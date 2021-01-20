@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Carousel Template · Bootstrap v5.0</title>
+
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/carousel.css">
+
+
+
+    <!-- Volt CSS -->
+    <link type="text/css" href="../css/volt.css" rel="stylesheet">
+
+    <!-- My CSS -->
+    <link type="text/css" href="../css/add_paper.css" rel="stylesheet">
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .bg-dark {
+            background-color: #ffffff !important;
+        }
+        
+        ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
+            color: #777;
+        }
+        
+        button.navbar-toggler {
+            background: #cecece;
+        }
+        
+        li.nav-item {
+            border-right: 1px solid #eaeaea;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
+            box-shadow: 5px 5px 10px #56565636;
+        }
+        
+        @media all and (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu {
+                display: none;
+            }
+            .navbar .nav-item:hover .nav-link {
+                color: #fff;
+            }
+            .navbar .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+            .navbar .nav-item .dropdown-menu {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://haymora.com/upload/images/giao_duc/fpt_education/logo.jpg" width="120px" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Science Technology</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Event & news</a></li>
+                                <li><a class="dropdown-item" href="#">Scientific products</a></li>
+                                <li><a class="dropdown-item" href="#">Researchers</a></li>
+                                <li><a class="dropdown-item" href="#">New Publications</a></li>
+                                <li><a class="dropdown-item" href="#">Procedure Guidelines</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">International Affairs</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Events & News</a></li>
+                                <li><a class="dropdown-item" href="#">Short term faculty exchange</a></li>
+                                <li><a class="dropdown-item" href="#">International Collaborations</a></li>
+                                <li><a class="dropdown-item" href="#">International Partners</a></li>
+                                <li><a class="dropdown-item" href="#">Meetings & Visits</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events & News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact us</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="margin-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <p class="text-uppercase fw-bolder text-center">thông tin bài báo</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên bài báo</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Ngày xuất bản</td>
+                        <td><input data-datepicker="" class="form-control" autocomplete="off" type="text" placeholder="dd/mm/yyyy" required></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Link bài báo</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Link google scholar</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Loại bài báo</td>
+                        <td>
+                            <select class="form-select" id="country" aria-label="Default select example">
+                                <option selected>Tạp chí khoa học</option>
+                                <option value="1">Kỷ yếu hội thảo</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Chuyên nghành</td>
+                        <td>
+                            <select class="form-select" id="country" aria-label="Default select example">
+                                <option selected>Công nghệ thông tin</option>
+                                <option value="1">Kinh tế</option>
+                                <option value="2">Khoa học máy tính</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin nhà xuất bản</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên tạp chí</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Tập</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Vị trí bài báo</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Nhà xuất bản</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin xét thưởng</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Chất lượng tạp chí</td>
+                        <td>
+                            <select class="form-select tieuchi" aria-label="Default select example">
+                                <option value="0" selected>Không có</option>
+                                <option value="100000000">Q1 và ISI</option>
+                                <option value="50000000">Q2 và ISI</option>
+                                <option value="30000000">Q3 và ISI</option>
+                                <option value="10000000">Scopus hoặc ISI</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Chấp lượng hội thảo</td>
+                        <td>
+                            <select class="form-select tieuchi" id="country" aria-label="Default select example">
+                                <option value="0" selected>Không có</option>
+                                <option value="100000000">QS100</option>
+                                <option value="50000000">Q200</option>
+                                <option value="30000000">Q500</option>
+                                <option value="10000000">QS1000</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td><input type="email" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo" disabled></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin tác giả</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" class="table_author" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên tác giả</td>
+                        <td>
+                            <input type="email" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                            <select class="form-select " id="country" aria-label="Default select example">
+                                <option value="0" selected>Vai trò</option>
+                                <option value="100000000">First author</option>
+                                <option value="50000000">Middle author</option>
+                                <option value="30000000">Last author</option>
+                                <option value="10000000">Corresponding author</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select " id="country" aria-label="Default select example">
+                                <option value="0" selected>Tác giả trong FE</option>
+                                <option value="100000000">Tác giả ngoài FE</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td>
+                            <input type="email" class="form-control" autocomplete="off" placeholder="Số tài khoản">
+                        </td>
+                        <td>
+                            <input type="email" class="form-control" autocomplete="off" placeholder="Mã số thuế">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td>
+                            <button class="btn btn-outline-primary">Thêm tác giả</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">tài liệu tham khảo</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" class="table_references" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Link tài liệu</td>
+                        <td>
+                            <input type="email" class="form-control" autocomplete="off">
+                        </td>
+                        <tr>
+                            <td class="td_title"></td>
+                            <td>
+                                <button class="btn btn-outline-primary">Thêm tài liệu</button>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            <div class="col-lg-12 text-center" style="margin-top: 25px;">
+                <button class="btn btn-primary">Thêm bài báo</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+
+    <!-- JQuery -->
+    <script src="../js/jquery-3.5.1.min.js"></script>
+
+    <!-- Core -->
+    <script src="../vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Vendor JS -->
+    <script src="../vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+    <!-- Slider -->
+    <script src="../vendor/nouislider/distribute/nouislider.min.js"></script>
+
+    <!-- Jarallax -->
+    <script src="../vendor/jarallax/dist/jarallax.min.js"></script>
+
+    <!-- Smooth scroll -->
+    <script src="../vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+    <!-- Count up -->
+    <script src="../vendor/countup.js/dist/countUp.umd.js"></script>
+
+    <!-- Notyf -->
+    <script src="../vendor/notyf/notyf.min.js"></script>
+
+    <!-- Charts -->
+    <script src="../vendor/chartist/dist/chartist.min.js"></script>
+    <script src="../vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- Datepicker -->
+    <script src="../vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+
+    <!-- Simplebar -->
+    <script src="../vendor/simplebar/dist/simplebar.min.js"></script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Volt JS -->
+    <script src="../js/volt.js"></script>
+
+
+    <!-- Code injected by live-server -->
+    <script type="text/javascript">
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function() {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function(msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        } else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+
+    <script>
+        $(".tieuchi").change(function() {
+            var a = document.getElementsByClassName("tieuchi");
+            var t = ;
+            var recipt = "(a[0]+a[1])/t";
+
+        });
+    </script>
+</body>
+
+</html>
