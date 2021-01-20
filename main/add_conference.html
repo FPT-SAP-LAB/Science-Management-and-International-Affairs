@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
-    <title>Carousel Template · Bootstrap v5.0</title>
+    <title>Thêm đề nghị hỗ trợ đi hội nghị</title>
 
     <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
     <!-- Bootstrap core CSS -->
@@ -133,8 +133,60 @@
 
     <main class="container">
         <h1 class="text-center">Đề nghị hỗ trợ hội nghị</h1>
-
-
+        <form>
+            <div class="mb-3">
+                <label for="inputNameConference" class="form-label">Tên hội nghị</label>
+                <input type="text" class="form-control" id="inputNameConference">
+            </div>
+            <div class="mb-3">
+                <label for="inputLinkConference" class="form-label">Link hội nghị</label>
+                <input type="text" class="form-control" id="inputLinkConference">
+            </div>
+            <div class="mb-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-6">
+                        <label for="inputNameKeynoteSpeaker" class="form-label">Tên diễn giả QS</label>
+                        <input type="text" class="form-control" id="inputNameKeynoteSpeaker">
+                    </div>
+                    <div class="col-6">
+                        <label for="inputNameUniversity" class="form-label">Thuộc trường đại học</label>
+                        <input type="text" class="form-control" id="inputNameUniversity">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="invitationFile" class="form-label">Thư mời hội nghị</label>
+                <input class="form-control" type="file" id="invitationFile">
+            </div>
+            <div class="mb-3">
+                <label for="paperFile" class="form-label">Bài báo thuộc hội nghị</label>
+                <input class="form-control" type="file" id="paperFile">
+            </div>
+            <div class="mb-3">
+                <label for="expenseFile" class="form-label">Phiếu đề nghị hỗ trợ kinh phí</label>
+                <input class="form-control" type="file" id="expenseFile" aria-describedby="expenseFileHelp">
+                <div class="col-auto">
+                    <span id="expenseFileHelp" class="form-text">
+                        Tải file mẫu <a href="../assets/template/template đề nghị hỗ trợ kinh phí.docx">tại đây</a>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="bussinessFile" class="form-label">Đề nghị cử đi công tác</label>
+                <input class="form-control" type="file" id="bussinessFile" aria-describedby="bussinessFileHelp">
+                <div class="col-auto">
+                    <span id="bussinessFileHelp" class="form-text">
+                        Tải file mẫu <a href="../assets/template/template đề nghị cử đi công tác.doc">tại đây</a>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Hội nghị quốc tế</label>
+            </div>
+            <!-- <button type="submit" class="btn btn-primary"></button> -->
+            <a class="btn btn-primary" href="conference_request.html" role="button">Submit</a>
+        </form>
     </main>
 
     <!-- FOOTER -->
@@ -145,7 +197,6 @@
 
     <script src="../js/jquery-3.5.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/volt.js"></script>
 </body>
 
 </html>
