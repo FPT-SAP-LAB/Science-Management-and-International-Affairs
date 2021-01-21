@@ -5,3 +5,11 @@
 .td_title {
     width: 200px;
 }
+
+.last_button {
+    width: 150px;
+}
+
+.paper_info {
+    column-span: 2;
+}
