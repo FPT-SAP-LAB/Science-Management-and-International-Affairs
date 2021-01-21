@@ -215,11 +215,11 @@
                         <td>
                             <div class='d-flex justify-content-between one_tag'>
                                 <div class="col-lg-6">
-                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q2</button>
+                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q2 và ISI</button>
                                     <a class="col-lg-12" href="https://www.scimagojr.com/journalsearch.php?q=21100886391&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img class="col-lg-11" border="0" src="https://www.scimagojr.com/journal_img.php?id=21100886391" alt="SCImago Journal &amp; Country Rank" /></a>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q1</button>
+                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q1 và ISI</button>
                                     <a href="https://www.scimagojr.com/journalsearch.php?q=28773&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img class="col-lg-11" border="0" src="https://www.scimagojr.com/journal_img.php?id=28773" alt="SCImago Journal &amp; Country Rank" /></a>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                     </tr>
                     <tr>
                         <td class="td_title"></td>
-                        <td><input value="10,000,000" disabled type="text" id="totalReward" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo"></td>
+                        <td><input value="10,000,000" type="text" id="totalReward" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo"></td>
                     </tr>
                 </table>
             </div>
@@ -243,21 +243,16 @@
                     <tr>
                         <td class="td_title">Tên tác giả</td>
                         <td>
-                            <input value="Huỳnh Tấn Hội" disabled type="email" class="form-control" autocomplete="off">
-                        </td>
-                        <td>
-                            <select disabled onchange="changeReward()" class="form-select author_role" id="country" aria-label="Default select example">
-                                <option value="3" selected>First author</option>
-                                <option value="2">Middle author</option>
-                                <option value="1" selected>Last author</option>
-                                <option value="3">Corresponding author</option>
-                            </select>
-                        </td>
-                        <td>
                             <select disabled onchange="changeReward()" class="form-select author_sestor" aria-label="Default select example">
                                 <option value="0" selected>Tác giả trong FE</option>
                                 <option value="1">Tác giả ngoài FE</option>
                             </select>
+                        </td>
+                        <td>
+                            <input value="Huỳnh Tấn Hội" disabled type="email" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                            <input value="First author" class="form-control" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -284,13 +279,23 @@
             </div>
             <div class="col-lg-12 text-center" style="margin-top: 50px;">
                 <a href="science.html" class="btn btn-primary last_button">Xác nhận duyệt</a>
+                <a href="science.html" class="btn btn-primary last_button">Xác nhận với tác giả</a>
                 <a href="Pending_paper.html" class="btn btn-secondary last_button">Quay lại</a>
             </div>
         </div>
     </main>
+    <div class="col-lg-12 text-center" style="margin-top: 25px;">
+        <textarea class="col-lg-6" id="w3review" name="w3review" rows="4" cols="50" disabled>
+        Trao đổi giữa phòng khoa học và tác giả
+    </textarea>
+    </div>
+    <div class="col-lg-12 text-center" style="margin-top: 5px;">
+        <input class="col-lg-5 form-control-custom">
+        <button class="col-lg-1 btn btn-secondary">Gửi</button>
+    </div>
 
     <!-- FOOTER -->
-    <footer class="container">
+    <footer class="container" style="margin-top: 50px;">
         <p class="float-end"><a href="#">Back to top</a></p>
         <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
     </footer>
