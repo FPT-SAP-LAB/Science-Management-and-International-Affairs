@@ -1,0 +1,42 @@
+.mou-left,
+.mou-right {
+    height: fit-content;
+    margin: 10px;
+}
+
+.col-custom-5 {
+    flex: 0 0 auto;
+    width: 47.666667%;
+}
+
+.infor-left,
+.infor-right {
+    padding: 25px 5px
+}
+
+#datepicker {
+    background-color: white;
+}
+
+.btn-light {
+    border: 1px solid #e3dada;
+}
+
+.input-mou {
+    margin-bottom: 10px;
+}
+
+.input-mou-area {
+    margin-top: 10px;
+}
+
+.btn-modify {
+    border: 1px solid rgb(159, 159, 196);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.title-left,
+.title-right {
+    text-align: center;
+    padding-top: 25px;
+}
