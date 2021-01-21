@@ -44,14 +44,6 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
     margin: auto;
 }
 
-.event-datepicker {
-    text-align: center;
-}
-
-::-webkit-input-placeholder {
-    text-align: center;
-}
-
 .news-item {
     height: 222px;
     color: #333333;
@@ -85,7 +77,7 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
     text-decoration: none;
 }
 
-p.event-content {
+p.content {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -133,7 +125,7 @@ p.event-content {
 }
 
 .news-type-item {
-    padding: 17px 10px 10px;
+    padding: 17px 10px 10px 10px;
     width: fit-content;
     height: 100%;
     outline: 1px solid;
@@ -167,7 +159,7 @@ p.event-content {
     height: 30px;
     display: block;
     border: none;
-    border-radius: 0;
+    border-radius: 0px;
 }
 
 .type-color::before {
