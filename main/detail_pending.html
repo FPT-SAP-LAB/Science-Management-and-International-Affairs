@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Carousel Template · Bootstrap v5.0</title>
+
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/carousel.css">
+    <!-- My CSS -->
+    <link type="text/css" href="../css/add_paper.css" rel="stylesheet">
+
+    <!-- Notyf -->
+    <link type="text/css" href="../vendor/notyf/notyf.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .bg-dark {
+            background-color: #ffffff !important;
+        }
+        
+        ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
+            color: #777;
+        }
+        
+        button.navbar-toggler {
+            background: #cecece;
+        }
+        
+        li.nav-item {
+            border-right: 1px solid #eaeaea;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
+            box-shadow: 5px 5px 10px #56565636;
+        }
+        
+        @media all and (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu {
+                margin-top: 0;
+                display: none;
+            }
+            .navbar .nav-item:hover .nav-link {
+                color: #fff;
+            }
+            .navbar .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+        }
+        
+        main {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://haymora.com/upload/images/giao_duc/fpt_education/logo.jpg" width="120px" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Science Technology</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Event & news</a></li>
+                                <li><a class="dropdown-item" href="#">Scientific products</a></li>
+                                <li><a class="dropdown-item" href="#">Researchers</a></li>
+                                <li><a class="dropdown-item" href="#">New Publications</a></li>
+                                <li><a class="dropdown-item" href="#">Procedure Guidelines</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">International Affairs</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Events & News</a></li>
+                                <li><a class="dropdown-item" href="#">Short term faculty exchange</a></li>
+                                <li><a class="dropdown-item" href="#">International Collaborations</a></li>
+                                <li><a class="dropdown-item" href="#">International Partners</a></li>
+                                <li><a class="dropdown-item" href="#">Meetings & Visits</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events & News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact us</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <p class="text-uppercase fw-bolder text-center">thông tin bài báo</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên bài báo</td>
+                        <td><input type="email" class="form-control" autocomplete="off" value="HIV and ways to maintain a meaningful life" disabled></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Ngày xuất bản</td>
+                        <td>
+                            <input class="form-control dateformat" id="date_public" autocomplete="off" type="month" placeholder="dd/mm/yyyy" disabled value="2019-12">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Link bài báo</td>
+                        <td>
+                            <a target="_blank" href="https://doi.org/10.1007/978-3-030-34980-6_9" class="btn btn-primary">Bấm để chuyển trang</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Link google scholar</td>
+                        <td><a target="_blank" href="https://scholar.google.com.vn/scholar?cluster=783580201061751&hl=en&as_sdt=0,5" class="btn btn-primary">Bấm để chuyển trang</a></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Loại bài báo</td>
+                        <td>
+                            <select class="form-select" disabled id="country" aria-label="Default select example">
+                                <option selected>Tạp chí khoa học</option>
+                                <option value="1">Kỷ yếu hội thảo không Index Scopus</option>
+                                <option value="1">Kỷ yếu hội thảo Index Scopus</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Chuyên nghành</td>
+                        <td>
+                            <select disabled class="form-select" id="country" aria-label="Default select example">
+                                <option selected>Công nghệ thông tin</option>
+                                <option value="1">Kinh tế</option>
+                                <option value="2">Khoa học máy tính</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin nhà xuất bản</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên tạp chí</td>
+                        <td><input value="Biomedicine" disabled type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Tập</td>
+                        <td><input value="Vol. 39(4) (2019)" disabled type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Vị trí bài báo</td>
+                        <td><input value="526–531" disabled type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Nhà xuất bản</td>
+                        <td><input type="email" class="form-control" autocomplete="off"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin xét thưởng</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Thoả mãn tiêu chí</td>
+                        <td>
+                            <div class='d-flex justify-content-between one_tag'>
+                                <div class="col-lg-6">
+                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q2 và ISI</button>
+                                    <a class="col-lg-12" href="https://www.scimagojr.com/journalsearch.php?q=21100886391&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img class="col-lg-11" border="0" src="https://www.scimagojr.com/journal_img.php?id=21100886391" alt="SCImago Journal &amp; Country Rank" /></a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <button class='col-lg-11 btn btn-secondary name_tag'>Q1 và ISI</button>
+                                    <a href="https://www.scimagojr.com/journalsearch.php?q=28773&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img class="col-lg-11" border="0" src="https://www.scimagojr.com/journal_img.php?id=28773" alt="SCImago Journal &amp; Country Rank" /></a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td id="tag_tieuchi"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td><input value="10,000,000" type="text" id="totalReward" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">thông tin tác giả</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" class="table_author" style="width: 100%;">
+                    <tr>
+                        <td class="td_title">Tên tác giả</td>
+                        <td>
+                            <select disabled onchange="changeReward()" class="form-select author_sestor" aria-label="Default select example">
+                                <option value="0" selected>Tác giả trong FE</option>
+                                <option value="1">Tác giả ngoài FE</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input value="Huỳnh Tấn Hội" disabled type="email" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                            <input value="First author" class="form-control" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title"></td>
+                        <td>
+                            <input value="10,000,000" disabled type="text" class="form-control author_money" autocomplete="off" placeholder="Số tiền thưởng">
+                        </td>
+                        <td>
+                            <input value="123456789" disabled type="email" class="form-control author_credit" autocomplete="off" placeholder="Số tài khoản">
+                        </td>
+                        <td>
+                            <input value="0987654321" disabled type="email" class="form-control author_tax" autocomplete="off" placeholder="Mã số thuế">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12" style="margin-top: 25px;">
+                <p class="text-uppercase fw-bolder text-center">tài liệu tham khảo</p>
+            </div>
+            <div class="col-lg-5">
+                <table id="table_add_paper" class="table_references" style="width: 100%;">
+                    <tr></tr>
+                </table>
+            </div>
+            <div class="col-lg-12 text-center" style="margin-top: 50px;">
+                <a href="science.html" class="btn btn-primary last_button">Xác nhận duyệt</a>
+                <a href="science.html" class="btn btn-primary last_button">Xác nhận với tác giả</a>
+                <a href="Pending_paper.html" class="btn btn-secondary last_button">Quay lại</a>
+            </div>
+        </div>
+    </main>
+    <div class="col-lg-12 text-center" style="margin-top: 25px;">
+        <textarea class="col-lg-6" id="w3review" name="w3review" rows="4" cols="50" disabled>
+        Trao đổi giữa phòng khoa học và tác giả
+    </textarea>
+    </div>
+    <div class="col-lg-12 text-center" style="margin-top: 5px;">
+        <input class="col-lg-5 form-control-custom">
+        <button class="col-lg-1 btn btn-secondary">Gửi</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="container" style="margin-top: 50px;">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Notyf -->
+    <script src="../vendor/notyf/notyf.min.js"></script>
+</body>
+
+</html>

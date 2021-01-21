@@ -19,7 +19,6 @@
 
     <!-- Notyf -->
     <link type="text/css" href="../vendor/notyf/notyf.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
 
@@ -62,8 +61,8 @@
         
         @media all and (min-width: 992px) {
             .navbar .nav-item .dropdown-menu {
-                display: none;
                 margin-top: 0;
+                display: none;
             }
             .navbar .nav-item:hover .nav-link {
                 color: #fff;
@@ -206,28 +205,32 @@
             <div class="col-lg-5">
                 <table id="table_add_paper" style="width: 100%;">
                     <tr>
-                        <td class="td_title">Thoả mãn tiêu chí</td>
+                        <td class="td_title">Chất lượng tạp chí</td>
                         <td>
-                            <select class="form-select tieuchi" name="thuong" aria-label="Default select example">
-                                <option selected disabled>Chọn tiêu chí thỏa mãn</option>
-                                <option value="">Q1 và ISI</option>
-                                <option value="">Q2 và ISI</option>
-                                <option value="">Q3 và ISI</option>
-                                <option value="">Scopus hoặc ISI</option>
-                                <option value="">QS100</option>
-                                <option value="">QS200</option>
-                                <option value="">QS500</option>
-                                <option value="">QS1000</option>
+                            <select onchange="changeReward()" class="form-select tieuchi" name="thuong" aria-label="Default select example">
+                                <option value="0" selected>Không có</option>
+                                <option value="100000000">Q1 và ISI</option>
+                                <option value="50000000">Q2 và ISI</option>
+                                <option value="30000000">Q3 và ISI</option>
+                                <option value="10000000">Scopus hoặc ISI</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">QS Ranking</td>
+                        <td>
+                            <select onchange="changeReward()" class="form-select tieuchi" name="thuong" id="country" aria-label="Default select example">
+                                <option value="0" selected>Không có</option>
+                                <option value="100000000">QS100</option>
+                                <option value="50000000">QS200</option>
+                                <option value="30000000">QS500</option>
+                                <option value="10000000">QS1000</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="td_title"></td>
-                        <td id="tag_tieuchi"></td>
-                    </tr>
-                    <tr>
-                        <td class="td_title"></td>
-                        <td><input type="text" id="totalReward" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo" disabled></td>
+                        <td><input type="email" id="totalReward" class="form-control" autocomplete="off" placeholder="Tổng thưởng cho bài báo" disabled></td>
                     </tr>
                 </table>
             </div>
@@ -237,18 +240,23 @@
             <div class="col-lg-5">
                 <table id="table_add_paper" class="table_author" style="width: 100%;">
                     <tr>
-                        <td class="td_title"></td>
+                        <td class="td_title">Tên tác giả</td>
+                        <td>
+                            <input type="email" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                            <select onchange="changeReward()" class="form-select author_role" id="country" aria-label="Default select example">
+                                <option value="3">First author</option>
+                                <option value="2">Middle author</option>
+                                <option value="1" selected>Last author</option>
+                                <option value="3">Corresponding author</option>
+                            </select>
+                        </td>
                         <td>
                             <select onchange="changeReward()" class="form-select author_sestor" aria-label="Default select example">
                                 <option value="0" selected>Tác giả trong FE</option>
                                 <option value="1">Tác giả ngoài FE</option>
                             </select>
-                        </td>
-                        <td>
-                            <input type="email" class="form-control" placeholder="Tên tác giả" autocomplete="off">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Ghi chú" autocomplete="off">
                         </td>
                     </tr>
                     <tr>
@@ -293,25 +301,15 @@
                 </table>
             </div>
             <div class="col-lg-12 text-center" style="margin-top: 50px;">
-                <a href="Pending_paper.html" class="btn btn-primary last_button">Đăng ký khen thưởng</a>
+                <a href="Pending_paper.html" class="btn btn-primary last_button">Thêm bài báo</a>
                 <a href="science.html" class="btn btn-secondary last_button">Quay lại</a>
             </div>
         </div>
     </main>
-    <div class="col-lg-12 text-center" style="margin-top: 25px;">
-        <textarea class="col-lg-6" id="w3review" name="w3review" rows="4" cols="50" disabled>
-        Trao đổi giữa phòng khoa học và tác giả
-    </textarea>
-    </div>
-    <div class="col-lg-12 text-center" style="margin-top: 5px;">
-        <input class="col-lg-5 form-control-custom">
-        <button class="col-lg-1 btn btn-secondary">Gửi</button>
-    </div>
-    <button class="btn btn-danger notifyTopRight" id="notifyTopRight_tieuchi" style="visibility: hidden;">Tiêu chí này đã có</button>
     <button class="btn btn-danger notifyTopRight" id="notifyTopRight_authorFirst" style="visibility: hidden;">Chỉ có thể có 1 First author và 1 Corresponding author</button>
     <button class="btn btn-danger notifyTopRight" id="notifyTopRight_authorMoney" style="visibility: hidden;">Tổng tiền thưởng từng tác giả không thể quá tổng thưởng cho bài báo</button>
     <!-- FOOTER -->
-    <footer class="container" style="margin-top: 50px;">
+    <footer class="container" style="margin-top: 250px;">
         <p class="float-end"><a href="#">Back to top</a></p>
         <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
     </footer>
@@ -409,73 +407,44 @@
             if (total > totalReward) {
                 $("#notifyTopRight_authorMoney").click();
             }
+            if (total > totalReward) {
+                $("#notifyTopRight_authorMoney").click();
+                $(this).val(0);
+            }
         }
 
         $(document).on("change", ".author_money", function() {
             checkAuthorMoney();
-            var temp = $(this).val();
-            $(this).val(formatNumber(temp));
         });
 
-        $(".tieuchi").change(function() {
-            var text = $(this).find(":selected").text();
-            var ck = 0;
-            $(".name_tag").each(function() {
-                if ($(this).text() === text) {
-                    $("#notifyTopRight_tieuchi").click();
-                    ck = 1;
+        function changeReward() {
+            var a = document.getElementsByName("thuong");
+            var authorsestor = document.getElementsByClassName("author_sestor");
+            var authorRole = document.getElementsByClassName("author_role");
+            var authorFE = 0;
+            var totalAuthor = 0;
+            for (var i = 0; i < authorsestor.length; i++) {
+                var temp = parseInt(authorRole[i].value, 10);
+                if (authorsestor[i].value == 0) {
+                    authorFE += temp;
                 }
-            });
-            if (ck == 0) {
-                $("#tag_tieuchi").append("<div class='d-flex justify-content-between one_tag'>" +
-                    "<button class='col-lg-3 btn btn-secondary name_tag'>" + text + "</button>" +
-                    "<input required class='col-lg-7 form-control-custom' type='text' placeholder='Link xác minh/bằng chứng' />" +
-                    "<button class='btn btn-danger col-lg-1 remove_tieuchi'><i class='bi-x-square col-lg-1'></i></button>" +
-                    "</div>");
+                totalAuthor += temp;
             }
-        });
-
-        $(document).on("click", ".remove_tieuchi", function() {
-            $(this).closest(".one_tag").remove();
-        });
-
-        $("#totalReward").change(function() {
-            var temp = $(this).val();
-            $("#totalReward").val(formatNumber(temp));
-        });
-
-        function formatNumber(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            var reward = [];
+            for (var i = 0; i < a.length; i++) {
+                reward[i] = parseInt(a[i].value, 10);
+            }
+            var t = authorFE / totalAuthor;
+            var recipt = "(reward[0] + reward[1])*t";
+            var currencyFormat = eval(recipt);
+            totalReward = currencyFormat;
+            currencyFormat = currencyFormat.toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND'
+            });
+            $("#totalReward").val(currencyFormat);
+            checkAuthorMoney();
         }
-
-        // function changeReward() {
-        //     var a = document.getElementsByName("thuong");
-        //     var authorsestor = document.getElementsByClassName("author_sestor");
-        //     var authorRole = document.getElementsByClassName("author_role");
-        //     var authorFE = 0;
-        //     var totalAuthor = 0;
-        //     for (var i = 0; i < authorsestor.length; i++) {
-        //         var temp = parseInt(authorRole[i].value, 10);
-        //         if (authorsestor[i].value == 0) {
-        //             authorFE += temp;
-        //         }
-        //         totalAuthor += temp;
-        //     }
-        //     var reward = [];
-        //     for (var i = 0; i < a.length; i++) {
-        //         reward[i] = parseInt(a[i].value, 10);
-        //     }
-        //     var t = authorFE / totalAuthor;
-        //     var recipt = "(reward[0] + reward[1])*t";
-        //     var currencyFormat = eval(recipt);
-        //     totalReward = currencyFormat;
-        //     currencyFormat = currencyFormat.toLocaleString('it-IT', {
-        //         style: 'currency',
-        //         currency: 'VND'
-        //     });
-        //     $("#totalReward").val(currencyFormat);
-        //     checkAuthorMoney();
-        // }
 
         $(".more_author").click(function() {
             $(".table_author tr:last").after("<tr><td class='td_title'>Tên tác giả</td><td><input type='email' class='form-control' autocomplete='off'></td><td><select onchange='changeReward()' class='form-select author_role' id='country' aria-label='Default select example'><option value='3'>First author</option><option value='2'>Middle author</option><option value='1' selected>Last author</option><option value='3'>Corresponding author</option></select></td><td><select onchange='changeReward()' class='form-select author_sestor' aria-label='Default select example'><option value='0' selected>Tác giả trong FE</option><option value='1'>Tác giả ngoài FE</option></select></td></tr>");
