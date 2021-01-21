@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <link rel="icon" href="../image/fpt.png">
+    <title>Sự kiện</title>
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../css/carousel.css">
+
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../css/event.css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .bg-dark {
+            background-color: #ffffff !important;
+        }
+        
+        ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
+            color: #777;
+        }
+        
+        button.navbar-toggler {
+            background: #cecece;
+        }
+        
+        li.nav-item {
+            border-right: 1px solid #eaeaea;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
+            box-shadow: 5px 5px 10px #56565636;
+        }
+        
+        @media all and (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu {
+                display: none;
+                margin-top: 0;
+            }
+            .navbar .nav-item:hover .nav-link {
+                color: #fff;
+            }
+            .navbar .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+        }
+        
+        main {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://haymora.com/upload/images/giao_duc/fpt_education/logo.jpg" width="120px" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Science Technology</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Event & news</a></li>
+                                <li><a class="dropdown-item" href="#">Scientific products</a></li>
+                                <li><a class="dropdown-item" href="#">Researchers</a></li>
+                                <li><a class="dropdown-item" href="#">New Publications</a></li>
+                                <li><a class="dropdown-item" href="#">Procedure Guidelines</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">International Affairs</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Events & News</a></li>
+                                <li><a class="dropdown-item" href="#">Short term faculty exchange</a></li>
+                                <li><a class="dropdown-item" href="#">International Collaborations</a></li>
+                                <li><a class="dropdown-item" href="#">International Partners</a></li>
+                                <li><a class="dropdown-item" href="#">Meetings & Visits</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events & News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact us</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <div class="">
+
+        </div>
+        <!-- FOOTER -->
+        <footer class="container ">
+            <p class="float-end "><a href="# ">Back to top</a></p>
+            <p>&copy; 2017-2020 Company, Inc. &middot; <a href="# ">Privacy</a> &middot; <a href="# ">Terms</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script>
+        $('#datepicker').datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            orientation: "bottom",
+        });
+    </script>
+</body>
+
+</html>
