@@ -54,6 +54,7 @@
         @media all and (min-width: 992px) {
             .navbar .nav-item .dropdown-menu {
                 display: none;
+                margin-top: 0;
             }
 
             .navbar .nav-item:hover .nav-link {
@@ -62,10 +63,6 @@
 
             .navbar .nav-item:hover .dropdown-menu {
                 display: block;
-            }
-
-            .navbar .nav-item .dropdown-menu {
-                margin-top: 0;
             }
         }
 
@@ -135,15 +132,43 @@
         <h1 class="text-center">Đề nghị hỗ trợ hội nghị</h1>
         <form>
             <div class="mb-3">
-                <label for="inputNameConference" class="form-label">Tên hội nghị</label>
-                <input type="text" class="form-control" id="inputNameConference">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label for="inputName" class="form-label">Họ và tên <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputName">
+                    </div>
+                    <div class="col-6">
+                        <label for="inputIdDepartment" class="form-label">MSNV/MSSV <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputIdDepartment">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="inputLinkConference" class="form-label">Link hội nghị</label>
-                <input type="text" class="form-control" id="inputLinkConference">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label for="inputDepartment" class="form-label">Đơn vị <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputDepartment">
+                    </div>
+                    <div class="col-6">
+                        <label for="inputRole" class="form-label">Chức danh <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputRole">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <div class="row g-3 align-items-center">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label for="inputNameConference" class="form-label">Tên hội nghị <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputNameConference">
+                    </div>
+                    <div class="col-6">
+                        <label for="inputLinkConference" class="form-label">Website hội nghị <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="inputLinkConference">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row g-3">
                     <div class="col-6">
                         <label for="inputNameKeynoteSpeaker" class="form-label">Tên diễn giả QS</label>
                         <input type="text" class="form-control" id="inputNameKeynoteSpeaker">
@@ -155,15 +180,48 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="invitationFile" class="form-label">Thư mời hội nghị</label>
+                <label for="inputSector" class="form-label">Khu vực <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="inputSector">
+            </div>
+            <div class="mb-3">
+                <label for="inputCountry" class="form-label">Quốc gia <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="inputCountry">
+            </div>
+            <div class="mb-3">
+                <label for="inputTime" class="form-label">Thời gian <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="inputTime">
+            </div>
+            <div class="mb-3">
+                <table class="table" id="inputMoney">
+                    <tr>
+                        <th>Nội dung</th>
+                        <th>Chi phí</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="number" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="number" class="form-control"></td>
+                    </tr>
+                </table>
+                <!-- <div class="btn-group"> -->
+                    <a id="addRow" href="#" class="btn btn-primary">Thêm dòng</a>
+                    <a id="deleteRow" href="#" class="pl-2 btn btn-danger">Xóa dòng</a>
+                <!-- </div> -->
+                
+            </div>
+            <div class="mb-3">
+                <label for="invitationFile" class="form-label">Thư mời hội nghị <span style="color: red;">*</span></label>
                 <input class="form-control" type="file" id="invitationFile">
             </div>
             <div class="mb-3">
-                <label for="paperFile" class="form-label">Bài báo thuộc hội nghị</label>
+                <label for="paperFile" class="form-label">Bài báo thuộc hội nghị <span style="color: red;">*</span></label>
                 <input class="form-control" type="file" id="paperFile">
             </div>
             <div class="mb-3">
-                <label for="expenseFile" class="form-label">Phiếu đề nghị hỗ trợ kinh phí</label>
+                <label for="expenseFile" class="form-label">Đơn đề nghị hỗ trợ kinh phí tham dự hội nghị <span style="color: red;">*</span></label>
                 <input class="form-control" type="file" id="expenseFile" aria-describedby="expenseFileHelp">
                 <div class="col-auto">
                     <span id="expenseFileHelp" class="form-text">
@@ -172,7 +230,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="bussinessFile" class="form-label">Đề nghị cử đi công tác</label>
+                <label for="bussinessFile" class="form-label">Đề nghị cử đi công tác <span style="color: red;">*</span></label>
                 <input class="form-control" type="file" id="bussinessFile" aria-describedby="bussinessFileHelp">
                 <div class="col-auto">
                     <span id="bussinessFileHelp" class="form-text">
@@ -197,6 +255,18 @@
 
     <script src="../js/jquery-3.5.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+
+    <script>
+        $("#addRow").click((evt) => {
+            evt.preventDefault();
+            $("#inputMoney").append('<tr><td><input type="text" class="form-control"></td><td><input type="number" class="form-control"></td></tr>')
+        })
+
+        $("#deleteRow").click((evt) => {
+            evt.preventDefault();
+            $('#inputMoney tr:last').remove();
+        })
+    </script>
 </body>
 
 </html>
