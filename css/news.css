@@ -125,7 +125,7 @@ p.content {
 }
 
 .news-type-item {
-    padding: 17px 10px 10px 10px;
+    padding: 17px 10px 10px;
     width: fit-content;
     height: 100%;
     outline: 1px solid;
@@ -159,7 +159,7 @@ p.content {
     height: 30px;
     display: block;
     border: none;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .type-color::before {
