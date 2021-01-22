@@ -1,6 +1,6 @@
 # FPT_Science
 
-[![CodeFactor](https://www.codefactor.io/repository/github/thang1160/fpt_science/badge/main)](https://www.codefactor.io/repository/github/thang1160/fpt_science/overview/main)
+[![CodeFactor](https://www.codefactor.io/repository/github/fpt-sap-lab/fpt_science/badge)](https://www.codefactor.io/repository/github/fpt-sap-lab/fpt_science)
 
 ## Title của pull request sẽ được đặt theo format: <B>prototype</B> - <I><Nội dung></I>
 
