@@ -17,7 +17,7 @@
 
 
     <!-- custom css -->
-    <link rel="stylesheet" href="../css/list_mou.css">
+    <link rel="stylesheet" href="../css/list-mou.css">
 
     <style>
         .bd-placeholder-img {
@@ -75,8 +75,6 @@
     </style>
 </head>
 
-
-
 <body>
 
     <header>
@@ -133,52 +131,124 @@
     </header>
 
     <main class="container">
-        <div class="master-card">
-            <div class="mou-row row justify-content-between">
-                <div class="mou-left col-custom-5" style=" border: 1px solid black">
-                    <div class="title-left">
-                        <h3>THÔNG TIN VỀ MOU</h3>
-                    </div>
-                    <div class="infor-left row">
-                        <div class="col-lg-6"><span>MOU ID:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-6"><span>Thời gian:</span>
-                            <input id="datepicker" class="form-control input-mou" placeholder="" readonly>
-                        </div>
-                        <div class="col-lg-6"><span>Bản mềm:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-6"><span>Mức độ hợp tác:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-12">
-                            <span>Mục đích chính:</span>
-                            <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                              </select>
 
-                        </div>
-                        <div class="col-lg-12 input-mou-area">
-                            <span>Lưu ý:</span>
-                            <textarea class="form-control " id="" rows="3"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="mou-right col-custom-5" style="border: 1px solid black">
-                    <div class="title-right">
-                        <h3>THÔNG TIN VỀ ĐỐI TÁC</h3>
-                    </div>
-                    <div class="infor-right row">
-                        <div class="col-lg-6"><span>MOU id:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-6"><span>MOU id:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-6"><span>MOU id:</span><input class="form-control input-mou" type="text" /></div>
-                        <div class="col-lg-6"><span>MOU id:</span><input class="form-control input-mou" type="text" /></div>
-                    </div>
-                </div>
+        <div class="row justify-content-center text-center">
+            <div class="list-title">
+                <h3>DANH SÁCH MOU</h3>
             </div>
-            <div class=""></div>
+            <table id="list-mou">
+                <tr>
+                    <th>STT</th>
+                    <th>MOU ID</th>
+                    <th>Link bản mềm</th>
+                    <th>Ngày ký</th>
+                    <th>Ngày hết hạn</th>
+                    <th>Mức độ hợp tác</th>
+                    <th>Mục đích</th>
+                    <th colspan="3">Đối tác</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Tên</td>
+                    <td>Quốc gia</td>
+                    <td>Website</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="margin-top: 10px">
+                <a href="detail-mou.html" class="btn">Thêm</a>
+            </div>
         </div>
-
 
         <!-- FOOTER -->
         <footer class="container ">
@@ -193,28 +263,12 @@
     <script src="../js/bootstrap.min.js"></script>
 
     <script src="../js/bootstrap-datepicker.js"></script>
-    <!-- multiple select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-    <script>
-        $('select').selectpicker();
-        $(document).ready(function() {
-            //set value
-            $('#main-purpose').selectpicker('val', [1, 3]);
-            //remove duplicate
-        });
-    </script>
-    <!-- multiple select -->
-
-
-    <script src="../js/bootstrap-datepicker.js"></script>
     <script>
         $('#datepicker').datepicker({
-            format: "dd/mm/yyyy",
-            orientation: "bottom right",
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            orientation: "bottom",
         });
     </script>
 </body>
