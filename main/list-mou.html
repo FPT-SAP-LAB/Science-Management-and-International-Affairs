@@ -8,71 +8,74 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
     <link rel="icon" href="../image/fpt.png">
-    <title>Sự kiện</title>
-    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="../css/carousel.css">
+    <<<<<<< HEAD <title>Danh sách MOU</title>
+        =======
+        <title>Sự kiện</title>
+        >>>>>>> main
+        <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/"> -->
+        <!-- Bootstrap core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="../css/carousel.css">
 
 
-    <!-- custom css -->
-    <link rel="stylesheet" href="../css/list-mou.css">
+        <!-- custom css -->
+        <link rel="stylesheet" href="../css/list-mou.css">
 
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-        
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
             }
-        }
-        
-        .bg-dark {
-            background-color: #ffffff !important;
-        }
-        
-        ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
-            color: #777;
-        }
-        
-        button.navbar-toggler {
-            background: #cecece;
-        }
-        
-        li.nav-item {
-            border-right: 1px solid #eaeaea;
-            min-width: 120px;
-            text-align: center;
-        }
-        
-        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
-            box-shadow: 5px 5px 10px #56565636;
-        }
-        
-        @media all and (min-width: 992px) {
-            .navbar .nav-item .dropdown-menu {
-                display: none;
-                margin-top: 0;
+            
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
             }
-            .navbar .nav-item:hover .nav-link {
-                color: #fff;
+            
+            .bg-dark {
+                background-color: #ffffff !important;
             }
-            .navbar .nav-item:hover .dropdown-menu {
-                display: block;
+            
+            ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
+                color: #777;
             }
-        }
-        
-        main {
-            padding-top: 50px;
-        }
-    </style>
+            
+            button.navbar-toggler {
+                background: #cecece;
+            }
+            
+            li.nav-item {
+                border-right: 1px solid #eaeaea;
+                min-width: 120px;
+                text-align: center;
+            }
+            
+            nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
+                box-shadow: 5px 5px 10px #56565636;
+            }
+            
+            @media all and (min-width: 992px) {
+                .navbar .nav-item .dropdown-menu {
+                    display: none;
+                    margin-top: 0;
+                }
+                .navbar .nav-item:hover .nav-link {
+                    color: #fff;
+                }
+                .navbar .nav-item:hover .dropdown-menu {
+                    display: block;
+                }
+            }
+            
+            main {
+                padding-top: 50px;
+            }
+        </style>
 </head>
 
 <body>
@@ -138,15 +141,20 @@
             </div>
             <table id="list-mou">
                 <tr>
-                    <th>STT</th>
-                    <th>MOU ID</th>
-                    <th>Link bản mềm</th>
-                    <th>Ngày ký</th>
-                    <th>Ngày hết hạn</th>
-                    <th>Mức độ hợp tác</th>
-                    <th>Mục đích</th>
+                    <th rowspan="2">STT</th>
+                    <th rowspan="2">MOU ID</th>
+                    <th rowspan="2">Link bản mềm</th>
+                    <th rowspan="2">Ngày ký</th>
+                    <th rowspan="2">Ngày hết hạn</th>
+                    <th rowspan="2">Mức độ hợp tác</th>
+                    <th rowspan="2">Mục đích</th>
                     <th colspan="3">Đối tác</th>
-                    <th></th>
+                    <th rowspan="2"></th>
+                </tr>
+                <tr>
+                    <th>Tên</th>
+                    <th>Quốc gia</th>
+                    <th>Website</th>
                 </tr>
                 <tr>
                     <td>1</td>
@@ -156,9 +164,9 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
@@ -172,9 +180,9 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
@@ -188,9 +196,9 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
@@ -204,9 +212,9 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
@@ -220,9 +228,9 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
@@ -236,9 +244,25 @@
                     <td>01/01/2022</td>
                     <td>Giao lưu văn hóa</td>
                     <td>Trao đổi sinh viên</td>
-                    <td>Tên</td>
-                    <td>Quốc gia</td>
-                    <td>Website</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
+                    <td>
+                        <input type="button" class="btn" value="Sửa" />
+                        <input type="button" class="btn" value="Xóa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="detail-mou.html">ID0001</a></td>
+                    <td>drive.google</td>
+                    <td>01/01/2021</td>
+                    <td>01/01/2022</td>
+                    <td>Giao lưu văn hóa</td>
+                    <td>Trao đổi sinh viên</td>
+                    <td>Pixta</td>
+                    <td>Nhật</td>
+                    <td>https//abc.com</td>
                     <td>
                         <input type="button" class="btn" value="Sửa" />
                         <input type="button" class="btn" value="Xóa" />
