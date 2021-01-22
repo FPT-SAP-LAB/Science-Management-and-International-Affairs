@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link href="../vendor/DataTables/datatables.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .bg-dark {
+            background-color: #ffffff !important;
+        }
+        
+        ul.navbar-nav.me-auto.mb-2.mb-md-0 * {
+            color: #777;
+        }
+        
+        button.navbar-toggler {
+            background: #cecece;
+        }
+        
+        li.nav-item {
+            border-right: 1px solid #eaeaea;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark {
+            box-shadow: 5px 5px 10px #56565636;
+        }
+        
+        @media all and (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu {
+                margin-top: 0;
+                display: none;
+            }
+            .navbar .nav-item:hover .nav-link {
+                color: #fff;
+            }
+            .navbar .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+        }
+        
+        main {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://haymora.com/upload/images/giao_duc/fpt_education/logo.jpg" width="120px" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Science Technology</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Event & news</a></li>
+                                <li><a class="dropdown-item" href="#">Scientific products</a></li>
+                                <li><a class="dropdown-item" href="#">Researchers</a></li>
+                                <li><a class="dropdown-item" href="#">New Publications</a></li>
+                                <li><a class="dropdown-item" href="#">Procedure Guidelines</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">International Affairs</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Events & News</a></li>
+                                <li><a class="dropdown-item" href="#">Short term faculty exchange</a></li>
+                                <li><a class="dropdown-item" href="#">International Collaborations</a></li>
+                                <li><a class="dropdown-item" href="#">International Partners</a></li>
+                                <li><a class="dropdown-item" href="#">Meetings & Visits</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events & News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact us</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <h1 class="text-center">Danh sách đối tác</h1>
+            </div>
+            <div class="col-lg-11">
+                <table id="example1" class="display nowrap" style="width: 100%; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="wrap-cell">STT</th>
+                            <th rowspan="2">Tên</th>
+                            <th rowspan="2" class="wrap-cell">Quốc gia</th>
+                            <th rowspan="2">Điện thoại</th>
+                            <th rowspan="2">Email</th>
+                            <th colspan="3">Giám đốc nhân sự</th>
+                            <th rowspan="2">Certificate Number</th>
+                            <th rowspan="2">Số lượng MOU kí kết</th>
+                            <th rowspan="2">Số lượng MOA kí kết</th>
+                            <th rowspan="2">Chỉnh sửa</th>
+                            <th rowspan="2" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</th>
+                        </tr>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>17</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td>Harvard University</td>
+                            <td>United States</td>
+                            <td>+1 617-495-1000</td>
+                            <td>college@fas.harvard.edu</td>
+                            <td>John Cena</td>
+                            <td>+1 123-345-4567</td>
+                            <td>johncena@fas.harvard.edu</td>
+                            <td>1234</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-partner">Sửa</button></td>
+                            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-partner">Thêm</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+    <div class="modal fade" id="add-partner" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Thêm đối tác</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tên đối tác</label>
+                                <input type="text" id="partner-name" name="name-input" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>SĐT</label>
+                                <input type="text" id="partner-phone" name="phone-input" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Quốc gia</label>
+                                <input type="text" id="partner-country" name="country-input" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email</label>
+                                <input type="text" id="partner-email" name="email-input" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Website</label>
+                                <input type="text" id="partner-website" name="website-input" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Certificate Number:</label>
+                                <input type="text" id="partner-certificate" name="certificate-input" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Hiệu suất:</label>
+                                <input type="text" id="partner-performance" name="performance-input" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Nhược điểm:</label>
+                                <input type="text" id="partner-defect" name="defect-input" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <h4>Giám đốc nhân sự</h4>
+                                <div class="col-md-6">
+                                    <label>Tên :</label>
+                                    <input type="text" id="manager-name" name="manager-name-input" class="form-control " />
+                                </div>
+                                <div class="col-md-6">
+                                    <label>SĐT :</label>
+                                    <input type="text" id="manager-phone" name="manager-phone-input" class="form-control " />
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Email :</label>
+                                    <input type="text" id="manager-email" name="manager-email-input" class="form-control " />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="change-partner" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Thêm đối tác</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tên đối tác</label>
+                                <input type="text" id="partner-name" name="name-input" class="form-control" value="Harvard University" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>SĐT</label>
+                                <input type="text" id="partner-phone" name="phone-input" class="form-control" value="+1 617-495-1000" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Quốc gia</label>
+                                <input type="text" id="partner-country" name="country-input" class="form-control" value="United States" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email</label>
+                                <input type="text" id="partner-email" name="email-input" class="form-control" value="college@fas.harvard.edu" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Website</label>
+                                <input type="text" id="partner-website" name="website-input" class="form-control" value="https://www.harvard.edu/" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Certificate Number:</label>
+                                <input type="text" id="partner-certificate" name="certificate-input" class="form-control" value="1234" />
+                            </div>
+                        </div>
+                        <div class=" row ">
+                            <div class="col-md-6 ">
+                                <label>Hiệu suất:</label>
+                                <input type="text " id="partner-performance " name="performance-input " class="form-control " />
+                            </div>
+                            <div class="col-md-6 ">
+                                <label>Nhược điểm:</label>
+                                <input type="text " id="partner-defect " name="defect-input " class="form-control " />
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <h4>Giám đốc nhân sự</h4>
+                            <div class="col-md-6 ">
+                                <label>Tên :</label>
+                                <input type="text " id="manager-name " name="manager-name-input " value="John Cena " class="form-control " />
+                            </div>
+                            <div class="col-md-6 ">
+                                <label>SĐT :</label>
+                                <input type="text " id="manager-phone " name="manager-phone-input " value="+1 123-345-4567 " class="form-control " />
+                            </div>
+                            <div class="col-md-6 ">
+                                <label>Email :</label>
+                                <input type="text " id="manager-email " name="manager-email-input " value="johncena@fas.harvard.edu " class="form-control " />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="delete-partner" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Xác nhận xóa mục này</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="red-text">Dữ liệu không thể phục hồi sau thao tác này</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#delete-partner">Xóa</button>
+                    <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery-3.5.1.min.js "></script>
+    <script src="../js/bootstrap.min.js "></script>
+    <script type="text/javascript " charset="utf8 " src="../vendor/DataTables/datatables.js "></script>
+    <script>
+        $(document).ready(function() {
+            $('#example1').DataTable({
+                deferRender: true,
+                scrollX: true,
+                scrollY: 500,
+                scrollCollapse: true,
+                columnDefs: [{
+                    render: function(data, type, full, meta) {
+                        return "<div class='text-wrap' style='width: 100%'>" + data + "</div>";
+                    },
+                    targets: "wrap-cell"
+                }]
+            });
+        });
+        $("#abs").click(function() {
+            var table = $('#example1').DataTable();
+            var temp = table.rows({
+                search: 'applied'
+            }).data();
+            console.log($(temp[0][0]).text());
+        });
+    </script>
+
+</body>
+
+
+</html>
