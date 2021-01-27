@@ -1,4 +1,5 @@
 .mou-left,
+.mou-center,
 .mou-right {
     height: fit-content;
     margin: 10px;
@@ -9,10 +10,21 @@
     width: 47.666667%;
 }
 
+.col-custom-8 {
+    flex: 0 0 auto;
+    width: 70%;
+    margin: auto;
+}
+
 .col-custom-10 {
     flex: 0 0 auto;
     width: 98.3%;
     margin: 10px;
+}
+
+.col-custom-12 {
+    flex: 0 0 auto;
+    width: 98.3%;
 }
 
 .infor-left,
@@ -60,6 +72,7 @@ th {
 }
 
 .title-left,
+.title-center,
 .title-right {
     text-align: center;
     padding-top: 25px;
