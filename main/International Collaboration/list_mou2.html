@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="../../css/carousel.css">
     <link href="../../vendor/DataTables/datatables.css" rel="stylesheet" type="text/css">
 
+    <!-- multiple select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -136,7 +142,7 @@
                 </div>
                 <div class="col-lg-6 d-flex">
                     <input class="form-control me-2" type="search" placeholder="Tên đối tác" aria-label="Search">
-                    <input class="form-control me-2" type="search" placeholder="Tên quốc gia" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="Tên người đại diện" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Tìm</button>
                 </div>
             </div>
@@ -146,14 +152,13 @@
                         <tr>
                             <th rowspan="2">STT</th>
                             <th rowspan="2">Số hiệu</th>
-                            <th rowspan="2">Link bản mềm</th>
+                            <th colspan="3">Đối tác</th>
+                            <th colspan="3">Người đại diện</th>
+                            <th rowspan="2">Đơn vị, cơ sở ký kết</th>
                             <th rowspan="2">Ngày ký</th>
                             <th rowspan="2">Ngày hết hạn</th>
-                            <th rowspan="2">Mức độ hợp tác</th>
-                            <th rowspan="2">Mục đích</th>
-                            <th colspan="3">Đối tác</th>
-                            <th colspan="4">Người đại diện</th>
-                            <th rowspan="2">Đơn vị, cơ sở ký kết</th>
+                            <th rowspan="2">Phạm vi hợp tác</th>
+                            <th rowspan="2">Link bản mềm</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr>
@@ -163,26 +168,25 @@
                             <th>Họ và tên</th>
                             <th>Email</th>
                             <th>Điện thoại</th>
-                            <th>Đầu mối</th>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
-
                             <td>Pixta</td>
                             <td>Nhật</td>
                             <td>https//abc.com</td>
+                            <td>Chưa có</td>
 
                             <td>Chưa có</td>
                             <td>Chưa có</td>
                             <td>Chưa có</td>
+
+
+                            <td>01/01/2021</td>
+                            <td>01/01/2022</td>
                             <td>Chưa có</td>
-                            <td></td>
+                            <td>drive.google</td>
+
                             <td>
                                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
@@ -191,19 +195,21 @@
                         <tr>
                             <td>1</td>
                             <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
                             <td>Pixta</td>
                             <td>Nhật</td>
                             <td>https//abc.com</td>
                             <td>Chưa có</td>
+
                             <td>Chưa có</td>
                             <td>Chưa có</td>
                             <td>Chưa có</td>
-                            <td></td>
+
+
+                            <td>01/01/2021</td>
+                            <td>01/01/2022</td>
+                            <td>Chưa có</td>
+                            <td>drive.google</td>
+
                             <td>
                                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
@@ -212,108 +218,21 @@
                         <tr>
                             <td>1</td>
                             <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
-
                             <td>Pixta</td>
                             <td>Nhật</td>
                             <td>https//abc.com</td>
                             <td>Chưa có</td>
+
                             <td>Chưa có</td>
                             <td>Chưa có</td>
                             <td>Chưa có</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
+
+
                             <td>01/01/2021</td>
                             <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
-
-                            <td>Pixta</td>
-                            <td>Nhật</td>
-                            <td>https//abc.com</td>
                             <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="detail_mou2.html">ID0001</a></td>
                             <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
 
-                            <td>Pixta</td>
-                            <td>Nhật</td>
-                            <td>https//abc.com</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
-
-                            <td>Pixta</td>
-                            <td>Nhật</td>
-                            <td>https//abc.com</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="detail_mou2.html">ID0001</a></td>
-                            <td>drive.google</td>
-                            <td>01/01/2021</td>
-                            <td>01/01/2022</td>
-                            <td>Giao lưu văn hóa</td>
-                            <td>Trao đổi sinh viên</td>
-
-                            <td>Pixta</td>
-                            <td>Nhật</td>
-                            <td>https//abc.com</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td>Chưa có</td>
-                            <td></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
@@ -339,21 +258,22 @@
                 <div class="modal-body">
                     <form>
                         <div class="infor-left row">
-                            <div class="col-lg-6"><span>Số hiệu:</span><input class="form-control input-mou" type="text" /></div>
                             <div class="col-lg-6">
-                                <span>Đơn vị, cơ sở kí kết</span>
+                                <span>Số hiệu:</span><span style="color: red;">*</span><input class="form-control input-mou" type="text" />
+                            </div>
+                            <div class="col-lg-6">
+                                <span>Đơn vị, cơ sở kí kết</span><span style="color: red;">*</span>
                                 <input class="form-control input-mou">
                             </div>
                             <div class="col-lg-6">
-                                <span>Thời gian ký kết:</span>
+                                <span>Thời gian ký kết:</span><span style="color: red;">*</span>
                                 <input class="form-control input-mou" type="text" />
                             </div>
                             <div class="col-lg-6">
-                                <span>Thời gian hết hạn:</span>
+                                <span>Thời gian hết hạn:</span><span style="color: red;">*</span>
                                 <input class="form-control input-mou" type="text" />
                             </div>
-                            <div class="col-lg-6"><span>Bản mềm:</span><input class="form-control input-mou" type="text" /></div>
-                            <div class="col-lg-6"><span>Mức độ hợp tác:</span><input class="form-control input-mou" type="text" /></div>
+
 
                             <div class="col-lg-3">
                                 <span>Trạng thái:</span></br>
@@ -369,16 +289,23 @@
 
                             <div class="col-lg-12">
                                 <span>Phạm vi hợp tác chính:</span>
-                                <input class="form-control input-mou" type="text" placeholder="Nhập item" />
-                                <button type="button" class="btn btn-primary mb-2">Thêm</button>
+                                <span>
+                                    <a href="#" style="color: royalblue;float: right;">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                </span>
                                 <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
-                                        <option value="1">Item 1</option>
+                                    <option value="1">Phạm vi 1</option>
+                                    <option value="2">Phạm vi 2</option>
+                                    <option value="3">Phạm vi 3</option>
+                                    <option value="4">Phạm vi 4</option>
+                                    <option value="5">Phạm vi 5</option>
+                                    <option value="6">Phạm vi 6</option>
                                 </select>
                             </div>
                             <div class="col-lg-12 input-mou-area">
                                 <span>Lưu ý:</span>
                                 <textarea class="form-control " id="" rows="3"></textarea>
                             </div>
+                            <div class="col-lg-12"><span>Bản mềm:</span><input class="form-control input-mou" type="text" /></div>
                         </div>
                     </form>
                 </div>
