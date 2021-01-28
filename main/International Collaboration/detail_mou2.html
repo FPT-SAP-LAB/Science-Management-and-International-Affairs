@@ -191,7 +191,7 @@
 
                                     <span>Phạm vi hợp tác chính:</span><br>
                                     <span>
-                                        <a href="#" style="color: royalblue;">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                        <a href="#" style="color: royalblue;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
                                     </span>
                                     <span>
                                         <a href="#" style="color: royalblue;float: right;">Chỉnh sửa</a>
@@ -434,7 +434,7 @@
                                     <div class="col-md-12">
                                         <label>Phạm vi hợp tác: </label>
                                         <span>
-                                            <a href="#" style="color: royalblue;float: right;">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                            <a href="#" style="color: royalblue;float: right;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
                                         </span>
                                         <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
                                             <option value="1" disabled>Phạm vi 1</option>
@@ -488,7 +488,7 @@
                                     <div class="col-md-12">
                                         <label>Phạm vi hợp tác: </label>
                                         <span>
-                                            <a href="#" style="color: royalblue;float: right;">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                            <a href="#" style="color: royalblue;float: right;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
                                         </span>
                                         <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
                                             <option value="1" disabled>Phạm vi 1</option>
@@ -819,6 +819,95 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="scope" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Danh sách phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add-scope">Thêm</button>
+                                </div>
+                                <div class="col-lg-6 d-flex">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Tìm</button>
+                                </div>
+                            </div>
+                            <table id="e2" class="display" style="width: 100%; text-align: center;">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Phạm vi hợp tác</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Phạm vi 1</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-scope">Sửa</button>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-scope">Xóa</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="add-scope" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Thêm phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-9">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search">
+                                </div>
+                                <div class="col-lg-3">
+                                    <button class="btn btn-outline-primary" type="submit">Kiểm tra</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="edit-scope" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Sửa phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-9">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search" value="Phạm vi 1">
+                                </div>
+                                <div class="col-lg-3">
+                                    <button class="btn btn-outline-primary" type="submit">Kiểm tra</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Sửa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         </div>
     </main>
@@ -865,6 +954,10 @@
             format: "dd/mm/yyyy",
             orientation: "bottom right",
         });
+
+        function openScopeModal() {
+            $('#scope').modal('show');
+        }
     </script>
 </body>
 
