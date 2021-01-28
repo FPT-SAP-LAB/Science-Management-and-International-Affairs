@@ -188,18 +188,24 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <span>Phạm vi hợp tác chính:</span>
+
+                                    <span>Phạm vi hợp tác chính:</span><br>
+                                    <span>
+                                        <a href="#" style="color: royalblue;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                    </span>
                                     <span>
                                         <a href="#" style="color: royalblue;float: right;">Chỉnh sửa</a>
                                     </span>
-                                    <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
+
+                                    <select id="main-purpose" disabled class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
+                                        <option value="1">Phạm vi 1</option>
+                                        <option value="2">Phạm vi 2</option>
+                                        <option value="3">Phạm vi 3</option>
+                                        <option value="4">Phạm vi 4</option>
+                                        <option value="5">Phạm vi 5</option>
+                                        <option value="6">Phạm vi 6</option>
                                     </select>
+
                                 </div>
                                 <div class="col-lg-12 input-mou-area">
                                     <span>Lưu ý:</span>
@@ -293,14 +299,13 @@
                                         <th rowspan="2">Tên đối tác</th>
                                         <th rowspan="2">Quốc gia</th>
                                         <th rowspan="2">Website</th>
-                                        <th colspan="4">Người đại diện</th>
+                                        <th colspan="3">Người đại diện</th>
                                         <th rowspan="2"></th>
                                     </tr>
                                     <tr>
                                         <th>Họ và tên</th>
                                         <th>Điện thoại</th>
                                         <th>Email</th>
-                                        <th>Đầu mối</th>
                                     </tr>
                                     <tr>
                                         <td>1</td>
@@ -311,7 +316,6 @@
                                         <td>Kiota</td>
                                         <td>0123456789</td>
                                         <td>kiota@bu.edu.vn</td>
-                                        <td>Kiota</td>
                                         <td>
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
@@ -326,7 +330,6 @@
                                         <td>Nam</td>
                                         <td>0123456789</td>
                                         <td>nam@hust.edu.vn</td>
-                                        <td>Kiota</td>
                                         <td>
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-partner">Sửa</button>
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-partner">Xóa</button>
@@ -341,7 +344,7 @@
                 <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
                     <div class="row justify-content-center">
                         <div class="col-lg-11">
-                            <div class="mou-right col-custom-8">
+                            <div class="mou-right col-custom-10">
                                 <div class="title-right">
                                     <h3>THÔNG TIN MOA</h3>
                                 </div>
@@ -354,6 +357,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Số hiệu</th>
+                                        <th>Tên đối tác</th>
                                         <th>Bản mềm</th>
                                         <th>Ngày ký</th>
                                         <th>Ngày hết hạn</th>
@@ -364,6 +368,7 @@
                                     <tr>
                                         <td>1</td>
                                         <td><a href="#">MOA01</a></td>
+                                        <td><a href="#">Bunkyo University</a></td>
                                         <td>ggdrive.com</td>
                                         <td>01/01/2020</td>
 
@@ -378,6 +383,7 @@
                                     <tr>
                                         <td>2</td>
                                         <td><a href="#">MOA02</a></td>
+                                        <td><a href="#">Bunkyo University</a></td>
                                         <td>ggdrive.com</td>
                                         <td>01/01/2020</td>
 
@@ -397,7 +403,7 @@
             </div>
 
             <div class="modal fade" id="add-additional-mou" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Bổ sung thỏa thuận hợp tác</h3>
@@ -406,7 +412,7 @@
                             <form>
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
-                                        <label>Mã hiệu: </label>
+                                        <label>Mã hiệu: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
@@ -416,18 +422,28 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Ngày kí: </label>
+                                        <label>Ngày kí: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Ngày hết hạn: </label>
+                                        <label>Ngày hết hạn: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-phone" name="phone-input" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Phạm vi hợp tác: </label>
-                                        <input type="text" id="partner-country" name="country-input" class="form-control" />
+                                        <span>
+                                            <a href="#" style="color: royalblue;float: right;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                        </span>
+                                        <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
+                                            <option value="1" disabled>Phạm vi 1</option>
+                                            <option value="2">Phạm vi 2</option>
+                                            <option value="3" disabled>Phạm vi 3</option>
+                                            <option value="4">Phạm vi 4</option>
+                                            <option value="5">Phạm vi 5</option>
+                                            <option value="6">Phạm vi 6</option>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -441,7 +457,7 @@
             </div>
 
             <div class="modal fade" id="edit-additional-mou" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Sửa thỏa thuận hợp tác bổ sung</h3>
@@ -470,8 +486,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Mục đích: </label>
-                                        <input type="text" id="partner-country" name="country-input" class="form-control" value="Chưa cập nhật" />
+                                        <label>Phạm vi hợp tác: </label>
+                                        <span>
+                                            <a href="#" style="color: royalblue;float: right;" onclick="openScopeModal()">Chỉnh sửa danh sách phạm vi hợp tác</a>
+                                        </span>
+                                        <select id="main-purpose" class="selectpicker form-control" data-dropup-auto="false" multiple data-live-search="true">
+                                            <option value="1" disabled>Phạm vi 1</option>
+                                            <option value="2">Phạm vi 2</option>
+                                            <option value="3" disabled>Phạm vi 3</option>
+                                            <option value="4" selected>Phạm vi 4</option>
+                                            <option value="5">Phạm vi 5</option>
+                                            <option value="6">Phạm vi 6</option>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -485,7 +511,7 @@
             </div>
 
             <div class="modal fade" id="add-partner" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Thêm đối tác</h3>
@@ -533,7 +559,7 @@
             </div>
 
             <div class="modal fade" id="edit-partner" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Sửa đối tác</h3>
@@ -581,7 +607,7 @@
             </div>
 
             <div class="modal fade" id="add-moa" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Thêm MOA bổ sung</h3>
@@ -590,7 +616,7 @@
                             <form>
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
-                                        <label>Số hiệu: </label>
+                                        <label>Số hiệu: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
@@ -600,11 +626,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Ngày kí kết: </label>
+                                        <label>Ngày kí kết: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Ngày hết hạn: </label>
+                                        <label>Ngày hết hạn: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-phone" name="phone-input" class="form-control" />
                                     </div>
                                 </div>
@@ -634,7 +660,7 @@
                             <form>
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
-                                        <label>Số hiệu: </label>
+                                        <label>Số hiệu: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" value="MOA01" />
                                     </div>
                                     <div class="col-md-6">
@@ -644,11 +670,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Ngày kí kết: </label>
+                                        <label>Ngày kí kết: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" value="01/01/2020" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Ngày hết hạn: </label>
+                                        <label>Ngày hết hạn: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-phone" name="phone-input" class="form-control" value="01/01/2022" />
                                     </div>
                                 </div>
@@ -708,7 +734,7 @@
                 </div>
             </div>
             <div class="modal fade" id="edit-additional-moa" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Sửa thông tin MOA bổ sung</h3>
@@ -717,7 +743,7 @@
                             <form>
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
-                                        <label>Số hiệu: </label>
+                                        <label>Số hiệu: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" value="MOA01" />
                                     </div>
                                     <div class="col-md-6">
@@ -727,11 +753,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Ngày kí kết: </label>
+                                        <label>Ngày kí kết: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" value="01/01/2020" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Ngày hết hạn: </label>
+                                        <label>Ngày hết hạn: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-phone" name="phone-input" class="form-control" value="01/01/2022" />
                                     </div>
                                 </div>
@@ -751,7 +777,7 @@
                 </div>
             </div>
             <div class="modal fade" id="add-additional-moa" aria-hidden="true">
-                <div class="modal-dialog ">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Bổ sung lịch sử thông tin MOA</h3>
@@ -760,7 +786,7 @@
                             <form>
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
-                                        <label>Số hiệu: </label>
+                                        <label>Số hiệu: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
@@ -770,11 +796,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Ngày kí kết: </label>
+                                        <label>Ngày kí kết: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-name" name="name-input" class="form-control" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Ngày hết hạn: </label>
+                                        <label>Ngày hết hạn: </label><span style="color: red;">*</span>
                                         <input type="text" id="partner-phone" name="phone-input" class="form-control" />
                                     </div>
                                 </div>
@@ -793,6 +819,95 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="scope" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Danh sách phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add-scope">Thêm</button>
+                                </div>
+                                <div class="col-lg-6 d-flex">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Tìm</button>
+                                </div>
+                            </div>
+                            <table id="e2" class="display" style="width: 100%; text-align: center;">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Phạm vi hợp tác</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Phạm vi 1</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-scope">Sửa</button>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del-scope">Xóa</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="add-scope" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Thêm phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-9">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search">
+                                </div>
+                                <div class="col-lg-3">
+                                    <button class="btn btn-outline-primary" type="submit">Kiểm tra</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="edit-scope" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="title-center">
+                                <h3>Sửa phạm vi hợp tác</h3>
+                            </div>
+                            <div class="row col-lg-12 mb-3 mt-3">
+                                <div class="col-lg-9">
+                                    <input class="form-control me-2" type="search" placeholder="Tên phạm vi" aria-label="Search" value="Phạm vi 1">
+                                </div>
+                                <div class="col-lg-3">
+                                    <button class="btn btn-outline-primary" type="submit">Kiểm tra</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button " class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button " class="btn btn-primary" data-bs-dismiss="modal">Sửa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         </div>
     </main>
@@ -839,6 +954,10 @@
             format: "dd/mm/yyyy",
             orientation: "bottom right",
         });
+
+        function openScopeModal() {
+            $('#scope').modal('show');
+        }
     </script>
 </body>
 
