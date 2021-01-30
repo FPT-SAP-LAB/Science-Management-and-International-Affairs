@@ -16,6 +16,8 @@
         - <B>resources</B></br>
         - <B>config</B></br>
 * Title của pull request sẽ được đặt theo format: <B>[<tên tag>]</B> - <I><Nội dung></I>
+* Luôn Squashing Pull Requests giúp cho lịch sử commits được gọn
+![image](https://29comwzoq712ml5vj5gf479x-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/github-merge-options.png)
 ## CONVENTION CHO BACK-END
 * Thêm Controller trực tiếp trong folder `Controllers`
 * Khi tạo View thì `Add View` trực tiếp từ `return View();`
