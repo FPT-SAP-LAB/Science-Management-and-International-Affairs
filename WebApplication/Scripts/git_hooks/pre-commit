@@ -1,0 +1,3 @@
+#!/bin/sh
+exec dotnet-format . -f
+exit 0
