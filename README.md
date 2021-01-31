@@ -22,6 +22,8 @@
 
 ## CONVENTION CHO BACK-END
 * Thêm Controller trực tiếp trong folder `Controllers`
+* Tên Controller sẽ đặt theo PascalCase, ví dụ `HomeController`
+* URL được mapping tự động theo `{controller}/{action}/{id}` nên tránh đặt tên Controller quá chung chung
 * Khi tạo View thì `Add View` trực tiếp từ `return View();`
         
 ![image](https://user-images.githubusercontent.com/35557579/106367296-12574f00-6374-11eb-927f-65aa0cbc1203.png)
