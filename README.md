@@ -6,7 +6,7 @@
 
 ### Tự động format code thừa sau khi push commit:
 - Cài dotnet-format (nếu máy chưa cài): dotnet tool install -g dotnet-format
-- Copy file `pre-commit` ở thư mục `FPT_Science\WebApplication\Scripts\git_hooks` sang thư mục `FPT_Science\.git\hooks`
+- Copy file `pre-commit` sang thư mục `.git\hooks`
 ## CONVENTION CHO GITHUB PULL REQUEST
 * Pull Request sẽ chia làm các loại (TAG):</br>
         - <B>fix</B></br>
@@ -28,7 +28,7 @@
 
 ## CONVENTION CHO LAYOUT
 * Luôn thêm `| FPT Science` vào title
-* Chỉ thêm `Meta Descriptions` vào `<head>` của layout dành cho Guest
+* Chỉ thêm `Meta Descriptions` vào `<head>` của layout dành cho User
 
 ![image](https://user-images.githubusercontent.com/35557579/106366744-a7f0df80-6370-11eb-896e-c61a50c8cb1b.png)
 
