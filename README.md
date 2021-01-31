@@ -1,4 +1,4 @@
-# FPT Science
+# FPT Science Management and International Affairs
 
 [![CodeFactor](https://www.codefactor.io/repository/github/fpt-sap-lab/science-management-and-international-affairs/badge)](https://www.codefactor.io/repository/github/fpt-sap-lab/science-management-and-international-affairs)
 
