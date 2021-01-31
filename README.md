@@ -1,6 +1,6 @@
 # FPT Science
 
-[![CodeFactor](https://www.codefactor.io/repository/github/fpt-sap-lab/fpt_science/badge)](https://www.codefactor.io/repository/github/fpt-sap-lab/fpt_science)
+[![CodeFactor](https://www.codefactor.io/repository/github/fpt-sap-lab/science-management-and-international-affairs/badge)](https://www.codefactor.io/repository/github/fpt-sap-lab/science-management-and-international-affairs)
 
 ## CÁC BƯỚC CHUẨN BỊ SAU KHI CLONE REPOS
 
