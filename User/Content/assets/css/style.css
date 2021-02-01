@@ -1,0 +1,56 @@
+@font-face {
+    src: url(../font/UTM_Nokia_Standard.ttf);
+    font-family: Avo;
+}
+
+* {
+    font-family: Avo;
+}
+
+#achievements * {
+    color: #1BC5BD;
+    text-align: center;
+}
+
+#achievements .card {
+    margin-bottom: 2rem;
+}
+
+.news {
+    margin-bottom: 2rem !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 0.5px solid #ebebeb !important;
+    margin-right: 1rem;
+}
+
+.news * {
+    cursor: pointer;
+}
+
+.news-thumbnail {
+    position: relative;
+    width: inherit;
+    margin-bottom: 1rem;
+}
+
+h3.news-title {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: justify;
+}
+
+.news-summary {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: justify;
+}
+
+.card.card-custom.card-stretch.gutter-b {
+    height: 100% !important
+}
+
+
+/* .card {
+    margin-bottom: 1rem !important;
+} */
