@@ -3,20 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using User.Models;
 
 namespace User.Controllers
 {
     public class ConferenceSponsorRequestController : Controller
     {
         // GET: ConferenceSponsorRequest
-        [Route("conference-sponsor-request/create-request")]
         public ActionResult Index()
         {
-            /////////////////////////////////////////////////////////////////////////////
-            
-            /////////////////////////////////////////////////////////////////////////////
-            ViewBag.title = "Đề nghị hỗ trợ hội nghị";
-            var pagesTree = new List<String> {"Trang chủ", "Đề nghị hỗ trợ hội nghị" };
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
+
+        public ActionResult Add()
+        {
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
+                new PageTree("Thêm","/ConferenceSponsorRequest/Add"),
+            };
             ViewBag.pagesTree = pagesTree;
             return View();
         }
