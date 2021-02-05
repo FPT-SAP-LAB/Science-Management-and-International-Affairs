@@ -1,0 +1,412 @@
+﻿
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="">
+                    <h3 class="mb-10 font-weight-bold text-dark">Thống kê chung</h3>
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <div class="card card-custom bg-primary gutter-b">
+                                <div class="card-body row">
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3 col-xl-9 row">
+                                        <span id="ncv" class="col-xl-12">40</span>
+                                        <a href="#" class="col-xl-12 text-inverse-primary text-hover-dark font-weight-bold font-size-lg mt-1">Nghiên cứu viên</a>
+                                    </div>
+                                    <span class="d-flex align-items-center"><i class="flaticon-users-1 icon-3x col-xl-3 text-inverse-primary"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card card-custom bg-primary gutter-b">
+                                <div class="card-body row">
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3 col-xl-9 row">
+                                        <span id="isi" class="col-xl-12">480</span>
+                                        <a href="#" class="col-xl-12 text-inverse-primary text-hover-dark font-weight-bold font-size-lg mt-1">Bài báo ISI/Scopus</a>
+                                    </div>
+                                    <span class="d-flex align-items-center"><i class="flaticon2-writing icon-3x col-xl-3 text-inverse-primary"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card card-custom bg-primary gutter-b">
+                                <div class="card-body row">
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3 col-xl-9 row">
+                                        <span id="bsc" class="col-xl-12">25</span>
+                                        <a href="#" class="col-xl-12 text-inverse-primary text-hover-dark font-weight-bold font-size-lg mt-1">Bằng sáng chế</a>
+                                    </div>
+                                    <span class="d-flex align-items-center"><i class="flaticon2-protected icon-3x col-xl-3 text-inverse-primary"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card card-custom bg-primary gutter-b">
+                                <div class="card-body row">
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3 col-xl-9 row">
+                                        <span id="qt" class="col-xl-12">180</span>
+                                        <a href="#" class="col-xl-12 text-inverse-primary text-hover-dark font-weight-bold font-size-lg mt-1">Đối tác quốc tế</a>
+                                    </div>
+                                    <span class="d-flex align-items-center"><i class="flaticon2-world icon-3x col-xl-3 text-inverse-primary"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 input-group date mb-2">
+                            <select type="text" class="form-control">
+                                <option value="0" selected>Tất cả</option>
+                                <option value="1">Tháng 1</option>
+                                <option value="2">Tháng 2</option>
+                                <option value="3">Tháng 3</option>
+                                <option value="4">Tháng 4</option>
+                                <option value="5">Tháng 5</option>
+                                <option value="6">Tháng 6</option>
+                                <option value="7">Tháng 7</option>
+                                <option value="8">Tháng 8</option>
+                                <option value="9">Tháng 9</option>
+                                <option value="10">Tháng 10</option>
+                                <option value="11">Tháng 11</option>
+                                <option value="12">Tháng 12</option>
+                            </select>
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-check"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 input-group date mb-2">
+                            <input type="text" class="form-control custom-pickyear" value="2021" readonly />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-check"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="card card-custom">
+                                <div class="card-header card-header-tabs-line">
+                                    <div class="card-toolbar">
+                                        <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#tapchi">
+                                                    <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                                    <span class="nav-text">Tạp chí khoa học</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#kyyeu">
+                                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                                    <span class="nav-text">Kỷ yếu hội thảo</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="tapchi" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
+                                            <table id="table_tapchi" class="display">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Tên bài báo</th>
+                                                        <th>Tên tác giả</th>
+                                                        <th>Tên tạp chí</th>
+                                                        <th>Chất lượng</th>
+                                                        <th>Tập</th>
+                                                        <th>Trang</th>
+                                                        <th>Link toàn văn</th>
+                                                        <th>Link scholar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>
+                                                            An Evaluation of Image-Based Malware Classification Using Machine Learning
+                                                        </td>
+                                                        <td>
+                                                            Nguyễn Quốc Long et al
+                                                        </td>
+                                                        <td>ICCCI 2020: Communications in Computer and Information Science</td>
+                                                        <td>Q1</td>
+                                                        <td>
+                                                            Vol. 1287
+                                                        </td>
+                                                        <td>125–138</td>
+                                                        <td>Row 1 Data 1</td>
+                                                        <td>Row 1 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>
+                                                            Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks
+                                                        </td>
+                                                        <td>
+                                                            An C. Tran<br /> Nghi C. Tran<br /> Dương Trung Nghĩa
+                                                        </td>
+                                                        <td>FDSE 2020: Communications in Computer and Information Science</td>
+                                                        <td>Q2</td>
+                                                        <td>
+                                                            Vol. 1306
+                                                        </td>
+                                                        <td>200-214</td>
+                                                        <td>Row 2 Data 1</td>
+                                                        <td>Row 2 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>
+                                                            HIV and ways to maintain a meaningful life
+                                                        </td>
+                                                        <td>
+                                                            Huỳnh Tấn Hội
+                                                        </td>
+                                                        <td>Biomedicine</td>
+                                                        <td>Scopus</td>
+                                                        <td>
+                                                            Vol. 39
+                                                        </td>
+                                                        <td>526-531</td>
+                                                        <td>Row 3 Data 1</td>
+                                                        <td>Row 3 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>
+                                                            Vector Map Random Encryption Algorithm Based on Multi-Scale Simplification and Gaussian Distribution
+                                                        </td>
+                                                        <td>
+                                                            Phạm Ngọc Giao<br /> Ngô Tùng Sơn<br /> Bùi Ngọc Anh<br /> Trần Văn Định<br /> Suk-Hwan Lee<br /> Ki-Ryong Kwon
+                                                        </td>
+                                                        <td>Applied Sciences</td>
+                                                        <td>Q1</td>
+                                                        <td>
+                                                            Vol. 9
+                                                        </td>
+                                                        <td>4889</td>
+                                                        <td>Row 4 Data 1</td>
+                                                        <td>Row 4 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>
+                                                            The structure of Leavitt path algebras and the Invariant Basis Number property
+                                                        </td>
+                                                        <td>
+                                                            Trần Giang Nam<br /> Ngô Tấn Phúc
+                                                        </td>
+                                                        <td>Journal of Pure and Applied Algebra</td>
+                                                        <td>Q1</td>
+                                                        <td>
+                                                            Vol. 223
+                                                        </td>
+                                                        <td>4827-4856</td>
+                                                        <td>Row 5 Data 1</td>
+                                                        <td>Row 5 Data 2</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="tab-pane fade" id="kyyeu" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
+                                            <table id="table_kyyeu" class="display">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Tên bài báo</th>
+                                                        <th>Tên tác giả</th>
+                                                        <th>Tên hội thảo</th>
+                                                        <th>Trang</th>
+                                                        <th>Ngày</th>
+                                                        <th>Link toàn văn</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>
+                                                            An Evaluation of Image-Based Malware Classification Using Machine Learning
+                                                        </td>
+                                                        <td>
+                                                            Nguyễn Quốc Long et al
+                                                        </td>
+                                                        <td>ICCCI 2020: Communications in Computer and Information Science</td>
+                                                        <td>125–138</td>
+                                                        <td>01/01/2021</td>
+                                                        <td>Row 1 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>
+                                                            Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks
+                                                        </td>
+                                                        <td>
+                                                            An C. Tran<br /> Nghi C. Tran<br /> Dương Trung Nghĩa
+                                                        </td>
+                                                        <td>FDSE 2020: Communications in Computer and Information Science</td>
+                                                        <td>200-214</td>
+                                                        <td>01/01/2021</td>
+                                                        <td>Row 2 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>
+                                                            HIV and ways to maintain a meaningful life
+                                                        </td>
+                                                        <td>
+                                                            Huỳnh Tấn Hội
+                                                        </td>
+                                                        <td>Biomedicine</td>
+                                                        <td>526-531</td>
+                                                        <td>01/01/2021</td>
+                                                        <td>Row 3 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>
+                                                            Vector Map Random Encryption Algorithm Based on Multi-Scale Simplification and Gaussian Distribution
+                                                        </td>
+                                                        <td>
+                                                            Phạm Ngọc Giao<br /> Ngô Tùng Sơn<br /> Bùi Ngọc Anh<br /> Trần Văn Định<br /> Suk-Hwan Lee<br /> Ki-Ryong Kwon
+                                                        </td>
+                                                        <td>Applied Sciences</td>
+                                                        <td>4889</td>
+                                                        <td>01/01/2021</td>
+                                                        <td>Row 4 Data 2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>
+                                                            The structure of Leavitt path algebras and the Invariant Basis Number property
+                                                        </td>
+                                                        <td>
+                                                            Trần Giang Nam<br /> Ngô Tấn Phúc
+                                                        </td>
+                                                        <td>Journal of Pure and Applied Algebra</td>
+                                                        <td>4827-4856</td>
+                                                        <td>01/01/2021</td>
+                                                        <td>Row 5 Data 2</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/ListAllPaper.js"></script>
+    @*<script src="~/Content/assets/js/pages/crud/ktdatatable/base/html-table.js"></script>*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script>
+        var ncv = 40, isi = 480, bsc = 25, qt = 180;
+        var i = 1, i2 = 1, i3 = 1, i4 = 1;
+        var myVarNCV = setInterval(myTimerNCV, 2000 / ncv);
+        function myTimerNCV() {
+            if (i <= ncv) $("#ncv").text(i);
+            else clearInterval(myVarNCV);
+            i++;
+        };
+        var myVarISI = setInterval(myTimerISI, 2000 / isi);
+        function myTimerISI() {
+            if (i2 <= isi) $("#isi").text(i2);
+            else clearInterval(myVarISI);
+            i2++;
+        };
+        var myVarBSC = setInterval(myTimerBSC, 2000 / bsc);
+        function myTimerBSC() {
+            if (i3 <= bsc) $("#bsc").text(i3);
+            else clearInterval(myVarBSC);
+            i3++;
+        };
+        var myVarQT = setInterval(myTimerQT, 2000 / qt);
+        function myTimerQT() {
+            if (i4 <= qt) $("#qt").text(i4);
+            else clearInterval(myVarQT);
+            i4++;
+        };
+        $(document).ready(function () {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
+            $('#table_tapchi').DataTable({
+                "columns": [
+                    { width: "5%" },
+                    { width: "20%" },
+                    { width: "20%" },
+                    { width: "20%" },
+                    { width: "5%" },
+                    { width: "10%" },
+                    { width: "10%" },
+                    {
+                        width: "5%",
+                        render: function () {
+                            return "<a href='#'>link</a>"
+                        }
+                    },
+                    {
+                        width: "5%",
+                        render: function () {
+                            return "<a href='#'>link</a>"
+                        }
+                    }
+                ],
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sLengthMenu: "Hiển thị <select>" +
+                        "<option value='5'>5</option>" +
+                        "<option value='10'>10</option>" +
+                        "<option value='20'>20</option>" +
+                        "</select> bản ghi",
+                    sSearch: "Tìm kiếm"
+                }
+            });
+
+            $('#table_kyyeu').DataTable({
+                "columns": [
+                    { width: "5%" },
+                    { width: "20%" },
+                    { width: "20%" },
+                    { width: "20%" },
+                    { width: "15%" },
+                    {
+                        width: "15%"
+                    },
+                    {
+                        width: "5%",
+                        render: function () {
+                            return "<a href='#'>link</a>"
+                        }
+                    }
+                ],
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sLengthMenu: "Hiển thị <select>" +
+                        "<option value='5'>5</option>" +
+                        "<option value='10'>10</option>" +
+                        "<option value='20'>20</option>" +
+                        "</select> bản ghi",
+                    sSearch: "Tìm kiếm"
+                }
+            });
+        });
+    </script>
+}
