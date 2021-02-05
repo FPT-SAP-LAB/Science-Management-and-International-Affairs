@@ -7,7 +7,7 @@
 <head>
     <base href="">
     <meta charset="utf-8" />
-    <title>@ViewBag.title | FPT Edu - QLKH-HTQT</title>
+    <title>@ViewBag.title | FPT Science and International Affairs</title>
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -143,7 +143,7 @@
                                                             <span class="menu-text">
                                                                 Trao đổi giảng viên ngắn
                                                                 hạn
-                                                            </span></i>
+                                                            </span>
                                                         </a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
@@ -908,7 +908,7 @@
                                         <!--end:Item-->
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="#" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
+                                            <a href="/ConferenceSponsorRequest" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
                                                 <span class="svg-icon svg-icon-3x svg-icon-success">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-attachment.svg--><svg xmlns="http://www.w3.org/2000/svg"
                                                                                                                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -923,8 +923,8 @@
                                                         </g>
                                                     </svg>
                                                     <!--end::Svg Icon-->
-                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Administration</span>
-                                                <span class="d-block text-dark-50 font-size-lg">Console</span>
+                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Đề nghị</span>
+                                                <span class="d-block text-dark-50 font-size-lg">Hỗ trợ hội nghị</span>
                                             </a>
                                         </div>
                                         <!--end:Item-->
@@ -1160,20 +1160,24 @@
                                         </a>
                                         <!--end::Item-->
                                         <!--begin::Item-->
-                                        @foreach (var page in ViewBag.pagesTree)
+                                        <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
+                                        <a href="/" class="text-white text-hover-white opacity-75 hover-opacity-100">
+                                            Trang chủ
+                                        </a>
+                                        @foreach (User.Models.PageTree page in ViewBag.pagesTree)
                                         {
                                             <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
-                                            <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">
-                                                @page
+                                            <a href="@page.URL" class="text-white text-hover-white opacity-75 hover-opacity-100">
+                                                @page.Name
                                             </a>
                                         }
 
                                         <!--end::Item-->
                                         <!--begin::Item-->
                                         @*<span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
-                                        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">
-                                            Bảng tin
-                                        </a>*@
+        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">
+            Bảng tin
+        </a>*@
                                         <!--end::Item-->
                                     </div>
                                     <!--end::Breadcrumb-->
