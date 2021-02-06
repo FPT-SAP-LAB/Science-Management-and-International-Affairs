@@ -28,6 +28,11 @@
         
 ![image](https://user-images.githubusercontent.com/35557579/106367296-12574f00-6374-11eb-927f-65aa0cbc1203.png)
 
+* Để thuận tiện cho việc quản lý source code thì tránh `[route()]` dưới mọi hình thức, đặt tên controller cẩn thận
+* Luôn thêm `ViewBag.pagesTree` vào `Action`, không cần phải thêm cho trang chủ
+
+![image](https://user-images.githubusercontent.com/35557579/107063796-5da6ad00-680d-11eb-88b9-7ba3ada76671.png)
+
 ## CONVENTION CHO LAYOUT
 * Luôn thêm `| FPT Science` vào title
 * Chỉ thêm `Meta Descriptions` vào `<head>` của layout dành cho User
