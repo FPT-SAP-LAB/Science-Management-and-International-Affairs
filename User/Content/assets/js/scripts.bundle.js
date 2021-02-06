@@ -1733,7 +1733,9 @@ var KTMenu = function(elementId, options) {
                 KTUtil.removeClass(item, 'menu-item-open-dropdown' );
                 Plugin.hideSubmenuDropdown(item, true);
             }
-
+            if (this.tagName == 'A' && this.href != "#" && this.href != "javascript:;" && e.type == "click") {
+                return;
+            }
             e.preventDefault();
         },
 
@@ -1820,6 +1822,9 @@ var KTMenu = function(elementId, options) {
 
             if ( Plugin.getSubmenuMode(el) === 'dropdown' && (query = item.closest('.menu-item') ) ) {
                 if (query.getAttribute('data-menu-submenu-mode') != 'accordion' ) {
+                    if (item.tagName == 'A' && item.href != "#" && item.href != "javascript:;" && e.type == "click") {
+                        return;
+                    }
                     e.preventDefault();
                     return;
                 }
