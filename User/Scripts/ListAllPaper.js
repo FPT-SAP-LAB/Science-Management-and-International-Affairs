@@ -26,6 +26,13 @@ var ConfigDatepicker = function () {
             format: "yyyy",
             minViewMode: "years"
         });
+
+        $('.custom-pickdate').datepicker({
+            rtl: KTUtil.isRTL(),
+            orientation: "bottom left",
+            todayHighlight: true,
+            templates: arrows
+        });
     }
 
     return {
