@@ -104,7 +104,7 @@
                             </select>
                         </div>
                     </div>
-                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin tác giả</h3>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
                     <div class="row">
                         <div class="col-xl-12">
                             <table class="table table-bordered tacgia">
@@ -194,19 +194,19 @@
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
             $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi'>" +
-                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg' type='text' /></span>" +
+                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg' name='tieuchiname' type='text' /></span>" +
                 "<span class='col-xl-8'><input placeholder='Link xác minh' class='form-control form-control-lg' type='text' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
+            var option = $("#tieuchi option[value='" + temp + "']");
+            option.prop('disabled', true);
         });
 
         $("#thuong").on("click", ".deletetieuchi", function () {
+            var text = $(this).closest(".onetieuchi").find("input[name='tieuchiname']").val();
+            var option = $("#tieuchi option[value='" + text + "']");
+            option.prop('disabled', false);
             $(this).closest(".onetieuchi").remove();
-        });
-
-        $(".optiontieuchi").click(function () {
-            alert("abc");
-            $(this).prop('disabled', false);
         });
 
         $(".addtacgia").click(function () {
