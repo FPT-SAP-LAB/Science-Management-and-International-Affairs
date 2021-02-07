@@ -2329,6 +2329,7 @@
     <Content Include="Views\ConferenceSponsorRequest\Index.cshtml" />
     <Content Include="Views\Paper\ListAll.cshtml" />
     <Content Include="Views\Paper\AddRequest.cshtml" />
+    <Content Include="Views\Paper\Pending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

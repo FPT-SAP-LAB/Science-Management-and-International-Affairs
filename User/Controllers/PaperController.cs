@@ -32,5 +32,16 @@ namespace User.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult Pending()
+        {
+            ViewBag.title = "Bài báo đangg xử lý";
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Bài báo đangg xử lý","/Paper/Pending"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
     }
 }

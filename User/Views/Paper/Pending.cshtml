@@ -1,0 +1,72 @@
+﻿
+@{
+    //ViewBag.Title = "Pending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="">
+                    <table id="pending_table">
+                        <thead>
+                            <tr>
+                                <th>Tên bài báo</th>
+                                <th>Ngày request</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
+                                <td>10/12/2019</td>
+                                <td>Cần chỉnh sửa</td>
+                                <td><a href="#" class="btn btn-primary">Chỉnh sửa</a></td>
+                            </tr>
+                            <tr>
+                                <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
+                                <td>09/12/2019</td>
+                                <td>Đang phê duyệt</td>
+                                <td><a href="#" class="btn btn-bg-secondary">Chi tiết</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#pending_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sLengthMenu: "Hiển thị <select>" +
+                        "<option value='5'>5</option>" +
+                        "<option value='10'>10</option>" +
+                        "<option value='20'>20</option>" +
+                        "</select> bản ghi",
+                    sSearch: "Tìm kiếm"
+                },
+                columns: [
+                    { width: "55%" },
+                    { width: "15%" },
+                    { width: "15%" },
+                    { width: "15%" }
+                ],
+            });
+        });
+    </script>
+}
+
