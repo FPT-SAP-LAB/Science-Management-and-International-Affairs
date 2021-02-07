@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Đề nghị hỗ trợ hội nghị của tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    System.Resources.ResourceManager rm = new System.Resources.ResourceManager(("User.Resources." + Request.Cookies["language_id"].Value),
+        System.Reflection.Assembly.GetExecutingAssembly());
 }
 
 <div class="card card-custom">

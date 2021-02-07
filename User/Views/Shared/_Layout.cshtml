@@ -1,4 +1,16 @@
-﻿
+﻿@using User_Application.Resources;
+@{ 
+
+    if (Request.Cookies["language_id"] == null)
+    {
+        Response.Cookies.Add(new HttpCookie("language_id", "vi-VN"));
+    }
+
+    System.Resources.ResourceManager rm = new System.Resources.ResourceManager("User.Resources." + Request.Cookies["language_id"].Value
+        , typeof(User_Application.MvcApplication).Assembly);
+
+}
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -96,7 +108,7 @@
                                     <ul class="menu-nav ">
                                         <li class="menu-item  menu-item-open menu-item-here menu-item-submenu menu-item-rel menu-item-open menu-item-here" data-menu-toggle="click" aria-haspopup="true">
                                             <a href="/" class="menu-link menu-toggle">
-                                                <span class="menu-text">Trang chủ</span><i class="menu-arrow"></i>
+                                                <span class="menu-text">@rm.GetString("homepage")</span><i class="menu-arrow"></i>
                                             </a>
                                         </li>
                                         <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
@@ -983,7 +995,7 @@
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                     <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1">
-                                        <img class="h-20px w-20px rounded-sm" src="~/Content/assets/media/svg/flags/220-vietnam.svg" alt="" />
+                                        <img class="h-20px w-20px rounded-sm" src="@rm.GetString("icon")" alt="" />
                                     </div>
                                 </div>
                                 <!--end::Toggle-->
@@ -993,15 +1005,15 @@
                                     <ul class="navi navi-hover py-4">
                                         <!--begin::Item-->
                                         <li class="navi-item">
-                                            <a href="#" class="navi-link">
+                                            <a href="#" data-language="vi-VN" class="navi-link change-language">
                                                 <span class="symbol symbol-20 mr-3">
                                                     <img src="~/Content/assets/media/svg/flags/220-vietnam.svg" alt="" />
                                                 </span>
-                                                <span class="navi-text">Tiếng Việt </span>
+                                                <span class="navi-text">Tiếng Việt</span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a href="#" class="navi-link">
+                                            <a href="#" data-language="en-US" class="navi-link change-language">
                                                 <span class="symbol symbol-20 mr-3">
                                                     <img src="~/Content/assets/media/svg/flags/226-united-states.svg" alt="" />
                                                 </span>
@@ -1352,6 +1364,13 @@
     @*<script src="~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6"></script>
         <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
     @RenderSection("scripts")
+
+    <script>
+        $(".change-language").click(function () {
+            document.cookie = "language_id=" + $(this).data("language");
+            location.reload();
+        })
+    </script>
 </body>
 <!--end::Body-->
 

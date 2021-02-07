@@ -16,6 +16,8 @@ namespace User.Controllers
                 new PageTree("Bảng tin","/"),
             };
             ViewBag.pagesTree = pagesTree;
+            //var a = User_Application.Resources.en_US.ResourceManager;
+            ViewBag.a = User_Application.Resources.en_US.ResourceManager;
             return View();
         }
     }
