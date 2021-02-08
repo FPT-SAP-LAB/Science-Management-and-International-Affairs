@@ -1,0 +1,95 @@
+﻿
+@{
+    //ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="row">
+                    <div class="col-xl-3 input-group date mb-2">
+                        <select type="text" class="form-control">
+                            <option value="0" selected>Tất cả</option>
+                            <option value="1">Tháng 1</option>
+                            <option value="2">Tháng 2</option>
+                            <option value="3">Tháng 3</option>
+                            <option value="4">Tháng 4</option>
+                            <option value="5">Tháng 5</option>
+                            <option value="6">Tháng 6</option>
+                            <option value="7">Tháng 7</option>
+                            <option value="8">Tháng 8</option>
+                            <option value="9">Tháng 9</option>
+                            <option value="10">Tháng 10</option>
+                            <option value="11">Tháng 11</option>
+                            <option value="12">Tháng 12</option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-check"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 input-group date mb-2">
+                        <input type="text" class="form-control custom-pickyear" value="2021" readonly />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-check"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <table id="table_trichdan">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Nguồn trích dẫn</th>
+                                    <th>Số trích dẫn</th>
+                                    <th>Link xác minh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Scopus</td>
+                                    <td>123</td>
+                                    <td><a class="btn btn-primary" href="#">Chi tiết</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Google scholar</td>
+                                    <td>456</td>
+                                    <td><a class="btn btn-primary" href="#">Chi tiết</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/ListAllPaper.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#table_trichdan").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sLengthMenu: "Hiển thị <select>" +
+                        "<option value='5'>5</option>" +
+                        "<option value='10'>10</option>" +
+                        "<option value='20'>20</option>" +
+                        "</select> bản ghi",
+                    sSearch: "Tìm kiếm"
+                }
+            });
+        });
+    </script>
+}
+
