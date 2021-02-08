@@ -33,15 +33,7 @@
 
 ![image](https://user-images.githubusercontent.com/35557579/107063796-5da6ad00-680d-11eb-88b9-7ba3ada76671.png)
 
-## CONVENTION CHO LAYOUT
-* Luôn thêm `| FPT Science` vào title
-* Chỉ thêm `Meta Descriptions` vào `<head>` của layout dành cho User
-
-![image](https://user-images.githubusercontent.com/35557579/106366744-a7f0df80-6370-11eb-896e-c61a50c8cb1b.png)
-
 ## CONVENTION CHO FRONT-END
-* Luôn thêm `Title` cho tất cả các màn
-* Luôn thêm `Description` cho những màn quan trọng như Homepage, trang chủ quản lý khoa học, hợp tác quốc tế,...
-* Không thêm `Description` cho những màn dành cho Admin
+* Sau khi thêm đầy đủ ngôn ngữ ở `/Resources/*.resx`, thêm `System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();` ở đầu file `.cshtml` và gọi resource theo cú pháp `rm.GetString("YourLabel")`
 
-![image](https://user-images.githubusercontent.com/35557579/106367006-27cb7980-6372-11eb-9f75-f089d79b882c.png)
+![image](https://user-images.githubusercontent.com/35557579/107229405-5f13e780-6a50-11eb-8993-a385b73bbe09.png)
