@@ -2122,7 +2122,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\InternationalCollaboration\AcademicActivity\" />
+    <Folder Include="Controllers\InternationalCollaboration\AcademicCollaboration\" />
+    <Folder Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\" />
+    <Folder Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\" />
+    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Partner\" />
+    <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
+    <Folder Include="Controllers\InternationalCollaboration\News\" />
+    <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
+    <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
+    <Folder Include="Views\InternationalCollaboration\Collaboration\MemorandumOfAgreement\" />
+    <Folder Include="Views\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\" />
+    <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />
+    <Folder Include="Views\InternationalCollaboration\MasterData\" />
+    <Folder Include="Views\InternationalCollaboration\News\" />
+    <Folder Include="Views\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Views\InternationalCollaboration\Scholarship\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
