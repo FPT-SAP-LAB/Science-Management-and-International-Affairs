@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách hoạt động trong năm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="row align-items-center">
+    <div class="col-lg-9 col-xl-8">
+        <div class="row align-items-center">
+            <div class="col-md-4 my-2 my-md-0">
+                <div class="input-icon">
+                    <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query">
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4 my-2 my-md-0">
+                <div class="d-flex align-items-center">
+                    <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
+                    <div class="dropdown bootstrap-select form-control dropup">
+                        <select class="form-control" id="kt_datatable_search_type" tabindex="null">
+                            <option value="">All</option>
+                            <option value="1">Online</option>
+                            <option value="2">Retail</option>
+                            <option value="3">Direct</option>
+                        </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="kt_datatable_search_type" title="All"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">All</div></div> </div></button><div class="dropdown-menu" style="max-height: 278.25px; overflow: hidden; min-height: 130px;"><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1" aria-activedescendant="bs-select-2-0" style="max-height: 266.25px; overflow-y: auto; min-height: 118px;"><ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;"><li class="selected active"><a role="option" class="dropdown-item active selected" id="bs-select-2-0" tabindex="0" aria-setsize="4" aria-posinset="1" aria-selected="true"><span class="text">All</span></a></li><li><a role="option" class="dropdown-item" id="bs-select-2-1" tabindex="0"><span class="text">Online</span></a></li><li><a role="option" class="dropdown-item" id="bs-select-2-2" tabindex="0"><span class="text">Retail</span></a></li><li><a role="option" class="dropdown-item" id="bs-select-2-3" tabindex="0"><span class="text">Direct</span></a></li></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+        <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Search</a>
+    </div>
+</div>*@
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+
+                <div class="row mb-5">
+                    <div class="col-lg-5 col-xl-6">
+                        <div class="row align-items-center">
+                            <a href="#" class="btn btn-primary px-6 font-weight-bold">Thêm sự kiện</a>
+                            <a href="#" class="btn btn-primary ml-3 font-weight-bold">Xuất excel</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-xl-6">
+                        <div class="row">
+                            <div class="input-icon mr-3">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span>
+                                    <i class="flaticon2-search-1 text-muted"></i>
+                                </span>
+                            </div>
+                            <a href="#" class="btn btn-light-primary font-weight-bold">Tìm kiếm</a>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="mylist" class="datatable-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Loại</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>RESFES 2020</td>
+                            <td>Hội nghị, hội thảo</td>
+                            <td><span class="label label-lg label-light-warning label-inline font-weight-bold py-4">Chưa chạy</span></td>
+                            <td>
+                                <select class="form-control form-control-md select-item" name="action">
+                                    <option value="edit">Sửa</option>
+                                    <option value="clone">Clone</option>
+                                    <option value="checkin">Checkin</option>
+                                    <option value="delete">Xóa</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Edu Camp 2020</td>
+                            <td>Hội nghị, hội thảo</td>
+                            <td><span class="label label-lg label-light-primary label-inline font-weight-bold py-4">Đang chạy</span></td>
+                            <td>
+                                <select class="form-control form-control-md" name="action">
+                                    <option value="edit">Sửa</option>
+                                    <option value="clone">Clone</option>
+                                    <option value="checkin">Checkin</option>
+                                    <option value="delete">Xóa</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</td>
+                            <td>Khóa học</td>
+                            <td><span class="label label-lg label-light-success label-inline font-weight-bold py-4">Đã xong</span></td>
+                            <td>
+                                <select class="form-control form-control-md" name="action">
+                                    <option value="edit">Sửa</option>
+                                    <option value="clone">Clone</option>
+                                    <option value="checkin">Checkin</option>
+                                    <option value="delete">Xóa</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+<script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
+<script>
+    $("#mylist").DataTable();
+</script>
