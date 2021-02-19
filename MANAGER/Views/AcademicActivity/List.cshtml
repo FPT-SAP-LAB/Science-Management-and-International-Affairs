@@ -120,9 +120,11 @@
     </div>
 </div>
 
-<link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-<script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+@section scripts{
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
-<script>
-    $("#mylist").DataTable();
-</script>
+    <script>
+        $("#my_list").DataTable();
+    </script>
+}
