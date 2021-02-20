@@ -11,7 +11,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         // GET: AcademicActivity
         public ActionResult List()
         {
-            ViewBag.pageTitle = "Danh sách hoạt động trong năm";
+            ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
             return View();
         }
     }
