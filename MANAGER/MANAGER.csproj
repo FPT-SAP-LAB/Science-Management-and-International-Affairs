@@ -121,6 +121,7 @@
     <Compile Include="Controllers\ConferencesFunding.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2122,6 +2123,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
     <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
+    <Content Include="Views\Scholarship\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2132,7 +2134,6 @@
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
