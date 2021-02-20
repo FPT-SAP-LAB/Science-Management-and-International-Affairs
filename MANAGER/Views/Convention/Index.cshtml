@@ -1,8 +1,10 @@
-﻿@{
-    ViewBag.Title = "Danh sách học bổng";
+﻿
+@{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 
+<h2>Convention</h2>
 
 <div class="card card-custom">
     <div class="card-body p-0">
@@ -13,18 +15,6 @@
                         <div class="row align-items-center">
                             <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Đăng tin</a>
                             <a href="#" class="btn btn-sm btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-xl-6">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown button
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +75,6 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
-
         $("#scholarship_table").DataTable({
             columnDefs: [
                 {
@@ -121,6 +110,3 @@
         });
     </script>
 }
-
-
-
