@@ -17,8 +17,10 @@
                     </div>
                     <div class="col-lg-5 col-xl-6">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown button
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle float-right"
+                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Ngành
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -66,16 +68,17 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade in" id="delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Xác nhận xóa</h4>
             </div>
-            <div class="modal-body">Bạn có muốn xóa lưu trữ này?</div>
+            <div class="modal-body">Có muốn xóa thông tin học bổng?</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-dark" data-dismiss="modal">Hủy bỏ</button>
-                <button type="button" class="btn btn-sm btn-outline-danger">Xóa</button>
+                <button type="button" class="btn btn-sm btn-outline-dark" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
             </div>
         </div>
     </div>
@@ -85,8 +88,61 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
+        var id_delete = "";
+        //parse id fo delete
+        function parse_id(id) {
+            id_delete = id;
+        }
+        //funtion delete
+        $('#btn_delete').click(function() {
+            $.ajax({
+                url: '@Url.Action("Delete_Scholar", "Scholarship")',
+                data: { 'id' : id_delete },
+                success: function (data) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    if (data = "") {
+                        toastr.danger("Có lỗi xảy ra");
+                    } else {
+                        toastr.success("Đã xóa thành công");
+                    }
 
+                },
+            });
+        });
+
+
+        //datatable
         $("#scholarship_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            },
             columnDefs: [
                 {
                     targets: 5,
@@ -114,7 +170,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-outline-dark" style="margin-right: 10px;">Sửa</a><a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-outline-dark" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
                     }
                 }
             ]
