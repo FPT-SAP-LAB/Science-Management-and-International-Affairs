@@ -2,15 +2,20 @@
     ViewBag.Title = "Danh sách hoạt động trong năm";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
-
+<style>
+    .custom-btn {
+        width: 25% !important;
+    }
+</style>
 <div class="card-body">
 
     <div class="row mb-5">
         <div class="col-lg-5 col-xl-6">
-            <div class="row align-items-center">
-                <a href="#" class="btn btn-outline-primary px-6 font-weight-bold">Thêm sự kiện</a>
-                <a href="#" class="btn btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
-            </div>
+            <a href="#" class="btn btn-outline-primary px-6 font-weight-bold">Thêm sự kiện</a>
+            <a href="#" class="btn btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
+        </div>
+        <div class="col-lg-7 col-xl-6">
+            <input type="text" class="btn btn-outline-primary custom-btn custom-pickyear align-center float-right" value="2021" readonly />
         </div>
     </div>
 
@@ -31,12 +36,15 @@
                 <td>Hội nghị, hội thảo</td>
                 <td><span class="label label-lg label-light-warning label-inline font-weight-bold py-4">Chưa chạy</span></td>
                 <td>
-                    <select class="form-control form-control-md select-item" name="action">
-                        <option value="edit">Sửa</option>
-                        <option value="clone">Clone</option>
-                        <option value="checkin">Checkin</option>
-                        <option value="delete">Xóa</option>
-                    </select>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -45,12 +53,15 @@
                 <td>Hội nghị, hội thảo</td>
                 <td><span class="label label-lg label-light-primary label-inline font-weight-bold py-4">Đang chạy</span></td>
                 <td>
-                    <select class="form-control form-control-md" name="action">
-                        <option value="edit">Sửa</option>
-                        <option value="clone">Clone</option>
-                        <option value="checkin">Checkin</option>
-                        <option value="delete">Xóa</option>
-                    </select>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -59,23 +70,111 @@
                 <td>Khóa học</td>
                 <td><span class="label label-lg label-light-success label-inline font-weight-bold py-4">Đã xong</span></td>
                 <td>
-                    <select class="form-control form-control-md" name="action">
-                        <option value="edit">Sửa</option>
-                        <option value="clone">Clone</option>
-                        <option value="checkin">Checkin</option>
-                        <option value="delete">Xóa</option>
-                    </select>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @*các size modal: modal-sm ## modal-lg ## modal-xl*@
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
-        $("#my_list").DataTable();
+        $("#my_list").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            }
+        });
+
+        var ConfigDatepicker = function () {
+
+            var arrows;
+            if (KTUtil.isRTL()) {
+                arrows = {
+                    leftArrow: '<i class="la la-angle-right"></i>',
+                    rightArrow: '<i class="la la-angle-left"></i>'
+                }
+            } else {
+                arrows = {
+                    leftArrow: '<i class="la la-angle-left"></i>',
+                    rightArrow: '<i class="la la-angle-right"></i>'
+                }
+            }
+
+            // Private functions
+            var demos = function () {
+                $('.custom-pickyear').datepicker({
+                    rtl: KTUtil.isRTL(),
+                    orientation: "bottom right",
+                    todayHighlight: true,
+                    templates: arrows,
+                    startView: "years",
+                    format: "yyyy",
+                    minViewMode: "years"
+                });
+
+                $('.custom-pickdate').datepicker({
+                    rtl: KTUtil.isRTL(),
+                    orientation: "bottom left",
+                    todayHighlight: true,
+                    templates: arrows
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        $(document).ready(function () {
+            ConfigDatepicker.init();
+        });
+
     </script>
 }
