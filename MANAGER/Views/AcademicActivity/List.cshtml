@@ -6,16 +6,20 @@
     .custom-btn {
         width: 25% !important;
     }
+
+    .modal-title {
+        font-size: 1.5rem !important;
+    }
 </style>
 <div class="card-body">
 
     <div class="row mb-5">
         <div class="col-lg-5 col-xl-6">
-            <a href="#" class="btn btn-outline-primary px-6 font-weight-bold">Thêm sự kiện</a>
-            <a href="#" class="btn btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
+            <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold">Thêm sự kiện</a>
+            <a href="#" class="btn btn-outline-primary btn-sm ml-3 font-weight-bold">Xuất excel</a>
         </div>
         <div class="col-lg-7 col-xl-6">
-            <input type="text" class="btn btn-outline-primary custom-btn custom-pickyear align-center float-right" value="2021" readonly />
+            <input type="text" class="btn btn-outline-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
         </div>
     </div>
 
@@ -37,10 +41,10 @@
                 <td><span class="label label-lg label-light-warning label-inline font-weight-bold py-4">Chưa chạy</span></td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
-                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
                         </div>
@@ -54,10 +58,10 @@
                 <td><span class="label label-lg label-light-primary label-inline font-weight-bold py-4">Đang chạy</span></td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
-                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
                         </div>
@@ -71,10 +75,10 @@
                 <td><span class="label label-lg label-light-success label-inline font-weight-bold py-4">Đã xong</span></td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
-                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
                         </div>
@@ -85,27 +89,79 @@
     </table>
 </div>
 
-
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    @*các size modal: modal-sm ## modal-lg ## modal-xl*@
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                <h3 class="modal-title">Clone sự kiện</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <input class="form-control" type="text" required />
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Loại</label>
+                        <select class="form-control" required>
+                            <option value="KH">Khóa học</option>
+                            <option value="SE">Seminar</option>
+                            <option value="CO">Hội nghị, hội thảo</option>
+                            <option value="TN">HĐTN FPT Edu</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <input type="text" class="form-control custom-pickdate" required />
+                    </div>
+                    <div class="col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <input type="text" class="form-control custom-pickdate" required />
+
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
+                        <input class="form-control" type="text" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label font-weight-bolder">Chọn các hạng mục cần sao chép</label>
+                    <div class="col-10 col-form-label">
+                        <div class="checkbox-list">
+                            <label class="checkbox">
+                                <input type="checkbox" name="Checkboxes4" />
+                                <span></span>
+                                Kinh phí
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="Checkboxes4" />
+                                <span></span>
+                                Đơn vị đồng tổ chức
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="Checkboxes4" />
+                                <span></span>
+                                Nội dung
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="Checkboxes4" />
+                                <span></span>
+                                Đăng kí tham dự
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Xác nhận</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
@@ -158,7 +214,7 @@
 
                 $('.custom-pickdate').datepicker({
                     rtl: KTUtil.isRTL(),
-                    orientation: "bottom left",
+                    orientation: "bottom right",
                     todayHighlight: true,
                     templates: arrows
                 });
