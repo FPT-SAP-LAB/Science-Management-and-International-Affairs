@@ -40,5 +40,11 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        private class MyClass
+        {
+            public int code;
+            public string err_content;
+        }
     }
 }
