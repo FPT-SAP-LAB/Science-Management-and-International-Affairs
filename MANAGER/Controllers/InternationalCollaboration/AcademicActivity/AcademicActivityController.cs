@@ -14,7 +14,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
             return View();
         }
-
         public JsonResult delete_AcademicActivity(int id)
         {
             try
@@ -26,7 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 JsonError jerr = new JsonError()
                 {
@@ -47,7 +46,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 JsonError jerr = new JsonError()
                 {
@@ -57,7 +56,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-
         public JsonResult edit_AcademicActivity(string title, string category, string from, string to, string location)
         {
             try
@@ -69,7 +67,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 JsonError jerr = new JsonError()
                 {
@@ -79,11 +77,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
+        private class JsonError
+        {
+            public int code;
+            public string err_content;
+        }
     }
-
-}
-class JsonError
-{
-    public int code;
-    public string err_content;
 }
