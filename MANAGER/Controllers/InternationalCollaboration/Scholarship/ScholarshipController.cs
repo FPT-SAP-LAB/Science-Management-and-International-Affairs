@@ -14,5 +14,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Scholarship
             ViewBag.pageTitle = "Danh sách học bổng";
             return View();
         }
+
+        public ActionResult Delete_Scholar(string id)
+        {
+            try
+            {
+                string result = id;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
