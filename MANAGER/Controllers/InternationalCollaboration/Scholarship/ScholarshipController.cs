@@ -26,7 +26,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Scholarship
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
-
         }
     }
 }
