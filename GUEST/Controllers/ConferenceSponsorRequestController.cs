@@ -31,7 +31,7 @@ namespace GUEST.Controllers
             return View();
         }
     }
-    class JsonError
+    public class JsonError
     {
         public int code;
         public string err_content;
