@@ -121,11 +121,8 @@
     <Compile Include="Controllers\ConferencesFunding.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
-
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\CheckInController.cs" />
-
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
-
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2131,8 +2128,8 @@
     <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
     <Content Include="Views\Scholarship\List.cshtml" />
     <Content Include="Views\Convention\Index.cshtml" />
-    <Content Include="Views\CheckIn\List.cshtml" />
     <Content Include="Views\AcademicCollaboration\List.cshtml" />
+    <Content Include="Views\CheckIn\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

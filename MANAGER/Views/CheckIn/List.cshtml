@@ -1,8 +1,6 @@
-﻿
-@{
-    ViewBag.Title = "Check-in hoạt động học thuật trong năm";
-    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
-}
+﻿@{ ViewBag.Title = "Check-in hoạt động học thuật trong năm";
+                Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml"; }
+
 <style>
     .custom_nav {
         min-width: 80px !important;
@@ -215,7 +213,7 @@
         function checkIn(id) {
             return;
         }
-        let phase = 0; 
+        let phase = 0;
         $('#btn_add').click(function () {
             let object = {
                 tu_cach: document.getElementById('add_tu_cach').value,
@@ -331,6 +329,5 @@
                     }
                 }
             ]
-        });
-    </script>
+        });</script>
 }
