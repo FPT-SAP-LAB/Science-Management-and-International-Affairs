@@ -30,15 +30,5 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-        public ActionResult Detail()
-        {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
-                new PageTree("Chi tiết","/ConferenceSponsorRequest/Detail"),
-            };
-            ViewBag.pagesTree = pagesTree;
-            return View();
-        }
     }
 }

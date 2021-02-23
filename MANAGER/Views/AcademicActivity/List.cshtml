@@ -6,21 +6,23 @@
     .custom-btn {
         width: 25% !important;
     }
+
     .modal-title {
         font-size: 1.5rem !important;
     }
 </style>
-
 <div class="card-body">
+
     <div class="row mb-5">
         <div class="col-lg-5 col-xl-6">
-            <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
+            <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold">Thêm sự kiện</a>
             <a href="#" class="btn btn-outline-primary btn-sm ml-3 font-weight-bold">Xuất excel</a>
         </div>
         <div class="col-lg-7 col-xl-6">
             <input type="text" class="btn btn-outline-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
         </div>
     </div>
+
     <table id="my_list" class="table table-separate table-head-custom table-checkable">
         <thead>
             <tr>
@@ -34,157 +36,64 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>RESFES 2021</td>
+                <td>RESFES 2020</td>
                 <td>Hội nghị, hội thảo</td>
-                <td>1</td>
-                <td></td>
+                <td><span class="label label-lg label-light-warning label-inline font-weight-bold py-4">Chưa chạy</span></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Edu Camp 2021</td>
+                <td>Edu Camp 2020</td>
                 <td>Hội nghị, hội thảo</td>
-                <td>3</td>
-                <td></td>
+                <td><span class="label label-lg label-light-primary label-inline font-weight-bold py-4">Đang chạy</span></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</td>
                 <td>Khóa học</td>
-                <td>2</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Hội thảo khoa học toàn khổi FPT Edu</td>
-                <td>Hội nghị, hội thảo</td>
-                <td>4</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>F-Talent Code 2021</td>
-                <td>HĐTN FPT Edu</td>
-                <td>4</td>
-                <td></td>
+                <td><span class="label label-lg label-light-success label-inline font-weight-bold py-4">Đã xong</span></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Sửa</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Checkin</a>
+                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop">Xóa</a>
+                        </div>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-
-<div class="modal fade" id="delete-confirm" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Xác nhận xóa</h4>
-            </div>
-            <div class="modal-body">Bạn có muốn xóa hoạt động học thuật này?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary" id="btn_delete" data-dismiss="modal">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Thêm hoạt động học thuật</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title"/>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="add_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to"/>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location"/>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Chỉnh sửa hoạt động học thuật</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="edit_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />
-                    </div>
-                    <div class="col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Sao chéo hoạt động học thuật</h3>
+                <h3 class="modal-title">Clone sự kiện</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -193,11 +102,11 @@
                 <div class="form-group row">
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title"/>
+                        <input class="form-control" type="text" required />
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="clone_category">
+                        <select class="form-control" required>
                             <option value="KH">Khóa học</option>
                             <option value="SE">Seminar</option>
                             <option value="CO">Hội nghị, hội thảo</option>
@@ -206,15 +115,16 @@
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from"/>
+                        <input type="text" class="form-control custom-pickdate" required />
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to"/>
+                        <input type="text" class="form-control custom-pickdate" required />
+
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location"/>
+                        <input class="form-control" type="text" required />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -222,22 +132,22 @@
                     <div class="col-10 col-form-label">
                         <div class="checkbox-list">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="1"/>
+                                <input type="checkbox" name="Checkboxes4" />
                                 <span></span>
                                 Kinh phí
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="2"/>
+                                <input type="checkbox" name="Checkboxes4" />
                                 <span></span>
                                 Đơn vị đồng tổ chức
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="3"/>
+                                <input type="checkbox" name="Checkboxes4" />
                                 <span></span>
                                 Nội dung
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="4"/>
+                                <input type="checkbox" name="Checkboxes4" />
                                 <span></span>
                                 Đăng kí tham dự
                             </label>
@@ -247,7 +157,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -258,91 +168,6 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
-
-        let id_delete = "";
-        let id_edit = "";
-        let id_checkin = "";
-        function saveTempIdDelete(id) {
-            id_delete = id;
-            $('#delete-confirm').modal('show');
-        }
-        function saveTempIdEdit(id) {
-            id_edit = id;
-            data = getDataByID(id);
-            document.getElementById('edit_title').value = 'RESFES 2021';
-            document.getElementById('edit_category').value = 'CO';
-            document.getElementById('edit_from').value = '02/12/2021';
-            document.getElementById('edit_to').value = '02/28/2021';
-            document.getElementById('edit_location').value = 'Hà Nội';
-            $('#editModal').modal('show');
-        }
-        function saveTempIdCheckin(id) {
-            id_checkin = id;
-            // sang màn khác 
-        }
-
-        function getDataByID(id) {
-
-        }
-
-        $('#btn_delete').click(function () {
-            $.ajax({
-                url: '/AcademicActivity/delete_AcademicActivity',
-                data: { 'id': id_delete },
-                success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
-                    } else {
-                        toastr.error(data.err_content);
-                    }
-                },
-            });
-        });
-
-        $('#btn_add').click(function () {
-            let object = {
-                title: document.getElementById('add_title').value,
-                category: document.getElementById('add_category').value,
-                from: document.getElementById('add_from').value,
-                to: document.getElementById('add_to').value,
-                location: document.getElementById('add_location').value
-            }
-            $.ajax({
-                url: '/AcademicActivity/add_AcademicActivity',
-                data: object,
-                success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
-                    } else {
-                        toastr.error(data.err_content);
-                    }
-
-                },
-            });
-        });
-
-        $('#btn_edit').click(function () {
-            let object = {
-                title: document.getElementById('edit_title').value,
-                category: document.getElementById('edit_category').value,
-                from: document.getElementById('edit_from').value,
-                to: document.getElementById('edit_to').value,
-                location: document.getElementById('edit_location').value
-            }
-            $.ajax({
-                url: '/AcademicActivity/edit_AcademicActivity',
-                data: object,
-                success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
-                    } else {
-                        toastr.error(data.err_content);
-                    }
-
-                },
-            });
-        });
-
         $("#my_list").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -357,52 +182,7 @@
                     "<option value='20'>20</option>" +
                     "</select> bản ghi",
                 sSearch: "Tìm kiếm"
-            },
-            columnDefs: [
-                {
-                    targets: 3,
-                    render: function (data, type, full, meta) {
-                        var status = {
-                            1: {
-                                'title': 'Chưa chạy',
-                                'class': 'label-light-warning'
-                            },
-                            2: {
-                                'title': 'Đã huỷ',
-                                'class': ' label-light-danger'
-                            },
-                            3: {
-                                'title': 'Đang chạy',
-                                'class': ' label-light-primary'
-                            },
-                            4: {
-                                'title': 'Đã xong',
-                                'class': ' label-light-success'
-                            }
-                        };
-                        if (typeof status[data] === 'undefined') {
-                            return data;
-                        }
-                        return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
-                    },
-                },
-                {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<div class="dropdown">' +
-                                    '<button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>'+
-                                        '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>'+
-                                            '<a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdCheckin(1)">Checkin</a>'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>'+
-                                        '</div>'+
-                                '</div>'
-                    }
-                }
-            ]
+            }
         });
 
         var ConfigDatepicker = function () {
