@@ -1,0 +1,158 @@
+﻿
+@{
+    //ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body">
+        <h3 class="mb-10 font-weight-bold text-dark">Thông tin bài báo</h3>
+        <div class="row">
+            <div class="col-xl-6 form-group">
+                <label>Tên bài báo</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Thời gian xuất bản</label>
+                <input class="form-control form-control-lg custom-pickdate" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Link public toàn văn</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Link scholar</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Loại ấn phẩm</label>
+                <select class="form-control form-control-lg">
+                    <option value="1">Tạp chí khoa học</option>
+                    <option value="2">Kỷ yếu hội thảo</option>
+                </select>
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Chuyên nghành</label>
+                <select class="form-control form-control-lg">
+                    <option value="1">Công nghệ thông tin</option>
+                    <option value="2">Kinh tế</option>
+                    <option value="3">Truyền thông</option>
+                </select>
+            </div>
+        </div>
+        <h3 class="mb-10 font-weight-bold text-dark">Thông tin nhà xuất bản</h3>
+        <div class="row">
+            <div class="col-xl-6 form-group">
+                <label>Tên tạp chí</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Tập</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Trang</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Nhà xuất bản</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+        </div>
+        <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+        <div class="row" id="thuong">
+            <div class="col-xl-6 form-group">
+                <label>Loại tiêu chí</label>
+                <select id="loaithuong" class="form-control form-control-lg">
+                    <option selected value="1">Quốc tế</option>
+                    <option value="2">Trong nước</option>
+                </select>
+            </div>
+            <div class="col-xl-6 form-group thuongqt">
+                <label>Chọn tiêu chí</label>
+                <select id="tieuchi" class="form-control form-control-lg">
+                    <option value="0" selected disabled>Chọn tiêu chí</option>
+                    <option class="optiontieuchi" value="Q1">Q1</option>
+                    <option class="optiontieuchi" value="Q2">Q2</option>
+                    <option class="optiontieuchi" value="Q3">Q3</option>
+                </select>
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label style="color:#fff">abc</label>
+                <button class="btn btn-primary form-control form-control-lg">Danh sách tạp chí trong nước</button>
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label>Chỉ số tạp chí</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label>Ghi chú</label>
+                <input class="form-control form-control-lg" type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Tổng thưởng cho bài báo</label>
+                <input class="form-control form-control-lg" readonly type="text" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Chọn loại khen thưởng</label>
+                <select class="form-control form-control-lg">
+                    <option value="1">Theo quy định</option>
+                    <option value="2">Đại diện nhận thưởng</option>
+                </select>
+            </div>
+        </div>
+        <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-bordered tacgia">
+                    <thead>
+                        <tr>
+                            <th>Đơn vị</th>
+                            <th>MSNV/MSSV</th>
+                            <th>Họ tên</th>
+                            <th>Chức danh</th>
+                            <th>Loại hợp đồng</th>
+                            <th>Mã số thuế</th>
+                            <th>Số CMND</th>
+                            <th>CMND</th>
+                            <th>Ngân hàng</th>
+                            <th>Số tài khoản</th>
+                            <th>Tiền thưởng</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tacgia_body">
+                        <tr>
+                            <td>
+                                <label class="checkbox">
+                                    <input type="checkbox" /><span></span>Trong FE
+                                </label>
+                            </td>
+                            <td><input list="ncv_list" type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="1">Nghiên cứu viên</option>
+                                    <option value="2">Giảng viên</option>
+                                    <option value="3">Sinh viên</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="1">Full time</option>
+                                    <option value="2">Part time</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><button class="btn btn-primary">Upload</button></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input readonly type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
