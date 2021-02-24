@@ -6,11 +6,11 @@
     .custom-btn {
         width: 25% !important;
     }
+
     .modal-title {
         font-size: 1.5rem !important;
     }
 </style>
-
 <div class="card-body">
     <div class="row mb-5">
         <div class="col-lg-5 col-xl-6">
@@ -71,7 +71,6 @@
     </table>
 </div>
 
-
 <div class="modal fade" id="delete-confirm" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,7 +99,7 @@
                 <div class="form-group row">
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title"/>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
@@ -113,15 +112,15 @@
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from"/>
+                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" />
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to"/>
+                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" />
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location"/>
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" />
                     </div>
                 </div>
             </div>
@@ -179,12 +178,11 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Sao chéo hoạt động học thuật</h3>
+                <h3 class="modal-title">Clone sự kiện</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -193,7 +191,7 @@
                 <div class="form-group row">
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title"/>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title" />
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
@@ -206,15 +204,16 @@
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from"/>
+                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from" />
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to"/>
+                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to" />
+
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location"/>
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -222,22 +221,22 @@
                     <div class="col-10 col-form-label">
                         <div class="checkbox-list">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="1"/>
+                                <input type="checkbox" name="Checkboxes4" value="1" />
                                 <span></span>
                                 Kinh phí
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="2"/>
+                                <input type="checkbox" name="Checkboxes4" value="2" />
                                 <span></span>
                                 Đơn vị đồng tổ chức
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="3"/>
+                                <input type="checkbox" name="Checkboxes4" value="3" />
                                 <span></span>
                                 Nội dung
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="4"/>
+                                <input type="checkbox" name="Checkboxes4" value="4" />
                                 <span></span>
                                 Đăng kí tham dự
                             </label>
@@ -258,7 +257,6 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
-
         let id_delete = "";
         let id_edit = "";
         let id_checkin = "";
@@ -278,7 +276,7 @@
         }
         function saveTempIdCheckin(id) {
             id_checkin = id;
-            // sang màn khác 
+            window.location.href = "/CheckIn/List"
         }
 
         function getDataByID(id) {
@@ -316,7 +314,6 @@
                     } else {
                         toastr.error(data.err_content);
                     }
-
                 },
             });
         });
@@ -338,11 +335,9 @@
                     } else {
                         toastr.error(data.err_content);
                     }
-
                 },
             });
         });
-
         $("#my_list").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -392,21 +387,20 @@
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<div class="dropdown">' +
-                                    '<button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>'+
-                                        '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>'+
-                                            '<a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdCheckin(1)">Checkin</a>'+
-                                            '<a href="#" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>'+
-                                        '</div>'+
-                                '</div>'
+                            '<button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            '<a href="#" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>' +
+                            '<a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>' +
+                            '<a href="#" class="dropdown-item" onclick="saveTempIdCheckin(1)">Checkin</a>' +
+                            '<a href="#" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>' +
+                            '</div>' +
+                            '</div>'
                     }
                 }
             ]
         });
 
         var ConfigDatepicker = function () {
-
             var arrows;
             if (KTUtil.isRTL()) {
                 arrows = {
@@ -419,7 +413,6 @@
                     rightArrow: '<i class="la la-angle-right"></i>'
                 }
             }
-
             // Private functions
             var demos = function () {
                 $('.custom-pickyear').datepicker({
@@ -451,6 +444,5 @@
         $(document).ready(function () {
             ConfigDatepicker.init();
         });
-
     </script>
 }
