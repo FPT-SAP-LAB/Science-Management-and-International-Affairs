@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Danh sách đào tạo sau đại học";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
@@ -639,6 +639,24 @@
                 },
             });
         });
+        //load status history table
+        function show_status_history(id){
+            $.ajax({
+                url: '@Url.Action("Get_Status_History", "AcademicCollaboration")',
+                data: { 'id': id },
+                success: function (data) {
+                    if (data = "") {
+                        toastr.error("Có lỗi xảy ra");
+                    } else {
+                        var temp = '';
+                        for (i = 0; i < 3; i++) {
+                            temp += '<tr><td  class="text-center">' + i + 1 + '</td><td class="text-center">01/01/2021 12:10:11</td><td class="text-center">Đã hoàn thành</td><td class="text-center">Lê Phương Anh</td><td class="text-center">abc.pdf</td><td class="text-center">Đẫ học xong</td></tr>';
+                        }
+                        $('#status_history_table').html(temp);
+                    }
+                },
+            });
+        };
 
         //load status history table
         function show_status_history(id){
