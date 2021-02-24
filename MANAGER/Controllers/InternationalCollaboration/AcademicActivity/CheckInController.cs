@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MANAGER.Models;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -35,6 +34,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
+        }
+        private class JsonError
+        {
+            public int code;
+            public string err_content;
         }
     }
 }
