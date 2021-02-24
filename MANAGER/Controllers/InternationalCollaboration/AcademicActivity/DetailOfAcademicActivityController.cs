@@ -15,7 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pageTitle = "Thông tin hoạt động học thuật";
             return View();
         }
-        public JsonResult add_Phase(string title,string from,string to)
+        public JsonResult add_Phase(string title, string from, string to)
         {
             try
             {
