@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Danh sách hoạt động trong năm";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
@@ -97,11 +98,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="add_category">
                             <option value="KH">Khóa học</option>
@@ -110,15 +111,15 @@
                             <option value="TN">HĐTN FPT Edu</option>
                         </select>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" />
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
                         <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" />
                     </div>
@@ -143,11 +144,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="edit_category">
                             <option value="KH">Khóa học</option>
@@ -156,15 +157,15 @@
                             <option value="TN">HĐTN FPT Edu</option>
                         </select>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
                         <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
                     </div>
@@ -189,11 +190,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="clone_category">
                             <option value="KH">Khóa học</option>
@@ -202,16 +203,16 @@
                             <option value="TN">HĐTN FPT Edu</option>
                         </select>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from" />
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to" />
 
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
                         <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location" />
                     </div>
@@ -380,6 +381,12 @@
                         }
                         return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
                     },
+                },
+                {
+                    targets: 1,
+                    render: function (data, type, full, meta) {
+                        return '<a href="@Url.Action("Index", "DetailOfAcademicActivity")">' + data +'</a>'
+                    }
                 },
                 {
                     targets: -1,
