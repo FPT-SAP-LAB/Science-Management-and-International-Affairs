@@ -777,31 +777,8 @@
             // Private functions
             var demos = function () {
                 DecoupledEditor
-                    .create(document.querySelector('#kt-ckeditor-3'),
-                        {
-                            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload', 'blockQuote',
-                                'insertTable', 'mediaEmbed', 'undo', 'redo'],
-                            image: {
-                                toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
-                                styles: ['full', 'alignLeft', 'alignRight']
-                            },
-                            table: {
-                                contentToolbar: [
-                                    'tableColumn',
-                                    'tableRow',
-                                    'mergeTableCells'
-                                ]
-                            },
-                            placeholder: {
-                                header: 'Header text goes here',
-                                content: 'Type content here',
-                                footerleft: 'Left footer content',
-                                footerright: 'Right footer content'
-                            },
-                        }
-                )
+                    .create(document.querySelector('#kt-ckeditor-3'))
                     .then(editor => {
-                        console.log(Array.from(editor.ui.componentFactory.names()));
                         const toolbarContainer = document.querySelector('#kt-ckeditor-3-toolbar');
 
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
