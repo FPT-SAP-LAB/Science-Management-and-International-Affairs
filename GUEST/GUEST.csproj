@@ -2337,6 +2337,9 @@
     <Content Include="Views\Citation\List.cshtml" />
     <Content Include="Views\Citation\AddRequest.cshtml" />
     <Content Include="Views\Invention\ListAll.cshtml" />
+    <Content Include="Views\ConferenceSponsorRequest\Detail.cshtml" />
+    <Content Include="Views\ConferenceSponsorRequest\Add.cshtml" />
+    <Content Include="Views\Invention\AddRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
