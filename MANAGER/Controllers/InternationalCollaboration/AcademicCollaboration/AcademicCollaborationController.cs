@@ -27,5 +27,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult Get_Status_History(string id)
+        {
+            try
+            {
+                string result = id;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

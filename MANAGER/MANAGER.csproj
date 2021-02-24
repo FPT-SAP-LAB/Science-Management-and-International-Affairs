@@ -126,6 +126,7 @@
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
+    <Compile Include="Controllers\PaperController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2133,6 +2134,8 @@
     <Content Include="Views\AcademicCollaboration\List.cshtml" />
     <Content Include="Views\CheckIn\List.cshtml" />
     <Content Include="Views\DetailOfAcademicActivity\Index.cshtml" />
+    <Content Include="Views\Paper\Pending.cshtml" />
+    <Content Include="Views\Paper\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

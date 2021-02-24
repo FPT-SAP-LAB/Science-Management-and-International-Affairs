@@ -9,84 +9,7 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">Thống kê chung</h3>
                     <div class="row">
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="fas fa-user-tie icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="ncv">40</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Nghiên cứu viên
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="far fa-newspaper icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="isi">480</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Bài báo ISI/SCOPUS
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="fas fa-medal icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="bsc">25</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Bằng sáng chế
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="far fa-handshake icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="qt">180</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                <b>Đối tác quốc tế</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-xl-3 input-group date mb-2">
                             <select type="text" class="form-control">
                                 <option value="0" selected>Tất cả</option>
@@ -339,32 +262,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
     <script>
-        var ncv = 40, isi = 480, bsc = 25, qt = 180;
-        var i = 1, i2 = 1, i3 = 1, i4 = 1;
-        var myVarNCV = setInterval(myTimerNCV, 2000 / ncv);
-        function myTimerNCV() {
-            if (i <= ncv) $("#ncv").text(i);
-            else clearInterval(myVarNCV);
-            i++;
-        };
-        var myVarISI = setInterval(myTimerISI, 2000 / isi);
-        function myTimerISI() {
-            if (i2 <= isi) $("#isi").text(i2);
-            else clearInterval(myVarISI);
-            i2++;
-        };
-        var myVarBSC = setInterval(myTimerBSC, 2000 / bsc);
-        function myTimerBSC() {
-            if (i3 <= bsc) $("#bsc").text(i3);
-            else clearInterval(myVarBSC);
-            i3++;
-        };
-        var myVarQT = setInterval(myTimerQT, 2000 / qt);
-        function myTimerQT() {
-            if (i4 <= qt) $("#qt").text(i4);
-            else clearInterval(myVarQT);
-            i4++;
-        };
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
