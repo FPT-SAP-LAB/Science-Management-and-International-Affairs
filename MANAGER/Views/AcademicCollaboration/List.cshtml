@@ -639,6 +639,24 @@
                 },
             });
         });
+        //load status history table
+        function show_status_history(id){
+            $.ajax({
+                url: '@Url.Action("Get_Status_History", "AcademicCollaboration")',
+                data: { 'id': id },
+                success: function (data) {
+                    if (data = "") {
+                        toastr.error("Có lỗi xảy ra");
+                    } else {
+                        var temp = '';
+                        for (i = 0; i < 3; i++) {
+                            temp += '<tr><td  class="text-center">' + i + 1 + '</td><td class="text-center">01/01/2021 12:10:11</td><td class="text-center">Đã hoàn thành</td><td class="text-center">Lê Phương Anh</td><td class="text-center">abc.pdf</td><td class="text-center">Đẫ học xong</td></tr>';
+                        }
+                        $('#status_history_table').html(temp);
+                    }
+                },
+            });
+        };
 
         //load status history table
         function show_status_history(id){
@@ -759,31 +777,8 @@
             // Private functions
             var demos = function () {
                 DecoupledEditor
-                    .create(document.querySelector('#kt-ckeditor-3'),
-                        {
-                            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload', 'blockQuote',
-                                'insertTable', 'mediaEmbed', 'undo', 'redo'],
-                            image: {
-                                toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
-                                styles: ['full', 'alignLeft', 'alignRight']
-                            },
-                            table: {
-                                contentToolbar: [
-                                    'tableColumn',
-                                    'tableRow',
-                                    'mergeTableCells'
-                                ]
-                            },
-                            placeholder: {
-                                header: 'Header text goes here',
-                                content: 'Type content here',
-                                footerleft: 'Left footer content',
-                                footerright: 'Right footer content'
-                            },
-                        }
-                )
+                    .create(document.querySelector('#kt-ckeditor-3'))
                     .then(editor => {
-                        console.log(Array.from(editor.ui.componentFactory.names()));
                         const toolbarContainer = document.querySelector('#kt-ckeditor-3-toolbar');
 
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
