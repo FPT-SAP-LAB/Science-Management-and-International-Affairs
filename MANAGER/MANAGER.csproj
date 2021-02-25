@@ -2137,6 +2137,7 @@
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Paper\Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\List.cshtml" />
+    <Content Include="Views\Paper\WaitDecision.cshtml" />
     <Content Include="Views\MOU\List.cshtml" />
     <Content Include="Views\MOU\Detail.cshtml" />
   </ItemGroup>
