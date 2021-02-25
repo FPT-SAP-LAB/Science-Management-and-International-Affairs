@@ -2136,6 +2136,7 @@
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Paper\Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\List.cshtml" />
+    <Content Include="Views\Paper\WaitDecision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
