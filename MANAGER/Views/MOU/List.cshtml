@@ -450,7 +450,7 @@
          //funtion delete
         $('#btn_delete').click(function() {
             $.ajax({
-                url: '@Url.Action("Delete_MOU", "MOU")',
+                url: '@Url.Action("Delete_Mou", "MOU")',
                 data: { 'id': id_row },
                 success: function (data) {
                     if (data = "") {
