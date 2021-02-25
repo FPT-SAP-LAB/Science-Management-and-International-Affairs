@@ -10,6 +10,15 @@
         border-bottom: 2px solid #cdcaca;
         padding-bottom: 20px;
     }
+
+    #delete {
+        z-index: 9999;
+    }
+
+    .row-with-table-on-modal {
+        overflow-y: auto;
+        height: 200px;
+    }
 </style>
 <div class="card card-custom ">
     <div class="card-body p-0">
@@ -111,7 +120,7 @@
                             </div>
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
                                 <div class="row align-items-center">
-                                    <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                                    <a href="#update_modal_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
                                 </div>
                             </div>
                             <table class="table table-bordered table-hover table-checkable collaboration_update_table"
@@ -159,17 +168,176 @@
 <div class="modal fade in" id="delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header  justify-content-center">
                 <h4 class="modal-title">XÁC NHẬN XÓA</h4>
             </div>
             <div class="modal-body">Có muốn xóa thông tin này?</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-dark" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
             </div>
         </div>
     </div>
 </div>
+
+@*modal update_modal_mou*@
+<div class="modal fade in" id="update_modal_mou" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title font-weight-bolder">BỔ SUNG BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-xl-12 col-lg-12 row">
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Mã hiệu</label>
+                            <input class="form-control" type="text" placeholder="Mã hiệu" autocomplete="off" required id="update_mou_id" />
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Bản mềm</label>
+                            <input class="form-control" type="text" placeholder="Tải lên" autocomplete="off" required id="upload" />
+                        </div>
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 row-with-table-on-modal">
+                            <h5 class="font-weight-bolder">Bổ sung về phạm vi hợp tác</h5>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Đối tác</th>
+                                        <th class="text-center">Phạm vi hợp tác</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">
+                                            Bunkyou Univesity
+                                        </td>
+                                        <td class="text-center">JC</td>
+                                        <td class="text-center" nowrap="nowrap">
+                                            <a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                                            <a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">
+                                            Bunkyou Univesity
+                                        </td>
+                                        <td class="text-center">JC</td>
+                                        <td class="text-center" nowrap="nowrap">
+                                            <a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                                            <a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">
+                                            Bunkyou Univesity
+                                        </td>
+                                        <td class="text-center">JC</td>
+                                        <td class="text-center" nowrap="nowrap">
+                                            <a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                                            <a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">
+                                            Bunkyou Univesity
+                                        </td>
+                                        <td class="text-center">JC</td>
+                                        <td class="text-center" nowrap="nowrap">
+                                            <a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                                            <a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">
+                                            Bunkyou Univesity
+                                        </td>
+                                        <td class="text-center">JC</td>
+                                        <td class="text-center" nowrap="nowrap">
+                                            <a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                                            <a href="#delete" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12">
+                        <h5 class="font-weight-bolder">Bổ sung về thời gian kí kết</h5>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 row mt-3">
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 row">
+
+                            <div class="col-xl-12 col-lg-12">
+                                <label class="font-weight-bolder">Ngày kí kết</label>
+                                <input class="form-control custom-pickdate" type="text" placeholder="Ngày kí kết" autocomplete="off" readonly required id="update_sign_date" />
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <label class="font-weight-bolder">Ngày hết hạn</label>
+                                <input class="form-control custom-pickdate" type="text" placeholder="Ngày hết hạn" autocomplete="off" readonly required id="update_end_date" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 row">
+                            <div class="col-xl-12 col-lg-12">
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <label class="font-weight-bolder">Đối tác</label>
+                                <select class="form-control" required id="update_partner">
+                                    <option value="1">Kyoudai</option>
+                                    <option value="2">Bách khoa</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                                <select class="form-control" required id="update_scope_for_partner">
+                                    <option value="1">SE</option>
+                                    <option value="2">??</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 mt-2">
+                            <a id="btn_modal_update_scope" href="#" class="float-right btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn_delete">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal update_scope*@
+<div class="modal fade in" id="update_scope" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title">BỔ SUNG PHAM VI HỢP TÁC</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -256,5 +424,6 @@
                 }
             ]
         });
+
     </script>
 }
