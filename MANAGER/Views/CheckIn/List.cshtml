@@ -1,5 +1,8 @@
-﻿@{ ViewBag.Title = "Check-in hoạt động học thuật trong năm";
-                Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml"; }
+﻿
+@{ 
+    ViewBag.Title = "Check-in hoạt động học thuật trong năm";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
 
 <style>
     .custom_nav {
@@ -32,7 +35,7 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                 <div class="row mb-3">
-                    <div class="col-lg-12 col-xl-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
                         <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
                     </div>
                 </div>
@@ -89,7 +92,7 @@
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                 <div class="row mb-3">
-                    <div class="col-lg-12 col-xl-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
                         <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
                     </div>
                 </div>
@@ -159,23 +162,22 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Họ và tên <span style="color:red">*</span></label>
                         <input type="text" class="form-control" placeholder="Họ và tên" required autocomplete="off" id="add_name" />
-
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tư cách <span style="color:red">*</span></label>
                         <select class="form-control" required id="add_tu_cach">
                             <option value="TD">Người tham dự</option>
                             <option value="TT">Người thuyết trình</option>
                         </select>
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Email <span style="color:red">*</span></label>
                         <input type="text" class="form-control" placeholder="Email" required autocomplete="off" id="add_email" />
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" required id="add_don_vi">
                             <option value="fptuni">FPT University</option>
@@ -183,7 +185,7 @@
                             <option value="fptgw">FPT Greenwich</option>
                         </select>
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Cơ Sở</label>
                         <select class="form-control" required id="add_co_so">
                             <option value="HN">Hà Nội</option>
@@ -192,7 +194,7 @@
                             <option value="DN">Đà Nẵng</option>
                         </select>
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">MSNV / MSSV</label>
                         <input type="text" class="form-control" placeholder="MSNV / MSSV" autocomplete="off" id="add_msnv_mssv" />
                     </div>

@@ -122,6 +122,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\CheckInController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\JsonError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2129,10 +2131,11 @@
     <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
     <Content Include="Views\Scholarship\List.cshtml" />
     <Content Include="Views\Convention\Index.cshtml" />
-    <Content Include="Views\AcademicCollaboration\List.cshtml" />
     <Content Include="Views\CheckIn\List.cshtml" />
+    <Content Include="Views\DetailOfAcademicActivity\Index.cshtml" />
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Paper\Detail.cshtml" />
+    <Content Include="Views\AcademicCollaboration\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2142,7 +2145,6 @@
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
