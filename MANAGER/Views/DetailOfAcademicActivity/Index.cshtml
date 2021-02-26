@@ -45,7 +45,7 @@
                 <div class="form-group row">
                     <div class="col-md-8 col-xl-8 col-lg-8">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input type="text" class="form-control" placeholder="Tiêu đề" required autocomplete="off" id="add_name" value="RESFES 2021" />
+                        <input type="text" class="form-control" placeholder="Tiêu đề" required autocomplete="off" id="detail_name" value="RESFES 2021" />
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="font-weight-bolder">Loại</label>
@@ -58,17 +58,17 @@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" value="01/06/2021" />
+                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="detail_from" value="01/06/2021" />
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" value="01/26/2021" />
+                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="detail_to" value="01/26/2021" />
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
                     <div class="col-md-8 col-xl-8 col-lg-8">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" value="Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội" />
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="detail_location" value="Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội" />
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
@@ -160,43 +160,113 @@
     </div>
 </div>
 
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="addModal-Tucach" tabindex="-1" role="dialog" aria-hidden="true" style="z-index:9999">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Chỉnh sửa hoạt động học thuật</h3>
+                <h3 class="modal-title">Thêm tư cách tham gia</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <label class="font-weight-bolder">Tư cách tham gia</label>
+                        <input class="form-control" type="text" placeholder="Tư cách tham gia" autocomplete="off" required id="add_tu_cach_name" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="edit_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
+                        <label class="col-form-label font-weight-bolder">Số lượng theo</label>
+                        <input type="text" class="form-control" placeholder="Số lượng theo" required autocomplete="off" id="add_tu_cach_quantity" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="checkbox pt-15 ">
+                            <input type="checkbox" id="add_tucach_donvi"/>
+                            <span class="mr-3"></span>
+                              Đơn vị cơ sở
+                        </label>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12" id="table_dynamic_donvi">
+
+                    </div>
+                    <div class="col-md-4 col-xl-4 col-lg-4">
+                        <label class="font-weight-bolder">Mức phí</label>
+                        <select class="form-control" id="add_tucach_price">
+                            <option value="MP">Miễn phí</option>
+                            <option value="CP">Có phí</option>
                         </select>
                     </div>
-                    <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />
-                    </div>
-                    <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_tucach_add">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Chỉnh sửa giai đoạn học thuật</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="form-group row">
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <label class="font-weight-bolder">Giai đoạn</label>
+                        <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_giaidoan_name" value="Sơ khảo"/>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_giaidoan_from" value="8/2/2021"/>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_giaidoan_to" value="16/2/2021" />
+                    </div>
+                    <hr />
+                    <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
+                        <h5 class="modal-title">Danh sách tư cách tham gia</h5>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6 my-3">
+                        <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal-Tucach">Thêm tư cách</a>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6 my-3">
+                        <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="my_list_2" class="table table-separate table-head-custom table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tư cách tham gia</th>
+                                    <th>Mức phí (VNĐ)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Người tham dự</td>
+                                    <td>Miễn phí</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Người thuyết trình</td>
+                                    <td>Miễn phí</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -206,13 +276,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="delete-confirm" role="dialog" aria-hidden="true">
+<div class="modal fade" id="delete-confirm-giaidoan" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Xác nhận xóa</h4>
             </div>
-            <div class="modal-body">Bạn có muốn xóa hoạt động học thuật này?</div>
+            <div class="modal-body">Bạn có muốn xóa giai đoạn này?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-sm btn-primary" id="btn_delete" data-dismiss="modal">Xác nhận</button>
@@ -225,26 +295,31 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
-        let id_delete = 0;
-        let id_edit = 0;
+        let id_delete_giai_doan = 0;
+        let id_edit_giai_doan = 0;
         function postActivity() {
             return;
         }
         function updateActivity() {
             return;
         }
+        function setUpForm() {
+            return;
+        }
         function editDetail(id) {
-            id_edit = id;
-            data = getDataByID(id);
-            document.getElementById('edit_title').value = 'RESFES 2021';
-            document.getElementById('edit_category').value = 'CO';
-            document.getElementById('edit_from').value = '02/12/2021';
-            document.getElementById('edit_to').value = '02/28/2021';
-            $('#editModal').modal('show');
+            id_edit_giai_doan = id;
+            $.ajax({
+                url: '/DetailOfAcademicActivity/edit_Phase',
+                data: { 'id': id_edit_giai_doan },
+                success: function (data) {
+                    $('#editModal').modal('show');
+                },
+            });
+
         }
         function deleteDetail(id) {
-            id_delete = id;
-            $('#delete-confirm').modal('show');
+            id_delete_giai_doan = id;
+            $('#delete-confirm-giaidoan').modal('show');
         }
         $('#btn_add').click(function () {
             let object = {
@@ -268,7 +343,7 @@
         $('#btn_delete').click(function () {
             $.ajax({
                 url: '/DetailOfAcademicActivity/delete_Phase',
-                data: { 'id': id_delete },
+                data: { 'id': id_delete_giai_doan },
                 success: function (data) {
                     if (data.code = 1) {
                         toastr.success(data.err_content);
@@ -280,24 +355,24 @@
         });
 
         $('#btn_edit').click(function () {
-            let object = {
-                title: document.getElementById('edit_title').value,
-                category: document.getElementById('edit_category').value,
-                from: document.getElementById('edit_from').value,
-                to: document.getElementById('edit_to').value,
-                location: document.getElementById('edit_location').value
-            }
-            $.ajax({
-                url: '/DetailOfAcademicActivity/edit_Phase',
-                data: object,
-                success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
-                    } else {
-                        toastr.error(data.err_content);
-                    }
-                },
-            });
+            //let object = {
+            //    title: document.getElementById('edit_title').value,
+            //    category: document.getElementById('edit_category').value,
+            //    from: document.getElementById('edit_from').value,
+            //    to: document.getElementById('edit_to').value,
+            //    location: document.getElementById('edit_location').value
+            //}
+            //$.ajax({
+            //    url: '/DetailOfAcademicActivity/edit_Phase',
+            //    data: object,
+            //    success: function (data) {
+            //        if (data.code = 1) {
+            //            toastr.success(data.err_content);
+            //        } else {
+            //            toastr.error(data.err_content);
+            //        }
+            //    },
+            //});
         });
 
         $('#btn_edit').click(function () {
@@ -320,7 +395,24 @@
                 },
             });
         });
-
+        $('#btn_tucach_add').click(function () {
+            //let object = {
+            //    title: document.getElementById('add_tucach_name').value,
+            //    quantity: document.getElementById('add_tucach_quantity').value,
+            //    price: document.getElementById('add_tucach_price').value
+            //}
+            //$.ajax({
+            //    url: '/DetailOfAcademicActivity/add_TuCach',
+            //    data: object,
+            //    success: function (data) {
+            //        if (data.code = 1) {
+            //            toastr.success(data.err_content);
+            //        } else {
+            //            toastr.error(data.err_content);
+            //        }
+            //    },
+            //});
+        });
         $("#my_list_1").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -348,7 +440,33 @@
                 }
             ]
         });
-
+        $("#my_list_2").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            },
+            columnDefs: [
+                {
+                    targets: 3,
+                    title: 'Hành động',
+                    width: "10%",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" class="btn btn-sm btn-outline-primary mr-5" onclick="editTuCach(1)">Sửa</a><a href="#" class="btn btn-sm btn-outline-danger" onclick="deleteTuCach(1)">Xóa</a>'
+                    }
+                }
+            ]
+        });
         var ConfigDatepicker = function () {
             var arrows;
             if (KTUtil.isRTL()) {
@@ -378,7 +496,8 @@
                     rtl: KTUtil.isRTL(),
                     orientation: "bottom left",
                     todayHighlight: true,
-                    templates: arrows
+                    templates: arrows,
+                    format: 'dd-mm-yyyy'
                 });
             }
 
@@ -389,12 +508,6 @@
                 }
             };
         }();
-
-        $(document).ready(function () {
-            ConfigDatepicker.init();
-            KTCkeditorDocument.init();
-        });
-
         var KTCkeditorDocument = function () {
             // Private functions
             var demos = function () {
@@ -402,14 +515,12 @@
                     .create(document.querySelector('#kt-ckeditor-3'))
                     .then(editor => {
                         const toolbarContainer = document.querySelector('#kt-ckeditor-3-toolbar');
-
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
                     })
                     .catch(error => {
                         console.error(error);
                     });
             }
-
             return {
                 // public functions
                 init: function () {
@@ -417,5 +528,9 @@
                 }
             };
         }();
+        $(document).ready(function () {
+            ConfigDatepicker.init();
+            KTCkeditorDocument.init();
+        });
     </script>
 }

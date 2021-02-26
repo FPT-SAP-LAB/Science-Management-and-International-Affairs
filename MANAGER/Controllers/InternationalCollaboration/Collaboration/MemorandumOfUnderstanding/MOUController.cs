@@ -15,7 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             return View();
         }
 
-        public ActionResult Delete_MOU(string id)
+        public ActionResult Delete_Mou(string id)
         {
             try
             {
@@ -26,6 +26,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult Detail(string id)
+        {
+            return View();
         }
     }
 }

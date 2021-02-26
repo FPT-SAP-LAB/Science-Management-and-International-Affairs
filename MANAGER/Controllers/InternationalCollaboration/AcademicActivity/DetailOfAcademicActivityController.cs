@@ -57,5 +57,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult edit_Phase(int id)
+        {
+            try
+            {
+                int data = id;
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
