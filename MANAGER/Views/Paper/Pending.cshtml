@@ -1,0 +1,68 @@
+﻿
+@{
+    //ViewBag.Title = "Danh sách các bài báo đang chờ xét duyệt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body">
+        <table id="pending" class="">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên bài báo, ẩn phẩm, báo cáo khoa học</th>
+                    <th>Người request</th>
+                    <th>Ngày request</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id="pending-body">
+                <tr>
+                    <td>1</td>
+                    <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
+                    <td>Nguyễn Quốc Long et al</td>
+                    <td>10/12/2019</td>
+                    <td><a href="/Paper/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
+                    <td>Tran, Nghi C</td>
+                    <td>09/12/2019</td>
+                    <td><a href="/Paper/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#pending").DataTable({
+            "columns": [
+                { width: "5%" },
+                { width: "30%" },
+                { width: "25%" },
+                { width: "25%" },
+                { width: "15%" },
+            ],
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            }
+        });
+    });
+</script>

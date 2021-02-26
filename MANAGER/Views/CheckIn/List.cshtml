@@ -1,0 +1,335 @@
+﻿
+@{ 
+    ViewBag.Title = "Check-in hoạt động học thuật trong năm";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+
+<style>
+    .custom_nav {
+        min-width: 80px !important;
+        text-align: center !important;
+    }
+
+    .custom-card {
+        padding-top: 10px !important;
+    }
+</style>
+<div class="card card-custom">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
+                        <span class="nav-text custom_nav">Sơ khảo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
+                        <span class="nav-text custom_nav">Trung kết</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body custom-card">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+                        <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
+                    </div>
+                </div>
+                <table id="my_list_1" class="table table-separate table-head-custom table-checkable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tư cách</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Đơn vị</th>
+                            <th>Cơ sở</th>
+                            <th>MSNV/ MSSV</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Người tham dự</td>
+                            <td>Nguyễn Bá Sơn</td>
+                            <td>sonnbhe130009@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130009</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Người thuyết trình</td>
+                            <td>Phan Lạc Dương</td>
+                            <td>duongplhe130367@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130367</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Người tham dự</td>
+                            <td>Phan Lạc Dương</td>
+                            <td>duongplhe130367@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130367</td>
+                            <td>2</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+                        <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
+                    </div>
+                </div>
+                <table id="my_list_2" class="table table-separate table-head-custom table-checkable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tư cách</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Đơn vị</th>
+                            <th>Cơ sở</th>
+                            <th>MSNV/ MSSV</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Người tham dự</td>
+                            <td>Nguyễn Bá Sơn</td>
+                            <td>sonnbhe130009@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130009</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Người thuyết trình</td>
+                            <td>Phan Lạc Dương</td>
+                            <td>duongplhe130367@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130367</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Người tham dự</td>
+                            <td>Phan Lạc Dương</td>
+                            <td>duongplhe130367@fpt.edu.vn</td>
+                            <td>Đại học FPT</td>
+                            <td>Hà Nội</td>
+                            <td>HE130367</td>
+                            <td>2</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Thêm người tham dự</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Họ và tên <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" placeholder="Họ và tên" required autocomplete="off" id="add_name" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Tư cách <span style="color:red">*</span></label>
+                        <select class="form-control" required id="add_tu_cach">
+                            <option value="TD">Người tham dự</option>
+                            <option value="TT">Người thuyết trình</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Email <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" placeholder="Email" required autocomplete="off" id="add_email" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Đơn vị</label>
+                        <select class="form-control" required id="add_don_vi">
+                            <option value="fptuni">FPT University</option>
+                            <option value="fptpoly">FPT Polytechnic</option>
+                            <option value="fptgw">FPT Greenwich</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Cơ Sở</label>
+                        <select class="form-control" required id="add_co_so">
+                            <option value="HN">Hà Nội</option>
+                            <option value="CT">Cần Thơ</option>
+                            <option value="HCM">Hồ Chí Minh</option>
+                            <option value="DN">Đà Nẵng</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">MSNV / MSSV</label>
+                        <input type="text" class="form-control" placeholder="MSNV / MSSV" autocomplete="off" id="add_msnv_mssv" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+        function checkIn(id) {
+            return;
+        }
+        let phase = 0;
+        $('#btn_add').click(function () {
+            let object = {
+                tu_cach: document.getElementById('add_tu_cach').value,
+                name: document.getElementById('add_name').value,
+                email: document.getElementById('add_email').value,
+                don_vi: document.getElementById('add_don_vi').value,
+                co_so: document.getElementById('add_co_so').value
+            }
+            $.ajax({
+                url: '/CheckIn/add_CheckIn',
+                data: object,
+                success: function (data) {
+                    if (data.code = 1) {
+                        toastr.success(data.err_content);
+                    } else {
+                        toastr.error(data.err_content);
+                    }
+
+                },
+            });
+        });
+
+        $("#my_list_1").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            },
+            columnDefs: [
+                {
+                    targets: 7,
+                    width: '75px',
+                    render: function (data, type, full, meta) {
+                        var status = {
+                            1: {
+                                'title': 'Chưa check-in',
+                                'class': ' label-light-danger'
+                            },
+                            2: {
+                                'title': 'Check-in',
+                                'class': ' label-light-success'
+                            }
+                        };
+                        if (typeof status[data] === 'undefined') {
+                            return data;
+                        }
+                        return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+                    },
+                },
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    width: '70px',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" class="btn btn-outline-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
+                    }
+                }
+            ]
+        });
+        $("#my_list_2").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            },
+            columnDefs: [
+                {
+                    targets: 7,
+                    width: '75px',
+                    render: function (data, type, full, meta) {
+                        var status = {
+                            1: {
+                                'title': 'Chưa check-in',
+                                'class': ' label-light-danger'
+                            },
+                            2: {
+                                'title': 'Check-in',
+                                'class': ' label-light-success'
+                            }
+                        };
+                        if (typeof status[data] === 'undefined') {
+                            return data;
+                        }
+                        return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+                    },
+                },
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    width: '70px',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" class="btn btn-outline-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
+                    }
+                }
+            ]
+        });</script>
+}

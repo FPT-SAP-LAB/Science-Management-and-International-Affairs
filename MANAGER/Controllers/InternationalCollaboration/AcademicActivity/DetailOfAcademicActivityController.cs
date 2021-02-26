@@ -7,36 +7,15 @@ using MANAGER.Models;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
-    public class AcademicActivityController : Controller
+    public class DetailOfAcademicActivityController : Controller
     {
-        // GET: AcademicActivity
-        public ActionResult List()
+        // GET: DetailOfAcademicActivity
+        public ActionResult Index()
         {
-            ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
+            ViewBag.pageTitle = "Thông tin hoạt động học thuật";
             return View();
         }
-        public JsonResult delete_AcademicActivity(int id)
-        {
-            try
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã xóa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public JsonResult add_AcademicActivity(string title, string category, string from, string to, string location)
+        public JsonResult add_Phase(string title, string from, string to)
         {
             try
             {
@@ -57,14 +36,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult edit_AcademicActivity(string title, string category, string from, string to, string location)
+        public JsonResult delete_Phase(int id)
         {
             try
             {
                 JsonError jerr = new JsonError()
                 {
                     code = 1,
-                    err_content = "Đã chỉnh sửa thành công"
+                    err_content = "Đã xóa thành công"
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
@@ -76,6 +55,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                     err_content = "Có lỗi xảy ra. Vui lòng thử lại"
                 };
                 return Json(jerr, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult edit_Phase(int id)
+        {
+            try
+            {
+                int data = id;
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
     }
