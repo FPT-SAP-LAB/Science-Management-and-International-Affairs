@@ -1,0 +1,79 @@
+﻿
+@{
+    //ViewBag.Title = "WaitDecision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card card-custom">
+    <div class="card-body">
+        <div class="card card-custom">
+            <div class="row" style="margin-bottom: 25px">
+                <div class="col-xl-12" style="text-align: start">
+                    <button class="btn btn-success font-weight-bolder">Upload quyết định</button>
+                    <button class="btn btn-success font-weight-bolder">Xuất excel</button>
+                </div>
+            </div>
+            <table id="tapchiin">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên tác giả</th>
+                        <th>MSNV/MSSV</th>
+                        <th>Đơn vị công tác</th>
+                        <th>Tên bằng sáng chế</th>
+                        <th>Loại bằng sáng chế</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyễn Quốc Long</td>
+                        <td>299923</td>
+                        <td>FU-HL</td>
+                        <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
+                        <td>Vietname Patent</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+        $('#tapchiin').DataTable({
+            "columns": [
+                { width: "5%" },
+                { width: "20%" },
+                { width: "15%" },
+                { width: "15%" },
+                { width: "25%" },
+                { width: "10%" },
+                { width: "10%" }
+            ],
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            }
+        });
+    });
+</script>
+
