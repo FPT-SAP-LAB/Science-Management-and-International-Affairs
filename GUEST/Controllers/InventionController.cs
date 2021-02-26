@@ -20,5 +20,16 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult AddRequest()
+        {
+            ViewBag.title = "Đăng ký khen thưởng bằng sáng chế";
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Đăng ký khen thưởng bằng sáng chế","/Invention/AddRequest"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
     }
 }

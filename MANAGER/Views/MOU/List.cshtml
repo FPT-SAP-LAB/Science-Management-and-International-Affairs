@@ -1,0 +1,467 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row mb-5">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                                <div class="row align-items-center">
+                                    <a href="#add" class="btn btn-sm btn-outline-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                    <a href="#" class="btn btn-sm btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                <div class="row align-items-center float-right">
+                                    <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">MOU đã xóa</a>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover table-checkable mou_table"
+                               id="">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="">S<br />T<br />T</th>
+                                    <th rowspan="2" class="">Số hiệu</th>
+                                    <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                    <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
+                                    <th rowspan="2" class="text-center">Trạng thái</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Tên</th>
+                                    <th class="text-center">Quốc gia</th>
+                                    <th class="text-center">Website</th>
+                                    <th class="text-center">Lĩnh vực</th>
+                                    <th class="text-center">Họ và tên</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Điện thoại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center" nowrap="nowrap">
+                                        2020/01
+                                    </td>
+                                    <td class="text-center">
+                                        Bunkyou University
+                                    </td>
+                                    <td class="text-center">Japan</td>
+                                    <td class="text-center">Icon link</td>
+                                    <td class="text-center">IT</td>
+                                    <td class="text-center">
+                                        Toshie Miyatake
+                                    </td>
+                                    <td class="text-center">kiec@stf.bunkyou.ac.jp</td>
+                                    <td nowrap="nowrap" class="text-center">
+                                        +81 48 974 8811
+                                    </td>
+                                    <td class="text-center">Icon driver</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center" nowrap="nowrap">FGO</td>
+                                    <td class="text-center" nowrap="nowrap">SE</td>
+                                    <td nowrap="nowrap">1</td>
+                                    <td nowrap="nowrap"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center" nowrap="nowrap">
+                                        2020/01
+                                    </td>
+                                    <td class="text-center">
+                                        Bunkyou University
+                                    </td>
+                                    <td class="text-center">Japan</td>
+                                    <td class="text-center">Icon link</td>
+                                    <td class="text-center">IT</td>
+                                    <td class="text-center">
+                                        Toshie Miyatake
+                                    </td>
+                                    <td class="text-center">kiec@stf.bunkyou.ac.jp</td>
+                                    <td nowrap="nowrap" class="text-center">
+                                        +81 48 974 8811
+                                    </td>
+                                    <td class="text-center">Icon driver</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center" nowrap="nowrap">FGO</td>
+                                    <td class="text-center" nowrap="nowrap">SE</td>
+                                    <td nowrap="nowrap">1</td>
+                                    <td nowrap="nowrap"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal add*@
+<div class="modal fade in" id="add" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">THÊM BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="wizard wizard-6 d-flex flex-column flex-lg-row flex-column-fluid" id="kt_wizard">
+                    <!--begin::Container-->
+                    <div class="wizard-content d-flex flex-column mx-auto py-10 py-lg-20 w-100 w-md-700px">
+                        <!--begin::Nav-->
+                        <div class="d-flex flex-column-auto flex-column px-10">
+                            <!--begin: Wizard Nav-->
+                            <div class="wizard-nav pb-lg-10 pb-3 d-flex flex-column align-items-center align-items-md-start">
+                                <!--begin::Wizard Steps-->
+                                <div class="wizard-steps d-flex flex-column flex-md-row">
+                                    <!--begin::Wizard Step 1 Nav-->
+                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step" data-wizard-state="current">
+                                        <div class="wizard-wrapper pr-lg-7 pr-5">
+                                            <div class="wizard-icon">
+                                                <i class="wizard-check ki ki-check"></i>
+                                                <span class="wizard-number">1</span>
+                                            </div>
+                                            <div class="wizard-label mr-3">
+                                                <h3 class="wizard-title">Account</h3>
+                                                <div class="wizard-desc">Account details</div>
+                                            </div>
+                                            <span class="svg-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                                        <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                        <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--end::Wizard Step 1 Nav-->
+                                    <!--begin::Wizard Step 2 Nav-->
+                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step">
+                                        <div class="wizard-wrapper pr-lg-7 pr-5">
+                                            <div class="wizard-icon">
+                                                <i class="wizard-check ki ki-check"></i>
+                                                <span class="wizard-number">2</span>
+                                            </div>
+                                            <div class="wizard-label mr-3">
+                                                <h3 class="wizard-title">Address</h3>
+                                                <div class="wizard-desc">Residential address</div>
+                                            </div>
+                                            <span class="svg-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                                        <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                        <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--end::Wizard Step 2 Nav-->
+                                    <!--begin::Wizard Step 3 Nav-->
+                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-icon">
+                                                <i class="wizard-check ki ki-check"></i>
+                                                <span class="wizard-number">3</span>
+                                            </div>
+                                            <div class="wizard-label">
+                                                <h3 class="wizard-title">Complete</h3>
+                                                <div class="wizard-desc">Submit form</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Wizard Step 3 Nav-->
+                                </div>
+                                <!--end::Wizard Steps-->
+                            </div>
+                            <!--end: Wizard Nav-->
+                        </div>
+                        <!--end::Nav-->
+                        <!--begin::Form-->
+                        <form class="px-10" novalidate="novalidate" id="kt_form">
+                            <!--begin: Wizard Step 1-->
+                            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                <!--begin::Title-->
+                                <div class="pb-10 pb-lg-12 text-center text-md-left">
+                                    <h3 class="font-weight-bolder text-dark font-size-h2">Create Account</h3>
+                                    <div class="text-muted font-weight-bold font-size-h4">
+                                        Already have an Account ?
+                                        <a href="/metronic/demo1/custom/pages/login/login-4/signin.html" class="text-primary font-weight-bolder">Sign In</a>
+                                    </div>
+                                </div>
+                                <!--begin::Title-->
+                                <!--begin::Form Group-->
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">First Name</label>
+                                    <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="firstname" placeholder="First Name" value="" />
+                                </div>
+                                <!--end::Form Group-->
+                                <!--begin::Form Group-->
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Last Name</label>
+                                    <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="lastname" placeholder="Last Name" value="" />
+                                </div>
+                                <!--end::Form Group-->
+                            </div>
+                            <!--end: Wizard Step 1-->
+                            <!--begin: Wizard Step 2-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <!--begin::Title-->
+                                <div class="pt-lg-0 pt-5 pb-15 text-center text-md-left">
+                                    
+                                </div>
+                                <!--begin::Title-->
+                                <!--begin::Row-->
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+                                            <label class="font-size-h6 font-weight-bolder text-dark">Address Line 1</label>
+                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="address1" placeholder="Address Line 1" value="Address Line 1" />
+                                            <span class="form-text text-muted">Please enter your Address.</span>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+                                            <label class="font-size-h6 font-weight-bolder text-dark">Address Line 2</label>
+                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="address2" placeholder="Address Line 2" value="Address Line 2" />
+                                            <span class="form-text text-muted">Please enter your Address.</span>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <!--end::Row-->
+                                <!--begin::Row-->
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+                                            <label class="font-size-h6 font-weight-bolder text-dark">State</label>
+                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="state" placeholder="State" value="VIC" />
+                                            <span class="form-text text-muted">Please enter your State.</span>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-xl-6">
+                                    </div>
+                                </div>
+                                <!--end::Row-->
+                            </div>
+                            <!--end: Wizard Step 2-->
+                            <!--begin: Wizard Step 3-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <!--begin::Title-->
+                                <div class="pt-lg-0 pt-5 pb-15 text-center text-md-left">
+                                    <h3 class="font-weight-bolder text-dark font-size-h2">Complete</h3>
+                                    <div class="text-muted font-weight-bold font-size-h4">Complete Your Signup And Become A Member!</div>
+                                </div>
+                                <!--end::Title-->
+                                <!--begin::Section-->
+                                <h4 class="font-weight-bolder mb-3">Accoun Settings:</h4>
+                                <div class="text-dark-50 font-weight-bold line-height-lg mb-8">
+                                    <div>Nick Stone</div>
+                                    <div>+12233434-34</div>
+                                    <div>nick.stone@gmail.com</div>
+                                </div>
+                                <!--end::Section-->
+                                <!--begin::Section-->
+                                <h4 class="font-weight-bolder mb-3">Address Details:</h4>
+                                <div class="text-dark-50 font-weight-bold line-height-lg mb-8">
+                                    <div>Address Line 1</div>
+                                    <div>Address Line 2</div>
+                                    <div>Melbourne 3000, VIC, Australia</div>
+                                </div>
+                                <!--end::Section-->
+                                <!--begin::Section-->
+                                <h4 class="font-weight-bolder mb-3">Support Channels:</h4>
+                                <div class="text-dark-50 font-weight-bold line-height-lg">
+                                    <div>Overnight Delivery with Regular Packaging</div>
+                                    <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
+                                </div>
+                                <!--end::Section-->
+                            </div>
+                            <!--end: Wizard Step 3-->
+                            <!--begin: Wizard Actions-->
+                            <div class="d-flex justify-content-between pt-7">
+                                <div class="mr-2">
+                                    <button type="button" class="btn btn-light-primary font-weight-bolder font-size-h6 pr-8 pl-6 py-4 my-3 mr-3" data-wizard-type="action-prev">
+                                        <span class="svg-icon svg-icon-md mr-2">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Left-2.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000)" x="14" y="7" width="2" height="10" rx="1" />
+                                                    <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997)" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>Previous
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-primary font-weight-bolder font-size-h6 pl-8 pr-4 py-4 my-3" data-wizard-type="action-submit">
+                                        Submit
+                                        <span class="svg-icon svg-icon-md ml-2">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Right-2.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary font-weight-bolder font-size-h6 pl-8 pr-4 py-4 my-3" data-wizard-type="action-next">
+                                        Next
+                                        <span class="svg-icon svg-icon-md ml-2">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Right-2.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--end: Wizard Actions-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal delete*@
+<div class="modal fade in" id="delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">XÁC NHẬN XÓA</h4>
+            </div>
+            <div class="modal-body">Có muốn xóa thông tin này?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+
+        //datatable
+        $(".mou_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
+                    "<option value='5'>5</option>" +
+                    "<option value='10'>10</option>" +
+                    "<option value='20'>20</option>" +
+                    "</select> bản ghi",
+                sSearch: "Tìm kiếm"
+            },
+            columnDefs: [
+                {
+                    targets: 14,
+                    width: '75px',
+                    render: function (data, type, full, meta) {
+                        var status = {
+                            1: {
+                                'title': 'Hết hạn',
+                                'class': 'label-light-danger'
+                            },
+                            2: {
+                                'title': 'Còn hạn',
+                                'class': 'label-light-success'
+                            }
+                        };
+                        if (typeof status[data] === 'undefined') {
+                            return data;
+                        }
+                        return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
+                    },
+                },
+                {
+                    targets: -1,
+                    title: '',
+                    orderable: false,
+                    width: '125px',
+                    render: function (data, type, full, meta) {
+                        return '<a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                    }
+                }
+            ]
+        });
+
+
+        //overflow
+        $(document).ready(function () {
+            $('.mou_table').parent().css('overflow-x', 'auto');
+            $('.mou_table thead tr th').css('font-weight', 'bold');
+            $('.header-modify').css('padding', '13px');
+        });
+
+        var id_row = "";
+        //parse id to do something
+        function parse_id(id) {
+            id_row = id;
+        }
+         //funtion delete
+        $('#btn_delete').click(function() {
+            $.ajax({
+                url: '@Url.Action("Delete_Mou", "MOU")',
+                data: { 'id': id_row },
+                success: function (data) {
+                    if (data = "") {
+                        toastr.error("Có lỗi xảy ra");
+                    } else {
+                        toastr.success("Đã xóa thành công");
+                    }
+
+                },
+            });
+        });
+    </script>
+}
+

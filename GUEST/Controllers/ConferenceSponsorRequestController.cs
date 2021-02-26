@@ -30,7 +30,7 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-        public ActionResult Detail()
+        public ActionResult Detail(int id)
         {
             var pagesTree = new List<PageTree>
             {
@@ -38,7 +38,17 @@ namespace GUEST.Controllers
                 new PageTree("Chi tiết","/ConferenceSponsorRequest/Detail"),
             };
             ViewBag.pagesTree = pagesTree;
+            ViewBag.id = id;
             return View();
+        }
+        [ChildActionOnly]
+        public ActionResult CostMenu(int id)
+        {
+            ViewBag.id = id;
+            ViewBag.CheckboxColumn = id == 2;
+            ViewBag.ReimbursementColumn = id >= 3;
+            ViewBag.EditAble = id == 2;
+            return PartialView();
         }
     }
 }

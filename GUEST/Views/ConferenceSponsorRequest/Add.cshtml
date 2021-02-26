@@ -547,6 +547,13 @@
                                             <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row">Tổng cộng</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td><span id="totalCost" class="label label-lg label-light-danger label-inline">0 đ</span></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -636,13 +643,13 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        var baseParticipant, tbodyParticipant, baseCost, tbodyCost;
+        var baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
+        var baseCost = document.getElementById("baseCost").cloneNode(true);
+        var tbodyParticipant = document.getElementById("tableParticipant");
+        var tbodyCost = document.getElementById("tableCost");
+        var rowTotalCost = tbodyCost.lastElementChild;
 
         $(document).ready(function () {
-            baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
-            baseCost = document.getElementById("baseCost").cloneNode(true);
-            tbodyParticipant = document.getElementById("tableParticipant");
-            tbodyCost = document.getElementById("tableCost");
 
             $('#kt_select2_1').select2();
 
@@ -852,26 +859,9 @@
 
         function addCost() {
             let temp = baseCost.cloneNode(true);
-            tbodyCost.appendChild(temp);
-        }
-
-        function deleteCost(ele) {
-            ele.closest("tr").remove();
-        }
-
-        function calculateCost(ele) {
-            let parentTr = ele.closest("tr");
-            let targetCost = parentTr.querySelector(".targetCost");
-            try {
-                let resultCal = eval(ele.value);
-                if (resultCal == undefined)
-                    targetCost.innerHTML = "0 đ"
-                else
-                    targetCost.innerHTML = resultCal + " đ"
-            } catch (e) {
-                targetCost.innerHTML = "0 đ"
-            }
+            tbodyCost.insertBefore(temp, rowTotalCost);
         }
     </script>
+    <script src="~/Scripts/CostTableConferenceRequest.js"></script>
 }
 

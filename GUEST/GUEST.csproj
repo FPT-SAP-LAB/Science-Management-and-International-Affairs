@@ -2307,6 +2307,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\CostTableConferenceRequest.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2339,6 +2340,8 @@
     <Content Include="Views\Invention\ListAll.cshtml" />
     <Content Include="Views\ConferenceSponsorRequest\Detail.cshtml" />
     <Content Include="Views\ConferenceSponsorRequest\Add.cshtml" />
+    <Content Include="Views\ConferenceSponsorRequest\CostMenu.cshtml" />
+    <Content Include="Views\Invention\AddRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2349,6 +2352,13 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
+    <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
+    <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
+    <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />
+    <Folder Include="Views\InternationalCollaboration\MasterData\" />
+    <Folder Include="Views\InternationalCollaboration\News\" />
+    <Folder Include="Views\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Views\InternationalCollaboration\Scholarship\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
