@@ -11,6 +11,7 @@
 * Pull Request sẽ chia làm các loại (TAG):</br>
         - <B>fix</B></br>
         - <B>add</B></br>
+        - <B>edit</B></br>
         - <B>remove</B></br>
         - <B>database</B></br>
         - <B>resources</B></br>
