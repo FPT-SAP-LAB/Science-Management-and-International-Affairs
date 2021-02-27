@@ -22,11 +22,11 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        //public ActionResult IntellectualPropertyReports()
-        //{
-        //    ViewBag.title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
-        //    return View();
-        //}
+        public ActionResult IntellectualPropertyReports()
+        {
+
+            return View();
+        }
 
     }
 }
