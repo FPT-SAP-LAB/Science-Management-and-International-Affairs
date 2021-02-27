@@ -1,6 +1,6 @@
 ﻿
 @{
-    //ViewBag.Title = "Danh sách các bài báo đang chờ xét duyệt";
+    //ViewBag.Title = "Pending";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,6 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên bài báo, ẩn phẩm, báo cáo khoa học</th>
                     <th>Người request</th>
                     <th>Ngày request</th>
                     <th>Chi tiết</th>
@@ -19,17 +18,15 @@
             <tbody id="pending-body">
                 <tr>
                     <td>1</td>
-                    <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
                     <td>Nguyễn Quốc Long et al</td>
                     <td>10/12/2019</td>
-                    <td><a href="/Paper/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
+                    <td><a href="/Citation/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
                     <td>Tran, Nghi C</td>
                     <td>09/12/2019</td>
-                    <td><a href="/Paper/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
+                    <td><a href="/Citation/Detail" class="btn btn-outline-primary">Chi tiết</a></td>
                 </tr>
             </tbody>
         </table>
@@ -44,10 +41,9 @@
         $("#pending").DataTable({
             "columns": [
                 { width: "5%" },
-                { width: "30%" },
+                { width: "35%" },
+                { width: "35%" },
                 { width: "25%" },
-                { width: "25%" },
-                { width: "15%" },
             ],
             oLanguage: {
                 oPaginate: {

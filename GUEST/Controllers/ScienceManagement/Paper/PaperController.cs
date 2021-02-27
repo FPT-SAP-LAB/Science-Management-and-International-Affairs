@@ -7,25 +7,25 @@ using User.Models;
 
 namespace GUEST.Controllers
 {
-    public class ConferenceSponsorRequestController : Controller
+    public class PaperController : Controller
     {
-        // GET: ConferenceSponsorRequest
-        public ActionResult Index()
+        public ActionResult AddRequest()
         {
+            ViewBag.title = "Đăng ký khen thưởng bài báo";
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
+                new PageTree("Đăng ký khen thưởng bài báo","/Paper/AddRequest"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();
         }
 
-        public ActionResult Add()
+        public ActionResult Pending()
         {
+            ViewBag.title = "Bài báo đang xử lý";
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
-                new PageTree("Thêm","/ConferenceSponsorRequest/Add"),
+                new PageTree("Bài báo đangg xử lý","/Paper/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();

@@ -118,12 +118,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CitationController.cs" />
-    <Compile Include="Controllers\ConferenceSponsorRequestController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InventionController.cs" />
-    <Compile Include="Controllers\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2307,6 +2307,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\CostTableConferenceRequest.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2330,16 +2331,17 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Index.cshtml" />
-    <Content Include="Views\Paper\ListAll.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Paper\AddRequest.cshtml" />
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Citation\List.cshtml" />
     <Content Include="Views\Citation\AddRequest.cshtml" />
     <Content Include="Views\Invention\ListAll.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Detail.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Add.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Add.cshtml" />
+    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\Invention\AddRequest.cshtml" />
+    <Content Include="Views\ScientificProducts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,123 @@
+﻿
+@{
+    //ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card card-custom">
+    <div class="card-body">
+        <h3 class="mb-10 font-weight-bold text-dark">Thông tin bằng sáng chế</h3>
+        <div class="row">
+            <div class="col-xl-6 form-group">
+                <label>Tên sản phẩm</label>
+                <input class="form-control form-control-lg" type="text" value="Máy in ba chiều" disabled />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Số bằng sáng chế</label>
+                <input class="form-control form-control-lg custom-pickdate" type="text" value="1-0015677" disabled />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Loại SHTT</label>
+                <input class="form-control form-control-lg" type="text" value="Vietnam Patent" disabled />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Ngày cấp</label>
+                <input class="form-control form-control-lg" type="text" value="25/08/2016" disabled />
+            </div>
+        </div>
+        <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+        <div class="row" id="thuong">
+            <div class="col-xl-6 form-group">
+                <label>Tổng thưởng cho bài báo</label>
+                <input id="totalreward" class="form-control form-control-lg" type="number" />
+            </div>
+            <div class="col-xl-6 form-group">
+                <label>Chọn loại khen thưởng</label>
+                <select id="typereward" class="form-control form-control-lg" disabled>
+                    <option value="1" selected>Theo quy định</option>
+                    <option value="2">Đại diện nhận thưởng</option>
+                </select>
+            </div>
+        </div>
+        <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-bordered tacgia">
+                    <thead>
+                        <tr>
+                            <th>Đơn vị</th>
+                            <th>MSNV/MSSV</th>
+                            <th>Họ tên</th>
+                            <th>Chức danh</th>
+                            <th>Loại hợp đồng</th>
+                            <th>Mã số thuế</th>
+                            <th>Số CMND</th>
+                            <th>CMND</th>
+                            <th>Ngân hàng</th>
+                            <th>Số tài khoản</th>
+                            <th>Tiền thưởng</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tacgia_body">
+                        <tr>
+                            <td>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked disabled /><span></span>Trong FE
+                                </label>
+                            </td>
+                            <td><input list="ncv_list" type="text" class="form-control" value="123" disabled /></td>
+                            <td><input type="text" class="form-control" value="abc" disabled /></td>
+                            <td>
+                                <select class="form-control" disabled>
+                                    <option value="1">Nghiên cứu viên</option>
+                                    <option value="2">Giảng viên</option>
+                                    <option value="3" selected>Sinh viên</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" disabled>
+                                    <option value="1" selected>Full time</option>
+                                    <option value="2">Part time</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" value="000" disabled /></td>
+                            <td><input type="text" class="form-control" value="123456789" disabled /></td>
+                            <td><button class="btn btn-primary">View</button></td>
+                            <td><input type="text" class="form-control" value="TPBank" disabled /></td>
+                            <td><input type="text" class="form-control" value="888" disabled /></td>
+                            <td><input type="number" class="form-control onereward" /></td>
+                            <td><input type="text" class="form-control" value="" disabled /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button class="btn btn-success col-xl-2" id="confirmbtn">Xác nhận duyệt</button>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $(document).on("wheel", "input[type=number]", function (e) {
+        $(this).blur();
+    });
+    $("#confirmbtn").click(function () {
+        var temp = $("#totalreward").val();
+        if (temp == "") {
+            toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+        }
+        var ck = $("#typereward").val()
+        if (ck == 1) {
+            $(".onereward").each(function () {
+                var value = $(this).val();
+                if (value == "") {
+                    toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                }
+            });
+        }
+    });
+</script>
+

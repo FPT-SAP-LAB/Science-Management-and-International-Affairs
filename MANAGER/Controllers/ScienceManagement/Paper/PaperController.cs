@@ -20,5 +20,11 @@ namespace MANAGER.Controllers
             ViewBag.title = "Chi tiết bài báo";
             return View();
         }
+
+        public ActionResult WaitDecision()
+        {
+            ViewBag.title = "Chờ quyết định khen thưởng";
+            return View();
+        }
     }
 }
