@@ -2156,6 +2156,7 @@
     <Content Include="Views\Reports\InternationalPapersReports.cshtml" />
     <Content Include="Views\Reports\InCountryPapersReports.cshtml" />
     <Content Include="Views\Reports\IntellectualPropertyReports.cshtml" />
+    <Content Include="Views\Reports\CitationReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,7 +11,6 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         // GET: Reports
         public ActionResult PapersReportsByWorkplace()
         {
-            
             return View();
         }
         public ActionResult InternationalPapersReports()
@@ -24,7 +23,10 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         public ActionResult IntellectualPropertyReports()
         {
-
+            return View();
+        }
+        public ActionResult CitationReports()
+        {
             return View();
         }
 
