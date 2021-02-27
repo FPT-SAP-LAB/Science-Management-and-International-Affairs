@@ -118,12 +118,22 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CitationController.cs" />
     <Compile Include="Controllers\ConferencesFunding.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\CheckInController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
+    <Compile Include="Controllers\InventionController.cs" />
+    <Compile Include="Controllers\PaperController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\JsonError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2122,18 +2132,30 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
     <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
+    <Content Include="Views\Scholarship\List.cshtml" />
+    <Content Include="Views\Convention\Index.cshtml" />
+    <Content Include="Views\CheckIn\List.cshtml" />
+    <Content Include="Views\DetailOfAcademicActivity\Index.cshtml" />
+    <Content Include="Views\Paper\Pending.cshtml" />
+    <Content Include="Views\Paper\Detail.cshtml" />
+    <Content Include="Views\AcademicCollaboration\List.cshtml" />
+    <Content Include="Views\MOU\List.cshtml" />
+    <Content Include="Views\MOU\Detail.cshtml" />
+    <Content Include="Views\Paper\WaitDecision.cshtml" />
+    <Content Include="Views\Invention\Pending.cshtml" />
+    <Content Include="Views\Invention\Detail.cshtml" />
+    <Content Include="Views\Invention\WaitDecision.cshtml" />
+    <Content Include="Views\Citation\Pending.cshtml" />
+    <Content Include="Views\Citation\Detail.cshtml" />
+    <Content Include="Views\Citation\WaitDecision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Partner\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
