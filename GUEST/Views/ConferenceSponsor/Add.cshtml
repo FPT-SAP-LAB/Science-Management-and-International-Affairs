@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    span.select2{
+        width: 220px !important;
+    }
+</style>
+
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -17,7 +23,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Tên hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
                                     <span class="form-text text-muted">Please enter your Postcode.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -27,7 +33,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="city" placeholder="Website hội nghị" value="">
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Website hội nghị" value="">
                                     <span class="form-text text-muted">Please enter your City.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -39,7 +45,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
                                     <span class="form-text text-muted">Please enter your Postcode.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -49,7 +55,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
                                     <span class="form-text text-muted">Please enter your City.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -61,7 +67,7 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Quốc gia <span style='color:red'>*</span>:</label>
-                                    <select class="form-control form-control-lg" id="kt_select2_1" name="country">
+                                    <select class="form-control form-control-lg" id="kt_select2_1">
                                         <option value="">Select</option>
                                         <option value="AF">Afghanistan</option>
                                         <option value="AX">Åland Islands</option>
@@ -357,7 +363,7 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Hình thức <span style='color:red'>*</span>:</label>
-                                    <select name="country" class="form-control  form-control-lg">
+                                    <select class="form-control form-control-lg">
                                         <option value="1">Online quốc tế</option>
                                         <option value="2">Offline quốc tế</option>
                                         <option value="3">Trong nước</option>
@@ -375,41 +381,40 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">MSNV/MSSV</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Họ và tên</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Đơn vị</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Khu vực</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Date: activate to sort column ascending">Chức danh</th>
-                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th style="width: 240px">MSNV/MSSV</th>
+                                        <th>Họ và tên</th>
+                                        <th>Đơn vị</th>
+                                        <th>Khu vực</th>
+                                        <th>Chức danh</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableParticipant">
                                     <tr role="row" class="odd">
                                         <td>
-                                            <select class="form-control select2" id="kt_select2_6" name="param">
-                                                <option label="Label"></option>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label">ABC123</option>
                                             </select>
-                                            @*<input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="ABC123">*@
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
+                                            <select class="form-control form-control-lg selectWorkUnit">
                                                 <option value="1">FPTU</option>
                                                 <option value="2">FPoly</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
+                                            <select class="form-control form-control-lg selectArea">
                                                 <option value="1">Hà Nội</option>
                                                 <option value="2">Đà Nẵng</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="1">Giảng viên</option>
-                                                <option value="2">Sinh viên</option>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -418,27 +423,29 @@
                                     </tr>
                                     <tr role="row" class="odd" id="baseParticipant">
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Họ và tên" value="">
-                                        </td>
-                                        <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Đại học FPT</option>
-                                                <option value="AX">FPoly</option>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label"></option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Hà Nội</option>
-                                                <option value="AX">Đà Nẵng</option>
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="">
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectWorkUnit">
+                                                <option value="1">FPTU</option>
+                                                <option value="2">FPoly</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Giảng viên</option>
-                                                <option value="AX">Sinh viên</option>
+                                            <select class="form-control form-control-lg selectArea">
+                                                <option value="1">Hà Nội</option>
+                                                <option value="2">Đà Nẵng</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -527,21 +534,21 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">Nội dung</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Tổ chức tài trợ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Chi phí</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Tổng cộng</th>
-                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th>Nội dung</th>
+                                        <th>Tổ chức tài trợ</th>
+                                        <th>Chi phí</th>
+                                        <th>Tổng cộng</th>
+                                        <th class="sorting_disabled">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableCost">
                                     <tr role="row" class="odd" id="baseCost">
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Nội dung " value="">
+                                            <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Nội dung " value="">
                                         </td>
                                         <td>FPTU</td>
                                         <td>
-                                            <input onInput="calculateCost(this)" type="text" class="form-control  form-control-lg" name="postcode" placeholder="Chi phí" value="">
+                                            <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg" name="postcode" placeholder="Chi phí" value="">
                                         </td>
                                         <td>
                                             <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -853,6 +860,7 @@
 
         function addParticipant() {
             let temp = baseParticipant.cloneNode(true);
+            inItSelectPeople(temp.getElementsByClassName("selectPeople"));
             tbodyParticipant.appendChild(temp);
         }
 
@@ -866,67 +874,72 @@
         }
 
         // loading remote data
+        var currentRow;
+
+        $(document).on("click", "#tableParticipant span.select2", function () {
+            currentRow = $(this).closest("tr");
+        })
 
         function formatRepo(repo) {
             if (repo.loading) return repo.text;
             var markup = "<div class='select2-result-repository clearfix'>" +
                 "<div class='select2-result-repository__meta'>" +
-                "<div class='select2-result-repository__title'>" + repo.ID + "</div>" +
+                "<div class='select2-result-repository__title'>" + repo.id + "</div>" +
                 "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
                 "<div class='select2-result-repository__statistics'>" +
                 "<div class='select2-result-repository__forks'>" + repo.WorkUnitString + " " + repo.AreaString + "</div>" +
                 "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
-                "</div>" +
-                "</div></div>";
-            //var markup = "<div class='select2-result-repository clearfix'>" +
-            //    "<div class='select2-result-repository__meta'>" +
-            //    "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
-            //if (repo.description) {
-            //    markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
-            //}
-            //markup += "<div class='select2-result-repository__statistics'>" +
-            //    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
-            //    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
-            //    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
-            //    "</div>" +
-            //    "</div></div>";
+                "</div></div></div>";
             return markup;
         }
 
         function formatRepoSelection(repo) {
-            return repo.ID || repo.text;
+            if (repo.id) {
+                $(currentRow).find(".inputName").val(repo.Name);
+                $(currentRow).find(".selectWorkUnit").val(repo.WorkUnitID);
+                $(currentRow).find(".selectArea").val(repo.AreaID);
+                $(currentRow).find(".selectTitle").val(repo.TitleID);
+                console.log(currentRow);
+            }
+            return repo.id || repo.text;
         }
 
-        $("#kt_select2_6").select2({
-            placeholder: "Search for git repositories",
-            allowClear: true,
-            ajax: {
-                url: "/ConferenceSponsor/GetInformationPeopleWithID",
-                //url: "https://api.github.com/search/repositories",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page
-                    };
-                },
-                processResults: function (data, params) {
-                    params.page = params.page || 1;
+        function inItSelectPeople(ele) {
+            $(ele).select2({
+                placeholder: "Tìm kiếm thông tin theo mã số",
+                allowClear: true,
+                ajax: {
+                    url: "/ConferenceSponsor/GetInformationPeopleWithID",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        data.map(function (obj) {
+                            obj.id = obj.PeopleID;
+                            return obj;
+                        })
 
-                    return {
-                        results: data
-                    };
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
                 },
-                cache: true
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            }, // let our custom formatter work
-            minimumInputLength: 2,
-            templateResult: formatRepo, // omitted for brevity, see the source of this page
-            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-        });
+                escapeMarkup: function (markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 2,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+        }
+
+        inItSelectPeople(document.getElementsByClassName("selectPeople"))
     </script>
     <script src="~/Scripts/CostTableConferenceRequest.js"></script>
 }
