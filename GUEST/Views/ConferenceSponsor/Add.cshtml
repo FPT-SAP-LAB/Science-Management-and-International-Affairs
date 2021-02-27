@@ -375,38 +375,41 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">MSNV/MSSV</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Họ và tên</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Đơn vị</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Khu vực</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 100px;" aria-label="Ship Date: activate to sort column ascending">Chức danh</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">MSNV/MSSV</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Họ và tên</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Đơn vị</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Khu vực</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Date: activate to sort column ascending">Chức danh</th>
+                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableParticipant">
                                     <tr role="row" class="odd">
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="ABC123">
+                                            <select class="form-control select2" id="kt_select2_6" name="param">
+                                                <option label="Label"></option>
+                                            </select>
+                                            @*<input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="ABC123">*@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
                                         </td>
                                         <td>
                                             <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Đại học FPT</option>
-                                                <option value="AX">FPoly</option>
+                                                <option value="1">FPTU</option>
+                                                <option value="2">FPoly</option>
                                             </select>
                                         </td>
                                         <td>
                                             <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Hà Nội</option>
-                                                <option value="AX">Đà Nẵng</option>
+                                                <option value="1">Hà Nội</option>
+                                                <option value="2">Đà Nẵng</option>
                                             </select>
                                         </td>
                                         <td>
                                             <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Giảng viên</option>
-                                                <option value="AX">Sinh viên</option>
+                                                <option value="1">Giảng viên</option>
+                                                <option value="2">Sinh viên</option>
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -524,11 +527,11 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">Nội dung</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Tổ chức tài trợ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Chi phí</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" rowspan="1" colspan="1" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Tổng cộng</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">Nội dung</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Tổ chức tài trợ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Chi phí</th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Tổng cộng</th>
+                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableCost">
@@ -861,6 +864,69 @@
             let temp = baseCost.cloneNode(true);
             tbodyCost.insertBefore(temp, rowTotalCost);
         }
+
+        // loading remote data
+
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+            var markup = "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__meta'>" +
+                "<div class='select2-result-repository__title'>" + repo.ID + "</div>" +
+                "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
+                "<div class='select2-result-repository__statistics'>" +
+                "<div class='select2-result-repository__forks'>" + repo.WorkUnitString + " " + repo.AreaString + "</div>" +
+                "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
+                "</div>" +
+                "</div></div>";
+            //var markup = "<div class='select2-result-repository clearfix'>" +
+            //    "<div class='select2-result-repository__meta'>" +
+            //    "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+            //if (repo.description) {
+            //    markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+            //}
+            //markup += "<div class='select2-result-repository__statistics'>" +
+            //    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
+            //    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
+            //    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
+            //    "</div>" +
+            //    "</div></div>";
+            return markup;
+        }
+
+        function formatRepoSelection(repo) {
+            return repo.ID || repo.text;
+        }
+
+        $("#kt_select2_6").select2({
+            placeholder: "Search for git repositories",
+            allowClear: true,
+            ajax: {
+                url: "/ConferenceSponsor/GetInformationPeopleWithID",
+                //url: "https://api.github.com/search/repositories",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 2,
+            templateResult: formatRepo, // omitted for brevity, see the source of this page
+            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+        });
     </script>
     <script src="~/Scripts/CostTableConferenceRequest.js"></script>
 }
