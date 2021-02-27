@@ -1,9 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
+    ViewBag.Title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO TRONG NƯỚC";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="card-body">
     <!--begin: Search Form-->
     <!--begin::Search Form-->
@@ -151,35 +150,30 @@
     <table class="table table-bordered table-checkable" id="kt_datatable">
         <thead>
             <tr>
-                <th>STT</th>
                 <th>Ngày Hiệu lực</th>
                 <th>Số Quyết Định</th>
                 <th>Tên Tác Giả</th>
                 <th>Chức Danh</th>
-                <th>Đơn vị</th>
+                <th>MNV</th>
                 <th>Tên Bài Báo</th>
                 <th>Tên Tạp Chí</th>
-                <th>Xếp loại</th>
-                <th>Lĩnh vực</th>
-                <th>Đồng tác giả</th>
+                <th>Năm Đăng</th>
+                <th>Tiền Thưởng</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>1</td>
-                <td>43839</td>
+                <td>14/10/2020</td>
                 <td>39/QĐ-ĐHFPT</td>
                 <td>Bùi Xuân Chung</td>
                 <td>GV</td>
-                <td>FPTU</td>
-                <td>Edges of interpolating tetrahedron based encryption algorithm for 3D printing model</td>
-                <td>Mobile networks and applications </td>
-                <td>Q1</td>
-                <td>IT</td>
-                <td>QS500</td>
+                <td>88222</td>
+                <td>Giác độ công nghệ với đổi mới mô hình kinh doanh trong sự tiến hoá của công nghệ 5G</td>
+                <td>Tạp chí TT&TT</td>
+                <td>2020</td>
+                <td>4000000</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td> </td>
@@ -189,23 +183,19 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>2</td>
-                <td>43839</td>
+                <td>15/10/2020</td>
                 <td>39/QĐ-ĐHFPT</td>
                 <td>Bùi Xuân Chung</td>
                 <td>GV</td>
-                <td>FPTU</td>
-                <td>Edges of interpolating tetrahedron based encryption algorithm for 3D printing model</td>
-                <td>Mobile networks and applications </td>
-                <td>Q1</td>
-                <td>IT</td>
-                <td>QS500</td>
+                <td>88222</td>
+                <td>Mô hình kinh doanh dưới tác động của công nghệ 5G</td>
+                <td>Tạp chí TT&TT</td>
+                <td>2020</td>
+                <td>4000000</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
                 <td>3</td>
                 <td>...</td>
                 <td>...</td>
@@ -215,10 +205,8 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
                 <td>4</td>
                 <td>...</td>
                 <td>...</td>
@@ -228,13 +216,10 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
                 <td>5</td>
                 <td>...</td>
-                <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -246,121 +231,120 @@
         </tbody>
     </table>
     <!--end: Datatable-->
-    @section scripts{
-        <script>
-            var KTDatatablesBasicBasic = function () {
 
-                var initTable1 = function () {
-                    var table = $('#kt_datatable');
-
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        order: [[1, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                var initTable2 = function () {
-                    var table = $('#kt_datatable_2');
-
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        // order: [[0, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
-                    }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
-            });
-        </script>
-    }
-    
 </div>
+@section scripts{
+    <script>
+        var KTDatatablesBasicBasic = function () {
 
+            var initTable1 = function () {
+                var table = $('#kt_datatable');
+
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                    lengthMenu: [5, 10, 25, 50],
+
+                    pageLength: 10,
+
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
+
+                    // Order settings
+                    order: [[1, 'desc']],
+
+                    columnDefs: [
+
+                    ],
+                });
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            var initTable2 = function () {
+                var table = $('#kt_datatable_2');
+
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                    lengthMenu: [5, 10, 25, 50],
+
+                    pageLength: 10,
+
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
+
+                    // Order settings
+                    // order: [[0, 'desc']],
+
+                    columnDefs: [
+
+                    ],
+                });
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            return {
+
+                //main function to initiate the module
+                init: function () {
+                    initTable1();
+                    initTable2();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTDatatablesBasicBasic.init();
+        });
+    </script>
+}

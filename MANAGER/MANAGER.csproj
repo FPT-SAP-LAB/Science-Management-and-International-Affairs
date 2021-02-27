@@ -2154,6 +2154,7 @@
     <Content Include="Views\Authen\Login.cshtml" />
     <Content Include="Views\Reports\PapersReportsByWorkplace.cshtml" />
     <Content Include="Views\Reports\InternationalPapersReports.cshtml" />
+    <Content Include="Views\Reports\InCountryPapersReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
