@@ -13,22 +13,25 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        public ActionResult InternationalPapersReports()
+        public ActionResult InternationalPapersReport()
         {
             return View();
         }
-        public ActionResult InCountryPapersReports()
+        public ActionResult InCountryPapersReport()
         {
             return View();
         }
-        public ActionResult IntellectualPropertyReports()
+        public ActionResult IntellectualPropertyReport()
         {
             return View();
         }
-        public ActionResult CitationReports()
+        public ActionResult CitationReport()
         {
             return View();
         }
-
+        public ActionResult ConferencesParticipationReport()
+        {
+            return View();
+        }
     }
 }
