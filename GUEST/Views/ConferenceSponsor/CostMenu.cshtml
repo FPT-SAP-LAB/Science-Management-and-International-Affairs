@@ -29,24 +29,24 @@
                 <td></td>
             }
         </tr>
-        <tr>
-            <td>Taxi</td>
-            <td>FPTU</td>
+        <tr class="costEditAble" id="23">
+            <td class="align-middle">Taxi</td>
+            <td class="align-middle">FPTU</td>
             @if (ViewBag.CheckboxColumn)
             {
-                <td>
-                    <input onInput="calculateCost(this)" type="text" class="form-control  form-control-lg" name="postcode" placeholder="Chi phí" value="">
+                <td class="align-middle">
+                    <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
                 </td>
-                <td>
+                <td class="align-middle">
                     <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
                 </td>
-                <td>
+                <td class="align-middle">
                     <label class="checkbox checkbox-disabled">
                         <input type="checkbox" disabled="disabled" name="Checkboxes1" />
                         <span></span>
                     </label>
                 </td>
-                <td nowrap="">
+                <td class="align-middle">
                     <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
                 </td>
             }
@@ -56,20 +56,31 @@
                 <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
             }
         </tr>
-        <tr>
-            <td>Vé máy bay</td>
-            <td>FPTU</td>
-            <td>500,000 * 3 * 4</td>
-            <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
+        <tr class="costEditAble" id="14">
+            <td class="align-middle">Vé máy bay</td>
+            <td class="align-middle">FPTU</td>
             @if (ViewBag.CheckboxColumn)
             {
-                <td>
+                <td class="align-middle">
+                    <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
+                </td>
+                <td class="align-middle">
+                    <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                </td>
+                <td class="align-middle">
                     <label class="checkbox checkbox-disabled">
-                        <input type="checkbox" disabled="disabled" checked="checked" name="Checkboxes1" />
+                        <input type="checkbox" disabled="disabled" name="Checkboxes1" />
                         <span></span>
                     </label>
                 </td>
-                <td></td>
+                <td class="align-middle">
+                    <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                </td>
+            }
+            else
+            {
+                <td>2,000,000 * 3</td>
+                <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
             }
         </tr>
         <tr>
@@ -112,8 +123,36 @@
 </table>
 @if (ViewBag.EditAble)
 {
-    <button type="submit" class="btn btn-primary float-right">Lưu</button>
-    <button type="submit" class="btn btn-success float-right mr-2">Gửi đơn</button>
+    <button type="button" onclick="saveCost()" class="btn btn-primary float-right">Lưu</button>
+    <button type="button" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
 
     @Scripts.Render("~/Scripts/CostTableConferenceRequest.js");
+
+    <script>
+        calculateTotalCost();
+
+        function saveCost() {
+
+        }
+
+        function submitCost() {
+            Swal.fire({
+                title: "Bạn chắc chắn chứ?",
+                text: "Chi phí không thể chỉnh sửa sau khi gửi!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Chắc chắn!",
+                cancelButtonText: "Hủy"
+            }).then(function (result) {
+                if (result.value) {
+                    let listCosts = [];
+                    document.querySelectorAll(".costEditAble").forEach(function (ele) {
+                        listCosts.push({ id: ele.id, cost: ele.querySelector(".costInput").value });
+                    })
+                    console.log(listCosts);
+                }
+                //location.reload();
+            });
+        }
+    </script>
 }
