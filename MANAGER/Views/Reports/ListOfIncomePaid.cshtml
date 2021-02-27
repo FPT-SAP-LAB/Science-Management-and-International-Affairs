@@ -1,27 +1,37 @@
 ﻿
 @{
-    ViewBag.Title = "THỐNG KÊ SỐ LƯỢT THAM GIA HỘI THẢO THEO TÁC GIẢ";
+    ViewBag.Title = "BẢNG KÊ CÁC KHOẢN THU NHẬP CHI TRẢ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card-body">
     <!--begin: Search Form-->
     <!--begin::Search Form-->
     <div class="mb-7">
+
         <div class="row align-items-center">
-            <div class="col-lg-9 col-xl-8">
+            <div class="col-lg-10 col-xl-8">
                 <div class="row align-items-center">
-                    <div class="col-md-4 my-2 my-md-0">
-                        <div class="input-icon">
-                            <input type="text" class="form-control"
-                                   placeholder="Tên..."
-                                   id="kt_datatable_search_query" />
-                            <span>
-                                <i class="flaticon2-search-1 text-muted"></i>
-                            </span>
+                    <div class="col-md-3 my-2 my-md-0">
+                        <div class="d-flex align-items-center">
+                            <label class="mr-3 mb-0 d-none d-md-block">Tháng:</label>
+                            <select class="form-control"
+                                    id="kt_datatable_search_status">
+                                <option value="">1</option>
+                                <option value="1">2</option>
+                                <option value="2">3</option>
+                                <option value="3">4</option>
+                                <option value="4">5</option>
+                                <option value="5">6</option>
+                                <option value="6">7</option>
+                                <option value="6">8</option>
+                                <option value="6">9</option>
+                                <option value="6">10</option>
+                                <option value="6">11</option>
+                                <option value="6">12</option>
+                            </select>
                         </div>
                     </div>
-
-                    <div class="col-md-4 my-2 my-md-0">
+                    <div class="col-md-3 my-2 my-md-0">
                         <div class="d-flex align-items-center">
                             <label class="mr-3 mb-0 d-none d-md-block">Năm:</label>
                             <select class="form-control"
@@ -36,7 +46,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+
+                    <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
                         <a href="#"
                            class="btn btn-light-primary px-6 font-weight-bold">
                             Tìm kiếm
@@ -46,7 +57,8 @@
                 </div>
 
             </div>
-            <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0" style="text-align: right;">
+            <div class="col-lg-2 col-xl-4 mt-5 mt-lg-0"
+                 style="text-align: right;">
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button"
                             class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -124,9 +136,6 @@
                 </div>
             </div>
         </div>
-        <div class="row align-items-center">
-
-        </div>
     </div>
     <!--end::Search Form-->
     <!--begin: Datatable-->
@@ -134,111 +143,70 @@
         <thead>
             <tr>
                 <th>STT</th>
-                <th>Tên tác giả</th>
-                <th>Chức danh</th>
-                <th>Đơn vị</th>
-                <th>Tổng chi phí</th>
-                <th>Số hội nghị trong nước</th>
-                <th>Số hội nghị ngoài nước</th>
+                <th>Họ và tên</th>
+                <th>Số CMND</th>
+                <th>Mã số thuế</th>
+                <th>Số tiền chi trả trước thuế</th>
+                <th>Thuế TNCN tạm khấu trừ</th>
+                <th>Số tiền thực chi trả</th>
+                <th>Nội dung chi trả</th>
             </tr>
         </thead>
-
         <tbody>
             <tr>
                 <td>1</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
+                <td>Trần Đức Chung</td>
+                <td>1072001593</td>
+                <td>80096253473</td>
+                <td>4000000</td>
+                <td>400000</td>
+                <td>3600000</td>
+                <td>Tiền bái báo trong nước</td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Đoàn Văn Thắng</td>
-                <td>Sinh viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>10.000.000</td>
-                <td>10</td>
-                <td>20</td>
+                <td>Huỳnh Tuấn Hội</td>
+                <td>308376502</td>
+                <td>308376502</td>
+                <td>1000000</td>
+                <td>&nbsp;</td>
+                <td>1000000</td>
+                <td>Tiền bái báo trong nước</td>
             </tr>
             <tr>
+                <td>&nbsp;</td>
                 <td>3</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
+                <td>&nbsp;</td>
                 <td>4</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
+                <td>&nbsp;</td>
                 <td>5</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
+                <td>...</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td></td>
             </tr>
-            <tr>
-                <td>6</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Giảng viên</td>
-                <td>FPTU Hà Nội</td>
-                <td>100.000.000</td>
-                <td>10</td>
-                <td>20</td>
-            </tr>
-
         </tbody>
-
     </table>
     <!--end: Datatable-->
+
 </div>
 @section scripts{
     <script>
@@ -253,7 +221,7 @@
 
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                     lengthMenu: [5, 10, 25, 50],
 
@@ -301,7 +269,7 @@
 
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                     lengthMenu: [5, 10, 25, 50],
 

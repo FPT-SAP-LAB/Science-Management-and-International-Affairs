@@ -2158,6 +2158,9 @@
     <Content Include="Views\Reports\IntellectualPropertyReport.cshtml" />
     <Content Include="Views\Reports\CitationReport.cshtml" />
     <Content Include="Views\Reports\ConferencesParticipationReport.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport_tgtemp.cshtml" />
+    <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
+    <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
