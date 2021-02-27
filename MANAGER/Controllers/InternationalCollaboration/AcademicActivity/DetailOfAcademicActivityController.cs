@@ -15,7 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pageTitle = "Thông tin hoạt động học thuật";
             return View();
         }
-        public JsonResult add_Phase(int id,string name, string from, string to)
+        public JsonResult add_Phase(int id, string name, string from, string to)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult edit_Phase(int id,string name, string from, string to)
+        public JsonResult edit_Phase(int id, string name, string from, string to)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult add_Tucach(int id,string name, int quantity, bool by, List<QuantityByUnit> arr)
+        public JsonResult add_Tucach(int id, string name, int quantity, bool by, List<QuantityByUnit> arr)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         public class QuantityByUnit
         {
-            public string name { get; set;}
+            public string name { get; set; }
             public int quantity { get; set; }
         }
     }
