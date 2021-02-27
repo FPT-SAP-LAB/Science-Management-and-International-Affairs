@@ -2156,7 +2156,7 @@
     <Content Include="Views\Reports\InternationalPapersReport.cshtml" />
     <Content Include="Views\Reports\InCountryPapersReport.cshtml" />
     <Content Include="Views\Reports\IntellectualPropertyReport.cshtml" />
-    <Content Include="Views\Reports\CitationReports.cshtml" />
+    <Content Include="Views\Reports\CitationReport.cshtml" />
     <Content Include="Views\Reports\ConferencesParticipationReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
