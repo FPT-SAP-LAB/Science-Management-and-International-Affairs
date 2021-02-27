@@ -7,14 +7,14 @@ using User.Models;
 
 namespace GUEST.Controllers
 {
-    public class ConferenceSponsorRequestController : Controller
+    public class ConferenceSponsorController : Controller
     {
-        // GET: ConferenceSponsorRequest
+        // GET: ConferenceSponsor
         public ActionResult Index()
         {
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
+                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();
@@ -24,8 +24,8 @@ namespace GUEST.Controllers
         {
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
-                new PageTree("Thêm","/ConferenceSponsorRequest/Add"),
+                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
+                new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();
@@ -34,8 +34,8 @@ namespace GUEST.Controllers
         {
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsorRequest"),
-                new PageTree("Chi tiết","/ConferenceSponsorRequest/Detail"),
+                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
+                new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.id = id;
