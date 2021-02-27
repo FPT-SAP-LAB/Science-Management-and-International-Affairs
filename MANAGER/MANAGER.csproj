@@ -118,7 +118,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ConferencesFunding.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferencesFunding.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\CheckInController.cs" />
@@ -2152,6 +2152,8 @@
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Controllers\ScienceManagement\Invention\" />
+    <Folder Include="Controllers\ScienceManagement\Paper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
