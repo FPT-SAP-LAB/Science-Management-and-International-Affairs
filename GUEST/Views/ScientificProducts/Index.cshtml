@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
 <div class="card card-custom">
@@ -12,19 +13,19 @@
                     <div class="row">
                         <div class="col-xl-3 input-group date mb-2">
                             <select type="text" class="form-control">
-                                <option value="0" selected>Tất cả</option>
-                                <option value="1">Tháng 1</option>
-                                <option value="2">Tháng 2</option>
-                                <option value="3">Tháng 3</option>
-                                <option value="4">Tháng 4</option>
-                                <option value="5">Tháng 5</option>
-                                <option value="6">Tháng 6</option>
-                                <option value="7">Tháng 7</option>
-                                <option value="8">Tháng 8</option>
-                                <option value="9">Tháng 9</option>
-                                <option value="10">Tháng 10</option>
-                                <option value="11">Tháng 11</option>
-                                <option value="12">Tháng 12</option>
+                                <option value="0" selected>@rm.GetString("All")</option>
+                                <option value="1">@rm.GetString("Jan")</option>
+                                <option value="2">@rm.GetString("Feb")</option>
+                                <option value="3">@rm.GetString("Mar")</option>
+                                <option value="4">@rm.GetString("Apr")</option>
+                                <option value="5">@rm.GetString("May")</option>
+                                <option value="6">@rm.GetString("Jun")</option>
+                                <option value="7">@rm.GetString("Jul")</option>
+                                <option value="8">@rm.GetString("Aug")</option>
+                                <option value="9">@rm.GetString("Sep")</option>
+                                <option value="10">@rm.GetString("Oct")</option>
+                                <option value="11">@rm.GetString("Nov")</option>
+                                <option value="12">@rm.GetString("Dec")</option>
                             </select>
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="la la-check"></i></span>
@@ -44,13 +45,13 @@
                                             <li class="nav-item">
                                                 <a class="nav-link active" data-toggle="tab" href="#tapchi">
                                                     <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
-                                                    <span class="nav-text">Tạp chí khoa học</span>
+                                                    <span class="nav-text">@rm.GetString("JournalPaper")</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#kyyeu">
                                                     <span class="nav-icon"><i class="flaticon2-drop"></i></span>
-                                                    <span class="nav-text">Kỷ yếu hội thảo</span>
+                                                    <span class="nav-text">@rm.GetString("ConferencePaper")</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -62,14 +63,14 @@
                                             <table id="table_tapchi" class="display">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
-                                                        <th>Tên bài báo</th>
-                                                        <th>Tên tác giả</th>
-                                                        <th>Tên tạp chí</th>
-                                                        <th>Chất lượng</th>
-                                                        <th>Tập</th>
-                                                        <th>Trang</th>
-                                                        <th>Link toàn văn</th>
+                                                        <th>@rm.GetString("Index")</th>
+                                                        <th>@rm.GetString("PaperName")</th>
+                                                        <th>@rm.GetString("AuthorName")</th>
+                                                        <th>@rm.GetString("JournalName")</th>
+                                                        <th>@rm.GetString("Quality")</th>
+                                                        <th>@rm.GetString("Vol")</th>
+                                                        <th>@rm.GetString("Page")</th>
+                                                        <th>@rm.GetString("LinkFull")</th>
                                                         <th>Link scholar</th>
                                                     </tr>
                                                 </thead>
@@ -166,13 +167,13 @@
                                             <table id="table_kyyeu" class="display">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
-                                                        <th>Tên bài báo</th>
-                                                        <th>Tên tác giả</th>
-                                                        <th>Tên hội thảo</th>
-                                                        <th>Trang</th>
-                                                        <th>Ngày</th>
-                                                        <th>Link toàn văn</th>
+                                                        <th>@rm.GetString("Index")</th>
+                                                        <th>@rm.GetString("PaperName")</th>
+                                                        <th>@rm.GetString("AuthorName")</th>
+                                                        <th>@rm.GetString("ConferenceName")</th>
+                                                        <th>@rm.GetString("Vol")</th>
+                                                        <th>@rm.GetString("Date")</th>
+                                                        <th>@rm.GetString("LinkFull")</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -290,17 +291,17 @@
                 ],
                 oLanguage: {
                     oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
                     },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                    sLengthMenu: "Hiển thị <select>" +
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                    sLengthMenu: "@rm.GetString("Show") <select>" +
                         "<option value='5'>5</option>" +
                         "<option value='10'>10</option>" +
                         "<option value='20'>20</option>" +
-                        "</select> bản ghi",
-                    sSearch: "Tìm kiếm"
+                        "</select> @rm.GetString("Record")",
+                    sSearch: "@rm.GetString("Search")"
                 }
             });
 
@@ -323,17 +324,17 @@
                 ],
                 oLanguage: {
                     oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
                     },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                    sLengthMenu: "Hiển thị <select>" +
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                    sLengthMenu: "@rm.GetString("Show") <select>" +
                         "<option value='5'>5</option>" +
                         "<option value='10'>10</option>" +
                         "<option value='20'>20</option>" +
-                        "</select> bản ghi",
-                    sSearch: "Tìm kiếm"
+                        "</select> @rm.GetString("Record")",
+                    sSearch: "@rm.GetString("Search")"
                 }
             });
         });
