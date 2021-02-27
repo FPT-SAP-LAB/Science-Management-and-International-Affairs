@@ -2153,10 +2153,11 @@
     <Content Include="Views\MOU\Detail_MOA.cshtml" />
     <Content Include="Views\Authen\Login.cshtml" />
     <Content Include="Views\Reports\PapersReportsByWorkplace.cshtml" />
-    <Content Include="Views\Reports\InternationalPapersReports.cshtml" />
-    <Content Include="Views\Reports\InCountryPapersReports.cshtml" />
-    <Content Include="Views\Reports\IntellectualPropertyReports.cshtml" />
+    <Content Include="Views\Reports\InternationalPapersReport.cshtml" />
+    <Content Include="Views\Reports\InCountryPapersReport.cshtml" />
+    <Content Include="Views\Reports\IntellectualPropertyReport.cshtml" />
     <Content Include="Views\Reports\CitationReports.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
