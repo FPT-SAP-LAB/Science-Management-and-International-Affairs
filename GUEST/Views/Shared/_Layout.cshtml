@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
@@ -115,7 +115,7 @@
                                                         <a href="#" class="menu-link"> <span class="menu-text">Lịch hoạt động trong năm</span> </a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="/Paper/ListAll" class="menu-link"><span class="menu-text">Sản phẩm khoa học</span></a>
+                                                        <a href="/ScientificProducts" class="menu-link"><span class="menu-text">Sản phẩm khoa học</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                                                         <a href="#" class="menu-link"><span class="menu-text">Nghiên cứu viên</span></a>
@@ -877,7 +877,7 @@
                                     <!--begin:Header-->
                                     <div class="d-flex flex-column flex-center py-10 bgi-size-cover bgi-no-repeat rounded-top" style="        background-image: url(../Content/assets/media/misc/bg-1.jpg)">
                                         <h4 class="text-white font-weight-bold">
-                                            Quick Actions
+                                            Đề nghị của tôi
                                         </h4>
                                         <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
                                             23 tasks
@@ -889,7 +889,7 @@
                                     <div class="row row-paddingless">
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="#" class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom">
+                                            <a href="/Paper/Pending" class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom">
                                                 <span class="svg-icon svg-icon-3x svg-icon-success">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Euro.svg--><svg xmlns="http://www.w3.org/2000/svg"
                                                                                                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -904,14 +904,14 @@
                                                         </g>
                                                     </svg>
                                                     <!--end::Svg Icon-->
-                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Accounting</span>
-                                                <span class="d-block text-dark-50 font-size-lg">eCommerce</span>
+                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Khen thưởng bài báo</span>
+                                                <span class="d-block text-dark-50 font-size-lg">Danh sách đang xử lý</span>
                                             </a>
                                         </div>
                                         <!--end:Item-->
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="/ConferenceSponsorRequest" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
+                                            <a href="/ConferenceSponsor" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
                                                 <span class="svg-icon svg-icon-3x svg-icon-success">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-attachment.svg--><svg xmlns="http://www.w3.org/2000/svg"
                                                                                                                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -926,8 +926,8 @@
                                                         </g>
                                                     </svg>
                                                     <!--end::Svg Icon-->
-                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Đề nghị</span>
-                                                <span class="d-block text-dark-50 font-size-lg">Hỗ trợ hội nghị</span>
+                                                </span> <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Hỗ trợ hội nghị</span>
+                                                <span class="d-block text-dark-50 font-size-lg">Danh sách đề nghị</span>
                                             </a>
                                         </div>
                                         <!--end:Item-->
@@ -1178,9 +1178,9 @@
                                         <!--end::Item-->
                                         <!--begin::Item-->
                                         @*<span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
-        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">
-            Bảng tin
-        </a>*@
+                                            <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">
+                                                Bảng tin
+                                            </a>*@
                                         <!--end::Item-->
                                     </div>
                                     <!--end::Breadcrumb-->

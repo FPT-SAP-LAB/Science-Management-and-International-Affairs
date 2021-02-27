@@ -9,19 +9,6 @@ namespace GUEST.Controllers
 {
     public class PaperController : Controller
     {
-        // GET: ListAllPaper
-        //[Route("paper/list")]
-        public ActionResult ListAll()
-        {
-            ViewBag.title = "Sản phẩm khoa học";
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Sản phẩm khoa học","/Paper/ListAll"),
-            };
-            ViewBag.pagesTree = pagesTree;
-            return View();
-        }
-
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bài báo";
@@ -35,7 +22,7 @@ namespace GUEST.Controllers
 
         public ActionResult Pending()
         {
-            ViewBag.title = "Bài báo đangg xử lý";
+            ViewBag.title = "Bài báo đang xử lý";
             var pagesTree = new List<PageTree>
             {
                 new PageTree("Bài báo đangg xử lý","/Paper/Pending"),
