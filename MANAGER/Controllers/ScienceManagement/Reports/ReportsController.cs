@@ -11,19 +11,17 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         // GET: Reports
         public ActionResult PapersReportsByWorkplace()
         {
-            ViewBag.title = "THỐNG KÊ BÀI BÁO KHOA HỌC THEO KHU VỰC";
+            
             return View();
         }
         public ActionResult InternationalPapersReports()
         {
-            ViewBag.title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
             return View();
         }
-        //public ActionResult InCountryPapersReports()
-        //{
-        //    ViewBag.title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
-        //    return View();
-        //}
+        public ActionResult InCountryPapersReports()
+        {
+            return View();
+        }
         //public ActionResult IntellectualPropertyReports()
         //{
         //    ViewBag.title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
