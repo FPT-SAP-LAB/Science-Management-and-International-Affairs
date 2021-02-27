@@ -54,13 +54,13 @@ namespace GUEST.Controllers
         {
             List<Info> infos = new List<Info>()
             {
-                new Info("HE130214", "Đoàn Văn Thắng", 1, "FPTU", 1, "Hà Nội", 1, "Sinh viên")
+                new Info("HE130214", "Đoàn Văn Thắng", 1, "FPTU", 1, "Hà Nội", 1, "Sinh viên"),
             };
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
         private class Info
         {
-            public string ID { get; set; }
+            public string PeopleID { get; set; }
             public string Name { get; set; }
             public int WorkUnitID { get; set; }
             public string WorkUnitString { get; set; }
@@ -71,7 +71,7 @@ namespace GUEST.Controllers
             public Info() { }
             public Info(string id, string name, int unitID, string unitString, int areaID, string areaString, int titleID, string titleString)
             {
-                ID = id;
+                PeopleID = id;
                 Name = name;
                 WorkUnitID = unitID;
                 WorkUnitString = unitString;
