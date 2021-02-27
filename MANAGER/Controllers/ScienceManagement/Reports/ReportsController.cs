@@ -33,5 +33,13 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
+        public ActionResult ConferencesParticipationReport_tgtemp()
+        {
+            return View();
+        }
+        public ActionResult RewardByAuthorReport()
+        {
+            return View();
+        }
     }
 }
