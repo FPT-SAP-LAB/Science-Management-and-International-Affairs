@@ -80,19 +80,18 @@
                         </div>
                         <form class="form" id="kt_login_signin_form">
                             <div class="form-group">
-                                <button id="qlkh_login" class="btn btn-pill btn-success opacity-90 px-15 py-3">
-                                    <i class="fab fa-google icon-lg"></i> Quản lý
-                                    khoa học
+                                <button id="login_btn" class="btn btn-pill btn-success opacity-90 px-15 py-3">
+                                    <i class="fab fa-google icon-lg"></i> Đăng nhập bằng Google
                                 </button>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <button id="htqt_login" class="btn btn-pill btn-success opacity-90 px-15 py-3">
                                     <i class="fab fa-google icon-lg"></i> Hợp tác quốc tế
                                 </button>
-                            </div>
+                            </div>*@
                         </form>
-                        <div class="g-signin2" hidden id="google_auth_htqt" data-onsuccess="onSignIn" data-theme="dark"></div>
-                        <div class="g-signin2" hidden id="google_auth_qlkh" data-onsuccess="onSignIn" data-theme="dark"></div>
+                        <div class="g-signin2" hidden id="google_auth_login" data-onsuccess="onSignIn" data-theme="dark"></div>
+                        @*<div class="g-signin2" hidden id="google_auth_qlkh" data-onsuccess="onSignIn" data-theme="dark"></div>*@
                     </div>
                     <!--end::Login Sign in form-->
                     <!--begin::Login Sign up form-->
@@ -301,12 +300,12 @@
             var id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
         }
-        $("#qlkh_login").click(function () {
-            $("#google_auth_qlkh").find(".abcRioButtonContentWrapper").click()
+        $("#login_btn").click(function () {
+            $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
         })
-        $("#htqt_login").click(function () {
-            $("#google_auth_htqt").find(".abcRioButtonContentWrapper").click()
-        })
+        //$("#htqt_login").click(function () {
+        //    $("#google_auth_htqt").find(".abcRioButtonContentWrapper").click()
+        //})
     </script>
 </body>
 <!--end::Body-->
