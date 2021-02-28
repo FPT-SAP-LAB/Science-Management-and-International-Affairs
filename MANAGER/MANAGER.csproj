@@ -131,6 +131,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2151,6 +2152,15 @@
     <Content Include="Views\Citation\WaitDecision.cshtml" />
     <Content Include="Views\MOU\Detail_MOA.cshtml" />
     <Content Include="Views\Authen\Login.cshtml" />
+    <Content Include="Views\Reports\PapersReportsByWorkplace.cshtml" />
+    <Content Include="Views\Reports\InternationalPapersReport.cshtml" />
+    <Content Include="Views\Reports\InCountryPapersReport.cshtml" />
+    <Content Include="Views\Reports\IntellectualPropertyReport.cshtml" />
+    <Content Include="Views\Reports\CitationReport.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport_tgtemp.cshtml" />
+    <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
+    <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
