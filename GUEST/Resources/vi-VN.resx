@@ -174,6 +174,9 @@
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>Không có dữ liệu</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="ErrorAuthorDel" xml:space="preserve">
     <value>Bài báo phải có ít nhất 1 tác giả</value>
+  </data>
+  <data name="ErrorAuthorDel2" xml:space="preserve">
+    <value>Bằng sáng chế phải có ít nhất 1 tác giả</value>
   </data>
   <data name="Feb" xml:space="preserve">
     <value>Tháng 2</value>
@@ -200,6 +206,9 @@
   </data>
   <data name="International" xml:space="preserve">
     <value>Quốc tế</value>
+  </data>
+  <data name="InvenName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
   </data>
   <data name="Jan" xml:space="preserve">
     <value>Tháng 1</value>
@@ -261,6 +270,15 @@
   <data name="PaperType" xml:space="preserve">
     <value>Loại ấn phẩm</value>
   </data>
+  <data name="PatentDate" xml:space="preserve">
+    <value>Ngày cấp</value>
+  </data>
+  <data name="PatentNumber" xml:space="preserve">
+    <value>Số bằng sáng chế</value>
+  </data>
+  <data name="PatentType" xml:space="preserve">
+    <value>Loại SHTT</value>
+  </data>
   <data name="Pre" xml:space="preserve">
     <value>Trang trước</value>
   </data>
@@ -281,6 +299,12 @@
   </data>
   <data name="Repre" xml:space="preserve">
     <value>Đại diện nhận thưởng</value>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Ngày gửi yêu cầu</value>
+  </data>
+  <data name="RequestInfo" xml:space="preserve">
+    <value>Thông tin yêu cầu</value>
   </data>
   <data name="Reward" xml:space="preserve">
     <value>Tiền thưởng</value>
@@ -309,6 +333,9 @@
   <data name="Specialized" xml:space="preserve">
     <value>Chuyên ngành</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
   <data name="Tax" xml:space="preserve">
     <value>Mã số thuế</value>
   </data>
@@ -317,6 +344,9 @@
   </data>
   <data name="TotalReward" xml:space="preserve">
     <value>Tổng thưởng</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Xem chi tiết</value>
   </data>
   <data name="Vol" xml:space="preserve">
     <value>Tập</value>

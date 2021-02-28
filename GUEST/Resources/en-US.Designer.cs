@@ -232,6 +232,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Record.
         /// </summary>
         public static string EmptyTB {
@@ -255,6 +264,15 @@ namespace GUEST.Resources {
         public static string ErrorAuthorDel {
             get {
                 return ResourceManager.GetString("ErrorAuthorDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invention must have at least 1 author.
+        /// </summary>
+        public static string ErrorAuthorDel2 {
+            get {
+                return ResourceManager.GetString("ErrorAuthorDel2", resourceCulture);
             }
         }
         
@@ -309,6 +327,15 @@ namespace GUEST.Resources {
         public static string International {
             get {
                 return ResourceManager.GetString("International", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invention&apos;s name.
+        /// </summary>
+        public static string InvenName {
+            get {
+                return ResourceManager.GetString("InvenName", resourceCulture);
             }
         }
         
@@ -493,6 +520,33 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patent license date.
+        /// </summary>
+        public static string PatentDate {
+            get {
+                return ResourceManager.GetString("PatentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patent number.
+        /// </summary>
+        public static string PatentNumber {
+            get {
+                return ResourceManager.GetString("PatentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patent type.
+        /// </summary>
+        public static string PatentType {
+            get {
+                return ResourceManager.GetString("PatentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         public static string Pre {
@@ -552,6 +606,24 @@ namespace GUEST.Resources {
         public static string Repre {
             get {
                 return ResourceManager.GetString("Repre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request date.
+        /// </summary>
+        public static string RequestDate {
+            get {
+                return ResourceManager.GetString("RequestDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Infomation.
+        /// </summary>
+        public static string RequestInfo {
+            get {
+                return ResourceManager.GetString("RequestInfo", resourceCulture);
             }
         }
         
@@ -637,6 +709,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax code.
         /// </summary>
         public static string Tax {
@@ -660,6 +741,15 @@ namespace GUEST.Resources {
         public static string TotalReward {
             get {
                 return ResourceManager.GetString("TotalReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         
