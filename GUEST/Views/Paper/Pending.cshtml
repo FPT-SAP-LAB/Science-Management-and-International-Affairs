@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Pending";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
 <div class="card card-custom">
@@ -12,9 +13,9 @@
                     <table id="pending_table">
                         <thead>
                             <tr>
-                                <th>Tên bài báo</th>
-                                <th>Ngày request</th>
-                                <th>Trạng thái</th>
+                                <th>@rm.GetString("PaperName")</th>
+                                <th>@rm.GetString("RequestDate")</th>
+                                <th>@rm.GetString("Status")</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -23,13 +24,13 @@
                                 <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
                                 <td>10/12/2019</td>
                                 <td>Cần chỉnh sửa</td>
-                                <td><a href="#" class="btn btn-primary">Chỉnh sửa</a></td>
+                                <td><a href="#" class="btn btn-primary">@rm.GetString("Edit")</a></td>
                             </tr>
                             <tr>
                                 <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
                                 <td>09/12/2019</td>
                                 <td>Đang phê duyệt</td>
-                                <td><a href="#" class="btn btn-bg-secondary">Chi tiết</a></td>
+                                <td><a href="#" class="btn btn-bg-secondary">@rm.GetString("View")</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -47,17 +48,17 @@
             $("#pending_table").DataTable({
                 oLanguage: {
                     oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
                     },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                    sLengthMenu: "Hiển thị <select>" +
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                    sLengthMenu: "@rm.GetString("Show") <select>" +
                         "<option value='5'>5</option>" +
                         "<option value='10'>10</option>" +
                         "<option value='20'>20</option>" +
-                        "</select> bản ghi",
-                    sSearch: "Tìm kiếm"
+                        "</select> @rm.GetString("Record")",
+                    sSearch: "@rm.GetString("Search")"
                 },
                 columns: [
                     { width: "55%" },
