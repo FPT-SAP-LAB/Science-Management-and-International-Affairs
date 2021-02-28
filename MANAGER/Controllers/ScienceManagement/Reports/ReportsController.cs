@@ -45,5 +45,9 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
     }
 }
