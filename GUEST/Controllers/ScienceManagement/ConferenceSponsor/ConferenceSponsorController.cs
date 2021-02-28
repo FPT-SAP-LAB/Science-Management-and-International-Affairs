@@ -10,7 +10,7 @@ namespace GUEST.Controllers
 {
     public class ConferenceSponsorController : Controller
     {
-        readonly ConferenceSponsorRepository repos = new ConferenceSponsorRepository();
+        readonly ConferenceSponsorRepo repos = new ConferenceSponsorRepo();
         // GET: ConferenceSponsor
         public ActionResult Index()
         {

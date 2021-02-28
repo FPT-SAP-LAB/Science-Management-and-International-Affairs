@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
-    public class ConferenceSponsorRepository
+    public class ConferenceSponsorRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<Country> GetAllCountries()

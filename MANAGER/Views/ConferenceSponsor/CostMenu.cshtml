@@ -1,0 +1,126 @@
+﻿<table class="col-12 table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Nội dung</th>
+            <th scope="col">Tổ chức tài trợ</th>
+            <th scope="col">Chi phí</th>
+            <th scope="col">Tổng cộng</th>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <th>Chấp thuận</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tiền khách sạn</td>
+            <td>FPTU</td>
+            <td>500,000 * 3 * 4</td>
+            <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" name="Checkboxes1" />
+                        <span></span>
+                    </label>
+                </td>
+            }
+        </tr>
+        <tr class="costEditAble" id="23">
+            <td class="align-middle">Taxi</td>
+            <td class="align-middle">FPTU</td>
+            <td>2,000,000 * 3</td>
+            <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <td class="align-middle">
+                    <label class="checkbox">
+                        <input type="checkbox" name="Checkboxes1" />
+                        <span></span>
+                    </label>
+                </td>
+            }
+        </tr>
+        <tr class="costEditAble" id="14">
+            <td class="align-middle">Vé máy bay</td>
+            <td class="align-middle">FPTU</td>
+            <td>2,000,000 * 3</td>
+            <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <td class="align-middle">
+                    <label class="checkbox">
+                        <input type="checkbox" name="Checkboxes1" />
+                        <span></span>
+                    </label>
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>Khác</td>
+            <td>FPTU</td>
+            <td>500,000</td>
+            <td><span class="label label-lg label-light-danger label-inline targetCost">500,000 đ</span></td>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" name="Checkboxes1" />
+                        <span></span>
+                    </label>
+                </td>
+            }
+        </tr>
+        <tr>
+            <th scope="row">Tổng cộng</th>
+            <td></td>
+            <td></td>
+            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">18,500,000 đ</span></td>
+            @if (ViewBag.CheckboxColumn)
+            {
+                <td></td>
+            }
+        </tr>
+        @if (ViewBag.ReimbursementColumn)
+        {
+            <tr>
+                <th scope="row">Hoàn ứng</th>
+                <td></td>
+                <td></td>
+                <td><span class="label label-lg label-light-danger label-inline">18,000,000 đ</span></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (ViewBag.CheckboxColumn)
+{
+    <button type="button" onclick="saveCost()" class="btn btn-primary float-right">Lưu</button>
+
+    <script>
+        function saveCost() {
+
+        }
+
+        function submitCost() {
+            Swal.fire({
+                title: "Bạn chắc chắn chứ?",
+                text: "Chi phí không thể chỉnh sửa sau khi gửi!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Chắc chắn!",
+                cancelButtonText: "Hủy"
+            }).then(function (result) {
+                if (result.value) {
+                    let listCosts = [];
+                    document.querySelectorAll(".costEditAble").forEach(function (ele) {
+                        listCosts.push({ id: ele.id, cost: ele.querySelector(".costInput").value });
+                    })
+                    console.log(listCosts);
+                }
+                //location.reload();
+            });
+        }
+    </script>
+}
