@@ -2161,8 +2161,7 @@
     <Content Include="Views\Reports\ConferencesParticipationReport_tgtemp.cshtml" />
     <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
     <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
-    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
-    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
+    <Content Include="Views\Reports\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
