@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using User.Models;
 using BLL.ScienceManagement.ConferenceSponsor;
-using ENTITIES.CustomModels;
 
 namespace GUEST.Controllers
 {
@@ -30,8 +29,7 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
-            Class1 class1 = new Class1();
-            ViewBag.countries = class1.GetAllCountries();
+            ViewBag.countries = repos.GetAllCountries();
             ViewBag.pagesTree = pagesTree;
             return View();
         }

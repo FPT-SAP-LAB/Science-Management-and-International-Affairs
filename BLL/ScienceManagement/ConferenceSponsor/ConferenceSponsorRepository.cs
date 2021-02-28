@@ -9,10 +9,14 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 {
     public class ConferenceSponsorRepository
     {
-        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<Country> GetAllCountries()
         {
-            var countries = db.Countries.ToList();
+            var countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList().Select(x => new Country
+            {
+                country_id = x.country_id,
+                country_name = x.country_name
+            }).ToList();
             return countries;
         }
         public List<Info> GetAllProfileBy(string id)

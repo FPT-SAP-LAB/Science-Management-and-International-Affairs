@@ -68,7 +68,7 @@
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Quốc gia <span style='color:red'>*</span>:</label>
                                     <select class="form-control form-control-lg" id="kt_select2_1">
-                                        @foreach (ENTITIES.Country item in ViewBag.countries)
+                                        @foreach (var item in ViewBag.countries)
                                         {
                                             <option value="@item.country_id">@item.country_name</option>
                                         }
