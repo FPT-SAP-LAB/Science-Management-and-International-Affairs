@@ -126,11 +126,17 @@
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
   </data>
+  <data name="AddRow" xml:space="preserve">
+    <value>Thêm dòng</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
   </data>
   <data name="Apr" xml:space="preserve">
     <value>Tháng 4</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Khu vực</value>
   </data>
   <data name="Aug" xml:space="preserve">
     <value>Tháng 8</value>
@@ -143,6 +149,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Ngân hàng</value>
+  </data>
+  <data name="CitationCount" xml:space="preserve">
+    <value>Số trích dẫn</value>
+  </data>
+  <data name="CitationInfo" xml:space="preserve">
+    <value>Thông tin trích dẫn</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>CMND</value>
@@ -171,6 +183,9 @@
   <data name="DelAu" xml:space="preserve">
     <value>Xóa tác giả</value>
   </data>
+  <data name="DelRow" xml:space="preserve">
+    <value>Xóa dòng</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
   </data>
@@ -188,6 +203,9 @@
   </data>
   <data name="ErrorAuthorDel2" xml:space="preserve">
     <value>Bằng sáng chế phải có ít nhất 1 tác giả</value>
+  </data>
+  <data name="ErrorCita" xml:space="preserve">
+    <value>Phải có ít nhất 1 dòng</value>
   </data>
   <data name="Feb" xml:space="preserve">
     <value>Tháng 2</value>
@@ -227,6 +245,9 @@
   </data>
   <data name="Jun" xml:space="preserve">
     <value>Tháng 6</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link xác minh</value>
   </data>
   <data name="LinkFull" xml:space="preserve">
     <value>Link toàn văn</value>
@@ -329,6 +350,9 @@
   </data>
   <data name="ShowTB" xml:space="preserve">
     <value>Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Nguồn trích dẫn</value>
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Chuyên ngành</value>

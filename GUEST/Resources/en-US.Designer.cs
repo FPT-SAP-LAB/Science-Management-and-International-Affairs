@@ -88,6 +88,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add more row.
+        /// </summary>
+        public static string AddRow {
+            get {
+                return ResourceManager.GetString("AddRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -102,6 +111,15 @@ namespace GUEST.Resources {
         public static string Apr {
             get {
                 return ResourceManager.GetString("Apr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Area.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
             }
         }
         
@@ -138,6 +156,24 @@ namespace GUEST.Resources {
         public static string Bank {
             get {
                 return ResourceManager.GetString("Bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciatation count.
+        /// </summary>
+        public static string CitationCount {
+            get {
+                return ResourceManager.GetString("CitationCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Citation info.
+        /// </summary>
+        public static string CitationInfo {
+            get {
+                return ResourceManager.GetString("CitationInfo", resourceCulture);
             }
         }
         
@@ -223,6 +259,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete a row.
+        /// </summary>
+        public static string DelRow {
+            get {
+                return ResourceManager.GetString("DelRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domestic.
         /// </summary>
         public static string Domestic {
@@ -273,6 +318,15 @@ namespace GUEST.Resources {
         public static string ErrorAuthorDel2 {
             get {
                 return ResourceManager.GetString("ErrorAuthorDel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must have at least 1 row.
+        /// </summary>
+        public static string ErrorCita {
+            get {
+                return ResourceManager.GetString("ErrorCita", resourceCulture);
             }
         }
         
@@ -390,6 +444,15 @@ namespace GUEST.Resources {
         public static string Jun {
             get {
                 return ResourceManager.GetString("Jun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string Link {
+            get {
+                return ResourceManager.GetString("Link", resourceCulture);
             }
         }
         
@@ -696,6 +759,15 @@ namespace GUEST.Resources {
         public static string ShowTB {
             get {
                 return ResourceManager.GetString("ShowTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
             }
         }
         

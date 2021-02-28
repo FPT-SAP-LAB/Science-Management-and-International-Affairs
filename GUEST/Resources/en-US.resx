@@ -126,11 +126,17 @@
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
   </data>
+  <data name="AddRow" xml:space="preserve">
+    <value>Add more row</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
   <data name="Apr" xml:space="preserve">
     <value>April</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
   </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
@@ -143,6 +149,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
+  </data>
+  <data name="CitationCount" xml:space="preserve">
+    <value>Ciatation count</value>
+  </data>
+  <data name="CitationInfo" xml:space="preserve">
+    <value>Citation info</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
@@ -171,6 +183,9 @@
   <data name="DelAu" xml:space="preserve">
     <value>Remove an author</value>
   </data>
+  <data name="DelRow" xml:space="preserve">
+    <value>Delete a row</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
@@ -188,6 +203,9 @@
   </data>
   <data name="ErrorAuthorDel2" xml:space="preserve">
     <value>Invention must have at least 1 author</value>
+  </data>
+  <data name="ErrorCita" xml:space="preserve">
+    <value>Must have at least 1 row</value>
   </data>
   <data name="Feb" xml:space="preserve">
     <value>February</value>
@@ -227,6 +245,9 @@
   </data>
   <data name="Jun" xml:space="preserve">
     <value>June</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
   </data>
   <data name="LinkFull" xml:space="preserve">
     <value>Link full text</value>
@@ -329,6 +350,9 @@
   </data>
   <data name="ShowTB" xml:space="preserve">
     <value>Show _START_ to _END_ of _TOTAL_ record</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Specialized</value>
