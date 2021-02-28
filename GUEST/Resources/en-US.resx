@@ -126,11 +126,17 @@
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
   </data>
+  <data name="AddRow" xml:space="preserve">
+    <value>Add more row</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
   <data name="Apr" xml:space="preserve">
     <value>April</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
   </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
@@ -143,6 +149,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
+  </data>
+  <data name="CitationCount" xml:space="preserve">
+    <value>Ciatation count</value>
+  </data>
+  <data name="CitationInfo" xml:space="preserve">
+    <value>Citation info</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
@@ -171,8 +183,14 @@
   <data name="DelAu" xml:space="preserve">
     <value>Remove an author</value>
   </data>
+  <data name="DelRow" xml:space="preserve">
+    <value>Delete a row</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>No Record</value>
@@ -182,6 +200,12 @@
   </data>
   <data name="ErrorAuthorDel" xml:space="preserve">
     <value>Paper must have at least 1 author</value>
+  </data>
+  <data name="ErrorAuthorDel2" xml:space="preserve">
+    <value>Invention must have at least 1 author</value>
+  </data>
+  <data name="ErrorCita" xml:space="preserve">
+    <value>Must have at least 1 row</value>
   </data>
   <data name="Feb" xml:space="preserve">
     <value>February</value>
@@ -201,6 +225,9 @@
   <data name="International" xml:space="preserve">
     <value>International</value>
   </data>
+  <data name="InvenName" xml:space="preserve">
+    <value>Invention's name</value>
+  </data>
   <data name="Jan" xml:space="preserve">
     <value>January</value>
   </data>
@@ -218,6 +245,9 @@
   </data>
   <data name="Jun" xml:space="preserve">
     <value>June</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
   </data>
   <data name="LinkFull" xml:space="preserve">
     <value>Link full text</value>
@@ -261,6 +291,15 @@
   <data name="PaperType" xml:space="preserve">
     <value>Paper type</value>
   </data>
+  <data name="PatentDate" xml:space="preserve">
+    <value>Patent license date</value>
+  </data>
+  <data name="PatentNumber" xml:space="preserve">
+    <value>Patent number</value>
+  </data>
+  <data name="PatentType" xml:space="preserve">
+    <value>Patent type</value>
+  </data>
   <data name="Pre" xml:space="preserve">
     <value>Previous</value>
   </data>
@@ -281,6 +320,12 @@
   </data>
   <data name="Repre" xml:space="preserve">
     <value>Representative receives a bonus</value>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Request date</value>
+  </data>
+  <data name="RequestInfo" xml:space="preserve">
+    <value>Request Infomation</value>
   </data>
   <data name="Reward" xml:space="preserve">
     <value>Reward</value>
@@ -306,8 +351,14 @@
   <data name="ShowTB" xml:space="preserve">
     <value>Show _START_ to _END_ of _TOTAL_ record</value>
   </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
   <data name="Specialized" xml:space="preserve">
     <value>Specialized</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax code</value>
@@ -317,6 +368,9 @@
   </data>
   <data name="TotalReward" xml:space="preserve">
     <value>Total reward</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="Vol" xml:space="preserve">
     <value>Vol</value>

@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
 <div class="card card-custom">
@@ -9,99 +10,22 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">Thống kê chung</h3>
                     <div class="row">
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="fas fa-user-tie icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="ncv">40</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Nghiên cứu viên
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="far fa-newspaper icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="isi">480</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Bài báo ISI/SCOPUS
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="fas fa-medal icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="bsc">25</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                Bằng sáng chế
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <div class="card card-custom wave wave-animate-slow wave-success max-h-150px">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center p-5">
-                                        <div class="mr-6">
-                                            <i class="far fa-handshake icon-3x"></i>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                                <h1><b id="qt">180</b></h1>
-                                            </a>
-                                            <div class="text-dark-75">
-                                                <b>Đối tác quốc tế</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-xl-3 input-group date mb-2">
                             <select type="text" class="form-control">
-                                <option value="0" selected>Tất cả</option>
-                                <option value="1">Tháng 1</option>
-                                <option value="2">Tháng 2</option>
-                                <option value="3">Tháng 3</option>
-                                <option value="4">Tháng 4</option>
-                                <option value="5">Tháng 5</option>
-                                <option value="6">Tháng 6</option>
-                                <option value="7">Tháng 7</option>
-                                <option value="8">Tháng 8</option>
-                                <option value="9">Tháng 9</option>
-                                <option value="10">Tháng 10</option>
-                                <option value="11">Tháng 11</option>
-                                <option value="12">Tháng 12</option>
+                                <option value="0" selected>@rm.GetString("All")</option>
+                                <option value="1">@rm.GetString("Jan")</option>
+                                <option value="2">@rm.GetString("Feb")</option>
+                                <option value="3">@rm.GetString("Mar")</option>
+                                <option value="4">@rm.GetString("Apr")</option>
+                                <option value="5">@rm.GetString("May")</option>
+                                <option value="6">@rm.GetString("Jun")</option>
+                                <option value="7">@rm.GetString("Jul")</option>
+                                <option value="8">@rm.GetString("Aug")</option>
+                                <option value="9">@rm.GetString("Sep")</option>
+                                <option value="10">@rm.GetString("Oct")</option>
+                                <option value="11">@rm.GetString("Nov")</option>
+                                <option value="12">@rm.GetString("Dec")</option>
                             </select>
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="la la-check"></i></span>
@@ -117,12 +41,12 @@
                             <table id="table_tapchi" class="display">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Tên bằng sáng chế</th>
-                                        <th>Tên tác giả</th>
-                                        <th>Loại SHTT</th>
-                                        <th>Ngày cấp</th>
-                                        <th>Số bằng sáng chế</th>
+                                        <th>@rm.GetString("Index")</th>
+                                        <th>@rm.GetString("InvenName")</th>
+                                        <th>@rm.GetString("AuthorName")</th>
+                                        <th>@rm.GetString("PatentType")</th>
+                                        <th>@rm.GetString("PatentDate")</th>
+                                        <th>@rm.GetString("PatentNumber")</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -213,32 +137,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
     <script>
-        var ncv = 40, isi = 480, bsc = 25, qt = 180;
-        var i = 1, i2 = 1, i3 = 1, i4 = 1;
-        var myVarNCV = setInterval(myTimerNCV, 2000 / ncv);
-        function myTimerNCV() {
-            if (i <= ncv) $("#ncv").text(i);
-            else clearInterval(myVarNCV);
-            i++;
-        };
-        var myVarISI = setInterval(myTimerISI, 2000 / isi);
-        function myTimerISI() {
-            if (i2 <= isi) $("#isi").text(i2);
-            else clearInterval(myVarISI);
-            i2++;
-        };
-        var myVarBSC = setInterval(myTimerBSC, 2000 / bsc);
-        function myTimerBSC() {
-            if (i3 <= bsc) $("#bsc").text(i3);
-            else clearInterval(myVarBSC);
-            i3++;
-        };
-        var myVarQT = setInterval(myTimerQT, 2000 / qt);
-        function myTimerQT() {
-            if (i4 <= qt) $("#qt").text(i4);
-            else clearInterval(myVarQT);
-            i4++;
-        };
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
@@ -254,50 +152,17 @@
                 ],
                 oLanguage: {
                     oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
                     },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                    sLengthMenu: "Hiển thị <select>" +
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                    sLengthMenu: "@rm.GetString("Show") <select>" +
                         "<option value='5'>5</option>" +
                         "<option value='10'>10</option>" +
                         "<option value='20'>20</option>" +
-                        "</select> bản ghi",
-                    sSearch: "Tìm kiếm"
-                }
-            });
-
-            $('#table_kyyeu').DataTable({
-                "columns": [
-                    { width: "5%" },
-                    { width: "20%" },
-                    { width: "20%" },
-                    { width: "20%" },
-                    { width: "15%" },
-                    {
-                        width: "15%"
-                    },
-                    {
-                        width: "5%",
-                        render: function () {
-                            return "<a href='#'>link</a>"
-                        }
-                    }
-                ],
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
-                    },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                    sLengthMenu: "Hiển thị <select>" +
-                        "<option value='5'>5</option>" +
-                        "<option value='10'>10</option>" +
-                        "<option value='20'>20</option>" +
-                        "</select> bản ghi",
-                    sSearch: "Tìm kiếm"
+                        "</select> @rm.GetString("Record")",
+                    sSearch: "@rm.GetString("Search")"
                 }
             });
         });
