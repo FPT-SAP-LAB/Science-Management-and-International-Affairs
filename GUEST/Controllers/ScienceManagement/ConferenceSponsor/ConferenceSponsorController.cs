@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using User.Models;
+using BLL.ScienceManagement.ConferenceSponsor;
+using ENTITIES.CustomModels;
 
 namespace GUEST.Controllers
 {
     public class ConferenceSponsorController : Controller
     {
+        readonly ConferenceSponsorRepository repos = new ConferenceSponsorRepository();
         // GET: ConferenceSponsor
         public ActionResult Index()
         {
@@ -27,6 +30,8 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
+            Class1 class1 = new Class1();
+            ViewBag.countries = class1.GetAllCountries();
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -52,34 +57,8 @@ namespace GUEST.Controllers
         }
         public JsonResult GetInformationPeopleWithID(string id)
         {
-            List<Info> infos = new List<Info>()
-            {
-                new Info("HE130214", "Đoàn Văn Thắng", 1, "FPTU", 1, "Hà Nội", 1, "Sinh viên"),
-            };
+            var infos = repos.GetAllProfileBy(id);
             return Json(infos, JsonRequestBehavior.AllowGet);
-        }
-        private class Info
-        {
-            public string PeopleID { get; set; }
-            public string Name { get; set; }
-            public int WorkUnitID { get; set; }
-            public string WorkUnitString { get; set; }
-            public int AreaID { get; set; }
-            public string AreaString { get; set; }
-            public int TitleID { get; set; }
-            public string TitleString { get; set; }
-            public Info() { }
-            public Info(string id, string name, int unitID, string unitString, int areaID, string areaString, int titleID, string titleString)
-            {
-                PeopleID = id;
-                Name = name;
-                WorkUnitID = unitID;
-                WorkUnitString = unitString;
-                AreaID = areaID;
-                AreaString = areaString;
-                TitleID = titleID;
-                TitleString = titleString;
-            }
         }
     }
 }
