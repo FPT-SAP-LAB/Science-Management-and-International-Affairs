@@ -394,6 +394,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bằng sáng chế.
+        /// </summary>
+        public static string Invention {
+            get {
+                return ResourceManager.GetString("Invention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 1.
         /// </summary>
         public static string Jan {
