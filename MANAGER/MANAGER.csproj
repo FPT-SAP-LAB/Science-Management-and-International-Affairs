@@ -134,6 +134,7 @@
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2169,6 +2170,7 @@
     <Content Include="Views\Partner\Detail.cshtml" />
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
+    <Content Include="Views\Researchers\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

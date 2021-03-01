@@ -26,5 +26,11 @@ namespace MANAGER.Controllers
 
             return View();
         }
+
+        public ActionResult Error()
+        {
+            ViewBag.code = 404;
+            return View("~/Views/Shared/Error.cshtml");
+        }
     }
 }
