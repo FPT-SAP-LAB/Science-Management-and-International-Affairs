@@ -8,20 +8,23 @@ namespace GUEST.Models
 {
     public class LanguageResource
     {
-        public static ResourceManager GetResourceManager()
+        public static string GetCurrentLanguageName()
         {
-            string language_id = "vi-VN";
-            var cookie = HttpContext.Current.Request.Cookies["language_id"];
+            string language_name = "vi-VN";
+            var cookie = HttpContext.Current.Request.Cookies["language_name"];
             if (cookie == null)
             {
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_id", "vi-VN"));
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_name", "vi-VN"));
             }
             else
             {
-                language_id = cookie.Value;
+                language_name = cookie.Value;
             }
-
-            switch (language_id)
+            return language_name;
+        }
+        public static ResourceManager GetResourceManager()
+        {
+            switch (GetCurrentLanguageName())
             {
                 case "vi-VN":
                     return Resources.vi_VN.ResourceManager;
