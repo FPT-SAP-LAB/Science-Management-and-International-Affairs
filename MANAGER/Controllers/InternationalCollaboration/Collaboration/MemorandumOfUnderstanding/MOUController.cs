@@ -61,6 +61,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
-
     }
 }

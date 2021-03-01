@@ -11,7 +11,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner
         // GET: Partner
         public ActionResult List()
         {
-
             ViewBag.pageTitle = "DANH SÁCH ĐỐI TÁC";
             return View();
         }
@@ -34,7 +33,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner
             ViewBag.pageTitle = "CHI TIẾT ĐỐI TÁC";
             return View();
         }
-
-
     }
 }
