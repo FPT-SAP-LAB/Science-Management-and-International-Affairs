@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết đối tác";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+ư<style>
+    #div-image {
+        height: unset;
+    }
+    </style>
+
+<div class="row justify-content-center" id="card-container">
+    <div class="card card-custom col-xl-8 col-lg-8 col-md-8 col-sm-8 mr-3" id="main-card">
+        <div class="card-body p-0 ">
+            <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+                <div class="col-xl-12 col-xxl-12">
+                    <div class="tabbable-line">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <label style="color:red">*</label>
+                                    <label class="font-weight-bolder">Tên đối tác</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="Tên đối tác" autocomplete="off" required id="partner_name" />
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <label style="color:red">*</label>
+                                    <label class="font-weight-bolder">Quốc gia</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="Quốc gia" autocomplete="off" required id="partner_nation" />
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <label style="color:red">*</label>
+                                    <label class="font-weight-bolder">Lĩnh vực</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="Lĩnh vực" autocomplete="off" required id="partner_specialization" />
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <label style="color:red">*</label>
+                                    <label class="font-weight-bolder">Website</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="Website" autocomplete="off" required id="partner_website" />
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <label style="color:red">*</label>
+                                    <label class="font-weight-bolder">Địa chỉ</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="Địa chỉ" autocomplete="off" required id="partner_address" />
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <label class="font-weight-bolder">Mô tả</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <div class="ckeditor-toolbar"></div>
+                                    <div class="ckeditor"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom col-xl-3 col-lg-3 col-md-3 col-sm-3" id="div-image">
+        <div class="card-body p-0 ">
+            <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+                <div class="col-xl-12 col-xxl-12">
+                    <div class="tabbable-line">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="row mb-5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+
+        // Class definition
+        var KTCkeditorDocument = function () {
+            // Private functions
+            var demos = function () {
+                DecoupledEditor
+                    .create(document.querySelector('.ckeditor'))
+                    .then(editor => {
+                        const toolbarContainer = document.querySelector('.ckeditor-toolbar');
+
+                        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        $(document).ready(function () {
+            KTCkeditorDocument.init();
+            $('#card-container').parent().css('background-color', '#eef0f8');
+        })
+
+
+    </script>
+
+}

@@ -62,10 +62,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
 
-        public ActionResult Detail_MOA(string id)
-        {
-            ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
-            return View();
-        }
     }
 }
