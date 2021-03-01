@@ -228,6 +228,9 @@
   <data name="InvenName" xml:space="preserve">
     <value>Invention's name</value>
   </data>
+  <data name="Invention" xml:space="preserve">
+    <value>Invention patent</value>
+  </data>
   <data name="Jan" xml:space="preserve">
     <value>January</value>
   </data>

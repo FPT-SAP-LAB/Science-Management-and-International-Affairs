@@ -1,9 +1,10 @@
 ﻿
 @{
-    //ViewBag.Title = "Pending";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Pending";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
+
 
 <div class="card card-custom">
     <div class="card-body p-0">
@@ -13,7 +14,8 @@
                     <table id="pending_table" class="table table-separate table-head-custom table-checkable">
                         <thead>
                             <tr>
-                                <th>@rm.GetString("PaperName")/@rm.GetString("InvenName")</th>
+                                <th>@rm.GetString("Source")</th>
+                                <th>@rm.GetString("CitationCount")</th>
                                 <th>@rm.GetString("RequestDate")</th>
                                 <th>@rm.GetString("Status")</th>
                                 <th></th>
@@ -21,13 +23,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
+                                <td>Google Scholar, Scopus</td>
+                                <td>100</td>
                                 <td>10/12/2019</td>
                                 <td>1</td>
                                 <td><a href="#" class="btn btn-bg-secondary">@rm.GetString("Edit")</a></td>
                             </tr>
                             <tr>
-                                <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
+                                <td>Scopus</td>
+                                <td>50</td>
                                 <td>09/12/2019</td>
                                 <td>3</td>
                                 <td><a href="#" class="btn btn-bg-primary">@rm.GetString("View")</a></td>
@@ -61,14 +65,15 @@
                     sSearch: "@rm.GetString("Search")"
                 },
                 columns: [
-                    { width: "55%" },
+                    { width: "30%" },
+                    { width: "25%" },
                     { width: "15%" },
                     { width: "15%" },
                     { width: "15%" }
                 ],
                 columnDefs: [
                     {
-                        targets: 2,
+                        targets: 3,
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
@@ -99,4 +104,3 @@
         });
     </script>
 }
-
