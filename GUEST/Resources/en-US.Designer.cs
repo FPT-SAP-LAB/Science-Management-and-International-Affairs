@@ -88,6 +88,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add more row.
+        /// </summary>
+        public static string AddRow {
+            get {
+                return ResourceManager.GetString("AddRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -102,6 +111,15 @@ namespace GUEST.Resources {
         public static string Apr {
             get {
                 return ResourceManager.GetString("Apr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Area.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
             }
         }
         
@@ -138,6 +156,24 @@ namespace GUEST.Resources {
         public static string Bank {
             get {
                 return ResourceManager.GetString("Bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciatation count.
+        /// </summary>
+        public static string CitationCount {
+            get {
+                return ResourceManager.GetString("CitationCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Citation info.
+        /// </summary>
+        public static string CitationInfo {
+            get {
+                return ResourceManager.GetString("CitationInfo", resourceCulture);
             }
         }
         
@@ -223,11 +259,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete a row.
+        /// </summary>
+        public static string DelRow {
+            get {
+                return ResourceManager.GetString("DelRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domestic.
         /// </summary>
         public static string Domestic {
             get {
                 return ResourceManager.GetString("Domestic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -255,6 +309,24 @@ namespace GUEST.Resources {
         public static string ErrorAuthorDel {
             get {
                 return ResourceManager.GetString("ErrorAuthorDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invention must have at least 1 author.
+        /// </summary>
+        public static string ErrorAuthorDel2 {
+            get {
+                return ResourceManager.GetString("ErrorAuthorDel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must have at least 1 row.
+        /// </summary>
+        public static string ErrorCita {
+            get {
+                return ResourceManager.GetString("ErrorCita", resourceCulture);
             }
         }
         
@@ -313,6 +385,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invention&apos;s name.
+        /// </summary>
+        public static string InvenName {
+            get {
+                return ResourceManager.GetString("InvenName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to January.
         /// </summary>
         public static string Jan {
@@ -363,6 +444,15 @@ namespace GUEST.Resources {
         public static string Jun {
             get {
                 return ResourceManager.GetString("Jun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string Link {
+            get {
+                return ResourceManager.GetString("Link", resourceCulture);
             }
         }
         
@@ -493,6 +583,33 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patent license date.
+        /// </summary>
+        public static string PatentDate {
+            get {
+                return ResourceManager.GetString("PatentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patent number.
+        /// </summary>
+        public static string PatentNumber {
+            get {
+                return ResourceManager.GetString("PatentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patent type.
+        /// </summary>
+        public static string PatentType {
+            get {
+                return ResourceManager.GetString("PatentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         public static string Pre {
@@ -552,6 +669,24 @@ namespace GUEST.Resources {
         public static string Repre {
             get {
                 return ResourceManager.GetString("Repre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request date.
+        /// </summary>
+        public static string RequestDate {
+            get {
+                return ResourceManager.GetString("RequestDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Infomation.
+        /// </summary>
+        public static string RequestInfo {
+            get {
+                return ResourceManager.GetString("RequestInfo", resourceCulture);
             }
         }
         
@@ -628,11 +763,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialized.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         
@@ -660,6 +813,15 @@ namespace GUEST.Resources {
         public static string TotalReward {
             get {
                 return ResourceManager.GetString("TotalReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         

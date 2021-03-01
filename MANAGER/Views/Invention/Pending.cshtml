@@ -36,34 +36,35 @@
         </table>
     </div>
 </div>
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#pending").DataTable({
-            "columns": [
-                { width: "5%" },
-                { width: "30%" },
-                { width: "25%" },
-                { width: "25%" },
-                { width: "15%" },
-            ],
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
-            }
+@section scripts{
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#pending").DataTable({
+                "columns": [
+                    { width: "5%" },
+                    { width: "30%" },
+                    { width: "25%" },
+                    { width: "25%" },
+                    { width: "15%" },
+                ],
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sLengthMenu: "Hiển thị <select>" +
+                        "<option value='5'>5</option>" +
+                        "<option value='10'>10</option>" +
+                        "<option value='20'>20</option>" +
+                        "</select> bản ghi",
+                    sSearch: "Tìm kiếm"
+                }
+            });
         });
-    });
-</script>
+    </script>
+}
