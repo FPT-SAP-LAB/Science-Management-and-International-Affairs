@@ -1367,7 +1367,7 @@
 
     <script>
         $(".change-language").click(function () {
-            document.cookie = "language_id=" + $(this).data("language");
+            document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
             location.reload();
         })
         $("#login_btn").click(function () {

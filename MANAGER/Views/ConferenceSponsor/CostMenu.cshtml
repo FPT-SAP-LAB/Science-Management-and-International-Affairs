@@ -27,7 +27,7 @@
                 </td>
             }
         </tr>
-        <tr class="costEditAble" id="23">
+        <tr id="23">
             <td class="align-middle">Taxi</td>
             <td class="align-middle">FPTU</td>
             <td>2,000,000 * 3</td>
@@ -42,7 +42,7 @@
                 </td>
             }
         </tr>
-        <tr class="costEditAble" id="14">
+        <tr id="14">
             <td class="align-middle">Vé máy bay</td>
             <td class="align-middle">FPTU</td>
             <td>2,000,000 * 3</td>
@@ -100,27 +100,7 @@
 
     <script>
         function saveCost() {
-
-        }
-
-        function submitCost() {
-            Swal.fire({
-                title: "Bạn chắc chắn chứ?",
-                text: "Chi phí không thể chỉnh sửa sau khi gửi!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Chắc chắn!",
-                cancelButtonText: "Hủy"
-            }).then(function (result) {
-                if (result.value) {
-                    let listCosts = [];
-                    document.querySelectorAll(".costEditAble").forEach(function (ele) {
-                        listCosts.push({ id: ele.id, cost: ele.querySelector(".costInput").value });
-                    })
-                    console.log(listCosts);
-                }
-                //location.reload();
-            });
+            toastr.success('Đã lưu và thông báo đến người đề nghị', 'Thành công')
         }
     </script>
 }
