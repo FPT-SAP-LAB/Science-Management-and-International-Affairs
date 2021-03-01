@@ -15,6 +15,12 @@ namespace MANAGER.Controllers
         public ActionResult Detail(int id)
         {
             ViewBag.id = id;
+            //switch (id)
+            //{
+            //    case 
+            //    default:
+            //        break;
+            //}
             return View();
         }
         [ChildActionOnly]

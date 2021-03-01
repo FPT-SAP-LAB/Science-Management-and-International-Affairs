@@ -2167,6 +2167,8 @@
     <Content Include="Views\MOA\Detail_MOA.cshtml" />
     <Content Include="Views\Partner\List.cshtml" />
     <Content Include="Views\Partner\Detail.cshtml" />
+    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
