@@ -2153,7 +2153,6 @@
     <Content Include="Views\Citation\Pending.cshtml" />
     <Content Include="Views\Citation\Detail.cshtml" />
     <Content Include="Views\Citation\WaitDecision.cshtml" />
-    <Content Include="Views\MOU\Detail_MOA.cshtml" />
     <Content Include="Views\Authen\Login.cshtml" />
     <Content Include="Views\Reports\PapersReportsByWorkplace.cshtml" />
     <Content Include="Views\Reports\InternationalPapersReport.cshtml" />

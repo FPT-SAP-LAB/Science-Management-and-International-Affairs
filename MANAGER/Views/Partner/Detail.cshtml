@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 <style>
-    #div-image {
-        height: fit-content;
+    #div-image { /*
+        height: fit-content;*/
     }
 </style>
 
@@ -67,6 +67,8 @@
                                 </div>
                             </div>
                         </div>
+                        <a class="btn btn-sm btn-bg-danger" id="submit">click</a>
+                        <a class="btn btn-sm btn-bg-danger" id="test">click</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +82,7 @@
                     <div class="tabbable-line">
                         <div class="tab-content" id="myTabContent">
                             <div class="row mb-5">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center">
                                     <label class="font-weight-bolder">Ảnh đại diện</label>
                                 </div>
                             </div>
@@ -98,6 +100,7 @@
         // Class definition
         var KTCkeditorDocument = function () {
             // Private functions
+            var editorData
             var demos = function () {
                 DecoupledEditor
                     .create(document.querySelector('.ckeditor'))
@@ -105,24 +108,44 @@
                         const toolbarContainer = document.querySelector('.ckeditor-toolbar');
 
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                        editorData = editor
+
                     })
                     .catch(error => {
                         console.error(error);
                     });
             }
+            var get_data = function () {
+                let temp = editorData.getData();
+                console.log(temp)
+                return temp;
+            }
+            var set_data = function (data) {
+                editorData.setData(data);
+            }
             return {
                 // public functions
                 init: function () {
                     demos();
-                }
+                },
+                get_data: function () {
+                    get_data();
+                },
+                set_data: function (data) {
+                    set_data(data);
+                },
             };
         }();
 
         $(document).ready(function () {
             KTCkeditorDocument.init();
+            KTCkeditorDocument.set_data('');
             $('#card-container').parent().css('background-color', '#eef0f8');
         })
 
+        $('#submit').click(function () {
+            KTCkeditorDocument.get_data();
+        });
 
     </script>
 
