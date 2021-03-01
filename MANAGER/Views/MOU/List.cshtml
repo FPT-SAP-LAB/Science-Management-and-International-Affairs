@@ -4,6 +4,143 @@
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 
+<style>
+    .custom-container {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+        .custom-container ul {
+            padding-left: 12px;
+        }
+
+    li {
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .progressbar li {
+        float: left;
+        width: 50%;
+        position: relative;
+        text-align: center;
+    }
+
+    .progressbar {
+        counter-reset: step;
+    }
+
+        .progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #bebebe;
+            display: block;
+            margin: 0 auto 10px auto;
+            border-radius: 50%;
+            line-height: 44px;
+            font-size: 19px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .progressbar li:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: #979797;
+            top: 21px;
+            left: -50%;
+            z-index: -1;
+        }
+
+        .progressbar li:first-child:after {
+            content: none;
+        }
+
+        .progressbar li.active::before {
+            border-color: #3aac5d;
+            color: #3aac5d;
+        }
+
+        .progressbar li.active + li:after {
+            background: #8db398;
+        }
+
+        .progressbar li.done::before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+        }
+
+        .progressbar li.done + li:after {
+            background: #3aac5d;
+        }
+</style>
+<style>
+    #toast-container-custom {
+        position: fixed;
+        z-index: 999999;
+        pointer-events: none;
+    }
+
+    .toast-bottom-left-custom {
+        bottom: 12px;
+        left: 12px;
+    }
+
+    #toast-container-custom * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #toast-container-custom > div {
+        position: relative;
+        pointer-events: auto;
+        overflow: hidden;
+        margin: 0 0 6px;
+        padding: 15px 15px 15px 50px;
+        width: 300px;
+        border-radius: 3px 3px 3px 3px;
+        background-position: 15px center;
+        background-repeat: no-repeat;
+        -webkit-box-shadow: 0 0 12px #999999;
+        box-shadow: 0 0 12px #999999;
+        color: #FFFFFF;
+        opacity: 0.8;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+        filter: alpha(opacity=80);
+    }
+
+        #toast-container-custom > div.rtl {
+            direction: rtl;
+            padding: 15px 50px 15px 15px;
+            background-position: right 15px center;
+        }
+
+        #toast-container-custom > div:hover {
+            -webkit-box-shadow: 0 0 12px #000000;
+            box-shadow: 0 0 12px #000000;
+            opacity: 1;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+            filter: alpha(opacity=100);
+            cursor: pointer;
+        }
+
+    #toast-container-custom > .toast-warning {
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=") !important;
+    }
+</style>
+<style>
+    .modal {
+        overflow-y: auto;
+    }
+</style>
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
         <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
@@ -13,7 +150,7 @@
                         <div class="row mb-5">
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                 <div class="row align-items-center">
-                                    <a href="#add" class="btn btn-sm btn-outline-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                    <a href="#add_mou_modal" class="btn btn-sm btn-outline-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
                                     <a href="#" class="btn btn-sm btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
                                 </div>
                             </div>
@@ -59,7 +196,7 @@
                                         Bunkyou University
                                     </td>
                                     <td class="text-center">Japan</td>
-                                    <td class="text-center">Icon link</td>
+                                    <td class="text-center"></td>
                                     <td class="text-center">IT</td>
                                     <td class="text-center">
                                         Toshie Miyatake
@@ -85,7 +222,7 @@
                                         Bunkyou University
                                     </td>
                                     <td class="text-center">Japan</td>
-                                    <td class="text-center">Icon link</td>
+                                    <td class="text-center"></td>
                                     <td class="text-center">IT</td>
                                     <td class="text-center">
                                         Toshie Miyatake
@@ -111,253 +248,216 @@
     </div>
 </div>
 
-@*modal add*@
-<div class="modal fade in" id="add" aria-hidden="true">
-    <div class="modal-dialog">
+@*modal add_mou*@
+<div class="modal fade in" id="add_mou_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">THÊM BIÊN BẢN GHI NHỚ</h4>
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title " id="e">THÊM BIÊN BẢN GHI NHỚ</h3>
+            </div>
+            <div class="justify-content-center">
+                <div class="custom-container">
+                    <ul class="progressbar">
+                        <li class="active"></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+            <div id='step-1' class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Số hiệu</label>
+                        <label style="font-style: italic;">
+                        </label>
+                        <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="mou_id" />
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                        <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
+                        <label style="font-style: italic;">
+                        </label>
+                        <input class="form-control" type="text" placeholder="Đơn vị - Cơ sở kí kết" autocomplete="off" required id="sign_facility" />
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                        <label class="font-weight-bolder">Thời gian kí kết</label>&nbsp;
+                        <label style="font-style: italic;">
+                            (Cập nhật theo thời gian kí kết)
+                        </label>
+                        <input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết" autocomplete="off" readonly id="sign_date_mou" />
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                        <label class="font-weight-bolder">Thời gian hết hạn</label>&nbsp;
+                        <label style="font-style: italic;">
+                        </label>
+                        <input class="form-control custom-pickdate" type="text" placeholder="Thời gian hết hạn" autocomplete="off" readonly id="end_date_mou" />
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Trạng thái</label>&nbsp;
+                        <select class="form-control" required id="status_mou">
+                            <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-8 col-sm-8">
+                        <label class="font-weight-bolder">Ghi chú</label>&nbsp;
+                        <input class="form-control" type="text" placeholder="Ghi chú" autocomplete="off" required id="note_mou" />
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
+                        <label class="font-weight-bolder">Phạm vi hợp tác chính</label>&nbsp;
+                        <label style="font-style: italic;">
+                            (Cập nhật theo pham vi hợp tác của các đối tác kí kết)
+                        </label>
+                        <input class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope_mou" />
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
+                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                        <input class="form-control" type="file" id="expenseFile" aria-describedby="expenseFileHelp">
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
+                        <label class="font-weight-bolder">Lưu ý</label>&nbsp;
+                        <textarea class="form-control " id="mou_area" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id='step-2' class="modal-body" style="display:none">
+                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
+                    <div class="row align-items-center">
+                        <a href="#add_partner_mou" data-toggle="modal" id="add_partner_mou_btn" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-checkable"
+                       id="mou-partner-table">
+                    <tr>
+                        <th class="text-center" rowspan="2">STT</th>
+                        <th class="text-center" rowspan="2">Tên đối tác</th>
+                        <th class="text-center" colspan="3">Người đại diện</th>
+                        <th class="text-center" rowspan="2"></th>
+                    </tr>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <th>Điện thoại</th>
+                        <th>Email</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Bunkyo University</td>
+                        <td>Toshie Miyatake</td>
+                        <td>+81 48 974 8811</td>
+                        <td>kiec@stf.bunkyou.ac.jp</td>
+                        <td nowrap="nowrap">
+                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                            <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>FPT Greenwich</td>
+                        <td>Cuong Minh Tran</td>
+                        <td>+84 12 345 2345</td>
+                        <td>cuong@fptgr.edu.vn</td>
+                        <td nowrap="nowrap">
+                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
+                            <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="step-1-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button id='step-1-button' type="button" class="btn btn-primary" onclick="nextStep()">Tiếp</button>
+                <button id='step-2-backbutton' type="button" class="btn btn-secondary" onclick="backToStep()" style="display:none">Quay về</button>
+                <button id='step-2-button' type="button" class="btn btn-primary" onclick="doneStep()" data-dismiss="modal" style="display:none">Hoàn thành</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal add_partner_mou*@
+<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 8888">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
             </div>
             <div class="modal-body">
-                <div class="wizard wizard-6 d-flex flex-column flex-lg-row flex-column-fluid" id="kt_wizard">
-                    <!--begin::Container-->
-                    <div class="wizard-content d-flex flex-column mx-auto py-10 py-lg-20 w-100 w-md-700px">
-                        <!--begin::Nav-->
-                        <div class="d-flex flex-column-auto flex-column px-10">
-                            <!--begin: Wizard Nav-->
-                            <div class="wizard-nav pb-lg-10 pb-3 d-flex flex-column align-items-center align-items-md-start">
-                                <!--begin::Wizard Steps-->
-                                <div class="wizard-steps d-flex flex-column flex-md-row">
-                                    <!--begin::Wizard Step 1 Nav-->
-                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step" data-wizard-state="current">
-                                        <div class="wizard-wrapper pr-lg-7 pr-5">
-                                            <div class="wizard-icon">
-                                                <i class="wizard-check ki ki-check"></i>
-                                                <span class="wizard-number">1</span>
-                                            </div>
-                                            <div class="wizard-label mr-3">
-                                                <h3 class="wizard-title">Account</h3>
-                                                <div class="wizard-desc">Account details</div>
-                                            </div>
-                                            <span class="svg-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
-                                                        <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!--end::Wizard Step 1 Nav-->
-                                    <!--begin::Wizard Step 2 Nav-->
-                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step">
-                                        <div class="wizard-wrapper pr-lg-7 pr-5">
-                                            <div class="wizard-icon">
-                                                <i class="wizard-check ki ki-check"></i>
-                                                <span class="wizard-number">2</span>
-                                            </div>
-                                            <div class="wizard-label mr-3">
-                                                <h3 class="wizard-title">Address</h3>
-                                                <div class="wizard-desc">Residential address</div>
-                                            </div>
-                                            <span class="svg-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
-                                                        <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!--end::Wizard Step 2 Nav-->
-                                    <!--begin::Wizard Step 3 Nav-->
-                                    <div class="wizard-step flex-grow-1 flex-basis-0" data-wizard-type="step">
-                                        <div class="wizard-wrapper">
-                                            <div class="wizard-icon">
-                                                <i class="wizard-check ki ki-check"></i>
-                                                <span class="wizard-number">3</span>
-                                            </div>
-                                            <div class="wizard-label">
-                                                <h3 class="wizard-title">Complete</h3>
-                                                <div class="wizard-desc">Submit form</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end::Wizard Step 3 Nav-->
-                                </div>
-                                <!--end::Wizard Steps-->
-                            </div>
-                            <!--end: Wizard Nav-->
-                        </div>
-                        <!--end::Nav-->
-                        <!--begin::Form-->
-                        <form class="px-10" novalidate="novalidate" id="kt_form">
-                            <!--begin: Wizard Step 1-->
-                            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                <!--begin::Title-->
-                                <div class="pb-10 pb-lg-12 text-center text-md-left">
-                                    <h3 class="font-weight-bolder text-dark font-size-h2">Create Account</h3>
-                                    <div class="text-muted font-weight-bold font-size-h4">
-                                        Already have an Account ?
-                                        <a href="/metronic/demo1/custom/pages/login/login-4/signin.html" class="text-primary font-weight-bolder">Sign In</a>
-                                    </div>
-                                </div>
-                                <!--begin::Title-->
-                                <!--begin::Form Group-->
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">First Name</label>
-                                    <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="firstname" placeholder="First Name" value="" />
-                                </div>
-                                <!--end::Form Group-->
-                                <!--begin::Form Group-->
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Last Name</label>
-                                    <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="lastname" placeholder="Last Name" value="" />
-                                </div>
-                                <!--end::Form Group-->
-                            </div>
-                            <!--end: Wizard Step 1-->
-                            <!--begin: Wizard Step 2-->
-                            <div class="pb-5" data-wizard-type="step-content">
-                                <!--begin::Title-->
-                                <div class="pt-lg-0 pt-5 pb-15 text-center text-md-left">
-                                    
-                                </div>
-                                <!--begin::Title-->
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <!--begin::Input-->
-                                        <div class="form-group">
-                                            <label class="font-size-h6 font-weight-bolder text-dark">Address Line 1</label>
-                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="address1" placeholder="Address Line 1" value="Address Line 1" />
-                                            <span class="form-text text-muted">Please enter your Address.</span>
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <!--begin::Input-->
-                                        <div class="form-group">
-                                            <label class="font-size-h6 font-weight-bolder text-dark">Address Line 2</label>
-                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="address2" placeholder="Address Line 2" value="Address Line 2" />
-                                            <span class="form-text text-muted">Please enter your Address.</span>
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                </div>
-                                <!--end::Row-->
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <!--begin::Input-->
-                                        <div class="form-group">
-                                            <label class="font-size-h6 font-weight-bolder text-dark">State</label>
-                                            <input type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6" name="state" placeholder="State" value="VIC" />
-                                            <span class="form-text text-muted">Please enter your State.</span>
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                    <div class="col-xl-6">
-                                    </div>
-                                </div>
-                                <!--end::Row-->
-                            </div>
-                            <!--end: Wizard Step 2-->
-                            <!--begin: Wizard Step 3-->
-                            <div class="pb-5" data-wizard-type="step-content">
-                                <!--begin::Title-->
-                                <div class="pt-lg-0 pt-5 pb-15 text-center text-md-left">
-                                    <h3 class="font-weight-bolder text-dark font-size-h2">Complete</h3>
-                                    <div class="text-muted font-weight-bold font-size-h4">Complete Your Signup And Become A Member!</div>
-                                </div>
-                                <!--end::Title-->
-                                <!--begin::Section-->
-                                <h4 class="font-weight-bolder mb-3">Accoun Settings:</h4>
-                                <div class="text-dark-50 font-weight-bold line-height-lg mb-8">
-                                    <div>Nick Stone</div>
-                                    <div>+12233434-34</div>
-                                    <div>nick.stone@gmail.com</div>
-                                </div>
-                                <!--end::Section-->
-                                <!--begin::Section-->
-                                <h4 class="font-weight-bolder mb-3">Address Details:</h4>
-                                <div class="text-dark-50 font-weight-bold line-height-lg mb-8">
-                                    <div>Address Line 1</div>
-                                    <div>Address Line 2</div>
-                                    <div>Melbourne 3000, VIC, Australia</div>
-                                </div>
-                                <!--end::Section-->
-                                <!--begin::Section-->
-                                <h4 class="font-weight-bolder mb-3">Support Channels:</h4>
-                                <div class="text-dark-50 font-weight-bold line-height-lg">
-                                    <div>Overnight Delivery with Regular Packaging</div>
-                                    <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
-                                </div>
-                                <!--end::Section-->
-                            </div>
-                            <!--end: Wizard Step 3-->
-                            <!--begin: Wizard Actions-->
-                            <div class="d-flex justify-content-between pt-7">
-                                <div class="mr-2">
-                                    <button type="button" class="btn btn-light-primary font-weight-bolder font-size-h6 pr-8 pl-6 py-4 my-3 mr-3" data-wizard-type="action-prev">
-                                        <span class="svg-icon svg-icon-md mr-2">
-                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Left-2.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000)" x="14" y="7" width="2" height="10" rx="1" />
-                                                    <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997)" />
-                                                </g>
-                                            </svg>
-                                            <!--end::Svg Icon-->
-                                        </span>Previous
-                                    </button>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-primary font-weight-bolder font-size-h6 pl-8 pr-4 py-4 my-3" data-wizard-type="action-submit">
-                                        Submit
-                                        <span class="svg-icon svg-icon-md ml-2">
-                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Right-2.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
-                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                                </g>
-                                            </svg>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                    </button>
-                                    <button type="button" class="btn btn-primary font-weight-bolder font-size-h6 pl-8 pr-4 py-4 my-3" data-wizard-type="action-next">
-                                        Next
-                                        <span class="svg-icon svg-icon-md ml-2">
-                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Right-2.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
-                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                                </g>
-                                            </svg>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!--end: Wizard Actions-->
-                        </form>
-                        <!--end::Form-->
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Tên đối tác</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <select class="form-control" required id="partner_name_form">
+                            <option value="1">Bách khoa</option>
+                            <option value="2">FPTGW</option>
+                        </select>
                     </div>
-                    <!--end::Container-->
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent" />
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <select class="form-control" required id="specialization">
+                            <option value="1">SE</option>
+                            <option value="2">AB</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Quốc gia</label>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation" />
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Email</label>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email" />
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Ngày ký kết</label>
+                        <input class="form-control custom-pickdate" type="text" placeholder="Ngày ký kết" autocomplete="off" id="sign_date" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website" />
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone" />
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <select class="form-control" required id="coop_scope">
+                            <option value="1">SE</option>
+                            <option value="2">AB</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address" />
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
+                <button type="button" class="btn btn-sm btn-primary">Thêm</button>
             </div>
         </div>
     </div>
@@ -379,19 +479,53 @@
     </div>
 </div>
 
+@*toast alert*@
+<div id="toast-container-custom" class="toast-bottom-left-custom">
+
+    @*toastr notice 90 days left*@
+    <div class="toast toast-warning toast-90" aria-live="assertive" style="display:none">
+        <button type="button" class="toast-close-button" role="button">×</button>
+        <div class="toast-message">
+            Hiện có biên bản 2020/01 sắp hết hạn cccccccccccccccccccccc
+        </div>
+    </div>
+
+    @*toastr notice 30 days left*@
+    <div class="toast toast-warning toast-30" aria-live="assertive" style="background-color: #f64e60; display:none">
+        <button type="button" class="toast-close-button" role="button">×</button>
+        <div class="toast-message">
+            Clear itself?
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    @model int
     <script>
+        $('.toast-close-button').click(function () {
+            $(this).parent().fadeOut('slow');
+        })
+
+        $(document).ready(function () {
+            var duration = @Html.Raw(Json.Encode(Model));
+            if (duration < 90) {
+                $('.toast-90').fadeIn('slow');
+                $('.toast-30').fadeIn('slow');
+            }
+            if (duration < 30) {
+                $('.toast-30').fadeIn('slow');
+            }
+    });
 
         //datatable
         $(".mou_table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
+                    oLanguage: {
+                        oPaginate: {
+                            sPrevious: "Trang trước",
                     sNext: "Trang sau"
-                },
+                        },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
                 sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
@@ -400,37 +534,51 @@
                     "<option value='20'>20</option>" +
                     "</select> bản ghi",
                 sSearch: "Tìm kiếm"
-            },
+                    },
             columnDefs: [
                 {
-                    targets: 14,
+                        targets: 4,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
+                            }
+                },
+                {
+                        targets: 9,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                                return '<a href="#" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
+                            }
+                        },
+                {
+                        targets: 14,
                     width: '75px',
                     render: function (data, type, full, meta) {
-                        var status = {
+                                var status = {
                             1: {
-                                'title': 'Hết hạn',
+                                    'title': 'Hết hạn',
                                 'class': 'label-light-danger'
                             },
                             2: {
-                                'title': 'Còn hạn',
+                                    'title': 'Còn hạn',
                                 'class': 'label-light-success'
                             }
-                        };
-                        if (typeof status[data] === 'undefined') {
-                            return data;
-                        }
-                        return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                 },
                 {
-                    targets: -1,
+        targets: -1,
                     title: '',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                return '<a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
                     }
-                }
+        }
             ]
         });
 
@@ -440,6 +588,7 @@
             $('.mou_table').parent().css('overflow-x', 'auto');
             $('.mou_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
+
         });
 
         var id_row = "";
@@ -448,11 +597,12 @@
             id_row = id;
         }
          //funtion delete
-        $('#btn_delete').click(function() {
+        $('#btn_delete').click(function () {
             $.ajax({
                 url: '@Url.Action("Delete_Mou", "MOU")',
                 data: { 'id': id_row },
                 success: function (data) {
+
                     if (data = "") {
                         toastr.error("Có lỗi xảy ra");
                     } else {
@@ -462,6 +612,46 @@
                 },
             });
         });
+    </script>
+    <script>
+        var list = document.getElementsByClassName("progressbar")[0];
+        itemList = list.getElementsByTagName("li");
+
+        var div_step1 = document.getElementById("step-1");
+        var div_step2 = document.getElementById("step-2");
+        var button_step1 = document.getElementById("step-1-button");
+        var step1_close_btn = document.getElementById("step-1-close-btn");
+        var button_step2 = document.getElementById("step-2-button");
+        var backbutton_step2 = document.getElementById("step-2-backbutton");
+
+        function nextStep() {
+            itemList[0].classList.remove("active");
+            itemList[0].classList.add("done");
+            itemList[1].classList.add("active");
+            div_step1.style.display = "none";
+            button_step1.style.display = "none";
+            step1_close_btn.style.display = "none";
+            div_step2.style.display = "block";
+            button_step2.style.display = "block";
+            backbutton_step2.style.display = "block";
+        }
+
+        function backToStep() {
+            itemList[0].classList.add("active");
+            itemList[0].classList.remove("done");
+            itemList[1].classList.remove("active");
+            div_step1.style.display = "block";
+            button_step1.style.display = "block";
+            step1_close_btn.style.display = "block";
+            div_step2.style.display = "none";
+            button_step2.style.display = "none";
+            backbutton_step2.style.display = "none";
+        }
+
+        function doneStep() {
+            toastr.success('Thêm thành công')
+        }
+
     </script>
 }
 

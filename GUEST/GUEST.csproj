@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -52,6 +58,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -118,12 +126,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CitationController.cs" />
-    <Compile Include="Controllers\ConferenceSponsorRequestController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InventionController.cs" />
-    <Compile Include="Controllers\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2331,17 +2339,17 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Index.cshtml" />
-    <Content Include="Views\Paper\ListAll.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Paper\AddRequest.cshtml" />
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Citation\List.cshtml" />
     <Content Include="Views\Citation\AddRequest.cshtml" />
     <Content Include="Views\Invention\ListAll.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Detail.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\Add.cshtml" />
-    <Content Include="Views\ConferenceSponsorRequest\CostMenu.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Add.cshtml" />
+    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\Invention\AddRequest.cshtml" />
+    <Content Include="Views\ScientificProducts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2382,6 +2390,19 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>vi-VN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{07f5d474-332d-4cf5-91eb-5f4e9099fbb4}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTITIES\ENTITIES.csproj">
+      <Project>{541d580a-53fd-4df7-93d4-ba5a675172d7}</Project>
+      <Name>ENTITIES</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

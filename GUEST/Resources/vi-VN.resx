@@ -117,10 +117,265 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccNo" xml:space="preserve">
+    <value>Số tài khoản</value>
+  </data>
+  <data name="According" xml:space="preserve">
+    <value>Theo quy định</value>
+  </data>
+  <data name="AddAu" xml:space="preserve">
+    <value>Thêm tác giả</value>
+  </data>
+  <data name="AddRow" xml:space="preserve">
+    <value>Thêm dòng</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="Apr" xml:space="preserve">
+    <value>Tháng 4</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="Aug" xml:space="preserve">
+    <value>Tháng 8</value>
+  </data>
+  <data name="AuthorInfo" xml:space="preserve">
+    <value>Thông tin tác giả</value>
+  </data>
+  <data name="AuthorName" xml:space="preserve">
+    <value>Tên tác giả</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>Ngân hàng</value>
+  </data>
+  <data name="CitationCount" xml:space="preserve">
+    <value>Số trích dẫn</value>
+  </data>
+  <data name="CitationInfo" xml:space="preserve">
+    <value>Thông tin trích dẫn</value>
+  </data>
+  <data name="CMND" xml:space="preserve">
+    <value>CMND</value>
+  </data>
+  <data name="ConferenceName" xml:space="preserve">
+    <value>Tên hội thảo</value>
+  </data>
+  <data name="ConferencePaper" xml:space="preserve">
+    <value>Kỷ yếu hội thảo</value>
+  </data>
+  <data name="ContractType" xml:space="preserve">
+    <value>Loại hợp đồng</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Tiêu chí</value>
+  </data>
+  <data name="CriteriaType" xml:space="preserve">
+    <value>Loại tiêu chí</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Ngày</value>
+  </data>
+  <data name="Dec" xml:space="preserve">
+    <value>Tháng 12</value>
+  </data>
+  <data name="DelAu" xml:space="preserve">
+    <value>Xóa tác giả</value>
+  </data>
+  <data name="DelRow" xml:space="preserve">
+    <value>Xóa dòng</value>
+  </data>
+  <data name="Domestic" xml:space="preserve">
+    <value>Trong nước</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="EmptyTB" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="ErrorAuthorDel" xml:space="preserve">
+    <value>Bài báo phải có ít nhất 1 tác giả</value>
+  </data>
+  <data name="ErrorAuthorDel2" xml:space="preserve">
+    <value>Bằng sáng chế phải có ít nhất 1 tác giả</value>
+  </data>
+  <data name="ErrorCita" xml:space="preserve">
+    <value>Phải có ít nhất 1 dòng</value>
+  </data>
+  <data name="Feb" xml:space="preserve">
+    <value>Tháng 2</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
   <data name="icon" xml:space="preserve">
     <value>/Content/assets/media/svg/flags/220-vietnam.svg</value>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>Trong</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="International" xml:space="preserve">
+    <value>Quốc tế</value>
+  </data>
+  <data name="InvenName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
+  </data>
+  <data name="Jan" xml:space="preserve">
+    <value>Tháng 1</value>
+  </data>
+  <data name="JournalIndex" xml:space="preserve">
+    <value>Chỉ số tạp chí</value>
+  </data>
+  <data name="JournalName" xml:space="preserve">
+    <value>Tên tạp chí</value>
+  </data>
+  <data name="JournalPaper" xml:space="preserve">
+    <value>Tạp chí khoa học</value>
+  </data>
+  <data name="Jul" xml:space="preserve">
+    <value>Tháng 7</value>
+  </data>
+  <data name="Jun" xml:space="preserve">
+    <value>Tháng 6</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link xác minh</value>
+  </data>
+  <data name="LinkFull" xml:space="preserve">
+    <value>Link toàn văn</value>
+  </data>
+  <data name="ListMaga" xml:space="preserve">
+    <value>Danh sách tạp chí trong nước</value>
+  </data>
+  <data name="Mar" xml:space="preserve">
+    <value>Tháng 3</value>
+  </data>
+  <data name="May" xml:space="preserve">
+    <value>Tháng 5</value>
+  </data>
+  <data name="MSNV" xml:space="preserve">
+    <value>MSNV/MSSV</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên tác giả</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Trang sau</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Nov" xml:space="preserve">
+    <value>Tháng 11</value>
+  </data>
+  <data name="Oct" xml:space="preserve">
+    <value>Tháng 10</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="PaperInfo" xml:space="preserve">
+    <value>Thông tin bài báo</value>
+  </data>
+  <data name="PaperName" xml:space="preserve">
+    <value>Tên bài báo</value>
+  </data>
+  <data name="PaperType" xml:space="preserve">
+    <value>Loại ấn phẩm</value>
+  </data>
+  <data name="PatentDate" xml:space="preserve">
+    <value>Ngày cấp</value>
+  </data>
+  <data name="PatentNumber" xml:space="preserve">
+    <value>Số bằng sáng chế</value>
+  </data>
+  <data name="PatentType" xml:space="preserve">
+    <value>Loại SHTT</value>
+  </data>
+  <data name="Pre" xml:space="preserve">
+    <value>Trang trước</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Ngày xuất bản</value>
+  </data>
+  <data name="PublishInfo" xml:space="preserve">
+    <value>Thông tin nhà xuất bản</value>
+  </data>
+  <data name="PublishName" xml:space="preserve">
+    <value>Tên nhà xuất bản</value>
+  </data>
+  <data name="Quality" xml:space="preserve">
+    <value>Chất lượng</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Bản ghi</value>
+  </data>
+  <data name="Repre" xml:space="preserve">
+    <value>Đại diện nhận thưởng</value>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Ngày gửi yêu cầu</value>
+  </data>
+  <data name="RequestInfo" xml:space="preserve">
+    <value>Thông tin yêu cầu</value>
+  </data>
+  <data name="Reward" xml:space="preserve">
+    <value>Tiền thưởng</value>
+  </data>
+  <data name="RewardInfo" xml:space="preserve">
+    <value>Thông tin xét thưởng</value>
+  </data>
+  <data name="RewardType" xml:space="preserve">
+    <value>Loại khen thưởng</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Gửi yêu cầu</value>
+  </data>
+  <data name="Sep" xml:space="preserve">
+    <value>Tháng 9</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Hiển thị</value>
+  </data>
+  <data name="ShowTB" xml:space="preserve">
+    <value>Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Nguồn trích dẫn</value>
+  </data>
+  <data name="Specialized" xml:space="preserve">
+    <value>Chuyên ngành</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Mã số thuế</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Chức danh</value>
+  </data>
+  <data name="TotalReward" xml:space="preserve">
+    <value>Tổng thưởng</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Xem chi tiết</value>
+  </data>
+  <data name="Vol" xml:space="preserve">
+    <value>Tập</value>
+  </data>
+  <data name="WorkUnit" xml:space="preserve">
+    <value>Đơn vị</value>
   </data>
 </root>

@@ -1,0 +1,700 @@
+﻿
+@{
+    ViewBag.Title = "Thêm đề nghị hỗ trợ hội nghị";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    span.select2 {
+        width: 220px !important;
+    }
+</style>
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                    <!---------------------------------------------------------------------->
+                    <div class="">
+                        <h3 class="mb-10 font-weight-bold text-dark">Thông tin hội nghị</h3>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Tên hội nghị <span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
+                                    <span class="form-text text-muted">Please enter your Postcode.</span>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Website hội nghị <span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Website hội nghị" value="">
+                                    <span class="form-text text-muted">Please enter your City.</span>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
+                                    <span class="form-text text-muted">Please enter your Postcode.</span>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
+                                    <span class="form-text text-muted">Please enter your City.</span>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!--begin::Select-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Quốc gia <span style='color:red'>*</span>:</label>
+                                    <select class="form-control form-control-lg" id="kt_select2_1">
+                                        @foreach (var item in ViewBag.countries)
+                                        {
+                                            <option value="@item.country_id">@item.country_name</option>
+                                        }
+                                    </select>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Select-->
+                            </div>
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <div class="date form-group fv-plugins-icon-container">
+                                    <label>Thời gian diễn ra<span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control form-control-lg" readonly="" id="kt_daterangepicker_1">
+
+                                </div>
+                                <!--end::Input-->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label>File bài báo <span style='color:red'>*</span>:</label>
+                                <div class="uppy" id="kt_uppy_1">
+                                    <div class="uppy-wrapper"></div>
+                                    <div class="uppy-list"></div>
+                                    <div class="uppy-status"></div>
+                                    <div class="uppy-informer uppy-informer-min"></div>
+                                </div>
+                                <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                            </div>
+                            <div class="col-xl-6">
+                                <!--begin::Input-->
+                                <label>Thư xác nhận <span style='color:red'>*</span>:</label>
+                                <div class="uppy" id="kt_uppy_2">
+                                    <div class="uppy-wrapper"></div>
+                                    <div class="uppy-list"></div>
+                                    <div class="uppy-status"></div>
+                                    <div class="uppy-informer uppy-informer-min"></div>
+                                </div>
+                                <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                                <!--end::Input-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!--begin::Select-->
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Hình thức <span style='color:red'>*</span>:</label>
+                                    <select class="form-control form-control-lg">
+                                        <option value="1">Online quốc tế</option>
+                                        <option value="2">Offline quốc tế</option>
+                                        <option value="3">Trong nước</option>
+                                    </select>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                                <!--end::Select-->
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="pb-5">
+                        <h3 class="mb-10 font-weight-bold text-dark">Danh sách tham dự</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th style="width: 240px">MSNV/MSSV</th>
+                                        <th>Họ và tên</th>
+                                        <th>Đơn vị</th>
+                                        <th>Khu vực</th>
+                                        <th>Chức danh</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableParticipant">
+                                    <tr role="row" class="odd">
+                                        <td>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label">ABC123</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectWorkUnit">
+                                                <option value="1">FPTU</option>
+                                                <option value="2">FPoly</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectArea">
+                                                <option value="1">Hà Nội</option>
+                                                <option value="2">Đà Nẵng</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
+                                            </select>
+                                        </td>
+                                        <td nowrap="">
+                                            <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                        </td>
+                                    </tr>
+                                    <tr role="row" class="odd" id="baseParticipant">
+                                        <td>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label"></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="">
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectWorkUnit">
+                                                <option value="1">FPTU</option>
+                                                <option value="2">FPoly</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectArea">
+                                                <option value="1">Hà Nội</option>
+                                                <option value="2">Đà Nẵng</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
+                                            </select>
+                                        </td>
+                                        <td nowrap="">
+                                            <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12" style="    text-align: end;">
+                                <a onclick="addParticipant()" class="btn btn-success font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg><!--end::Svg Icon-->
+                                    </span> Thêm
+                                </a>
+                                <div class="dropdown dropdown-inline mr-2">
+                                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="svg-icon svg-icon-md">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3"></path>
+                                                    <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000"></path>
+                                                </g>
+                                            </svg><!--end::Svg Icon-->
+                                        </span>		Export
+                                    </button>
+
+                                    <!--begin::Dropdown Menu-->
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <!--begin::Navigation-->
+                                        <ul class="navi flex-column navi-hover py-2">
+                                            <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                Choose an option:
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-print"></i></span>
+                                                    <span class="navi-text">Print</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-copy"></i></span>
+                                                    <span class="navi-text">Copy</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-excel-o"></i></span>
+                                                    <span class="navi-text">Excel</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-text-o"></i></span>
+                                                    <span class="navi-text">CSV</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
+                                                    <span class="navi-text">PDF</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--end::Navigation-->
+                                    </div>
+                                    <!--end::Dropdown Menu-->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pb-5">
+                        <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Nội dung</th>
+                                        <th>Tổ chức tài trợ</th>
+                                        <th>Chi phí</th>
+                                        <th>Tổng cộng</th>
+                                        <th class="sorting_disabled">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableCost">
+                                    <tr role="row" class="odd" id="baseCost">
+                                        <td>
+                                            <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Nội dung " value="">
+                                        </td>
+                                        <td>FPTU</td>
+                                        <td>
+                                            <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg" name="postcode" placeholder="Chi phí" value="">
+                                        </td>
+                                        <td>
+                                            <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                        </td>
+                                        <td nowrap="">
+                                            <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Tổng cộng</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td><span id="totalCost" class="label label-lg label-light-danger label-inline">0 đ</span></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12" style="    text-align: end;">
+                                <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg><!--end::Svg Icon-->
+                                    </span> Thêm
+                                </a>
+                                <div class="dropdown dropdown-inline mr-2">
+                                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="svg-icon svg-icon-md">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3"></path>
+                                                    <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000"></path>
+                                                </g>
+                                            </svg><!--end::Svg Icon-->
+                                        </span>		Export
+                                    </button>
+
+                                    <!--begin::Dropdown Menu-->
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <!--begin::Navigation-->
+                                        <ul class="navi flex-column navi-hover py-2">
+                                            <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                Choose an option:
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-print"></i></span>
+                                                    <span class="navi-text">Print</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-copy"></i></span>
+                                                    <span class="navi-text">Copy</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-excel-o"></i></span>
+                                                    <span class="navi-text">Excel</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-text-o"></i></span>
+                                                    <span class="navi-text">CSV</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
+                                                    <span class="navi-text">PDF</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--end::Navigation-->
+                                    </div>
+                                    <!--end::Dropdown Menu-->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--end::Wizard Form-->
+            </div>
+        </div>
+        <!--end::Wizard-->
+    </div>
+    <div class="card-footer">
+        <button type="reset" class="btn btn-primary mr-2">Gửi đơn</button>
+        <button type="reset" class="btn btn-secondary">Huỷ</button>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
+        var baseCost = document.getElementById("baseCost").cloneNode(true);
+        var tbodyParticipant = document.getElementById("tableParticipant");
+        var tbodyCost = document.getElementById("tableCost");
+        var rowTotalCost = tbodyCost.lastElementChild;
+
+        $(document).ready(function () {
+
+            $('#kt_select2_1').select2();
+
+            $('#kt_daterangepicker_1').daterangepicker({
+                buttonClasses: ' btn',
+                applyClass: 'btn-primary',
+                cancelClass: 'btn-secondary'
+            });
+
+            var KTUppy = function () {
+                const Tus = Uppy.Tus;
+                const ProgressBar = Uppy.ProgressBar;
+                const StatusBar = Uppy.StatusBar;
+                const FileInput = Uppy.FileInput;
+                const Informer = Uppy.Informer;
+
+                // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
+                const Dashboard = Uppy.Dashboard;
+                const Dropbox = Uppy.Dropbox;
+                const GoogleDrive = Uppy.GoogleDrive;
+                const Instagram = Uppy.Instagram;
+                const Webcam = Uppy.Webcam;
+
+                var initUppy1 = function () {
+                    // Uppy variables
+                    // For more info refer: https://uppy.io/
+                    var elemId = 'kt_uppy_1';
+                    var id = '#' + elemId;
+                    var $statusBar = $(id + ' .uppy-status');
+                    var $uploadedList = $(id + ' .uppy-list');
+                    var timeout;
+
+                    var uppyMin = Uppy.Core({
+                        debug: true,
+                        autoProceed: true,
+                        showProgressDetails: true,
+                        restrictions: {
+                            maxFileSize: 1000000, // 1mb
+                            maxNumberOfFiles: 5,
+                            minNumberOfFiles: 1
+                        }
+                    });
+
+                    uppyMin.use(FileInput, {
+                        target: id + ' .uppy-wrapper',
+                        pretty: false
+                    });
+                    uppyMin.use(Informer, {
+                        target: id + ' .uppy-informer'
+                    });
+
+                    // demo file upload server
+                    uppyMin.use(Tus, {
+                        endpoint: 'https://master.tus.io/files/'
+                    });
+                    uppyMin.use(StatusBar, {
+                        target: id + ' .uppy-status',
+                        hideUploadButton: true,
+                        hideAfterFinish: false
+                    });
+
+                    $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                    $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                    var $fileLabel = $(id + ' .uppy-input-label');
+
+                    uppyMin.on('upload', function (data) {
+                        $fileLabel.text("Uploading...");
+                        $statusBar.addClass('uppy-status-ongoing');
+                        $statusBar.removeClass('uppy-status-hidden');
+                        clearTimeout(timeout);
+                    });
+
+                    uppyMin.on('complete', function (file) {
+                        $.each(file.successful, function (index, value) {
+                            var sizeLabel = "bytes";
+                            var filesize = value.size;
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "kb";
+
+                                if (filesize > 1024) {
+                                    filesize = filesize / 1024;
+                                    sizeLabel = "MB";
+                                }
+                            }
+                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            $uploadedList.append(uploadListHtml);
+                        });
+
+                        $fileLabel.text("Add more files");
+
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+                    });
+
+                    $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                        var itemId = $(this).attr('data-id');
+                        uppyMin.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    });
+                }
+
+                var initUppy2 = function () {
+                    // Uppy variables
+                    // For more info refer: https://uppy.io/
+                    var elemId = 'kt_uppy_2';
+                    var id = '#' + elemId;
+                    var $statusBar = $(id + ' .uppy-status');
+                    var $uploadedList = $(id + ' .uppy-list');
+                    var timeout;
+
+                    var uppyMin = Uppy.Core({
+                        debug: true,
+                        autoProceed: true,
+                        showProgressDetails: true,
+                        restrictions: {
+                            maxFileSize: 1000000, // 1mb
+                            maxNumberOfFiles: 5,
+                            minNumberOfFiles: 1
+                        }
+                    });
+
+                    uppyMin.use(FileInput, {
+                        target: id + ' .uppy-wrapper',
+                        pretty: false
+                    });
+                    uppyMin.use(Informer, {
+                        target: id + ' .uppy-informer'
+                    });
+
+                    // demo file upload server
+                    uppyMin.use(Tus, {
+                        endpoint: 'https://master.tus.io/files/'
+                    });
+                    uppyMin.use(StatusBar, {
+                        target: id + ' .uppy-status',
+                        hideUploadButton: true,
+                        hideAfterFinish: false
+                    });
+
+                    $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                    $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                    var $fileLabel = $(id + ' .uppy-input-label');
+
+                    uppyMin.on('upload', function (data) {
+                        $fileLabel.text("Uploading...");
+                        $statusBar.addClass('uppy-status-ongoing');
+                        $statusBar.removeClass('uppy-status-hidden');
+                        clearTimeout(timeout);
+                    });
+
+                    uppyMin.on('complete', function (file) {
+                        $.each(file.successful, function (index, value) {
+                            var sizeLabel = "bytes";
+                            var filesize = value.size;
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "kb";
+
+                                if (filesize > 1024) {
+                                    filesize = filesize / 1024;
+                                    sizeLabel = "MB";
+                                }
+                            }
+                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            $uploadedList.append(uploadListHtml);
+                        });
+
+                        $fileLabel.text("Add more files");
+
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+                    });
+
+                    $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                        var itemId = $(this).attr('data-id');
+                        uppyMin.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    });
+                }
+
+                return {
+                    // public functions
+                    init: function () {
+                        initUppy1();
+                        initUppy2();
+                        // initUppy6();
+                    }
+                };
+            }();
+
+            KTUtil.ready(function () {
+                KTUppy.init();
+            });
+        })
+
+        function addParticipant() {
+            let temp = baseParticipant.cloneNode(true);
+            inItSelectPeople(temp.getElementsByClassName("selectPeople"));
+            tbodyParticipant.appendChild(temp);
+        }
+
+        function deleteParticipant(ele) {
+            ele.closest("tr").remove();
+        }
+
+        function addCost() {
+            let temp = baseCost.cloneNode(true);
+            tbodyCost.insertBefore(temp, rowTotalCost);
+        }
+
+        // loading remote data
+        var currentRow;
+
+        $(document).on("click", "#tableParticipant span.select2", function () {
+            currentRow = $(this).closest("tr");
+        })
+
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+            var markup = "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__meta'>" +
+                "<div class='select2-result-repository__title'>" + repo.id + "</div>" +
+                "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
+                "<div class='select2-result-repository__statistics'>" +
+                "<div class='select2-result-repository__forks'>" + repo.WorkUnitString + " " + repo.AreaString + "</div>" +
+                "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
+                "</div></div></div>";
+            return markup;
+        }
+
+        function formatRepoSelection(repo) {
+            if (repo.id) {
+                $(currentRow).find(".inputName").val(repo.Name);
+                $(currentRow).find(".selectWorkUnit").val(repo.WorkUnitID);
+                $(currentRow).find(".selectArea").val(repo.AreaID);
+                $(currentRow).find(".selectTitle").val(repo.TitleID);
+                console.log(currentRow);
+            }
+            return repo.id || repo.text;
+        }
+
+        function inItSelectPeople(ele) {
+            $(ele).select2({
+                placeholder: "Tìm kiếm thông tin theo mã số",
+                allowClear: true,
+                ajax: {
+                    url: "/ConferenceSponsor/GetInformationPeopleWithID",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        data.map(function (obj) {
+                            obj.id = obj.PeopleID;
+                            return obj;
+                        })
+
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 2,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+        }
+
+        inItSelectPeople(document.getElementsByClassName("selectPeople"))
+    </script>
+    <script src="~/Scripts/CostTableConferenceRequest.js"></script>
+}
+
