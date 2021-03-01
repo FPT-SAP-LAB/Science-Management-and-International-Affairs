@@ -99,25 +99,28 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script>
-    $(document).on("wheel", "input[type=number]", function (e) {
-        $(this).blur();
-    });
-    $("#confirmbtn").click(function () {
-        var temp = $("#totalreward").val();
-        if (temp == "") {
-            toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
-        }
-        var ck = $("#typereward").val()
-        if (ck == 1) {
-            $(".onereward").each(function () {
-                var value = $(this).val();
-                if (value == "") {
-                    toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
-                }
-            });
-        }
-    });
-</script>
+@section scripts{
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        $(document).on("wheel", "input[type=number]", function (e) {
+            $(this).blur();
+        });
+        $("#confirmbtn").click(function () {
+            var temp = $("#totalreward").val();
+            if (temp == "") {
+                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+            }
+            var ck = $("#typereward").val()
+            if (ck == 1) {
+                $(".onereward").each(function () {
+                    var value = $(this).val();
+                    if (value == "") {
+                        toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                    }
+                });
+            }
+        });
+    </script>
+}
+
 

@@ -583,8 +583,8 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Nội dung</label>
-                        <div id="kt-ckeditor-3-toolbar"></div>
-                        <div id="kt-ckeditor-3"></div>
+                        <div class="ckeditor-toolbar"></div>
+                        <div class="ckeditor"></div>
                     </div>
                 </div>
             </div>
@@ -765,7 +765,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a href="#add_program" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                        return '<a href="#add_program" data-toggle="modal" class="btn btn-sm btn-outline-primary ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
                     }
                 }
             ]
@@ -777,16 +777,15 @@
             // Private functions
             var demos = function () {
                 DecoupledEditor
-                    .create(document.querySelector('#kt-ckeditor-3'))
+                    .create(document.querySelector('.ckeditor'))
                     .then(editor => {
-                        const toolbarContainer = document.querySelector('#kt-ckeditor-3-toolbar');
+                        const toolbarContainer = document.querySelector('.ckeditor-toolbar');
 
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
                     })
                     .catch(error => {
                         console.error(error);
                     });
-
             }
             return {
                 // public functions
@@ -796,7 +795,7 @@
             };
         }();
         // Initialization
-        $(document).ready(function () {
+        $('.ck-init').click(function () {
             KTCkeditorDocument.init();
         });
     </script>

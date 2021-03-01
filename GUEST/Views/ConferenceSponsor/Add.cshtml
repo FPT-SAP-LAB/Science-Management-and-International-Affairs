@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    span.select2 {
+        width: 220px !important;
+    }
+</style>
+
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -17,7 +23,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Tên hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
                                     <span class="form-text text-muted">Please enter your Postcode.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -27,7 +33,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="city" placeholder="Website hội nghị" value="">
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Website hội nghị" value="">
                                     <span class="form-text text-muted">Please enter your City.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -39,7 +45,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
+                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
                                     <span class="form-text text-muted">Please enter your Postcode.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -49,7 +55,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control  form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
+                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
                                     <span class="form-text text-muted">Please enter your City.</span>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -61,257 +67,11 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Quốc gia <span style='color:red'>*</span>:</label>
-                                    <select class="form-control form-control-lg" id="kt_select2_1" name="country">
-                                        <option value="">Select</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AX">Åland Islands</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AS">American Samoa</option>
-                                        <option value="AD">Andorra</option>
-                                        <option value="AO">Angola</option>
-                                        <option value="AI">Anguilla</option>
-                                        <option value="AQ">Antarctica</option>
-                                        <option value="AG">Antigua and Barbuda</option>
-                                        <option value="AR">Argentina</option>
-                                        <option value="AM">Armenia</option>
-                                        <option value="AW">Aruba</option>
-                                        <option value="AU" selected="">Australia</option>
-                                        <option value="AT">Austria</option>
-                                        <option value="AZ">Azerbaijan</option>
-                                        <option value="BS">Bahamas</option>
-                                        <option value="BH">Bahrain</option>
-                                        <option value="BD">Bangladesh</option>
-                                        <option value="BB">Barbados</option>
-                                        <option value="BY">Belarus</option>
-                                        <option value="BE">Belgium</option>
-                                        <option value="BZ">Belize</option>
-                                        <option value="BJ">Benin</option>
-                                        <option value="BM">Bermuda</option>
-                                        <option value="BT">Bhutan</option>
-                                        <option value="BO">Bolivia, Plurinational State of</option>
-                                        <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-                                        <option value="BA">Bosnia and Herzegovina</option>
-                                        <option value="BW">Botswana</option>
-                                        <option value="BV">Bouvet Island</option>
-                                        <option value="BR">Brazil</option>
-                                        <option value="IO">British Indian Ocean Territory</option>
-                                        <option value="BN">Brunei Darussalam</option>
-                                        <option value="BG">Bulgaria</option>
-                                        <option value="BF">Burkina Faso</option>
-                                        <option value="BI">Burundi</option>
-                                        <option value="KH">Cambodia</option>
-                                        <option value="CM">Cameroon</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="CV">Cape Verde</option>
-                                        <option value="KY">Cayman Islands</option>
-                                        <option value="CF">Central African Republic</option>
-                                        <option value="TD">Chad</option>
-                                        <option value="CL">Chile</option>
-                                        <option value="CN">China</option>
-                                        <option value="CX">Christmas Island</option>
-                                        <option value="CC">Cocos (Keeling) Islands</option>
-                                        <option value="CO">Colombia</option>
-                                        <option value="KM">Comoros</option>
-                                        <option value="CG">Congo</option>
-                                        <option value="CD">Congo, the Democratic Republic of the</option>
-                                        <option value="CK">Cook Islands</option>
-                                        <option value="CR">Costa Rica</option>
-                                        <option value="CI">Côte d'Ivoire</option>
-                                        <option value="HR">Croatia</option>
-                                        <option value="CU">Cuba</option>
-                                        <option value="CW">Curaçao</option>
-                                        <option value="CY">Cyprus</option>
-                                        <option value="CZ">Czech Republic</option>
-                                        <option value="DK">Denmark</option>
-                                        <option value="DJ">Djibouti</option>
-                                        <option value="DM">Dominica</option>
-                                        <option value="DO">Dominican Republic</option>
-                                        <option value="EC">Ecuador</option>
-                                        <option value="EG">Egypt</option>
-                                        <option value="SV">El Salvador</option>
-                                        <option value="GQ">Equatorial Guinea</option>
-                                        <option value="ER">Eritrea</option>
-                                        <option value="EE">Estonia</option>
-                                        <option value="ET">Ethiopia</option>
-                                        <option value="FK">Falkland Islands (Malvinas)</option>
-                                        <option value="FO">Faroe Islands</option>
-                                        <option value="FJ">Fiji</option>
-                                        <option value="FI">Finland</option>
-                                        <option value="FR">France</option>
-                                        <option value="GF">French Guiana</option>
-                                        <option value="PF">French Polynesia</option>
-                                        <option value="TF">French Southern Territories</option>
-                                        <option value="GA">Gabon</option>
-                                        <option value="GM">Gambia</option>
-                                        <option value="GE">Georgia</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="GH">Ghana</option>
-                                        <option value="GI">Gibraltar</option>
-                                        <option value="GR">Greece</option>
-                                        <option value="GL">Greenland</option>
-                                        <option value="GD">Grenada</option>
-                                        <option value="GP">Guadeloupe</option>
-                                        <option value="GU">Guam</option>
-                                        <option value="GT">Guatemala</option>
-                                        <option value="GG">Guernsey</option>
-                                        <option value="GN">Guinea</option>
-                                        <option value="GW">Guinea-Bissau</option>
-                                        <option value="GY">Guyana</option>
-                                        <option value="HT">Haiti</option>
-                                        <option value="HM">Heard Island and McDonald Islands</option>
-                                        <option value="VA">Holy See (Vatican City State)</option>
-                                        <option value="HN">Honduras</option>
-                                        <option value="HK">Hong Kong</option>
-                                        <option value="HU">Hungary</option>
-                                        <option value="IS">Iceland</option>
-                                        <option value="IN">India</option>
-                                        <option value="ID">Indonesia</option>
-                                        <option value="IR">Iran, Islamic Republic of</option>
-                                        <option value="IQ">Iraq</option>
-                                        <option value="IE">Ireland</option>
-                                        <option value="IM">Isle of Man</option>
-                                        <option value="IL">Israel</option>
-                                        <option value="IT">Italy</option>
-                                        <option value="JM">Jamaica</option>
-                                        <option value="JP">Japan</option>
-                                        <option value="JE">Jersey</option>
-                                        <option value="JO">Jordan</option>
-                                        <option value="KZ">Kazakhstan</option>
-                                        <option value="KE">Kenya</option>
-                                        <option value="KI">Kiribati</option>
-                                        <option value="KP">Korea, Democratic People's Republic of</option>
-                                        <option value="KR">Korea, Republic of</option>
-                                        <option value="KW">Kuwait</option>
-                                        <option value="KG">Kyrgyzstan</option>
-                                        <option value="LA">Lao People's Democratic Republic</option>
-                                        <option value="LV">Latvia</option>
-                                        <option value="LB">Lebanon</option>
-                                        <option value="LS">Lesotho</option>
-                                        <option value="LR">Liberia</option>
-                                        <option value="LY">Libya</option>
-                                        <option value="LI">Liechtenstein</option>
-                                        <option value="LT">Lithuania</option>
-                                        <option value="LU">Luxembourg</option>
-                                        <option value="MO">Macao</option>
-                                        <option value="MK">Macedonia, the former Yugoslav Republic of</option>
-                                        <option value="MG">Madagascar</option>
-                                        <option value="MW">Malawi</option>
-                                        <option value="MY">Malaysia</option>
-                                        <option value="MV">Maldives</option>
-                                        <option value="ML">Mali</option>
-                                        <option value="MT">Malta</option>
-                                        <option value="MH">Marshall Islands</option>
-                                        <option value="MQ">Martinique</option>
-                                        <option value="MR">Mauritania</option>
-                                        <option value="MU">Mauritius</option>
-                                        <option value="YT">Mayotte</option>
-                                        <option value="MX">Mexico</option>
-                                        <option value="FM">Micronesia, Federated States of</option>
-                                        <option value="MD">Moldova, Republic of</option>
-                                        <option value="MC">Monaco</option>
-                                        <option value="MN">Mongolia</option>
-                                        <option value="ME">Montenegro</option>
-                                        <option value="MS">Montserrat</option>
-                                        <option value="MA">Morocco</option>
-                                        <option value="MZ">Mozambique</option>
-                                        <option value="MM">Myanmar</option>
-                                        <option value="NA">Namibia</option>
-                                        <option value="NR">Nauru</option>
-                                        <option value="NP">Nepal</option>
-                                        <option value="NL">Netherlands</option>
-                                        <option value="NC">New Caledonia</option>
-                                        <option value="NZ">New Zealand</option>
-                                        <option value="NI">Nicaragua</option>
-                                        <option value="NE">Niger</option>
-                                        <option value="NG">Nigeria</option>
-                                        <option value="NU">Niue</option>
-                                        <option value="NF">Norfolk Island</option>
-                                        <option value="MP">Northern Mariana Islands</option>
-                                        <option value="NO">Norway</option>
-                                        <option value="OM">Oman</option>
-                                        <option value="PK">Pakistan</option>
-                                        <option value="PW">Palau</option>
-                                        <option value="PS">Palestinian Territory, Occupied</option>
-                                        <option value="PA">Panama</option>
-                                        <option value="PG">Papua New Guinea</option>
-                                        <option value="PY">Paraguay</option>
-                                        <option value="PE">Peru</option>
-                                        <option value="PH">Philippines</option>
-                                        <option value="PN">Pitcairn</option>
-                                        <option value="PL">Poland</option>
-                                        <option value="PT">Portugal</option>
-                                        <option value="PR">Puerto Rico</option>
-                                        <option value="QA">Qatar</option>
-                                        <option value="RE">Réunion</option>
-                                        <option value="RO">Romania</option>
-                                        <option value="RU">Russian Federation</option>
-                                        <option value="RW">Rwanda</option>
-                                        <option value="BL">Saint Barthélemy</option>
-                                        <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
-                                        <option value="KN">Saint Kitts and Nevis</option>
-                                        <option value="LC">Saint Lucia</option>
-                                        <option value="MF">Saint Martin (French part)</option>
-                                        <option value="PM">Saint Pierre and Miquelon</option>
-                                        <option value="VC">Saint Vincent and the Grenadines</option>
-                                        <option value="WS">Samoa</option>
-                                        <option value="SM">San Marino</option>
-                                        <option value="ST">Sao Tome and Principe</option>
-                                        <option value="SA">Saudi Arabia</option>
-                                        <option value="SN">Senegal</option>
-                                        <option value="RS">Serbia</option>
-                                        <option value="SC">Seychelles</option>
-                                        <option value="SL">Sierra Leone</option>
-                                        <option value="SG">Singapore</option>
-                                        <option value="SX">Sint Maarten (Dutch part)</option>
-                                        <option value="SK">Slovakia</option>
-                                        <option value="SI">Slovenia</option>
-                                        <option value="SB">Solomon Islands</option>
-                                        <option value="SO">Somalia</option>
-                                        <option value="ZA">South Africa</option>
-                                        <option value="GS">South Georgia and the South Sandwich Islands</option>
-                                        <option value="SS">South Sudan</option>
-                                        <option value="ES">Spain</option>
-                                        <option value="LK">Sri Lanka</option>
-                                        <option value="SD">Sudan</option>
-                                        <option value="SR">Suriname</option>
-                                        <option value="SJ">Svalbard and Jan Mayen</option>
-                                        <option value="SZ">Swaziland</option>
-                                        <option value="SE">Sweden</option>
-                                        <option value="CH">Switzerland</option>
-                                        <option value="SY">Syrian Arab Republic</option>
-                                        <option value="TW">Taiwan, Province of China</option>
-                                        <option value="TJ">Tajikistan</option>
-                                        <option value="TZ">Tanzania, United Republic of</option>
-                                        <option value="TH">Thailand</option>
-                                        <option value="TL">Timor-Leste</option>
-                                        <option value="TG">Togo</option>
-                                        <option value="TK">Tokelau</option>
-                                        <option value="TO">Tonga</option>
-                                        <option value="TT">Trinidad and Tobago</option>
-                                        <option value="TN">Tunisia</option>
-                                        <option value="TR">Turkey</option>
-                                        <option value="TM">Turkmenistan</option>
-                                        <option value="TC">Turks and Caicos Islands</option>
-                                        <option value="TV">Tuvalu</option>
-                                        <option value="UG">Uganda</option>
-                                        <option value="UA">Ukraine</option>
-                                        <option value="AE">United Arab Emirates</option>
-                                        <option value="GB">United Kingdom</option>
-                                        <option value="US">United States</option>
-                                        <option value="UM">United States Minor Outlying Islands</option>
-                                        <option value="UY">Uruguay</option>
-                                        <option value="UZ">Uzbekistan</option>
-                                        <option value="VU">Vanuatu</option>
-                                        <option value="VE">Venezuela, Bolivarian Republic of</option>
-                                        <option value="VN">Viet Nam</option>
-                                        <option value="VG">Virgin Islands, British</option>
-                                        <option value="VI">Virgin Islands, U.S.</option>
-                                        <option value="WF">Wallis and Futuna</option>
-                                        <option value="EH">Western Sahara</option>
-                                        <option value="YE">Yemen</option>
-                                        <option value="ZM">Zambia</option>
-                                        <option value="ZW">Zimbabwe</option>
+                                    <select class="form-control form-control-lg" id="kt_select2_1">
+                                        @foreach (var item in ViewBag.countries)
+                                        {
+                                            <option value="@item.country_id">@item.country_name</option>
+                                        }
                                     </select>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -357,7 +117,7 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Hình thức <span style='color:red'>*</span>:</label>
-                                    <select name="country" class="form-control  form-control-lg">
+                                    <select class="form-control form-control-lg">
                                         <option value="1">Online quốc tế</option>
                                         <option value="2">Offline quốc tế</option>
                                         <option value="3">Trong nước</option>
@@ -375,41 +135,40 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">MSNV/MSSV</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Họ và tên</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Đơn vị</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Khu vực</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Date: activate to sort column ascending">Chức danh</th>
-                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th style="width: 240px">MSNV/MSSV</th>
+                                        <th>Họ và tên</th>
+                                        <th>Đơn vị</th>
+                                        <th>Khu vực</th>
+                                        <th>Chức danh</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableParticipant">
                                     <tr role="row" class="odd">
                                         <td>
-                                            <select class="form-control select2" id="kt_select2_6" name="param">
-                                                <option label="Label"></option>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label">ABC123</option>
                                             </select>
-                                            @*<input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="ABC123">*@
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
+                                            <select class="form-control form-control-lg selectWorkUnit">
                                                 <option value="1">FPTU</option>
                                                 <option value="2">FPoly</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
+                                            <select class="form-control form-control-lg selectArea">
                                                 <option value="1">Hà Nội</option>
                                                 <option value="2">Đà Nẵng</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="1">Giảng viên</option>
-                                                <option value="2">Sinh viên</option>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -418,27 +177,29 @@
                                     </tr>
                                     <tr role="row" class="odd" id="baseParticipant">
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="MSNV/MSSV " value="">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Họ và tên" value="">
-                                        </td>
-                                        <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Đại học FPT</option>
-                                                <option value="AX">FPoly</option>
+                                            <select class="form-control select2 selectPeople" name="param">
+                                                <option label="Label"></option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Hà Nội</option>
-                                                <option value="AX">Đà Nẵng</option>
+                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="">
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectWorkUnit">
+                                                <option value="1">FPTU</option>
+                                                <option value="2">FPoly</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="country" class="form-control  form-control-lg">
-                                                <option value="AF">Giảng viên</option>
-                                                <option value="AX">Sinh viên</option>
+                                            <select class="form-control form-control-lg selectArea">
+                                                <option value="1">Hà Nội</option>
+                                                <option value="2">Đà Nẵng</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-lg selectTitle">
+                                                <option value="2">Giảng viên</option>
+                                                <option value="1">Sinh viên</option>
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -527,21 +288,21 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 50px;" aria-label="Ship City: activate to sort column ascending">Nội dung</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Ship Address: activate to sort column ascending">Tổ chức tài trợ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 122px;" aria-label="Company Agent: activate to sort column ascending">Chi phí</th>
-                                        <th class="sorting" tabindex="0" aria-controls="kt_datatable" style="width: 100px;" aria-label="Company Name: activate to sort column ascending">Tổng cộng</th>
-                                        <th class="sorting_disabled" style="width: 30px;" aria-label="Actions">Actions</th>
+                                        <th>Nội dung</th>
+                                        <th>Tổ chức tài trợ</th>
+                                        <th>Chi phí</th>
+                                        <th>Tổng cộng</th>
+                                        <th class="sorting_disabled">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableCost">
                                     <tr role="row" class="odd" id="baseCost">
                                         <td>
-                                            <input type="text" class="form-control  form-control-lg" name="postcode" placeholder="Nội dung " value="">
+                                            <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Nội dung " value="">
                                         </td>
                                         <td>FPTU</td>
                                         <td>
-                                            <input onInput="calculateCost(this)" type="text" class="form-control  form-control-lg" name="postcode" placeholder="Chi phí" value="">
+                                            <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg" name="postcode" placeholder="Chi phí" value="">
                                         </td>
                                         <td>
                                             <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -853,6 +614,7 @@
 
         function addParticipant() {
             let temp = baseParticipant.cloneNode(true);
+            inItSelectPeople(temp.getElementsByClassName("selectPeople"));
             tbodyParticipant.appendChild(temp);
         }
 
@@ -866,67 +628,72 @@
         }
 
         // loading remote data
+        var currentRow;
+
+        $(document).on("click", "#tableParticipant span.select2", function () {
+            currentRow = $(this).closest("tr");
+        })
 
         function formatRepo(repo) {
             if (repo.loading) return repo.text;
             var markup = "<div class='select2-result-repository clearfix'>" +
                 "<div class='select2-result-repository__meta'>" +
-                "<div class='select2-result-repository__title'>" + repo.ID + "</div>" +
+                "<div class='select2-result-repository__title'>" + repo.id + "</div>" +
                 "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
                 "<div class='select2-result-repository__statistics'>" +
                 "<div class='select2-result-repository__forks'>" + repo.WorkUnitString + " " + repo.AreaString + "</div>" +
                 "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
-                "</div>" +
-                "</div></div>";
-            //var markup = "<div class='select2-result-repository clearfix'>" +
-            //    "<div class='select2-result-repository__meta'>" +
-            //    "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
-            //if (repo.description) {
-            //    markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
-            //}
-            //markup += "<div class='select2-result-repository__statistics'>" +
-            //    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
-            //    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
-            //    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
-            //    "</div>" +
-            //    "</div></div>";
+                "</div></div></div>";
             return markup;
         }
 
         function formatRepoSelection(repo) {
-            return repo.ID || repo.text;
+            if (repo.id) {
+                $(currentRow).find(".inputName").val(repo.Name);
+                $(currentRow).find(".selectWorkUnit").val(repo.WorkUnitID);
+                $(currentRow).find(".selectArea").val(repo.AreaID);
+                $(currentRow).find(".selectTitle").val(repo.TitleID);
+                console.log(currentRow);
+            }
+            return repo.id || repo.text;
         }
 
-        $("#kt_select2_6").select2({
-            placeholder: "Search for git repositories",
-            allowClear: true,
-            ajax: {
-                url: "/ConferenceSponsor/GetInformationPeopleWithID",
-                //url: "https://api.github.com/search/repositories",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page
-                    };
-                },
-                processResults: function (data, params) {
-                    params.page = params.page || 1;
+        function inItSelectPeople(ele) {
+            $(ele).select2({
+                placeholder: "Tìm kiếm thông tin theo mã số",
+                allowClear: true,
+                ajax: {
+                    url: "/ConferenceSponsor/GetInformationPeopleWithID",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        data.map(function (obj) {
+                            obj.id = obj.PeopleID;
+                            return obj;
+                        })
 
-                    return {
-                        results: data
-                    };
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
                 },
-                cache: true
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            }, // let our custom formatter work
-            minimumInputLength: 2,
-            templateResult: formatRepo, // omitted for brevity, see the source of this page
-            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-        });
+                escapeMarkup: function (markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 2,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+        }
+
+        inItSelectPeople(document.getElementsByClassName("selectPeople"))
     </script>
     <script src="~/Scripts/CostTableConferenceRequest.js"></script>
 }

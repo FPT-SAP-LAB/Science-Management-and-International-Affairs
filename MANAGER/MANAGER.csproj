@@ -119,7 +119,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
-    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferencesFunding.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2129,7 +2132,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\ConferencesFunding\Index.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
     <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
@@ -2151,11 +2154,24 @@
     <Content Include="Views\Citation\WaitDecision.cshtml" />
     <Content Include="Views\MOU\Detail_MOA.cshtml" />
     <Content Include="Views\Authen\Login.cshtml" />
+    <Content Include="Views\Reports\PapersReportsByWorkplace.cshtml" />
+    <Content Include="Views\Reports\InternationalPapersReport.cshtml" />
+    <Content Include="Views\Reports\InCountryPapersReport.cshtml" />
+    <Content Include="Views\Reports\IntellectualPropertyReport.cshtml" />
+    <Content Include="Views\Reports\CitationReport.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport.cshtml" />
+    <Content Include="Views\Reports\ConferencesParticipationReport_tgtemp.cshtml" />
+    <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
+    <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
+    <Content Include="Views\Reports\Dashboard.cshtml" />
+    <Content Include="Views\MOA\Detail_MOA.cshtml" />
+    <Content Include="Views\Partner\List.cshtml" />
+    <Content Include="Views\Partner\Detail.cshtml" />
+    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Partner\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
@@ -2172,6 +2188,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{07f5d474-332d-4cf5-91eb-5f4e9099fbb4}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTITIES\ENTITIES.csproj">
+      <Project>{541d580a-53fd-4df7-93d4-ba5a675172d7}</Project>
+      <Name>ENTITIES</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

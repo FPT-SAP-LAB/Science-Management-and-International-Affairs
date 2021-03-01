@@ -88,6 +88,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm dòng.
+        /// </summary>
+        public static string AddRow {
+            get {
+                return ResourceManager.GetString("AddRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tất cả.
         /// </summary>
         public static string All {
@@ -102,6 +111,15 @@ namespace GUEST.Resources {
         public static string Apr {
             get {
                 return ResourceManager.GetString("Apr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khu vực.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
             }
         }
         
@@ -138,6 +156,24 @@ namespace GUEST.Resources {
         public static string Bank {
             get {
                 return ResourceManager.GetString("Bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số trích dẫn.
+        /// </summary>
+        public static string CitationCount {
+            get {
+                return ResourceManager.GetString("CitationCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin trích dẫn.
+        /// </summary>
+        public static string CitationInfo {
+            get {
+                return ResourceManager.GetString("CitationInfo", resourceCulture);
             }
         }
         
@@ -223,11 +259,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xóa dòng.
+        /// </summary>
+        public static string DelRow {
+            get {
+                return ResourceManager.GetString("DelRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trong nước.
         /// </summary>
         public static string Domestic {
             get {
                 return ResourceManager.GetString("Domestic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chỉnh sửa.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -255,6 +309,24 @@ namespace GUEST.Resources {
         public static string ErrorAuthorDel {
             get {
                 return ResourceManager.GetString("ErrorAuthorDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bằng sáng chế phải có ít nhất 1 tác giả.
+        /// </summary>
+        public static string ErrorAuthorDel2 {
+            get {
+                return ResourceManager.GetString("ErrorAuthorDel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phải có ít nhất 1 dòng.
+        /// </summary>
+        public static string ErrorCita {
+            get {
+                return ResourceManager.GetString("ErrorCita", resourceCulture);
             }
         }
         
@@ -313,6 +385,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên sản phẩm.
+        /// </summary>
+        public static string InvenName {
+            get {
+                return ResourceManager.GetString("InvenName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bằng sáng chế.
+        /// </summary>
+        public static string Invention {
+            get {
+                return ResourceManager.GetString("Invention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 1.
         /// </summary>
         public static string Jan {
@@ -363,6 +453,15 @@ namespace GUEST.Resources {
         public static string Jun {
             get {
                 return ResourceManager.GetString("Jun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link xác minh.
+        /// </summary>
+        public static string Link {
+            get {
+                return ResourceManager.GetString("Link", resourceCulture);
             }
         }
         
@@ -493,6 +592,33 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày cấp.
+        /// </summary>
+        public static string PatentDate {
+            get {
+                return ResourceManager.GetString("PatentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số bằng sáng chế.
+        /// </summary>
+        public static string PatentNumber {
+            get {
+                return ResourceManager.GetString("PatentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loại SHTT.
+        /// </summary>
+        public static string PatentType {
+            get {
+                return ResourceManager.GetString("PatentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trang trước.
         /// </summary>
         public static string Pre {
@@ -552,6 +678,24 @@ namespace GUEST.Resources {
         public static string Repre {
             get {
                 return ResourceManager.GetString("Repre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày gửi yêu cầu.
+        /// </summary>
+        public static string RequestDate {
+            get {
+                return ResourceManager.GetString("RequestDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin yêu cầu.
+        /// </summary>
+        public static string RequestInfo {
+            get {
+                return ResourceManager.GetString("RequestInfo", resourceCulture);
             }
         }
         
@@ -628,11 +772,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nguồn trích dẫn.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chuyên ngành.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trạng thái.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         
@@ -660,6 +822,15 @@ namespace GUEST.Resources {
         public static string TotalReward {
             get {
                 return ResourceManager.GetString("TotalReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xem chi tiết.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         
