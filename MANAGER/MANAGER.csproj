@@ -2162,6 +2162,8 @@
     <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
     <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
     <Content Include="Views\Reports\Dashboard.cshtml" />
+    <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
