@@ -2350,6 +2350,7 @@
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\Invention\AddRequest.cshtml" />
     <Content Include="Views\ScientificProducts\Index.cshtml" />
+    <Content Include="Views\Citation\Pending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,8 +11,9 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
                     <div class="row">
-                        <div class="col-xl-3 input-group date mb-2">
-                            <select type="text" class="form-control">
+
+                        <div class="col-xl-3">
+                            <select type="text" class="form-control btn btn-outline-primary btn-sm custom-btn">
                                 <option value="0" selected>@rm.GetString("All")</option>
                                 <option value="1">@rm.GetString("Jan")</option>
                                 <option value="2">@rm.GetString("Feb")</option>
@@ -27,18 +28,12 @@
                                 <option value="11">@rm.GetString("Nov")</option>
                                 <option value="12">@rm.GetString("Dec")</option>
                             </select>
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="la la-check"></i></span>
-                            </div>
                         </div>
-                        <div class="col-xl-3 input-group date mb-2">
-                            <input type="text" class="form-control custom-pickyear" value="2021" readonly />
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="la la-check"></i></span>
-                            </div>
+                        <div class="col-lg-7 col-xl-3">
+                            <input type="text" class=" form-control btn btn-outline-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
                         </div>
                         <div class="col-xl-12">
-                            <table id="table_tapchi" class="display">
+                            <table id="table_sangche" class="display">
                                 <thead>
                                     <tr>
                                         <th>@rm.GetString("Index")</th>
