@@ -20,15 +20,26 @@ namespace GUEST.Controllers
             return View();
         }
 
-        public ActionResult Pending()
+        public ActionResult Edit()
         {
-            ViewBag.title = "Bài báo đang xử lý";
+            ViewBag.title = "Chỉnh sửa khen thưởng bài báo";
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Bài báo đang xử lý","/Paper/Pending"),
+                new PageTree("Chỉnh sửa khen thưởng bài báo","/Paper/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        //public ActionResult Pending()
+        //{
+        //    ViewBag.title = "Bài báo đang xử lý";
+        //    var pagesTree = new List<PageTree>
+        //    {
+        //        new PageTree("Bài báo đang xử lý","/Paper/Pending"),
+        //    };
+        //    ViewBag.pagesTree = pagesTree;
+        //    return View();
+        //}
     }
 }
