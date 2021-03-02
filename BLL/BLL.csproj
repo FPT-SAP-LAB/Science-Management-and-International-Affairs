@@ -54,11 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOURepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorRepo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="InternationalCollaboration\" />
+    <Folder Include="InternationalCollaboration\Collaboration\Partner\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTITIES\ENTITIES.csproj">

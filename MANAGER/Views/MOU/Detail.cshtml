@@ -96,8 +96,13 @@
         overflow-y: auto;
         height: 200px;
     }
-    .modal{
+
+    .modal {
         overflow-y: auto;
+    }
+
+    .uppy-list-item {
+        margin: 0 !important;
     }
 </style>
 <div class="card card-custom ">
@@ -131,21 +136,40 @@
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                                     <label style="color:red">*</label><label class="font-weight-bolder">Đơn vị cơ sở kí kết</label>&nbsp;
-                                    <select class="form-control" required id="facility">
-                                        <option value="1">FPTU-HN</option>
-                                        <option value="2">FPTGW</option>
-                                    </select>
+                                    <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                        <select class="form-control select-search" id="facility" name="param" style="width:100% !important">
+                                            <option label="Label"></option>
+                                            <option value="1">FPTU-HN</option>
+                                            <option value="2">FPTGW</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                                     <label class="font-weight-bolder">Thời gian kí kết</label>&nbsp;
                                     <label style="font-style: italic;"></label>
-                                    <input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết" autocomplete="off" required readonly id="sign_time" />
+                                    @*<input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết"required readonly id="sign_time" />*@
+                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_3" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Số hiệu</label>&nbsp;
-                                    <input class="form-control custom-pickdate" type="text" placeholder="Thời gian hết hạn" autocomplete="off" required readonly id="end_time" />
+                                    <label style="color:red">*</label><label class="font-weight-bolder">Thời gian hết hạn</label>&nbsp;
+                                    @*<input class="form-control custom-pickdate" type="text" placeholder="Thời gian hết hạn" autocomplete="off" required readonly id="end_time" />*@
+                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_end_date" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_3" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_end_date" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -172,9 +196,13 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
-                                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
-                                        <input class="form-control" type="file" id="expenseFile" aria-describedby="expenseFileHelp">
+                                    <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                                    <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                                    <div class="uppy row" id="kt_uppy_5">
+                                        <div class="uppy-wrapper col-3"></div>
+                                        <div class="uppy-list col-7"></div>
+                                        <div class="uppy-status"></div>
+                                        <div class="uppy-informer uppy-informer-min"></div>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +214,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="#" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -906,7 +934,7 @@
         //modal tab 2
           function show_status_history(id){
             $.ajax({
-                url: '@Url.Action("Get_MOU_History", "MOU")',
+                url: '@Url.Action("Get_MOU_History", "PartnerMOU")',
                 data: { 'id': id },
                 success: function (data) {
                     if (data = "") {
@@ -938,9 +966,9 @@
 
         //modal tab 2
         function show_data_partner_detail(id) {
-                $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
+            $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
             $.ajax({
-                url: '@Url.Action("Get_Data_Partner_Detail", "MOU")',
+                url: '@Url.Action("Get_Data_Partner_Detail", "PartnerMOU")',
                 data: { 'id': id },
                 success: function (data) {
                     if (data = "") {
@@ -971,6 +999,33 @@
 
 
 
+    </script>
+    <script>
+        //jquery for dropdown
+        $('#facility').select2({
+            placeholder: 'Đơn vị cơ sở kí kết',
+            allowClear: true,
+        })
+
+        //datepicker
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/yyyy'
+                });
+
+            }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+        });
     </script>
 
     <script>
@@ -1011,6 +1066,117 @@
         function doneStep() {
             toastr.success('Thêm thành công')
         }
+
+    </script>
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const ProgressBar = Uppy.ProgressBar;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
+            const Dashboard = Uppy.Dashboard;
+            const Dropbox = Uppy.Dropbox;
+            const GoogleDrive = Uppy.GoogleDrive;
+            const Instagram = Uppy.Instagram;
+            const Webcam = Uppy.Webcam;
+
+            // Private functions
+
+            var initUppy5 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_5';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                var uppyMin = Uppy.Core({
+                    debug: true,
+                    autoProceed: true,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 1000000, // 1mb
+                        maxNumberOfFiles: 5,
+                        minNumberOfFiles: 1
+                    }
+                });
+
+                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMin.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                uppyMin.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                uppyMin.on('complete', function (file) {
+                    $.each(file.successful, function (index, value) {
+                        var sizeLabel = "bytes";
+                        var filesize = value.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+                    });
+
+                    $fileLabel.text("Add more files");
+
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyMin.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+
+
+            return {
+                // public functions
+                init: function () {
+                    initUppy5();
+                    setTimeout(function () {
+
+                    }, 2000);
+                }
+            };
+        }();
+
+        KTUtil.ready(function () {
+            KTUppy.init();
+        });
 
     </script>
 }
