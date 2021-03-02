@@ -11,27 +11,58 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
                     <div class="row">
-                        <div class="col-xl-3">
-                            <select type="text" class="form-control btn btn-outline-primary btn-sm custom-btn">
-                                <option value="0" selected>@rm.GetString("All")</option>
-                                <option value="1">@rm.GetString("Jan")</option>
-                                <option value="2">@rm.GetString("Feb")</option>
-                                <option value="3">@rm.GetString("Mar")</option>
-                                <option value="4">@rm.GetString("Apr")</option>
-                                <option value="5">@rm.GetString("May")</option>
-                                <option value="6">@rm.GetString("Jun")</option>
-                                <option value="7">@rm.GetString("Jul")</option>
-                                <option value="8">@rm.GetString("Aug")</option>
-                                <option value="9">@rm.GetString("Sep")</option>
-                                <option value="10">@rm.GetString("Oct")</option>
-                                <option value="11">@rm.GetString("Nov")</option>
-                                <option value="12">@rm.GetString("Dec")</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-7 col-xl-3">
-                            <input type="text" class=" form-control btn btn-outline-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
-                        </div>
+                        <div class="mb-7 col-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-lg-10 col-xl-8">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3 my-2 my-md-0">
+                                            <div class="input-icon">
+                                                <input type="text" class="form-control"
+                                                       placeholder="Tên"
+                                                       id="kt_datatable_search_query" />
+                                                <span>
+                                                    <i class="flaticon2-search-1 text-muted"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 my-2 my-md-0">
+                                            <div class="d-flex align-items-center">
+                                                <select class="form-control" id="search_thang" name="param">
+                                                    <option label="Label"></option>
+                                                    <option value="0">@rm.GetString("All")</option>
+                                                    <option value="1">@rm.GetString("Jan")</option>
+                                                    <option value="2">@rm.GetString("Feb")</option>
+                                                    <option value="3">@rm.GetString("Mar")</option>
+                                                    <option value="4">@rm.GetString("Apr")</option>
+                                                    <option value="5">@rm.GetString("May")</option>
+                                                    <option value="6">@rm.GetString("Jun")</option>
+                                                    <option value="7">@rm.GetString("Jul")</option>
+                                                    <option value="8">@rm.GetString("Aug")</option>
+                                                    <option value="9">@rm.GetString("Sep")</option>
+                                                    <option value="10">@rm.GetString("Oct")</option>
+                                                    <option value="11">@rm.GetString("Nov")</option>
+                                                    <option value="12">@rm.GetString("Dec")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 my-2 my-md-0">
+                                            <div class="d-flex align-items-center">
+                                                <input type="text" class="form-control custom-pickyear" readonly
+                                                       placeholder="Chọn năm" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
+                                            <a href="#"
+                                               class="btn btn-light-primary px-6 font-weight-bold">
+                                                Tìm kiếm
+                                            </a>
+                                        </div>
 
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-xl-12">
                             <div class="card card-custom">
                                 <div class="card-header card-header-tabs-line">
@@ -61,7 +92,7 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="tapchi" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
-                                            <table id="table_tapchi" class="display table table-separate table-head-custom table-checkable">
+                                            <table id="table_tapchi" class="table table-bordered table-checkable">
                                                 <thead>
                                                     <tr>
                                                         <th>@rm.GetString("Index")</th>
@@ -165,7 +196,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane fade" id="kyyeu" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
-                                            <table id="table_kyyeu" class="display table table-separate table-head-custom table-checkable">
+                                            <table id="table_kyyeu" class="table table-bordered table-checkable">
                                                 <thead>
                                                     <tr>
                                                         <th>@rm.GetString("Index")</th>
@@ -247,7 +278,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane fade" id="sangche" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
-                                            <table id="table_sangche" class="display table table-separate table-head-custom table-checkable">
+                                            <table id="table_sangche" class="table table-bordered table-checkable">
                                                 <thead>
                                                     <tr>
                                                         <th>@rm.GetString("Index")</th>
@@ -347,8 +378,18 @@
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     @*<script src="~/Content/assets/js/pages/crud/ktdatatable/base/html-table.js"></script>*@
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">*@
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>*@
+    <script>
+        $('#search_thang').select2({
+            placeholder: 'Chọn tháng',
+            allowClear: true
+        });
+        $('#search_nam').select2({
+            placeholder: 'Chọn năm',
+            allowClear: true,
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -376,20 +417,26 @@
                         }
                     }
                 ],
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "@rm.GetString("Pre")",
-                        sNext: "@rm.GetString("Next")"
-                    },
-                    sEmptyTable: "@rm.GetString("EmptyTB")",
-                    sInfo: "@rm.GetString("ShowTB")",
-                    sLengthMenu: "@rm.GetString("Show") <select>" +
-                        "<option value='5'>5</option>" +
-                        "<option value='10'>10</option>" +
-                        "<option value='20'>20</option>" +
-                        "</select> @rm.GetString("Record")",
-                    sSearch: "@rm.GetString("Search")"
-                }
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+      <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+
+                // Order settings
+                order: [[0, 'asc']],
+
+                columnDefs: [
+
+                ],
             });
 
             $('#table_kyyeu').DataTable({
@@ -409,20 +456,26 @@
                         }
                     }
                 ],
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "@rm.GetString("Pre")",
-                        sNext: "@rm.GetString("Next")"
-                    },
-                    sEmptyTable: "@rm.GetString("EmptyTB")",
-                    sInfo: "@rm.GetString("ShowTB")",
-                    sLengthMenu: "@rm.GetString("Show") <select>" +
-                        "<option value='5'>5</option>" +
-                        "<option value='10'>10</option>" +
-                        "<option value='20'>20</option>" +
-                        "</select> @rm.GetString("Record")",
-                    sSearch: "@rm.GetString("Search")"
-                }
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+      <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+
+                // Order settings
+                order: [[0, 'asc']],
+
+                columnDefs: [
+
+                ],
             });
 
             $('#table_sangche').DataTable({
@@ -434,20 +487,26 @@
                     { width: "15%" },
                     { width: "15%" }
                 ],
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "@rm.GetString("Pre")",
-                        sNext: "@rm.GetString("Next")"
-                    },
-                    sEmptyTable: "@rm.GetString("EmptyTB")",
-                    sInfo: "@rm.GetString("ShowTB")",
-                    sLengthMenu: "@rm.GetString("Show") <select>" +
-                        "<option value='5'>5</option>" +
-                        "<option value='10'>10</option>" +
-                        "<option value='20'>20</option>" +
-                        "</select> @rm.GetString("Record")",
-                    sSearch: "@rm.GetString("Search")"
-                }
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+      <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+
+                // Order settings
+                order: [[0, 'asc']],
+
+                columnDefs: [
+
+                ],
             });
         });
     </script>

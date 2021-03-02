@@ -84,7 +84,7 @@
                             </td>
                             <td><input type="text" class="form-control" value="000" disabled /></td>
                             <td><input type="text" class="form-control" value="123456789" disabled /></td>
-                            <td><button class="btn btn-primary">View</button></td>
+                            <td><button class="btn btn-light-info font-weight-bold">View</button></td>
                             <td><input type="text" class="form-control" value="TPBank" disabled /></td>
                             <td><input type="text" class="form-control" value="888" disabled /></td>
                             <td><input type="number" class="form-control onereward" /></td>
@@ -95,7 +95,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <button class="btn btn-success col-xl-2" id="confirmbtn">Xác nhận duyệt</button>
+            <button class="btn btn-light-success px-6 font-weight-bold" id="confirmbtn">Xác nhận duyệt</button>
         </div>
     </div>
 </div>
@@ -108,7 +108,7 @@
         $("#confirmbtn").click(function () {
             var temp = $("#totalreward").val();
             if (temp == "") {
-                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                toastr.error("Chưa điền thông tin tổng thưởng cho bằng sáng chế", "Lỗi");
             }
             var ck = $("#typereward").val()
             if (ck == 1) {
