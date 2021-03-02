@@ -18,7 +18,7 @@ namespace ENTITIES
         public int formality_id { get; set; }
         public string name { get; set; }
     
-        public virtual Language Language { get; set; }
         public virtual Formality Formality { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

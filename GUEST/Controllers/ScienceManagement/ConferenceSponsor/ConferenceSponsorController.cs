@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using User.Models;
 using BLL.ScienceManagement.ConferenceSponsor;
+using GUEST.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using ENTITIES;
 
 namespace GUEST.Controllers
 {
@@ -29,7 +33,12 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
-            ViewBag.countries = repos.GetAllCountries();
+            string output = repos.GetAddPageJson(LanguageResource.GetCurrentLanguageName());
+            DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
+            ViewBag.Countries = data.Countries;
+            ViewBag.FormalityLanguages = data.FormalityLanguages;
+            ViewBag.Offices = data.Offices;
+            ViewBag.TitleLanguages = data.TitleLanguages;
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -57,6 +66,13 @@ namespace GUEST.Controllers
         {
             var infos = repos.GetAllProfileBy(id);
             return Json(infos, JsonRequestBehavior.AllowGet);
+        }
+        private class DataAddPage
+        {
+            public List<Country> Countries { get; set; }
+            public List<FormalityLanguage> FormalityLanguages { get; set; }
+            public List<Office> Offices { get; set; }
+            public List<TitleLanguage> TitleLanguages { get; set; }
         }
     }
 }
