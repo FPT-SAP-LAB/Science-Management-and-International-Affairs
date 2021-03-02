@@ -42,5 +42,16 @@ namespace User.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult Edit()
+        {
+            ViewBag.title = "Chỉnh sửa số trích dẫn";
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Chỉnh sửa số trích dẫn","/Citation/Edit"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
     }
 }

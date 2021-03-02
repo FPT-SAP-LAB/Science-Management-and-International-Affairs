@@ -140,6 +140,14 @@
     .modal {
         overflow-y: auto;
     }
+
+    .uppy-list-item {
+        margin: 0 !important;
+    }
+
+    .select2-dropdown {
+        z-index: 8888;
+    }
 </style>
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
@@ -329,7 +337,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title " id="e">THÊM BIÊN BẢN GHI NHỚ</h3>
+                <h3 class="modal-title font-weight-bolder" id="e">THÊM BIÊN BẢN GHI NHỚ</h3>
             </div>
             <div class="justify-content-center">
                 <div class="custom-container">
@@ -350,13 +358,13 @@
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
                         <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
-                        <label style="font-style: italic;">
-                        </label>
-                        @*<input class="form-control" type="text" placeholder="Đơn vị - Cơ sở kí kết" autocomplete="off" required id="sign_facility" />*@
-                        <select class="form-control" required id="unit_mou">
-                            <option value="0">FGO</option>
-                            <option value="1">FE</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="search_coso" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option>FU Hà Nội</option>
+                                <option>FU Cần Ther</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center">
@@ -366,7 +374,7 @@
                             (Cập nhật theo thời gian kí kết)
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date" data-target="#kt_datetimepicker_3" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" data-target="#kt_datetimepicker_3" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -379,7 +387,7 @@
                         <label style="font-style: italic;">
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_end_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date" data-target="#kt_datetimepicker_3" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_mou" data-target="#kt_datetimepicker_3" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_end_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -402,7 +410,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center">
-                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
+                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Phạm vi hợp tác chính</label>&nbsp;
                         <label style="font-style: italic;">
                             (Cập nhật theo pham vi hợp tác của các đối tác kí kết)
@@ -411,16 +419,14 @@
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center">
-                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
+                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Bản mềm</label>&nbsp;
-                        <div class="col-lg-6">
-                            <div class="uppy" id="kt_uppy_5">
-                                <div class="uppy-wrapper"></div>
-                                <div class="uppy-list"></div>
-                                <div class="uppy-status"></div>
-                                <div class="uppy-informer uppy-informer-min"></div>
-                            </div>
-                            <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="kt_uppy_5">
+                            <div class="uppy-wrapper col-3"></div>
+                            <div class="uppy-list col-7"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
                         </div>
                     </div>
                 </div>
@@ -434,7 +440,7 @@
             <div id='step-2' class="modal-body" style="display:none">
                 <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
                     <div class="row align-items-center">
-                        <a href="#add_partner_mou" data-toggle="modal" id="add_partner_mou_btn" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                        <a href="#add_partner_mou" data-toggle="modal" id="add_partner_mou_btn" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                     </div>
                 </div>
                 <table class="table table-bordered table-hover table-checkable"
@@ -457,8 +463,8 @@
                         <td>+81 48 974 8811</td>
                         <td>kiec@stf.bunkyou.ac.jp</td>
                         <td nowrap="nowrap">
-                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
-                            <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                            <a onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                     <tr>
@@ -468,17 +474,17 @@
                         <td>+84 12 345 2345</td>
                         <td>cuong@fptgr.edu.vn</td>
                         <td nowrap="nowrap">
-                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
-                            <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                            <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                            <a  onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button id="step-1-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id='step-1-button' type="button" class="btn btn-primary" onclick="nextStep()">Tiếp</button>
-                <button id='step-2-backbutton' type="button" class="btn btn-secondary" onclick="backToStep()" style="display:none">Quay về</button>
-                <button id='step-2-button' type="button" class="btn btn-primary" onclick="doneStep()" data-dismiss="modal" style="display:none">Hoàn thành</button>
+                <button id="step-1-close-btn" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Đóng</button>
+                <button id='step-1-button' type="button" class="btn btn-sm btn-light-primary font-weight-bold px-6" onclick="nextStep()">Tiếp</button>
+                <button id='step-2-backbutton' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" onclick="backToStep()" style="display:none">Quay về</button>
+                <button id='step-2-button' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6" onclick="doneStep()" data-dismiss="modal" style="display:none">Hoàn thành</button>
             </div>
         </div>
     </div>
@@ -497,10 +503,14 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="partner_name_form">
-                            <option value="1">Bách khoa</option>
-                            <option value="2">FPTGW</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="partner_name" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option>Bách khoa</option>
+                                <option>NEU</option>
+                            </select>
+                        </div>
+
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Đại diện</label>
@@ -510,10 +520,13 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="specialization">
-                            <option value="1">SE</option>
-                            <option value="2">AB</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="specialization" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option>IT</option>
+                                <option>BA</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -543,11 +556,13 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="coop_scope">
-                            <option value="1">SE</option>
-                            <option value="2">AB</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="coop-scope" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option>FGO</option>
+                                <option>SE</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -558,28 +573,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary">Thêm</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-light-primary">Thêm</button>
             </div>
         </div>
     </div>
 </div>
 
-@*modal delete*@
-<div class="modal fade in" id="delete" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title font-weight-bolder">XÁC NHẬN XÓA</h4>
-            </div>
-            <div class="modal-body">Có muốn xóa thông tin này?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 @*toast alert*@
 <div id="toast-container-custom" class="toast-bottom-left-custom">
@@ -604,7 +605,7 @@
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    @model int
+    @*@model int*@
     <script>
         $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
@@ -698,7 +699,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
         }
             ]
@@ -713,27 +714,6 @@
 
         });
 
-        var id_row = "";
-        //parse id to do something
-        function parse_id(id) {
-            id_row = id;
-        }
-         //funtion delete
-        $('#btn_delete').click(function () {
-            $.ajax({
-                url: '@Url.Action("Delete_Mou", "MOU")',
-                data: { 'id': id_row },
-                success: function (data) {
-
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        toastr.success("Đã xóa thành công");
-                    }
-
-                },
-            });
-        });
 
 
         $(document).ready(function () {
@@ -784,6 +764,220 @@
             toastr.success('Thêm thành công')
         }
 
+    </script>
+    @*upload*@
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const ProgressBar = Uppy.ProgressBar;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
+            const Dashboard = Uppy.Dashboard;
+            const Dropbox = Uppy.Dropbox;
+            const GoogleDrive = Uppy.GoogleDrive;
+            const Instagram = Uppy.Instagram;
+            const Webcam = Uppy.Webcam;
+
+            // Private functions
+
+            var initUppy5 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_5';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                var uppyMin = Uppy.Core({
+                    debug: true,
+                    autoProceed: true,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 1000000, // 1mb
+                        maxNumberOfFiles: 5,
+                        minNumberOfFiles: 1
+                    }
+                });
+
+                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMin.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                uppyMin.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                uppyMin.on('complete', function (file) {
+                    $.each(file.successful, function (index, value) {
+                        var sizeLabel = "bytes";
+                        var filesize = value.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+                    });
+
+                    $fileLabel.text("Add more files");
+
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyMin.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+
+
+            return {
+                // public functions
+                init: function () {
+                    initUppy5();
+                    setTimeout(function () {
+
+                    }, 2000);
+                }
+            };
+        }();
+
+        KTUtil.ready(function () {
+            KTUppy.init();
+        });
+
+    </script>
+    <script>
+
+        $('#search_coso').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        });
+
+        $('#partner_name').select2({
+            placeholder: 'Tên đối tác',
+            allowClear: true,
+        });
+
+        $('#specialization').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        });
+
+        $('#coop-scope').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+        });
+
+    </script>
+    <script>
+        //parse id to do something
+         //funtion delete
+        function parse_id(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.dismiss === "cancel") {
+                    Swal.fire("Cancelled", "Your imaginary file is safe :)", "error")
+                } else {
+                    $.ajax({
+                        url: '@Url.Action("Delete_Mou", "MOU")',
+                        data: { 'id': id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                            }
+                        },
+                    })
+                }
+            })
+        };
+
+
+        //delete modal
+        //function abc() {
+        //    Swal.fire({
+        //        title: "Are you sure?",
+        //        text: "You won't be able to revert this!",
+        //        icon: "warning",
+        //        showCancelButton: true,
+        //        confirmButtonText: "Yes, delete it!",
+        //        cancelButtonText: "No, cancel!",
+        //        reverseButtons: true
+        //    }).then(function (result) {
+        //        if (result.value) {
+        //            Swal.fire(
+        //                "Deleted!",
+        //                "Your file has been deleted.",
+        //                "success"
+        //            )
+        //            // result.dismiss can be "cancel", "overlay",
+        //            // "close", and "timer"
+        //        } else if (result.dismiss === "cancel") {
+        //            Swal.fire(
+        //                "Cancelled",
+        //                "Your imaginary file is safe :)",
+        //                "error"
+        //            )
+        //        }
+        //    });
+
+       //function abc() {
+       //     Swal.fire({
+       //         title: "Are you sure?",
+       //         text: "You won't be able to revert this!",
+       //         icon: "warning",
+       //         showCancelButton: true,
+       //         confirmButtonText: "Yes, delete it!",
+       //         cancelButtonText: "No, cancel!",
+       //         reverseButtons: true
+       //     }).then(function (result) {
+       //         if (result.dismiss === "cancel") {
+       //             Swal.fire(
+       //                 "Cancelled",
+       //                 "Your imaginary file is safe :)",
+       //                 "error"
+       //             )
+       //         }
+       //     });
     </script>
 }
 

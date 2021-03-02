@@ -2351,6 +2351,10 @@
     <Content Include="Views\Invention\AddRequest.cshtml" />
     <Content Include="Views\ScientificProducts\Index.cshtml" />
     <Content Include="Views\Citation\Pending.cshtml" />
+    <Content Include="Views\ScientificProducts\Pending.cshtml" />
+    <Content Include="Views\Paper\Edit.cshtml" />
+    <Content Include="Views\Invention\Edit.cshtml" />
+    <Content Include="Views\Citation\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
