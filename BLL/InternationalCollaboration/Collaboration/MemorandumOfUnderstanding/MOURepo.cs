@@ -188,7 +188,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //?
         }
 
-
         private void handlingMOUListData(List<ListMOU> mouList)
         {
             //handling spe and scope data.
@@ -224,8 +223,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //get all expired ActiveMOU.
             //if number > 0: update status for MOU: Active => Inactive.
         }
-
-
 
         public class ListMOU {}
 

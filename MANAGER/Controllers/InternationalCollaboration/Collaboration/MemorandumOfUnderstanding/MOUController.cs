@@ -101,8 +101,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
 
-
-
         public ActionResult Detail(string id)
         {
             return View();
