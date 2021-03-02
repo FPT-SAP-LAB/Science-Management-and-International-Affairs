@@ -11,7 +11,7 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <table id="pending_table" class="table table-separate table-head-custom table-checkable">
+                    <table id="pending_table" class="table table-bordered table-checkable">
                         <thead>
                             <tr>
                                 <th>@rm.GetString("Source")</th>
@@ -45,24 +45,21 @@
 </div>
 
 @section scripts{
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function () {
             $("#pending_table").DataTable({
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "@rm.GetString("Pre")",
-                        sNext: "@rm.GetString("Next")"
-                    },
-                    sEmptyTable: "@rm.GetString("EmptyTB")",
-                    sInfo: "@rm.GetString("ShowTB")",
-                    sLengthMenu: "@rm.GetString("Show") <select>" +
-                        "<option value='5'>5</option>" +
-                        "<option value='10'>10</option>" +
-                        "<option value='20'>20</option>" +
-                        "</select> @rm.GetString("Record")",
-                    sSearch: "@rm.GetString("Search")"
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
                 },
                 columns: [
                     { width: "30%" },

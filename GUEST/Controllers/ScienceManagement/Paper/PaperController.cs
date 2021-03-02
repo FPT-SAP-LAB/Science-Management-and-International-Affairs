@@ -25,7 +25,7 @@ namespace GUEST.Controllers
             ViewBag.title = "Bài báo đang xử lý";
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Bài báo đangg xử lý","/Paper/Pending"),
+                new PageTree("Bài báo đang xử lý","/Paper/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
             return View();
