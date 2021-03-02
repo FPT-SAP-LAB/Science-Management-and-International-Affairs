@@ -24,9 +24,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             return value.Duration().Days;
         }
 
-        public class ListMOU {
-            
-        }
+        public class ListMOU {}
 
         public class NotificationInfo
         {
@@ -34,6 +32,5 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public int InactiveNumber { get; set; }
             public List<string> ExpiredMOUCode { get; set; }
         }
-
     }
 }
