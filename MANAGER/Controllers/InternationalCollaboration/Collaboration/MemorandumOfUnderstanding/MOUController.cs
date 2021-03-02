@@ -16,8 +16,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         public ActionResult List()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
-            int duration = mou.getDuration();
-            List<ListMOU> listMOU = mou.listAllMOU();
+            //int duration = mou.getDuration();
+            //List<ListMOU> listMOU = mou.listAllMOU();
 
             return View();
         }
