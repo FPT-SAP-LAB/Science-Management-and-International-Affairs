@@ -159,11 +159,17 @@
   <data name="CMND" xml:space="preserve">
     <value>CMND</value>
   </data>
+  <data name="CmtInfo" xml:space="preserve">
+    <value>Thông tin hội thoại</value>
+  </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Tên hội thảo</value>
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Kỷ yếu hội thảo</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Nội dung</value>
   </data>
   <data name="ContractType" xml:space="preserve">
     <value>Loại hợp đồng</value>
@@ -345,6 +351,12 @@
   <data name="Send" xml:space="preserve">
     <value>Gửi yêu cầu</value>
   </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Người gửi</value>
+  </data>
+  <data name="SendM" xml:space="preserve">
+    <value>Gửi</value>
+  </data>
   <data name="Sep" xml:space="preserve">
     <value>Tháng 9</value>
   </data>
@@ -365,6 +377,9 @@
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Mã số thuế</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Thời gian</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Chức danh</value>

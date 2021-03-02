@@ -159,11 +159,17 @@
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
   </data>
+  <data name="CmtInfo" xml:space="preserve">
+    <value>Conversation</value>
+  </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Conference's name</value>
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Conference papers</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
   </data>
   <data name="ContractType" xml:space="preserve">
     <value>Contract type</value>
@@ -345,6 +351,12 @@
   <data name="Send" xml:space="preserve">
     <value>Send request</value>
   </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Sender</value>
+  </data>
+  <data name="SendM" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="Sep" xml:space="preserve">
     <value>September</value>
   </data>
@@ -365,6 +377,9 @@
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax code</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
