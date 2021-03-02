@@ -906,7 +906,7 @@
         //modal tab 2
           function show_status_history(id){
             $.ajax({
-                url: '@Url.Action("Get_MOU_History", "MOU")',
+                url: '@Url.Action("Get_MOU_History", "PartnerMOU")',
                 data: { 'id': id },
                 success: function (data) {
                     if (data = "") {
@@ -938,9 +938,9 @@
 
         //modal tab 2
         function show_data_partner_detail(id) {
-                $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
+            $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
             $.ajax({
-                url: '@Url.Action("Get_Data_Partner_Detail", "MOU")',
+                url: '@Url.Action("Get_Data_Partner_Detail", "PartnerMOU")',
                 data: { 'id': id },
                 success: function (data) {
                     if (data = "") {
