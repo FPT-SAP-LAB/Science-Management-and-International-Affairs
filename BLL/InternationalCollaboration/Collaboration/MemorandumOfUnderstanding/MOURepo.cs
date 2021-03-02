@@ -211,7 +211,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
                 noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired).ToList();
                 return noti;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -224,9 +225,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //if number > 0: update status for MOU: Active => Inactive.
         }
 
-        public class ListMOU {}
+        public class ListMOU { }
 
-        public class MOUAdd 
+        public class MOUAdd
         {
             public MOUAdd() { }
             public MOU MOU { get; set; }

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
-    class BasicInfoMOURepo{}
+    class BasicInfoMOURepo { }
 }
