@@ -1,25 +1,27 @@
 ﻿
 @{
-    ViewBag.Title = "Danh sách hoạt động trong năm";
+    ViewBag.Title = "Danh sách hoạt động học thuật trong năm";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 <style>
     .custom-btn {
         width: 25% !important;
     }
-
     .modal-title {
         font-size: 1.5rem !important;
+    }
+    .modal {
+        overflow-y: auto;
     }
 </style>
 <div class="card-body">
     <div class="row mb-5">
         <div class="col-lg-5 col-xl-6">
-            <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
-            <a href="#" class="btn btn-outline-primary btn-sm ml-3 font-weight-bold">Xuất excel</a>
+            <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
+            <a href="#" class="btn btn-light-primary btn-sm ml-3 font-weight-bold">Xuất excel</a>
         </div>
         <div class="col-lg-7 col-xl-6">
-            <input type="text" class="btn btn-outline-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
+            <input type="text" class="btn btn-light-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
         </div>
     </div>
     <table id="my_list" class="table table-separate table-head-custom table-checkable">
@@ -91,7 +93,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Thêm hoạt động học thuật</h3>
+                <h3 class="modal-title font-weight-bolder">Thêm hoạt động học thuật</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -113,11 +115,35 @@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
@@ -126,8 +152,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -137,7 +163,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Chỉnh sửa hoạt động học thuật</h3>
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa hoạt động học thuật</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -159,11 +185,35 @@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
@@ -172,8 +222,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -183,7 +233,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Clone sự kiện</h3>
+                <h3 class="modal-title font-weight-bolder">Clone sự kiện</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -205,11 +255,35 @@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_clone_from" autocomplete="off" id="clone_from" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_clone_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_clone_to" autocomplete="off" id="clone_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_clone_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to" />*@
 
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
@@ -246,8 +320,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -270,8 +344,8 @@
             data = getDataByID(id);
             document.getElementById('edit_title').value = 'RESFES 2021';
             document.getElementById('edit_category').value = 'CO';
-            document.getElementById('edit_from').value = '02/12/2021';
-            document.getElementById('edit_to').value = '02/28/2021';
+            document.getElementById('edit_from').value = '02/02/2021';
+            document.getElementById('edit_to').value = '26/02/2021';
             document.getElementById('edit_location').value = 'Hà Nội';
             $('#editModal').modal('show');
         }
@@ -346,14 +420,11 @@
                     sNext: "Trang sau"
                 },
                 sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
+                sInfo: "",
+                sSearch: ""
             },
+            "searching": false,
+            "lengthChange" : false,
             columnDefs: [
                 {
                     targets: 3,
@@ -394,7 +465,7 @@
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<div class="dropdown">' +
-                            '<button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
                             '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
                             '<a href="#" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>' +
                             '<a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>' +
@@ -406,51 +477,20 @@
                 }
             ]
         });
-
-        var ConfigDatepicker = function () {
-            var arrows;
-            if (KTUtil.isRTL()) {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-right"></i>',
-                    rightArrow: '<i class="la la-angle-left"></i>'
-                }
-            } else {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-left"></i>',
-                    rightArrow: '<i class="la la-angle-right"></i>'
-                }
-            }
-            // Private functions
-            var demos = function () {
-                $('.custom-pickyear').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    startView: "years",
-                    format: "yyyy",
-                    minViewMode: "years"
-                });
-
-                $('.custom-pickdate').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    format: 'dd/mm/yyyy'
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/YYYY'
                 });
             }
-
             return {
-                // public functions
                 init: function () {
-                    demos();
+                    baseDemos();
                 }
             };
         }();
-
         $(document).ready(function () {
-            ConfigDatepicker.init();
+            KTBootstrapDatetimepicker.init();
         });
     </script>
 }
