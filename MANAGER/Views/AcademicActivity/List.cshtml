@@ -337,7 +337,23 @@
         let id_checkin = "";
         function saveTempIdDelete(id) {
             id_delete = id;
-            $('#delete-confirm').modal('show');
+            Swal.fire({
+                title: "Bạn có muốn xóa hoạt động học thuật này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
         }
         function saveTempIdEdit(id) {
             id_edit = id;
