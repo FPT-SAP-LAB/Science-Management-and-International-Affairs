@@ -276,7 +276,11 @@
                         <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
                         <label style="font-style: italic;">
                         </label>
-                        <input class="form-control" type="text" placeholder="Đơn vị - Cơ sở kí kết" autocomplete="off" required id="sign_facility" />
+                        @*<input class="form-control" type="text" placeholder="Đơn vị - Cơ sở kí kết" autocomplete="off" required id="sign_facility" />*@
+                        <select class="form-control" required id="unit_mou">
+                            <option value="0">FGO</option>
+                            <option value="1">FE</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center">
@@ -285,7 +289,7 @@
                         <label style="font-style: italic;">
                             (Cập nhật theo thời gian kí kết)
                         </label>
-                        <input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết" autocomplete="off" readonly id="sign_date_mou" />
+                        <input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết" autocomplete="off" id="sign_date_mou" disabled/>
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
                         <label class="font-weight-bolder">Thời gian hết hạn</label>&nbsp;
@@ -612,6 +616,58 @@
                 },
             });
         });
+
+        // datepicker functions
+        var ConfigDatepicker = function () {
+            var arrows;
+            if (KTUtil.isRTL()) {
+                arrows = {
+                    leftArrow: '<i class="la la-angle-right"></i>',
+                    rightArrow: '<i class="la la-angle-left"></i>'
+                }
+            } else {
+                arrows = {
+                    leftArrow: '<i class="la la-angle-left"></i>',
+                    rightArrow: '<i class="la la-angle-right"></i>'
+                }
+            }
+            var demos = function () {
+                $('.custom-pickyear').datepicker({
+                    rtl: KTUtil.isRTL(),
+                    orientation: "bottom right",
+                    todayHighlight: true,
+                    templates: arrows,
+                    startView: "years",
+                    format: "yyyy",
+                    minViewMode: "years"
+                });
+
+                $('.custom-pickdate').datepicker({
+                    rtl: KTUtil.isRTL(),
+                    orientation: "bottom right",
+                    todayHighlight: true,
+                    templates: arrows,
+                    format: 'dd-mm-yyyy'
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        $(document).ready(function () {
+            ConfigDatepicker.init();
+            //split card
+            //overflow
+            $('#partner_table').parent().css('overflow-x', 'auto');
+            $('#partner_table thead tr th').css('font-weight', 'bold');
+            $('.header-modify').css('padding', '13px');
+        });
+
     </script>
     <script>
         var list = document.getElementsByClassName("progressbar")[0];
