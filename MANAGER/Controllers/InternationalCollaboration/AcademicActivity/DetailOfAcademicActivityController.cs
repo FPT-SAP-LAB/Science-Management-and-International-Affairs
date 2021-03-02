@@ -141,6 +141,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult RegisterForm(int id)
+        {
+            ViewBag.phaseID = id;
+            ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
+            return View();
+        }
         public class QuantityByUnit
         {
             public string name { get; set; }

@@ -1,21 +1,31 @@
 ﻿
 @{
-    ViewBag.Title = "Pending";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    //ViewBag.Title = "Pending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
-
 
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 px-0">
+                <div class="col-md-3 my-2 my-md-0 float-left">
+                    <div class="input-icon">
+                        <input type="text" class="form-control"
+                               placeholder="Tên"
+                               id="kt_datatable_search_query" />
+                        <span>
+                            <i class="flaticon2-search-1 text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
                     <table id="pending_table" class="table table-bordered table-checkable">
                         <thead>
                             <tr>
-                                <th>@rm.GetString("Source")</th>
-                                <th>@rm.GetString("CitationCount")</th>
+                                <th>@rm.GetString("PaperName")/@rm.GetString("InvenName")</th>
                                 <th>@rm.GetString("RequestDate")</th>
                                 <th>@rm.GetString("Status")</th>
                                 <th></th>
@@ -23,18 +33,16 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Google Scholar, Scopus</td>
-                                <td>100</td>
+                                <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
                                 <td>10/12/2019</td>
                                 <td>1</td>
-                                <td><a href="#" class="btn btn-bg-secondary">@rm.GetString("Edit")</a></td>
+                                <td><a href="#" class="btn btn-secondary btn-sm px-6 font-weight-bold">@rm.GetString("Edit")</a></td>
                             </tr>
                             <tr>
-                                <td>Scopus</td>
-                                <td>50</td>
+                                <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
                                 <td>09/12/2019</td>
                                 <td>3</td>
-                                <td><a href="#" class="btn btn-bg-primary">@rm.GetString("View")</a></td>
+                                <td><a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold">@rm.GetString("View")</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,7 +60,7 @@
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+          <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -61,39 +69,42 @@
                 language: {
                     'lengthMenu': 'Display _MENU_',
                 },
+
+                // Order settings
+                order: [[0, 'asc']],
+
                 columns: [
-                    { width: "30%" },
-                    { width: "25%" },
+                    { width: "55%" },
                     { width: "15%" },
                     { width: "15%" },
                     { width: "15%" }
                 ],
                 columnDefs: [
                     {
-                        targets: 3,
+                        targets: 2,
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
                                     'title': 'Cần chỉnh sửa',
-                                    'class': 'label-light-warning'
+                                    'class': 'label label-warning label-pill label-inline mr-2'
                                 },
                                 2: {
                                     'title': 'Đã hủy',
-                                    'class': ' label-light-danger'
+                                    'class': 'label label-danger label-pill label-inline mr-2'
                                 },
                                 3: {
                                     'title': 'Đang phê duyệt',
-                                    'class': ' label-light-primary'
+                                    'class': 'label label-primary label-pill label-inline mr-2'
                                 },
                                 4: {
                                     'title': 'Đã xong',
-                                    'class': ' label-light-success'
+                                    'class': 'label label-success label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
                                 return data;
                             }
-                            return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+                            return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
                         },
                     },
                 ],
