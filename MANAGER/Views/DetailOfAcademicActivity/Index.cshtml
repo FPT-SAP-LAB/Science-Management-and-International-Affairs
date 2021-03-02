@@ -7,7 +7,6 @@
     .customrow {
         margin-bottom: 10px;
     }
-
     .customabtn2 {
         border: 1px solid #16854d;
         padding: 5px 16px;
@@ -18,6 +17,9 @@
         background-color: #16854d;
         text-align: center;
         position: absolute;
+    }
+    .modal{
+        overflow-y: auto;
     }
 </style>
 <div class="card card-custom">
@@ -49,10 +51,10 @@
             </div>
         </div>
         <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
-            <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
+            <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
         </div>
         <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
-            <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
+            <a href="#" class="btn btn-light-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
         </div>
     </div>
     <div class="card-body custom-card pt-3">
@@ -74,11 +76,35 @@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="detail_from" value="06-01-2021" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_detail_from" autocomplete="off" id="detail_from" value="06/01/2021"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_detail_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="detail_from" value="06-01-2021" />*@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="detail_to" value="26-01-2021" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_detail_to" autocomplete="off" id="detail_to" value="26/01/2021"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_detail_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="detail_to" value="26-01-2021" />*@
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
@@ -99,7 +125,7 @@
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                        <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm giai đoạn</a>
+                        <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_Giaidoan">Thêm giai đoạn</a>
                     </div>
                 </div>
                 <table id="my_list_1" class="table table-separate table-head-custom table-checkable">
@@ -147,7 +173,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Thêm giai đoạn</h3>
+                <h3 class="modal-title font-weight-bolder">Thêm giai đoạn</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -160,17 +186,41 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from_giaidoan" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_giaidoan" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_giaidoan" autocomplete="off" id="add_from_giaidoan" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from_giaidoan" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from_giaidoan" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to_giaidoan" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_giaidoan" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_giaidoan" autocomplete="off" id="add_to_giaidoan" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to_giaidoan" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to_giaidoan" />*@
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add_giaidoan">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_giaidoan">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -180,7 +230,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Thêm tư cách tham gia</h3>
+                <h3 class="modal-title font-weight-bolder">Thêm tư cách tham gia</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -243,8 +293,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add_tucach">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_tucach">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -254,37 +304,61 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Chỉnh sửa giai đoạn học thuật</h3>
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa giai đoạn học thuật</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body pt-3 pb-0">
-                <div class="form-group row">
+                <div class="form-group row pb-0 mb-0">
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <label class="font-weight-bolder">Giai đoạn</label>
                         <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" value="Sơ khảo" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from_giaidoan" value="08-02-2021" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_giaidoan" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" value="08/02/2021"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_giaidoan" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from_giaidoan" value="08-02-2021" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">đến</label>
-                        <input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to_giaidoan" value="16-02-2021" />
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_giaidoan" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" value="16/02/2021"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_giaidoan" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to_giaidoan" value="16-02-2021" />*@
                     </div>
                 </div>
             </div>
             <div class="modal-header pb-3">
-                <h3 class="modal-title">Danh sách tư cách tham gia</h3>
+                <h3 class="modal-title font-weight-bolder">Danh sách tư cách tham gia</h3>
             </div>
             <div class="modal-body pt-3 pb-0">
                 <div class="row form-group">
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
+                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
+                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <table id="my_list_2" class="table table-separate table-head-custom table-checkable">
@@ -315,8 +389,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_edit_giaidoan">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_giaidoan">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -362,7 +436,7 @@
         function bonusRow() {
             arrIndexDonvi.push(numberOfIndexDonvi);
             $('#add_control').append("<div class=\"row customrow\" id=\"row-" + numberOfIndexDonvi + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + numberOfIndexDonvi + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
-                "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"text\" id=\"amount-" + numberOfIndexDonvi + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\"><a href=\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRow(" + numberOfIndexDonvi + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;\"></i></a></div></div>");
+                "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"number\" id=\"amount-" + numberOfIndexDonvi + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\"><a href=\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRow(" + numberOfIndexDonvi + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;\"></i></a></div></div>");
             numberOfIndexDonvi = numberOfIndexDonvi + 1;
         }
 
@@ -513,21 +587,18 @@
                     sNext: "Trang sau"
                 },
                 sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
+                sInfo: "",
+                sSearch: ""
             },
+            "searching": false,
+            "lengthChange": false,
             columnDefs: [
                 {
                     targets: -1,
                     title: 'Hành động',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm btn-outline-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-outline-danger" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
+                        return '<a href="#" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
                     }
                 }
             ]
@@ -540,13 +611,10 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
+                sSearch: ""
             },
+            "searching": false,
+            "lengthChange": false,
             columnDefs: [
                 {
                     targets: 3,
@@ -554,49 +622,20 @@
                     width: "10%",
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm btn-outline-primary mr-5" onclick="editTuCach(1)">Sửa</a><a href="#" class="btn btn-sm btn-outline-danger" onclick="deleteTuCach(1)">Xóa</a>'
+                        return '<a href="#" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
                     }
                 }
             ]
         });
-        var ConfigDatepicker = function () {
-            var arrows;
-            if (KTUtil.isRTL()) {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-right"></i>',
-                    rightArrow: '<i class="la la-angle-left"></i>'
-                }
-            } else {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-left"></i>',
-                    rightArrow: '<i class="la la-angle-right"></i>'
-                }
-            }
-            // Private functions
-            var demos = function () {
-                $('.custom-pickyear').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom left",
-                    todayHighlight: true,
-                    templates: arrows,
-                    startView: "years",
-                    format: "yyyy",
-                    minViewMode: "years"
-                });
-
-                $('.custom-pickdate').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom left",
-                    todayHighlight: true,
-                    templates: arrows,
-                    format: 'dd-mm-yyyy'
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/YYYY'
                 });
             }
-
             return {
-                // public functions
                 init: function () {
-                    demos();
+                    baseDemos();
                 }
             };
         }();
@@ -623,7 +662,8 @@
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
-            ConfigDatepicker.init();
+            $('#add_control_price').hide();
+            KTBootstrapDatetimepicker.init();
             KTCkeditorDocument.init();
         });
     </script>
