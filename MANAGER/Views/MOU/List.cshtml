@@ -374,7 +374,7 @@
                             (Cập nhật theo thời gian kí kết)
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" data-target="#kt_datetimepicker_3" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" data-target="#kt_datetimepicker_sign_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -387,7 +387,7 @@
                         <label style="font-style: italic;">
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_end_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_mou" data-target="#kt_datetimepicker_3" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_mou" data-target="#kt_datetimepicker_end_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_end_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -422,7 +422,7 @@
                     <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Bản mềm</label>&nbsp;
                         <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
-                        <div class="uppy row" id="kt_uppy_5">
+                        <div class="uppy row" id="mou_upload">
                             <div class="uppy-wrapper col-3"></div>
                             <div class="uppy-list col-7"></div>
                             <div class="uppy-status"></div>
@@ -464,7 +464,7 @@
                         <td>kiec@stf.bunkyou.ac.jp</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="parse_id(12, 'Delete_Mou', 'MOU')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                     <tr>
@@ -475,7 +475,7 @@
                         <td>cuong@fptgr.edu.vn</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a  onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="parse_id(12, 'Delete_Mou', 'MOU')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                 </table>
@@ -649,12 +649,6 @@
                         },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
             },
             searching: false,
             lengthChange: false,
@@ -694,12 +688,15 @@
                     },
                 },
                 {
-        targets: -1,
+                    targets: -1,
                     title: '',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        var action = 'Delete_Mou';
+                        var controller = 'MOU';
+                        var id_to_catch_in_controller = 'mou_id';
+                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="parse_id(12, ' + "'" + action + "'" + ', ' + "'" + controller + "'" + ', ' + "'"+ id_to_catch_in_controller+ "'"+')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
         }
             ]
@@ -787,10 +784,10 @@
 
             // Private functions
 
-            var initUppy5 = function () {
+            var initUppy5 = function (id_input) {
                 // Uppy variables
                 // For more info refer: https://uppy.io/
-                var elemId = 'kt_uppy_5';
+                var elemId = id_input;
                 var id = '#' + elemId;
                 var $statusBar = $(id + ' .uppy-status');
                 var $uploadedList = $(id + ' .uppy-list');
@@ -863,8 +860,8 @@
 
             return {
                 // public functions
-                init: function () {
-                    initUppy5();
+                init: function (id_input) {
+                    initUppy5(id_input);
                     setTimeout(function () {
 
                     }, 2000);
@@ -873,7 +870,7 @@
         }();
 
         KTUtil.ready(function () {
-            KTUppy.init();
+            KTUppy.init('mou_upload');
         });
 
     </script>
@@ -903,7 +900,10 @@
     <script>
         //parse id to do something
          //funtion delete
-        function parse_id(id) {
+        function parse_id(id, action, controller) {
+            var link = '@Url.Action("action", "controller")'
+            link = link.replace("action", action);
+            link = link.replace("controller", controller);
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -913,18 +913,18 @@
                 cancelButtonText: "No, cancel!",
                 reverseButtons: true
             }).then(function (result) {
-                if (result.dismiss === "cancel") {
-                    Swal.fire("Cancelled", "Your imaginary file is safe :)", "error")
-                } else {
+                if (result.value) {
                     $.ajax({
-                        url: '@Url.Action("Delete_Mou", "MOU")',
-                        data: { 'id': id },
+                        url: link,
+                        data: { id : id },
                         success: function (data) {
                             if (data = "") {
                                 Swal.fire("Good job!", "You clicked the button!", "error");
                             } else {
                                 Swal.fire("Deleted!", "Your file has been deleted.", "success")
                             }
+                        },
+                        error: function (data) {
                         },
                     })
                 }
