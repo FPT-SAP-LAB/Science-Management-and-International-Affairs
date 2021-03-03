@@ -7,6 +7,7 @@
     .customrow {
         margin-bottom: 10px;
     }
+
     .customabtn2 {
         border: 1px solid #16854d;
         padding: 5px 16px;
@@ -18,7 +19,8 @@
         text-align: center;
         position: absolute;
     }
-    .modal{
+
+    .modal {
         overflow-y: auto;
     }
 </style>
@@ -79,7 +81,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_detail_from" autocomplete="off" id="detail_from" value="06/01/2021"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_detail_from" autocomplete="off" id="detail_from" value="06/01/2021" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_detail_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -88,14 +90,13 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="detail_from" value="06-01-2021" />*@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_detail_to" autocomplete="off" id="detail_to" value="26/01/2021"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_detail_to" autocomplete="off" id="detail_to" value="26/01/2021" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_detail_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -104,7 +105,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="detail_to" value="26-01-2021" />*@
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
@@ -163,7 +163,250 @@
                 3
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
-                4
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+                        <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_DongToChuc">Bổ sung đơn vị</a>
+                    </div>
+                </div>
+                <table id="my_list_3" class="table table-separate table-head-custom table-checkable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên đơn vị</th>
+                            <th>Thời gian bắt đầu</th>
+                            <th>Thời gian kết thúc</th>
+                            <th>Đầu mối liên hệ</th>
+                            <th>Nguồn tài trợ (VNĐ)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Fsoft Hòa Lạc</td>
+                            <td>15/02/2021</td>
+                            <td>22/02/2021</td>
+                            <td>Sơn Nguyễn</td>
+                            <td>100.000.000</td>
+                            <td nowrap="nowrap"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Codelearn</td>
+                            <td>20/02/2021</td>
+                            <td>22/02/2021</td>
+                            <td>Sơn Nguyễn</td>
+                            <td>20.000.000</td>
+                            <td nowrap="nowrap"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal_DongToChuc" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Bổ sung đơn vị đồng tổ chức</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                        <label class="font-weight-bolder">Tên đơn vị</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="add_name_donvi" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option value="1">Fsoft</option>
+                                <option value="2">UTP</option>
+                                <option value="3">Codelearn</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
+                        <label class="font-weight-bolder">Nguồn tài trợ</label>
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="add_name_taitro" />
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
+                        <label class="font-weight-bolder">Đơn vị tiền tệ</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="add_name_donvitiente" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option value="VND">Đồng</option>
+                                <option value="USD">Dollar</option>
+                                <option value="Yuan">Yuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="add_name_phamvihoptac" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option value="1">Joint Conferences</option>
+                                <option value="2">Support event</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_5">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_lienhe" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_lienhe" autocomplete="off" id="add_from_lienhe" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from_lienhe" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_lienhe" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_lienhe" autocomplete="off" id="add_to_lienhe" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to_lienhe" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Đầu mối liên hệ</label>
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="add_name_daumoi" />
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="add_email_daumoi" />
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="add_phone_daumoi" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_dongtochuc">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal_DongToChuc" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Bổ sung đơn vị đồng tổ chức</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                        <label class="font-weight-bolder">Tên đơn vị</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="edit_name_donvi" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option selected value="1">Fsoft</option>
+                                <option value="2">UTP</option>
+                                <option value="3">Codelearn</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
+                        <label class="font-weight-bolder">Nguồn tài trợ</label>
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_name_taitro" value="100000000"/>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
+                        <label class="font-weight-bolder">Đơn vị tiền tệ</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="edit_name_donvitiente" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option selected value="VND">Đồng</option>
+                                <option value="USD">Dollar</option>
+                                <option value="Yuan">Yuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <div class="d-flex align-items-center">
+                            <select class="form-control" id="edit_name_phamvihoptac" style="width: 100% !important">
+                                <option label="Label"></option>
+                                <option selected value="1">Joint Conferences</option>
+                                <option value="2">Support event</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_5_2">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_lienhe" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_lienhe" autocomplete="off" id="edit_from_lienhe" value="15/02/2021" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_lienhe" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_lienhe" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_lienhe" autocomplete="off" id="edit_to_lienhe" value="22/02/2021"/>
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_lienhe" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Đầu mối liên hệ</label>
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_daumoi" value="Hấu Nguyễn"/>
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_daumoi" value=\"default@gmail.com\"/>
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_daumoi" value="0929232929"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_dong_to_chuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -198,7 +441,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from_giaidoan" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">đến</label>
@@ -214,7 +456,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to_giaidoan" />*@
                     </div>
                 </div>
             </div>
@@ -320,7 +561,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" value="08/02/2021"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" value="08/02/2021" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -329,14 +570,13 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from_giaidoan" value="08-02-2021" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" value="16/02/2021"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" value="16/02/2021" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -345,7 +585,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to_giaidoan" value="16-02-2021" />*@
                     </div>
                 </div>
             </div>
@@ -410,15 +649,18 @@
         </div>
     </div>
 </div>
-
+<a href="@Url.Action()"></a>
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
         let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;
         let id_edit_tu_cach = 0;
+        let id_delete_dong_to_chuc = 0;
+        let id_edit_dong_to_chuc = 0;
         function postActivity() {
             return;
         }
@@ -426,7 +668,7 @@
             return;
         }
         function setUpForm() {
-            return;
+            window.open("/DetailOfAcademicActivity/RegisterForm?id=" + id_edit_giai_doan);
         }
 
         let arrIndexDonvi = []
@@ -444,7 +686,9 @@
             $('#row-' + id).remove();
             // remove bỏ id trong arrIndexDonvi
         }
-
+        function getContactInfo() {
+            return;
+        }
         function editDetailGiaiDoan(id) {
             id_edit_giai_doan = id;
             $.ajax({
@@ -458,7 +702,23 @@
         }
         function deleteDetailGiaiDoan(id) {
             id_delete_giai_doan = id;
-            $('#delete-confirm-giaidoan').modal('show');
+            Swal.fire({
+                title: "Bạn có muốn xóa giai đoạn này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
         }
         function editTuCach(id) {
             return
@@ -466,7 +726,31 @@
         function deleteTuCach(id) {
             return
         }
-
+        function editDongToChuc(id) {
+            id_edit_dong_to_chuc = id;
+            $('#editModal_DongToChuc').modal('show');
+        }
+        function deleteDongToChuc(id) {
+            id_delete_dong_to_chuc = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa đơn vị này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
+            return
+        }
         $('#add_price_tucach').click(function () {
             if (document.getElementById('add_price_tucach').value == 'MP') {
                 $('#add_control_price').hide();
@@ -479,7 +763,7 @@
                 $('#add_control_title').show();
                 $('#add_control_btn').show();
                 $('#add_control').show();
-                $('#add_quantity_tucach').attr('readonly',true)
+                $('#add_quantity_tucach').attr('readonly', true)
             } else {
                 $('#add_control_title').hide();
                 $('#add_control_btn').hide();
@@ -506,6 +790,26 @@
             });
         });
 
+        $('#btn_add_dongtochuc').click(function () {
+            toastr.success("Thêm thành công");
+            //let object = {
+            //    name: document.getElementById('add_name_giaidoan').value,
+            //    from: document.getElementById('add_from_giaidoan').value,
+            //    to: document.getElementById('add_to_giaidoan').value
+            //}
+            //$.ajax({
+            //    url: '/DetailOfAcademicActivity/add_Phase',
+            //    data: object,
+            //    success: function (data) {
+            //        if (data.code = 1) {
+            //            toastr.success(data.err_content);
+            //        } else {
+            //            toastr.error(data.err_content);
+            //        }
+            //    },
+            //});
+        });
+
         $('#btn_edit_giaidoan').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
             //let object = {
@@ -524,6 +828,10 @@
             //        }
             //    },
             //});
+        });
+
+        $('#btn_edit_dong_to_chuc').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
         });
 
         $('#btn_delete_giaidoan').click(function () {
@@ -619,10 +927,38 @@
                 {
                     targets: 3,
                     title: 'Hành động',
-                    width: "10%",
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<a href="#" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
+                    }
+                }
+            ]
+        });
+        $("#my_list_3").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editDongToChuc(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc(1)">Xóa</a>'
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" onclick="getContactInfo()">' + data +'</a>'
                     }
                 }
             ]
@@ -659,6 +995,102 @@
                 }
             };
         }();
+        $('#add_name_phamvihoptac').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true
+        });
+        $('#add_name_donvi').select2({
+            placeholder: 'Tên đơn vị',
+            allowClear: true
+        });
+        $('#add_name_donvitiente').select2({
+            placeholder: 'Đơn vị tiền tệ',
+            allowClear: true
+        });
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const ProgressBar = Uppy.ProgressBar;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            const Dashboard = Uppy.Dashboard;
+            const Dropbox = Uppy.Dropbox;
+            const GoogleDrive = Uppy.GoogleDrive;
+            const Instagram = Uppy.Instagram;
+            const Webcam = Uppy.Webcam;
+
+            var initUppy5 = function () {
+                var elemId = 'kt_uppy_5';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+                var uppyMin = Uppy.Core({
+                    debug: true,
+                    autoProceed: true,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 1000000, // 1mb
+                        maxNumberOfFiles: 5,
+                        minNumberOfFiles: 1
+                    }
+                });
+                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+                // demo file upload server
+                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMin.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+                var $fileLabel = $(id + ' .uppy-input-label');
+                uppyMin.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+                uppyMin.on('complete', function (file) {
+                    $.each(file.successful, function (index, value) {
+                        var sizeLabel = "bytes";
+                        var filesize = value.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+                    });
+                    $fileLabel.text("Add more files");
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+                });
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyMin.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+            return {
+                // public functions
+                init: function () {
+                    initUppy5();
+                    setTimeout(function () {
+                    }, 2000);
+                }
+            };
+        }();
+        KTUtil.ready(function () {
+            KTUppy.init();
+        });
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
