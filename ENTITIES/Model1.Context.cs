@@ -25,12 +25,12 @@ namespace ENTITIES
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<InternalUnit> InternalUnits { get; set; }
-        public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Office> Offices { get; set; }
         public virtual DbSet<Person> People { get; set; }
@@ -83,15 +83,9 @@ namespace ENTITIES
         public virtual DbSet<ResearchContactPoint> ResearchContactPoints { get; set; }
         public virtual DbSet<ResearchPartner> ResearchPartners { get; set; }
         public virtual DbSet<Scholarship> Scholarships { get; set; }
-        public virtual DbSet<Citation> Citations { get; set; }
-        public virtual DbSet<Conference> Conferences { get; set; }
-        public virtual DbSet<ConferenceParticipant> ConferenceParticipants { get; set; }
-        public virtual DbSet<ConferenceSupport> ConferenceSupports { get; set; }
-        public virtual DbSet<Cost> Costs { get; set; }
-        public virtual DbSet<Criterion> Criteria { get; set; }
-        public virtual DbSet<Formality> Formalities { get; set; }
         public virtual DbSet<DegreeLanguage> DegreeLanguages { get; set; }
         public virtual DbSet<FormalityLanguage> FormalityLanguages { get; set; }
+        public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<LevelAcademicLanguage> LevelAcademicLanguages { get; set; }
         public virtual DbSet<NotificationLanguage> NotificationLanguages { get; set; }
         public virtual DbSet<PaperStatusLanguage> PaperStatusLanguages { get; set; }
@@ -99,6 +93,14 @@ namespace ENTITIES
         public virtual DbSet<ResearchAreaLanguage> ResearchAreaLanguages { get; set; }
         public virtual DbSet<SpecializationLanguage> SpecializationLanguages { get; set; }
         public virtual DbSet<TitleLanguage> TitleLanguages { get; set; }
+        public virtual DbSet<Citation> Citations { get; set; }
+        public virtual DbSet<Conference> Conferences { get; set; }
+        public virtual DbSet<ConferenceParticipant> ConferenceParticipants { get; set; }
+        public virtual DbSet<ConferenceStatu> ConferenceStatus { get; set; }
+        public virtual DbSet<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual DbSet<Cost> Costs { get; set; }
+        public virtual DbSet<Criterion> Criteria { get; set; }
+        public virtual DbSet<Formality> Formalities { get; set; }
         public virtual DbSet<ContractType> ContractTypes { get; set; }
         public virtual DbSet<Degree> Degrees { get; set; }
         public virtual DbSet<LevelAcademic> LevelAcademics { get; set; }
@@ -122,5 +124,6 @@ namespace ENTITIES
         public virtual DbSet<Paper> Papers { get; set; }
         public virtual DbSet<PaperCriteria> PaperCriterias { get; set; }
         public virtual DbSet<PaperStatu> PaperStatus { get; set; }
+        public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }
 }
