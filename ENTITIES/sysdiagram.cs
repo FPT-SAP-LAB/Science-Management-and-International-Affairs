@@ -12,16 +12,12 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class NewsVersion
+    public partial class sysdiagram
     {
-        public int news_version_id { get; set; }
-        public System.DateTime publish_time { get; set; }
-        public string version_title { get; set; }
-        public string news_content { get; set; }
-        public int article_id { get; set; }
-        public int language_id { get; set; }
-    
-        public virtual News News { get; set; }
-        public virtual Language Language { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

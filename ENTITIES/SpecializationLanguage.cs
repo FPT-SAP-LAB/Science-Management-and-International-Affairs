@@ -18,7 +18,7 @@ namespace ENTITIES
         public int specialization_id { get; set; }
         public string name { get; set; }
     
-        public virtual Language Language { get; set; }
         public virtual Specialization Specialization { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

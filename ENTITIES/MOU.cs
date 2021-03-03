@@ -33,6 +33,7 @@ namespace ENTITIES
         public int account_id { get; set; }
         public System.DateTime add_time { get; set; }
         public bool is_deleted { get; set; }
+        public int noti_count { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Office Office { get; set; }

@@ -68,7 +68,7 @@
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Quốc gia <span style='color:red'>*</span>:</label>
                                     <select class="form-control form-control-lg" id="kt_select2_1">
-                                        @foreach (var item in ViewBag.countries)
+                                        @foreach (var item in ViewBag.Countries)
                                         {
                                             <option value="@item.country_id">@item.country_name</option>
                                         }
@@ -118,9 +118,10 @@
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Hình thức <span style='color:red'>*</span>:</label>
                                     <select class="form-control form-control-lg">
-                                        <option value="1">Online quốc tế</option>
-                                        <option value="2">Offline quốc tế</option>
-                                        <option value="3">Trong nước</option>
+                                        @foreach (var item in ViewBag.FormalityLanguages)
+                                        {
+                                            <option value="@item.formality_id">@item.name</option>
+                                        }
                                     </select>
                                     <div class="fv-plugins-message-container"></div>
                                 </div>
@@ -137,8 +138,7 @@
                                     <tr role="row">
                                         <th style="width: 240px">MSNV/MSSV</th>
                                         <th>Họ và tên</th>
-                                        <th>Đơn vị</th>
-                                        <th>Khu vực</th>
+                                        <th>Cơ sở</th>
                                         <th>Chức danh</th>
                                         <th>Actions</th>
                                     </tr>
@@ -151,24 +151,22 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                            <input type="text" class="form-control inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
                                         </td>
                                         <td>
-                                            <select class="form-control form-control-lg selectWorkUnit">
-                                                <option value="1">FPTU</option>
-                                                <option value="2">FPoly</option>
+                                            <select class="form-control selectOffice">
+                                                @foreach (ENTITIES.Office item in ViewBag.Offices)
+                                                {
+                                                    <option value="@item.office_id">@item.office_name</option>
+                                                }
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control form-control-lg selectArea">
-                                                <option value="1">Hà Nội</option>
-                                                <option value="2">Đà Nẵng</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control form-control-lg selectTitle">
-                                                <option value="2">Giảng viên</option>
-                                                <option value="1">Sinh viên</option>
+                                            <select class="form-control selectTitle">
+                                                @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
+                                                {
+                                                    <option value="@item.title_id">@item.name</option>
+                                                }
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -182,24 +180,22 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control form-control-lg inputName" name="postcode" placeholder="Họ và tên" value="">
+                                            <input type="text" class="form-control inputName" name="postcode" placeholder="Họ và tên" value="">
                                         </td>
                                         <td>
-                                            <select class="form-control form-control-lg selectWorkUnit">
-                                                <option value="1">FPTU</option>
-                                                <option value="2">FPoly</option>
+                                            <select class="form-control selectOffice">
+                                                @foreach (ENTITIES.Office item in ViewBag.Offices)
+                                                {
+                                                    <option value="@item.office_id">@item.office_name</option>
+                                                }
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control form-control-lg selectArea">
-                                                <option value="1">Hà Nội</option>
-                                                <option value="2">Đà Nẵng</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control form-control-lg selectTitle">
-                                                <option value="2">Giảng viên</option>
-                                                <option value="1">Sinh viên</option>
+                                            <select class="form-control selectTitle">
+                                                @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
+                                                {
+                                                    <option value="@item.title_id">@item.name</option>
+                                                }
                                             </select>
                                         </td>
                                         <td nowrap="">
@@ -414,8 +410,7 @@
         var rowTotalCost = tbodyCost.lastElementChild;
 
         $(document).ready(function () {
-
-            $('#kt_select2_1').select2();
+            $(document).find(".selectOffice, .selectTitle, #kt_select2_1").select2();
 
             $('#kt_daterangepicker_1').daterangepicker({
                 buttonClasses: ' btn',
@@ -452,7 +447,7 @@
                         showProgressDetails: true,
                         restrictions: {
                             maxFileSize: 1000000, // 1mb
-                            maxNumberOfFiles: 5,
+                            maxNumberOfFiles: 1,
                             minNumberOfFiles: 1
                         }
                     });
@@ -532,7 +527,7 @@
                         showProgressDetails: true,
                         restrictions: {
                             maxFileSize: 1000000, // 1mb
-                            maxNumberOfFiles: 5,
+                            maxNumberOfFiles: 1,
                             minNumberOfFiles: 1
                         }
                     });
@@ -614,6 +609,7 @@
 
         function addParticipant() {
             let temp = baseParticipant.cloneNode(true);
+            $(temp).find(".selectOffice, .selectTitle").select2();
             inItSelectPeople(temp.getElementsByClassName("selectPeople"));
             tbodyParticipant.appendChild(temp);
         }
@@ -641,7 +637,7 @@
                 "<div class='select2-result-repository__title'>" + repo.id + "</div>" +
                 "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
                 "<div class='select2-result-repository__statistics'>" +
-                "<div class='select2-result-repository__forks'>" + repo.WorkUnitString + " " + repo.AreaString + "</div>" +
+                "<div class='select2-result-repository__forks'>" + repo.OfficeName + "</div>" +
                 "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
                 "</div></div></div>";
             return markup;
@@ -650,10 +646,8 @@
         function formatRepoSelection(repo) {
             if (repo.id) {
                 $(currentRow).find(".inputName").val(repo.Name);
-                $(currentRow).find(".selectWorkUnit").val(repo.WorkUnitID);
-                $(currentRow).find(".selectArea").val(repo.AreaID);
-                $(currentRow).find(".selectTitle").val(repo.TitleID);
-                console.log(currentRow);
+                $(currentRow).find(".selectOffice").val(repo.OfficeID).trigger('change');;
+                $(currentRow).find(".selectTitle").val(repo.TitleID).trigger('change');;
             }
             return repo.id || repo.text;
         }
@@ -668,7 +662,7 @@
                     delay: 250,
                     data: function (params) {
                         return {
-                            q: params.term, // search term
+                            id: params.term, // search term
                             page: params.page
                         };
                     },
