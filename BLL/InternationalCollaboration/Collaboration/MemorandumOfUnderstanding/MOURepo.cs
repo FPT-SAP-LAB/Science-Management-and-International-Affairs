@@ -1,11 +1,14 @@
 ﻿using ENTITIES;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -18,25 +21,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 string sql_mouList =
                     @"select tb2.mou_partner_id,
-                    tb1.mou_code,tb3.partner_name,tb3.website,tb2.contact_point_name
-                    ,tb2.contact_phone_email,tb2.contact_point_phone,tb1.evidence,
-                    tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.unit_abbreviation, tb5.scope_name
-                    ,tb7.specialization_name, tb9.mou_status_name
-                    from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
-                    on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
-                    on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
-                    on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
-                    inner join IA_MasterData.CollaborationScope tb5
-                    on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
-                    on tb6.mou_partner_id = tb2.mou_partner_id 
-                    inner join IA_Collaboration.Specialization tb7
-                    on tb7.specialization_id = tb6.specialization_id
-                    inner join IA_Collaboration.MOUStatusHistory tb8 on
-                    tb8.mou_id = tb1.mou_id 
-                    inner join IA_Collaboration.MOUStatus tb9 on
-                    tb9.mou_status_id = tb8.mou_status_id
-                    inner join IA_MasterData.InternalUnit tb10 on
-                    tb10.unit_id = tb1.unit_id ";
+                        tb1.mou_code,tb3.partner_name,tb3.website,tb2.contact_point_name
+                        ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
+                        ,tb7.specialization_name, tb9.mou_status_name
+                        from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
+                        on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
+                        on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
+                        on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
+                        inner join IA_MasterData.CollaborationScope tb5
+                        on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                        on tb6.mou_partner_id = tb2.mou_partner_id 
+                        inner join General.Specialization tb7
+                        on tb7.specialization_id = tb6.specialization_id
+                        inner join 
+                        (select max([datetime]) as 'maxdate',mou_status_id, mou_id
+                        from IA_Collaboration.MOUStatusHistory 
+                        group by mou_status_id, mou_id) tb8 on
+                        tb8.mou_id = tb1.mou_id
+                        inner join IA_Collaboration.MOUStatus tb9 on
+                        tb9.mou_status_id = tb8.mou_status_id
+                        inner join General.Office tb10 on
+                        tb10.office_id = tb1.office_id
+                        where tb1.is_deleted = 0 ";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList).ToList();
                 handlingMOUListData(mouList);
                 return mouList;
@@ -50,7 +57,30 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_mouList_deleted = $"";
+                string sql_mouList_deleted = @"select tb2.mou_partner_id,
+                    tb1.mou_code,tb3.partner_name,tb3.website,tb2.contact_point_name
+                    ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                    tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
+                    ,tb7.specialization_name, tb9.mou_status_name
+                    from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
+                    on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3
+                    on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
+                    on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
+                    inner join IA_MasterData.CollaborationScope tb5
+                    on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                    on tb6.mou_partner_id = tb2.mou_partner_id
+                    inner join General.Specialization tb7
+                    on tb7.specialization_id = tb6.specialization_id
+                    inner join
+                    (select max([datetime]) as 'maxdate',mou_status_id, mou_id
+                    from IA_Collaboration.MOUStatusHistory
+                    group by mou_status_id, mou_id) tb8 on
+                    tb8.mou_id = tb1.mou_id
+                    inner join IA_Collaboration.MOUStatus tb9 on
+                    tb9.mou_status_id = tb8.mou_status_id
+                    inner join General.Office tb10 on
+                    tb10.office_id = tb1.office_id
+                    where tb1.is_deleted = 1";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList_deleted).ToList();
                 handlingMOUListData(mouList);
                 return mouList;
@@ -94,7 +124,38 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
         public void ExportMOUExcel()
         {
-            //data of excel sheet??
+            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/");
+            string filename = "MOU.xlsx";
+            FileInfo file = new FileInfo(path + filename);
+            List<ListMOU> listMOU = listAllMOU();
+
+            using (ExcelPackage excelPackage = new ExcelPackage(file))
+            {
+                ExcelWorkbook excelWorkbook = excelPackage.Workbook;
+                ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
+                int startRow = 3;
+                for (int i = 0; i < listMOU.Count; i++)
+                {
+                    excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
+                    excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
+                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
+                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
+                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
+                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
+                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
+                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_phone_email;
+                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_phone;
+                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).mou_start_date;
+                    excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_end_date;
+                    excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).office_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).scope_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).mou_status_name;
+                }
+                //string Flocation = "/Content/assets/excel/CDVT/download/baocaohoatdong.xlsx";
+                string Flocation = "/Content/assets/excel/Collaboration/download/MOU.xlsx";
+                string savePath = HostingEnvironment.MapPath(Flocation);
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/MOU.xlsx")));
+            }
         }
 
         public void deleteMOU(int mou_id)
@@ -121,9 +182,21 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_mouCode = $"";
-                string newMOUCode = db.Database.SqlQuery<string>(sql_mouCode).First();
-                return newMOUCode;
+                string sql_mouCode = @"select count(*) from IA_Collaboration.MOU where mou_code like @year";
+                string sql_checkDup = @"select count(*) from IA_Collaboration.MOU where mou_code = @newCode";
+                bool isDuplicated = false;
+                string newCode = "";
+                int countInYear = db.Database.SqlQuery<int>(sql_mouCode,
+                        new SqlParameter("year", '%' + DateTime.Now.Year + '%')).First();
+                //fix duplicate mou_code:
+                do
+                {
+                    countInYear++;
+                    newCode = DateTime.Now.Year + "/" + countInYear;
+                    isDuplicated = db.Database.SqlQuery<int>(sql_mouCode, 
+                        new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
+                } while (isDuplicated);
+                return newCode;
             }
             catch (Exception ex)
             {
@@ -135,9 +208,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_partner = $"";
-                List<ENTITIES.Partner> partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner).ToList();
-                return true;
+                string sql_partner = $"select * from IA_Collaboration.Partner where partner_id = @partner_id";
+                ENTITIES.Partner partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner,
+                    new SqlParameter("partner_id",partner_id)).FirstOrDefault();
+                return partner is null ? false : true;
             }
             catch (Exception ex)
             {
@@ -145,12 +219,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public List<InternalUnit> GetInternalUnit()
+        public List<Office> GetOffice()
         {
             try
             {
-                string sql_unitList = $"";
-                List<InternalUnit> unitList = db.Database.SqlQuery<InternalUnit>(sql_unitList).ToList();
+                string sql_unitList = @"select * from General.Office";
+                List<Office> unitList = db.Database.SqlQuery<Office>(sql_unitList).ToList();
                 return unitList;
             }
             catch (Exception ex)
@@ -163,7 +237,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_partnerList = $"";
+                string sql_partnerList = @"select * from IA_Collaboration.Partner";
                 List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList).ToList();
                 return partnerList;
             }
@@ -177,7 +251,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_speList = $"";
+                string sql_speList = @"select * from General.Specialization";
                 List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
                 return speList;
             }
@@ -191,7 +265,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_scopeList = $"";
+                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
                 return scopeList;
             }
@@ -226,9 +300,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         {
                             previousItem.specialization_name = previousItem.specialization_name + "," + item.specialization_name;
                         }
-                        if (!previousItem.scope_name.Contains(item.scope_name))
+                        if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
                         {
-                            previousItem.scope_name = previousItem.scope_name + "," + item.scope_name; 
+                            previousItem.scope_abbreviation = previousItem.scope_abbreviation + "," + item.scope_abbreviation; 
                         }
                         //then remove current object
                         mouList.Remove(item);
@@ -253,14 +327,52 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 NotificationInfo noti = new NotificationInfo();
-                string sql_inactive_number = $"";
-                string sql_expired = $"";
+                DateTime nextMonth = DateTime.Now.AddMonths(1);
+                DateTime next3Months = DateTime.Now.AddMonths(3);
+                //Warning 1: end_date < next3Months && notiCount = 0
+                //warning 2: end_date < nextMonths && notiCount = 1
+                string sql_inactive_number 
+                    = @"select count(*) from IA_Collaboration.MOU tb1 left join 
+                        (
+                        select max([datetime]) as 'maxdate',mou_status_id, mou_id
+                        from IA_Collaboration.MOUStatusHistory 
+                        group by mou_status_id, mou_id) tb2 
+                        on tb1.mou_id = tb2.mou_id
+                        where tb1.is_deleted = 0";
+                string sql_expired 
+                    = @"select * from IA_Collaboration.MOU
+                        where (mou_end_date < @next3Months and noti_count = 0) or 
+                        (mou_end_date < @nextMonth and noti_count = 1)";
                 noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
                 noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired).ToList();
+                updateNotiCount(noti);
                 return noti;
             } catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private void updateNotiCount(NotificationInfo noti)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (string mouCode in noti.ExpiredMOUCode)
+                    {
+                        MOU mou = db.MOUs.Where(x => x.mou_code.Equals(mouCode)).First();
+                        mou.noti_count += 1;
+                        db.Entry(mou).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
         }
 
@@ -269,6 +381,32 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //get current date
             //get all expired ActiveMOU.
             //if number > 0: update status for MOU: Active => Inactive.
+
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    string sql_expired = @"select mou_id from IA_Collaboration.MOU tb1 where tb1.mou_end_date > @current_date";
+                    List<int> mouIdList = db.Database.SqlQuery<int>(sql_expired,
+                        new SqlParameter("current_date", DateTime.Now)).ToList();
+                    if (mouIdList.Count > 0)
+                    {
+                        foreach (int id in mouIdList)
+                        {
+                            MOUStatusHistory mou = new MOUStatusHistory();
+                            mou.mou_id = id;
+                            mou.mou_status_id = 2;
+                            mou.date = DateTime.Now;
+                            db.MOUStatusHistories.Add(mou);
+                            db.SaveChanges();
+                        }
+                    }
+                    transaction.Commit();
+                } catch (Exception ex)
+                {
+
+                }
+            }
         }
 
         public class ListMOU 
@@ -278,6 +416,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public int mou_partner_id { get; set; }
             public string partner_name { get; set; }
             public string website { get; set; }
+            public string country_name { get; set; }
             public string contact_point_name { get; set; }
             public string contact_phone_email { get; set; }
             public string contact_point_phone { get; set; }
@@ -287,8 +426,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string mou_start_date_string { get; set; }
             public string mou_end_date_string { get; set; }
             public string mou_note { get; set; }
-            public string unit_abbreviation { get; set; }
-            public string scope_name { get; set; }
+            public string office_abbreviation { get; set; }
+            public string scope_abbreviation { get; set; }
             public string specialization_name { get; set; }
             public string mou_status_name { get; set; }
         }
