@@ -464,7 +464,7 @@
                         <td>kiec@stf.bunkyou.ac.jp</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="parse_id(12, 'Delete_Mou', 'MOU')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                     <tr>
@@ -475,7 +475,7 @@
                         <td>cuong@fptgr.edu.vn</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="parse_id(12, 'Delete_Mou', 'MOU')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                 </table>
@@ -696,7 +696,7 @@
                         var action = 'Delete_Mou';
                         var controller = 'MOU';
                         var id_to_catch_in_controller = 'mou_id';
-                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="parse_id(12, ' + "'" + action + "'" + ', ' + "'" + controller + "'" + ', ' + "'"+ id_to_catch_in_controller+ "'"+')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
         }
             ]
@@ -898,12 +898,12 @@
 
     </script>
     <script>
-        //parse id to do something
          //funtion delete
-        function parse_id(id, action, controller) {
+       function confirm_delete(id) {
+        //function confirm_delete(id, action, controller) {
             var link = '@Url.Action("action", "controller")'
-            link = link.replace("action", action);
-            link = link.replace("controller", controller);
+            link = link.replace("action", "Delete_MOU");
+            link = link.replace("controller", "MOU");
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -916,7 +916,7 @@
                 if (result.value) {
                     $.ajax({
                         url: link,
-                        data: { id : id },
+                        data: { mou_id : id },
                         success: function (data) {
                             if (data = "") {
                                 Swal.fire("Good job!", "You clicked the button!", "error");
@@ -925,59 +925,13 @@
                             }
                         },
                         error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
                         },
                     })
                 }
             })
         };
 
-
-        //delete modal
-        //function abc() {
-        //    Swal.fire({
-        //        title: "Are you sure?",
-        //        text: "You won't be able to revert this!",
-        //        icon: "warning",
-        //        showCancelButton: true,
-        //        confirmButtonText: "Yes, delete it!",
-        //        cancelButtonText: "No, cancel!",
-        //        reverseButtons: true
-        //    }).then(function (result) {
-        //        if (result.value) {
-        //            Swal.fire(
-        //                "Deleted!",
-        //                "Your file has been deleted.",
-        //                "success"
-        //            )
-        //            // result.dismiss can be "cancel", "overlay",
-        //            // "close", and "timer"
-        //        } else if (result.dismiss === "cancel") {
-        //            Swal.fire(
-        //                "Cancelled",
-        //                "Your imaginary file is safe :)",
-        //                "error"
-        //            )
-        //        }
-        //    });
-
-       //function abc() {
-       //     Swal.fire({
-       //         title: "Are you sure?",
-       //         text: "You won't be able to revert this!",
-       //         icon: "warning",
-       //         showCancelButton: true,
-       //         confirmButtonText: "Yes, delete it!",
-       //         cancelButtonText: "No, cancel!",
-       //         reverseButtons: true
-       //     }).then(function (result) {
-       //         if (result.dismiss === "cancel") {
-       //             Swal.fire(
-       //                 "Cancelled",
-       //                 "Your imaginary file is safe :)",
-       //                 "error"
-       //             )
-       //         }
-       //     });
     </script>
 }
 

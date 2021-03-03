@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 <style>
-    #div-image { /*
-        height: fit-content;*/
+    #div-image { 
+        height: fit-content;
     }
 </style>
 
@@ -98,6 +98,7 @@
     <script>
 
         // Class definition
+        var content_ckeditor = '<figure class="table"><table><tbody><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table></figure>'
         var KTCkeditorDocument = function () {
             // Private functions
             var editorData
@@ -106,9 +107,9 @@
                     .create(document.querySelector('.ckeditor'))
                     .then(editor => {
                         const toolbarContainer = document.querySelector('.ckeditor-toolbar');
-
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
                         editorData = editor
+                        editorData.setData(content_ckeditor);
 
                     })
                     .catch(error => {
@@ -120,9 +121,7 @@
                 console.log(temp)
                 return temp;
             }
-            var set_data = function (data) {
-                editorData.setData(data);
-            }
+            
             return {
                 // public functions
                 init: function () {
@@ -130,17 +129,13 @@
                 },
                 get_data: function () {
                     get_data();
-                },
-                set_data: function (data) {
-                    set_data(data);
-                },
+                }
             };
         }();
 
         $(document).ready(function () {
             KTCkeditorDocument.init();
-            KTCkeditorDocument.set_data('');
-            $('#card-container').parent().css('background-color', '#eef0f8');
+            $('#card-container').parent().removeClass();
         })
 
         $('#submit').click(function () {
