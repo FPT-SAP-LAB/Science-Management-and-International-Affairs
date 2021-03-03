@@ -12,15 +12,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     public class MOUController : Controller
     {
         // GET: MOU
-        private static MOURepo mou;
+        private static MOURepo mou = new MOURepo();
 
         public ActionResult List()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
-            int duration = mou.getDuration();
+            //int duration = mou.getDuration();
             List<ListMOU> listMOU = mou.listAllMOU();
-            NotificationInfo noti = mou.getNoti();
-            mou.UpdateStatusMOU();
+            //NotificationInfo noti = mou.getNoti();
+            //mou.UpdateStatusMOU();
             return View();
         }
 
