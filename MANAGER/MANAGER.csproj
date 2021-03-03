@@ -2175,6 +2175,7 @@
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ResearcherInfo.cshtml" />
+    <Content Include="Views\Researchers\ResearcherBio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
