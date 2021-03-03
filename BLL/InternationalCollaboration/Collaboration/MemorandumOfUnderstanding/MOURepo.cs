@@ -16,7 +16,27 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_mouList = $"";
+                string sql_mouList =
+                    @"select tb2.mou_partner_id,
+                    tb1.mou_code,tb3.partner_name,tb3.website,tb2.contact_point_name
+                    ,tb2.contact_phone_email,tb2.contact_point_phone,tb1.evidence,
+                    tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.unit_abbreviation, tb5.scope_name
+                    ,tb7.specialization_name, tb9.mou_status_name
+                    from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
+                    on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
+                    on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
+                    on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
+                    inner join IA_MasterData.CollaborationScope tb5
+                    on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                    on tb6.mou_partner_id = tb2.mou_partner_id 
+                    inner join IA_Collaboration.Specialization tb7
+                    on tb7.specialization_id = tb6.specialization_id
+                    inner join IA_Collaboration.MOUStatusHistory tb8 on
+                    tb8.mou_id = tb1.mou_id 
+                    inner join IA_Collaboration.MOUStatus tb9 on
+                    tb9.mou_status_id = tb8.mou_status_id
+                    inner join IA_MasterData.InternalUnit tb10 on
+                    tb10.unit_id = tb1.unit_id ";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList).ToList();
                 handlingMOUListData(mouList);
                 return mouList;
@@ -189,6 +209,35 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         private void handlingMOUListData(List<ListMOU> mouList)
         {
             //handling spe and scope data.
+            //handling calender display
+            ListMOU previousItem = null;
+            foreach (ListMOU item in mouList.ToList())
+            {
+                if (previousItem == null) //first record
+                {
+                    previousItem = item;
+                    previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
+                    previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
+                } else
+                {
+                    if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
+                    {
+                        if (!previousItem.specialization_name.Contains(item.specialization_name))
+                        {
+                            previousItem.specialization_name = previousItem.specialization_name + "," + item.specialization_name;
+                        }
+                        if (!previousItem.scope_name.Contains(item.scope_name))
+                        {
+                            previousItem.scope_name = previousItem.scope_name + "," + item.scope_name; 
+                        }
+                        //then remove current object
+                        mouList.Remove(item);
+                    } else
+                    {
+                        previousItem = item;
+                    }
+                }
+            }
         }
 
         public int getDuration()
@@ -222,7 +271,27 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //if number > 0: update status for MOU: Active => Inactive.
         }
 
-        public class ListMOU {}
+        public class ListMOU 
+        {
+            public ListMOU() { }
+            public string mou_code  { get; set; }
+            public int mou_partner_id { get; set; }
+            public string partner_name { get; set; }
+            public string website { get; set; }
+            public string contact_point_name { get; set; }
+            public string contact_phone_email { get; set; }
+            public string contact_point_phone { get; set; }
+            public string evidence { get; set; }
+            public DateTime mou_start_date { get; set; }
+            public DateTime mou_end_date { get; set; }
+            public string mou_start_date_string { get; set; }
+            public string mou_end_date_string { get; set; }
+            public string mou_note { get; set; }
+            public string unit_abbreviation { get; set; }
+            public string scope_name { get; set; }
+            public string specialization_name { get; set; }
+            public string mou_status_name { get; set; }
+        }
 
         public class MOUAdd 
         {
