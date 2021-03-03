@@ -12,20 +12,20 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperStatu
+    public partial class ConferenceStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaperStatu()
+        public ConferenceStatu()
         {
-            this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
-            this.Papers = new HashSet<Paper>();
+            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
+            this.ConferenceSupports = new HashSet<ConferenceSupport>();
         }
     
         public int status_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperStatusLanguage> PaperStatusLanguages { get; set; }
+        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
     }
 }

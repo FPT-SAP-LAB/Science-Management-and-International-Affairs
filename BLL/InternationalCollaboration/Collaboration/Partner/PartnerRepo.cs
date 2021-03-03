@@ -5,36 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
+namespace BLL.InternationalCollaboration.Collaboration.Partner
 {
-    class PartnerMOARepo
+    class PartnerRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public void addMOAPartner()
+        public void getListAll()
         {
             return;
         }
-        public void editMOAPartner()
+        public void addPartner()
         {
             return;
         }
-        public void DeleteMOAPartner()
+        public void deletePartner()
         {
             return;
         }
-        public void ListMOUPartnerHistory()
+        public void editPartner()
         {
             return;
         }
-        public void getMOASpecializationByPartner()
+        public void getSpe()
         {
             return;
         }
-        public void getExMOAPartner()
+        public void getPreView()
         {
             return;
         }
-        public void getMOAStatus()
+        public void exportExcel()
         {
             return;
         }

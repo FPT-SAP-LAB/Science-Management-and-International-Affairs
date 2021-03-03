@@ -18,7 +18,7 @@ namespace ENTITIES
         public int degree_id { get; set; }
         public string name { get; set; }
     
-        public virtual Language Language { get; set; }
         public virtual Degree Degree { get; set; }
+        public virtual Language Language { get; set; }
     }
 }
