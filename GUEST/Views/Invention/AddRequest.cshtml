@@ -27,6 +27,18 @@
                             <label>@rm.GetString("PatentDate")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("Country")</label>
+                            <select class="form-control" id="search_nam" name="param">
+                                <option>Việt Nam</option>
+                                <option>Mỹ</option>
+                                <option>Nga</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("FileCM")</label>
+                            <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">Upload</button>
+                        </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                     <div class="row">
@@ -98,6 +110,9 @@
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script>
+        $('#search_nam').select2({
+            allowClear: true
+        });
         $(".addtacgia").click(function () {
             $("#tacgia_body tr:last").after("<tr>" +
                 "<td><label class='checkbox'><input type='checkbox' /><span></span>@rm.GetString("In") FE</label></td>" +
