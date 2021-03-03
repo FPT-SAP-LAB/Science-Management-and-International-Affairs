@@ -67,6 +67,11 @@ namespace GUEST.Controllers
             var infos = repos.GetAllProfileBy(id);
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetConferenceWithName(string name)
+        {
+            var confer = repos.GetAllConferenceBy(name);
+            return Json(confer, JsonRequestBehavior.AllowGet);
+        }
         private class DataAddPage
         {
             public List<Country> Countries { get; set; }
