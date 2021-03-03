@@ -193,7 +193,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     countInYear++;
                     newCode = DateTime.Now.Year + "/" + countInYear;
-                    isDuplicated = db.Database.SqlQuery<int>(sql_mouCode, 
+                    isDuplicated = db.Database.SqlQuery<int>(sql_mouCode,
                         new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
                 } while (isDuplicated);
                 return newCode;
@@ -210,7 +210,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 string sql_partner = $"select * from IA_Collaboration.Partner where partner_id = @partner_id";
                 ENTITIES.Partner partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner,
-                    new SqlParameter("partner_id",partner_id)).FirstOrDefault();
+                    new SqlParameter("partner_id", partner_id)).FirstOrDefault();
                 return partner is null ? false : true;
             }
             catch (Exception ex)
@@ -292,7 +292,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     previousItem = item;
                     previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
                     previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
-                } else
+                }
+                else
                 {
                     if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
                     {
@@ -302,11 +303,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
                         {
-                            previousItem.scope_abbreviation = previousItem.scope_abbreviation + "," + item.scope_abbreviation; 
+                            previousItem.scope_abbreviation = previousItem.scope_abbreviation + "," + item.scope_abbreviation;
                         }
                         //then remove current object
                         mouList.Remove(item);
-                    } else
+                    }
+                    else
                     {
                         previousItem = item;
                     }
@@ -331,7 +333,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 DateTime next3Months = DateTime.Now.AddMonths(3);
                 //Warning 1: end_date < next3Months && notiCount = 0
                 //warning 2: end_date < nextMonths && notiCount = 1
-                string sql_inactive_number 
+                string sql_inactive_number
                     = @"select count(*) from IA_Collaboration.MOU tb1 left join 
                         (
                         select max([datetime]) as 'maxdate',mou_status_id, mou_id
@@ -339,7 +341,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         group by mou_status_id, mou_id) tb2 
                         on tb1.mou_id = tb2.mou_id
                         where tb1.is_deleted = 0";
-                string sql_expired 
+                string sql_expired
                     = @"select * from IA_Collaboration.MOU
                         where (mou_end_date < @next3Months and noti_count = 0) or 
                         (mou_end_date < @nextMonth and noti_count = 1)";
@@ -347,7 +349,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired).ToList();
                 updateNotiCount(noti);
                 return noti;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -402,17 +405,18 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                     }
                     transaction.Commit();
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
 
                 }
             }
         }
 
-        public class ListMOU 
+        public class ListMOU
         {
             public ListMOU() { }
-            public string mou_code  { get; set; }
+            public string mou_code { get; set; }
             public int mou_partner_id { get; set; }
             public string partner_name { get; set; }
             public string website { get; set; }
@@ -432,7 +436,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string mou_status_name { get; set; }
         }
 
-        public class MOUAdd 
+        public class MOUAdd
         {
             public MOUAdd() { }
             public MOU MOU { get; set; }
