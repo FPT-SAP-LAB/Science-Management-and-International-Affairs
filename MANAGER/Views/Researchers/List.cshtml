@@ -25,11 +25,12 @@
                         <div class="d-flex align-items-center">
                             <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
                             <select class="form-control"
-                                    id="kt_datatable_search_status">
+                                    id="search_nganh">
+                                <option label="Label"></option>
                                 <option value="">Khoa học máy tính</option>
                                 <option value="1">Toán học</option>
                                 <option value="2">Kinh tế</option>
-                    
+
                             </select>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                         <div class="d-flex align-items-center">
                             <label class="mr-3 mb-0 d-none d-md-block">CS:</label>
                             <select class="form-control"
-                                    id="kt_datatable_search_status">
+                                    id="search_nam">
+                                <option label="Label"></option>
                                 <option value="">FPTU HN</option>
                                 <option value="1">FPTU Cần Thơ</option>
                             </select>
@@ -242,7 +244,12 @@
                     order: [[1, 'desc']],
 
                     columnDefs: [
-
+                        {
+                            "targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<a href='#'>" + data + "</a>"
+                            }
+                        }
                     ],
                 });
 
@@ -328,5 +335,18 @@
         jQuery(document).ready(function () {
             KTDatatablesBasicBasic.init();
         });
+        //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
+        list_select = {
+            "search_nam": "Chọn năm",
+            "search_nganh":"Chọn ngành"
+        }
+        for (let i in list_select) {
+            $('#' + i).select2({
+                placeholder: list_select[i],
+                allowClear: true
+            });
+        }
+        //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+        
     </script>
 }
