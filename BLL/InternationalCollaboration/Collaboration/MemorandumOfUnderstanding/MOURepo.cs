@@ -12,7 +12,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
     public class MOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-
         public List<ListMOU> listAllMOU()
         {
             try
@@ -27,7 +26,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public List<ListMOU> listAllMOUDeleted()
         {
             try
@@ -118,7 +116,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 string sql_partner = $"";
-                List<Partner> partner = db.Database.SqlQuery<Partner>(sql_partner).ToList();
+                List<ENTITIES.Partner> partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner).ToList();
                 return true;
             }
             catch (Exception ex)
@@ -141,12 +139,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public List<Partner> GetPartners()
+        public List<ENTITIES.Partner> GetPartners()
         {
             try
             {
                 string sql_partnerList = $"";
-                List<Partner> partnerList = db.Database.SqlQuery<Partner>(sql_partnerList).ToList();
+                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList).ToList();
                 return partnerList;
             }
             catch (Exception ex)
