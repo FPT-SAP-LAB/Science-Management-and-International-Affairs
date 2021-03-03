@@ -21,7 +21,7 @@ namespace ENTITIES
         public int article_id { get; set; }
         public int language_id { get; set; }
     
-        public virtual Language Language { get; set; }
         public virtual News News { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

@@ -1,0 +1,118 @@
+﻿
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+}
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="">
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RequestInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("MSNV")</label>
+                            <input class="form-control form-control-lg" type="text" value="1234"  />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("AuthorName")</label>
+                            <input class="form-control form-control-lg custom-pickdate" type="text" value="Đoàn Văn Thắng"  />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("WorkUnit")</label>
+                            <input class="form-control form-control-lg" type="text" value="FU-HL"  />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("Area")</label>
+                            <input class="form-control form-control-lg" type="text" value="Hà Nội"  />
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <table class="table table-bordered trichdan">
+                                <thead>
+                                    <tr>
+                                        <th>@rm.GetString("Source")</th>
+                                        <th>@rm.GetString("CitationCount")</th>
+                                        <th>@rm.GetString("Link")</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trichdan_body">
+                                    <tr>
+                                        <td><input class="form-control" type="text" value="Google scholar"  /></td>
+                                        <td><input class="form-control" type="number" value="10"  /></td>
+                                        <td><input class="form-control" type="text" value="https://scholar.google.com/citations?view_op=list_works&hl=en&user=qbbO_4UAAAAJ"  /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control" type="text" /></td>
+                                        <td><input class="form-control" type="number" min="0" /></td>
+                                        <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-xl-12" style="text-align: end">
+                                <button class="btn btn-light-danger px-6 font-weight-bold deleterow">@rm.GetString("DelRow")</button>
+                                <button class="btn btn-light-primary px-6 font-weight-bold addrow">@rm.GetString("AddRow")</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input class="form-control" type="text" value="" id="example-text-input" />
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="submit" class="btn btn-block btn-success">@rm.GetString("SendM")</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <table class="col-12 table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" width="15%">@rm.GetString("Time")</th>
+                                        <th scope="col" width="15%">@rm.GetString("Sender")</th>
+                                        <th scope="col">@rm.GetString("Content")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01/01/21-10:00AM</td>
+                                        <td>Ngô Tùng Sơn</td>
+                                        <td>Sao lâu có phản hồi thế em</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(".addrow").click(function () {
+            $("#trichdan_body tr:last").after("<tr>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><input type='number' class='form-control' min='0' /></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "</tr>");
+        });
+
+        $(".deleterow").click(function () {
+            var rowCount = $('#trichdan_body tr').length;
+            if (rowCount > 1) $("#trichdan_body tr:last").remove();
+            else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
+        });
+    </script>
+}
+

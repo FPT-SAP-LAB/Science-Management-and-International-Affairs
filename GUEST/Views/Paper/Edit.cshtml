@@ -1,0 +1,307 @@
+﻿
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+}
+
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="">
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("PaperInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("PaperName")</label>
+                            <input class="form-control form-control-lg" type="text" value="An Efficient Algorithm for the k-Dominating Set Problem on Very Large-Scale Networks" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("PublishDate")</label>
+                            <input class="form-control form-control-lg custom-pickdate" type="text" value="11/2019" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("LinkFull")</label>
+                            <input class="form-control form-control-lg" type="text" value="https://doi.org/10.1007/978-3-030-34980-6_9" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>Link scholar</label>
+                            <input class="form-control form-control-lg" type="text" value="https://scholar.google.com.vn/scholar?cluster=783580201061751&hl=en&as_sdt=0,5" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>Loại ấn phẩm</label>
+                            <select class="form-control form-control-lg">
+                                <option selected value="1">@rm.GetString("JournalPaper")</option>
+                                <option value="2">@rm.GetString("ConferencePaper")</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("Specialized")</label>
+                            <select class="form-control form-control-lg">
+                                <option selected value="1">Công nghệ thông tin</option>
+                                <option value="2">Kinh tế</option>
+                                <option value="3">Truyền thông</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("PublishInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("JournalName")</label>
+                            <input class="form-control form-control-lg" type="text" value=" Lecture Notes in Computer Science: International Conference on Computational Data and Social Networks" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("Vol")</label>
+                            <input class="form-control form-control-lg" type="text" value="11917" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("Page")</label>
+                            <input class="form-control form-control-lg" type="text" value="74 - 76" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("PublishName")</label>
+                            <input class="form-control form-control-lg" type="text" value="" />
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <div class="row" id="thuong">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("CriteriaType")</label>
+                            <select id="loaithuong" class="form-control form-control-lg">
+                                <option selected value="1">@rm.GetString("International")</option>
+                                <option value="2">@rm.GetString("Domestic")</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-6 form-group thuongqt">
+                            <label>@rm.GetString("Criteria")</label>
+                            <select id="tieuchi" class="form-control form-control-lg">
+                                <option value="0" selected disabled>@rm.GetString("Criteria")</option>
+                                <option class="optiontieuchi" value="Q1">Q1</option>
+                                <option class="optiontieuchi" disabled value="Q2">Q2</option>
+                                <option class="optiontieuchi" value="Q3">Q3</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                            <label style="color:#fff">abc</label>
+                            <button class="btn btn-primary form-control form-control-lg">@rm.GetString("ListMaga")</button>
+                        </div>
+                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                            <label>@rm.GetString("JournalIndex")</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                            <label>@rm.GetString("Note")</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("TotalReward")</label>
+                            <input class="form-control form-control-lg" readonly type="text" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("RewardType")</label>
+                            <select class="form-control form-control-lg">
+                                <option selected value="1">@rm.GetString("According")</option>
+                                <option value="2">@rm.GetString("Repre")</option>
+                            </select>
+                        </div>
+                        <div class='col-xl-12 d-flex justify-content-center onetieuchi'>
+                            <span class='col-xl-2'><input readonly value="Q2" class='form-control form-control-lg' name='tieuchiname' type='text' /></span>
+                            <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg' type='text' /></span>
+                            <span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <table class="table table-bordered table-checkable tacgia">
+                                <thead>
+                                    <tr>
+                                        <th>@rm.GetString("WorkUnit")</th>
+                                        <th>@rm.GetString("MSNV")</th>
+                                        <th>@rm.GetString("Name")</th>
+                                        <th>@rm.GetString("Title")</th>
+                                        <th>@rm.GetString("ContractType")</th>
+                                        <th>@rm.GetString("Tax")</th>
+                                        <th>@rm.GetString("CMND")</th>
+                                        <th>@rm.GetString("CMND")</th>
+                                        <th>@rm.GetString("Bank")</th>
+                                        <th>@rm.GetString("AccNo")</th>
+                                        <th>@rm.GetString("Reward")</th>
+                                        <th>@rm.GetString("Note")</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tacgia_body">
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox">
+                                                <input type="checkbox" checked /><span></span>Trong FE
+                                            </label>
+                                        </td>
+                                        <td><input list="ncv_list" type="text" class="form-control" value="123" /></td>
+                                        <td><input type="text" class="form-control" value="abc" /></td>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="1">Nghiên cứu viên</option>
+                                                <option value="2">Giảng viên</option>
+                                                <option value="3" selected>Sinh viên</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="1" selected>Full time</option>
+                                                <option value="2">Part time</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" value="000" /></td>
+                                        <td><input type="text" class="form-control" value="123456789" /></td>
+                                        <td><button class="btn btn-light-info font-weight-bold">View</button></td>
+                                        <td><input type="text" class="form-control" value="TPBank" /></td>
+                                        <td><input type="text" class="form-control" value="888" /></td>
+                                        <td><input type="number" class="form-control onereward" /></td>
+                                        <td><input type="text" class="form-control" value="" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox">
+                                                <input type="checkbox" /><span></span>@rm.GetString("In") FE
+                                            </label>
+                                        </td>
+                                        <td><input list="ncv_list" type="text" class="form-control" /></td>
+                                        <td><input type="text" class="form-control" /></td>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="1">Nghiên cứu viên</option>
+                                                <option value="2">Giảng viên</option>
+                                                <option value="3">Sinh viên</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="1">Full time</option>
+                                                <option value="2">Part time</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" /></td>
+                                        <td><input type="text" class="form-control" /></td>
+                                        <td><button class="btn btn-light-primary px-6 font-weight-bold btn-sm">Upload</button></td>
+                                        <td><input type="text" class="form-control" /></td>
+                                        <td><input type="text" class="form-control" /></td>
+                                        <td><input readonly type="number" class="form-control" /></td>
+                                        <td><input type="text" class="form-control" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xl-12" style="text-align: end">
+                            <button class="btn btn-light-danger px-6 font-weight-bold deletetacgia">@rm.GetString("DelAu")</button>
+                            <button class="btn btn-light-primary px-6 font-weight-bold addtacgia">@rm.GetString("AddAu")</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input class="form-control" type="text" value="" id="example-text-input" />
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="submit" class="btn btn-block btn-success">@rm.GetString("SendM")</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <table class="col-12 table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" width="15%">@rm.GetString("Time")</th>
+                                        <th scope="col" width="15%">@rm.GetString("Sender")</th>
+                                        <th scope="col">@rm.GetString("Content")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01/01/21-10:00AM</td>
+                                        <td>Ngô Tùng Sơn</td>
+                                        <td>Sao lâu có phản hồi thế em</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<datalist id="ncv_list">
+    <option>1234</option>
+    <option>abcd</option>
+    <option>12bư</option>
+    <option>323q</option>
+</datalist>
+@section scripts{
+    <script src="~/Scripts/ListAllPaper.js"></script>
+    <script>
+        $("#loaithuong").change(function () {
+            var temp = $(this).val();
+            console.log(temp);
+            if (temp == 1) {
+                $(".thuongqt").show();
+                $(".thuongtn").hide();
+            } else {
+                $(".thuongqt").hide();
+                $(".thuongtn").show();
+                $(".deletetieuchi").each(function () {
+                    $(this).click();
+                });
+            }
+        });
+
+        $("#tieuchi").change(function () {
+            var temp = $("#tieuchi").val();
+            $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi'>" +
+                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg' type='text' /></span>" +
+                "<span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
+                "</div>");
+            var option = $("#tieuchi option[value='" + temp + "']");
+            option.prop('disabled', true);
+        });
+
+        $("#thuong").on("click", ".deletetieuchi", function () {
+            var text = $(this).closest(".onetieuchi").find("input[name='tieuchiname']").val();
+            var option = $("#tieuchi option[value='" + text + "']");
+            option.prop('disabled', false);
+            $(this).closest(".onetieuchi").remove();
+        });
+
+        $(".addtacgia").click(function () {
+            $("#tacgia_body tr:last").after("<tr>" +
+                "<td><label class='checkbox'><input type='checkbox' /><span></span>@rm.GetString("In") FE</label></td>" +
+                "<td><input list='ncv_list' type='text' class='form-control' /></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><select class='form-control'><option value='1'>Nghiên cứu viên</option><option value='2'>Giảng viên</option><option value='3'>Sinh viên</option></select></td>" +
+                "<td><select class='form-control'><option value='1'>Full time</option><option value='2'>Part time</option></select></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><button class='btn btn-primary'>Upload</button></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "<td><input readonly type='number' class='form-control' /></td>" +
+                "<td><input type='text' class='form-control' /></td>" +
+                "</tr>");
+        });
+
+        $(".deletetacgia").click(function () {
+            var rowCount = $('#tacgia_body tr').length;
+            if (rowCount > 1) $("#tacgia_body tr:last").remove();
+            else toastr.error("@rm.GetString("ErrorAuthorDel")", "@rm.GetString("Error")");
+        });
+    </script>
+}

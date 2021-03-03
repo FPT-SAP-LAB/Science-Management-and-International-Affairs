@@ -17,10 +17,11 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Language()
         {
+            this.NewsVersions = new HashSet<NewsVersion>();
             this.DegreeLanguages = new HashSet<DegreeLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
+            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.LevelAcademicLanguages = new HashSet<LevelAcademicLanguage>();
-            this.NewsVersions = new HashSet<NewsVersion>();
             this.NotificationLanguages = new HashSet<NotificationLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
             this.PositionLanguages = new HashSet<PositionLanguage>();
@@ -33,13 +34,15 @@ namespace ENTITIES
         public string language_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NewsVersion> NewsVersions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DegreeLanguage> DegreeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormalityLanguage> FormalityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LevelAcademicLanguage> LevelAcademicLanguages { get; set; }
+        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NewsVersion> NewsVersions { get; set; }
+        public virtual ICollection<LevelAcademicLanguage> LevelAcademicLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationLanguage> NotificationLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

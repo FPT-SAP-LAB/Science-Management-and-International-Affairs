@@ -20,5 +20,16 @@ namespace GUEST.Controllers.ScientificProducts
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult Pending()
+        {
+            ViewBag.title = "Sản phẩm khoa học đang chờ phê duyệt";
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Sản phẩm khoa học đang chờ phê duyệt","/ScientificProducts/Pending"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
     }
 }

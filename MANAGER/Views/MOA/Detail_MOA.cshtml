@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Detail_MOA";
+    ViewBag.Title = "Chi tiết biên bản thỏa thuận";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 
@@ -12,6 +12,14 @@
 
     .modal {
         overflow-y: auto;
+    }
+
+    .uppy-list-item {
+        margin: 0 !important;
+    }
+
+    .select2-dropdown {
+        z-index: 8888;
     }
 </style>
 
@@ -42,22 +50,40 @@
                                     <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="moa_id" />
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Đơn vị cơ sở kí kết</label>&nbsp;
-                                    <select class="form-control" required id="moa_facility">
-                                        <option value="1">FPTU-HN</option>
-                                        <option value="2">FPTGW</option>
-                                    </select>
+                                    <label style="color:red">*</label><label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
+                                    <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                        <select class="form-control select-search" id="facility_detail_mou" name="param" style="width:100% !important">
+                                            <option label="Label"></option>
+                                            <option value="1">FPTU-HN</option>
+                                            <option value="2">FPTGW</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                    <label style="color:red">*</label>
                                     <label class="font-weight-bolder">Thời gian kí kết</label>&nbsp;
                                     <label style="font-style: italic;"></label>
-                                    <input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết" autocomplete="off" required readonly id="moa_sign_time" />
+                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_moa" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_moa" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date_moa" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_moa" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Số hiệu</label>&nbsp;
-                                    <input class="form-control custom-pickdate" type="text" placeholder="Thời gian hết hạn" autocomplete="off" required readonly id="moa_end_time" />
+                                    <label style="color:red">*</label><label class="font-weight-bolder">Thời gian hết hạn</label>&nbsp;
+                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_end_date_moa" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_moa" readonly autocomplete="off" data-target="#kt_datetimepicker_end_date_moa" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_end_date_moa" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -84,9 +110,13 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <div class="col-xl-10 col-lg-1 col-md-12 col-sm-12">
-                                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
-                                        <input class="form-control" type="file" id="moa_expenseFile" aria-describedby="expenseFileHelp">
+                                    <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                                    <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                                    <div class="uppy row" id="moa_detail_upload">
+                                        <div class="uppy-wrapper col-3"></div>
+                                        <div class="uppy-list col-7"></div>
+                                        <div class="uppy-status"></div>
+                                        <div class="uppy-informer uppy-informer-min"></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +128,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="#" class="btn btn-sm btn-light-success px-6 font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -108,7 +138,7 @@
                             </div>
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
                                 <div class="row align-items-center">
-                                    <a href="#add_additional_moa" data-toggle="modal" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                                    <a href="#add_additional_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                                 </div>
                             </div>
                             <table class="table table-bordered table-hover table-checkable "
@@ -136,7 +166,7 @@
                                         </td>
                                         <td class="text-center">JC</td>
                                         <td class="text-center"></td>
-                                        <td class="text-center"></td>
+                                        <td class="text-center" nowrap="nowrap"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -150,7 +180,7 @@
                             <div class="row mb-5">
                                 <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                     <div class="row align-items-center">
-                                        <a id="add_partner_mou_btn" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
+                                        <a id="add_partner_mou_btn" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                                     </div>
                                 </div>
                             </div>
@@ -213,19 +243,39 @@
                         <input class="form-control" type="text" placeholder="Mã hiệu MOU_BS/số thứ tự" autocomplete="off" required id="moa_id_addition" />
                     </div>
                     <div class="col-md-6">
-                        <label style="color:red">*</label><label class="font-weight-bolder">Bản mềm</label>&nbsp;
-                        <label style="font-style: italic;"></label>
-                        <input class="form-control" type="file" id="expenseFile" aria-describedby="expenseFileHelp">
+                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="moa_addition_upload">
+                            <div class="uppy-wrapper col-4"></div>
+                            <div class="uppy-list col-7"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <label style="color:red">*</label><label class="font-weight-bolder">Ngày kí kết</label>&nbsp;
-                        <input class="form-control custom-pickdate" type="text" placeholder="Ngày kí kết" autocomplete="off" required readonly id="moa_addition_sign_time" />
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_addition_sign_time" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày kí kết" id="moa_addition_sign_time" readonly autocomplete="off" data-target="#kt_datetimepicker_moa_addition_sign_time" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_addition_sign_time" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label style="color:red">*</label><label class="font-weight-bolder">Ngày hết hạn</label>&nbsp;
-                        <input class="form-control custom-pickdate" type="text" placeholder="Ngày hết hạn" autocomplete="off" required readonly id="moa_addition_end_time" />
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_addition_end_time" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày hết hạn" id="moa_addition_end_time" readonly autocomplete="off" data-target="#kt_datetimepicker_moa_addition_end_time" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_addition_end_time" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -236,7 +286,7 @@
             <div class="modal-body">
                 <div class="row col-lg-11 mb-3 mt-3">
                     <div class="col-lg-6">
-                        <a class="btn btn-sm btn-outline-primary" data-toggle="modal" href="#add-partner-scope">Thêm</a>
+                        <a class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-toggle="modal" href="#add-partner-scope">Thêm</a>
                     </div>
                 </div>
                 <table id="" class="table table-bordered table-hover table-checkable" style="text-align: center;">
@@ -254,8 +304,8 @@
                             <td class="text-center">Bunkyou University</td>
                             <td class="text-center">JC </td>
                             <td class="text-center" nowrap="nowrap">
-                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
-                                <a href="#delete" onclick="" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                         <tr>
@@ -263,16 +313,16 @@
                             <td class="text-center">FPT Software</td>
                             <td class="text-center">ME </td>
                             <td class="text-center" nowrap="nowrap">
-                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a>
-                                <a href="#delete" onclick="" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>
+                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-sm bbtn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Bổ sung</button>
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-dismiss="modal">Bổ sung</button>
             </div>
         </div>
     </div>
@@ -304,25 +354,8 @@
                 </div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Bổ sung</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-@*modal delete*@
-<div class="modal fade in" id="delete" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header  justify-content-center">
-                <h4 class="modal-title">XÁC NHẬN XÓA</h4>
-            </div>
-            <div class="modal-body">Có muốn xóa thông tin này?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-outline-danger" id="btn_delete">Xóa</button>
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-dismiss="modal">Bổ sung</button>
             </div>
         </div>
     </div>
@@ -342,11 +375,15 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="partner_name_form">
-                            <option value="1">Bách khoa</option>
-                            <option value="2">FPTGW</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="partner_name_form" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option value="1">Bách khoa</option>
+                                <option value="2">FPTGW</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Đại diện</label>
                         <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent" />
@@ -355,10 +392,13 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="specialization">
-                            <option value="1">SE</option>
-                            <option value="2">AB</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="specialization" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option value="1">IT</option>
+                                <option value="2">BA</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -370,10 +410,18 @@
                         <label class="font-weight-bolder">Email</label>
                         <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email" />
                     </div>
+
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
-                        <input class="form-control custom-pickdate" type="text" placeholder="Ngày ký kết" autocomplete="off" id="sign_date" />
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày ký kết" id="sign_date" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -389,10 +437,13 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <select class="form-control" required id="coop_scope">
-                            <option value="1">SE</option>
-                            <option value="2">AB</option>
-                        </select>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="coop_scope" name="param" style="width:100% !important">
+                                <option label="Label"></option>
+                                <option value="1">IT</option>
+                                <option value="2">BA</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -403,8 +454,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary">Thêm</button>
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</button>
             </div>
         </div>
     </div>
@@ -441,7 +492,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
@@ -450,7 +501,83 @@
 
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+         //funtion delete
+        function confirm_delete(id) {
+        //function confirm_delete(id, action, controller) {
+            var link = '@Url.Action("action", "controller")'
+            link = link.replace("action", "Delete_MOU");
+            link = link.replace("controller", "MOU");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: link,
+                        data: { mou_id : id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
+                        },
+                    })
+                }
+            })
+        };
 
+    </script>
+    <script>
+        $('#facility_detail_mou').select2({
+            placeholder: 'Đơn vị - Cơ sở kí kết',
+            allowClear: true,
+        })
+
+        $('#partner_name_form').select2({
+            placeholder: 'Tên đối tác',
+            allowClear: true,
+        })
+
+        $('#specialization').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        })
+
+        $('#coop_scope').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+        })
+
+        //datepicker
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/yyyy'
+                });
+
+            }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+        });
+    </script>
     <script>
         $("#moa_update_table").DataTable({
             oLanguage: {
@@ -460,13 +587,9 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
             },
+            searching: false,
+            lengthChange: false,
             columnDefs: [
                 {
                     targets: 5,
@@ -482,7 +605,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a  href="#add_additional_moa"  data-toggle="modal"  class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                        return '<a  href="#add_additional_moa"  data-toggle="modal"  class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 }
             ]
@@ -497,13 +620,9 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
             },
+            searching: false,
+            lengthChange: false,
             columnDefs: [
                 {
                     targets: 4,
@@ -520,7 +639,7 @@
                     width: '125px',
                     render: function (data, type, full, meta) {
                         return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
-                            + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-outline-primary update_partner_mou" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>';
+                            + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary update_partner_mou px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>';
                     }
                 }
             ]
@@ -566,56 +685,127 @@
         };
 
 
-        // datepicker functions
-        var ConfigDatepicker = function () {
-            var arrows;
-            if (KTUtil.isRTL()) {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-right"></i>',
-                    rightArrow: '<i class="la la-angle-left"></i>'
-                }
-            } else {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-left"></i>',
-                    rightArrow: '<i class="la la-angle-right"></i>'
-                }
-            }
-            var demos = function () {
-                $('.custom-pickyear').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    startView: "years",
-                    format: "yyyy",
-                    minViewMode: "years"
-                });
-
-                $('.custom-pickdate').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    format: 'dd-mm-yyyy'
-                });
-            }
-
-            return {
-                // public functions
-                init: function () {
-                    demos();
-                }
-            };
-        }();
 
         $(document).ready(function () {
-            ConfigDatepicker.init();
             //split card
             //overflow
             $('#partner_table').parent().css('overflow-x', 'auto');
             $('#partner_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
+    </script>
+
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const ProgressBar = Uppy.ProgressBar;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
+            const Dashboard = Uppy.Dashboard;
+            const Dropbox = Uppy.Dropbox;
+            const GoogleDrive = Uppy.GoogleDrive;
+            const Instagram = Uppy.Instagram;
+            const Webcam = Uppy.Webcam;
+
+            // Private functions
+
+            var initUppy5 = function (data) {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = data;
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                var uppyMin = Uppy.Core({
+                    debug: true,
+                    autoProceed: true,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 1000000, // 1mb
+                        maxNumberOfFiles: 5,
+                        minNumberOfFiles: 1
+                    }
+                });
+
+                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMin.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                uppyMin.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                uppyMin.on('complete', function (file) {
+                    $.each(file.successful, function (index, value) {
+                        var sizeLabel = "bytes";
+                        var filesize = value.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+                    });
+
+                    $fileLabel.text("Add more files");
+
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyMin.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+
+
+            return {
+                // public functions
+                init: function (data) {
+                    initUppy5(data);
+                    setTimeout(function () {
+
+                    }, 2000);
+                }
+            };
+        }();
+
+        KTUtil.ready(function () {
+            KTUppy.init('moa_detail_upload');
+            KTUppy.init('moa_addition_upload');
+        });
+
     </script>
 }
 
