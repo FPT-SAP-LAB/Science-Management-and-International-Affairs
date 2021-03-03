@@ -378,7 +378,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-
         public void UpdateStatusMOU()
         {
             //get current date
@@ -408,11 +407,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 catch (Exception ex)
                 {
-
+                    transaction.Rollback();
+                    throw ex;
                 }
             }
         }
-
         public class ListMOU
         {
             public ListMOU() { }
