@@ -57,12 +57,11 @@
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorRepo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="InternationalCollaboration\Collaboration\Partner\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ENTITIES\ENTITIES.csproj">
       <Project>{541d580a-53fd-4df7-93d4-ba5a675172d7}</Project>
