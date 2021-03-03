@@ -109,13 +109,6 @@
         margin: 0 !important;
     }
 
-    .tagify__input {
-        z-index: 9999;
-    }
-
-    .tagify__dropdown__item {
-        z-index: 9999;
-    }
 </style>
 <div class="card card-custom ">
     <div class="card-body p-0">
@@ -449,7 +442,7 @@
                             <td class="text-center">JC </td>
                             <td class="text-center" nowrap="nowrap">
                                 <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a>
-                                <a href="#delete" onclick="" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                         <tr>
@@ -458,7 +451,7 @@
                             <td class="text-center">ME </td>
                             <td class="text-center" nowrap="nowrap">
                                 <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a>
-                                <a href="#delete" onclick="" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
+                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -549,7 +542,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center row">
-                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN THỎA THUẬN</h4>
+                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -776,7 +769,7 @@
                         <td>kiec@stf.bunkyou.ac.jp</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a  onclick="confirm_delete(12)"  class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                     <tr>
@@ -787,7 +780,7 @@
                         <td>cuong@fptgr.edu.vn</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a  onclick="confirm_delete(12)"  class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                 </table>
@@ -808,50 +801,45 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
+         //funtion delete
+        function confirm_delete(id) {
+        //function confirm_delete(id, action, controller) {
+            var link = '@Url.Action("action", "controller")'
+            link = link.replace("action", "Delete_MOU");
+            link = link.replace("controller", "MOU");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: link,
+                        data: { mou_id : id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
+                        },
+                    })
+                }
+            })
+        };
+
+    </script>
+    <script>
             // datepicker functions
-        var ConfigDatepicker = function () {
-            var arrows;
-            if (KTUtil.isRTL()) {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-right"></i>',
-                    rightArrow: '<i class="la la-angle-left"></i>'
-                }
-            } else {
-                arrows = {
-                    leftArrow: '<i class="la la-angle-left"></i>',
-                    rightArrow: '<i class="la la-angle-right"></i>'
-                }
-            }
-            var demos = function () {
-                $('.custom-pickyear').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    startView: "years",
-                    format: "yyyy",
-                    minViewMode: "years"
-                });
-
-                $('.custom-pickdate').datepicker({
-                    rtl: KTUtil.isRTL(),
-                    orientation: "bottom right",
-                    todayHighlight: true,
-                    templates: arrows,
-                    format: 'dd-mm-yyyy'
-                });
-            }
-
-            return {
-                // public functions
-                init: function () {
-                    demos();
-                }
-            };
-        }();
 
         $(document).ready(function () {
-            ConfigDatepicker.init();
             //split card
             //overflow
             $('#partner_table').parent().css('overflow-x', 'auto');
@@ -887,7 +875,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
                     }
                 }
             ]
@@ -922,7 +910,7 @@
                     width: '125px',
                     render: function (data, type, full, meta) {
                         return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
-                            + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary update_partner_mou px-6" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
+                            + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary update_partner_mou px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
                     }
                 }
             ]
@@ -975,7 +963,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick="" href="#" data-toggle="modal" class="btn btn-sm btn-light-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
+                        return '<a onclick="" href="#" data-toggle="modal" class="btn btn-sm btn-light-primary" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
                     }
                 }
             ]
@@ -1072,7 +1060,7 @@
             placeholder: 'Đơn vị - Cơ sở kí kết',
             allowClear: true,
         })
-        
+
         //datepicker
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
