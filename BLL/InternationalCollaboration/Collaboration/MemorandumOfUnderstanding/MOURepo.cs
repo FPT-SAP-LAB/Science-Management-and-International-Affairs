@@ -218,7 +218,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     previousItem = item;
                     previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
                     previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
-                } else
+                }
+                else
                 {
                     if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
                     {
@@ -228,11 +229,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         if (!previousItem.scope_name.Contains(item.scope_name))
                         {
-                            previousItem.scope_name = previousItem.scope_name + "," + item.scope_name; 
+                            previousItem.scope_name = previousItem.scope_name + "," + item.scope_name;
                         }
                         //then remove current object
                         mouList.Remove(item);
-                    } else
+                    }
+                    else
                     {
                         previousItem = item;
                     }
@@ -272,10 +274,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //if number > 0: update status for MOU: Active => Inactive.
         }
 
-        public class ListMOU 
+        public class ListMOU
         {
             public ListMOU() { }
-            public string mou_code  { get; set; }
+            public string mou_code { get; set; }
             public int mou_partner_id { get; set; }
             public string partner_name { get; set; }
             public string website { get; set; }
