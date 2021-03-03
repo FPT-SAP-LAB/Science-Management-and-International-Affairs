@@ -165,23 +165,6 @@
                                                 class="btn btn-sm btn-light-primary font-weight-bolder dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
-                                            <!--<span class="svg-icon svg-icon-md">-->
-                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
-                                            <!--<svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                                             width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                                             version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none"
-                                                   fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24" />
-                                                    <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z"
-                                                          fill="#000000" opacity="0.3" />
-                                                    <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z"
-                                                          fill="#000000" />
-                                                </g>
-                                            </svg>-->
-                                            <!--end::Svg Icon-->
-                                            <!--</span>-->
                                             Export
                                         </button>
                                         <!--begin::Dropdown Menu-->
@@ -606,7 +589,7 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     @*@model int*@
-    <script>
+<script>
         $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
         })
@@ -620,21 +603,22 @@
             if (duration < 30) {
                 $('.toast-30').fadeIn('slow');
             }
-    });
+        });
+
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({
                     format: 'DD/MM/yyyy'
-        });
+                });
 
-	}
-        return {
-            // Public functions
-            init: function () {
-                baseDemos();
-            }
-        };
-	}();
+	        }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+	    }();
 
         jQuery(document).ready(function () {
             KTBootstrapDatetimepicker.init();
@@ -642,11 +626,11 @@
 
         //datatable
         $(".mou_table").DataTable({
-                    oLanguage: {
-                        oPaginate: {
-                            sPrevious: "Trang trước",
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
                     sNext: "Trang sau"
-                        },
+                },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
@@ -654,37 +638,37 @@
             lengthChange: false,
             columnDefs: [
                 {
-                        targets: 4,
+                    targets: 4,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
-                            }
+                    }
                 },
                 {
-                        targets: 9,
+                    targets: 9,
                     orderable: false,
                     render: function (data, type, full, meta) {
-                                return '<a href="#" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
-                            }
-                        },
+                        return '<a href="#" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
+                    }
+                },
                 {
-                        targets: 14,
+                    targets: 14,
                     width: '75px',
                     render: function (data, type, full, meta) {
-                                var status = {
+                        var status = {
                             1: {
-                                    'title': 'Hết hạn',
+                                'title': 'Hết hạn',
                                 'class': 'label-light-danger'
                             },
                             2: {
-                                    'title': 'Còn hạn',
+                                'title': 'Còn hạn',
                                 'class': 'label-light-success'
                             }
-                            };
-                            if (typeof status[data] === 'undefined') {
-                                return data;
-                            }
-                            return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
+                        };
+                        if (typeof status[data] === 'undefined') {
+                            return data;
+                        }
+                        return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                 },
                 {
@@ -698,7 +682,7 @@
                         var id_to_catch_in_controller = 'mou_id';
                         return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
-        }
+                }
             ]
         });
 
@@ -710,9 +694,6 @@
             $('.header-modify').css('padding', '13px');
 
         });
-
-
-
         $(document).ready(function () {
             //split card
             //overflow
@@ -721,7 +702,7 @@
             $('.header-modify').css('padding', '13px');
         });
 
-    </script>
+</script>
     <script>
         var list = document.getElementsByClassName("progressbar")[0];
         itemList = list.getElementsByTagName("li");
