@@ -26,7 +26,7 @@ namespace ENTITIES
         public int conference_support_id { get; set; }
         public int conference_id { get; set; }
         public string reimbursement { get; set; }
-        public Nullable<int> status_id { get; set; }
+        public int status_id { get; set; }
         public Nullable<int> decision_id { get; set; }
         public Nullable<int> reward_policy_id { get; set; }
         public Nullable<int> paper_file_id { get; set; }
@@ -35,9 +35,9 @@ namespace ENTITIES
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
+        public virtual ConferenceStatu ConferenceStatu { get; set; }
         public virtual Decision Decision { get; set; }
         public virtual RewardPolicy RewardPolicy { get; set; }
-        public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cost> Costs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
