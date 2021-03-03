@@ -13,7 +13,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             return View();
         }
-
-
     }
 }
