@@ -52,7 +52,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     previousItem = item;
                     previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
-
                 }
                 else
                 {
@@ -332,7 +331,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public int partner_id { get; set; }
             public List<int> list_spe { get; set; }
             public List<int> list_scope { get; set; }
-
         }
         public class PartnerHistory
         {
