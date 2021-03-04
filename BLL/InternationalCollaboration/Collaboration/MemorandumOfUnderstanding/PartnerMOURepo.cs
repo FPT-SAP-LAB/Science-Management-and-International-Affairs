@@ -52,8 +52,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     previousItem = item;
                     previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
-                    
-                } 
+
+                }
                 else
                 {
                     if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
@@ -68,7 +68,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         //then remove current object
                         mouList.Remove(item);
-                    } 
+                    }
                     else
                     {
                         previousItem = item;
@@ -145,8 +145,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //spe
                     foreach (int spe_id in input.list_spe)
                     {
-                        db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization 
-                        { 
+                        db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
+                        {
                             mou_partner_id = input.mou_partner_id,
                             specialization_id = spe_id
                         });
@@ -179,7 +179,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void deleteMOUPartner(int mou_id,int partner_id, int mou_partner_id)
+        public void deleteMOUPartner(int mou_id, int partner_id, int mou_partner_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -249,7 +249,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 ENTITIES.Partner p = db.Partners.Find(partner_id);
                 return p;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
