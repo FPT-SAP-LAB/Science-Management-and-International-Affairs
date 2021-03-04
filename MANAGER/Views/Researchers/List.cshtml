@@ -30,7 +30,6 @@
                                 <option value="">Khoa học máy tính</option>
                                 <option value="1">Toán học</option>
                                 <option value="2">Kinh tế</option>
-
                             </select>
                         </div>
                     </div>
@@ -247,7 +246,9 @@
                         {
                             "targets": 1,
                             "render": function (data, type, row, meta) {
+                                return "<a href='Researchers/ViewInfo'>" + data + "</a>"
                                 return "<a href='#'>" + data + "</a>"
+
                             }
                         }
                     ],
