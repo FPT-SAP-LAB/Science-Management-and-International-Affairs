@@ -232,6 +232,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Criteria.
         /// </summary>
         public static string Criteria {
@@ -354,6 +363,15 @@ namespace GUEST.Resources {
         public static string Feb {
             get {
                 return ResourceManager.GetString("Feb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string FileCM {
+            get {
+                return ResourceManager.GetString("FileCM", resourceCulture);
             }
         }
         
