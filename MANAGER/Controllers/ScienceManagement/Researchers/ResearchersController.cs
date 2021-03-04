@@ -15,19 +15,19 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public ActionResult ViewInfo()
         {
-            return View("~/Views/Researchers/ResearcherInfo.cshtml");
+            return View();
         }
         public ActionResult Biography()
         {
-            return View("~/Views/Researchers/ResearcherBio.cshtml");
+            return View();
         }
         public ActionResult Publications()
         {
-            return View("~/Views/Researchers/ResearcherPublications.cshtml");
+            return View();
         }
         public ActionResult Rewards()
         {
-            return View("~/Views/Researchers/ResearcherRewards.cshtml");
+            return View();
         }
     }
 }
