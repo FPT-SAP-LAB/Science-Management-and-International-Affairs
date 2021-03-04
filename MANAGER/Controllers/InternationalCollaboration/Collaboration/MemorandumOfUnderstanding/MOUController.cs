@@ -1,5 +1,4 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
             //int duration = mou.getDuration();
-            List<ListMOU> listMOU = mou.listAllMOU();
+            //List<ListMOU> listMOU = mou.listAllMOU();
             //NotificationInfo noti = mou.getNoti();
             //mou.UpdateStatusMOU();
             return View();

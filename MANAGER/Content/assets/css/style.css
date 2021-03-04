@@ -3,9 +3,6 @@
     font-family: myfont;
 }
 
-*{
+*:not(.la, .fa, .far, .fas, .fab) {
     font-family: myfont !important;
-}
-.fa, .far, .fas {
-    font-family: "Font Awesome 5 Free" !important;
 }

@@ -2181,10 +2181,12 @@
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
-    <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
+    <Content Include="Views\Researchers\ResearcherInfo.cshtml" />
+    <Content Include="Views\Researchers\ResearcherBio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\excel\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
