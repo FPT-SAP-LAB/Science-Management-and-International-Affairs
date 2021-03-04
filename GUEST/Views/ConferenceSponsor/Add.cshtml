@@ -4,12 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    span.select2 {
-        width: 220px !important;
-    }
-</style>
-
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -22,10 +16,9 @@
                             <div class="col-xl-6">
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label>Tên hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Tên hội nghị" value="">
-                                    <span class="form-text text-muted">Please enter your Postcode.</span>
-                                    <div class="fv-plugins-message-container"></div>
+                                    <label for="selectConference">Tên hội nghị <span style='color:red'>*</span>:</label>
+                                    <select class="form-control" id="selectConference">
+                                    </select>
                                 </div>
                                 <!--end::Input-->
                             </div>
@@ -33,9 +26,7 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Website hội nghị" value="">
-                                    <span class="form-text text-muted">Please enter your City.</span>
-                                    <div class="fv-plugins-message-container"></div>
+                                    <input type="text" class="form-control" id="website" placeholder="Website hội nghị" value="">
                                 </div>
                                 <!--end::Input-->
                             </div>
@@ -45,19 +36,15 @@
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Diễn giả/ Thành viên BTC " value="">
-                                    <span class="form-text text-muted">Please enter your Postcode.</span>
-                                    <div class="fv-plugins-message-container"></div>
+                                    <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC " value="">
                                 </div>
                                 <!--end::Input-->
                             </div>
                             <div class="col-xl-6">
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control form-control-lg" name="city" placeholder="Đơn vị tổ chức" value="">
-                                    <span class="form-text text-muted">Please enter your City.</span>
-                                    <div class="fv-plugins-message-container"></div>
+                                    <label>Đơn vị tổ chức (Top QS)<span style='color:red'>*</span>:</label>
+                                    <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
                                 </div>
                                 <!--end::Input-->
                             </div>
@@ -67,13 +54,12 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Quốc gia <span style='color:red'>*</span>:</label>
-                                    <select class="form-control form-control-lg" id="kt_select2_1">
+                                    <select class="form-control" id="country">
                                         @foreach (var item in ViewBag.Countries)
                                         {
                                             <option value="@item.country_id">@item.country_name</option>
                                         }
                                     </select>
-                                    <div class="fv-plugins-message-container"></div>
                                 </div>
                                 <!--end::Select-->
                             </div>
@@ -81,8 +67,7 @@
                                 <!--begin::Input-->
                                 <div class="date form-group fv-plugins-icon-container">
                                     <label>Thời gian diễn ra<span style='color:red'>*</span>:</label>
-                                    <input type="text" class="form-control form-control-lg" readonly="" id="kt_daterangepicker_1">
-
+                                    <input type="text" class="form-control" readonly="" id="kt_daterangepicker_1">
                                 </div>
                                 <!--end::Input-->
                             </div>
@@ -117,13 +102,13 @@
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Hình thức <span style='color:red'>*</span>:</label>
-                                    <select class="form-control form-control-lg">
+                                    <select id="formality" class="form-control">
                                         @foreach (var item in ViewBag.FormalityLanguages)
                                         {
                                             <option value="@item.formality_id">@item.name</option>
                                         }
                                     </select>
-                                    <div class="fv-plugins-message-container"></div>
+
                                 </div>
                                 <!--end::Select-->
                             </div>
@@ -294,11 +279,11 @@
                                 <tbody id="tableCost">
                                     <tr role="row" class="odd" id="baseCost">
                                         <td>
-                                            <input type="text" class="form-control form-control-lg" name="postcode" placeholder="Nội dung " value="">
+                                            <input type="text" class="form-control" name="postcode" placeholder="Nội dung " value="">
                                         </td>
                                         <td>FPTU</td>
                                         <td>
-                                            <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg" name="postcode" placeholder="Chi phí" value="">
+                                            <input onInput="calculateCost(this)" type="text" class="form-control" name="postcode" placeholder="Chi phí" value="">
                                         </td>
                                         <td>
                                             <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -408,14 +393,48 @@
         var tbodyParticipant = document.getElementById("tableParticipant");
         var tbodyCost = document.getElementById("tableCost");
         var rowTotalCost = tbodyCost.lastElementChild;
+        var startDate = new Date();
+        var endDate = new Date();
 
         $(document).ready(function () {
-            $(document).find(".selectOffice, .selectTitle, #kt_select2_1").select2();
+            $(document).find(".selectOffice, .selectTitle, #country").select2({
+                width: '100%',
+            });
 
-            $('#kt_daterangepicker_1').daterangepicker({
-                buttonClasses: ' btn',
-                applyClass: 'btn-primary',
-                cancelClass: 'btn-secondary'
+            inItDateRangePicker("#kt_daterangepicker_1");
+
+            $("#selectConference").select2({
+                placeholder: "Tên hội nghị",
+                allowClear: true,
+                width: '100%',
+                ajax: {
+                    url: "/ConferenceSponsor/GetConferenceWithName",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            name: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        data.map(function (obj) {
+                            obj.id = obj.conference_id;
+                            return obj;
+                        })
+
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 2,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
             });
 
             var KTUppy = function () {
@@ -630,20 +649,18 @@
             currentRow = $(this).closest("tr");
         })
 
-        function formatRepo(repo) {
+        function formatInfo(repo) {
             if (repo.loading) return repo.text;
-            var markup = "<div class='select2-result-repository clearfix'>" +
-                "<div class='select2-result-repository__meta'>" +
-                "<div class='select2-result-repository__title'>" + repo.id + "</div>" +
-                "<div class='select2-result-repository__description'>" + repo.Name + "</div>" +
-                "<div class='select2-result-repository__statistics'>" +
-                "<div class='select2-result-repository__forks'>" + repo.OfficeName + "</div>" +
-                "<div class='select2-result-repository__watchers'>" + repo.TitleString + "</div>" +
-                "</div></div></div>";
+            var markup = "<div class='clearfix'>" +
+                "<div>" + repo.id + "</div>" +
+                "<div>" + repo.Name + "</div>" +
+                "<div>" + repo.OfficeName + "</div>" +
+                "<div>" + repo.TitleString + "</div>" +
+                "</div>";
             return markup;
         }
 
-        function formatRepoSelection(repo) {
+        function formatInfoSelection(repo) {
             if (repo.id) {
                 $(currentRow).find(".inputName").val(repo.Name);
                 $(currentRow).find(".selectOffice").val(repo.OfficeID).trigger('change');;
@@ -652,10 +669,44 @@
             return repo.id || repo.text;
         }
 
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+            var markup = "<div class='clearfix'>" + repo.conference_name + "</div>";
+            return markup;
+        }
+
+        function formatRepoSelection(repo) {
+            if (repo.id) {
+                document.getElementById("website").value = repo.website;
+                document.getElementById("keynote_speaker").value = repo.keynote_speaker;
+                document.getElementById("qs_university").value = repo.qs_university;
+                $('#country').val(repo.country_id).trigger('change');
+                startDate = new Date(parseInt(repo.time_start.substr(6)));
+                endDate = new Date(parseInt(repo.time_end.substr(6)));
+                inItDateRangePicker("#kt_daterangepicker_1");
+                document.getElementById("formality").value = repo.formality_id;
+            }
+            return repo.conference_name || repo.text;
+        }
+
+        function inItDateRangePicker(ele) {
+            $(ele).daterangepicker({
+                buttonClasses: 'btn',
+                applyClass: 'btn-primary',
+                cancelClass: 'btn-secondary',
+                startDate: startDate,
+                endDate: endDate,
+                locale: {
+                    format: 'DD/MM/YYYY',
+                }
+            });
+        }
+
         function inItSelectPeople(ele) {
             $(ele).select2({
                 placeholder: "Tìm kiếm thông tin theo mã số",
                 allowClear: true,
+                width: '100%',
                 ajax: {
                     url: "/ConferenceSponsor/GetInformationPeopleWithID",
                     dataType: 'json',
@@ -682,8 +733,8 @@
                     return markup;
                 }, // let our custom formatter work
                 minimumInputLength: 2,
-                templateResult: formatRepo, // omitted for brevity, see the source of this page
-                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+                templateResult: formatInfo, // omitted for brevity, see the source of this page
+                templateSelection: formatInfoSelection // omitted for brevity, see the source of this page
             });
         }
 

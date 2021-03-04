@@ -56,6 +56,29 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 infos.Add(new Info(id, "", 1, "", 1, ""));
             return infos;
         }
+        public List<Conference> GetAllConferenceBy(string name)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var Conferences = db.Conferences.Where(x => x.conference_name.Contains(name)).ToList();
+            Conferences.DefaultIfEmpty();
+            if (Conferences.Count == 0)
+            {
+                Conference c = new Conference
+                {
+                    conference_id = 0,
+                    conference_name = name,
+                    website = "",
+                    keynote_speaker = "",
+                    qs_university = "",
+                    country_id = 1,
+                    time_start = DateTime.Today,
+                    time_end = DateTime.Today,
+                    formality_id = 1
+                };
+                Conferences.Add(c);
+            }
+            return Conferences;
+        }
         public class Info
         {
             public string PeopleID { get; set; }
