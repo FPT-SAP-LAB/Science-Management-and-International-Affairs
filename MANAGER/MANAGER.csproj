@@ -2181,8 +2181,11 @@
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
-    <Content Include="Views\Researchers\ResearcherInfo.cshtml" />
-    <Content Include="Views\Researchers\ResearcherBio.cshtml" />
+    <Content Include="Views\Researchers\ViewInfo.cshtml" />
+    <Content Include="Views\Researchers\Biography.cshtml" />
+    <Content Include="Views\Shared\_Researcher.cshtml" />
+    <Content Include="Views\Researchers\Publications.cshtml" />
+    <Content Include="Views\Researchers\Rewards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
