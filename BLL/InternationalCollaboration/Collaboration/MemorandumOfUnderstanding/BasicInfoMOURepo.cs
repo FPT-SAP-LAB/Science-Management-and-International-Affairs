@@ -199,7 +199,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     baseItem = item;
                     baseItem.mou_bonus_decision_date_string = item.mou_bonus_decision_date.ToString("dd'/'MM'/'yyyy");
                     baseItem.mou_bonus_end_date_string = item.mou_bonus_end_date.ToString("dd'/'MM'/'yyyy");
-                    baseItem.ListPartnerExMOU.Add(new CustomPartner(item.partner_id,item.partner_name));
+                    baseItem.ListPartnerExMOU.Add(new CustomPartner(item.partner_id, item.partner_name));
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     if (partnerItem.partner_id == item.partner_id)
                     {
-                        partnerItem.ListScopeExMOU.Add(new CustomScope(item.scope_id,item.scope_abbreviation));
+                        partnerItem.ListScopeExMOU.Add(new CustomScope(item.scope_id, item.scope_abbreviation));
                         break;
                     }
                 }
@@ -256,14 +256,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
                     db.SaveChanges();
                     transaction.Commit();
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     throw ex;
                 }
             }
         }
-        public void editExtraMOU(ExtraMOU input,int mou_bonus_id)
+        public void editExtraMOU(ExtraMOU input, int mou_bonus_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -434,7 +435,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         }
         public class CustomPartner
         {
-            public CustomPartner(int partner_id,string partner_name)
+            public CustomPartner(int partner_id, string partner_name)
             {
                 this.partner_id = partner_id;
                 this.partner_name = partner_name;
