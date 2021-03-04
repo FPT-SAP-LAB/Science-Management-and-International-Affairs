@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Data;
+using System.Data.Entity;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -51,7 +54,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             bool IsExist = currentID.Any(x => x.Contains(id));
             List<Info> infos = new List<Info>();
             if (IsExist)
+            {
                 infos.Add(new Info("HE130214", "Đoàn Văn Thắng", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
+                infos.Add(new Info("HE130020", "Trần Thị Thúy Nguyên", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
+            }
             else
                 infos.Add(new Info(id, "", 1, "", 1, ""));
             return infos;
@@ -78,6 +84,61 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 Conferences.Add(c);
             }
             return Conferences;
+        }
+        public string AddConference(string input)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    DataTable dt = new DataTable();
+                    //log.Debug("Creating a conference sponsor request");
+                    //int a = int.Parse("43gg34+-");
+                    JObject @object = JObject.Parse(input);
+
+                    JToken conf = @object["Conference"];
+                    int conference_id = conf["conference_id"].ToObject<int>();
+
+                    Conference conference = conf.ToObject<Conference>();
+                    Conference temp = db.Conferences.Find(conference.conference_id);
+                    if (temp != null)
+                    {
+                        conference = temp;
+                    }
+                    else
+                    {
+                        db.Conferences.Add(conference);
+                        db.SaveChanges();
+                    }
+
+                    ConferenceSupport support = new ConferenceSupport()
+                    {
+                        conference_id = conference.conference_id,
+                        reimbursement = null,
+                        status_id = 1,
+                        decision_id = null,
+                        reward_policy_id = null,
+                        paper_file_id = null,
+                        editable = false,
+                    };
+
+                    List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
+                    foreach (var item in costs)
+                    {
+                        item.editable = false;
+                        item.sponsoring_organization = "FPTU";
+                        item.total = dt.Compute(item.detail, "").ToString();
+                    }
+                    trans.Rollback();
+                    return JsonConvert.SerializeObject(new { success = false, message = "OK" });
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    //log.Error(ex);
+                    return JsonConvert.SerializeObject(new { success = false, });
+                }
+            }
         }
         public class Info
         {
