@@ -90,7 +90,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public void addMOU(MOUAdd input)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -121,7 +120,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-
         public void ExportMOUExcel()
         {
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/");
@@ -157,7 +155,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/MOU.xlsx")));
             }
         }
-
         public void deleteMOU(int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -177,7 +174,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-
         public string getSuggestedMOUCode()
         {
             try
@@ -203,7 +199,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public bool partnerIsExisted(int partner_id)
         {
             try
@@ -218,7 +213,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public List<Office> GetOffice()
         {
             try
@@ -232,7 +226,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public List<ENTITIES.Partner> GetPartners()
         {
             try
@@ -246,7 +239,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public List<Specialization> GetSpecializations()
         {
             try
@@ -260,7 +252,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public List<CollaborationScope> GetCollaborationScopes()
         {
             try
@@ -274,12 +265,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         public void checkCollabStatus()
         {
             //?
         }
-
         private void handlingMOUListData(List<ListMOU> mouList)
         {
             //handling spe and scope data.
@@ -315,7 +304,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-
         public int getDuration()
         {
             DateTime today = DateTime.Today;
@@ -323,7 +311,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             TimeSpan value = end_date.Subtract(today);
             return value.Duration().Days;
         }
-
         public NotificationInfo getNoti()
         {
             try
@@ -355,7 +342,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
         private void updateNotiCount(NotificationInfo noti)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -434,7 +420,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string specialization_name { get; set; }
             public string mou_status_name { get; set; }
         }
-
         public class MOUAdd
         {
             public MOUAdd() { }
@@ -444,7 +429,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public List<MOUPartnerSpecialization> listMOUPartnerSpe { get; set; }
             public List<MOUPartnerScope> listMOUPartnerScope { get; set; }
         }
-
         public class NotificationInfo
         {
             public NotificationInfo() { }

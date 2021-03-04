@@ -74,7 +74,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                List<ENTITIES.InternalUnit> unitList = mou.GetInternalUnit();
+                List<ENTITIES.Office> officeList = mou.GetOffice();
                 List<ENTITIES.Partner> partnerList = mou.GetPartners();
                 List<ENTITIES.Specialization> speList = mou.GetSpecializations();
                 List<ENTITIES.CollaborationScope> scopeList = mou.GetCollaborationScopes();
