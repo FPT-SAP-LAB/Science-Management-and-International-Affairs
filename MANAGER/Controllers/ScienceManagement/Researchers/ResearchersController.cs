@@ -13,5 +13,21 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             return View();
         }
+        public ActionResult ViewInfo()
+        {
+            return View();
+        }
+        public ActionResult Biography()
+        {
+            return View();
+        }
+        public ActionResult Publications()
+        {
+            return View();
+        }
+        public ActionResult Rewards()
+        {
+            return View();
+        }
     }
 }
