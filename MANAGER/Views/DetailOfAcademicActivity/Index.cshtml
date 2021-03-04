@@ -53,10 +53,10 @@
             </div>
         </div>
         <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
-            <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
+            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
         </div>
         <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
-            <a href="#" class="btn btn-light-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
+            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
         </div>
     </div>
     <div class="card-body custom-card pt-3">
@@ -125,10 +125,10 @@
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                        <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_Giaidoan">Thêm giai đoạn</a>
+                        <a href="javascripts:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_Giaidoan">Thêm giai đoạn</a>
                     </div>
                 </div>
-                <table id="my_list_1" class="table table-separate table-head-custom table-checkable">
+                <table id="my_list_1" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -168,7 +168,7 @@
                         <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_DongToChuc">Bổ sung đơn vị</a>
                     </div>
                 </div>
-                <table id="my_list_3" class="table table-separate table-head-custom table-checkable">
+                <table id="my_list_3" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -217,7 +217,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Tên đơn vị</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="add_name_donvi" style="width: 100% !important">
@@ -227,6 +227,9 @@
                                 <option value="3">Codelearn</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
+                        <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
                     </div>
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Nguồn tài trợ</label>
@@ -320,7 +323,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Tên đơn vị</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="edit_name_donvi" style="width: 100% !important">
@@ -331,9 +334,12 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
+                        <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
+                    </div>
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Nguồn tài trợ</label>
-                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_name_taitro" value="100000000"/>
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_name_taitro" value="100000000" />
                     </div>
                     <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
                         <label class="font-weight-bolder">Đơn vị tiền tệ</label>
@@ -386,7 +392,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_lienhe" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_lienhe" autocomplete="off" id="edit_to_lienhe" value="22/02/2021"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_lienhe" autocomplete="off" id="edit_to_lienhe" value="22/02/2021" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_lienhe" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -398,9 +404,9 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_daumoi" value="Hấu Nguyễn"/>
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_daumoi" value=\"default@gmail.com\"/>
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_daumoi" value="0929232929"/>
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_daumoi" value="Hấu Nguyễn" />
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_daumoi" value="default@gmail.com" />
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_daumoi" value="0929232929" />
                     </div>
                 </div>
             </div>
@@ -600,7 +606,7 @@
                         <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
-                        <table id="my_list_2" class="table table-separate table-head-custom table-checkable">
+                        <table id="my_list_2" class="table table-bordered table-checkable">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -724,7 +730,24 @@
             return
         }
         function deleteTuCach(id) {
-            return
+            id_delete_tu_cach = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa tư cách này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
         }
         function editDongToChuc(id) {
             id_edit_dong_to_chuc = id;
@@ -749,7 +772,6 @@
                     )
                 }
             });
-            return
         }
         $('#add_price_tucach').click(function () {
             if (document.getElementById('add_price_tucach').value == 'MP') {
@@ -904,6 +926,7 @@
                 {
                     targets: -1,
                     title: 'Hành động',
+                    width: '15%',
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<a href="#" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
@@ -958,7 +981,7 @@
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" onclick="getContactInfo()">' + data +'</a>'
+                        return '<a href="#" onclick="getContactInfo()">' + data + '</a>'
                     }
                 }
             ]
