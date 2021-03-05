@@ -14,6 +14,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner
             ViewBag.pageTitle = "DANH SÁCH ĐỐI TÁC";
             return View();
         }
+        public ActionResult List_Deleted()
+        {
+            ViewBag.pageTitle = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
+            return View();
+        }
 
         public ActionResult Delete(string id)
         {

@@ -61,41 +61,12 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tacgia_body">
-                                    <tr>
-                                        <td>
-                                            <label class="checkbox">
-                                                <input type="checkbox" /><span></span>@rm.GetString("In") FE
-                                            </label>
-                                        </td>
-                                        <td><input list="ncv_list" type="text" class="form-control" /></td>
-                                        <td><input type="text" class="form-control" /></td>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="1">Nghiên cứu viên</option>
-                                                <option value="2">Giảng viên</option>
-                                                <option value="3">Sinh viên</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="1">Full time</option>
-                                                <option value="2">Part time</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" class="form-control" /></td>
-                                        <td><input type="text" class="form-control" /></td>
-                                        <td><button class="btn btn-light-primary px-6 font-weight-bold btn-sm">Upload</button></td>
-                                        <td><input type="text" class="form-control" /></td>
-                                        <td><input type="text" class="form-control" /></td>
-                                        <td><input readonly type="text" class="form-control" /></td>
-                                        <td><input type="text" class="form-control" /></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-xl-12" style="text-align: end">
-                            <button class="btn btn-light-danger px-6 font-weight-bold deletetacgia">@rm.GetString("DelAu")</button>
-                            <button class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">@rm.GetString("AddAu")</button>
+                        <div class="col-xl-12" style="text-align: left">
+                            @*   <button class="btn btn-light-danger px-6 font-weight-bold deletetacgia">@rm.GetString("DelAu")</button>*@
+                            <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_btn" data-toggle="modal" data-target="#addModal">@rm.GetString("AddAu")</button>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -132,28 +103,6 @@
         });
         $('#search_nam').select2({
             allowClear: true
-        });
-        $(".addtacgia").click(function () {
-            $("#tacgia_body tr:last").after("<tr>" +
-                "<td><label class='checkbox'><input type='checkbox' /><span></span>@rm.GetString("In") FE</label></td>" +
-                "<td><input list='ncv_list' type='text' class='form-control' /></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><select class='form-control'><option value='1'>Nghiên cứu viên</option><option value='2'>Giảng viên</option><option value='3'>Sinh viên</option></select></td>" +
-                "<td><select class='form-control'><option value='1'>Full time</option><option value='2'>Part time</option></select></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><button class='btn btn-primary'>Upload</button></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><input readonly type='text' class='form-control' /></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "</tr>");
-        });
-
-        $(".deletetacgia").click(function () {
-            var rowCount = $('#tacgia_body tr').length;
-            if (rowCount > 1) $("#tacgia_body tr:last").remove();
-            else toastr.error("@rm.GetString("ErrorAuthorDel2")", "@rm.GetString("Error")");
         });
     </script>
 }

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Danh sách đối tác";
+    ViewBag.Title = "List_Deleted";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 
@@ -14,7 +14,7 @@
                         <div class="row mb-2">
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                 <div class="row align-items-center">
-                                    <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
+                                    <a href="#" class="btn btn-light-primary px-6 font-weight-bolder">Quay lại</a>
                                     <div class="dropdown dropdown-inline ml-2">
                                         <button type="button"
                                                 class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -29,22 +29,6 @@
                                                 <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
                                                     Choose an option:
                                                 </li>
-                                                @*<li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-print"></i>
-                                                        </span>
-                                                        <span class="navi-text">Print</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-copy"></i>
-                                                        </span>
-                                                        <span class="navi-text">Copy</span>
-                                                    </a>
-                                                </li>*@
                                                 <li class="navi-item">
                                                     <a href="#" class="navi-link">
                                                         <span class="navi-icon">
@@ -53,22 +37,6 @@
                                                         <span class="navi-text">Excel</span>
                                                     </a>
                                                 </li>
-                                                @*<li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-text-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">CSV</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-pdf-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">PDF</span>
-                                                    </a>
-                                                </li>*@
                                             </ul>
                                             <!--end::Navigation-->
                                         </div>
@@ -93,24 +61,9 @@
                                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
-                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
-                                                <option label="Label"></option>
-                                                <option value="1">Chưa có</option>
-                                                <option value="2">Đã có</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                                         <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
                                     </div>
-                                </div>
-
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
-                                <div class="row align-items-center justify-content-end">
-                                    <a href="#" class="px-7">Đối tác đã xóa</a>
                                 </div>
                             </div>
                         </div>
@@ -157,46 +110,24 @@
         </div>
     </div>
 </div>
-
-@*modal delete*@
-<div class="modal fade in" id="delete" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title font-weight-bolder">XÁC NHẬN XÓA</h4>
-            </div>
-            <div class="modal-body">Có muốn xóa thông tin này?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-light-danger px-6 font-weight-bold" id="btn_delete">Xóa</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 @section scripts{
+
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
+
         $('#search_nation').select2({
             placeholder: 'Quốc gia',
             allowClear: true,
         })
-        $('#search_coop_agreement').select2({
-            placeholder: 'Thỏa thuận hợp tác',
-            allowClear: true,
-        })
-    </script>
-    <script>
 
         //datatable
         $("#partner-table").DataTable({
-                    oLanguage: {
-                        oPaginate: {
-                            sPrevious: "Trang trước",
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
                     sNext: "Trang sau"
-                        },
+                },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
 
@@ -205,11 +136,11 @@
             lengthChange: false,
             columnDefs: [
                 {
-                        targets: 3,
+                    targets: 3,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
-                            }
+                    }
                 },
                 {
                     targets: 5,
@@ -232,62 +163,15 @@
                     },
                 },
                 {
-                     targets: -1,
-                    title: '',
+                    targets: -1,
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> ' +
-                        '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="/Partner/Detail" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
                     }
-        }
+                }
             ]
         });
-
-
-        //overflow
-        $(document).ready(function () {
-            $('#partner-table').parent().css('overflow-x', 'auto');
-            $('#partner-table thead tr th').css('font-weight', 'bold');
-            $('.header-modify').css('padding', '13px');
-
-        });
-
-        function confirm_delete(id) {
-        //function confirm_delete(id, action, controller) {
-            var link = '@Url.Action("action", "controller")'
-            link = link.replace("action", "Delete_MOU");
-            link = link.replace("controller", "MOU");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: link,
-                        data: { mou_id : id },
-                        success: function (data) {
-                            if (data = "") {
-                                Swal.fire("Good job!", "You clicked the button!", "error");
-                            } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
-                            }
-                        },
-                        error: function (data) {
-                            Swal.fire("Good job!", "You clicked the button!", "error");
-                        },
-                    })
-                }
-            })
-        };
     </script>
-
 }
-
-
-
