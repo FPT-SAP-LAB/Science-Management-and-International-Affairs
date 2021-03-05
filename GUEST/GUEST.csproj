@@ -131,6 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\PartialViewController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2327,6 +2328,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ListAllPaper.js" />
+    <Content Include="Scripts\PartialViewScript.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2355,6 +2357,7 @@
     <Content Include="Views\Paper\Edit.cshtml" />
     <Content Include="Views\Invention\Edit.cshtml" />
     <Content Include="Views\Citation\Edit.cshtml" />
+    <Content Include="Views\PartialView\AddAuthor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

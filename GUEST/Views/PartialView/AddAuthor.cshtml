@@ -1,0 +1,73 @@
+﻿@{
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+}
+<div class="row">
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("WorkUnit")</label>
+        <select class="form-control select-custom" id="ckfe" name="param" style="width: 100% !important">
+            <option value="1">FPTU</option>
+            <option value="1">FPT Swinburne</option>
+            <option value="1">Fpoly</option>
+            <option value="0">Khác</option>
+        </select>
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Area")</label>
+        <select class="form-control editfe select-custom" id="area" name="param" style="width: 100% !important">
+            <option>Hà Nội</option>
+            <option>Hồ Chí Minh</option>
+            <option>Đà Nẵng</option>
+        </select>
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("MSNV")</label>
+        <input class="form-control editfe" type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Name")</label>
+        <input class="form-control " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Title")</label>
+        <input class="form-control editfe" type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("ContractType")</label>
+        <input class="form-control editfe " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("CMND")</label>
+        <input class="form-control editfe " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("CMND")</label>
+        <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe">Upload</button>
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Tax")</label>
+        <input class="form-control editfe" type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Bank")</label>
+        <input class="form-control editfe " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("AccNo")</label>
+        <input class="form-control editfe" type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Reward")</label>
+        <input class="form-control editfe " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+        <label>@rm.GetString("Note")</label>
+        <input class="form-control editfe " type="text" />
+    </div>
+    <div class="col-xl-6 form-group">
+    </div>
+    <div class="justify-content-center col-xl-12 d-flex">
+        <button class="btn btn-light-primary px-6 font-weight-bold" data-dismiss="modal">@rm.GetString("AddAu")</button>
+    </div>
+</div>
+
+
