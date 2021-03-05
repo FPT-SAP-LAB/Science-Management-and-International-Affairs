@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "Biên bản ghi nhớ đã xóa";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row mb-5">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                                <div class="row align-items-center">
+                                    <a href="/MOU/List" class="btn btn-light-primary px-6 font-weight-bolder">Quay lại</a>
+                                    <div class="dropdown dropdown-inline ml-2">
+                                        <button type="button"
+                                                class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Export
+                                        </button>
+                                        <!--begin::Dropdown Menu-->
+                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                            <!--begin::Navigation-->
+                                            <ul class="navi flex-column navi-hover py-2">
+                                                <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                    Choose an option:
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                        <span class="navi-icon">
+                                                            <i class="la la-file-excel-o"></i>
+                                                        </span>
+                                                        <span class="navi-text">Excel</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--end::Navigation-->
+                                        </div>
+                                        <!--end::Dropdown Menu-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Tên người đại diện" id="search_" />
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_id" />
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover table-checkable mou_table"
+                               id="">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="">S<br />T<br />T</th>
+                                    <th rowspan="2" class="">Số hiệu</th>
+                                    <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                    <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
+                                    <th rowspan="2" class="text-center">Trạng thái</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Tên</th>
+                                    <th class="text-center">Quốc gia</th>
+                                    <th class="text-center">Website</th>
+                                    <th class="text-center">Lĩnh vực</th>
+                                    <th class="text-center">Họ và tên</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Điện thoại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center" nowrap="nowrap">
+                                        2020/01
+                                    </td>
+                                    <td class="text-center">
+                                        Bunkyou University
+                                    </td>
+                                    <td class="text-center">Japan</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">IT</td>
+                                    <td class="text-center">
+                                        Toshie Miyatake
+                                    </td>
+                                    <td class="text-center">kiec@stf.bunkyou.ac.jp</td>
+                                    <td nowrap="nowrap" class="text-center">
+                                        +81 48 974 8811
+                                    </td>
+                                    <td class="text-center">Icon driver</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center" nowrap="nowrap">FGO</td>
+                                    <td class="text-center" nowrap="nowrap">SE</td>
+                                    <td nowrap="nowrap">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center" nowrap="nowrap">
+                                       2020/01
+                                    </td>
+                                    <td class="text-center">
+                                        Bunkyou University
+                                    </td>
+                                    <td class="text-center">Japan</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">IT</td>
+                                    <td class="text-center">
+                                        Toshie Miyatake
+                                    </td>
+                                    <td class="text-center">kiec@stf.bunkyou.ac.jp</td>
+                                    <td nowrap="nowrap" class="text-center">
+                                        +81 48 974 8811
+                                    </td>
+                                    <td class="text-center">Icon driver</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center">18/03/2020</td>
+                                    <td class="text-center" nowrap="nowrap">FGO</td>
+                                    <td class="text-center" nowrap="nowrap">SE</td>
+                                    <td nowrap="nowrap">1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
+    <script>
+        //overflow
+        $(document).ready(function () {
+            $('.mou_table').parent().css('overflow-x', 'auto');
+            $('.mou_table thead tr th').css('font-weight', 'bold');
+            $('.header-modify').css('padding', '13px');
+
+        });
+
+        $(".mou_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: 4,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
+                    }
+                },
+                {
+                    targets: 9,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
+                    }
+                },
+                {
+                    targets: 14,
+                    width: '75px',
+                    render: function (data, type, full, meta) {
+                        var status = {
+                            1: {
+                                'title': 'Hết hạn',
+                                'class': 'label-light-danger'
+                            },
+                            2: {
+                                'title': 'Còn hạn',
+                                'class': 'label-light-success'
+                            }
+                        };
+                        if (typeof status[data] === 'undefined') {
+                            return data;
+                        }
+                        return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
+                    },
+                },
+                //{
+                //    targets: -1,
+                //    title: 'Hành động',
+                //    orderable: false,
+                //    width: '125px',
+                //    render: function (data, type, full, meta) {
+                //        var action = 'Delete_Mou';
+                //        var controller = 'MOU';
+                //        var id_to_catch_in_controller = 'mou_id';
+                //        return '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                //    }
+                //}
+            ]
+        });
+    </script>
+}

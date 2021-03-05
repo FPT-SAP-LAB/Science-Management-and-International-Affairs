@@ -42,8 +42,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         public ActionResult ListDeleted()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ ĐÃ XÓA";
-            int duration = mou.getDuration();
-            List<ListMOU> listMOU = mou.listAllMOUDeleted();
+            //int duration = mou.getDuration();
+            //List<ListMOU> listMOU = mou.listAllMOUDeleted();
             return View();
         }
 
