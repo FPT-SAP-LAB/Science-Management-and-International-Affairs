@@ -26,7 +26,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             return View();
         }
 
-        public ActionResult ViewMOU(string partner_name,string contact_point_name,string mou_code)
+        public ActionResult ViewMOU(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {

@@ -50,7 +50,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         and contact_point_name like @contact_point_name
                         and mou_code like @mou_code";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
-                    new SqlParameter("partner_name",'%' + partner_name + '%'),
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
                 handlingMOUListData(mouList);
@@ -133,7 +133,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/");
             string filename = "MOU.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<ListMOU> listMOU = listAllMOU("","","");
+            List<ListMOU> listMOU = listAllMOU("", "", "");
 
             using (ExcelPackage excelPackage = new ExcelPackage(file))
             {
@@ -282,7 +282,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     left join General.Country t2 on
                     t1.country_id = t2.country_id where t1.partner_name = @partner_name";
                 CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
-                    new SqlParameter("partner_name",partner_name)).FirstOrDefault();
+                    new SqlParameter("partner_name", partner_name)).FirstOrDefault();
                 return p;
             }
             catch (Exception ex)
@@ -480,12 +480,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public int InactiveNumber { get; set; }
             public List<string> ExpiredMOUCode { get; set; }
         }
-        public class CustomOffice 
+        public class CustomOffice
         {
             public string office_abbreviation { get; set; }
             public int office_id { get; set; }
         }
-        public class CustomPartner 
+        public class CustomPartner
         {
             public string website { get; set; }
             public int country_id { get; set; }
