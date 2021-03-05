@@ -15,16 +15,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
     public class MOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOU> listAllMOU()
+        public List<ListMOU> listAllMOU(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
                 string sql_mouList =
                     @"select tb2.mou_partner_id,
-                        tb1.mou_code,tb3.partner_name,tb3.website,tb2.contact_point_name
+                        tb1.mou_code,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
                         ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
-                        ,tb7.specialization_name, tb9.mou_status_name
+                        ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
                         from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
                         on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
                         on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
@@ -43,8 +43,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb9.mou_status_id = tb8.mou_status_id
                         inner join General.Office tb10 on
                         tb10.office_id = tb1.office_id
-                        where tb1.is_deleted = 0 ";
-                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList).ToList();
+                        inner join General.Country tb11 on 
+                        tb11.country_id = tb3.country_id
+                        where tb1.is_deleted = 0
+                        and partner_name like @partner_name
+                        and contact_point_name like @contact_point_name
+                        and mou_code like @mou_code";
+                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
+                    new SqlParameter("partner_name",'%' + partner_name + '%'),
+                    new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
+                    new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
                 handlingMOUListData(mouList);
                 return mouList;
             }
@@ -125,7 +133,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/");
             string filename = "MOU.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<ListMOU> listMOU = listAllMOU();
+            List<ListMOU> listMOU = listAllMOU("","","");
 
             using (ExcelPackage excelPackage = new ExcelPackage(file))
             {
@@ -213,12 +221,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<Office> GetOffice()
+        public List<CustomOffice> GetOffice()
         {
             try
             {
-                string sql_unitList = @"select * from General.Office";
-                List<Office> unitList = db.Database.SqlQuery<Office>(sql_unitList).ToList();
+                string sql_unitList = @"select office_id,office_abbreviation from General.Office";
+                List<CustomOffice> unitList = db.Database.SqlQuery<CustomOffice>(sql_unitList).ToList();
                 return unitList;
             }
             catch (Exception ex)
@@ -259,6 +267,41 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
                 return scopeList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public CustomPartner CheckPartner(string partner_name)
+        {
+            try
+            {
+                string sql = @"select t1.partner_id,t1.partner_name,t2.country_id,t2.country_name
+                    ,t1.address,t1.website from IA_Collaboration.Partner t1
+                    left join General.Country t2 on
+                    t1.country_id = t2.country_id where t1.partner_name = @partner_name";
+                CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
+                    new SqlParameter("partner_name",partner_name)).FirstOrDefault();
+                return p;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public CustomPartner CheckPartnerEdit(string partner_name)
+        {
+            try
+            {
+                string sql = @"select t1.partner_id,t1.partner_name,t2.country_id,t2.country_name
+                    ,t1.address,t1.website from IA_Collaboration.Partner t1
+                    left join General.Country t2 on
+                    t1.country_id = t2.country_id where t1.partner_name = @partner_name";
+                CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
+                    new SqlParameter("partner_name", partner_name)).FirstOrDefault();
+                return p;
             }
             catch (Exception ex)
             {
@@ -403,6 +446,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public ListMOU() { }
             public string mou_code { get; set; }
             public int mou_partner_id { get; set; }
+            public int mou_id { get; set; }
             public string partner_name { get; set; }
             public string website { get; set; }
             public string country_name { get; set; }
@@ -419,6 +463,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string scope_abbreviation { get; set; }
             public string specialization_name { get; set; }
             public string mou_status_name { get; set; }
+            public int mou_status_id { get; set; }
         }
         public class MOUAdd
         {
@@ -435,5 +480,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public int InactiveNumber { get; set; }
             public List<string> ExpiredMOUCode { get; set; }
         }
+        public class CustomOffice 
+        {
+            public string office_abbreviation { get; set; }
+            public int office_id { get; set; }
+        }
+        public class CustomPartner 
+        {
+            public string website { get; set; }
+            public int country_id { get; set; }
+            public string country_name { get; set; }
+            public int partner_id { get; set; }
+            public string partner_name { get; set; }
+            public string address { get; set; }
+        }
+
     }
 }

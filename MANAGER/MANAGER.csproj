@@ -2195,10 +2195,6 @@
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\BasicInfoMOA\" />
-    <Folder Include="Views\BasicInfoMOU\" />
-    <Folder Include="Views\PartnerMOA\" />
-    <Folder Include="Views\PartnerMOU\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
