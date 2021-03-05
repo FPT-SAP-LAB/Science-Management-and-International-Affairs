@@ -23,11 +23,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             return View();
         }
 
-        public ActionResult ListDeleted()
+        public ActionResult List_Deleted()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ ĐÃ XÓA";
-            int duration = mou.getDuration();
-            List<ListMOU> listMOU = mou.listAllMOUDeleted();
+            //int duration = mou.getDuration();
+            //List<ListMOU> listMOU = mou.listAllMOUDeleted();
             return View();
         }
 
