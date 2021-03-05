@@ -13,30 +13,30 @@
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("PaperInfo")</h3>
                     <div class="row">
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("PaperName")</label>
+                            <label class="required-field">@rm.GetString("PaperName")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("PublishDate")</label>
+                            <label class="required-field">@rm.GetString("PublishDate")</label>
                             <input class="form-control form-control-lg custom-pickdate" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("LinkFull")</label>
+                            <label class="required-field">@rm.GetString("LinkFull")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>Link scholar</label>
+                            <label  class="required-field">Link scholar</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>Loại ấn phẩm</label>
+                            <label  class="required-field">Loại ấn phẩm</label>
                             <select class="form-control form-control-lg">
                                 <option value="1">@rm.GetString("JournalPaper")</option>
                                 <option value="2">@rm.GetString("ConferencePaper")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Specialized")</label>
+                            <label  class="required-field">@rm.GetString("Specialized")</label>
                             <select class="form-control form-control-lg">
                                 <option value="1">Công nghệ thông tin</option>
                                 <option value="2">Kinh tế</option>
@@ -47,33 +47,33 @@
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("PublishInfo")</h3>
                     <div class="row">
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("JournalName")</label>
+                            <label  class="required-field">@rm.GetString("JournalName")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Vol")</label>
+                            <label  class="required-field">@rm.GetString("Vol")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Page")</label>
+                            <label  class="required-field">@rm.GetString("Page")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("PublishName")</label>
+                            <label  class="required-field">@rm.GetString("PublishName")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
                     <div class="row" id="thuong">
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("CriteriaType")</label>
+                            <label  class="required-field">@rm.GetString("CriteriaType")</label>
                             <select id="loaithuong" class="form-control form-control-lg">
                                 <option selected value="1">@rm.GetString("International")</option>
                                 <option value="2">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongqt">
-                            <label>@rm.GetString("Criteria")</label>
+                            <label  class="required-field">@rm.GetString("Criteria")</label>
                             <select id="tieuchi" class="form-control form-control-lg">
                                 <option value="0" selected disabled>@rm.GetString("Criteria")</option>
                                 <option class="optiontieuchi" value="Q1">Q1</option>
@@ -86,19 +86,19 @@
                             <button class="btn btn-primary form-control form-control-lg">@rm.GetString("ListMaga")</button>
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
-                            <label>@rm.GetString("JournalIndex")</label>
+                            <label  class="required-field">@rm.GetString("JournalIndex")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
-                            <label>@rm.GetString("Note")</label>
+                            <label  class="required-field">@rm.GetString("Note")</label>
                             <input class="form-control form-control-lg" type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("TotalReward")</label>
+                            <label  class="required-field">@rm.GetString("TotalReward")</label>
                             <input class="form-control form-control-lg" readonly type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("RewardType")</label>
+                            <label  class="required-field">@rm.GetString("RewardType")</label>
                             <select class="form-control form-control-lg">
                                 <option value="1">@rm.GetString("According")</option>
                                 <option value="2">@rm.GetString("Repre")</option>
@@ -304,6 +304,8 @@
                 $(".tacgia").hide()
             }
         });
+        
     </script>
+    <script src="~/Content/assets/js/sci/sci-bundle.js"></script>
 }
 
