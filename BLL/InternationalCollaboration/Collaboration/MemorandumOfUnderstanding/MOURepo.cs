@@ -494,6 +494,5 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string partner_name { get; set; }
             public string address { get; set; }
         }
-
     }
 }
