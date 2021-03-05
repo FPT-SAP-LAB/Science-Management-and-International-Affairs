@@ -12,15 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class MOAStatusHistory
+    public partial class AuthorPaper
     {
-        public int moa_status_history_id { get; set; }
-        public Nullable<System.DateTime> datetime { get; set; }
-        public string reason { get; set; }
-        public Nullable<int> moa_id { get; set; }
-        public Nullable<int> mou_status_id { get; set; }
+        public int people_id { get; set; }
+        public int paper_id { get; set; }
+        public string currnet_mssv_msnv { get; set; }
     
-        public virtual CollaborationStatu CollaborationStatu { get; set; }
-        public virtual MOA MOA { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual Paper Paper { get; set; }
     }
 }

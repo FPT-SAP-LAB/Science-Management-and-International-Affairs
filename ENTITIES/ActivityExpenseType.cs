@@ -12,23 +12,18 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Procedure
+    public partial class ActivityExpenseType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Procedure()
+        public ActivityExpenseType()
         {
-            this.ProcedureLanguages = new HashSet<ProcedureLanguage>();
+            this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
         }
     
-        public int procedure_id { get; set; }
-        public int collab_id { get; set; }
-        public int account_id { get; set; }
-        public Nullable<int> article_id { get; set; }
+        public int expense_type_id { get; set; }
+        public string expense_type_name { get; set; }
     
-        public virtual Account Account { get; set; }
-        public virtual AcademicCollaboration AcademicCollaboration { get; set; }
-        public virtual Article Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcedureLanguage> ProcedureLanguages { get; set; }
+        public virtual ICollection<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
     }
 }

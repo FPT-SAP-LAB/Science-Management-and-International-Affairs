@@ -2080,6 +2080,7 @@
     <Content Include="Content\assets\plugins\custom\kanban\kanban.bundle.js" />
     <Content Include="Content\assets\plugins\custom\leaflet\leaflet.bundle.css" />
     <Content Include="Content\assets\plugins\custom\leaflet\leaflet.bundle.js" />
+    <Content Include="Content\assets\plugins\custom\moment\moment.js" />
     <Content Include="Content\assets\plugins\custom\prismjs\prismjs.bundle.css" />
     <Content Include="Content\assets\plugins\custom\prismjs\prismjs.bundle.js" />
     <Content Include="Content\assets\plugins\custom\tinymce\plugins\advlist\index.js" />

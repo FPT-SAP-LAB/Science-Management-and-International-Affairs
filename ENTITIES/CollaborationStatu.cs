@@ -12,28 +12,21 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class File
+    public partial class CollaborationStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public File()
+        public CollaborationStatu()
         {
-            this.Decisions = new HashSet<Decision>();
-            this.Inventions = new HashSet<Invention>();
-            this.People = new HashSet<Person>();
-            this.Profiles = new HashSet<Profile>();
+            this.MOAStatusHistories = new HashSet<MOAStatusHistory>();
+            this.MOUStatusHistories = new HashSet<MOUStatusHistory>();
         }
     
-        public int file_id { get; set; }
-        public string name { get; set; }
-        public string link { get; set; }
+        public int mou_status_id { get; set; }
+        public string mou_status_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
+        public virtual ICollection<MOAStatusHistory> MOAStatusHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<MOUStatusHistory> MOUStatusHistories { get; set; }
     }
 }

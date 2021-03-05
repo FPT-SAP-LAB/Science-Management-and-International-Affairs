@@ -12,15 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class MOAStatusHistory
+    public partial class DirectionLanguage
     {
-        public int moa_status_history_id { get; set; }
-        public Nullable<System.DateTime> datetime { get; set; }
-        public string reason { get; set; }
-        public Nullable<int> moa_id { get; set; }
-        public Nullable<int> mou_status_id { get; set; }
+        public int language_id { get; set; }
+        public int direction_id { get; set; }
+        public string description { get; set; }
     
-        public virtual CollaborationStatu CollaborationStatu { get; set; }
-        public virtual MOA MOA { get; set; }
+        public virtual Direction Direction { get; set; }
+        public virtual Language Language { get; set; }
     }
 }
