@@ -1,8 +1,6 @@
 ﻿
-@{ 
-    ViewBag.Title = "Check-in hoạt động học thuật trong năm";
-    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
-}
+@{ ViewBag.Title = "Check-in hoạt động học thuật trong năm";
+                Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml"; }
 
 <style>
     .custom_nav {
@@ -36,10 +34,10 @@
             <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                        <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
+                        <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
                     </div>
                 </div>
-                <table id="my_list_1" class="table table-separate table-head-custom table-checkable">
+                <table id="my_list_1" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -63,7 +61,7 @@
                             <td>Hà Nội</td>
                             <td>HE130009</td>
                             <td>1</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                         <tr>
                             <td>2</td>
@@ -74,7 +72,7 @@
                             <td>Hà Nội</td>
                             <td>HE130367</td>
                             <td>1</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                         <tr>
                             <td>3</td>
@@ -85,7 +83,7 @@
                             <td>Hà Nội</td>
                             <td>HE130367</td>
                             <td>2</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -93,10 +91,10 @@
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                        <a href="#" class="btn btn-outline-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
+                        <a href="javascripts:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold float-right" data-toggle="modal" data-target="#addModal">Thêm người tham dự</a>
                     </div>
                 </div>
-                <table id="my_list_2" class="table table-separate table-head-custom table-checkable">
+                <table id="my_list_2" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -120,7 +118,7 @@
                             <td>Hà Nội</td>
                             <td>HE130009</td>
                             <td>1</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                         <tr>
                             <td>2</td>
@@ -131,7 +129,7 @@
                             <td>Hà Nội</td>
                             <td>HE130367</td>
                             <td>1</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                         <tr>
                             <td>3</td>
@@ -142,7 +140,7 @@
                             <td>Hà Nội</td>
                             <td>HE130367</td>
                             <td>2</td>
-                            <td></td>
+                            <td nowrap="nowrap"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -155,7 +153,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Thêm người tham dự</h3>
+                <h3 class="modal-title font-weight-bolder">Thêm người tham dự</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -201,8 +199,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -280,7 +278,7 @@
                     orderable: false,
                     width: '70px',
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-outline-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
+                        return '<a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
                     }
                 }
             ]
@@ -327,9 +325,10 @@
                     orderable: false,
                     width: '70px',
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-outline-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
+                        return '<a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold center" onclick="checkIn(1)">Check-in</a>'
                     }
                 }
             ]
-        });</script>
+        });
+    </script>
 }

@@ -419,6 +419,7 @@
     <Content Include="Content\assets\media\misc\bg-1.jpg" />
     <Content Include="Content\assets\media\misc\bg-2.jpg" />
     <Content Include="Content\assets\media\misc\invoice 5 bar.jpg" />
+    <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\plugins\jstree\32px.png" />
     <Content Include="Content\assets\media\products\1.png" />
     <Content Include="Content\assets\media\products\10.png" />

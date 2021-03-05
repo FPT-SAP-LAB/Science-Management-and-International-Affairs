@@ -7,24 +7,55 @@
     .custom-btn {
         width: 25% !important;
     }
+
     .modal-title {
         font-size: 1.5rem !important;
     }
+
     .modal {
         overflow-y: auto;
     }
 </style>
 <div class="card-body">
     <div class="row mb-5">
-        <div class="col-lg-5 col-xl-6">
-            <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
-            <a href="#" class="btn btn-light-primary btn-sm ml-3 font-weight-bold">Xuất excel</a>
+        <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+            <a href="#" class="btn btn-light-primary font-weight-bolder px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
+            <div class="dropdown dropdown-inline ml-2">
+                <button type="button"
+                        class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    Export
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                    <ul class="navi flex-column navi-hover py-2">
+                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                            Choose an option:
+                        </li>
+                        <li class="navi-item">
+                            <a href="#" class="navi-link">
+                                <span class="navi-icon">
+                                    <i class="la la-file-excel-o"></i>
+                                </span>
+                                <span class="navi-text">Excel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-7 col-xl-6">
-            <input type="text" class="btn btn-light-primary btn-sm custom-btn custom-pickyear align-center float-right" value="2021" readonly />
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" value="2021" readonly/>
+                <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
+                    <span class="input-group-text">
+                        <i class="ki ki-calendar"></i>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-    <table id="my_list" class="table table-separate table-head-custom table-checkable">
+    <table id="my_list" class="table table-bordered table-checkable">
         <thead>
             <tr>
                 <th>STT</th>
@@ -118,7 +149,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from"/>
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -197,7 +228,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="edit_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
@@ -213,7 +243,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="edit_to" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
@@ -267,7 +296,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="clone_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
@@ -283,8 +311,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="clone_to" />*@
-
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
@@ -347,11 +373,7 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    toast.success('Đã xóa thành công');
                 }
             });
         }
@@ -483,10 +505,10 @@
                         return '<div class="dropdown">' +
                             '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
                             '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="#" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>' +
-                            '<a href="#" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>' +
-                            '<a href="#" class="dropdown-item" onclick="saveTempIdCheckin(1)">Checkin</a>' +
-                            '<a href="#" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>' +
+                            '<a href="javascript:;" class="dropdown-item" target="_tab" onclick="saveTempIdCheckin(1)">Checkin</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>' +
                             '</div>' +
                             '</div>'
                     }
@@ -505,8 +527,21 @@
                 }
             };
         }();
+        var KTBootstrapDateYeartimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3_year').datetimepicker({
+                    format: 'YYYY'
+                });
+            }
+            return {
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
         $(document).ready(function () {
             KTBootstrapDatetimepicker.init();
+            KTBootstrapDateYeartimepicker.init();
         });
     </script>
 }
