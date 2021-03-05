@@ -419,6 +419,7 @@
     <Content Include="Content\assets\media\misc\bg-1.jpg" />
     <Content Include="Content\assets\media\misc\bg-2.jpg" />
     <Content Include="Content\assets\media\misc\invoice 5 bar.jpg" />
+    <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\plugins\jstree\32px.png" />
     <Content Include="Content\assets\media\products\1.png" />
     <Content Include="Content\assets\media\products\10.png" />
@@ -2181,10 +2182,17 @@
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
-    <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
+    <Content Include="Views\Researchers\ViewInfo.cshtml" />
+    <Content Include="Views\Researchers\Biography.cshtml" />
+    <Content Include="Views\Shared\_Researcher.cshtml" />
+    <Content Include="Views\Researchers\Publications.cshtml" />
+    <Content Include="Views\Researchers\Rewards.cshtml" />
+    <Content Include="Views\MOU\List_Deleted.cshtml" />
+    <Content Include="Views\Partner\List_Deleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\excel\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />

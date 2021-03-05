@@ -158,11 +158,10 @@
                         <div class="row mb-5">
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                 <div class="row align-items-center">
-                                    <a href="#add_mou_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
-                                    @*<a href="#" class="btn btn-sm btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>*@
+                                    <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
                                     <div class="dropdown dropdown-inline ml-2">
                                         <button type="button"
-                                                class="btn btn-sm btn-light-primary font-weight-bolder dropdown-toggle"
+                                                class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
                                             Export
@@ -177,41 +176,9 @@
                                                 <li class="navi-item">
                                                     <a href="#" class="navi-link">
                                                         <span class="navi-icon">
-                                                            <i class="la la-print"></i>
-                                                        </span>
-                                                        <span class="navi-text">Print</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-copy"></i>
-                                                        </span>
-                                                        <span class="navi-text">Copy</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
                                                             <i class="la la-file-excel-o"></i>
                                                         </span>
                                                         <span class="navi-text">Excel</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-text-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">CSV</span>
-                                                    </a>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-pdf-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">PDF</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -222,8 +189,24 @@
                                 </div>
                             </div>
                             <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
-                                <div class="row align-items-center float-right">
-                                    <a href="#" class="btn btn-sm btn-light-primary px-6 font-weight-bolder">MOU đã xóa</a>
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Tên người đại diện" id="search_" />
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_id" />
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                                <div class="row align-items-center justify-content-end">
+                                    <a href="/MOU/List_Deleted" class="px-7">MOU đã xóa</a>
                                 </div>
                             </div>
                         </div>

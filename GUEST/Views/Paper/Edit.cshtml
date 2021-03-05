@@ -195,7 +195,7 @@
                         </div>
                         <div class="col-xl-12" style="text-align: end">
                             <button class="btn btn-light-danger px-6 font-weight-bold deletetacgia">@rm.GetString("DelAu")</button>
-                            <button class="btn btn-light-primary px-6 font-weight-bold addtacgia">@rm.GetString("AddAu")</button>
+                            <button class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">@rm.GetString("AddAu")</button>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -245,8 +245,26 @@
     <option>12bư</option>
     <option>323q</option>
 </datalist>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderAction("AddAuthor", "PartialView");
+                }
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
+    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         $("#loaithuong").change(function () {
             var temp = $(this).val();

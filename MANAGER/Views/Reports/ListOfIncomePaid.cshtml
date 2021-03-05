@@ -15,7 +15,8 @@
                         <div class="d-flex align-items-center">
                             <label class="mr-3 mb-0 d-none d-md-block">Tháng:</label>
                             <select class="form-control"
-                                    id="kt_datatable_search_status">
+                                    id="search_thang">
+                                <option label="Label"></option>
                                 <option value="">1</option>
                                 <option value="1">2</option>
                                 <option value="2">3</option>
@@ -35,7 +36,8 @@
                         <div class="d-flex align-items-center">
                             <label class="mr-3 mb-0 d-none d-md-block">Năm:</label>
                             <select class="form-control"
-                                    id="kt_datatable_search_status">
+                                    id="search_nam">
+                                <option label="Label"></option>
                                 <option value="">2021</option>
                                 <option value="1">2020</option>
                                 <option value="2">2019</option>
@@ -321,5 +323,17 @@
         jQuery(document).ready(function () {
             KTDatatablesBasicBasic.init();
         });
+        //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
+        list_select = {
+            "search_nam": "Chọn năm",
+            "search_thang":"Chọn tháng"
+        }
+        for (let i in list_select) {
+            $('#' + i).select2({
+                placeholder: list_select[i],
+                allowClear: true
+            });
+        }
+        //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
     </script>
 }

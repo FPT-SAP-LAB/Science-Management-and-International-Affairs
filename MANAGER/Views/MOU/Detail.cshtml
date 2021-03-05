@@ -108,7 +108,6 @@
     .uppy-list-item {
         margin: 0 !important;
     }
-
 </style>
 <div class="card card-custom ">
     <div class="card-body p-0">
@@ -152,12 +151,11 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label>
                                     <label class="font-weight-bolder">Thời gian kí kết</label>&nbsp;
-                                    <label style="font-style: italic;"></label>
+                                    <label style="font-style: italic;">(Cập nhật theo đối tác)</label>
                                     @*<input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết"required readonly id="sign_time" />*@
                                     <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
+                                        <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
                                         <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
                                             <span class="input-group-text">
                                                 <i class="ki ki-calendar"></i>
@@ -180,6 +178,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                                    <label style="color:red">*</label>
                                     <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                                     <select class="form-control" required id="status">
                                         <option value="0">Inactive</option>
@@ -197,7 +196,7 @@
                                     <label style="font-style: italic;">
                                         (Cập nhật theo pham vi hợp tác của các đối tác kí kết)
                                     </label>
-                                    <input class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope" />
+                                    <input disabled class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope" />
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -269,10 +268,38 @@
                                     DANH SÁCH ĐỐI TÁC HOẠT ĐỘNG
                                 </h4>
                             </div>
-                            <div class="row mb-5">
+                            <div class="row mb-2">
                                 <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                     <div class="row align-items-center">
-                                        <a id="add_partner_mou_btn" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                        <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                    <div class="row align-items-center justify-content-end">
+                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                            <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">Việt Nam</option>
+                                                    <option value="2">USA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">IT</option>
+                                                    <option value="2">BA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -320,10 +347,23 @@
                                     DANH SÁCH BIÊN BẢN THỎA THUẬN
                                 </h4>
                             </div>
-                            <div class="row mb-5">
+                            <div class="row mb-2">
                                 <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                     <div class="row align-items-center">
-                                        <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                        <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bolder">Thêm</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                    <div class="row align-items-center justify-content-end">
+                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                            <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                            <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_moa_id" />
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -371,7 +411,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title font-weight-bolder">BỔ SUNG BIÊN BẢN THỎA THUẬN</h3>
+                <h3 class="modal-title font-weight-bolder">BỔ SUNG BIÊN BẢN GHI NHỚ</h3>
             </div>
             <div class="modal-body">
                 <div class="row justify-content-center">
@@ -404,7 +444,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label style="color:red">*</label><label class="font-weight-bolder">Ngày hết hạn</label>&nbsp;
+                        <label class="font-weight-bolder">Ngày hết hạn</label>&nbsp;
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_mou_addition_end_time" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" placeholder="Ngày hết hạn" id="mou_addition_end_time" readonly autocomplete="off" data-target="#kt_datetimepicker_mou_addition_end_time" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_mou_addition_end_time" data-toggle="datetimepicker">
@@ -417,10 +457,12 @@
                 </div>
             </div>
 
-            <div class="modal-header justify-content-center">
-                <h3 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h3>
-            </div>
             <div class="modal-body">
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <h5 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h5>
+                    </div>
+                </div>
                 <div class="row col-lg-11 mb-3 mt-3">
                     <div class="col-lg-6">
                         <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-partner-scope">Thêm</a>
@@ -451,7 +493,7 @@
                             <td class="text-center">ME </td>
                             <td class="text-center" nowrap="nowrap">
                                 <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a>
-                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -549,7 +591,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="#">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="partner_name_form" name="param" style="width:100% !important">
                                 <option label="Label"></option>
@@ -566,7 +608,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="#">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="specialization" name="param" style="width:100% !important">
                                 <option label="Label"></option>
@@ -612,7 +654,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="#">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="coop_scope_modal" name="param" style="width:100% !important">
                                 <option label="Label"></option>
@@ -664,7 +706,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
                         <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="facility_moa" name="param" style="width:100% !important">
+                            <select class="form-control select-search" id="facility_moa" name="param" style="width:100% !important" disabled>
                                 <option label="Label"></option>
                                 <option>FU Hà Nội</option>
                                 <option>FU Cần Ther</option>
@@ -679,7 +721,7 @@
                             (Cập nhật theo thời gian kí kết)
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_moa" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_moa" data-target="#kt_datetimepicker_sign_date_moa" />
+                            <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_moa" data-target="#kt_datetimepicker_sign_date_moa" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_moa" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -703,6 +745,7 @@
                 </div>
                 <div class="row mt-3 justify-content-center">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+                        <label style="color:red">*</label>
                         <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                         <select class="form-control" required id="status_moa">
                             <option value="0">Inactive</option>
@@ -720,7 +763,7 @@
                         <label style="font-style: italic;">
                             (Cập nhật theo pham vi hợp tác của các đối tác kí kết)
                         </label>
-                        <input class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope_moa" />
+                        <input disabled class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope_moa" />
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center">
@@ -769,7 +812,7 @@
                         <td>kiec@stf.bunkyou.ac.jp</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a  onclick="confirm_delete(12)"  class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                     <tr>
@@ -780,7 +823,7 @@
                         <td>cuong@fptgr.edu.vn</td>
                         <td nowrap="nowrap">
                             <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a  onclick="confirm_delete(12)"  class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
                     </tr>
                 </table>
@@ -1040,6 +1083,16 @@
     </script>
     <script>
         //jquery for dropdown
+        $('#search_nation').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+        })
+
+        $('#search_specialization').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        })
+
         $('#facility').select2({
             placeholder: 'Đơn vị - Cơ sở kí kết',
             allowClear: true,
