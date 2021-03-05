@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewBag.Title = "THÔNG TIN NCV: ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -21,193 +21,9 @@
             <!--begin::Profile Personal Information-->
             <div class="d-flex flex-row">
                 <!--begin::Aside-->
-                <div class="flex-row-auto offcanvas-mobile w-250px w-xxl-350px" id="kt_profile_aside">
-                    <!--begin::Profile Card-->
-                    <div class="card card-custom card-stretch">
-                        <!--begin::Body-->
-                        <div class="card-body pt-4">
-                            <!--begin::Toolbar-->
-                            <div class="d-flex justify-content-end">
-                                <div class="dropdown dropdown-inline">
-                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi navi-hover py-5">
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-drop"></i></span>
-                                                    <span class="navi-text">New Group</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-list-3"></i></span>
-                                                    <span class="navi-text">Contacts</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-rocket-1"></i></span>
-                                                    <span class="navi-text">Groups</span>
-                                                    <span class="navi-link-badge">
-                                                        <span class="label label-light-primary label-inline font-weight-bold">new</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
-                                                    <span class="navi-text">Calls</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-gear"></i></span>
-                                                    <span class="navi-text">Settings</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="navi-separator my-3"></li>
-
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-magnifier-tool"></i></span>
-                                                    <span class="navi-text">Help</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
-                                                    <span class="navi-text">Privacy</span>
-                                                    <span class="navi-link-badge">
-                                                        <span class="label label-light-danger label-rounded font-weight-bold">5</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end::Toolbar-->
-                            <!--begin::User-->
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                    <div class="symbol-label" style="background-image: url('https://2.pik.vn/2021637e388b-ec69-431f-b7a8-7af6c49b9c91.jpg')"></div>
-                                    <i class="symbol-badge bg-success"></i>
-                                </div>
-                                <div>
-                                    <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
-                                        Ngô Tùng Sơn
-                                    </a>
-                                    <div class="text-muted">
-                                        Giảng viên
-                                    </div>
-                                    <div class="mt-2">
-                                        FU Hà Nội
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end::User-->
-                            <!--begin::Contact-->
-                            <div class="py-9">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="font-weight-bold mr-2">Email:</span>
-                                    <a href="#" class="text-muted text-hover-primary">sonnt69@fe.edu.vn</a>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="font-weight-bold mr-2">ĐT:</span>
-                                    <span class="text-muted">0969696969</span>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    @*<span class="font-weight-bold mr-2">Location:</span>
-                                        <span class="text-muted">Melbourne</span>*@
-                                </div>
-                            </div>
-                            <!--end::Contact-->
-                            <!--begin::Nav-->
-                            <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
-                                <div class="navi-item mb-2">
-                                    <a href="Researchers/ViewInfo" class="navi-link py-4">
-                                        <span class="navi-icon mr-2">
-                                            <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                                        <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                        <span class="navi-text font-size-lg">
-                                            THÔNG TIN CHUNG
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="navi-item mb-2">
-                                    <a href="Researchers/Biography" class="navi-link py-4 active">
-                                        <span class="navi-icon mr-2">
-                                            <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24" />
-                                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3" />
-                                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                        <span class="navi-text font-size-lg">
-                                            TIỂU SỬ
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="navi-item mb-2">
-                                    <a href="custom/apps/profile/profile-1/account-information.html" class="navi-link py-4 ">
-                                        <span class="navi-icon mr-2">
-                                            <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24" />
-                                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3" />
-                                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                        <span class="navi-text font-size-lg">
-                                            CÔNG BỐ KHOA HỌC
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="navi-item mb-2">
-                                    <a href="custom/apps/profile/profile-1/account-information.html" class="navi-link py-4 ">
-                                        <span class="navi-icon mr-2">
-                                            <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24" />
-                                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3" />
-                                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                        <span class="navi-text font-size-lg">
-                                            GIẢI THƯỞNG
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                            <!--end::Nav-->
-                        </div>
-                        <!--end::Body-->
-                    </div>
-                    <!--end::Profile Card-->
-                </div>
+                @{
+                    Html.RenderPartial("_Researcher");
+                }
                 <!--end::Aside-->
                 <!--begin::Content-->
                 <div class="flex-row-fluid ml-lg-8">
@@ -216,8 +32,8 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">TIỂU SỬ</h3>
-                                <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin tiểu sử cho nghiên cứu viên</span>
+                                <h3 class="card-label font-weight-bolder text-dark">CÔNG BỐ KHOA HỌC, HỘI NGHỊ</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin về các công bố khoa học cho nghiên cứu viên</span>
                             </div>
                             <div class="card-toolbar">
                                 <button type="reset" class="btn btn-success mr-2">Lưu</button>
@@ -231,27 +47,18 @@
                             <div class="row">
                                 <label class="col-xl-3"></label>
                                 <div class="col-lg-12 col-xl-12">
-                                    <h5 class="font-weight-bold ">Quá trình học tập</h5>
+                                    <h5 class="font-weight-bold ">Tạp chí/sách</h5>
                                 </div>
                                 <div class="col-lg-12 col-xl-12">
-                                    <table class="custom-add-table table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Học vị</th>
-                                                <th>Nơi học tập</th>
-                                                <th>Thời gian</th>
-                                                <th>Ghi chú</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
+                                    <table class="table table-bordered table-checkable" id="tapchi_list">
+                                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Tác giả</th><th>Năm</th><th>&nbsp;</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>Cử nhân</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2001-2005</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>Filter regular sequence under small perturbations</td>
+                                                <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -269,16 +76,14 @@
                                                             </svg>
                                                         </span>
                                                     </a>
-
-
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
-                                                <td>Thạc sĩ</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2005-2007</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>Colength, multiplicity, and ideal closure operations, Communications in Algebra, Vol. 48 (2020), 1601-1607</td>
+                                                <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -300,10 +105,35 @@
                                             </tr>
                                             <tr>
                                                 <td>3</td>
-                                                <td>Tiến sĩ</td>
-                                                <td>Viện toán học</td>
-                                                <td>2010-2013</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>On the index of reducibility of parameter ideals: The stable and limit values, Acta Mathematica Vietnamica, Vol.45 Issue 1 in honor of Lê Văn Thiêm (2020), 249-260</td>
+                                                <td>Nguễn Tự Cường, Phạm Hùng Quý</td>
+                                                <td>2020</td>
+                                                <td>
+                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                                                        <span class="svg-icon svg-icon-md">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                 width="24px"
+                                                                 height="24px"
+                                                                 viewBox="0 0 24 24"
+                                                                 version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
+                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td> Upper bound of multiplicity in prime characteristic, Forum Mathematicum, Vol.32 (2020), 393-398</td>
+                                                <td>Dương Thị Hương, Phạm Hùng Quý</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -326,37 +156,27 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-lg-12 col-xl-12" style="text-align: right">
-                                    <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm tiểu sử học tập
-                                    </button>
-                                </div>
+                                @*<div class="col-lg-12 col-xl-12" style="text-align: right">
+                                        <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                            Chi
+                                        </button>
+                                    </div>*@
                             </div>
                             <div class="row">
                                 <label class="col-xl-3"></label>
                                 <div class="col-lg-12 col-xl-12">
-                                    <h5 class="font-weight-bold ">Quá trình công tác</h5>
+                                    <h5 class="font-weight-bold ">Hội Nghị</h5>
                                 </div>
                                 <div class="col-lg-12 col-xl-12">
-                                    <table class="custom-add-table table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Đơn vị công tác</th>
-                                                <th>Chức danh</th>
-                                                <th>Thời gian</th>
-                                                <th>Ghi chú</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
+                                    <table class="table table-bordered table-checkable" id="conferences_list">
+                                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Tác giả</th><th>Năm</th><th>&nbsp;</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>Giảng viên</td>
-                                                <td>2001-2005</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>Filter regular sequence under small perturbations</td>
+                                                <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -378,10 +198,10 @@
                                             </tr>
                                             <tr>
                                                 <td>2</td>
-                                                <td>Thạc sĩ</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2005-2007</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>Colength, multiplicity, and ideal closure operations, Communications in Algebra, Vol. 48 (2020), 1601-1607</td>
+                                                <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -403,10 +223,35 @@
                                             </tr>
                                             <tr>
                                                 <td>3</td>
-                                                <td>Tiến sĩ</td>
-                                                <td>Viện toán học</td>
-                                                <td>2010-2013</td>
-                                                <td>...</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td>On the index of reducibility of parameter ideals: The stable and limit values, Acta Mathematica Vietnamica, Vol.45 Issue 1 in honor of Lê Văn Thiêm (2020), 249-260</td>
+                                                <td>Nguễn Tự Cường, Phạm Hùng Quý</td>
+                                                <td>2020</td>
+                                                <td>
+                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                                                        <span class="svg-icon svg-icon-md">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                 width="24px"
+                                                                 height="24px"
+                                                                 viewBox="0 0 24 24"
+                                                                 version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
+                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Lorem Ipsum Dolor Sit Amet</td>
+                                                <td> Upper bound of multiplicity in prime characteristic, Forum Mathematicum, Vol.32 (2020), 393-398</td>
+                                                <td>Dương Thị Hương, Phạm Hùng Quý</td>
+                                                <td>2020</td>
                                                 <td>
                                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                                                         <span class="svg-icon svg-icon-md">
@@ -430,12 +275,12 @@
                                     </table>
                                 </div>
 
-                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                @*<div class="col-lg-12 col-xl-12" style="text-align: right">
                                     <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
                                         <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
                                         Thêm tiểu sử công tác
                                     </button>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                         <!-- Modal hoc tap-->
@@ -572,8 +417,160 @@
 @section scripts{
     <script>
         $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+        $(".research-info-link").each(function () {
+            if ($(this).attr('href').trim() == window.location.pathname) {
+                $(this).addClass('active')
+            }
+        })
+    </script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Page Vendors-->
+    <!--begin::Page Scripts(used by this page)-->
+    <script>
+        var KTDatatablesBasicBasic = function () {
+            var initTable1 = function () {
+                var table = $('#tapchi_list');
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                    lengthMenu: [5, 10, 25, 50],
+
+                    pageLength: 10,
+
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
+
+                    // Order settings
+                    order: [[1, 'desc']],
+
+                    columnDefs: [
+                        {
+                            "targets": 2,
+                            "data": "download_link",
+                            "render": function (data, type, row, meta) {
+                                thresh = 39
+                                if (data.length > thresh) {
+                                    reformat = generateTooltip(data, thresh)
+                                    return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + reformat['tooltip'] + "'>" + reformat['trimtext'] + "</a>";
+                                } else {
+                                    return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
+                                }
+                                
+                            }
+                        }
+                    ],
+                });
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            var initTable2 = function () {
+                var table = $('#conferences_list');
+
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                    lengthMenu: [5, 10, 25, 50],
+
+                    pageLength: 10,
+
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
+
+                    // Order settings
+                    // order: [[0, 'desc']],
+
+                    columnDefs: [
+                        {
+                            "targets": 2,
+                            "data": "download_link",
+                            "render": function (data, type, row, meta) {
+                                thresh = 39
+                                if (data.length > thresh) {
+                                    reformat = generateTooltip(data, thresh)
+                                    return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + reformat['tooltip'] + "'>" + reformat['trimtext'] + "</a>";
+                                } else {
+                                    return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
+                                }
+                            }
+                        }
+                    ],
+                });
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            return {
+
+                //main function to initiate the module
+                init: function () {
+                    initTable1();
+                    initTable2();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTDatatablesBasicBasic.init();
+        });
+
     </script>
     <script>
-
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        function generateTooltip(text, thresh) {
+            tooltip = text;
+            trimtext = text.substring(0, thresh) + "..."
+            return { 'tooltip': tooltip, 'trimtext': trimtext }
+        }
     </script>
 }

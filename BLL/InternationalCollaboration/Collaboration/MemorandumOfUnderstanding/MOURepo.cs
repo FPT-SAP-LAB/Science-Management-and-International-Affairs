@@ -189,7 +189,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     countInYear++;
                     newCode = DateTime.Now.Year + "/" + countInYear;
-                    isDuplicated = db.Database.SqlQuery<int>(sql_mouCode,
+                    isDuplicated = db.Database.SqlQuery<int>(sql_checkDup,
                         new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
                 } while (isDuplicated);
                 return newCode;
