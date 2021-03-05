@@ -12,28 +12,24 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class File
+    public partial class AcademicCollaborationType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public File()
+        public AcademicCollaborationType()
         {
-            this.Decisions = new HashSet<Decision>();
-            this.Inventions = new HashSet<Invention>();
-            this.People = new HashSet<Person>();
-            this.Profiles = new HashSet<Profile>();
+            this.AcademicCollaborationStatusTypes = new HashSet<AcademicCollaborationStatusType>();
+            this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
+            this.AcademicPrograms = new HashSet<AcademicProgram>();
         }
     
-        public int file_id { get; set; }
-        public string name { get; set; }
-        public string link { get; set; }
+        public int collab_type_id { get; set; }
+        public string collab_type_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
+        public virtual ICollection<AcademicCollaborationStatusType> AcademicCollaborationStatusTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
+        public virtual ICollection<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
     }
 }

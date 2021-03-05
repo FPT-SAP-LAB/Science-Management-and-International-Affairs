@@ -17,9 +17,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MOUPartnerScope()
         {
-            this.ActivityPartners = new HashSet<ActivityPartner>();
             this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
             this.MOAPartnerScopes = new HashSet<MOAPartnerScope>();
+            this.ActivityPartners = new HashSet<ActivityPartner>();
             this.ResearchPartners = new HashSet<ResearchPartner>();
         }
     
@@ -30,13 +30,13 @@ namespace ENTITIES
         public Nullable<int> mou_bonus_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOAPartnerScope> MOAPartnerScopes { get; set; }
         public virtual MOU MOU { get; set; }
         public virtual MOUBonu MOUBonu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
         public virtual Partner Partner { get; set; }
         public virtual CollaborationScope CollaborationScope { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

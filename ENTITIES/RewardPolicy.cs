@@ -22,7 +22,7 @@ namespace ENTITIES
         }
     
         public int reward_policy_id { get; set; }
-        public Nullable<System.DateTime> valid_date { get; set; }
+        public System.DateTime valid_date { get; set; }
         public Nullable<System.DateTime> expired_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

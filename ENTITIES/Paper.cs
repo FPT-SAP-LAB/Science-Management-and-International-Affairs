@@ -17,9 +17,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Paper()
         {
+            this.AuthorPapers = new HashSet<AuthorPaper>();
             this.Comments = new HashSet<Comment>();
             this.Decisions = new HashSet<Decision>();
-            this.People = new HashSet<Person>();
             this.PaperCriterias = new HashSet<PaperCriteria>();
         }
     
@@ -27,6 +27,7 @@ namespace ENTITIES
         public string name { get; set; }
         public Nullable<System.DateTime> publish_date { get; set; }
         public string link_doi { get; set; }
+        public string link_scholar { get; set; }
         public Nullable<int> specialization_id { get; set; }
         public string type { get; set; }
         public string journal_name { get; set; }
@@ -36,15 +37,17 @@ namespace ENTITIES
         public string index { get; set; }
         public string reward_type { get; set; }
         public int status_id { get; set; }
+        public int paper_type_id { get; set; }
     
         public virtual Specialization Specialization { get; set; }
+        public virtual PaperType PaperType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AuthorPaper> AuthorPapers { get; set; }
         public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Decision> Decisions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperCriteria> PaperCriterias { get; set; }
     }

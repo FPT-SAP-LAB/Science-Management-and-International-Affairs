@@ -126,6 +126,7 @@
                                         <th>Họ và tên</th>
                                         <th>Cơ sở</th>
                                         <th>Chức danh</th>
+                                        <th>Email</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -137,7 +138,10 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control inputName" name="postcode" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                            <input type="text" class="form-control inputName" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                        </td>
+                                        <td>
+                                            <input type="email" class="form-control inputEmail" placeholder="Email" value="sonnt69@fpt.edu.vn">
                                         </td>
                                         <td>
                                             <select class="form-control selectOffice">
@@ -166,7 +170,10 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control inputName" name="postcode" placeholder="Họ và tên" value="">
+                                            <input type="text" class="form-control inputName" placeholder="Họ và tên" value="">
+                                        </td>
+                                        <td>
+                                            <input type="email" class="form-control inputEmail" placeholder="Email" value="">
                                         </td>
                                         <td>
                                             <select class="form-control selectOffice">
@@ -224,11 +231,11 @@
                                 <tbody id="tableCost">
                                     <tr role="row" class="odd" id="baseCost">
                                         <td>
-                                            <input type="text" class="form-control" name="postcode" placeholder="Nội dung " value="">
+                                            <input type="text" class="form-control" placeholder="Nội dung " value="">
                                         </td>
                                         <td>FPTU</td>
                                         <td>
-                                            <input onInput="calculateCost(this)" type="text" class="form-control" name="postcode" placeholder="Chi phí" value="">
+                                            <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí" value="">
                                         </td>
                                         <td>
                                             <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -650,21 +657,27 @@
                     formality_id: $("#formality").val()
                 },
                 ConferenceParticipant: [],
-                Cost: []
+                Cost: [],
+                Persons: []
             }
             $("#tableParticipant tr").each((idx, ele) => {
-                let listTD = $(ele).find("td");
-                let ms = $(listTD[0]).find("select").select2('data')[0].id;
-                let name = $(listTD[1]).find("input").val();
+                let ms = $(ele).find(".selectPeople").select2('data')[0].id;
+                let name = $(ele).find(".inputName").val();
                 if (ms == "" || name == "")
                     return;
                 let info = {
-                    ms: ms,
-                    name: name,
-                    office_id: $(listTD[2]).find("select").val(),
-                    title_id: $(listTD[3]).find("select").val(),
+                    current_mssv_msnv: ms,
+                    office_id: $(ele).find(".selectOffice").val(),
+                    title_id: $(ele).find(".selectTitle").val(),
                 }
-                this.data.ConferenceParticipant.push(info)
+                this.data.ConferenceParticipant.push(info);
+                let person = {
+                    name: name,
+                    office_id: $(ele).find(".selectOffice").val(),
+                    email: $(ele).find(".inputEmail").val(),
+                    mssv_msnv: ms
+                }
+                this.data.Persons.push(person);
             })
             $("#tableCost tr:not(:last-child)").each((idx, ele) => {
                 let listTD = $(ele).find("td");
