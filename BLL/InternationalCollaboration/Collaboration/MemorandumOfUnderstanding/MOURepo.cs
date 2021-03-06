@@ -285,11 +285,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     t1.country_id = t2.country_id where t1.partner_name = @partner_name";
                 CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
                     new SqlParameter("partner_name", partner_name)).FirstOrDefault();
-                if (p != null)
-                {
-                    p.website = p.website is null ? "" : p.website;
-                    p.address = p.address is null ? "" : p.address;
-                }
+                //if (p != null)
+                //{
+                //    p.website = p.website is null ? "" : p.website;
+                //    p.address = p.address is null ? "" : p.address;
+                //}
                 return p;
             }
             catch (Exception ex)
