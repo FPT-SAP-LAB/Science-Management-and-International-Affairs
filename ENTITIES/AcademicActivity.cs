@@ -17,27 +17,28 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AcademicActivity()
         {
+            this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
-            this.ActivityExpenses = new HashSet<ActivityExpense>();
+            this.ActivityOffices = new HashSet<ActivityOffice>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
         }
     
         public int activity_id { get; set; }
-        public string activity_name { get; set; }
-        public string location { get; set; }
         public Nullable<System.DateTime> activity_date_start { get; set; }
         public Nullable<System.DateTime> activity_date_end { get; set; }
         public int activity_type_id { get; set; }
         public int activity_status_id { get; set; }
         public Nullable<int> article_id { get; set; }
     
+        public virtual Article Article { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         public virtual AcademicActivityType AcademicActivityType { get; set; }
         public virtual AcademicActivityStatu AcademicActivityStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
-        public virtual News News { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpense> ActivityExpenses { get; set; }
+        public virtual ICollection<ActivityOffice> ActivityOffices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
     }

@@ -14,14 +14,21 @@ namespace ENTITIES
     
     public partial class Procedure
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Procedure()
+        {
+            this.ProcedureLanguages = new HashSet<ProcedureLanguage>();
+        }
+    
         public int procedure_id { get; set; }
-        public string procedure_name { get; set; }
         public int collab_id { get; set; }
         public int account_id { get; set; }
         public Nullable<int> article_id { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual AcademicCollaboration AcademicCollaboration { get; set; }
-        public virtual News News { get; set; }
+        public virtual Article Article { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcedureLanguage> ProcedureLanguages { get; set; }
     }
 }

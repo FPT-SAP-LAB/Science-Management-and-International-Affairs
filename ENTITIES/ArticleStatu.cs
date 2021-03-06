@@ -17,13 +17,13 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ArticleStatu()
         {
-            this.News = new HashSet<News>();
+            this.Articles = new HashSet<Article>();
         }
     
         public int news_status_id { get; set; }
         public string news_status_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<News> News { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

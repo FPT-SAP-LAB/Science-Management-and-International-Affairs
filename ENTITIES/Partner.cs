@@ -17,11 +17,8 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Partner()
         {
-            this.ActivityPartners = new HashSet<ActivityPartner>();
-            this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
             this.MOUPartners = new HashSet<MOUPartner>();
             this.MOUPartnerScopes = new HashSet<MOUPartnerScope>();
-            this.ResearchPartners = new HashSet<ResearchPartner>();
             this.Specializations = new HashSet<Specialization>();
         }
     
@@ -38,16 +35,10 @@ namespace ENTITIES
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartner> MOUPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartnerScope> MOUPartnerScopes { get; set; }
-        public virtual News News { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearchPartner> ResearchPartners { get; set; }
+        public virtual Article Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Specialization> Specializations { get; set; }
     }
