@@ -62,8 +62,6 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
                 get { return website; }   // get method
                 set { website = value; }  // set method
             }
-
-
         }
         //------------------------------------------------
 
