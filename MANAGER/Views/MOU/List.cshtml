@@ -367,33 +367,12 @@
                         <th class="text-center" rowspan="2">Tên đối tác</th>
                         <th class="text-center" colspan="3">Người đại diện</th>
                         <th class="text-center" rowspan="2"></th>
+                        <th class="text-center" rowspan="2"></th>
                     </tr>
                     <tr>
-                        <th>Họ và tên</th>
-                        <th>Điện thoại</th>
-                        <th>Email</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Bunkyo University</td>
-                        <td>Toshie Miyatake</td>
-                        <td>+81 48 974 8811</td>
-                        <td>kiec@stf.bunkyou.ac.jp</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>FPT Greenwich</td>
-                        <td>Cuong Minh Tran</td>
-                        <td>+84 12 345 2345</td>
-                        <td>cuong@fptgr.edu.vn</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
+                        <th class="text-center">Họ và tên</th>
+                        <th class="text-center">Điện thoại</th>
+                        <th class="text-center">Email</th>
                     </tr>
                 </table>
             </div>
@@ -422,6 +401,7 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                             <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                         </div>
 
@@ -499,7 +479,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" disabled>Thêm</button>
+                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="addToTemp()" disabled>Thêm</button>
             </div>
         </div>
     </div>
@@ -519,7 +499,8 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()"/>
+                            <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no"/>
+                            <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -533,7 +514,6 @@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="specialization_edit" name="param" style="width:100% !important">
                                 <option value="" selected></option>
-                                
                             </select>
                         </div>
                     </div>
@@ -575,10 +555,6 @@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="coop_scope_edit" name="param" style="width:100% !important">
                                 <option value="" selected></option>
-                                @foreach (var item in ViewBag.listScopes)
-                                {
-                                    <option value="@item.scope_id">@item.scope_abbreviation</option>
-                                }
                             </select>
                         </div>
                     </div>
@@ -601,7 +577,7 @@
 <datalist id="partnerList">
     @foreach (var item in ViewBag.listPartners)
     {
-        <option >@item.partner_name</option>
+        <option>@item.partner_name</option>
     }
 </datalist>
 
@@ -904,9 +880,13 @@
 
     </script>
 
-    @*mou_table*@
+    @*mou*@
 <script>
     var rowIdx = 1;
+    var listTempPartnerMOUAdd = [];
+    var listScopes = [];
+    var listSpe = [];
+    var listPartners = [];
     var mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1010,38 +990,56 @@
             ]
     });
 
+    $(document).ready(function () {
+        $("#specialization_add option").each(function () {
+            listSpe.push({
+                spe_id: $(this).val(),
+                spe_name: $(this).text()  
+            });
+        });
+        $("#coop_scope_add option").each(function () {
+            listScopes.push({
+                scope_id: $(this).val(),
+                scope_name: $(this).text()
+            });
+        });
+        listSpe.shift();
+        listScopes.shift();
+
+    });
+
     function searchMOU() {
         mou_table.ajax.reload();
     }
 
     function checkPartnerAdd() {
-        //var partner_name = document.getElementById("partner_name_add").value;
-        alert($('#partner_name_add').val());
+        var partner_name = document.getElementById("partner_name_add").value;
+        var em = { partner_name: partner_name };
         $.ajax({
             url: "@Url.Action("CheckPartner", "MOU")",
             type: "POST",
-            data: {
-                "partner_name": function () { return $('#partner_name_add').val() }
-            },
+            data: JSON.stringify(em),
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (data) {
-                //if (data == null) {
-                //    document.getElementById('nation_add').removeAttribute('disabled');
-                //    document.getElementById('website_add').removeAttribute('disabled');
-                //    document.getElementById('address_add').removeAttribute('disabled');
-                //    document.getElementById("nation_add").value = "";
-                //    document.getElementById("website_add").value = "";
-                //    document.getElementById("address_add").value = "";
-                //} else {
-                //    document.getElementById('nation_add').setAttribute('disabled', '');
-                //    document.getElementById('website_add').setAttribute('disabled', '');
-                //    document.getElementById('address_add').setAttribute('disabled', '');
-                //    document.getElementById("nation_add").value = data.country_name;
-                //    document.getElementById("website_add").value = data.website;
-                //    document.getElementById("address_add").value = data.address;
-                //}
-                //document.getElementById("add_mou_partner_button").removeAttribute('disabled');
+                if (data == "") {
+                    document.getElementById('nation_add').removeAttribute('disabled');
+                    document.getElementById('website_add').removeAttribute('disabled');
+                    document.getElementById('address_add').removeAttribute('disabled');
+                    document.getElementById("nation_add").value = "";
+                    document.getElementById("website_add").value = "";
+                    document.getElementById("address_add").value = "";
+                    document.getElementById("partner_id_add").value = "";
+                } else {
+                    document.getElementById('nation_add').setAttribute('disabled', '');
+                    document.getElementById('website_add').setAttribute('disabled', '');
+                    document.getElementById('address_add').setAttribute('disabled', '');
+                    document.getElementById("nation_add").value = data.country_name;
+                    document.getElementById("website_add").value = data.website;
+                    document.getElementById("address_add").value = data.address;
+                    document.getElementById("partner_id_add").value = data.partner_id;
+                }
+                document.getElementById("add_mou_partner_button").removeAttribute('disabled');
             },
             error: function () {
                 //alert("fail");
@@ -1090,6 +1088,115 @@
     function preventAdd() {
         document.getElementById("add_mou_partner_button").setAttribute('disabled', '');
     }
+
+    function addToTemp() {
+        var TempObj = {
+            partnername_add: document.getElementById("partner_name_add").value,
+            represent_add: document.getElementById("represent_add").value,
+            specialization_add: document.getElementById("specialization_add").value,
+            nation_add: document.getElementById("nation_add").value,
+            website_add: document.getElementById("website_add").value,
+            address_add: document.getElementById("address_add").value,
+            email_add: document.getElementById("email_add").value,
+            sign_date_mou_add: document.getElementById("sign_date_mou_add").value,
+            phone_add: document.getElementById("phone_add").value,
+            coop_scope_add: document.getElementById("coop_scope_add").value,
+            partner_id: document.getElementById("partner_id_add").value,
+        }
+        listTempPartnerMOUAdd.push(TempObj);
+        clearInputAdd();
+        initAndRefreshTableMOUAdd();
+    }
+
+    function clearInputAdd() {
+        document.getElementById("partner_name_add").value = "";
+        document.getElementById("represent_add").value = "";
+        document.getElementById("specialization_add").value = "";
+        document.getElementById("nation_add").value = "";
+        document.getElementById("website_add").value = "";
+        document.getElementById("address_add").value = "";
+        document.getElementById("email_add").value = "";
+        document.getElementById("sign_date_mou_add").value = "";
+        document.getElementById("phone_add").value = "";
+        document.getElementById("coop_scope_add").value = "";
+    }
+
+    function initAndRefreshTableMOUAdd() {
+        $(".MOUPartnerTempList").remove();
+        var HTMLdata = null;
+        for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
+            HTMLdata += '<tr id="temp'+idx+'" "class="MOUPartnerTempList">';
+            HTMLdata += '<td>' + (idx+1) + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].email_add + '</td>';
+            var buttonEdit = '<a onclick="loadEditTemp('+ idx +')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
+            var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+            HTMLdata += '<td class="text-center">' + buttonEdit + '</td>';
+            HTMLdata += '<td class="text-center">' + buttonDel + '</td>';
+            HTMLdata += '</tr>';
+        }
+        $('#mou-partner-table').append(HTMLdata);
+    }
+
+    //function confirm_delete_temp(index) {
+    //    Swal.fire({
+    //        title: "Are you sure?",
+    //        text: "You won't be able to revert this!",
+    //        icon: "warning",
+    //        showCancelButton: true,
+    //        confirmButtonText: "Yes, delete it!",
+    //        cancelButtonText: "No, cancel!",
+    //        reverseButtons: true
+    //    }).then(function (result) {
+    //        if (result.isConfirmed) {
+    //            listTempPartnerMOUAdd.splice(index, 1);
+    //            initAndRefreshTableMOUAdd();
+    //        }
+    //    })
+    //}
+
+    //function loadEditTemp(index) {
+    //    $("#idx_edit").val(index);
+    //    var HTMLSpedata = "";
+    //    var HTMLScopedata = "";
+    //    for (i = 0; i < listSpe.length; i++) {
+    //        if (listTempPartnerMOUAdd[index].specialization_add == listSpe[i].spe_id) {
+    //            HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
+                
+    //        } else {
+    //            HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" >' + listSpe[i].spe_name + '</option>'
+                
+    //        }
+    //    }
+    //    for (j = 0; j < listScopes.length; j++) {
+    //        if (listTempPartnerMOUAdd[index].coop_scope_add == listScopes[j].scope_id) {
+    //            HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_name + '</option>'
+    //        } else {
+    //            HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_name + '</option>'
+    //        }
+    //    }
+    //    $('#specialization_edit').append(HTMLSpedata);
+    //    $('#coop_scope_edit').append(HTMLScopedata);
+    //    if (listTempPartnerMOUAdd[index].partner_id == "") {
+    //        document.getElementById('nation_edit').removeAttribute('disabled');
+    //        document.getElementById('website_edit').removeAttribute('disabled');
+    //        document.getElementById('address_edit').removeAttribute('disabled');
+    //    } else {
+    //        document.getElementById('nation_edit').setAttribute('disabled', '');
+    //        document.getElementById('website_edit').setAttribute('disabled', '');
+    //        document.getElementById('address_edit').setAttribute('disabled', '');
+    //    }
+    //    $('#partner_name_edit').val(listTempPartnerMOUAdd[index].partnername_add);
+    //    $('#represent_edit').val(listTempPartnerMOUAdd[index].represent_add);
+    //    $('#nation_edit').val(listTempPartnerMOUAdd[index].nation_add);
+    //    $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
+    //    $('#address_edit').val(listTempPartnerMOUAdd[index].address_add);
+    //    $('#email_edit').val(listTempPartnerMOUAdd[index].email_add);
+    //    $('#sign_date_mou_edit').val(listTempPartnerMOUAdd[index].sign_date_mou_add);
+    //    $('#phone_edit').val(listTempPartnerMOUAdd[index].phone_add);
+    //}
 </script>
 }
 
