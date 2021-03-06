@@ -90,7 +90,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_start_date = input.mou_start_date,
                         contact_point_name = input.contact_point_name,
                         contact_point_phone = input.contact_point_phone,
-                        contact_phone_email = input.contact_point_email
+                        contact_point_email= input.contact_point_email
                     });
                     MOUPartner mp = db.MOUPartners.Where(x => x.mou_id == input.mou_id && x.partner_id == input.partner_id).First();
                     //spe
@@ -130,7 +130,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     //edit mouPartner
                     MOUPartner mp = db.MOUPartners.Where(x => x.mou_id == input.mou_id && x.partner_id == input.partner_id).First();
-                    mp.contact_phone_email = input.contact_point_email;
+                    mp.contact_point_email = input.contact_point_email;
                     mp.contact_point_name = input.contact_point_name;
                     mp.contact_point_phone = input.contact_point_phone;
                     mp.mou_start_date = input.mou_start_date;
