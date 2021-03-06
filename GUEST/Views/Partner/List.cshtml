@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách đối tác";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .select2-selection__rendered {
+        padding-left: 55px !important;
+    }
+
+    table thead tr th {
+        font-weight: bolder !important;
+    }
+</style>
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row mb-2 col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0 text-center">
+                                    <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                        <option label="Label"></option>
+                                        <option value="1">Việt Nam</option>
+                                        <option value="2">USA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
+                                <a href="#" class="btn btn-light-primary font-weight-bolder text-nowrap">Tìm kiếm</a>
+                            </div>
+                        </div>
+                        <table id="partner_table" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên đối tác</th>
+                                    <th>Quốc gia</th>
+                                    <th>Lĩnh vực</th>
+                                    <th>Website</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row justify-content-center">
+                            <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
+    <script>
+
+        $('#search_nation').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+        })
+        $(document).ready(function () {
+            $('.select2-selection__rendered').addClass('justify-content-center')
+           
+        })
+        function link_icon() {
+            $('#partner_table tbody tr').each(function () {
+                var data = $(this).find('td').eq(4).text()
+                $(this).find('td').eq(4).html('<a target="blank" href="#' + data + '"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>')
+            })
+        }
+        $(document).ready(function () {
+            var table = $('#partner_table').DataTable({
+                searching: false,
+                dom: 'frt',
+                processing: true,
+                ajax: $.fn.dataTable.pageLoadMore({
+                    url: '/Partner/Load_List'
+                }),
+                drawCallback: function () {
+                    link_icon(); 
+
+                    // Show or hide "Load more" button based on whether there is more data available
+                    $('#btn-example-load-more').toggle(this.api().page.hasMore());
+                },
+                initComplete: function () {
+                }
+            });
+
+           
+
+            // Handle click on "Load more" button
+            $('#btn-example-load-more').on('click', function () {
+                // Load more data
+                table.page.loadMore();
+            });
+
+        });
+
+
+    </script>
+}
