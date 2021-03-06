@@ -71,7 +71,6 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
         {
             List<Person> list = new List<Person>();
 
-
             for (int i = 0; i < 100; i++)
             {
                 Person temp = new Person();
@@ -82,12 +81,9 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
                 else
                 {
                     temp = new Person("2021/01:SBI Graduate School", "Japan", "CNNT", "https://");
-
                 }
                 list.Add(temp);
             }
-
-
             return Json(new { success = true, data = list }, JsonRequestBehavior.AllowGet);
         }
 
