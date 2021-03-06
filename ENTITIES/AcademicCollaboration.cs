@@ -21,25 +21,25 @@ namespace ENTITIES
             this.Procedures = new HashSet<Procedure>();
         }
     
-        public System.DateTime study_start_date { get; set; }
-        public System.DateTime study_end_date { get; set; }
-        public int collab_type { get; set; }
+        public System.DateTime plan_study_start_date { get; set; }
+        public System.DateTime plan_study_end_date { get; set; }
         public string note { get; set; }
         public int collab_id { get; set; }
-        public int direction { get; set; }
-        public int partner_id { get; set; }
+        public int direction_id { get; set; }
         public int people_id { get; set; }
-        public int collab_status_id { get; set; }
         public Nullable<bool> is_supported { get; set; }
         public Nullable<int> mou_partner_scope_id { get; set; }
+        public int collab_status_type_id { get; set; }
+        public Nullable<System.DateTime> actual_study_start_date { get; set; }
+        public Nullable<System.DateTime> actual_study_end_date { get; set; }
     
         public virtual Person Person { get; set; }
-        public virtual AcademicCollaborationStatu AcademicCollaborationStatu { get; set; }
+        public virtual Direction Direction { get; set; }
         public virtual MOUPartnerScope MOUPartnerScope { get; set; }
-        public virtual Partner Partner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Procedure> Procedures { get; set; }
+        public virtual AcademicCollaborationStatusType AcademicCollaborationStatusType { get; set; }
     }
 }

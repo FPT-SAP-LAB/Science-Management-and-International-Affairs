@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Office()
         {
-            this.ActivityExpenses = new HashSet<ActivityExpense>();
+            this.ActivityOffices = new HashSet<ActivityOffice>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.MOUs = new HashSet<MOU>();
             this.Participants = new HashSet<Participant>();
@@ -26,15 +26,15 @@ namespace ENTITIES
         }
     
         public int office_id { get; set; }
-        public int unit_id { get; set; }
-        public int area_id { get; set; }
+        public Nullable<int> unit_id { get; set; }
+        public Nullable<int> area_id { get; set; }
         public string office_abbreviation { get; set; }
         public string office_name { get; set; }
     
         public virtual Area Area { get; set; }
         public virtual InternalUnit InternalUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpense> ActivityExpenses { get; set; }
+        public virtual ICollection<ActivityOffice> ActivityOffices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

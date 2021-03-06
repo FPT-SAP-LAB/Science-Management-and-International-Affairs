@@ -23,14 +23,14 @@ namespace ENTITIES
         }
     
         public int project_id { get; set; }
-        public int project_name { get; set; }
-        public int project_start_date { get; set; }
-        public int project_end_date { get; set; }
+        public string project_name { get; set; }
+        public System.DateTime project_start_date { get; set; }
+        public System.DateTime project_end_date { get; set; }
         public int specialization_id { get; set; }
         public Nullable<int> article_id { get; set; }
     
         public virtual Specialization Specialization { get; set; }
-        public virtual News News { get; set; }
+        public virtual Article Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectProduct> ProjectProducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

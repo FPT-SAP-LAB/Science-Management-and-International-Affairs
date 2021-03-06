@@ -16,14 +16,30 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         public ActionResult List()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
-            //int duration = mou.getDuration();
-            //List<ListMOU> listMOU = mou.listAllMOU();
             //NotificationInfo noti = mou.getNoti();
             //mou.UpdateStatusMOU();
+            ViewBag.listOffice = mou.GetOffice();
+            ViewBag.newMOUCode = mou.getSuggestedMOUCode();
+            ViewBag.listPartners = mou.GetPartners();
+            ViewBag.listScopes = mou.GetCollaborationScopes();
+            ViewBag.listSpe = mou.GetSpecializations();
             return View();
         }
 
-        public ActionResult List_Deleted()
+        public ActionResult ViewMOU(string partner_name, string contact_point_name, string mou_code)
+        {
+            try
+            {
+                List<ListMOU> listMOU = mou.listAllMOU(partner_name, contact_point_name, mou_code);
+                return Json(new { success = true, data = listMOU }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+
+        public ActionResult ListDeleted()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ ĐÃ XÓA";
             //int duration = mou.getDuration();
@@ -56,6 +72,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        public ActionResult CheckPartner(string partner_name)
+        {
+            try
+            {
+                CustomPartner partner = mou.CheckPartner(partner_name);
+                return Json(new { success = true, data = partner }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
 
         public ActionResult ExportMOUExcel()
         {
@@ -69,37 +97,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-
-        public ActionResult getDataAddingMOU()
-        {
-            try
-            {
-                List<ENTITIES.Office> officeList = mou.GetOffice();
-                List<ENTITIES.Partner> partnerList = mou.GetPartners();
-                List<ENTITIES.Specialization> speList = mou.GetSpecializations();
-                List<ENTITIES.CollaborationScope> scopeList = mou.GetCollaborationScopes();
-                string suggestedMOUCode = mou.getSuggestedMOUCode();
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(400);
-            }
-        }
-
-        public ActionResult checkPartner()
-        {
-            try
-            {
-                mou.ExportMOUExcel();
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(400);
-            }
-        }
-
         public ActionResult Detail(string id)
         {
             return View();

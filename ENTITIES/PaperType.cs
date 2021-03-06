@@ -12,22 +12,18 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ActivityExpense
+    public partial class PaperType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ActivityExpense()
+        public PaperType()
         {
-            this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
+            this.Papers = new HashSet<Paper>();
         }
     
-        public int expense_id { get; set; }
-        public string expense_name { get; set; }
-        public int activity_id { get; set; }
-        public int office_id { get; set; }
+        public int paper_type_id { get; set; }
+        public string name { get; set; }
     
-        public virtual Office Office { get; set; }
-        public virtual AcademicActivity AcademicActivity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
+        public virtual ICollection<Paper> Papers { get; set; }
     }
 }

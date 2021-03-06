@@ -18,6 +18,7 @@ namespace ENTITIES
         public File()
         {
             this.Decisions = new HashSet<Decision>();
+            this.Inventions = new HashSet<Invention>();
             this.People = new HashSet<Person>();
             this.Profiles = new HashSet<Profile>();
         }
@@ -28,6 +29,8 @@ namespace ENTITIES
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Decision> Decisions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Invention> Inventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> People { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
