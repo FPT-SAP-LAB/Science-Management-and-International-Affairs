@@ -12,28 +12,24 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class File
+    public partial class Direction
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public File()
+        public Direction()
         {
-            this.Decisions = new HashSet<Decision>();
-            this.Inventions = new HashSet<Invention>();
-            this.People = new HashSet<Person>();
-            this.Profiles = new HashSet<Profile>();
+            this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
+            this.AcademicPrograms = new HashSet<AcademicProgram>();
+            this.DirectionLanguages = new HashSet<DirectionLanguage>();
         }
     
-        public int file_id { get; set; }
-        public string name { get; set; }
-        public string link { get; set; }
+        public int direction_id { get; set; }
+        public string direction_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
+        public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
+        public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<DirectionLanguage> DirectionLanguages { get; set; }
     }
 }

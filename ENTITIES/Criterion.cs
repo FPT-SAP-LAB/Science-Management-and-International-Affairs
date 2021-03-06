@@ -17,15 +17,17 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Criterion()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
+            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
         }
     
         public int criteria_id { get; set; }
-        public string name { get; set; }
         public int reward_policy_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
         public virtual RewardPolicy RewardPolicy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
     }
 }

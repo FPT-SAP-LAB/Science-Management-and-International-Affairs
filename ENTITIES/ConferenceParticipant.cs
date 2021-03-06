@@ -18,6 +18,7 @@ namespace ENTITIES
         public int conference_support_id { get; set; }
         public int title_id { get; set; }
         public int office_id { get; set; }
+        public string current_mssv_msnv { get; set; }
     
         public virtual Office Office { get; set; }
         public virtual Person Person { get; set; }

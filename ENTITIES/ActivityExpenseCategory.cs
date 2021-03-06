@@ -12,21 +12,20 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class MOUStatu
+    public partial class ActivityExpenseCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MOUStatu()
+        public ActivityExpenseCategory()
         {
-            this.MOAStatusHistories = new HashSet<MOAStatusHistory>();
-            this.MOUStatusHistories = new HashSet<MOUStatusHistory>();
+            this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
         }
     
-        public int mou_status_id { get; set; }
-        public string mou_status_name { get; set; }
+        public int expense_category_id { get; set; }
+        public string expense_category_name { get; set; }
+        public Nullable<int> activity_office_id { get; set; }
     
+        public virtual ActivityOffice ActivityOffice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOAStatusHistory> MOAStatusHistories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOUStatusHistory> MOUStatusHistories { get; set; }
+        public virtual ICollection<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
     }
 }

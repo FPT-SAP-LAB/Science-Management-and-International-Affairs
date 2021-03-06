@@ -17,11 +17,9 @@ namespace ENTITIES
         public bool is_sponsor { get; set; }
         public int research_partner_id { get; set; }
         public int project_id { get; set; }
-        public int partner_id { get; set; }
         public Nullable<int> mou_partner_scope_id { get; set; }
     
         public virtual MOUPartnerScope MOUPartnerScope { get; set; }
-        public virtual Partner Partner { get; set; }
         public virtual ResearchCollaboration ResearchCollaboration { get; set; }
         public virtual ResearchContactPoint ResearchContactPoint { get; set; }
     }

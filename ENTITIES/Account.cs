@@ -18,10 +18,11 @@ namespace ENTITIES
         public Account()
         {
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
+            this.Articles = new HashSet<Article>();
             this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
+            this.ConferenceSupports = new HashSet<ConferenceSupport>();
             this.MOAs = new HashSet<MOA>();
             this.MOUs = new HashSet<MOU>();
-            this.News = new HashSet<News>();
             this.Notifications = new HashSet<Notification>();
             this.Procedures = new HashSet<Procedure>();
             this.Rights = new HashSet<Right>();
@@ -38,13 +39,15 @@ namespace ENTITIES
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Article> Articles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOA> MOAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOU> MOUs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<News> News { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Notification> Notifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
