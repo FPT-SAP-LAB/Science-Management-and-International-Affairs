@@ -2345,10 +2345,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Paper\AddRequest.cshtml" />
-    <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Citation\List.cshtml" />
     <Content Include="Views\Citation\AddRequest.cshtml" />
-    <Content Include="Views\Invention\ListAll.cshtml" />
     <Content Include="Views\ConferenceSponsor\Detail.cshtml" />
     <Content Include="Views\ConferenceSponsor\Add.cshtml" />
     <Content Include="Views\ConferenceSponsor\CostMenu.cshtml" />
