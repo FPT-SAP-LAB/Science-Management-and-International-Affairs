@@ -23,7 +23,7 @@ namespace ENTITIES
         public int mou_bonus_id { get; set; }
         public int mou_id { get; set; }
         public string mou_bonus_code { get; set; }
-        public Nullable<System.DateTime> mou_bonus_decision_date { get; set; }
+        public System.DateTime mou_bonus_decision_date { get; set; }
         public Nullable<System.DateTime> mou_bonus_end_date { get; set; }
         public string evidence { get; set; }
     

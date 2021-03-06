@@ -19,8 +19,8 @@ namespace ENTITIES
         public string content { get; set; }
         public string sponsoring_organization { get; set; }
         public string detail { get; set; }
-        public string total { get; set; }
-        public Nullable<bool> editable { get; set; }
+        public int total { get; set; }
+        public bool editable { get; set; }
     
         public virtual ConferenceSupport ConferenceSupport { get; set; }
     }

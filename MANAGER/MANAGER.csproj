@@ -419,6 +419,7 @@
     <Content Include="Content\assets\media\misc\bg-1.jpg" />
     <Content Include="Content\assets\media\misc\bg-2.jpg" />
     <Content Include="Content\assets\media\misc\invoice 5 bar.jpg" />
+    <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\plugins\jstree\32px.png" />
     <Content Include="Content\assets\media\products\1.png" />
     <Content Include="Content\assets\media\products\10.png" />
@@ -2186,6 +2187,8 @@
     <Content Include="Views\Shared\_Researcher.cshtml" />
     <Content Include="Views\Researchers\Publications.cshtml" />
     <Content Include="Views\Researchers\Rewards.cshtml" />
+    <Content Include="Views\MOU\List_Deleted.cshtml" />
+    <Content Include="Views\Partner\List_Deleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2195,10 +2198,6 @@
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\BasicInfoMOA\" />
-    <Folder Include="Views\BasicInfoMOU\" />
-    <Folder Include="Views\PartnerMOA\" />
-    <Folder Include="Views\PartnerMOU\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
