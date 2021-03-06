@@ -427,7 +427,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             MOUStatusHistory mou = new MOUStatusHistory();
                             mou.mou_id = id;
                             mou.mou_status_id = 2;
-                            mou.date = DateTime.Now;
+                            mou.datetime = DateTime.Now;
                             db.MOUStatusHistories.Add(mou);
                             db.SaveChanges();
                         }
