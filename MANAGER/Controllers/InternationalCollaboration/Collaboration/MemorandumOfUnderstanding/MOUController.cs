@@ -77,7 +77,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 CustomPartner partner = mou.CheckPartner(partner_name);
-                return Json(new { success = true, data = partner }, JsonRequestBehavior.AllowGet);
+                return partner is null ? Json("") : Json(partner);
             }
             catch (Exception)
             {
