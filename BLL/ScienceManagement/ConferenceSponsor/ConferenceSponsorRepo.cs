@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
@@ -44,20 +45,31 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public List<Info> GetAllProfileBy(string id)
         {
-            id = id.ToUpper();
-            List<string> currentID = new List<string>()
+            List<Info> infos = db.Database.SqlQuery<Info>(@"
+                SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
+                FROM   General.People INNER JOIN
+                             SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
+                             SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
+                             General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
+                             Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
+                WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
+                ORDER BY MS
+                OFFSET 0 ROWS
+                FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
+            if (infos.Count == 0)
             {
-                "HE130214"
-            };
-            bool IsExist = currentID.Any(x => x.Contains(id));
-            List<Info> infos = new List<Info>();
-            if (IsExist)
-            {
-                infos.Add(new Info("HE130214", "Đoàn Văn Thắng", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
-                infos.Add(new Info("HE130020", "Trần Thị Thúy Nguyên", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
+                Info info = new Info()
+                {
+                    Email = "",
+                    MS = id.ToUpper(),
+                    Name = "",
+                    OfficeID = 1,
+                    OfficeName = "",
+                    TitleID = 1,
+                    TitleString = ""
+                };
+                infos = new List<Info>() { info };
             }
-            else
-                infos.Add(new Info(id, "", 1, "", 1, ""));
             return infos;
         }
         public List<Conference> GetAllConferenceBy(string name)
@@ -173,26 +185,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public class Info
         {
-            public string PeopleID { get; set; }
+            public string MS { get; set; }
             public string Name { get; set; }
+            public string Email { get; set; }
             public int OfficeID { get; set; }
             public string OfficeName { get; set; }
             public int TitleID { get; set; }
             public string TitleString { get; set; }
-            public Info() { }
-            public Info(string id, string name, int officeID, string officeName, int titleID, string titleString)
-            {
-                PeopleID = id;
-                Name = name;
-                OfficeID = officeID;
-                OfficeName = officeName;
-                TitleID = titleID;
-                TitleString = titleString;
-            }
-        }
-        private class ParticipantExtend : Participant
-        {
-            public string Name { get; set; }
         }
     }
 }

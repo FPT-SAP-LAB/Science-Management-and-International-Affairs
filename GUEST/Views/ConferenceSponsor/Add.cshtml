@@ -122,11 +122,11 @@
                             <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th style="width: 240px">MSNV/MSSV</th>
+                                        <th>MSNV/MSSV</th>
                                         <th>Họ và tên</th>
+                                        <th>Email</th>
                                         <th>Cơ sở</th>
                                         <th>Chức danh</th>
-                                        <th>Email</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -560,6 +560,7 @@
         function formatInfoSelection(repo) {
             if (repo.id) {
                 $(currentRow).find(".inputName").val(repo.Name);
+                $(currentRow).find(".inputEmail").val(repo.Email);
                 $(currentRow).find(".selectOffice").val(repo.OfficeID).trigger('change');;
                 $(currentRow).find(".selectTitle").val(repo.TitleID).trigger('change');;
             }
@@ -617,7 +618,7 @@
                     },
                     processResults: function (data, params) {
                         data.map(function (obj) {
-                            obj.id = obj.PeopleID;
+                            obj.id = obj.MS;
                             return obj;
                         })
 
