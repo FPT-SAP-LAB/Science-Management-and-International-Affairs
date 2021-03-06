@@ -2360,6 +2360,7 @@
     <Content Include="Views\Citation\Edit.cshtml" />
     <Content Include="Views\PartialView\AddAuthor.cshtml" />
     <Content Include="Views\Partner\List.cshtml" />
+    <Content Include="Views\Partner\Partner_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
