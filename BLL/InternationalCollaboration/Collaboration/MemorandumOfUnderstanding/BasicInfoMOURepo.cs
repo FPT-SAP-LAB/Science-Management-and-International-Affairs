@@ -150,7 +150,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         m.mou_status_id = newBasicInfo.mou_status_id;
                         m.reason = newBasicInfo.reason;
                         m.mou_id = newBasicInfo.mou_id;
-                        m.date = DateTime.Now;
+                        m.datetime = DateTime.Now;
                         db.MOUStatusHistories.Add(m);
                     }
                     db.SaveChanges();
