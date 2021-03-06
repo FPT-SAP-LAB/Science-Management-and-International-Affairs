@@ -1,10 +1,12 @@
 ﻿using ENTITIES;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -43,17 +45,31 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public List<Info> GetAllProfileBy(string id)
         {
-            id = id.ToUpper();
-            List<string> currentID = new List<string>()
+            List<Info> infos = db.Database.SqlQuery<Info>(@"
+                SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
+                FROM   General.People INNER JOIN
+                             SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
+                             SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
+                             General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
+                             Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
+                WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
+                ORDER BY MS
+                OFFSET 0 ROWS
+                FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
+            if (infos.Count == 0)
             {
-                "HE130214"
-            };
-            bool IsExist = currentID.Any(x => x.Contains(id));
-            List<Info> infos = new List<Info>();
-            if (IsExist)
-                infos.Add(new Info("HE130214", "Đoàn Văn Thắng", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
-            else
-                infos.Add(new Info(id, "", 1, "", 1, ""));
+                Info info = new Info()
+                {
+                    Email = "",
+                    MS = id.ToUpper(),
+                    Name = "",
+                    OfficeID = 1,
+                    OfficeName = "",
+                    TitleID = 1,
+                    TitleString = ""
+                };
+                infos = new List<Info>() { info };
+            }
             return infos;
         }
         public List<Conference> GetAllConferenceBy(string name)
@@ -79,24 +95,103 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
+        public string AddConference(string input)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    DataTable dt = new DataTable();
+                    //log.Debug("Creating a conference sponsor request");
+                    //int a = int.Parse("43gg34+-");
+                    JObject @object = JObject.Parse(input);
+
+                    JToken conf = @object["Conference"];
+                    int conference_id = conf["conference_id"].ToObject<int>();
+
+                    Conference conference = conf.ToObject<Conference>();
+                    Conference temp = db.Conferences.Find(conference.conference_id);
+                    if (temp != null)
+                    {
+                        conference = temp;
+                    }
+                    else
+                    {
+                        db.Conferences.Add(conference);
+                        db.SaveChanges();
+                    }
+
+                    RewardPolicy policy = db.RewardPolicies.Where(x => x.expired_date == null).FirstOrDefault();
+
+                    ConferenceSupport support = new ConferenceSupport()
+                    {
+                        conference_id = conference.conference_id,
+                        status_id = 1,
+                        decision_id = null,
+                        reward_policy_id = policy.reward_policy_id,
+                        paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
+                        account_id = 1, // Sẽ chỉnh sau khi xong tạo account
+                        editable = false
+                    };
+                    db.ConferenceSupports.Add(support);
+                    db.SaveChanges();
+
+                    List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
+                    foreach (var item in costs)
+                    {
+                        int total = int.Parse(dt.Compute(item.detail, "").ToString());
+                        item.editable = false;
+                        item.sponsoring_organization = "FPTU";
+                        item.total = total;
+                        item.conference_support_id = support.conference_support_id;
+                    }
+                    db.Costs.AddRange(costs);
+
+                    List<ConferenceParticipant> participants = @object["ConferenceParticipant"].ToObject<List<ConferenceParticipant>>();
+                    List<Person> Persons = @object["Persons"].ToObject<List<Person>>();
+                    participants.ForEach(x => x.conference_support_id = support.conference_support_id);
+                    List<string> codes = participants.Select(x => x.current_mssv_msnv).ToList();
+                    List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
+                    Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
+                        .ToDictionary(x => x.title_id, x => x);
+                    Dictionary<string, int> CodeIDPairs = db.People.Where(x => codes.Contains(x.mssv_msnv))
+                        .ToDictionary(x => x.mssv_msnv, x => x.people_id);
+                    for (int i = 0; i < participants.Count; i++)
+                    {
+                        var item = participants[i];
+                        if (CodeIDPairs.ContainsKey(item.current_mssv_msnv))
+                            item.people_id = CodeIDPairs[item.current_mssv_msnv];
+                        else
+                        {
+                            db.People.Add(Persons[i]);
+                            db.SaveChanges();
+
+                            Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
+                            item.people_id = Persons[i].people_id;
+                        }
+                    }
+                    db.ConferenceParticipants.AddRange(participants);
+                    db.SaveChanges();
+                    trans.Commit();
+                    return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.conference_support_id });
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    //log.Error(ex);
+                    return JsonConvert.SerializeObject(new { success = false, });
+                }
+            }
+        }
         public class Info
         {
-            public string PeopleID { get; set; }
+            public string MS { get; set; }
             public string Name { get; set; }
+            public string Email { get; set; }
             public int OfficeID { get; set; }
             public string OfficeName { get; set; }
             public int TitleID { get; set; }
             public string TitleString { get; set; }
-            public Info() { }
-            public Info(string id, string name, int officeID, string officeName, int titleID, string titleString)
-            {
-                PeopleID = id;
-                Name = name;
-                OfficeID = officeID;
-                OfficeName = officeName;
-                TitleID = titleID;
-                TitleString = titleString;
-            }
         }
     }
 }

@@ -18,10 +18,12 @@ namespace ENTITIES
         public int expense_quantity { get; set; }
         public string note { get; set; }
         public System.DateTime created_time { get; set; }
-        public int expense_type { get; set; }
+        public int expense_type_id { get; set; }
         public int expense_detail_id { get; set; }
-        public int expense_id { get; set; }
+        public string evidence { get; set; }
+        public Nullable<int> expense_category_id { get; set; }
     
-        public virtual ActivityExpense ActivityExpense { get; set; }
+        public virtual ActivityExpenseCategory ActivityExpenseCategory { get; set; }
+        public virtual ActivityExpenseType ActivityExpenseType { get; set; }
     }
 }

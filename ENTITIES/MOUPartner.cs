@@ -24,7 +24,7 @@ namespace ENTITIES
         public int mou_partner_id { get; set; }
         public string contact_point_name { get; set; }
         public string contact_point_phone { get; set; }
-        public string contact_phone_email { get; set; }
+        public string contact_point_email { get; set; }
         public System.DateTime mou_start_date { get; set; }
         public int mou_id { get; set; }
         public int partner_id { get; set; }

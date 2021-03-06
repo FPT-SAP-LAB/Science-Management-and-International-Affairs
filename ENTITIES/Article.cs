@@ -12,15 +12,15 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class News
+    public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public News()
+        public Article()
         {
-            this.AcademicActivities = new HashSet<AcademicActivity>();
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.Procedures = new HashSet<Procedure>();
             this.Partners = new HashSet<Partner>();
+            this.AcademicActivities = new HashSet<AcademicActivity>();
             this.NewsVersions = new HashSet<NewsVersion>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
@@ -30,27 +30,26 @@ namespace ENTITIES
         public int article_id { get; set; }
         public string article_title { get; set; }
         public System.DateTime publish_time { get; set; }
-        public int status { get; set; }
-        public bool is_pinned { get; set; }
-        public System.DateTime pin_time { get; set; }
+        public Nullable<bool> is_pinned { get; set; }
+        public Nullable<System.DateTime> pin_time { get; set; }
         public bool need_approved { get; set; }
         public string thumbnail { get; set; }
-        public int pin_order { get; set; }
-        public int category_id { get; set; }
+        public Nullable<int> pin_order { get; set; }
+        public Nullable<int> category_id { get; set; }
         public int article_status_id { get; set; }
         public int account_id { get; set; }
     
         public virtual Account Account { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Procedure> Procedures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partner> Partners { get; set; }
-        public virtual ArticleCategory ArticleCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
         public virtual ArticleStatu ArticleStatu { get; set; }
+        public virtual ArticleCategory ArticleCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NewsVersion> NewsVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
