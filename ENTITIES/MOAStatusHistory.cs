@@ -14,12 +14,13 @@ namespace ENTITIES
     
     public partial class MOAStatusHistory
     {
-        public System.DateTime date { get; set; }
+        public int moa_status_history_id { get; set; }
+        public Nullable<System.DateTime> datetime { get; set; }
         public string reason { get; set; }
-        public int moa_id { get; set; }
-        public int mou_status_id { get; set; }
+        public Nullable<int> moa_id { get; set; }
+        public Nullable<int> mou_status_id { get; set; }
     
+        public virtual CollaborationStatu CollaborationStatu { get; set; }
         public virtual MOA MOA { get; set; }
-        public virtual MOUStatu MOUStatu { get; set; }
     }
 }

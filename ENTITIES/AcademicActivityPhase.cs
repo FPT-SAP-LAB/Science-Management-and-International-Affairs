@@ -25,7 +25,6 @@ namespace ENTITIES
         public string phase_name { get; set; }
         public System.DateTime phase_start { get; set; }
         public System.DateTime phase_end { get; set; }
-        public int need_register { get; set; }
         public int activity_id { get; set; }
         public int created_by { get; set; }
     

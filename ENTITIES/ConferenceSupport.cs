@@ -19,19 +19,21 @@ namespace ENTITIES
         {
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.Costs = new HashSet<Cost>();
-            this.Criteria = new HashSet<Criterion>();
+            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
             this.Comments = new HashSet<Comment>();
         }
     
         public int conference_support_id { get; set; }
         public int conference_id { get; set; }
-        public string reimbursement { get; set; }
+        public int reimbursement { get; set; }
         public int status_id { get; set; }
         public Nullable<int> decision_id { get; set; }
-        public Nullable<int> reward_policy_id { get; set; }
-        public Nullable<int> paper_file_id { get; set; }
-        public Nullable<bool> editable { get; set; }
+        public int reward_policy_id { get; set; }
+        public int paper_file_id { get; set; }
+        public bool editable { get; set; }
+        public int account_id { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
@@ -41,7 +43,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cost> Costs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Criterion> Criteria { get; set; }
+        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
     }

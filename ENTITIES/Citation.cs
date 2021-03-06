@@ -19,6 +19,7 @@ namespace ENTITIES
         public Nullable<int> count { get; set; }
         public string link { get; set; }
         public int people_id { get; set; }
+        public string currnet_mssv_msnv { get; set; }
     
         public virtual Person Person { get; set; }
     }

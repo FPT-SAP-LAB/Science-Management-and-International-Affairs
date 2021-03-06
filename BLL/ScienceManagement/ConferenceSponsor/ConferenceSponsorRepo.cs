@@ -1,10 +1,11 @@
 ﻿using ENTITIES;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -51,7 +52,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             bool IsExist = currentID.Any(x => x.Contains(id));
             List<Info> infos = new List<Info>();
             if (IsExist)
+            {
                 infos.Add(new Info("HE130214", "Đoàn Văn Thắng", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
+                infos.Add(new Info("HE130020", "Trần Thị Thúy Nguyên", 2, "Đai học FPT Hà Nội 2", 5, "Sinh viên"));
+            }
             else
                 infos.Add(new Info(id, "", 1, "", 1, ""));
             return infos;
@@ -79,6 +83,94 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
+        public string AddConference(string input)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    DataTable dt = new DataTable();
+                    //log.Debug("Creating a conference sponsor request");
+                    //int a = int.Parse("43gg34+-");
+                    JObject @object = JObject.Parse(input);
+
+                    JToken conf = @object["Conference"];
+                    int conference_id = conf["conference_id"].ToObject<int>();
+
+                    Conference conference = conf.ToObject<Conference>();
+                    Conference temp = db.Conferences.Find(conference.conference_id);
+                    if (temp != null)
+                    {
+                        conference = temp;
+                    }
+                    else
+                    {
+                        db.Conferences.Add(conference);
+                        db.SaveChanges();
+                    }
+
+                    RewardPolicy policy = db.RewardPolicies.Where(x => x.expired_date == null).FirstOrDefault();
+
+                    ConferenceSupport support = new ConferenceSupport()
+                    {
+                        conference_id = conference.conference_id,
+                        status_id = 1,
+                        decision_id = null,
+                        reward_policy_id = policy.reward_policy_id,
+                        paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
+                        account_id = 1, // Sẽ chỉnh sau khi xong tạo account
+                        editable = false
+                    };
+                    db.ConferenceSupports.Add(support);
+                    db.SaveChanges();
+
+                    List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
+                    foreach (var item in costs)
+                    {
+                        int total = int.Parse(dt.Compute(item.detail, "").ToString());
+                        item.editable = false;
+                        item.sponsoring_organization = "FPTU";
+                        item.total = total;
+                        item.conference_support_id = support.conference_support_id;
+                    }
+                    db.Costs.AddRange(costs);
+
+                    List<ConferenceParticipant> participants = @object["ConferenceParticipant"].ToObject<List<ConferenceParticipant>>();
+                    List<Person> Persons = @object["Persons"].ToObject<List<Person>>();
+                    participants.ForEach(x => x.conference_support_id = support.conference_support_id);
+                    List<string> codes = participants.Select(x => x.current_mssv_msnv).ToList();
+                    List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
+                    Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
+                        .ToDictionary(x => x.title_id, x => x);
+                    Dictionary<string, int> CodeIDPairs = db.People.Where(x => codes.Contains(x.mssv_msnv))
+                        .ToDictionary(x => x.mssv_msnv, x => x.people_id);
+                    for (int i = 0; i < participants.Count; i++)
+                    {
+                        var item = participants[i];
+                        if (CodeIDPairs.ContainsKey(item.current_mssv_msnv))
+                            item.people_id = CodeIDPairs[item.current_mssv_msnv];
+                        else
+                        {
+                            db.People.Add(Persons[i]);
+                            db.SaveChanges();
+
+                            Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
+                            item.people_id = Persons[i].people_id;
+                        }
+                    }
+                    db.ConferenceParticipants.AddRange(participants);
+                    db.SaveChanges();
+                    trans.Commit();
+                    return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.conference_support_id });
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    //log.Error(ex);
+                    return JsonConvert.SerializeObject(new { success = false, });
+                }
+            }
+        }
         public class Info
         {
             public string PeopleID { get; set; }
@@ -97,6 +189,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 TitleID = titleID;
                 TitleString = titleString;
             }
+        }
+        private class ParticipantExtend : Participant
+        {
+            public string Name { get; set; }
         }
     }
 }

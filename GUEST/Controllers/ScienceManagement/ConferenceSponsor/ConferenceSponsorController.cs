@@ -25,7 +25,7 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-
+        [HttpGet]
         public ActionResult Add()
         {
             var pagesTree = new List<PageTree>
@@ -35,12 +35,15 @@ namespace GUEST.Controllers
             };
             string output = repos.GetAddPageJson(LanguageResource.GetCurrentLanguageName());
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
-            ViewBag.Countries = data.Countries;
-            ViewBag.FormalityLanguages = data.FormalityLanguages;
-            ViewBag.Offices = data.Offices;
-            ViewBag.TitleLanguages = data.TitleLanguages;
+            ViewBag.data = data;
             ViewBag.pagesTree = pagesTree;
             return View();
+        }
+        [HttpPost]
+        public string Add(string input)
+        {
+            string output = repos.AddConference(input);
+            return output;
         }
         public ActionResult Detail(int id)
         {
@@ -72,7 +75,7 @@ namespace GUEST.Controllers
             var confer = repos.GetAllConferenceBy(name);
             return Json(confer, JsonRequestBehavior.AllowGet);
         }
-        private class DataAddPage
+        public class DataAddPage
         {
             public List<Country> Countries { get; set; }
             public List<FormalityLanguage> FormalityLanguages { get; set; }

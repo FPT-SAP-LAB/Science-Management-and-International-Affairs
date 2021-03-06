@@ -492,6 +492,7 @@
     <Content Include="Content\assets\js\pages\my-script.min.js" />
     <Content Include="Content\assets\js\pages\widgets.js" />
     <Content Include="Content\assets\js\pages\widgets.min.js" />
+    <Content Include="Content\assets\js\sci\sci-bundle.js" />
     <Content Include="Content\assets\js\scripts.bundle.js" />
     <Content Include="Content\assets\js\scripts.bundle.min.js" />
     <Content Include="Content\assets\media\bg\300.jpg" />
@@ -2079,6 +2080,7 @@
     <Content Include="Content\assets\plugins\custom\kanban\kanban.bundle.js" />
     <Content Include="Content\assets\plugins\custom\leaflet\leaflet.bundle.css" />
     <Content Include="Content\assets\plugins\custom\leaflet\leaflet.bundle.js" />
+    <Content Include="Content\assets\plugins\custom\moment\moment.js" />
     <Content Include="Content\assets\plugins\custom\prismjs\prismjs.bundle.css" />
     <Content Include="Content\assets\plugins\custom\prismjs\prismjs.bundle.js" />
     <Content Include="Content\assets\plugins\custom\tinymce\plugins\advlist\index.js" />

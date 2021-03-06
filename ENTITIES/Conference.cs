@@ -25,10 +25,10 @@ namespace ENTITIES
         public string website { get; set; }
         public string keynote_speaker { get; set; }
         public string qs_university { get; set; }
-        public Nullable<int> country_id { get; set; }
-        public Nullable<System.DateTime> time_start { get; set; }
-        public Nullable<System.DateTime> time_end { get; set; }
-        public Nullable<int> formality_id { get; set; }
+        public int country_id { get; set; }
+        public System.DateTime time_start { get; set; }
+        public System.DateTime time_end { get; set; }
+        public int formality_id { get; set; }
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

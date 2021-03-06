@@ -14,19 +14,18 @@ namespace ENTITIES
     
     public partial class ActivityPartner
     {
+        public int activity_partner_id { get; set; }
         public Nullable<double> sponsor { get; set; }
         public string contact_point_name { get; set; }
         public string contact_point_email { get; set; }
         public string contact_point_phone { get; set; }
         public string evidence { get; set; }
         public Nullable<System.DateTime> cooperation_date_start { get; set; }
-        public Nullable<int> cooperation_date_end { get; set; }
-        public int partner_id { get; set; }
+        public Nullable<System.DateTime> cooperation_date_end { get; set; }
         public int activity_id { get; set; }
         public Nullable<int> mou_partner_scope_id { get; set; }
     
-        public virtual AcademicActivity AcademicActivity { get; set; }
         public virtual MOUPartnerScope MOUPartnerScope { get; set; }
-        public virtual Partner Partner { get; set; }
+        public virtual AcademicActivity AcademicActivity { get; set; }
     }
 }
