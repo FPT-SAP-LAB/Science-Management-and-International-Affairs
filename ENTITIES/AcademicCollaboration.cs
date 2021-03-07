@@ -29,7 +29,6 @@ namespace ENTITIES
         public int people_id { get; set; }
         public Nullable<bool> is_supported { get; set; }
         public Nullable<int> mou_partner_scope_id { get; set; }
-        public int collab_status_type_id { get; set; }
         public Nullable<System.DateTime> actual_study_start_date { get; set; }
         public Nullable<System.DateTime> actual_study_end_date { get; set; }
     
@@ -40,6 +39,5 @@ namespace ENTITIES
         public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Procedure> Procedures { get; set; }
-        public virtual AcademicCollaborationStatusType AcademicCollaborationStatusType { get; set; }
     }
 }

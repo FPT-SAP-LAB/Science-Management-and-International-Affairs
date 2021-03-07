@@ -126,6 +126,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.General.AccountRigh
           <Property Name="office_id" Type="int" Nullable="false" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="is_verify" Type="bit" Nullable="false" />
+          <Property Name="account_id" Type="int" />
         </EntityType>
         <EntityType Name="Right">
           <Key>
@@ -162,7 +163,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.General.AccountRigh
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="is_supported" Type="bit" />
           <Property Name="mou_partner_scope_id" Type="int" />
-          <Property Name="collab_status_type_id" Type="int" Nullable="false" />
           <Property Name="actual_study_start_date" Type="date" />
           <Property Name="actual_study_end_date" Type="date" />
         </EntityType>
@@ -934,10 +934,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="decision_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="decision_type_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
-          <Property Name="valid_date" Type="date" />
-          <Property Name="expired_date" Type="date" />
-          <Property Name="file_id" Type="int" />
+          <Property Name="valid_date" Type="date" Nullable="false" />
+          <Property Name="file_id" Type="int" Nullable="false" />
+          <Property Name="decision_number" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="DecisionType">
           <Key>
@@ -969,6 +968,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="valid_date" Type="date" Nullable="false" />
           <Property Name="expired_date" Type="date" />
+          <Property Name="file_id" Type="int" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -978,6 +978,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="invention_id" Type="int" Nullable="false" />
           <Property Name="currnet_mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="author_request" Type="bit" />
+          <Property Name="money_reward" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="AuthorPaper">
           <Key>
@@ -987,6 +989,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="paper_id" Type="int" Nullable="false" />
           <Property Name="currnet_mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="author_request" Type="bit" />
+          <Property Name="money_reward" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Invention">
           <Key>
@@ -1984,7 +1988,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Decision__file_i__39E294A9">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="File" Type="Self.File" Multiplicity="1" />
           <End Role="Decision" Type="Self.Decision" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="File">
@@ -2799,6 +2803,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__People__account___1293BD5E">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__People__evidence__251C81ED">
           <End Role="File" Type="Self.File" Multiplicity="0..1" />
           <End Role="People" Type="Self.People" Multiplicity="*" />
@@ -3219,6 +3235,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RewardPol__file___119F9925">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="RewardPolicy" Type="Self.RewardPolicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="RewardPolicy">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Right__module_id__2704CA5F">
           <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
           <End Role="Right" Type="Self.Right" Multiplicity="*" />
@@ -3324,18 +3352,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="TitleLanguage">
               <PropertyRef Name="title_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AcademicCollaboration_AcademicCollaborationStatusType">
-          <End Role="AcademicCollaborationStatusType" Type="Self.AcademicCollaborationStatusType" Multiplicity="1" />
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicCollaborationStatusType">
-              <PropertyRef Name="collab_status_type_id" />
-            </Principal>
-            <Dependent Role="AcademicCollaboration">
-              <PropertyRef Name="collab_status_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4071,6 +4087,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Specialization" EntitySet="Specialization" />
             <End Role="PartnerSpecialization" EntitySet="PartnerSpecialization" />
           </AssociationSet>
+          <AssociationSet Name="FK__People__account___1293BD5E" Association="Self.FK__People__account___1293BD5E">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
           <AssociationSet Name="FK__People__evidence__251C81ED" Association="Self.FK__People__evidence__251C81ED">
             <End Role="File" EntitySet="File" />
             <End Role="People" EntitySet="People" />
@@ -4211,6 +4231,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Form" EntitySet="Form" />
             <End Role="Response" EntitySet="Response" />
           </AssociationSet>
+          <AssociationSet Name="FK__RewardPol__file___119F9925" Association="Self.FK__RewardPol__file___119F9925">
+            <End Role="File" EntitySet="File" />
+            <End Role="RewardPolicy" EntitySet="RewardPolicy" />
+          </AssociationSet>
           <AssociationSet Name="FK__Right__module_id__2704CA5F" Association="Self.FK__Right__module_id__2704CA5F">
             <End Role="Module" EntitySet="Module" />
             <End Role="Right" EntitySet="Right" />
@@ -4246,10 +4270,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__TitleLang__title__1699586C" Association="Self.FK__TitleLang__title__1699586C">
             <End Role="Title" EntitySet="Title" />
             <End Role="TitleLanguage" EntitySet="TitleLanguage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AcademicCollaboration_AcademicCollaborationStatusType" Association="Self.FK_AcademicCollaboration_AcademicCollaborationStatusType">
-            <End Role="AcademicCollaborationStatusType" EntitySet="AcademicCollaborationStatusType" />
-            <End Role="AcademicCollaboration" EntitySet="AcademicCollaboration" />
           </AssociationSet>
           <AssociationSet Name="FK_AcademicProgram_AcademicCollaborationType" Association="Self.FK_AcademicProgram_AcademicCollaborationType">
             <End Role="AcademicCollaborationType" EntitySet="AcademicCollaborationType" />
@@ -4317,6 +4337,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__account_id__4A4E069C" FromRole="Account" ToRole="MOA" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__account_id__55BFB948" FromRole="Account" ToRole="MOU" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__accou__26CFC035" FromRole="Account" ToRole="Notification" />
+          <NavigationProperty Name="People" Relationship="Self.FK__People__account___1293BD5E" FromRole="Account" ToRole="People" />
           <NavigationProperty Name="Procedures" Relationship="Self.FK__Procedure__accou__477199F1" FromRole="Account" ToRole="Procedure" />
           <NavigationProperty Name="Rights" Relationship="Self.AccountRight" FromRole="Account" ToRole="Right" />
         </EntityType>
@@ -4353,6 +4374,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___436BFEE3" FromRole="File" ToRole="Invention" />
           <NavigationProperty Name="People" Relationship="Self.FK__People__evidence__251C81ED" FromRole="File" ToRole="People" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___324172E1" FromRole="File" ToRole="Profile" />
+          <NavigationProperty Name="RewardPolicies" Relationship="Self.FK__RewardPol__file___119F9925" FromRole="File" ToRole="RewardPolicy" />
         </EntityType>
         <EntityType Name="InternalUnit">
           <Key>
@@ -4404,7 +4426,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="office_id" Type="Int32" Nullable="false" />
           <Property Name="mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="is_verify" Type="Boolean" Nullable="false" />
+          <Property Name="account_id" Type="Int32" />
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__people___1B9317B3" FromRole="People" ToRole="Comment" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__People__account___1293BD5E" FromRole="People" ToRole="Account" />
           <NavigationProperty Name="File" Relationship="Self.FK__People__evidence__251C81ED" FromRole="People" ToRole="File" />
           <NavigationProperty Name="Office" Relationship="Self.FK__People__office_i__756D6ECB" FromRole="People" ToRole="Office" />
           <NavigationProperty Name="AcademicCollaborations" Relationship="Self.FK__AcademicC__peopl__0D44F85C" FromRole="People" ToRole="AcademicCollaboration" />
@@ -4467,7 +4491,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="Int32" Nullable="false" />
           <Property Name="is_supported" Type="Boolean" />
           <Property Name="mou_partner_scope_id" Type="Int32" />
-          <Property Name="collab_status_type_id" Type="Int32" Nullable="false" />
           <Property Name="actual_study_start_date" Type="DateTime" Precision="0" />
           <Property Name="actual_study_end_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Person" Relationship="Self.FK__AcademicC__peopl__0D44F85C" FromRole="AcademicCollaboration" ToRole="People" />
@@ -4475,7 +4498,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="MOUPartnerScope" Relationship="Self.FK__AcademicC__mou_p__0B5CAFEA" FromRole="AcademicCollaboration" ToRole="MOUPartnerScope" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK__Collabora__colla__4589517F" FromRole="AcademicCollaboration" ToRole="CollaborationStatusHistory" />
           <NavigationProperty Name="Procedures" Relationship="Self.FK__Procedure__colla__15DA3E5D" FromRole="AcademicCollaboration" ToRole="Procedure" />
-          <NavigationProperty Name="AcademicCollaborationStatusType" Relationship="Self.FK_AcademicCollaboration_AcademicCollaborationStatusType" FromRole="AcademicCollaboration" ToRole="AcademicCollaborationStatusType" />
         </EntityType>
         <EntityType Name="AcademicCollaborationStatusType">
           <Key>
@@ -4484,7 +4506,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="collab_status_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="collab_type_id" Type="Int32" />
           <Property Name="collab_status_id" Type="Int32" />
-          <NavigationProperty Name="AcademicCollaborations" Relationship="Self.FK_AcademicCollaboration_AcademicCollaborationStatusType" FromRole="AcademicCollaborationStatusType" ToRole="AcademicCollaboration" />
           <NavigationProperty Name="AcademicCollaborationType" Relationship="Self.FK__AcademicC__colla__3FD07829" FromRole="AcademicCollaborationStatusType" ToRole="AcademicCollaborationType" />
           <NavigationProperty Name="AcademicCollaborationStatu" Relationship="Self.FK__AcademicC__colla__40C49C62" FromRole="AcademicCollaborationStatusType" ToRole="AcademicCollaborationStatus" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK__Collabora__colla__467D75B8" FromRole="AcademicCollaborationStatusType" ToRole="CollaborationStatusHistory" />
@@ -5384,10 +5405,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="decision_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="decision_type_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="valid_date" Type="DateTime" Precision="0" />
-          <Property Name="expired_date" Type="DateTime" Precision="0" />
-          <Property Name="file_id" Type="Int32" />
+          <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="decision_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="File" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="Decision" ToRole="File" />
           <NavigationProperty Name="ConferenceSupports" Relationship="Self.FK__Conferenc__decis__1699586C" FromRole="Decision" ToRole="ConferenceSupport" />
           <NavigationProperty Name="CitationDecisions" Relationship="Self.FK__CitationD__decis__37FA4C37" FromRole="Decision" ToRole="CitationDecision" />
@@ -5410,6 +5430,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="expired_date" Type="DateTime" Precision="0" />
+          <Property Name="file_id" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="Self.FK__RewardPol__file___119F9925" FromRole="RewardPolicy" ToRole="File" />
           <NavigationProperty Name="ConferenceSupports" Relationship="Self.FK__Conferenc__rewar__178D7CA5" FromRole="RewardPolicy" ToRole="ConferenceSupport" />
           <NavigationProperty Name="Criteria" Relationship="Self.FK__Criteria__reward__1A69E950" FromRole="RewardPolicy" ToRole="Criteria" />
         </EntityType>
@@ -5421,6 +5443,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="Int32" Nullable="false" />
           <Property Name="invention_id" Type="Int32" Nullable="false" />
           <Property Name="currnet_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="author_request" Type="Boolean" />
+          <Property Name="money_reward" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Person" Relationship="Self.FK__AuthorInv__peopl__3F9B6DFF" FromRole="AuthorInvention" ToRole="People" />
           <NavigationProperty Name="Invention" Relationship="Self.FK__AuthorInv__inven__3EA749C6" FromRole="AuthorInvention" ToRole="Invention" />
         </EntityType>
@@ -5432,6 +5456,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="Int32" Nullable="false" />
           <Property Name="paper_id" Type="Int32" Nullable="false" />
           <Property Name="currnet_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="author_request" Type="Boolean" />
+          <Property Name="money_reward" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Person" Relationship="Self.FK__AuthorPap__peopl__4183B671" FromRole="AuthorPaper" ToRole="People" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__AuthorPap__paper__408F9238" FromRole="AuthorPaper" ToRole="Paper" />
         </EntityType>
@@ -5815,6 +5841,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__People__account___1293BD5E">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="People" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Procedure__accou__477199F1">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
@@ -5888,7 +5926,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Decision__file_i__39E294A9">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="File" Type="Self.File" Multiplicity="1" />
           <End Role="Decision" Type="Self.Decision" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="File">
@@ -5932,6 +5970,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="avatar_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RewardPol__file___119F9925">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="RewardPolicy" Type="Self.RewardPolicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="RewardPolicy">
+              <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6256,18 +6306,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="Procedure">
               <PropertyRef Name="collab_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AcademicCollaboration_AcademicCollaborationStatusType">
-          <End Role="AcademicCollaborationStatusType" Type="Self.AcademicCollaborationStatusType" Multiplicity="1" />
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicCollaborationStatusType">
-              <PropertyRef Name="collab_status_type_id" />
-            </Principal>
-            <Dependent Role="AcademicCollaboration">
-              <PropertyRef Name="collab_status_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7795,6 +7833,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
+          <AssociationSet Name="FK__People__account___1293BD5E" Association="Self.FK__People__account___1293BD5E">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
           <AssociationSet Name="FK__Procedure__accou__477199F1" Association="Self.FK__Procedure__accou__477199F1">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Procedure" EntitySet="Procedures" />
@@ -7834,6 +7876,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Profile__avatar___324172E1" Association="Self.FK__Profile__avatar___324172E1">
             <End Role="File" EntitySet="Files" />
             <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RewardPol__file___119F9925" Association="Self.FK__RewardPol__file___119F9925">
+            <End Role="File" EntitySet="Files" />
+            <End Role="RewardPolicy" EntitySet="RewardPolicies" />
           </AssociationSet>
           <AssociationSet Name="FK__Office__unit_id__73852659" Association="Self.FK__Office__unit_id__73852659">
             <End Role="InternalUnit" EntitySet="InternalUnits" />
@@ -7942,10 +7988,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Procedure__colla__15DA3E5D" Association="Self.FK__Procedure__colla__15DA3E5D">
             <End Role="AcademicCollaboration" EntitySet="AcademicCollaborations" />
             <End Role="Procedure" EntitySet="Procedures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AcademicCollaboration_AcademicCollaborationStatusType" Association="Self.FK_AcademicCollaboration_AcademicCollaborationStatusType">
-            <End Role="AcademicCollaborationStatusType" EntitySet="AcademicCollaborationStatusTypes" />
-            <End Role="AcademicCollaboration" EntitySet="AcademicCollaborations" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicC__colla__3FD07829" Association="Self.FK__AcademicC__colla__3FD07829">
             <End Role="AcademicCollaborationType" EntitySet="AcademicCollaborationTypes" />
@@ -8549,6 +8591,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="is_verify" ColumnName="is_verify" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8589,7 +8632,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="people_id" ColumnName="people_id" />
                 <ScalarProperty Name="is_supported" ColumnName="is_supported" />
                 <ScalarProperty Name="mou_partner_scope_id" ColumnName="mou_partner_scope_id" />
-                <ScalarProperty Name="collab_status_type_id" ColumnName="collab_status_type_id" />
                 <ScalarProperty Name="actual_study_start_date" ColumnName="actual_study_start_date" />
                 <ScalarProperty Name="actual_study_end_date" ColumnName="actual_study_end_date" />
               </MappingFragment>
@@ -9346,10 +9388,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <MappingFragment StoreEntitySet="Decision">
                 <ScalarProperty Name="decision_id" ColumnName="decision_id" />
                 <ScalarProperty Name="decision_type_id" ColumnName="decision_type_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="valid_date" ColumnName="valid_date" />
-                <ScalarProperty Name="expired_date" ColumnName="expired_date" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="decision_number" ColumnName="decision_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9367,6 +9408,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="reward_policy_id" ColumnName="reward_policy_id" />
                 <ScalarProperty Name="valid_date" ColumnName="valid_date" />
                 <ScalarProperty Name="expired_date" ColumnName="expired_date" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9376,6 +9418,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="people_id" ColumnName="people_id" />
                 <ScalarProperty Name="invention_id" ColumnName="invention_id" />
                 <ScalarProperty Name="currnet_mssv_msnv" ColumnName="currnet_mssv_msnv" />
+                <ScalarProperty Name="author_request" ColumnName="author_request" />
+                <ScalarProperty Name="money_reward" ColumnName="money_reward" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9385,6 +9429,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="people_id" ColumnName="people_id" />
                 <ScalarProperty Name="paper_id" ColumnName="paper_id" />
                 <ScalarProperty Name="currnet_mssv_msnv" ColumnName="currnet_mssv_msnv" />
+                <ScalarProperty Name="author_request" ColumnName="author_request" />
+                <ScalarProperty Name="money_reward" ColumnName="money_reward" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
