@@ -11,11 +11,11 @@ using System.Collections;
 
 namespace GUEST.Controllers.ScienceManagement.Researchers
 {
-    public class ReseachersController : Controller
+    public class ResearchersController : Controller
     {
         // GET: Reseachers
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public ActionResult Index()
+        public ActionResult List()
         {
             var pagesTree = new List<PageTree>
             {
@@ -49,7 +49,22 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             return View();
         }
-
+        
+        public ActionResult ViewInfo()
+        {
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Nghiên cứu viên", "/Researchers"),
+                new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
+            };
+            ViewBag.researcher_avt = "https://2.pik.vn/20217382d096-d98d-473d-acb6-9dc98a16f45b.jpg";
+            ViewBag.researcher_name = "PGS. TS Phạm Hùng Quý";
+            ViewBag.researcher_email = "quyph@fe.edu.vn";
+            ViewBag.researcher_majors = "Giảng viên –  Nghiên cứu viên Toán học";
+            ViewBag.researcher_workplace = "FPTU Hà Nội";
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
         public class Researchers_ListView
         {
             public string name { get; set; }
@@ -60,4 +75,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             public string office_name { get; set; }
         }
     }
+    
+
 }
