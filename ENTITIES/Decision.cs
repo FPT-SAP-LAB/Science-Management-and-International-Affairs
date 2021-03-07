@@ -25,10 +25,9 @@ namespace ENTITIES
     
         public int decision_id { get; set; }
         public int decision_type_id { get; set; }
-        public string name { get; set; }
-        public Nullable<System.DateTime> valid_date { get; set; }
-        public Nullable<System.DateTime> expired_date { get; set; }
-        public Nullable<int> file_id { get; set; }
+        public System.DateTime valid_date { get; set; }
+        public int file_id { get; set; }
+        public string decision_number { get; set; }
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
