@@ -15,6 +15,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetAddPageJson(string language_name)
         {
+            var ConferenceCriteriaLanguages = db.Database.SqlQuery<string>(@"
+                SELECT   Localization.ConferenceCriteriaLanguage.name
+                FROM     SM_Reward.RewardPolicy INNER JOIN
+                         SM_Conference.Criteria ON SM_Reward.RewardPolicy.reward_policy_id = SM_Conference.Criteria.reward_policy_id AND SM_Reward.RewardPolicy.reward_policy_id = SM_Conference.Criteria.reward_policy_id INNER JOIN
+                         Localization.ConferenceCriteriaLanguage ON SM_Conference.Criteria.criteria_id = Localization.ConferenceCriteriaLanguage.criteria_id INNER JOIN
+                         Localization.Language ON Localization.ConferenceCriteriaLanguage.language_id = Localization.Language.language_id
+                WHERE    SM_Reward.RewardPolicy.expired_date IS NULL AND Localization.Language.language_name = @language_name", new SqlParameter("language_name", language_name)).ToList();
             var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
                 .Select(x => new Country
                 {
@@ -41,7 +48,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages });
+            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages });
         }
         public List<Info> GetAllProfileBy(string id)
         {

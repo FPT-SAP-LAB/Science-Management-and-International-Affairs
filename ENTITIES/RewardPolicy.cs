@@ -24,7 +24,9 @@ namespace ENTITIES
         public int reward_policy_id { get; set; }
         public System.DateTime valid_date { get; set; }
         public Nullable<System.DateTime> expired_date { get; set; }
+        public Nullable<int> file_id { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

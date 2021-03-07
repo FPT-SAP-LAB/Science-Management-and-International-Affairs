@@ -45,9 +45,11 @@ namespace ENTITIES
         public int office_id { get; set; }
         public string mssv_msnv { get; set; }
         public bool is_verify { get; set; }
+        public Nullable<int> account_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual Account Account { get; set; }
         public virtual File File { get; set; }
         public virtual Office Office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
