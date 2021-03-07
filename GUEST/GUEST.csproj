@@ -126,6 +126,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2358,12 +2359,13 @@
     <Content Include="Views\Invention\Edit.cshtml" />
     <Content Include="Views\Citation\Edit.cshtml" />
     <Content Include="Views\PartialView\AddAuthor.cshtml" />
+    <Content Include="Views\Partner\List.cshtml" />
+    <Content Include="Views\Partner\Partner_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Controllers\InternationalCollaboration\AcademicCollaboration\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Partner\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
