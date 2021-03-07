@@ -39,7 +39,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
 
-        public ActionResult ListDeleted()
+        public ActionResult List_Deleted()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ ĐÃ XÓA";
             //int duration = mou.getDuration();
