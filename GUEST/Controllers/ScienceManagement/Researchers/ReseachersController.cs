@@ -35,7 +35,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                            google_scholar = p.google_scholar,
                            website = p.website,
                            office_name = o.office_name
-                       }).ToList<Researchers_ListView>(); ;
+                       }).ToList<Researchers_ListView>();
             list.Add(new Researchers_ListView { name="Bùi Ngọc Anh", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHN"});
             list.Add(new Researchers_ListView { name="Nguyễn Phi Hùng", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHCM"});
             list.Add(new Researchers_ListView { name="Nguyễn Bá Sơn", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FPoly HN"});
