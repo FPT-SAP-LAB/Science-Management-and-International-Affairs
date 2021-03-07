@@ -162,6 +162,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Lĩnh vực quan tâm</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>
+                                            <select class="form-control select2" id="kt_select2_3" name="param" multiple="multiple">
+                                                <option value="AK" selected>Toán học</option>
+                                                <option value="AK" selected>Khoa học máy tính</option>
+                                                <option value="AK">Toán học</option>
+                                                <option value="AK">Kinh tế</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!--end::Body-->
                         </form>
@@ -184,6 +198,29 @@
                 $(this).addClass('active')
             }
         })
+        // Class definition
+        var KTSelect2 = function () {
+            // Private functions
+            var demos = function () {
+                // basic
+
+                // multi select
+                $('#kt_select2_3').select2({
+                    placeholder: 'Chọn lĩnh vực quan tâm',
+                });
+            }
+            // Public functions
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSelect2.init();
+        });
     </script>
 }
 

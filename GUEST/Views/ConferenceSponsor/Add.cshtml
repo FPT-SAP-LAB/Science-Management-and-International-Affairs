@@ -120,8 +120,10 @@
                         <div class="col-md-2" style="border-radius: 25px; border: 2px solid #73AD21; padding: 20px; height: fit-content;">
                             <h3 class="mb-10 font-weight-bold text-dark">Chính sách hiện thời (<a href="#">xem thêm</a>)</h3>
                             <ul>
-                                <li>Diễn giả hoặc thành viên ban tổ chức thuộc đại học QS1000</li>
-                                <li>Bài nghiên cứu khoa học hoàn chỉnh và đơn vị chủ quản là FE</li>
+                                @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
+                                {
+                                    <li>@item</li>
+                                }
                             </ul>
                         </div>
                     </div>
