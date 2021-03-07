@@ -291,7 +291,7 @@
                             (Cập nhật theo thời gian kí kết)
                         </label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
-                            <input type="text" disabled class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" data-target="#kt_datetimepicker_sign_date" />
+                            <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" data-target="#kt_datetimepicker_sign_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -367,33 +367,12 @@
                         <th class="text-center" rowspan="2">Tên đối tác</th>
                         <th class="text-center" colspan="3">Người đại diện</th>
                         <th class="text-center" rowspan="2"></th>
+                        <th class="text-center" rowspan="2"></th>
                     </tr>
                     <tr>
-                        <th>Họ và tên</th>
-                        <th>Điện thoại</th>
-                        <th>Email</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Bunkyo University</td>
-                        <td>Toshie Miyatake</td>
-                        <td>+81 48 974 8811</td>
-                        <td>kiec@stf.bunkyou.ac.jp</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>FPT Greenwich</td>
-                        <td>Cuong Minh Tran</td>
-                        <td>+84 12 345 2345</td>
-                        <td>cuong@fptgr.edu.vn</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
+                        <th class="text-center">Họ và tên</th>
+                        <th class="text-center">Điện thoại</th>
+                        <th class="text-center">Email</th>
                     </tr>
                 </table>
             </div>
@@ -401,7 +380,7 @@
                 <button id="step-1-close-btn" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Đóng</button>
                 <button id='step-1-button' type="button" class="btn btn-sm btn-light-primary font-weight-bold px-6" onclick="nextStep()">Tiếp</button>
                 <button id='step-2-backbutton' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" onclick="backToStep()" style="display:none">Quay về</button>
-                <button id='step-2-button' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6" onclick="doneStep()" data-dismiss="modal" style="display:none">Hoàn thành</button>
+                <button id='step-2-button' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6" onclick="doneStep()" style="display:none">Hoàn thành</button>
             </div>
         </div>
     </div>
@@ -422,6 +401,7 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                             <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                         </div>
 
@@ -499,7 +479,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" disabled>Thêm</button>
+                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="addToTemp()" disabled>Thêm</button>
             </div>
         </div>
     </div>
@@ -519,7 +499,9 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()"/>
+                            <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no" />
+                            <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
+                            <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -533,7 +515,6 @@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="specialization_edit" name="param" style="width:100% !important">
                                 <option value="" selected></option>
-                                
                             </select>
                         </div>
                     </div>
@@ -575,10 +556,6 @@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="coop_scope_edit" name="param" style="width:100% !important">
                                 <option value="" selected></option>
-                                @foreach (var item in ViewBag.listScopes)
-                                {
-                                    <option value="@item.scope_id">@item.scope_abbreviation</option>
-                                }
                             </select>
                         </div>
                     </div>
@@ -592,7 +569,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="edit_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" disabled>Sửa</button>
+                <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
             </div>
         </div>
     </div>
@@ -601,7 +578,7 @@
 <datalist id="partnerList">
     @foreach (var item in ViewBag.listPartners)
     {
-        <option >@item.partner_name</option>
+        <option>@item.partner_name</option>
     }
 </datalist>
 
@@ -645,10 +622,6 @@
                 $('.toast-30').fadeIn('slow');
             }
         });
-
-        function doneStep() {
-            toastr.success('Thêm thành công')
-        }
     </script>
 
     @*date-picker*@
@@ -703,7 +676,7 @@
         var button_step2 = document.getElementById("step-2-button");
         var backbutton_step2 = document.getElementById("step-2-backbutton");
 
-        function nextStep() {
+        function toggleNextStep() {
             itemList[0].classList.remove("active");
             itemList[0].classList.add("done");
             itemList[1].classList.add("active");
@@ -715,7 +688,7 @@
             backbutton_step2.style.display = "block";
         }
 
-        function backToStep() {
+        function toggleBackStep() {
             itemList[0].classList.add("active");
             itemList[0].classList.remove("done");
             itemList[1].classList.remove("active");
@@ -904,9 +877,13 @@
 
     </script>
 
-    @*mou_table*@
+    @*mou*@
 <script>
     var rowIdx = 1;
+    var listTempPartnerMOUAdd = [];
+    var listScopes = [];
+    var listSpe = [];
+    var listPartners = [];
     var mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1010,38 +987,56 @@
             ]
     });
 
+    $(document).ready(function () {
+        $("#specialization_add option").each(function () {
+            listSpe.push({
+                spe_id: $(this).val(),
+                spe_name: $(this).text()  
+            });
+        });
+        $("#coop_scope_add option").each(function () {
+            listScopes.push({
+                scope_id: $(this).val(),
+                scope_name: $(this).text()
+            });
+        });
+        listSpe.shift();
+        listScopes.shift();
+
+    });
+
     function searchMOU() {
         mou_table.ajax.reload();
     }
 
     function checkPartnerAdd() {
-        //var partner_name = document.getElementById("partner_name_add").value;
-        alert($('#partner_name_add').val());
+        var partner_name = document.getElementById("partner_name_add").value;
+        var em = { partner_name: partner_name };
         $.ajax({
             url: "@Url.Action("CheckPartner", "MOU")",
             type: "POST",
-            data: {
-                "partner_name": function () { return $('#partner_name_add').val() }
-            },
+            data: JSON.stringify(em),
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (data) {
-                //if (data == null) {
-                //    document.getElementById('nation_add').removeAttribute('disabled');
-                //    document.getElementById('website_add').removeAttribute('disabled');
-                //    document.getElementById('address_add').removeAttribute('disabled');
-                //    document.getElementById("nation_add").value = "";
-                //    document.getElementById("website_add").value = "";
-                //    document.getElementById("address_add").value = "";
-                //} else {
-                //    document.getElementById('nation_add').setAttribute('disabled', '');
-                //    document.getElementById('website_add').setAttribute('disabled', '');
-                //    document.getElementById('address_add').setAttribute('disabled', '');
-                //    document.getElementById("nation_add").value = data.country_name;
-                //    document.getElementById("website_add").value = data.website;
-                //    document.getElementById("address_add").value = data.address;
-                //}
-                //document.getElementById("add_mou_partner_button").removeAttribute('disabled');
+                if (data == "") {
+                    document.getElementById('nation_add').removeAttribute('disabled');
+                    document.getElementById('website_add').removeAttribute('disabled');
+                    document.getElementById('address_add').removeAttribute('disabled');
+                    document.getElementById("nation_add").value = "";
+                    document.getElementById("website_add").value = "";
+                    document.getElementById("address_add").value = "";
+                    document.getElementById("partner_id_add").value = "";
+                } else {
+                    document.getElementById('nation_add').setAttribute('disabled', '');
+                    document.getElementById('website_add').setAttribute('disabled', '');
+                    document.getElementById('address_add').setAttribute('disabled', '');
+                    document.getElementById("nation_add").value = data.country_name == null ? "" : data.country_name;
+                    document.getElementById("website_add").value = data.website == null ? "" : data.website;
+                    document.getElementById("address_add").value = data.address == null ? "" : data.address;
+                    document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
+                }
+                document.getElementById("add_mou_partner_button").removeAttribute('disabled');
             },
             error: function () {
                 //alert("fail");
@@ -1051,29 +1046,30 @@
 
     function checkPartnerEdit() {
         var partner_name = document.getElementById("partner_name_edit").value;
+        var em = { partner_name: partner_name };
         $.ajax({
             url: "@Url.Action("CheckPartner", "MOU")",
             type: "POST",
-            data: {
-                partner_name: partner_name
-            },
+            data: JSON.stringify(em),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                if (data == null) {
+                if (data == "") {
                     document.getElementById('nation_edit').removeAttribute('disabled');
                     document.getElementById('website_edit').removeAttribute('disabled');
                     document.getElementById('address_edit').removeAttribute('disabled');
                     document.getElementById("nation_edit").value = "";
                     document.getElementById("website_edit").value = "";
                     document.getElementById("address_edit").value = "";
+                    document.getElementById("partner_id_edit").value = "";
                 } else {
                     document.getElementById('nation_edit').setAttribute('disabled', '');
                     document.getElementById('website_edit').setAttribute('disabled', '');
                     document.getElementById('address_edit').setAttribute('disabled', '');
-                    document.getElementById("nation_edit").value = data.country_name;
-                    document.getElementById("website_edit").value = data.website;
-                    document.getElementById("address_edit").value = data.address;
+                    document.getElementById("nation_edit").value = data.country_name == null ? "" : data.country_name;
+                    document.getElementById("website_edit").value = data.website == null ? "" : data.website;
+                    document.getElementById("address_edit").value = data.address == null ? "" : data.address;
+                    document.getElementById("partner_id_edit").value = data.partner_id == null ? "" : data.partner_id;
                 }
                 document.getElementById("edit_mou_partner_button").removeAttribute('disabled');
             },
@@ -1090,6 +1086,191 @@
     function preventAdd() {
         document.getElementById("add_mou_partner_button").setAttribute('disabled', '');
     }
+
+    function addToTemp() {
+        var TempObj = {
+            partnername_add: document.getElementById("partner_name_add").value,
+            represent_add: document.getElementById("represent_add").value,
+            specialization_add: document.getElementById("specialization_add").value,
+            nation_add: document.getElementById("nation_add").value,
+            website_add: document.getElementById("website_add").value,
+            address_add: document.getElementById("address_add").value,
+            email_add: document.getElementById("email_add").value,
+            sign_date_mou_add: document.getElementById("sign_date_mou_add").value,
+            phone_add: document.getElementById("phone_add").value,
+            coop_scope_add: document.getElementById("coop_scope_add").value,
+            partner_id: document.getElementById("partner_id_add").value,
+        }
+        listTempPartnerMOUAdd.push(TempObj);
+        clearInputAdd();
+        initAndRefreshTableMOUAdd();
+    }
+
+    function clearInputAdd() {
+        document.getElementById("partner_name_add").value = "";
+        document.getElementById("represent_add").value = "";
+        document.getElementById("specialization_add").value = "";
+        document.getElementById("nation_add").value = "";
+        document.getElementById("website_add").value = "";
+        document.getElementById("address_add").value = "";
+        document.getElementById("email_add").value = "";
+        document.getElementById("sign_date_mou_add").value = "";
+        document.getElementById("phone_add").value = "";
+        document.getElementById("coop_scope_add").value = "";
+    }
+
+    function initAndRefreshTableMOUAdd() {
+        resetTable();
+        initTable();
+    }
+
+    function initTable() {
+        var HTMLdata = null;
+        for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
+            HTMLdata += '<tr id="temp' + idx + '" "class="MOUPartnerTempList">';
+            HTMLdata += '<td>' + (idx + 1) + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].email_add + '</td>';
+            var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
+            var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+            HTMLdata += '<td class="text-center">' + buttonEdit + '</td>';
+            HTMLdata += '<td class="text-center">' + buttonDel + '</td>';
+            HTMLdata += '</tr>';
+        }
+        $('#mou-partner-table').append(HTMLdata);
+    }
+
+    function resetTable() {
+        for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
+            $("#temp"+idx).remove();
+        }
+    }
+
+    function confirm_delete_temp(index) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                resetTable();
+                listTempPartnerMOUAdd.splice(index, 1);
+                initTable();
+            }
+        })
+    }
+
+    function loadEditTemp(index) {
+        $("#idx_edit").val(index);
+        var HTMLSpedata = "";
+        var HTMLScopedata = "";
+        for (i = 0; i < listSpe.length; i++) {
+            if (listTempPartnerMOUAdd[index].specialization_add == listSpe[i].spe_id) {
+                HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
+                
+            } else {
+                HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" >' + listSpe[i].spe_name + '</option>'
+                
+            }
+        }
+        for (j = 0; j < listScopes.length; j++) {
+            if (listTempPartnerMOUAdd[index].coop_scope_add == listScopes[j].scope_id) {
+                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_name + '</option>'
+            } else {
+                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_name + '</option>'
+            }
+        }
+        $('#specialization_edit').append(HTMLSpedata);
+        $('#coop_scope_edit').append(HTMLScopedata);
+ 
+        $('#partner_name_edit').val(listTempPartnerMOUAdd[index].partnername_add);
+        $('#represent_edit').val(listTempPartnerMOUAdd[index].represent_add);
+        $('#nation_edit').val(listTempPartnerMOUAdd[index].nation_add);
+        $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
+        $('#address_edit').val(listTempPartnerMOUAdd[index].address_add);
+        $('#email_edit').val(listTempPartnerMOUAdd[index].email_add);
+        $('#sign_date_mou_edit').val(listTempPartnerMOUAdd[index].sign_date_mou_add);
+        $('#phone_edit').val(listTempPartnerMOUAdd[index].phone_add);
+        $('#partner_id_edit').val(listTempPartnerMOUAdd[index].partner_id);
+
+        if (listTempPartnerMOUAdd[index].partner_id == "") {
+            document.getElementById('nation_edit').removeAttribute('disabled');
+            document.getElementById('website_edit').removeAttribute('disabled');
+            document.getElementById('address_edit').removeAttribute('disabled');
+            
+            
+        } else {
+            document.getElementById('nation_edit').setAttribute('disabled', '');
+            document.getElementById('website_edit').setAttribute('disabled', '');
+            document.getElementById('address_edit').setAttribute('disabled', '');
+            
+        }
+    }
+
+    function editTemp() {
+        var index = $("#idx_edit").val();
+        listTempPartnerMOUAdd[index].partnername_add = document.getElementById("partner_name_edit").value;
+        listTempPartnerMOUAdd[index].represent_add = document.getElementById("represent_edit").value;
+        listTempPartnerMOUAdd[index].specialization_add = document.getElementById("specialization_edit").value;
+        listTempPartnerMOUAdd[index].nation_add = document.getElementById("nation_edit").value;
+        listTempPartnerMOUAdd[index].website_add = document.getElementById("website_edit").value;
+        listTempPartnerMOUAdd[index].address_add = document.getElementById("address_edit").value;
+        listTempPartnerMOUAdd[index].email_add = document.getElementById("email_edit").value;
+        listTempPartnerMOUAdd[index].sign_date_mou_add = document.getElementById("sign_date_mou_edit").value;
+        listTempPartnerMOUAdd[index].phone_add = document.getElementById("phone_edit").value;
+        listTempPartnerMOUAdd[index].coop_scope_add = document.getElementById("coop_scope_edit").value;
+        listTempPartnerMOUAdd[index].partner_id = document.getElementById("partner_id_edit").value;
+        initAndRefreshTableMOUAdd();
+    }
+
+    function doneStep() {
+        if (listTempPartnerMOUAdd.length == 0) {
+            toastr.error('Chưa có đối tác nào được thêm');
+            //$('#add_mou_modal').modal('hide');
+        }
+        //toastr.success('Thêm thành công');
+    }
+
+    function nextStep() {
+        toggleNextStep();
+    }
+
+    function updateMOUStartDateAndMainScope() {
+        var max_date = '01/01/0001';
+        var main_scopes = '';
+        for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
+            if (Date.parse(listTempPartnerMOUAdd[idx].sign_date_mou_add) > Date.parse(max_date)) {
+                max_date = listTempPartnerMOUAdd[idx].sign_date_mou_add;
+            }
+            var obj = listScopes.find(x => x.scope_id === listTempPartnerMOUAdd[idx].coop_scope_add);
+            if (obj != null) {
+                if (!main_scopes.includes(obj.scope_name)) {
+                    main_scopes += (obj.scope_name + ",")
+                }
+            }
+        }
+        if (main_scopes.endsWith(",")) {
+            main_scopes = main_scopes.slice(0, -1);
+        }
+        if (max_date == '01/01/0001') {
+            max_date = '';
+        }
+        $("#sign_date_mou").val(max_date);
+        $("#coop_scope_mou").val(main_scopes);
+    }
+
+    function backToStep() {
+        updateMOUStartDateAndMainScope();
+        toggleBackStep();
+    }
+
+
 </script>
 }
 
