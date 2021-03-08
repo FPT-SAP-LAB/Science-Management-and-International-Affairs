@@ -74,132 +74,132 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public void addMOAPartner(MOAPartnerAdd input)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    //mouPartner
-                    db.MOAPartners.Add(new MOAPartner
-                    {
-                        moa_id = input.mou_id,
-                        moa_start_date = input.moa_start_date,
-                        mou_partner_id = input.mou_partner_id
-                    });
-                    MOAPartner mp = db.MOAPartners.Where(x => x.moa_id == input.moa_id && x.mou_partner_id == input.mou_partner_id).First();
-                    //spe
-                    foreach (int spe_id in input.list_spe)
-                    {
-                        db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
-                        {
-                            mou_partner_id = input.mou_partner_id,
-                            specialization_id = spe_id
-                        });
-                    }
-                    //scope
-                    foreach (int scope_id in input.list_scope)
-                    {
-                        db.MOUPartnerScopes.Add(new MOUPartnerScope
-                        {
-                            mou_id = input.mou_id,
-                            partner_id = input.partner_id,
-                            scope_id = scope_id
-                        });
-                    }
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
-        public void editMOAPartner(MOAPartnerAdd input)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    //edit mouPartner
-                    MOAPartner mp = db.MOAPartners.Where(x => x.moa_id == input.moa_id && x.mou_partner_id == input.mou_partner_id).First();
-                    mp.moa_start_date = input.moa_start_date;
+        //public void addMOAPartner(MOAPartnerAdd input)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //mouPartner
+        //            db.MOAPartners.Add(new MOAPartner
+        //            {
+        //                moa_id = input.mou_id,
+        //                moa_start_date = input.moa_start_date,
+        //                mou_partner_id = input.mou_partner_id
+        //            });
+        //            MOAPartner mp = db.MOAPartners.Where(x => x.moa_id == input.moa_id && x.mou_partner_id == input.mou_partner_id).First();
+        //            //spe
+        //            foreach (int spe_id in input.list_spe)
+        //            {
+        //                db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
+        //                {
+        //                    mou_partner_id = input.mou_partner_id,
+        //                    specialization_id = spe_id
+        //                });
+        //            }
+        //            //scope
+        //            foreach (int scope_id in input.list_scope)
+        //            {
+        //                db.MOUPartnerScopes.Add(new MOUPartnerScope
+        //                {
+        //                    mou_id = input.mou_id,
+        //                    partner_id = input.partner_id,
+        //                    scope_id = scope_id
+        //                });
+        //            }
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
+        //public void editMOAPartner(MOAPartnerAdd input)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //edit mouPartner
+        //            MOAPartner mp = db.MOAPartners.Where(x => x.moa_id == input.moa_id && x.mou_partner_id == input.mou_partner_id).First();
+        //            mp.moa_start_date = input.moa_start_date;
 
-                    //remove old spe.
-                    List<MOAPartnerSpecialization> mpsList = db.MOAPartnerSpecializations.Where(x => x.moa_partner_id == mp.moa_partner_id).ToList();
-                    foreach (MOAPartnerSpecialization item in mpsList.ToList())
-                    {
-                        db.MOAPartnerSpecializations.Remove(item);
-                    }
-                    //spe
-                    //foreach (int spe_id in input.list_spe)
-                    //{
-                    //    db.MOAPartnerSpecializations.Add(new MOAPartnerSpecialization
-                    //    {
-                    //        moa_partner_id = input.moa_partner_id,
-                    //        specialization_id = spe_id
-                    //    });
-                    //}
+        //            //remove old spe.
+        //            List<MOAPartnerSpecialization> mpsList = db.MOAPartnerSpecializations.Where(x => x.moa_partner_id == mp.moa_partner_id).ToList();
+        //            foreach (MOAPartnerSpecialization item in mpsList.ToList())
+        //            {
+        //                db.MOAPartnerSpecializations.Remove(item);
+        //            }
+        //            //spe
+        //            //foreach (int spe_id in input.list_spe)
+        //            //{
+        //            //    db.MOAPartnerSpecializations.Add(new MOAPartnerSpecialization
+        //            //    {
+        //            //        moa_partner_id = input.moa_partner_id,
+        //            //        specialization_id = spe_id
+        //            //    });
+        //            //}
 
-                    //remove old scope.
-                    List<MOUPartnerScope> mscList = db.MOUPartnerScopes.Where(x => x.mou_id == input.mou_id && x.partner_id == input.partner_id).ToList();
-                    foreach (MOUPartnerScope item in mscList.ToList())
-                    {
-                        db.MOUPartnerScopes.Remove(item);
-                    }
-                    //scope
-                    //foreach (int scope_id in input.list_scope)
-                    //{
-                    //    db.MOUPartnerScopes.Add(new MOUPartnerScope
-                    //    {
-                    //        mou_id = input.mou_id,
-                    //        partner_id = input.partner_id,
-                    //        scope_id = scope_id
-                    //    });
-                    //}
+        //            //remove old scope.
+        //            List<MOUPartnerScope> mscList = db.MOUPartnerScopes.Where(x => x.mou_id == input.mou_id && x.partner_id == input.partner_id).ToList();
+        //            foreach (MOUPartnerScope item in mscList.ToList())
+        //            {
+        //                db.MOUPartnerScopes.Remove(item);
+        //            }
+        //            //scope
+        //            //foreach (int scope_id in input.list_scope)
+        //            //{
+        //            //    db.MOUPartnerScopes.Add(new MOUPartnerScope
+        //            //    {
+        //            //        mou_id = input.mou_id,
+        //            //        partner_id = input.partner_id,
+        //            //        scope_id = scope_id
+        //            //    });
+        //            //}
 
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
-        public void DeleteMOAPartner(int moa_id, int partner_id, int moa_partner_id)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    //remove old spe.
-                    List<MOAPartnerSpecialization> mpsList = db.MOAPartnerSpecializations.Where(x => x.moa_partner_id == moa_partner_id).ToList();
-                    foreach (MOAPartnerSpecialization item in mpsList.ToList())
-                    {
-                        db.MOAPartnerSpecializations.Remove(item);
-                    }
-                    //remove old scope.
-                    List<MOAPartnerScope> mscList = db.MOAPartnerScopes.Where(x => x.moa_partner_id == moa_partner_id).ToList();
-                    foreach (MOAPartnerScope item in mscList.ToList())
-                    {
-                        db.MOAPartnerScopes.Remove(item);
-                    }
-                    MOUPartner m = db.MOUPartners.Where(x => x.mou_partner_id == moa_partner_id).First();
-                    db.MOUPartners.Remove(m);
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
+        //public void DeleteMOAPartner(int moa_id, int partner_id, int moa_partner_id)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //remove old spe.
+        //            List<MOAPartnerSpecialization> mpsList = db.MOAPartnerSpecializations.Where(x => x.moa_partner_id == moa_partner_id).ToList();
+        //            foreach (MOAPartnerSpecialization item in mpsList.ToList())
+        //            {
+        //                db.MOAPartnerSpecializations.Remove(item);
+        //            }
+        //            //remove old scope.
+        //            List<MOAPartnerScope> mscList = db.MOAPartnerScopes.Where(x => x.moa_partner_id == moa_partner_id).ToList();
+        //            foreach (MOAPartnerScope item in mscList.ToList())
+        //            {
+        //                db.MOAPartnerScopes.Remove(item);
+        //            }
+        //            MOUPartner m = db.MOUPartners.Where(x => x.mou_partner_id == moa_partner_id).First();
+        //            db.MOUPartners.Remove(m);
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
         public List<PartnerHistory> listMOUPartnerHistory(int mou_partner_id)
         {
             string sql_history =
