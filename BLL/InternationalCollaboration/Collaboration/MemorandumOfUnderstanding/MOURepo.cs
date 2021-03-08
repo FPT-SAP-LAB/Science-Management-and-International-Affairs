@@ -181,9 +181,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 //add to MOUPartnerSpe with mou_partner_id and spe_id
                             }
 
-                            
 
-                        } else //old partner
+
+                        }
+                        else //old partner
                         {
                             //add to MOUPartner via each partner of MOU
                             db.MOUPartners.Add(new ENTITIES.MOUPartner
@@ -577,7 +578,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         }
         public class MOUAdd
         {
-            public MOUAdd (){}
+            public MOUAdd() { }
             public BasicInfo BasicInfo { get; set; }
             public List<PartnerInfo> PartnerInfo { get; set; }
         }
