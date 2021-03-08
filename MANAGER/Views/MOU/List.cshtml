@@ -175,7 +175,7 @@
                                                     Choose an option:
                                                 </li>
                                                 <li class="navi-item">
-                                                    <a href="#" class="navi-link">
+                                                    <a href="#" class="navi-link" onclick="exportExcel()">
                                                         <span class="navi-icon">
                                                             <i class="la la-file-excel-o"></i>
                                                         </span>
@@ -1036,8 +1036,6 @@
                 scope_name: $(this).text()
             });
         });
-        //listSpe.shift();
-        //listScopes.shift();
     });
 
     function searchMOU() {
@@ -1340,12 +1338,11 @@
             reason: $('#note_mou').val(),
             mou_note: $('#mou_area').val()
         };
-        
+
         var MOUAdd = {
             BasicInfo: BasicInfo,
             PartnerInfo: listTempPartnerMOUAdd,
         };
-
         $.ajax({
             url: "@Url.Action("Add_Mou", "MOU")",
             type: "POST",
@@ -1354,7 +1351,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                
+
             },
             error: function () {
                 //alert("fail");
@@ -1363,6 +1360,23 @@
 
         //collect Partner data.
         //Send to controller.
+    }
+
+    function exportExcel() {
+        //alert('haha');
+        $.ajax({
+            url: "@Url.Action("ExportMOUExcel", "MOU")",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
     }
 </script>
 }
