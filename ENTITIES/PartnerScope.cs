@@ -12,27 +12,34 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Direction
+    public partial class PartnerScope
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Direction()
+        public PartnerScope()
         {
             this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
-            this.AcademicPrograms = new HashSet<AcademicProgram>();
-            this.DirectionLanguages = new HashSet<DirectionLanguage>();
-            this.Procedures = new HashSet<Procedure>();
+            this.MOAPartnerScopes = new HashSet<MOAPartnerScope>();
+            this.MOUPartnerScopes = new HashSet<MOUPartnerScope>();
+            this.ActivityPartners = new HashSet<ActivityPartner>();
+            this.ResearchPartners = new HashSet<ResearchPartner>();
         }
     
-        public int direction_id { get; set; }
-        public string direction_name { get; set; }
+        public int partner_scope_id { get; set; }
+        public int partner_id { get; set; }
+        public int scope_id { get; set; }
+        public int reference_count { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
+        public virtual ICollection<MOAPartnerScope> MOAPartnerScopes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DirectionLanguage> DirectionLanguages { get; set; }
+        public virtual ICollection<MOUPartnerScope> MOUPartnerScopes { get; set; }
+        public virtual Partner Partner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Procedure> Procedures { get; set; }
+        public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
+        public virtual CollaborationScope CollaborationScope { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ResearchPartner> ResearchPartners { get; set; }
     }
 }

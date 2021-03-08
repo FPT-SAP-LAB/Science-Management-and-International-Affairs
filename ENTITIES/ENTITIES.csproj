@@ -122,6 +122,9 @@
     <Compile Include="ArticleStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArticleVersion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="AuthorInvention.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -239,13 +242,7 @@
     <Compile Include="MOABonu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="MOAPartner.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="MOAPartnerScope.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MOAPartnerSpecialization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="MOAStatusHistory.cs">
@@ -287,9 +284,6 @@
     <Compile Include="MOUStatusHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="NewsVersion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Notification.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -324,6 +318,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Partner.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PartnerScope.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Person.cs">

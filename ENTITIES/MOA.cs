@@ -18,7 +18,7 @@ namespace ENTITIES
         public MOA()
         {
             this.MOABonus = new HashSet<MOABonu>();
-            this.MOAPartners = new HashSet<MOAPartner>();
+            this.MOAPartnerScopes = new HashSet<MOAPartnerScope>();
             this.MOAStatusHistories = new HashSet<MOAStatusHistory>();
         }
     
@@ -37,7 +37,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOABonu> MOABonus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOAPartner> MOAPartners { get; set; }
+        public virtual ICollection<MOAPartnerScope> MOAPartnerScopes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOAStatusHistory> MOAStatusHistories { get; set; }
     }

@@ -17,7 +17,6 @@ namespace ENTITIES
         public double expense_price { get; set; }
         public int expense_quantity { get; set; }
         public string note { get; set; }
-        public System.DateTime created_time { get; set; }
         public int expense_type_id { get; set; }
         public int expense_detail_id { get; set; }
         public string evidence { get; set; }
