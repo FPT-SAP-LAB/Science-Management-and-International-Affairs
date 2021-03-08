@@ -26,7 +26,7 @@
                 <input class="form-control form-control-lg" type="text" value="25/08/2016" disabled />
             </div>
             <div class="col-xl-6 form-group">
-                <label>@rm.GetString("Country")</label>
+                <label>Quốc gia</label>
                 <select class="form-control" id="search_nam" name="param" disabled>
                     <option selected>Việt Nam</option>
                     <option>Mỹ</option>
@@ -34,7 +34,7 @@
                 </select>
             </div>
             <div class="col-xl-6 form-group">
-                <label>@rm.GetString("FileCM")</label>
+                <label>File chứng minh</label>
                 <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</button>
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="row" id="thuong">
             <div class="col-xl-6 form-group">
                 <label>Tổng thưởng cho bài báo</label>
-                <input id="totalreward" class="form-control form-control-lg" type="number" />
+                <input id="totalreward" class="form-control form-control-lg" type="text" />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Chọn loại khen thưởng</label>
@@ -99,7 +99,7 @@
                             <td><button class="btn btn-light-info font-weight-bold">View</button></td>
                             <td><input type="text" class="form-control" value="TPBank" disabled /></td>
                             <td><input type="text" class="form-control" value="888" disabled /></td>
-                            <td><input type="number" class="form-control onereward" /></td>
+                            <td><input type="text" class="form-control onereward" /></td>
                             <td><input type="text" class="form-control" value="" disabled /></td>
                         </tr>
                     </tbody>
@@ -145,7 +145,7 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/inputFilter.js"></script>
     <script>
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
@@ -163,6 +163,28 @@
                         toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                     }
                 });
+            }
+        });
+        $(".onereward, #totalreward").inputFilter(function (value) {
+            return /^-?\d*$/.test(value);
+        });
+        $("#totalreward").change(function () {
+            var x = $(this).val();
+            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        });
+        $(".onereward").on("change", function () {
+            var x = $(this).val();
+            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            var total = $("#totalreward").val();
+            total = total.split(",").join("");
+            var sum = 0;
+            $(".onereward").each(function () {
+                var temp = $(this).val().split(",").join("");
+                sum = parseInt(sum) + parseInt(temp);
+            });
+            console.log(total, sum);
+            if (sum > parseInt(total)) {
+                toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bằng sáng chế", "Lỗi");
             }
         });
     </script>

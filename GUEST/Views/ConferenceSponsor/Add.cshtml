@@ -4,16 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
-
+<style>
+    .table-responsive > .table-bordered {
+        border: 0.5px solid #e6e6e6;
+    }
+</style>
+<div class="content  d-flex flex-column flex-column-fluid">
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-            <div class="col-xl-12 col-xxl-12">
+            <div class="col-xl-12">
                 <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
                     <!---------------------------------------------------------------------->
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <h3 class="mb-10 font-weight-bold text-dark">Thông tin hội nghị</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-6">
                                     <!--begin::Input-->
@@ -117,12 +126,25 @@
 
                             </div>
                         </div>
-                        <div class="col-md-2" style="border-radius: 25px; border: 2px solid #73AD21; padding: 20px; height: fit-content;">
-                            <h3 class="mb-10 font-weight-bold text-dark">Chính sách hiện thời (<a href="#">xem thêm</a>)</h3>
-                            <ul>
-                                <li>Diễn giả hoặc thành viên ban tổ chức thuộc đại học QS1000</li>
-                                <li>Bài nghiên cứu khoa học hoàn chỉnh và đơn vị chủ quản là FE</li>
-                            </ul>
+                        <div class="col-md-4" style="">
+                            <div class="card card-custom "  style="box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 17%); border: 0; margin-bottom: 2rem;">
+                                <div class="card-header ribbon ribbon-top ribbon-ver">
+                                    <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                        <i class="fa fa-star text-white"></i>
+                                    </div>
+                                    <h3 class="card-title">
+                                        Chính sách hiện tại
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
+                                    {
+                                        <li>@item</li>
+                                    }
+                                    <br /><br />
+                                    <a href="#" class="btn btn-light-primary mr-2">Xem thêm</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="pb-5">
@@ -226,8 +248,9 @@
                     </div>
                     <div class="pb-5">
                         <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
+                        <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
                         <div class="table-responsive">
-                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
+                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                 <thead>
                                     <tr role="row">
                                         <th>Nội dung</th>
@@ -291,6 +314,7 @@
         <a href="/ConferenceSponsor" class="btn btn-secondary">Hủy</a>
     </div>
 </div>
+    </div>
 @section scripts{
     <script type="text/javascript">
         var baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
@@ -345,17 +369,9 @@
 
             var KTUppy = function () {
                 const Tus = Uppy.Tus;
-                const ProgressBar = Uppy.ProgressBar;
                 const StatusBar = Uppy.StatusBar;
                 const FileInput = Uppy.FileInput;
                 const Informer = Uppy.Informer;
-
-                // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
-                const Dashboard = Uppy.Dashboard;
-                const Dropbox = Uppy.Dropbox;
-                const GoogleDrive = Uppy.GoogleDrive;
-                const Instagram = Uppy.Instagram;
-                const Webcam = Uppy.Webcam;
 
                 var initUppy1 = function () {
                     // Uppy variables
@@ -368,7 +384,7 @@
 
                     var uppyMin = Uppy.Core({
                         debug: true,
-                        autoProceed: true,
+                        autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
                             maxFileSize: 1000000, // 1mb
@@ -448,7 +464,7 @@
 
                     var uppyMin = Uppy.Core({
                         debug: true,
-                        autoProceed: true,
+                        autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
                             maxFileSize: 1000000, // 1mb
@@ -614,7 +630,7 @@
             $(ele).select2({
                 placeholder: "Tìm kiếm thông tin theo mã số",
                 allowClear: true,
-                width: '100%',
+                width: '200px',
                 ajax: {
                     url: "/ConferenceSponsor/GetInformationPeopleWithID",
                     dataType: 'json',

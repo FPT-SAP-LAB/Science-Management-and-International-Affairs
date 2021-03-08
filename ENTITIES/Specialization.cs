@@ -22,7 +22,6 @@ namespace ENTITIES
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
             this.SpecializationLanguages = new HashSet<SpecializationLanguage>();
-            this.Partners = new HashSet<Partner>();
         }
     
         public int specialization_id { get; set; }
@@ -38,7 +37,5 @@ namespace ENTITIES
         public virtual ICollection<Scholarship> Scholarships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecializationLanguage> SpecializationLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Partner> Partners { get; set; }
     }
 }

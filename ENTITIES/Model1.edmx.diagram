@@ -4,143 +4,144 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3c02dda203fb43b5b846a0b41d2a70bc" Name="Diagram1">
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Comment" Width="1.5" PointX="5.25" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Area" Width="1.5" PointX="1.5" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Country" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.File" Width="1.5" PointX="0.75" PointY="36.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.InternalUnit" Width="1.5" PointX="1.5" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Module" Width="1.5" PointX="12" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Office" Width="1.5" PointX="0.75" PointY="32.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Person" Width="1.5" PointX="3" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Right" Width="1.5" PointX="14.25" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Role" Width="1.5" PointX="3.75" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Specialization" Width="1.5" PointX="9" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaboration" Width="1.5" PointX="11.25" PointY="38" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationStatusType" Width="1.5" PointX="9" PointY="61.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationType" Width="1.5" PointX="6.75" PointY="60.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicProgram" Width="1.5" PointX="18.25" PointY="30.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationStatusHistory" Width="1.5" PointX="16.5" PointY="42.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Direction" Width="1.5" PointX="9" PointY="57.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Procedure" Width="1.5" PointX="13.5" PointY="44.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationStatu" Width="1.5" PointX="14" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOA" Width="1.5" PointX="16.25" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOABonu" Width="1.5" PointX="18.5" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAPartner" Width="1.5" PointX="21.5" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAPartnerScope" Width="1.5" PointX="23.75" PointY="16.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAPartnerSpecialization" Width="1.5" PointX="23.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAStatusHistory" Width="1.5" PointX="21.5" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOU" Width="1.5" PointX="9" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUBonu" Width="1.5" PointX="9" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartner" Width="1.5" PointX="14.25" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartnerScope" Width="1.5" PointX="11.25" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartnerSpecialization" Width="1.5" PointX="16.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUStatusHistory" Width="1.5" PointX="16.25" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Partner" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationStatu" Width="1.5" PointX="6.75" PointY="63.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationScope" Width="1.5" PointX="9" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Product" Width="1.5" PointX="11.25" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ScholarshipStatu" Width="1.5" PointX="9" PointY="65.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Article" Width="1.5" PointX="4.5" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ArticleCategory" Width="1.5" PointX="2.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ArticleStatu" Width="1.5" PointX="2.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NewsVersion" Width="1.5" PointX="18.75" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Tag" Width="1.5" PointX="6.75" PointY="66.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ProjectProduct" Width="1.5" PointX="13.5" PointY="30" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchCollaboration" Width="1.5" PointX="5.25" PointY="32.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchContactPoint" Width="1.5" PointX="15.75" PointY="27.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchPartner" Width="1.5" PointX="13.5" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Scholarship" Width="1.5" PointX="11.25" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityLanguage" Width="1.5" PointX="20.75" PointY="30.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationTypeLanguage" Width="1.5" PointX="15.75" PointY="53.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicProgramLanguage" Width="1.5" PointX="20.5" PointY="42.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceCriteriaLanguage" Width="1.5" PointX="18.75" PointY="34.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DegreeLanguage" Width="1.5" PointX="21.75" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DirectionLanguage" Width="1.5" PointX="17.75" PointY="57.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.FormalityLanguage" Width="1.5" PointX="21.75" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Language" Width="1.5" PointX="13.5" PointY="50.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.LevelAcademicLanguage" Width="1.5" PointX="18.75" PointY="50.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationLanguage" Width="1.5" PointX="19.5" PointY="37.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperStatusLanguage" Width="1.5" PointX="18.75" PointY="53.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PositionLanguage" Width="1.5" PointX="7.5" PointY="44.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ProcedureLanguage" Width="1.5" PointX="15.75" PointY="47.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchAreaLanguage" Width="1.5" PointX="7.5" PointY="48.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.SpecializationLanguage" Width="1.5" PointX="15.75" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.TitleLanguage" Width="1.5" PointX="7.5" PointY="51.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Citation" Width="1.5" PointX="5.25" PointY="41" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Conference" Width="1.5" PointX="6" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceParticipant" Width="1.5" PointX="13.5" PointY="41" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatu" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceSupport" Width="1.5" PointX="8.25" PointY="32.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Cost" Width="1.5" PointX="10.5" PointY="27.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Criterion" Width="1.5" PointX="11.25" PointY="24.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.EligibilityCriteria" Width="1.5" PointX="13.5" PointY="33.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Formality" Width="1.5" PointX="3.75" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ContractType" Width="1.5" PointX="0.75" PointY="40.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Degree" Width="1.5" PointX="6" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.LevelAcademic" Width="1.5" PointX="12" PointY="48.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperType" Width="1.5" PointX="9" PointY="25.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Position" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchArea" Width="1.5" PointX="5.25" PointY="46.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Title" Width="1.5" PointX="5.25" PointY="48.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Notification" Width="1.5" PointX="17.25" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotifyType" Width="1.5" PointX="15" PointY="56.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Award" Width="1.5" PointX="5.25" PointY="51.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CustomProfile" Width="1.5" PointX="5.25" PointY="54.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Profile" Width="1.5" PointX="11.25" PointY="43.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearcherDegree" Width="1.5" PointX="8.25" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearcherLevelAcademic" Width="1.5" PointX="14.25" PointY="36.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CitationDecision" Width="1.5" PointX="8.25" PointY="42.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Decision" Width="1.5" PointX="6" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DecisionType" Width="1.5" PointX="3.75" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RewardPolicy" Width="1.5" PointX="6" PointY="57.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AuthorInvention" Width="1.5" PointX="16.5" PointY="39.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AuthorPaper" Width="1.5" PointX="16.5" PointY="35.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Invention" Width="1.5" PointX="8.25" PointY="37.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.InventionType" Width="1.5" PointX="6" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Paper" Width="1.5" PointX="11.25" PointY="31.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperCriteria" Width="1.5" PointX="9" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperStatu" Width="1.5" PointX="9" PointY="55" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivity" Width="1.5" PointX="9.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityPhase" Width="1.5" PointX="17" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityStatu" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityType" Width="1.5" PointX="7.5" PointY="69.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseCategory" Width="1.5" PointX="16.25" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseDetail" Width="1.5" PointX="18.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseType" Width="1.5" PointX="16.25" PointY="50.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityOffice" Width="1.5" PointX="14" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityPartner" Width="1.5" PointX="13.5" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AnswerType" Width="1.5" PointX="19.25" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Form" Width="1.5" PointX="19.25" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Participant" Width="1.5" PointX="21.5" PointY="22.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ParticipantRole" Width="1.5" PointX="19.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PlanParticipant" Width="1.5" PointX="24.5" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Question" Width="1.5" PointX="21.5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Response" Width="1.5" PointX="21.5" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatusLanguage" Width="1.5" PointX="21.75" PointY="33.125" IsExpanded="true" />
+      <Diagram DiagramId="49e7d99593954fb6aa1adca8838d6733" Name="Diagram1">
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Comment" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="0.75" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Area" Width="1.5" PointX="1.5" PointY="44.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Country" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.File" Width="1.5" PointX="0.75" PointY="35.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.InternalUnit" Width="1.5" PointX="1.5" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Module" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Office" Width="1.5" PointX="0.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Person" Width="1.5" PointX="3" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Right" Width="1.5" PointX="3" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Role" Width="1.5" PointX="1.5" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Specialization" Width="1.5" PointX="6" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaboration" Width="1.5" PointX="11.25" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationStatusType" Width="1.5" PointX="14.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationType" Width="1.5" PointX="12" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicProgram" Width="1.5" PointX="19.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationStatusHistory" Width="1.5" PointX="16.5" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Direction" Width="1.5" PointX="9" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Procedure" Width="1.5" PointX="16.25" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationStatu" Width="1.5" PointX="23" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOA" Width="1.5" PointX="18" PointY="30.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOABonu" Width="1.5" PointX="20.25" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAPartnerScope" Width="1.5" PointX="13.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOAStatusHistory" Width="1.5" PointX="25.25" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOU" Width="1.5" PointX="13" PointY="47.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUBonu" Width="1.5" PointX="15.25" PointY="48.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartner" Width="1.5" PointX="17.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartnerScope" Width="1.5" PointX="13.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUPartnerSpecialization" Width="1.5" PointX="21.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.MOUStatusHistory" Width="1.5" PointX="18.25" PointY="48.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Partner" Width="1.5" PointX="9" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PartnerScope" Width="1.5" PointX="11.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationStatu" Width="1.5" PointX="12" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CollaborationScope" Width="1.5" PointX="9" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Product" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ScholarshipStatu" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Article" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ArticleCategory" Width="1.5" PointX="0.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ArticleStatu" Width="1.5" PointX="0.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ArticleVersion" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Tag" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ProjectProduct" Width="1.5" PointX="10.5" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchCollaboration" Width="1.5" PointX="5.25" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchContactPoint" Width="1.5" PointX="15.75" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchPartner" Width="1.5" PointX="13.5" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Scholarship" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityLanguage" Width="1.5" PointX="19.5" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicCollaborationTypeLanguage" Width="1.5" PointX="18.25" PointY="43.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicProgramLanguage" Width="1.5" PointX="22.5" PointY="38.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceCriteriaLanguage" Width="1.5" PointX="7.5" PointY="59.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DegreeLanguage" Width="1.5" PointX="13.25" PointY="57.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DirectionLanguage" Width="1.5" PointX="21.25" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.FormalityLanguage" Width="1.5" PointX="11.5" PointY="61.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Language" Width="1.5" PointX="8.25" PointY="53" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.LevelAcademicLanguage" Width="1.5" PointX="16.25" PointY="55" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationLanguage" Width="1.5" PointX="13.5" PointY="53.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperStatusLanguage" Width="1.5" PointX="15.5" PointY="45.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PositionLanguage" Width="1.5" PointX="10.5" PointY="43.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ProcedureLanguage" Width="1.5" PointX="18.5" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchAreaLanguage" Width="1.5" PointX="10.5" PointY="46.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.SpecializationLanguage" Width="1.5" PointX="20.5" PointY="48" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.TitleLanguage" Width="1.5" PointX="7.5" PointY="50.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Citation" Width="1.5" PointX="5.25" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Conference" Width="1.5" PointX="6" PointY="64.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceParticipant" Width="1.5" PointX="15.5" PointY="41.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatu" Width="1.5" PointX="6" PointY="68.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceSupport" Width="1.5" PointX="8.25" PointY="44.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Cost" Width="1.5" PointX="10.5" PointY="49.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Criterion" Width="1.5" PointX="5.25" PointY="59.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.EligibilityCriteria" Width="1.5" PointX="10.5" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Formality" Width="1.5" PointX="3.75" PointY="65.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ContractType" Width="1.5" PointX="0.75" PointY="49.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Degree" Width="1.5" PointX="9" PointY="62.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.LevelAcademic" Width="1.5" PointX="11" PointY="57.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperType" Width="1.5" PointX="6" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Position" Width="1.5" PointX="5.25" PointY="43.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearchArea" Width="1.5" PointX="5.25" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Title" Width="1.5" PointX="5.25" PointY="48.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Notification" Width="1.5" PointX="3" PointY="41.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotifyType" Width="1.5" PointX="0.75" PointY="51.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Award" Width="1.5" PointX="5.25" PointY="50.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CustomProfile" Width="1.5" PointX="5.25" PointY="53.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Profile" Width="1.5" PointX="11.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearcherDegree" Width="1.5" PointX="11.25" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ResearcherLevelAcademic" Width="1.5" PointX="13.25" PointY="43.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CitationDecision" Width="1.5" PointX="8.25" PointY="41.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Decision" Width="1.5" PointX="6" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.DecisionType" Width="1.5" PointX="3.75" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RewardPolicy" Width="1.5" PointX="3" PointY="58.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AuthorInvention" Width="1.5" PointX="13.5" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AuthorPaper" Width="1.5" PointX="13.5" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Invention" Width="1.5" PointX="8.25" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.InventionType" Width="1.5" PointX="6" PointY="62" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Paper" Width="1.5" PointX="8.25" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperCriteria" Width="1.5" PointX="6" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperStatu" Width="1.5" PointX="6" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivity" Width="1.5" PointX="11.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityPhase" Width="1.5" PointX="18.5" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityStatu" Width="1.5" PointX="9" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AcademicActivityType" Width="1.5" PointX="9" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseCategory" Width="1.5" PointX="21.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseDetail" Width="1.5" PointX="24" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityExpenseType" Width="1.5" PointX="21.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityOffice" Width="1.5" PointX="19.5" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ActivityPartner" Width="1.5" PointX="16.5" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AnswerType" Width="1.5" PointX="20.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Form" Width="1.5" PointX="20.75" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Participant" Width="1.5" PointX="23" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ParticipantRole" Width="1.5" PointX="20.75" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PlanParticipant" Width="1.5" PointX="25" PointY="38.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Question" Width="1.5" PointX="23" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Response" Width="1.5" PointX="23" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatusLanguage" Width="1.5" PointX="10.5" PointY="64.75" IsExpanded="true" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Comment__people___1B9317B3" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__creat__2704CA5F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Account__role_id__2057CCD0" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Account__role_id__1D7B6025" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Article__account__5E54FF49" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__accou__44952D46" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__accou__1E3A7A34" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOA__account_id__4A4E069C" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOU__account_id__55BFB948" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__accou__26CFC035" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__accou__477199F1" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__accou__2DB1C7EE" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__accou__047AA831" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOA__account_id__336AA144" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOU__account_id__3B0BC30C" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__accou__0D0FEE32" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__People__account___22401542" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__accou__308E3499" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Office__area_id__72910220" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__count__589C25F3" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__count__4277DAAA" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__count__29AC2CE0" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Partner__country__2F9A1060" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__count__762C88DA" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__count__5C6CB6D7" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Decision__file_i__39E294A9" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__file___436BFEE3" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__file___2AA05119" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__People__evidence__251C81ED" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Profile__avatar___324172E1" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Profile__avatar___1881A0DE" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__RewardPol__file___24E777C3" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Office__unit_id__73852659" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Right__module_id__2704CA5F" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Right__module_id__251C81ED" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityE__offic__7D0E9093" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__offic__5B78929E" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOU__office_id__2334397B" ManuallyRouted="false" />
@@ -157,114 +158,109 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Profile__people___3335971A" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__peopl__351DDF8C" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__peopl__370627FE" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__speci__5F492382" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__specializ__46486B8E" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__speci__43A1090D" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__specializ__2D7CBDC4" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchC__speci__3BFFE745" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__speci__7814D14C" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Specializ__speci__14B10FFA" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__direc__3BFFE745" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__speci__5E54FF49" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Specializ__speci__7AF13DF7" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__direc__2610A626" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__mou_p__0B5CAFEA" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__colla__4589517F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__colla__15DA3E5D" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_AcademicCollaboration_AcademicCollaborationStatusType" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__3FD07829" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__40C49C62" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__colla__467D75B8" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__7AF13DF7" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__colla__2EA5EC27" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__28ED12D1" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__29E1370A" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Collabora__colla__2F9A1060" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__colla__61316BF4" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_AcademicProgram_AcademicCollaborationType" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicP__artic__3BFFE745" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicP__progr__0662F0A3" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_AcademicProgram_Direction" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Direction__direc__047AA831" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Direction__direc__6ABAD62E" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_Procedure_Direction" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__artic__40C49C62" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__proce__10E07F16" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAStatus__mou_s__54CB950F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUStatus__mou_s__61316BF4" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOA__mou_id__4B422AD5" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__proce__7720AD13" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAStatus__mou_s__3A179ED3" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUStatus__mou_s__4589517F" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOA__mou_id__345EC57D" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOABonus__moa_id__18B6AB08" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_i__4D2A7347" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAStatus__moa_i__53D770D6" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_b__1B9317B3" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_p__5006DFF2" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_p__51EF2864" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__mou_p__4E1E9780" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__mou_p__50FB042B" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__mou_p__52E34C9D" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_i__373B3228" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAStatus__moa_i__39237A9A" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__moa_b__36470DEF" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOAPartne__partn__382F5661" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUBonus__mou_id__24285DB4" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_i__589C25F3" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_i__5B78929E" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUStatus__mou_i__603D47BB" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_b__2704CA5F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_p__5E54FF49" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_i__3DE82FB7" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_i__40C49C62" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUStatus__mou_i__44952D46" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_b__3FD07829" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__mou_p__42ACE4D4" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__partn__2610A626" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityP__mou_p__595B4002" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__partn__41B8C09B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__partn__28ED12D1" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOUPartne__scope__5D60DB10" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchP__mou_p__73501C2F" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Partner__article__2EA5EC27" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ProjectPr__produ__6E8B6712" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__schol__7720AD13" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityP__mou_p__595B4002" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PartnerSc__scope__4959E263" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchP__partn__59904A2C" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ProjectPr__produ__54CB950F" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__schol__5D60DB10" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__artic__251C81ED" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Article__article__5F492382" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Article__categor__603D47BB" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__NewsVersi__artic__6319B466" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchC__artic__3B0BC30C" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Scholarsh__artic__6E8B6712" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__NewsVersi__langu__6BAEFA67" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_ArticleVersion_Article" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ProjectPr__proje__3A179ED3" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchP__proje__3FD07829" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchC__resea__725BF7F6" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__7908F585" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__langu__79FD19BE" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__langu__7BE56230" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicP__langu__7CD98669" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchC__resea__589C25F3" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__5F492382" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__langu__603D47BB" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__langu__6225902D" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicP__langu__6319B466" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__crite__65C116E7" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__langu__66B53B20" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__DegreeLan__degre__02925FBF" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__DegreeLan__langu__038683F8" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Direction__langu__056ECC6A" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Formality__forma__0662F0A3" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Formality__langu__075714DC" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__langu__00AA174D" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__LevelAcad__langu__084B3915" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__langu__0A338187" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PaperStat__langu__0C1BC9F9" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PositionL__langu__0E04126B" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__langu__0FEC5ADD" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchA__langu__11D4A34F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Specializ__langu__13BCEBC1" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__TitleLang__langu__15A53433" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__LevelAcad__level__093F5D4E" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__notif__0B27A5C0" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PaperStat__statu__0D0FEE32" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PositionL__posit__0EF836A4" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchA__resea__12C8C788" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__TitleLang__title__1699586C" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__DegreeLan__degre__68D28DBC" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__DegreeLan__langu__69C6B1F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Direction__langu__6BAEFA67" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Formality__forma__6CA31EA0" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Formality__langu__6D9742D9" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__langu__66EA454A" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__LevelAcad__langu__6E8B6712" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__langu__7073AF84" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PaperStat__langu__725BF7F6" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PositionL__langu__74444068" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Procedure__langu__762C88DA" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchA__langu__7814D14C" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Specializ__langu__79FD19BE" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__TitleLang__langu__7BE56230" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__LevelAcad__level__6F7F8B4B" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__notif__7167D3BD" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PaperStat__statu__73501C2F" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PositionL__posit__753864A1" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ResearchA__resea__7908F585" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__TitleLang__title__7CD98669" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__confe__5E54FF49" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__forma__59904A2C" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__confe__11D4A34F" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__title__1D4655FB" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__statu__019E3B86" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__title__038683F8" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__statu__1881A0DE" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__statu__67DE6983" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__decis__1699586C" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__rewar__178D7CA5" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Cost__conference__1975C517" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Eligibili__confe__1B5E0D89" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Criteria__reward__1A69E950" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Eligibili__crite__1C5231C2" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__degre__3429BB53" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__level__361203C5" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__paper_typ__45544755" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__type___27C3E46E" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__degre__1A69E950" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Researche__level__1C5231C2" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__paper_typ__2C88998B" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Notificat__type___0E04126B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__CitationD__decis__37FA4C37" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Decision__decisi__38EE7070" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AuthorInv__inven__3EA749C6" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AuthorPap__paper__408F9238" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__type___4460231C" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__status_id__473C8FC7" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AuthorInv__inven__25DB9BFC" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AuthorPap__paper__27C3E46E" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Invention__type___2B947552" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Paper__status_id__2E70E1FD" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__2610A626" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__27F8EE98" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__28ED12D1" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__314D4EA8" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__activ__324172E1" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityE__activ__27F8EE98" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityP__activ__58671BC9" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Form__phase_id__2DB1C7EE" ManuallyRouted="false" />
@@ -272,14 +268,13 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_ActivityExpenseCategory_ActivityOffice" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_ActivityExpenseDetail_ActivityExpenseCategory" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK_ActivityExpenseDetail_ActivityExpenseType" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Question__answer__39237A9A" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Question__answer__4277DAAA" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Question__form_i__345EC57D" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Response__form_i__3552E9B6" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Participa__parti__2F9A1060" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PlanParti__parti__32767D0B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.ConferenceComment" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PaperComment" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.PartnerSpecialization" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.ArticleTag" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.CollaborationOfficer" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.AreaCare" ManuallyRouted="false" />

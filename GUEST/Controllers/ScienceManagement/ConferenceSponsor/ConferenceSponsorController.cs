@@ -77,6 +77,7 @@ namespace GUEST.Controllers
         }
         public class DataAddPage
         {
+            public List<string> ConferenceCriteriaLanguages { get; set; }
             public List<Country> Countries { get; set; }
             public List<FormalityLanguage> FormalityLanguages { get; set; }
             public List<Office> Offices { get; set; }
