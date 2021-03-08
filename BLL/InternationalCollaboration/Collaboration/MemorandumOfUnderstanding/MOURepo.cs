@@ -101,7 +101,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public void addMOU(MOUAdd input)
+        public void addMOU()
         {
             //using (DbContextTransaction transaction = db.Database.BeginTransaction())
             //{
