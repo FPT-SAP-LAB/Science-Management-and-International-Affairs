@@ -60,18 +60,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
 
-        public ActionResult Add_Mou(MOUAdd input)
-        {
-            try
-            {
-                mou.addMOU(input);
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-        }
+        //public ActionResult Add_Mou(MOUAdd input)
+        //{
+        //    try
+        //    {
+        //        mou.addMOU(input);
+        //        return Json("", JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json("", JsonRequestBehavior.AllowGet);
+        //    }
+        //}
         public ActionResult CheckPartner(string partner_name)
         {
             try

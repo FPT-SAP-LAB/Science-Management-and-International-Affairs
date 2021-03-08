@@ -561,36 +561,36 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string mou_status_name { get; set; }
             public int mou_status_id { get; set; }
         }
-        public class BasicInfo
-        {
-            public string mou_code { get; set; }
-            public int office_id { get; set; }
-            public string mou_end_date { get; set; }
-            public int mou_status_id { get; set; }
-            public string reason { get; set; }
-            public string mou_note { get; set; }
-            public string evidence { get; set; }
-        }
-        public class MOUAdd
-        {
-            public MOUAdd() { }
-            public BasicInfo BasicInfo { get; set; }
-            public List<PartnerInfo> PartnerInfo { get; set; }
-        }
-        public class PartnerInfo
-        {
-            public string partnername_add { get; set; }
-            public string represent_add { get; set; }
-            public string specialization_add { get; set; }
-            public string nation_add { get; set; }
-            public string website_add { get; set; }
-            public string address_add { get; set; }
-            public string email_add { get; set; }
-            public string sign_date_mou_add { get; set; }
-            public string phone_add { get; set; }
-            public string coop_scope_add { get; set; }
-            public string partner_id { get; set; }
-        }
+        //public class BasicInfo
+        //{
+        //    public string mou_code { get; set; }
+        //    public int office_id { get; set; }
+        //    public string mou_end_date { get; set; }
+        //    public int mou_status_id { get; set; }
+        //    public string reason { get; set; }
+        //    public string mou_note { get; set; }
+        //    public string evidence { get; set; }
+        //}
+        //public class MOUAdd
+        //{
+        //    public MOUAdd() { }
+        //    public BasicInfo BasicInfo { get; set; }
+        //    public List<PartnerInfo> PartnerInfo { get; set; }
+        //}
+        //public class PartnerInfo
+        //{
+        //    public string partnername_add { get; set; }
+        //    public string represent_add { get; set; }
+        //    public string specialization_add { get; set; }
+        //    public string nation_add { get; set; }
+        //    public string website_add { get; set; }
+        //    public string address_add { get; set; }
+        //    public string email_add { get; set; }
+        //    public string sign_date_mou_add { get; set; }
+        //    public string phone_add { get; set; }
+        //    public string coop_scope_add { get; set; }
+        //    public string partner_id { get; set; }
+        //}
         public class NotificationInfo
         {
             public NotificationInfo() { }
