@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -106,20 +107,112 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
-                    db.MOUs.Add(input.MOU);
-                    db.MOUStatusHistories.Add(input.MOUStatusHistory);
-                    foreach (MOUPartner item in input.listMOUPartner)
+                    //add MOU
+                    //Check Partner
+                    //add MOUPartner => 
+                    //check or add PartnerScope
+                    //add MOUPartnerScope
+                    //add MOUPartnerSpecialization
+                    //add MOUStatusHistory
+
+                    MOU m = new MOU
                     {
-                        db.MOUPartners.Add(item);
-                    }
-                    foreach (MOUPartnerSpecialization item in input.listMOUPartnerSpe)
+                        mou_code = input.BasicInfo.mou_code,
+                        mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        mou_note = input.BasicInfo.mou_note,
+                        evidence = input.BasicInfo.evidence,
+                        office_id = input.BasicInfo.office_id,
+                        account_id = 1,
+                        add_time = DateTime.Now,
+                        is_deleted = false,
+                        noti_count = 0
+                    };
+                    db.MOUs.Add(m);
+                    MOU objMOU = db.MOUs.Where(x => x.mou_code == input.BasicInfo.mou_code).First();
+
+                    //Add MOUStatusHistory
+                    db.MOUStatusHistories.Add(new ENTITIES.MOUStatusHistory
                     {
-                        db.MOUPartnerSpecializations.Add(item);
-                    }
-                    foreach (MOUPartnerScope item in input.listMOUPartnerScope)
+                        datetime = DateTime.Now,
+                        reason = input.BasicInfo.reason,
+                        mou_id = objMOU.mou_id,
+                        mou_status_id = input.BasicInfo.mou_status_id
+                    });
+
+                    foreach (PartnerInfo item in input.PartnerInfo.ToList())
                     {
-                        db.MOUPartnerScopes.Add(item);
+                        //new partner
+                        if (item.partner_id is null || item.partner_id == "")
+                        {
+                            db.Partners.Add(new ENTITIES.Partner
+                            {
+                                partner_name = item.partnername_add,
+                                website = item.website_add,
+                                address = item.address_add,
+                                country_id = 13
+                            });
+                            ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == item.partnername_add).First();
+                            //add to MOUPartner via each partner of MOU
+                            db.MOUPartners.Add(new ENTITIES.MOUPartner
+                            {
+                                mou_id = objMOU.mou_id,
+                                partner_id = objPartner.partner_id,
+                                mou_start_date = DateTime.ParseExact(item.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                contact_point_name = item.represent_add,
+                                contact_point_email = item.email_add,
+                                contact_point_phone = item.phone_add
+                            });
+                            //PartnerScope and MOUPartnerScope
+                            string[] scopes = item.coop_scope_add.Split(',');
+                            foreach (string tokenScope in scopes.ToList())
+                            {
+                                //check PartnerScope exist with (Ex: Partner_id:1 , Scope_id: 2)
+                                //if not existed => add New PartnerScope with reference count = ? 
+                                //if existed => +refer ?
+                                //get partner_scope_id from object checked.
+                                //add to MOUPartnerScope with this partner_scope_id.
+                            }
+
+                            //MOUPartnerSpe
+                            string[] spes = item.specialization_add.Split(',');
+                            MOUPartner objMOUPartner = db.MOUPartners.Where(x => (x.mou_id == objMOU.mou_id && x.partner_id == objPartner.partner_id)).First();
+                            foreach (string tokenSpe in spes.ToList())
+                            {
+                                //add to MOUPartnerSpe with mou_partner_id and spe_id
+                            }
+
+                            
+
+                        } else //old partner
+                        {
+                            //add to MOUPartner via each partner of MOU
+                            db.MOUPartners.Add(new ENTITIES.MOUPartner
+                            {
+                                mou_id = objMOU.mou_id,
+                                partner_id = int.Parse(item.partner_id),
+                                mou_start_date = DateTime.ParseExact(item.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                contact_point_name = item.represent_add,
+                                contact_point_email = item.email_add,
+                                contact_point_phone = item.phone_add
+                            });
+                        }
                     }
+
+
+                    //db.MOUs.Add(input.MOU);
+                    //db.MOUStatusHistories.Add(input.MOUStatusHistory);
+                    //foreach (MOUPartner item in input.listMOUPartner)
+                    //{
+                    //    db.MOUPartners.Add(item);
+                    //}
+                    //foreach (MOUPartnerSpecialization item in input.listMOUPartnerSpe)
+                    //{
+                    //    db.MOUPartnerSpecializations.Add(item);
+                    //}
+                    //foreach (MOUPartnerScope item in input.listMOUPartnerScope)
+                    //{
+                    //    db.MOUPartnerScopes.Add(item);
+                    //}
                     db.SaveChanges();
                     transaction.Commit();
                 }
@@ -472,14 +565,35 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             public string mou_status_name { get; set; }
             public int mou_status_id { get; set; }
         }
+        public class BasicInfo
+        {
+            public string mou_code { get; set; }
+            public int office_id { get; set; }
+            public string mou_end_date { get; set; }
+            public int mou_status_id { get; set; }
+            public string reason { get; set; }
+            public string mou_note { get; set; }
+            public string evidence { get; set; }
+        }
         public class MOUAdd
         {
-            public MOUAdd() { }
-            public MOU MOU { get; set; }
-            public MOUStatusHistory MOUStatusHistory { get; set; }
-            public List<MOUPartner> listMOUPartner { get; set; }
-            public List<MOUPartnerSpecialization> listMOUPartnerSpe { get; set; }
-            public List<MOUPartnerScope> listMOUPartnerScope { get; set; }
+            public MOUAdd (){}
+            public BasicInfo BasicInfo { get; set; }
+            public List<PartnerInfo> PartnerInfo { get; set; }
+        }
+        public class PartnerInfo
+        {
+            public string partnername_add { get; set; }
+            public string represent_add { get; set; }
+            public string specialization_add { get; set; }
+            public string nation_add { get; set; }
+            public string website_add { get; set; }
+            public string address_add { get; set; }
+            public string email_add { get; set; }
+            public string sign_date_mou_add { get; set; }
+            public string phone_add { get; set; }
+            public string coop_scope_add { get; set; }
+            public string partner_id { get; set; }
         }
         public class NotificationInfo
         {

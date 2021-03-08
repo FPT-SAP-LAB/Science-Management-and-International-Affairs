@@ -69,7 +69,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception)
             {
-                return new HttpStatusCodeResult(400);
+                return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult CheckPartner(string partner_name)
