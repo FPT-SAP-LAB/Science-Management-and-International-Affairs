@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
 <style>
-    input, textarea {
+    #main-control input, textarea {
         border: 0px !important;
         border-radius: 0px !important;
         font-size: 15px !important;
@@ -12,14 +12,14 @@
         white-space: pre-wrap;
     }
 
-        input:focus {
+        #main-control input:focus {
             border-bottom: 2px solid #0094ff !important;
         }
 
-        textarea:focus {
-            border-bottom: 2px solid #0094ff !important;
-            border-right: 2px solid #0094ff !important;
-        }
+    #main-control textarea:focus {
+        border-bottom: 2px solid #0094ff !important;
+        border-right: 2px solid #0094ff !important;
+    }
 
     .card-title {
         border-top: 8px solid #0725d0 !important;
@@ -29,8 +29,9 @@
         border-left: 6px solid #0094ff !important;
     }
 
-    .input-title {
+    #main-control .input-title {
         height: 60px !important;
+        font-size: 19px !important;
     }
 
     .row {
@@ -58,6 +59,31 @@
         overflow: hidden !important;
         min-height: 65px !important;
     }
+
+    #main-control .checkbox-inline {
+        height: 47px !important;
+    }
+
+    #main-control .radio-inline {
+        height: 47px !important;
+    }
+
+    #main-control .custom-checkbox {
+        border: 1px solid #ded6d6 !important;
+    }
+
+    #main-control .custom-rv-checkbox {
+        font-size: 20px !important;
+    }
+
+    #main-control .custom-row {
+        padding-top: unset !important;
+        padding-bottom: unset !important;
+    }
+
+    #main-control .custom-font-choice {
+        font-size: 14px !important;
+    }
 </style>
 <div id="main-control">
     <div id="control-title">
@@ -72,7 +98,7 @@
             </div>
         </div>
     </div>
-    <div id="control-1" class="mb-">
+    <div id="control-0">
         <div class="card custom-card custom-card-after">
             <div class="row">
                 <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
@@ -80,17 +106,28 @@
                 </div>
                 <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                     <div class="row align-items-end">
-                        <select class="form-control" id="answer-type-1" onchange="changeAnswerType(1)">
+                        <select class="form-control" id="answer-type-0" onchange="changeAnswerType(0)">
                             <option checked value="Stext">Câu trả lời ngắn</option>
                             <option value="Ltext">Đoạn hội thoại</option>
                             <option value="Mchoice">Nhiều lựa chọn</option>
-                            <option value="Cbox">Checkboxs</option>
-                            <option value="Ddown">Drop-down</option>
+                            <option value="Cbox">Một lựa chọn</option>
                             <option value="Date">Ngày tháng năm</option>
                         </select>
                     </div>
                 </div>
-                <div id="answer-control-1" class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                <div id="answer-control-0" class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                    @*<div class="form-group row">
+                        <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                            <div class="input-group date kt_datetimepicker_3" id="date-0" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" placeholder="Ngày, tháng, năm" data-target="#date-0" autocomplete="off" id="date-0" readonly />
+                                <div class="input-group-append" data-target="#date-0" data-toggle="datetimepicker">
+                                    <span class="input-group-text">
+                                        <i class="ki ki-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 pl-0">
                         <input type="text" class="form-control" placeholder="Câu trả lời ngắn" />
                     </div>
@@ -98,33 +135,26 @@
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
                     <div class="row">
                         <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
-                            <a href="javascript:;" onclick="addQues('#control-1')" class="btn">
+                            <a href="javascript:;" onclick="addQues('#control-0')" class="btn">
                                 <i class="fas fa-plus-circle" style="color: #0094ffc4;"></i>
                             </a>
                         </div>
-                        <div class="col-sm-offset-8 col-md-offset-8 col-xl-offset-8 col-lg-offset-8 col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
-                            <a href="javascript:;" onclick="Clone('#control-1')" class="btn">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <a href="javascript:;" onclick="Clone('#control-0')" class="btn">
                                 <i class="fas fa-clone" style="color: #0094ffc4;"></i>
                             </a>
                         </div>
-                        @*<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
-                                    <a href="javascript:;" onclick="Delete('#control-1')" class="btn">
-                                        <i class="fas fa-trash" style="color: #0094ffc4;"></i>
-                                    </a>
-                            </div>*@
                         <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
                             <span class="switch switch-sm">
                                 <label>
-                                    <input type="checkbox" id="compulsory-1" />
+                                    <input type="checkbox" id="compulsory-0" />
                                     <span></span>
                                 </label>
                                 <span class="pl-2">Bắt buộc</span>
                             </span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -132,8 +162,8 @@
 
 @section scripts{
     <script>
-        arrDivControl = [1]
-        indexDiv = 2
+        arrDivControl = [0]
+        indexDiv = 1
 
         function addQues(id) {
             let htmlString = '<div id="control-' + indexDiv + '">' +
@@ -148,8 +178,7 @@
                 '<option checked value="Stext">Câu trả lời ngắn</option>' +
                 '<option value="Ltext">Đoạn hội thoại</option>' +
                 '<option value="Mchoice">Nhiều lựa chọn</option>' +
-                '<option value="Cbox">Checkboxs</option>' +
-                '<option value="Ddown">Drop-down</option>' +
+                '<option value="Cbox">Một lựa chọn</option>' +
                 '<option value="Date">Ngày tháng năm</option>' +
                 '</select>' +
                 '</div>' +
@@ -194,11 +223,14 @@
             div1 = document.querySelector(id);
             div.innerHTML = htmlString;
             div1.parentNode.insertBefore(div.firstChild, div1.nextSibling);
+            arrDivControl.push(indexDiv);
             indexDiv = indexDiv + 1;
         }
 
         function Delete(id) {
             $(id).remove();
+            str = id.split('-');
+            arrDivControl = arrDivControl.filter(function (e) { return e !== parseInt(str[str.length - 1]) });
         }
         function Clone(id) {
             return;
@@ -206,32 +238,274 @@
 
         function changeAnswerType(id) {
             val = document.getElementById('answer-type-' + id).value;
+            document.getElementById('answer-control-' + id).innerHTML = '';
             switch (val) {
                 case 'Stext':
-                    document.getElementById('answer-control-' + id).innerHTML = '';
                     $('#answer-control-' + id).append('<div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 pl-0">' +
-                        '<input type="text" class="form-control" placeholder="Câu trả lời ngắn" />' +
+                        '<input type="text" class="form-control" id="content-Stext-' + id + '" placeholder="Câu trả lời ngắn" />' +
                         '</div>');
                     break;
                 case 'Ltext':
-                    document.getElementById('answer-control-' + id).innerHTML = '';
                     $('#answer-control-' + id).append('<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 pl-0">' +
-                        '<textarea class= "form-control" placeholder = "Đoạn hội thoại"></textarea>' +
+                        '<textarea class= "form-control" id="content-Ltext-' + id + '" placeholder= "Đoạn hội thoại"></textarea>' +
                         '</div>');
                     break;
                 case 'Mchoice':
+                    arrCMD[0][id] = 1;
+                    temp_option = 0
+                    for (let i = 0; i < 100; i++) {
+                        if (typeof arrM_content[id][i] == 'undefined') {
+                            i = 999;
+                        } else {
+                            temp_option = temp_option + 1;
+                        }
+                    }
+                    arrM_content[id][temp_option] = 'Lựa chọn'
+                    $('#answer-control-' + id).append(
+                        '<div id ="answer-checkbox-' + id + '-' + temp_option + '" class="row custom-row" >' +
+                        '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0">' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 p-0 float-left">' +
+                        '<div class="checkbox-inline justify-content-center">' +
+                        '<label class="checkbox checkbox-lg">' +
+                        '<input type="checkbox" id="checkbox-' + id + '-' + temp_option + '" />' +
+                        '<span class="custom-checkbox"></span>' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 pl-0 float-left">' +
+                        '<input type="text" class="form-control" placeholder="Lựa chọn" id="content-checkbox-' + id + '-' + temp_option + '"  onchange="UpdateValueOfOptionCheckbox(\'' + id + '-' + temp_option + '\')"/>' +
+                        '</div>' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left justify-content-center">' +
+                        '<a href="javascript:;" onclick="RemoveCheckbox(\'#answer-checkbox-' + id + '-' + temp_option + '\')" class="btn">' +
+                        '<i class="fas fa-times custom-rv-checkbox" style="color: #5f5656;"></i>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div id="answer-checkbox-option" class="row custom-row">' +
+                        '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0">' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 p-0 float-left">' +
+                        '<div class="checkbox-inline justify-content-center">' +
+                        '<label class="checkbox checkbox-lg">' +
+                        '<input type="checkbox" disabled/>' +
+                        '<span class="custom-checkbox"></span>' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-sm-3 col-md-3 col-xl-3 col-lg-3 float-left">' +
+                        '<a href="javascript:;" onclick="AddCheckbox(\'#answer-checkbox-' + id + '-' + temp_option + '\')" class="btn custom-font-choice pl-0">' +
+                        'Thêm lựa chọn' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
                     break;
                 case 'Cbox':
-                    break;
-                case 'Ddown':
+                    arrCMD[1][id] = 1;
+                    temp_option = 0
+                    for (let i = 0; i < 100; i++) {
+                        if (typeof arrC_content[id][i] == 'undefined') {
+                            i = 999;
+                        } else {
+                            temp_option = temp_option + 1;
+                        }
+                    }
+                    arrC_content[id][temp_option] = 'Lựa chọn'
+                    $('#answer-control-' + id).append(
+                        '<div id="answer-radio-' + id + '-' + temp_option + '" class="row custom-row">' +
+                        '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0">' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left p-0">' +
+                        '<div class="radio-inline justify-content-center">' +
+                        '<label class="radio radio-lg">' +
+                        '<input type="radio" id="radio-' + id + '-' + temp_option + '" name="radio-' + id + '" />' +
+                        '<span class="custom-checkbox"></span>' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 float-left pl-0">' +
+                        '<input type="text" class="form-control" placeholder="Lựa chọn" id="content-radio-' + id + '-' + temp_option + '" onchange="UpdateValueOfOptionRadio(\'' + id + '-' + temp_option + '\')" />' +
+                        '</div>' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left justify-content-center">' +
+                        '<a href="javascript:;" onclick="RemoveRadio(\'#answer-radio-' + id + '-' + temp_option + '\')" class="btn">' +
+                        '<i class="fas fa-times custom-rv-checkbox" style="color: #5f5656;"></i>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div id="answer-radio-option" class="row custom-row">' +
+                        '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0">' +
+                        '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 p-0 float-left">' +
+                        '<div class="radio-inline justify-content-center">' +
+                        '<label class="radio radio-lg">' +
+                        '<input type="radio" disabled />' +
+                        '<span class="custom-checkbox"></span>' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-sm-3 col-md-3 col-xl-3 col-lg-3 float-left">' +
+                        '<a href="javascript:;" onclick="AddRadio(\'#answer-radio-' + id + '-' + temp_option + '\')" class="btn custom-font-choice pl-0">' +
+                        'Thêm lựa chọn' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
                     break;
                 case 'Date':
+                    $('#answer-control-' + id).append(
+                        '<div class="form-group row">' +
+                            '<div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">' +
+                                '<div class="input-group date kt_datetimepicker_3" id="date-' + id + '" data-target-input="nearest">' +
+                                    '<input type="text" class="form-control datetimepicker-input" placeholder="Ngày, tháng, năm" readonly data-target="#date-' + id + '" autocomplete="off" id="date-' + id + '" />' +
+                                        '<div class="input-group-append" data-target="#date-' + id + '" data-toggle="datetimepicker">' +
+                                            '<span class="input-group-text">' +
+                                                '<i class="ki ki-calendar"></i>' +
+                                            '</span>' +
+                                        '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>');
+                    KTBootstrapDatetimepicker.init();
                     break;
             }
         }
 
+        function RemoveCheckbox(id) {
+            $(id).remove();
+            str = id.split('-');
+            arrCMD[0][parseInt(str[str.length - 2])] = 0;
+            arrM_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = '';
+        }
+
+        function AddCheckbox(id) {
+            str = id.split('-');
+            index = parseInt(str[str.length - 2]);
+            index_insert = 0;
+            temp_option = 0
+            for (let i = 0; i < 100; i++) {
+                if (typeof arrM_content[index][i] == 'undefined') {
+                    i = 999;
+                } else {
+                    if (arrM_content[index][i] == '') {
+                        index_insert = i - 1;
+                    } else index_insert = i;
+                    temp_option = temp_option + 1;
+                }
+            }
+            arrM_content[index][temp_option] = 'Lựa chọn';
+            let htmlString =
+                '<div id = "answer-checkbox-' + index + '-' + temp_option + '" class= "row custom-row" >' +
+                '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0">' +
+                '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 p-0 float-left">' +
+                '<div class="checkbox-inline justify-content-center">' +
+                '<label class="checkbox checkbox-lg">' +
+                '<input type="checkbox" id="checkbox-' + index + '-' + temp_option + '" />' +
+                '<span class="custom-checkbox"></span>' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 pl-0 float-left">' +
+                '<input type="text" class="form-control" placeholder="Lựa chọn" id="content-checkbox-' + index + '-' + temp_option + '" onchange="UpdateValueOfOptionCheckbox(\'' + index + '-' + temp_option + '\')"/>' +
+                '</div>' +
+                '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left justify-content-center">' +
+                '<a href="javascript:;" onclick="RemoveCheckbox(\'#answer-checkbox-' + index + '-' + temp_option + '\')" class="btn">' +
+                '<i class="fas fa-times custom-rv-checkbox" style="color: #5f5656;"></i>' +
+                '</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            div = document.createElement('div');
+            div1 = document.querySelector('#answer-checkbox-' + index + '-' + index_insert);
+            div.innerHTML = htmlString;
+            div1.parentNode.insertBefore(div.firstChild, div1.nextSibling);
+        }
+
+        function RemoveRadio(id) {
+            $(id).remove();
+            str = id.split('-');
+            arrCMD[1][parseInt(str[str.length - 2])] = 0;
+            arrC_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = '';
+        }
+
+        function AddRadio(id) {
+            str = id.split('-');
+            index = parseInt(str[str.length - 2]);
+            index_insert = 0;
+            temp_option = 0
+            for (let i = 0; i < 100; i++) {
+                if (typeof arrC_content[index][i] == 'undefined') {
+                    i = 999;
+                } else {
+                    if (arrC_content[index][i] == '') {
+                        index_insert = i - 1;
+                    } else index_insert = i;
+                    temp_option = temp_option + 1;
+                }
+            }
+            arrC_content[index][temp_option] = 'Lựa chọn';
+            let htmlString =
+                '<div id="answer-radio-' + index + '-' + temp_option + '" class="row custom-row">' +
+                '<div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 pl-0" >' +
+                '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left p-0">' +
+                '<div class="radio-inline justify-content-center">' +
+                '<label class="radio radio-lg">' +
+                '<input type="radio" id="radio-' + index + '-' + temp_option + '" name="radio-' + index + '" />' +
+                '<span class="custom-checkbox"></span>' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 float-left pl-0">' +
+                '<input type="text" class="form-control" placeholder="Lựa chọn" id="content-radio-' + index + '-' + temp_option + '" onchange="UpdateValueOfOptionRadio(\'' + index + '-' + temp_option + '\')" />' +
+                '</div>' +
+                '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 float-left justify-content-center">' +
+                '<a href="javascript:;" onclick="RemoveRadio(\'#answer-radio-' + index + '-' + temp_option + '\')" class="btn">' +
+                '<i class="fas fa-times custom-rv-checkbox" style="color: #5f5656;"></i>' +
+                '</a>' +
+                '</div>' +
+                '</div >' +
+                '</div >';
+            div = document.createElement('div');
+            div1 = document.querySelector('#answer-radio-' + index + '-' + index_insert);
+            div.innerHTML = htmlString;
+            div1.parentNode.insertBefore(div.firstChild, div1.nextSibling);
+        }
+
+        function UpdateValueOfOptionCheckbox(id) {
+            str = id.split('-');
+            val = document.getElementById('content-checkbox-' + str[str.length - 2] + '-' + str[str.length - 1]).value;
+            arrM_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = val;
+        }
+        function UpdateValueOfOptionRadio(id) {
+            str = id.split('-');
+            val = document.getElementById('content-radio-' + str[str.length - 2] + '-' + str[str.length - 1]).value;
+            arrC_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = val;
+        }
+
+        function createArrMultiDimensional(length) {
+            var arr = [],
+                i = length;
+            if (arguments.length > 1) {
+                var args = Array.prototype.slice.call(arguments, 1);
+                while (i--) arr[length - 1 - i] = createArrMultiDimensional.apply(this, args);
+            }
+            return arr;
+        }
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+            }
+            return {
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
         $(document).ready(function () {
-            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
+            arrCMD = createArrMultiDimensional(2, 100);
+            arrM_content = createArrMultiDimensional(100, 200);
+            arrC_content = createArrMultiDimensional(100, 200);
         });
     </script>
 }
