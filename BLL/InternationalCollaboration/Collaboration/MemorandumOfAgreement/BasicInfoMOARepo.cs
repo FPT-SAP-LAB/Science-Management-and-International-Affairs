@@ -153,90 +153,91 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void addExtraMOA(ExtraMOA input)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    //add MOUBonus
-                    MOABonu mb = new MOABonu();
-                    mb.moa_bonus_code = input.moa_bonus_code;
-                    mb.moa_bonus_decision_date = input.moa_bonus_decision_date;
-                    mb.moa_bonus_end_date = input.moa_bonus_end_date;
-                    mb.moa_id = input.moa_id;
-                    mb.evidence = input.evidence;
-                    db.MOABonus.Add(mb);
-                    MOABonu addObj = db.MOABonus.Where(x => x.moa_bonus_code.Equals(mb.moa_bonus_code)).First();
+        //public void addExtraMOA(ExtraMOA input)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //add MOUBonus
+        //            MOABonu mb = new MOABonu();
+        //            mb.moa_bonus_code = input.moa_bonus_code;
+        //            mb.moa_bonus_decision_date = input.moa_bonus_decision_date;
+        //            mb.moa_bonus_end_date = input.moa_bonus_end_date;
+        //            mb.moa_id = input.moa_id;
+        //            mb.evidence = input.evidence;
+        //            db.MOABonus.Add(mb);
+        //            MOABonu addObj = db.MOABonus.Where(x => x.moa_bonus_code.Equals(mb.moa_bonus_code)).First();
 
-                    //add MOuPartnerScope
-                    foreach (CustomPartner cp in input.ListPartnerExMOA.ToList())
-                    {
-                        foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
-                        {
-                            MOUPartnerScope m = new MOUPartnerScope();
-                            m.mou_id = input.moa_id;
-                            m.partner_id = cp.partner_id;
-                            m.scope_id = cs.scope_id;
-                            m.mou_bonus_id = addObj.moa_bonus_id;
-                            db.MOUPartnerScopes.Add(m);
-                        }
-                    }
+        //            //add MOuPartnerScope
+        //            foreach (CustomPartner cp in input.ListPartnerExMOA.ToList())
+        //            {
+        //                foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
+        //                {
+        //                    MOUPartnerScope m = new MOUPartnerScope();
+        //                    m.mou_id = input.moa_id;
+        //                    m.partner_id = cp.partner_id;
+        //                    m.scope_id = cs.scope_id;
+        //                    m.mou_bonus_id = addObj.moa_bonus_id;
+        //                    db.MOUPartnerScopes.Add(m);
+        //                }
+        //            }
 
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
-        public void editExtraMOA(ExtraMOA input, int moa_bonus_id)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    //edit MOUBonus
-                    MOABonu mb = db.MOABonus.Find(moa_bonus_id);
-                    mb.moa_bonus_code = input.moa_bonus_code;
-                    mb.moa_bonus_decision_date = input.moa_bonus_decision_date;
-                    mb.moa_bonus_end_date = input.moa_bonus_end_date;
-                    mb.moa_id = input.moa_id;
-                    mb.evidence = input.evidence;
-                    db.Entry(mb).State = EntityState.Modified;
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
+        //public void editExtraMOA(ExtraMOA input, int moa_bonus_id)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //edit MOUBonus
+        //            MOABonu mb = db.MOABonus.Find(moa_bonus_id);
+        //            mb.moa_bonus_code = input.moa_bonus_code;
+        //            mb.moa_bonus_decision_date = input.moa_bonus_decision_date;
+        //            mb.moa_bonus_end_date = input.moa_bonus_end_date;
+        //            mb.moa_id = input.moa_id;
+        //            mb.evidence = input.evidence;
+        //            db.Entry(mb).State = EntityState.Modified;
 
-                    //finding old exScope of exMOU.
-                    List<MOAPartnerScope> exList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == moa_bonus_id).ToList();
-                    exList.Clear();
-                    db.Entry(exList).State = EntityState.Modified;
+        //            //finding old exScope of exMOU.
+        //            List<MOAPartnerScope> exList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == moa_bonus_id).ToList();
+        //            exList.Clear();
+        //            db.Entry(exList).State = EntityState.Modified;
 
-                    //add new record of MOuPartnerScope
-                    foreach (CustomPartner cp in input.ListPartnerExMOA.ToList())
-                    {
-                        foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
-                        {
-                            MOUPartnerScope m = new MOUPartnerScope();
-                            m.mou_id = input.moa_id;
-                            m.partner_id = cp.partner_id;
-                            m.scope_id = cs.scope_id;
-                            m.mou_bonus_id = moa_bonus_id;
-                            db.MOUPartnerScopes.Add(m);
-                        }
-                    }
+        //            //add new record of MOuPartnerScope
+        //            foreach (CustomPartner cp in input.ListPartnerExMOA.ToList())
+        //            {
+        //                foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
+        //                {
+        //                    MOUPartnerScope m = new MOUPartnerScope();
+        //                    m.mou_id = input.moa_id;
+        //                    m.partner_id = cp.partner_id;
+        //                    m.scope_id = cs.scope_id;
+        //                    m.mou_bonus_id = moa_bonus_id;
+        //                    db.MOUPartnerScopes.Add(m);
+        //                }
+        //            }
 
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
+
         public void deleteExtraMOA(int moa_bonus_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
