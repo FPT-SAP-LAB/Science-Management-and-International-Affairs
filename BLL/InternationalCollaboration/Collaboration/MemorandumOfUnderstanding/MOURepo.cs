@@ -123,7 +123,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
 
-                    DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);                    
+                    DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
                         mou_code = input.BasicInfo.mou_code,
@@ -189,7 +189,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             int partner_scope_id = 0;
                             if (objPS == null)
                             {
-                                db.PartnerScopes.Add(new PartnerScope {
+                                db.PartnerScopes.Add(new PartnerScope
+                                {
                                     partner_id = partner_id_item,
                                     scope_id = tokenScope,
                                     reference_count = 0
@@ -198,7 +199,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 db.SaveChanges();
                                 PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
                                 partner_scope_id = newObjPS.partner_scope_id;
-                            } else
+                            }
+                            else
                             {
                                 objPS.reference_count += 1;
                                 db.Entry(objPS).State = EntityState.Modified;
