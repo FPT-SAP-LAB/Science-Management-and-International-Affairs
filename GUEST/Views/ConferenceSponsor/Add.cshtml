@@ -10,311 +10,313 @@
     }
 </style>
 <div class="content  d-flex flex-column flex-column-fluid">
-<div class="card card-custom">
-    <div class="card-body p-0">
-        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-            <div class="col-xl-12">
-                <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
-                    <!---------------------------------------------------------------------->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="mb-10 font-weight-bold text-dark">Thông tin hội nghị</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label for="selectConference">Tên hội nghị <span style='color:red'>*</span>:</label>
-                                        <select class="form-control" id="selectConference">
-                                        </select>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control" id="website" placeholder="Website hội nghị" value="">
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
+    <div class="card card-custom">
+        <div class="card-body p-0">
+            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                <div class="col-xl-12">
+                    <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                        <!---------------------------------------------------------------------->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="mb-10 font-weight-bold text-dark">Thông tin hội nghị</h3>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC " value="">
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Đơn vị tổ chức (Top QS)<span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!--begin::Select-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Quốc gia <span style='color:red'>*</span>:</label>
-                                        <select class="form-control" id="country">
-                                            @foreach (var item in ViewBag.data.Countries)
-                                            {
-                                                <option value="@item.country_id">@item.country_name</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <!--end::Select-->
-                                </div>
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <div class="date form-group fv-plugins-icon-container">
-                                        <label>Thời gian diễn ra<span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control" readonly="" id="kt_daterangepicker_1">
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>File bài báo <span style='color:red'>*</span>:</label>
-                                    <div class="uppy" id="kt_uppy_1">
-                                        <div class="uppy-wrapper"></div>
-                                        <div class="uppy-list"></div>
-                                        <div class="uppy-status"></div>
-                                        <div class="uppy-informer uppy-informer-min"></div>
-                                    </div>
-                                    <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
-                                </div>
-                                <div class="col-md-6">
-                                    <!--begin::Input-->
-                                    <label>Thư xác nhận <span style='color:red'>*</span>:</label>
-                                    <div class="uppy" id="kt_uppy_2">
-                                        <div class="uppy-wrapper"></div>
-                                        <div class="uppy-list"></div>
-                                        <div class="uppy-status"></div>
-                                        <div class="uppy-informer uppy-informer-min"></div>
-                                    </div>
-                                    <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
-                                    <!--end::Input-->
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!--begin::Select-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Hình thức <span style='color:red'>*</span>:</label>
-                                        <select id="formality" class="form-control">
-                                            @foreach (var item in ViewBag.data.FormalityLanguages)
-                                            {
-                                                <option value="@item.formality_id">@item.name</option>
-                                            }
-                                        </select>
-
-                                    </div>
-                                    <!--end::Select-->
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="">
-                            <div class="card card-custom "  style="box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 17%); border: 0; margin-bottom: 2rem;">
-                                <div class="card-header ribbon ribbon-top ribbon-ver">
-                                    <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
-                                        <i class="fa fa-star text-white"></i>
-                                    </div>
-                                    <h3 class="card-title">
-                                        Chính sách hiện tại
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
-                                    {
-                                        <li>@item</li>
-                                    }
-                                    <br /><br />
-                                    <a href="#" class="btn btn-light-primary mr-2">Xem thêm</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pb-5">
-                        <h3 class="mb-10 font-weight-bold text-dark">Danh sách tham dự</h3>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th>MSNV/MSSV</th>
-                                        <th style="min-width: 140px;">Họ và tên</th>
-                                        <th style="min-width: 200px;">Email</th>
-                                        <th>Cơ sở</th>
-                                        <th>Chức danh</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableParticipant">
-                                    <tr role="row" class="odd">
-                                        <td>
-                                            <select class="form-control select2 selectPeople" name="param">
-                                                <option label="Label">ABC123</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control inputName" placeholder="Họ và tên" value="Ngô Tùng Sơn">
-                                        </td>
-                                        <td>
-                                            <input type="email" class="form-control inputEmail" placeholder="Email" value="sonnt69@fpt.edu.vn">
-                                        </td>
-                                        <td>
-                                            <select class="form-control selectOffice">
-                                                @foreach (ENTITIES.Office item in ViewBag.data.Offices)
-                                                {
-                                                    <option value="@item.office_id">@item.office_name</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control selectTitle">
-                                                @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
-                                                {
-                                                    <option value="@item.title_id">@item.name</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td nowrap="">
-                                            <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="odd" id="baseParticipant">
-                                        <td>
-                                            <select class="form-control select2 selectPeople" name="param">
-                                                <option label="Label"></option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control inputName" placeholder="Họ và tên" value="">
-                                        </td>
-                                        <td>
-                                            <input type="email" class="form-control inputEmail" placeholder="Email" value="">
-                                        </td>
-                                        <td>
-                                            <select class="form-control selectOffice">
-                                                @foreach (ENTITIES.Office item in ViewBag.data.Offices)
-                                                {
-                                                    <option value="@item.office_id">@item.office_name</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control selectTitle">
-                                                @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
-                                                {
-                                                    <option value="@item.title_id">@item.name</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td nowrap="">
-                                            <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
                         </div>
                         <div class="row">
-                            <div class="col-xl-12" style="    text-align: end;">
-                                <a onclick="addParticipant()" class="btn btn-success font-weight-bolder">
-                                    <span class="svg-icon svg-icon-md">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
-                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
-                                            </g>
-                                        </svg><!--end::Svg Icon-->
-                                    </span> Thêm
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pb-5">
-                        <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
-                        <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th>Nội dung</th>
-                                        <th>Tổ chức tài trợ</th>
-                                        <th>Chi phí</th>
-                                        <th>Tổng cộng</th>
-                                        <th class="sorting_disabled">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableCost">
-                                    <tr role="row" class="odd" id="baseCost">
-                                        <td>
-                                            <input type="text" class="form-control" placeholder="Nội dung " value="">
-                                        </td>
-                                        <td>FPTU</td>
-                                        <td>
-                                            <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí" value="">
-                                        </td>
-                                        <td>
-                                            <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
-                                        </td>
-                                        <td nowrap="">
-                                            <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Tổng cộng</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td><span id="totalCost" class="label label-lg label-light-danger label-inline">0 đ</span></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label for="selectConference">Tên hội nghị <span style='color:red'>*</span>:</label>
+                                            <select class="form-control" id="selectConference">
+                                            </select>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Website hội nghị <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="website" placeholder="Website hội nghị" value="">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC " value="">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Đơn vị tổ chức (Top QS)<span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Select-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Quốc gia <span style='color:red'>*</span>:</label>
+                                            <select class="form-control" id="country">
+                                                @foreach (var item in ViewBag.data.Countries)
+                                                {
+                                                    <option value="@item.country_id">@item.country_name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <!--end::Select-->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="date form-group fv-plugins-icon-container">
+                                            <label>Thời gian diễn ra<span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" readonly="" id="kt_daterangepicker_1">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-12" style="    text-align: end;">
-                                <a onclick="addCost()" class="btn btn-success font-weight-bolder">
-                                    <span class="svg-icon svg-icon-md">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
-                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
-                                            </g>
-                                        </svg><!--end::Svg Icon-->
-                                    </span> Thêm
-                                </a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>File bài báo <span style='color:red'>*</span>:</label>
+                                        <div class="uppy" id="kt_uppy_1">
+                                            <div class="uppy-wrapper"></div>
+                                            <div class="uppy-list"></div>
+                                            <div class="uppy-status"></div>
+                                            <div class="uppy-informer uppy-informer-min"></div>
+                                        </div>
+                                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <label>Thư xác nhận <span style='color:red'>*</span>:</label>
+                                        <div class="uppy" id="kt_uppy_2">
+                                            <div class="uppy-wrapper"></div>
+                                            <div class="uppy-list"></div>
+                                            <div class="uppy-status"></div>
+                                            <div class="uppy-informer uppy-informer-min"></div>
+                                        </div>
+                                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Select-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Hình thức <span style='color:red'>*</span>:</label>
+                                            <select id="formality" class="form-control">
+                                                @foreach (var item in ViewBag.data.FormalityLanguages)
+                                                {
+                                                    <option value="@item.formality_id">@item.name</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                        <!--end::Select-->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="">
+                                <div class="card card-custom " style="box-shadow: 0px 0px 30px 0px rgba(82,63,105,0.17); border: 0; margin-bottom: 2rem;">
+                                    <div class="card-header ribbon ribbon-top ribbon-ver">
+                                        <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                            <i class="fa fa-star text-white"></i>
+                                        </div>
+                                        <h3 class="card-title">
+                                            Chính sách hiện tại
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
+                                            {
+                                                <li>@item</li>
+                                            }
+                                        </ul>
+                                        <br />
+                                        <a href="@ViewBag.data.link" class="btn btn-light-primary mr-2" target="_blank">Xem thêm</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <!--end::Wizard Form-->
+                        <div class="pb-5">
+                            <h3 class="mb-10 font-weight-bold text-dark">Danh sách tham dự</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>MSNV/MSSV</th>
+                                            <th style="min-width: 140px;">Họ và tên</th>
+                                            <th style="min-width: 200px;">Email</th>
+                                            <th>Cơ sở</th>
+                                            <th>Chức danh</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableParticipant">
+                                        <tr role="row" class="odd">
+                                            <td>
+                                                <select class="form-control select2 selectPeople" name="param">
+                                                    <option label="Label">ABC123</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                            </td>
+                                            <td>
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="sonnt69@fpt.edu.vn">
+                                            </td>
+                                            <td>
+                                                <select class="form-control selectOffice">
+                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
+                                                    {
+                                                        <option value="@item.office_id">@item.office_name</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control selectTitle">
+                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
+                                                    {
+                                                        <option value="@item.title_id">@item.name</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td nowrap="">
+                                                <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                            </td>
+                                        </tr>
+                                        <tr role="row" class="odd" id="baseParticipant">
+                                            <td>
+                                                <select class="form-control select2 selectPeople" name="param">
+                                                    <option label="Label"></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="">
+                                            </td>
+                                            <td>
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="">
+                                            </td>
+                                            <td>
+                                                <select class="form-control selectOffice">
+                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
+                                                    {
+                                                        <option value="@item.office_id">@item.office_name</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control selectTitle">
+                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
+                                                    {
+                                                        <option value="@item.title_id">@item.name</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td nowrap="">
+                                                <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12" style="    text-align: end;">
+                                    <a onclick="addParticipant()" class="btn btn-success font-weight-bolder">
+                                        <span class="svg-icon svg-icon-md">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                    <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg><!--end::Svg Icon-->
+                                        </span> Thêm
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-5">
+                            <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
+                            <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Nội dung</th>
+                                            <th>Tổ chức tài trợ</th>
+                                            <th>Chi phí</th>
+                                            <th>Tổng cộng</th>
+                                            <th class="sorting_disabled">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableCost">
+                                        <tr role="row" class="odd" id="baseCost">
+                                            <td>
+                                                <input type="text" class="form-control" placeholder="Nội dung " value="">
+                                            </td>
+                                            <td>FPTU</td>
+                                            <td>
+                                                <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí" value="">
+                                            </td>
+                                            <td>
+                                                <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                            </td>
+                                            <td nowrap="">
+                                                <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Tổng cộng</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">0 đ</span></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12" style="    text-align: end;">
+                                    <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                                        <span class="svg-icon svg-icon-md">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                    <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg><!--end::Svg Icon-->
+                                        </span> Thêm
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--end::Wizard Form-->
+                </div>
             </div>
+            <!--end::Wizard-->
         </div>
-        <!--end::Wizard-->
-    </div>
-    <div class="card-footer">
-        <button type="button" onclick="submitData()" class="btn btn-primary mr-2">Gửi đơn</button>
-        <a href="/ConferenceSponsor" class="btn btn-secondary">Hủy</a>
+        <div class="card-footer">
+            <button type="button" onclick="submitData()" class="btn btn-primary mr-2">Gửi đơn</button>
+            <a href="/ConferenceSponsor" class="btn btn-secondary">Hủy</a>
+        </div>
     </div>
 </div>
-    </div>
 @section scripts{
     <script type="text/javascript">
         var baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
@@ -325,6 +327,7 @@
         var startDate = new Date();
         var endDate = new Date();
         var conferenceID = 0;
+        var uppy1, uppy2;
 
         $(document).ready(function () {
             $(document).find(".selectOffice, .selectTitle, #country").select2({
@@ -382,30 +385,30 @@
                     var $uploadedList = $(id + ' .uppy-list');
                     var timeout;
 
-                    var uppyMin = Uppy.Core({
+                    uppy1 = Uppy.Core({
                         debug: true,
                         autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
-                            maxFileSize: 1000000, // 1mb
+                            maxFileSize: 15000000, // 1mb
                             maxNumberOfFiles: 1,
                             minNumberOfFiles: 1
                         }
                     });
 
-                    uppyMin.use(FileInput, {
+                    uppy1.use(FileInput, {
                         target: id + ' .uppy-wrapper',
                         pretty: false
                     });
-                    uppyMin.use(Informer, {
+                    uppy1.use(Informer, {
                         target: id + ' .uppy-informer'
                     });
 
                     // demo file upload server
-                    uppyMin.use(Tus, {
+                    uppy1.use(Tus, {
                         endpoint: 'https://master.tus.io/files/'
                     });
-                    uppyMin.use(StatusBar, {
+                    uppy1.use(StatusBar, {
                         target: id + ' .uppy-status',
                         hideUploadButton: true,
                         hideAfterFinish: false
@@ -416,31 +419,27 @@
 
                     var $fileLabel = $(id + ' .uppy-input-label');
 
-                    uppyMin.on('upload', function (data) {
+                    uppy1.on('upload', function (data) {
                         $fileLabel.text("Uploading...");
                         $statusBar.addClass('uppy-status-ongoing');
                         $statusBar.removeClass('uppy-status-hidden');
                         clearTimeout(timeout);
                     });
 
-                    uppyMin.on('complete', function (file) {
-                        $.each(file.successful, function (index, value) {
-                            var sizeLabel = "bytes";
-                            var filesize = value.size;
+                    uppy1.on('file-added', function (file) {
+                        var sizeLabel = "bytes";
+                        var filesize = file.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
                             if (filesize > 1024) {
                                 filesize = filesize / 1024;
-                                sizeLabel = "kb";
-
-                                if (filesize > 1024) {
-                                    filesize = filesize / 1024;
-                                    sizeLabel = "MB";
-                                }
+                                sizeLabel = "MB";
                             }
-                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                            $uploadedList.append(uploadListHtml);
-                        });
-
-                        $fileLabel.text("Add more files");
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
 
                         $statusBar.addClass('uppy-status-hidden');
                         $statusBar.removeClass('uppy-status-ongoing');
@@ -448,7 +447,7 @@
 
                     $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                         var itemId = $(this).attr('data-id');
-                        uppyMin.removeFile(itemId);
+                        uppy1.removeFile(itemId);
                         $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                     });
                 }
@@ -462,30 +461,30 @@
                     var $uploadedList = $(id + ' .uppy-list');
                     var timeout;
 
-                    var uppyMin = Uppy.Core({
+                    var uppy2 = Uppy.Core({
                         debug: true,
                         autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
-                            maxFileSize: 1000000, // 1mb
+                            maxFileSize: 5000000, // 1mb
                             maxNumberOfFiles: 1,
                             minNumberOfFiles: 1
                         }
                     });
 
-                    uppyMin.use(FileInput, {
+                    uppy2.use(FileInput, {
                         target: id + ' .uppy-wrapper',
                         pretty: false
                     });
-                    uppyMin.use(Informer, {
+                    uppy2.use(Informer, {
                         target: id + ' .uppy-informer'
                     });
 
                     // demo file upload server
-                    uppyMin.use(Tus, {
+                    uppy2.use(Tus, {
                         endpoint: 'https://master.tus.io/files/'
                     });
-                    uppyMin.use(StatusBar, {
+                    uppy2.use(StatusBar, {
                         target: id + ' .uppy-status',
                         hideUploadButton: true,
                         hideAfterFinish: false
@@ -496,31 +495,27 @@
 
                     var $fileLabel = $(id + ' .uppy-input-label');
 
-                    uppyMin.on('upload', function (data) {
+                    uppy2.on('upload', function (data) {
                         $fileLabel.text("Uploading...");
                         $statusBar.addClass('uppy-status-ongoing');
                         $statusBar.removeClass('uppy-status-hidden');
                         clearTimeout(timeout);
                     });
 
-                    uppyMin.on('complete', function (file) {
-                        $.each(file.successful, function (index, value) {
-                            var sizeLabel = "bytes";
-                            var filesize = value.size;
+                    uppy2.on('file-added', function (file) {
+                        var sizeLabel = "bytes";
+                        var filesize = file.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
                             if (filesize > 1024) {
                                 filesize = filesize / 1024;
-                                sizeLabel = "kb";
-
-                                if (filesize > 1024) {
-                                    filesize = filesize / 1024;
-                                    sizeLabel = "MB";
-                                }
+                                sizeLabel = "MB";
                             }
-                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                            $uploadedList.append(uploadListHtml);
-                        });
-
-                        $fileLabel.text("Add more files");
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
 
                         $statusBar.addClass('uppy-status-hidden');
                         $statusBar.removeClass('uppy-status-ongoing');
@@ -528,7 +523,7 @@
 
                     $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                         var itemId = $(this).attr('data-id');
-                        uppyMin.removeFile(itemId);
+                        uppy2.removeFile(itemId);
                         $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                     });
                 }
