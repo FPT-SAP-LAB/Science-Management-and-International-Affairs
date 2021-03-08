@@ -25,31 +25,31 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ViewBag.pagesTree = pagesTree;
             ////////////////////////////////////////////
             var list = (from p in db.Profiles
-                        join rp in db.People on p.people_id equals rp.people_id
-                        join o in db.Offices on rp.office_id equals o.office_id
-                        select new Researchers_ListView
-                        {
-                            name = p.name,
-                            avatar_id = p.avatar_id,
-                            email = p.email,
-                            google_scholar = p.google_scholar,
-                            website = p.website,
-                            office_name = o.office_name
-                        }).ToList<Researchers_ListView>();
-            list.Add(new Researchers_ListView { name = "Bùi Ngọc Anh", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
-            list.Add(new Researchers_ListView { name = "Nguyễn Phi Hùng", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHCM" });
-            list.Add(new Researchers_ListView { name = "Nguyễn Bá Sơn", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FPoly HN" });
-            list.Add(new Researchers_ListView { name = "Trần Thị A", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHCM" });
-            list.Add(new Researchers_ListView { name = "Nguyễn Văn B", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FPTU Cần Thơ" });
-            list.Add(new Researchers_ListView { name = "Trần văn C", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
-            list.Add(new Researchers_ListView { name = "Trần văn C", avatar_id = 0, email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
+                       join rp in db.People on p.people_id equals rp.people_id
+                       join o in db.Offices on rp.office_id equals o.office_id
+                       select new Researchers_ListView
+                       {
+                           name = p.name,
+                           avatar_id = p.avatar_id,
+                           email = p.email,
+                           google_scholar = p.google_scholar,
+                           website = p.website,
+                           office_name = o.office_name
+                       }).ToList<Researchers_ListView>();
+            list.Add(new Researchers_ListView { name="Bùi Ngọc Anh", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHN"});
+            list.Add(new Researchers_ListView { name="Nguyễn Phi Hùng", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHCM"});
+            list.Add(new Researchers_ListView { name="Nguyễn Bá Sơn", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FPoly HN"});
+            list.Add(new Researchers_ListView { name="Trần Thị A", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHCM"});
+            list.Add(new Researchers_ListView { name="Nguyễn Văn B", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FPTU Cần Thơ"});
+            list.Add(new Researchers_ListView { name="Trần văn C", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHN"});
+            list.Add(new Researchers_ListView { name="Trần văn C", avatar_id=0, email="anhbn@fe.edu.vn", google_scholar="#", website="#", office_name="FUHN"});
             //var list = query.ToList<Researchers_ListView>();
 
             ViewBag.list = list;
             ////////////////////////////////////////////
             return View();
         }
-
+        
         public ActionResult ViewInfo()
         {
             var pagesTree = new List<PageTree>
@@ -75,4 +75,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             public string office_name { get; set; }
         }
     }
+    
+
 }
