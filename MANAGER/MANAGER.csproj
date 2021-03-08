@@ -132,6 +132,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2190,6 +2191,7 @@
     <Content Include="Views\MOU\List_Deleted.cshtml" />
     <Content Include="Views\Partner\List_Deleted.cshtml" />
     <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
