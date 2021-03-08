@@ -2190,6 +2190,7 @@
     <Content Include="Views\Researchers\Rewards.cshtml" />
     <Content Include="Views\MOU\List_Deleted.cshtml" />
     <Content Include="Views\Partner\List_Deleted.cshtml" />
+    <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

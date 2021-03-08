@@ -114,6 +114,15 @@
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
+                    <div class="col-md-2 col-xl-2 col-lg-2">
+                        <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
+                        <select class="form-control" id="language-content">
+                            <option selected value="TV">Tiếng Việt</option>
+                            <option value="EN">Tiếng Anh</option>
+                            <option value="JP">Tiếng Nhật</option>
+                            <option value="CN">Tiếng Trung</option>
+                        </select>
+                    </div>
                     <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
                         <div id="kt-ckeditor-3-toolbar"></div>
                         <div id="kt-ckeditor-3">
@@ -547,6 +556,49 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="editModal_Tucach" tabindex="-1" role="dialog" aria-hidden="true" style="z-index:9999">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm tư cách tham gia</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <label class="font-weight-bolder">Tư cách tham gia</label>
+                        <input class="form-control" type="text" placeholder="Tư cách tham gia" autocomplete="off" id="edit_name_tucach" value="Người tham dự" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_quantity_tucach" value="30" />
+                    </div>
+                    <div class="col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Chi phí</label>
+                        <select class="form-control" id="edit_price_tucach">
+                            <option selected value="MP">Miễn phí</option>
+                            <option value="CP">Có phí</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-xl-4 col-lg-4">
+                        <div id="add_control_price">
+                            <label class="font-weight-bolder">Mức giá</label>
+                            <input type="number" class="form-control" placeholder="Mức giá" autocomplete="off" disabled id="edit_cost_tucach" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_tucach">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="editModal_Giaidoan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -727,7 +779,8 @@
             });
         }
         function editTuCach(id) {
-            return
+            id_edit_tu_cach = id;
+            $('#editModal_Tucach').modal('show');
         }
         function deleteTuCach(id) {
             id_delete_tu_cach = id;
@@ -780,6 +833,13 @@
                 $('#add_control_price').show();
         });
 
+
+        $('#edit_price_tucach').click(function () {
+            if (document.getElementById('edit_price_tucach').value == 'MP') {
+                $('#edit_cost_tucach').attr('disabled',true);
+            } else
+                $('#edit_cost_tucach').attr('disabled', false);
+        });
         $('#add_donvi_tucach').click(function () {
             if ($(this).prop('checked')) {
                 $('#add_control_title').show();
@@ -851,7 +911,9 @@
             //    },
             //});
         });
-
+        $('#btn_edit_tucach').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
+        });
         $('#btn_edit_dong_to_chuc').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });

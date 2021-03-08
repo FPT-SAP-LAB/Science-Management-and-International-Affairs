@@ -12,13 +12,15 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class MOAPartnerSpecialization
+    public partial class ArticleVersion
     {
-        public int moa_partner_specialization_id { get; set; }
-        public int mou_partner_specialization_id { get; set; }
-        public int moa_partner_id { get; set; }
+        public int article_version_id { get; set; }
+        public System.DateTime publish_time { get; set; }
+        public string version_title { get; set; }
+        public string article_content { get; set; }
+        public int article_id { get; set; }
+        public int language_id { get; set; }
     
-        public virtual MOAPartner MOAPartner { get; set; }
-        public virtual MOUPartnerSpecialization MOUPartnerSpecialization { get; set; }
+        public virtual Article Article { get; set; }
     }
 }

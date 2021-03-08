@@ -48,9 +48,7 @@ namespace ENTITIES
         public virtual DbSet<CollaborationStatu> CollaborationStatus { get; set; }
         public virtual DbSet<MOA> MOAs { get; set; }
         public virtual DbSet<MOABonu> MOABonus { get; set; }
-        public virtual DbSet<MOAPartner> MOAPartners { get; set; }
         public virtual DbSet<MOAPartnerScope> MOAPartnerScopes { get; set; }
-        public virtual DbSet<MOAPartnerSpecialization> MOAPartnerSpecializations { get; set; }
         public virtual DbSet<MOAStatusHistory> MOAStatusHistories { get; set; }
         public virtual DbSet<MOU> MOUs { get; set; }
         public virtual DbSet<MOUBonu> MOUBonus { get; set; }
@@ -59,6 +57,7 @@ namespace ENTITIES
         public virtual DbSet<MOUPartnerSpecialization> MOUPartnerSpecializations { get; set; }
         public virtual DbSet<MOUStatusHistory> MOUStatusHistories { get; set; }
         public virtual DbSet<Partner> Partners { get; set; }
+        public virtual DbSet<PartnerScope> PartnerScopes { get; set; }
         public virtual DbSet<AcademicCollaborationStatu> AcademicCollaborationStatus { get; set; }
         public virtual DbSet<CollaborationScope> CollaborationScopes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -66,7 +65,7 @@ namespace ENTITIES
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
         public virtual DbSet<ArticleStatu> ArticleStatus { get; set; }
-        public virtual DbSet<NewsVersion> NewsVersions { get; set; }
+        public virtual DbSet<ArticleVersion> ArticleVersions { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<ProjectProduct> ProjectProducts { get; set; }
         public virtual DbSet<ResearchCollaboration> ResearchCollaborations { get; set; }
