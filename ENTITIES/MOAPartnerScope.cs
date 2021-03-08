@@ -14,13 +14,12 @@ namespace ENTITIES
     
     public partial class MOAPartnerScope
     {
-        public int moa_partner_scope_id { get; set; }
-        public int moa_partner_id { get; set; }
-        public int mou_partner_scope_id { get; set; }
+        public int partner_scope_id { get; set; }
+        public int moa_id { get; set; }
         public Nullable<int> moa_bonus_id { get; set; }
     
+        public virtual MOA MOA { get; set; }
         public virtual MOABonu MOABonu { get; set; }
-        public virtual MOAPartner MOAPartner { get; set; }
-        public virtual MOUPartnerScope MOUPartnerScope { get; set; }
+        public virtual PartnerScope PartnerScope { get; set; }
     }
 }

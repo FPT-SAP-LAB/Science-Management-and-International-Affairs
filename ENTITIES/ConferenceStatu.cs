@@ -17,15 +17,15 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ConferenceStatu()
         {
-            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
         }
     
         public int status_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }
 }

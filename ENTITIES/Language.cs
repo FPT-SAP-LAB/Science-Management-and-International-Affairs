@@ -17,7 +17,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Language()
         {
-            this.NewsVersions = new HashSet<NewsVersion>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
             this.AcademicProgramLanguages = new HashSet<AcademicProgramLanguage>();
@@ -39,8 +38,6 @@ namespace ENTITIES
         public int language_id { get; set; }
         public string language_name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NewsVersion> NewsVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

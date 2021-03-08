@@ -17,7 +17,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MOUPartner()
         {
-            this.MOAPartners = new HashSet<MOAPartner>();
             this.MOUPartnerSpecializations = new HashSet<MOUPartnerSpecialization>();
         }
     
@@ -29,8 +28,6 @@ namespace ENTITIES
         public int mou_id { get; set; }
         public int partner_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOAPartner> MOAPartners { get; set; }
         public virtual MOU MOU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartnerSpecialization> MOUPartnerSpecializations { get; set; }
