@@ -71,36 +71,36 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public void addMOA(MOAAdd input)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    db.MOAs.Add(input.MOA);
-                    db.MOAStatusHistories.Add(input.MOAStatusHistory);
-                    foreach (MOAPartner item in input.listMOAPartner)
-                    {
-                        db.MOAPartners.Add(item);
-                    }
-                    foreach (MOAPartnerSpecialization item in input.listMOAPartnerSpe)
-                    {
-                        db.MOAPartnerSpecializations.Add(item);
-                    }
-                    foreach (MOAPartnerScope item in input.listMOAPartnerScope)
-                    {
-                        db.MOAPartnerScopes.Add(item);
-                    }
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw ex;
-                }
-            }
-        }
+        //public void addMOA(MOAAdd input)
+        //{
+        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            db.MOAs.Add(input.MOA);
+        //            db.MOAStatusHistories.Add(input.MOAStatusHistory);
+        //            foreach (MOAPartner item in input.listMOAPartner)
+        //            {
+        //                db.MOAPartners.Add(item);
+        //            }
+        //            foreach (MOAPartnerSpecialization item in input.listMOAPartnerSpe)
+        //            {
+        //                db.MOAPartnerSpecializations.Add(item);
+        //            }
+        //            foreach (MOAPartnerScope item in input.listMOAPartnerScope)
+        //            {
+        //                db.MOAPartnerScopes.Add(item);
+        //            }
+        //            db.SaveChanges();
+        //            transaction.Commit();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            throw ex;
+        //        }
+        //    }
+        //}
         public void deleteMOA(int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -190,14 +190,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string scope_abbreviation { get; set; }
             public string moa_status_name { get; set; }
         }
-        public class MOAAdd
-        {
-            public MOAAdd() { }
-            public MOA MOA { get; set; }
-            public MOAStatusHistory MOAStatusHistory { get; set; }
-            public List<MOAPartner> listMOAPartner { get; set; }
-            public List<MOAPartnerSpecialization> listMOAPartnerSpe { get; set; }
-            public List<MOAPartnerScope> listMOAPartnerScope { get; set; }
-        }
+        //public class MOAAdd
+        //{
+        //    public MOAAdd() { }
+        //    public MOA MOA { get; set; }
+        //    public MOAStatusHistory MOAStatusHistory { get; set; }
+        //    public List<MOAPartner> listMOAPartner { get; set; }
+        //    public List<MOAPartnerSpecialization> listMOAPartnerSpe { get; set; }
+        //    public List<MOAPartnerScope> listMOAPartnerScope { get; set; }
+        //}
     }
 }

@@ -49,7 +49,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             return View();
         }
-
         public ActionResult ViewInfo()
         {
             var pagesTree = new List<PageTree>
