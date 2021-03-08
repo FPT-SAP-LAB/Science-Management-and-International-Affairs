@@ -49,7 +49,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             return View();
         }
-        
         public ActionResult ViewInfo()
         {
             var pagesTree = new List<PageTree>
@@ -75,6 +74,4 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             public string office_name { get; set; }
         }
     }
-    
-
 }
