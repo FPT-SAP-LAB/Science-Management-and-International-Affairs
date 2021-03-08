@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
-
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
@@ -390,11 +390,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     t1.country_id = t2.country_id where t1.partner_name = @partner_name";
                 CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
                     new SqlParameter("partner_name", partner_name)).FirstOrDefault();
-                //if (p != null)
-                //{
-                //    p.website = p.website is null ? "" : p.website;
-                //    p.address = p.address is null ? "" : p.address;
-                //}
                 return p;
             }
             catch (Exception ex)
@@ -524,7 +519,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //get current date
             //get all expired ActiveMOU.
             //if number > 0: update status for MOU: Active => Inactive.
-
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
@@ -552,80 +546,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     throw ex;
                 }
             }
-        }
-        public class ListMOU
-        {
-            public ListMOU() { }
-            public string mou_code { get; set; }
-            public int mou_partner_id { get; set; }
-            public int mou_id { get; set; }
-            public string partner_name { get; set; }
-            public string website { get; set; }
-            public string country_name { get; set; }
-            public string contact_point_name { get; set; }
-            public string contact_phone_email { get; set; }
-            public string contact_point_phone { get; set; }
-            public string evidence { get; set; }
-            public DateTime mou_start_date { get; set; }
-            public DateTime mou_end_date { get; set; }
-            public string mou_start_date_string { get; set; }
-            public string mou_end_date_string { get; set; }
-            public string mou_note { get; set; }
-            public string office_abbreviation { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string specialization_name { get; set; }
-            public string mou_status_name { get; set; }
-            public int mou_status_id { get; set; }
-        }
-        public class BasicInfo
-        {
-            public string mou_code { get; set; }
-            public int office_id { get; set; }
-            public string mou_end_date { get; set; }
-            public int mou_status_id { get; set; }
-            public string reason { get; set; }
-            public string mou_note { get; set; }
-            public string evidence { get; set; }
-        }
-        public class MOUAdd
-        {
-            public MOUAdd() { }
-            public BasicInfo BasicInfo { get; set; }
-            public List<PartnerInfo> PartnerInfo { get; set; }
-        }
-        public class PartnerInfo
-        {
-            public string partnername_add { get; set; }
-            public string represent_add { get; set; }
-            public List<int> specialization_add { get; set; }
-            public string nation_add { get; set; }
-            public string website_add { get; set; }
-            public string address_add { get; set; }
-            public string email_add { get; set; }
-            public string sign_date_mou_add { get; set; }
-            public string phone_add { get; set; }
-            public List<int> coop_scope_add { get; set; }
-            public int partner_id { get; set; }
-        }
-        public class NotificationInfo
-        {
-            public NotificationInfo() { }
-            public int InactiveNumber { get; set; }
-            public List<string> ExpiredMOUCode { get; set; }
-        }
-        public class CustomOffice
-        {
-            public string office_abbreviation { get; set; }
-            public int office_id { get; set; }
-        }
-        public class CustomPartner
-        {
-            public string website { get; set; }
-            public int country_id { get; set; }
-            public string country_name { get; set; }
-            public int partner_id { get; set; }
-            public string partner_name { get; set; }
-            public string address { get; set; }
         }
     }
 }
