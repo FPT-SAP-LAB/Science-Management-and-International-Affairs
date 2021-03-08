@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
 using System.Linq;
