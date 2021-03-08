@@ -19,7 +19,7 @@
 <div class="card-body">
     <div class="row mb-5">
         <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
-            <a href="#" class="btn btn-light-primary font-weight-bolder px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
+            <a href="#" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
             <div class="dropdown dropdown-inline ml-2">
                 <button type="button"
                         class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -58,11 +58,11 @@
     <table id="my_list" class="table table-bordered table-checkable">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tiêu đề</th>
-                <th>Loại</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
+                <th class="text-center">STT</th>
+                <th class="text-center">Tiêu đề</th>
+                <th class="text-center">Loại</th>
+                <th class="text-center">Trạng thái</th>
+                <th class="text-center">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -464,6 +464,10 @@
             "searching": false,
             "lengthChange" : false,
             columnDefs: [
+                {
+                    className: "text-center",
+                    targets: [0, 3, -1],
+                },
                 {
                     targets: 3,
                     render: function (data, type, full, meta) {
