@@ -140,12 +140,12 @@
                 <table id="GiaiDoanDatatable" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Giai đoạn</th>
-                            <th>Thời gian bắt đầu</th>
-                            <th>Thời gian kết thúc</th>
-                            <th>Người đăng</th>
-                            <th></th>
+                            <th class="text-center">STT</th>
+                            <th class="text-center">Giai đoạn</th>
+                            <th class="text-center">Thời gian bắt đầu</th>
+                            <th class="text-center">Thời gian kết thúc</th>
+                            <th class="text-center">Người đăng</th>
+                            <th class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1070,7 +1070,11 @@
                     render: function (data, type, full, meta) {
                         return '<a href="#" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
                     }
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, 1, 2, 3, 4, -1],
+                },
             ]
         });
         $("#TuCachDatatable").DataTable({
@@ -1122,7 +1126,11 @@
                     render: function (data, type, full, meta) {
                         return '<a href="#" onclick="getContactInfo()">' + data + '</a>'
                     }
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, 1, 2, 3, 4, 5, -1],
+                },
             ]
         });
         $("#KinhPhiDatatable").DataTable({
@@ -1154,7 +1162,12 @@
                             '</div>' +
                             '</div>'
                     }
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, -1],
+                },
+
             ]
         });
         var KTBootstrapDatetimepicker = function () {
