@@ -4,6 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    h3.card-label {
+        padding-left: 2rem;
+        padding-top: 2rem;
+    }
+
+    #rewards_list {
+        margin-bottom: 2rem
+    }
+
+    .major {
+        margin-bottom: 1rem !important
+    }
+</style>
 <!--begin::Card-->
 <div class="card card-custom gutter-b">
     <div class="card-body">
@@ -97,31 +111,31 @@
                     <i class="far fa-user-circle display-4 text-muted font-weight-bold"></i>
                 </span>
                 <div class="d-flex flex-column">
-                    <span class="text-dark-75 font-weight-bolder font-size-sm">CV</span>
-                    <a href="#" class="text-primary font-weight-bolder">View</a>
+                    @*<span class="text-dark-75 font-weight-bolder font-size-sm">CV</span>*@
+                    <a href="#" class="text-primary font-weight-bolder">CV</a>
                 </div>
             </div>
             <!--end::Item-->
             <!--begin::Item-->
             <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
                 @*<span class="mr-4">
-                    <i class="flaticon-file-2 display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column flex-lg-fill">
-                    <span class="text-dark-75 font-weight-bolder font-size-sm">73 Tasks</span>
-                    <a href="#" class="text-primary font-weight-bolder">View</a>
-                </div>*@
+                        <i class="flaticon-file-2 display-4 text-muted font-weight-bold"></i>
+                    </span>
+                    <div class="d-flex flex-column flex-lg-fill">
+                        <span class="text-dark-75 font-weight-bolder font-size-sm">73 Tasks</span>
+                        <a href="#" class="text-primary font-weight-bolder">View</a>
+                    </div>*@
             </div>
             <!--end::Item-->
             <!--begin::Item-->
             <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
                 @*<span class="mr-4">
-                    <i class="flaticon-chat-1 display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column">
-                    <span class="text-dark-75 font-weight-bolder font-size-sm">648 Comments</span>
-                    <a href="#" class="text-primary font-weight-bolder">View</a>
-                </div>*@
+                        <i class="flaticon-chat-1 display-4 text-muted font-weight-bold"></i>
+                    </span>
+                    <div class="d-flex flex-column">
+                        <span class="text-dark-75 font-weight-bolder font-size-sm">648 Comments</span>
+                        <a href="#" class="text-primary font-weight-bolder">View</a>
+                    </div>*@
             </div>
             <!--end::Item-->
         </div>
@@ -133,34 +147,209 @@
 <div class="row">
     <div class="col-lg-4">
         <!--begin::Mixed Widget 14-->
-        <div class="card card-custom card-stretch gutter-b">
-            <!--begin::Header-->
-            <div class="card-header border-0 pt-5">
-                <h3 class="card-title font-weight-bolder ">Thông tin chung</h3>
-                
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <!--begin::Header-->
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title font-weight-bolder ">Tiểu sử</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline timeline-1">
+                            <div class="timeline-sep bg-primary-opacity-20"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-label">2010-2013</div>
+                                <div class="timeline-badge">
+                                    <i class="flaticon2-image-file text-primary "></i>
+                                </div>
+                                <div class="timeline-content text-muted font-weight-normal">
+                                    Tiến sĩ: Viện Toán học
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-label">2005–2007</div>
+                                <div class="timeline-badge">
+                                    <i class="flaticon2-layers text-success "></i>
+                                </div>
+                                <div class="timeline-content text-muted font-weight-normal">
+                                    Thạc sĩ: Trường ĐH Sư Phạm HN
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-label">2001–2005</div>
+                                <div class="timeline-badge">
+                                    <i class="flaticon2-paper-plane text-warning "></i>
+                                </div>
+                                <div class="timeline-content text-muted font-weight-normal">
+                                    Đại học: Trường ĐH Sư Phạm HN
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!------------------------->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <!--begin::Header-->
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title font-weight-bolder ">Lĩnh vực nghiên cứu</h3>
+                    </div>
+                    <div class="card-body">
+                        <span class="label label-light-primary label-inline mr-2 major">Toán học</span>
+                        <span class="label label-light-primary label-inline mr-2 major">Đại số giao hoán</span>
+                        <span class="label label-light-primary label-inline mr-2 major">Xác xuất thống kê</span>
+                        <span class="label label-light-primary label-inline mr-2 major">Xác xuất thống kê</span>
+                        <span class="label label-light-primary label-inline mr-2 major">Xác xuất thống kê</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title font-weight-bolder ">Các nghiên cứu quan tâm</h3>
+                    </div>
+                    <div class="card-body">
+                        <span class="label label-light-primary label-inline mr-2 major">Toán học</span>
+                        <span class="label label-light-primary label-inline mr-2 major">Đại số giao hoán</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutster-b">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title font-weight-bolder ">Các dự án đang thực hiện</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="#">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. </a></li>
+                            <li><a href="#">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. </a></li>
+                            <li><a href="#">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. </a></li>
+                            <li><a href="#">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------->
         <!--end::Mixed Widget 14-->
     </div>
     <div class="col-lg-8">
         <!--begin::Advance Table Widget 2-->
-        <div class="card card-custom card-stretch gutter-b">
-            <!--begin::Header-->
-            <div class="card-header border-0 pt-5">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label font-weight-bolder text-dark">Công trình khoa học</span>
-                </h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b"  style="padding-bottom:2rem">
+                    <!--begin::Header-->
+                    <h3 class="card-label font-weight-bolder text-dark"><i class="la text-success la-navicon icon-md"></i> Công trình khoa học</h3>
+                    <hr />
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body pt-3 pb-0">
+                        <!--begin::Table-->
+                        <table id="table_tapchi" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên bài báo</th>
+                                    <th>Tên tạp chí</th>
+                                    <th>Năm xuất bản</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
+                                    <td>dummy text</td>
+                                    <td>2019</td>
+                                    <td><a href="#">Xem</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
+                                    <td>dummy text</td>
+                                    <td>2019</td>
+                                    <td><a href="#">Xem</a></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
+                                    <td>dummy text</td>
+                                    <td>2019</td>
+                                    <td><a href="#">Xem</a></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
+                                    <td>dummy text</td>
+                                    <td>2019</td>
+                                    <td><a href="#">Xem</a></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
+                                    <td>dummy text</td>
+                                    <td>2019</td>
+                                    <td><a href="#">Xem</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Advance Table Widget 2-->
             </div>
-            <!--end::Header-->
-            <!--begin::Body-->
-            <div class="card-body pt-3 pb-0">
-                <!--begin::Table-->
-                
-                <!--end::Table-->
-            </div>
-            <!--end::Body-->
         </div>
-        <!--end::Advance Table Widget 2-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom card-stretch gutter-b">
+                    <h3 class="card-label font-weight-bolder text-dark"><i class="text-success la la-navicon icon-md"></i> Giải thưởng</h3>
+                    <hr />
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body pt-5 pb-0">
+                        <!--begin::Table-->
+                        <div class="timeline timeline-2" id="rewards_list">
+                            <div class="timeline-bar"></div>
+                            <div class="timeline-item">
+                                <span class="timeline-badge bg-success"></span>
+                                <div class="timeline-content d-flex align-items-center justify-content-between">
+                                    <span class="mr-3">
+                                        <i class="text-warning la la-diamond icon-md"></i> Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="timeline-badge bg-success"></span>
+                                <div class="timeline-content d-flex align-items-center justify-content-between">
+                                    <span class="mr-3">
+                                        <i class="text-warning la la-diamond icon-md"></i> Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="timeline-badge bg-success"></span>
+                                <div class="timeline-content d-flex align-items-center justify-content-between">
+                                    <span class="mr-3">
+                                        <i class="text-warning la la-diamond icon-md"></i> Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -168,4 +357,33 @@
 
 
 @section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_tapchi').DataTable({
+                "columns": [
+                    { width: "5%" },
+                    { width: "50%" },
+                    { width: "30%" },
+                    { width: "10%" },
+                    { width: "5%" },
+                ],
+                responsive: true,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+
+                // Order settings
+                order: [[0, 'asc']],
+
+                columnDefs: [
+
+                ],
+            });
+        })
+    </script>
 }
