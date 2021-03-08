@@ -1,9 +1,11 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,16 +23,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 string sql_mouList =
                     @"select tb2.mou_partner_id,
-                        tb1.mou_code,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
+                        tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
                         ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
                         ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
                         from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
                         on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
-                        on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
-                        on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
-                        inner join IA_MasterData.CollaborationScope tb5
-                        on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                        on tb2.partner_id = tb3.partner_id inner join
+                        (select t1.mou_id,t2.partner_id,t2.scope_id
+                        from IA_Collaboration.MOUPartnerScope t1 inner join
+                        IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
+                        on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
+                        inner join IA_MasterData.CollaborationScope tb5 on
+                        tb5.scope_id  = tb4.scope_id
+                        inner join IA_Collaboration.MOUPartnerSpecialization tb6
                         on tb6.mou_partner_id = tb2.mou_partner_id 
                         inner join General.Specialization tb7
                         on tb7.specialization_id = tb6.specialization_id
@@ -66,16 +72,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 string sql_mouList_deleted = @"select tb2.mou_partner_id,
-                    tb1.mou_code,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
+                    tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
                     ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                     tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
                     ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
                     from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
                     on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
-                    on tb2.partner_id = tb3.partner_id inner join IA_Collaboration.MOUPartnerScope tb4
-                    on tb4.mou_id = tb2.mou_id and tb4.partner_id = tb2.partner_id
-                    inner join IA_MasterData.CollaborationScope tb5
-                    on tb4.scope_id = tb5.scope_id inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                    on tb2.partner_id = tb3.partner_id inner join
+                    (select t1.mou_id,t2.partner_id,t2.scope_id
+                    from IA_Collaboration.MOUPartnerScope t1 inner join
+                    IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
+                    on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
+                    inner join IA_MasterData.CollaborationScope tb5 on
+                    tb5.scope_id  = tb4.scope_id
+                    inner join IA_Collaboration.MOUPartnerSpecialization tb6
                     on tb6.mou_partner_id = tb2.mou_partner_id 
                     inner join General.Specialization tb7
                     on tb7.specialization_id = tb6.specialization_id
@@ -106,19 +116,114 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
-                    db.MOUs.Add(input.MOU);
-                    db.MOUStatusHistories.Add(input.MOUStatusHistory);
-                    foreach (MOUPartner item in input.listMOUPartner)
+                    //add MOU
+                    //Check Partner
+                    //add MOUPartner => 
+                    //check or add PartnerScope
+                    //add MOUPartnerScope
+                    //add MOUPartnerSpecialization
+                    //add MOUStatusHistory
+                    DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    MOU m = new MOU
                     {
-                        db.MOUPartners.Add(item);
-                    }
-                    foreach (MOUPartnerSpecialization item in input.listMOUPartnerSpe)
+                        mou_code = input.BasicInfo.mou_code,
+                        mou_end_date = mou_end_date,
+                        mou_note = input.BasicInfo.mou_note,
+                        evidence = input.BasicInfo.evidence is null ? "" : input.BasicInfo.evidence,
+                        office_id = input.BasicInfo.office_id,
+                        account_id = 1,
+                        add_time = DateTime.Now,
+                        is_deleted = false,
+                        noti_count = 0
+                    };
+                    db.MOUs.Add(m);
+                    //checkpoint 1
+                    db.SaveChanges();
+                    MOU objMOU = db.MOUs.Where(x => x.mou_code == input.BasicInfo.mou_code).First();
+
+                    //Add MOUStatusHistory
+                    db.MOUStatusHistories.Add(new ENTITIES.MOUStatusHistory
                     {
-                        db.MOUPartnerSpecializations.Add(item);
-                    }
-                    foreach (MOUPartnerScope item in input.listMOUPartnerScope)
+                        datetime = DateTime.Now,
+                        reason = input.BasicInfo.reason,
+                        mou_id = objMOU.mou_id,
+                        mou_status_id = input.BasicInfo.mou_status_id
+                    });
+
+                    foreach (PartnerInfo item in input.PartnerInfo.ToList())
                     {
-                        db.MOUPartnerScopes.Add(item);
+                        int partner_id_item = 0;
+                        //new partner
+                        if (item.partner_id == 0)
+                        {
+                            db.Partners.Add(new ENTITIES.Partner
+                            {
+                                partner_name = item.partnername_add,
+                                website = item.website_add,
+                                address = item.address_add,
+                                country_id = 13
+                            });
+                            //checkpoint 2
+                            db.SaveChanges();
+                            ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == item.partnername_add).First();
+                            partner_id_item = objPartner.partner_id;
+                        }
+                        else //old partner
+                        {
+                            partner_id_item = item.partner_id;
+                        }
+                        //add to MOUPartner via each partner of MOU
+                        db.MOUPartners.Add(new ENTITIES.MOUPartner
+                        {
+                            mou_id = objMOU.mou_id,
+                            partner_id = partner_id_item,
+                            mou_start_date = DateTime.ParseExact(item.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            contact_point_name = item.represent_add,
+                            contact_point_email = item.email_add,
+                            contact_point_phone = item.phone_add
+                        });
+                        //PartnerScope and MOUPartnerScope
+                        foreach (int tokenScope in item.coop_scope_add.ToList())
+                        {
+                            PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
+                            int partner_scope_id = 0;
+                            if (objPS == null)
+                            {
+                                db.PartnerScopes.Add(new PartnerScope
+                                {
+                                    partner_id = partner_id_item,
+                                    scope_id = tokenScope,
+                                    reference_count = 0
+                                });
+                                //checkpoint 3
+                                db.SaveChanges();
+                                PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
+                                partner_scope_id = newObjPS.partner_scope_id;
+                            }
+                            else
+                            {
+                                objPS.reference_count += 1;
+                                db.Entry(objPS).State = EntityState.Modified;
+                                partner_scope_id = objPS.partner_scope_id;
+                            }
+                            db.MOUPartnerScopes.Add(new MOUPartnerScope
+                            {
+                                partner_scope_id = partner_scope_id,
+                                mou_id = objMOU.mou_id
+                            });
+                        }
+                        //checkpoint 4
+                        db.SaveChanges();
+                        //MOUPartnerSpe
+                        MOUPartner objMOUPartner = db.MOUPartners.Where(x => (x.mou_id == objMOU.mou_id && x.partner_id == partner_id_item)).First();
+                        foreach (int tokenSpe in item.specialization_add.ToList())
+                        {
+                            db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
+                            {
+                                mou_partner_id = objMOUPartner.mou_partner_id,
+                                specialization_id = tokenSpe,
+                            });
+                        }
                     }
                     db.SaveChanges();
                     transaction.Commit();
@@ -132,11 +237,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         }
         public void ExportMOUExcel()
         {
-            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/");
+            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
             string filename = "MOU.xlsx";
             FileInfo file = new FileInfo(path + filename);
             List<ListMOU> listMOU = listAllMOU("", "", "");
 
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
             {
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
@@ -159,10 +265,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).scope_abbreviation;
                     excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).mou_status_name;
                 }
-                //string Flocation = "/Content/assets/excel/CDVT/download/baocaohoatdong.xlsx";
-                string Flocation = "/Content/assets/excel/Collaboration/download/MOU.xlsx";
+                string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/download/MOU.xlsx")));
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
             }
         }
         public void deleteMOU(int mou_id)
@@ -285,11 +390,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     t1.country_id = t2.country_id where t1.partner_name = @partner_name";
                 CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
                     new SqlParameter("partner_name", partner_name)).FirstOrDefault();
-                //if (p != null)
-                //{
-                //    p.website = p.website is null ? "" : p.website;
-                //    p.address = p.address is null ? "" : p.address;
-                //}
                 return p;
             }
             catch (Exception ex)
@@ -419,7 +519,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             //get current date
             //get all expired ActiveMOU.
             //if number > 0: update status for MOU: Active => Inactive.
-
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
@@ -447,59 +546,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     throw ex;
                 }
             }
-        }
-        public class ListMOU
-        {
-            public ListMOU() { }
-            public string mou_code { get; set; }
-            public int mou_partner_id { get; set; }
-            public int mou_id { get; set; }
-            public string partner_name { get; set; }
-            public string website { get; set; }
-            public string country_name { get; set; }
-            public string contact_point_name { get; set; }
-            public string contact_phone_email { get; set; }
-            public string contact_point_phone { get; set; }
-            public string evidence { get; set; }
-            public DateTime mou_start_date { get; set; }
-            public DateTime mou_end_date { get; set; }
-            public string mou_start_date_string { get; set; }
-            public string mou_end_date_string { get; set; }
-            public string mou_note { get; set; }
-            public string office_abbreviation { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string specialization_name { get; set; }
-            public string mou_status_name { get; set; }
-            public int mou_status_id { get; set; }
-        }
-        public class MOUAdd
-        {
-            public MOUAdd() { }
-            public MOU MOU { get; set; }
-            public MOUStatusHistory MOUStatusHistory { get; set; }
-            public List<MOUPartner> listMOUPartner { get; set; }
-            public List<MOUPartnerSpecialization> listMOUPartnerSpe { get; set; }
-            public List<MOUPartnerScope> listMOUPartnerScope { get; set; }
-        }
-        public class NotificationInfo
-        {
-            public NotificationInfo() { }
-            public int InactiveNumber { get; set; }
-            public List<string> ExpiredMOUCode { get; set; }
-        }
-        public class CustomOffice
-        {
-            public string office_abbreviation { get; set; }
-            public int office_id { get; set; }
-        }
-        public class CustomPartner
-        {
-            public string website { get; set; }
-            public int country_id { get; set; }
-            public string country_name { get; set; }
-            public int partner_id { get; set; }
-            public string partner_name { get; set; }
-            public string address { get; set; }
         }
     }
 }

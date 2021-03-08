@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-xl-3">
                 <label>Tổng thưởng</label>
-                <input id="totalreward" class="form-control form-control-lg" type="number" value="" />
+                <input id="totalreward" class="form-control form-control-lg" type="text" value="" />
             </div>
         </div>
         <div class="row justify-content-center">
@@ -97,7 +97,7 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/inputFilter.js"></script>
     <script>
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
@@ -107,6 +107,13 @@
             if (temp == "") {
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
             }
+        });
+        $("#totalreward").inputFilter(function (value) {
+            return /^-?\d*$/.test(value);
+        });
+        $("#totalreward").change(function () {
+            var x = $(this).val();
+            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
     </script>
 }

@@ -20,6 +20,7 @@ namespace ENTITIES
             this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.DirectionLanguages = new HashSet<DirectionLanguage>();
+            this.Procedures = new HashSet<Procedure>();
         }
     
         public int direction_id { get; set; }
@@ -31,5 +32,7 @@ namespace ENTITIES
         public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DirectionLanguage> DirectionLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Procedure> Procedures { get; set; }
     }
 }

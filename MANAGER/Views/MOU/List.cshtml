@@ -159,38 +159,41 @@
                         <div class="row mb-5">
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
                                 <div class="row align-items-center">
-                                    <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
-                                    <div class="dropdown dropdown-inline ml-2">
-                                        <button type="button"
-                                                class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Export
-                                        </button>
-                                        <!--begin::Dropdown Menu-->
-                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                            <!--begin::Navigation-->
-                                            <ul class="navi flex-column navi-hover py-2">
-                                                <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                                    Choose an option:
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-excel-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">Excel</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <!--end::Navigation-->
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <div class="dropdown dropdown-inline ml-2">
+                                            <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Export
+                                            </button>
+                                            <!--begin::Dropdown Menu-->
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi flex-column navi-hover py-2">
+                                                    <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                        Choose an option:
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link" onclick="exportExcel()">
+                                                            <span class="navi-icon">
+                                                                <i class="la la-file-excel-o"></i>
+                                                            </span>
+                                                            <span class="navi-text">Excel</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <!--end::Navigation-->
+                                            </div>
+                                            <!--end::Dropdown Menu-->
                                         </div>
-                                        <!--end::Dropdown Menu-->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
-                                <div class="row align-items-center justify-content-end">
+                                <div class="row align-items-center float-right" style=" margin-right: -78px; ">
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
@@ -201,7 +204,7 @@
                                         <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
                                     <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
-                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -224,9 +227,8 @@
                                     <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
                                     <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
                                     <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
-                                    <th rowspan="2" class="text-center">Trạng thái</th>
-                                    <th rowspan="2"></th>
-                                    <th rowspan="2"></th>
+                                    <th rowspan="2" nowrap="nowrap" class="text-center">Trạng thái</th>
+                                    <th rowspan="2" nowrap="nowrap" class="text-center"></th>
                                 </tr>
                                 <tr>
                                     <th class="text-center">Tên</th>
@@ -266,8 +268,8 @@
             <div id='step-1' class="modal-body">
                 <div class="row justify-content-center">
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
-                        <label style="color:red">*</label>
                         <label class="font-weight-bolder">Số hiệu</label>
+                        <label style="color:red"> *</label>
                         <label style="font-style: italic;">
                         </label>
                         <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="mou_code_add" value="@ViewBag.newMOUCode" />
@@ -396,7 +398,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
@@ -404,37 +406,38 @@
                             <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                             <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                         </div>
-
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_add" />
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="specialization_add" name="param" style="width:100% !important">
-                                <option value="" selected></option>
-                                @foreach (var item in ViewBag.listSpe)
-                                {
-                                    <option value="@item.specialization_id">@item.specialization_name</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
                         <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_add" />
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_add" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
                         <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_add" />
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_add" data-target-input="nearest">
@@ -448,32 +451,31 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_add" />
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important">
+                                @foreach (var item in ViewBag.listSpe)
+                                {
+                                    <option value="@item.specialization_id">@item.specialization_name</option>
+                                }
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_add" />
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="coop_scope_add" name="param" style="width:100% !important">
-                                <option value="" selected></option>
+                            <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important">
                                 @foreach (var item in ViewBag.listScopes)
                                 {
                                     <option value="@item.scope_id">@item.scope_abbreviation</option>
                                 }
                             </select>
                         </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_add" />
                     </div>
                 </div>
             </div>
@@ -494,7 +496,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
@@ -504,31 +506,37 @@
                             <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="specialization_edit" name="param" style="width:100% !important">
-                                <option value="" selected></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
                         <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
                         <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
@@ -542,28 +550,22 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="coop_scope_edit" name="param" style="width:100% !important">
-                                <option value="" selected></option>
+                            <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -608,6 +610,9 @@
 
     @*toast*@
     <script>
+
+
+
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
         })
@@ -651,7 +656,7 @@
         //overflow
         $(document).ready(function () {
             $('.mou_table').parent().css('overflow-x', 'auto');
-            $('.mou_table thead tr th').css('font-weight', 'bold');
+            //$('.mou_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
 
         });
@@ -877,8 +882,44 @@
 
     </script>
 
+    @*multi select*@
+    <script>
+        // Class definition
+        var KTSelect2 = function () {
+            // Private functions
+            var demos = function () {
+                // basic
+
+                // multi select
+                $('#specialization_add').select2({
+                    placeholder: 'Chọn lĩnh vực',
+                });
+                $('#coop_scope_add').select2({
+                    placeholder: 'Chọn phạm vi',
+                });
+                $('#specialization_edit').select2({
+                    placeholder: 'Chọn lĩnh vực',
+                });
+                $('#coop_scope_edit').select2({
+                    placeholder: 'Chọn phạm vi',
+                });
+            }
+            // Public functions
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSelect2.init();
+        });
+    </script>
+
     @*mou*@
-<script>
+    <script>
     var rowIdx = 1;
     var listTempPartnerMOUAdd = [];
     var listScopes = [];
@@ -964,34 +1005,35 @@
                     }
                 },
                 {
-                    title: '',
+                    title: 'Hành động',
                     data: "mou_id",
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a href="./Detail" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>'
+                        return '<a href="./Detail" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                            '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-                {
-                    title: '',
-                    data: "mou_id",
-                    orderable: false,
-                    width: '125px',
-                    render: function (data, type, full, meta) {
-                        var action = 'Delete_Mou';
-                        var controller = 'MOU';
-                        var id_to_catch_in_controller = 'mou_id';
-                        return '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-                    }
-                }
-            ]
+
+        ],
+        columnDefs: [
+            {
+                className: "text-center",
+                targets: [0,4,9,12,13],
+
+            },
+            {
+                className: "text-nowrap",
+                targets: [5,6,8, -1]
+            },
+        ]
     });
 
     $(document).ready(function () {
         $("#specialization_add option").each(function () {
             listSpe.push({
                 spe_id: $(this).val(),
-                spe_name: $(this).text()  
+                spe_name: $(this).text()
             });
         });
         $("#coop_scope_add option").each(function () {
@@ -1000,9 +1042,6 @@
                 scope_name: $(this).text()
             });
         });
-        listSpe.shift();
-        listScopes.shift();
-
     });
 
     function searchMOU() {
@@ -1091,16 +1130,17 @@
         var TempObj = {
             partnername_add: document.getElementById("partner_name_add").value,
             represent_add: document.getElementById("represent_add").value,
-            specialization_add: document.getElementById("specialization_add").value,
+            specialization_add: $("#specialization_add").val(),
             nation_add: document.getElementById("nation_add").value,
             website_add: document.getElementById("website_add").value,
             address_add: document.getElementById("address_add").value,
             email_add: document.getElementById("email_add").value,
             sign_date_mou_add: document.getElementById("sign_date_mou_add").value,
             phone_add: document.getElementById("phone_add").value,
-            coop_scope_add: document.getElementById("coop_scope_add").value,
+            coop_scope_add: $("#coop_scope_add").val(),
             partner_id: document.getElementById("partner_id_add").value,
         }
+
         listTempPartnerMOUAdd.push(TempObj);
         clearInputAdd();
         initAndRefreshTableMOUAdd();
@@ -1170,17 +1210,19 @@
         $("#idx_edit").val(index);
         var HTMLSpedata = "";
         var HTMLScopedata = "";
+        $('#specialization_edit').empty();
+        $('#coop_scope_edit').empty();
         for (i = 0; i < listSpe.length; i++) {
-            if (listTempPartnerMOUAdd[index].specialization_add == listSpe[i].spe_id) {
+            //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
+            if (listTempPartnerMOUAdd[index].specialization_add.includes(listSpe[i].spe_id)) {
                 HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
-                
+
             } else {
                 HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" >' + listSpe[i].spe_name + '</option>'
-                
             }
         }
         for (j = 0; j < listScopes.length; j++) {
-            if (listTempPartnerMOUAdd[index].coop_scope_add == listScopes[j].scope_id) {
+            if (listTempPartnerMOUAdd[index].coop_scope_add.includes(listScopes[j].scope_id)) {
                 HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_name + '</option>'
             } else {
                 HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_name + '</option>'
@@ -1188,7 +1230,7 @@
         }
         $('#specialization_edit').append(HTMLSpedata);
         $('#coop_scope_edit').append(HTMLScopedata);
- 
+
         $('#partner_name_edit').val(listTempPartnerMOUAdd[index].partnername_add);
         $('#represent_edit').val(listTempPartnerMOUAdd[index].represent_add);
         $('#nation_edit').val(listTempPartnerMOUAdd[index].nation_add);
@@ -1203,13 +1245,13 @@
             document.getElementById('nation_edit').removeAttribute('disabled');
             document.getElementById('website_edit').removeAttribute('disabled');
             document.getElementById('address_edit').removeAttribute('disabled');
-            
-            
+
+
         } else {
             document.getElementById('nation_edit').setAttribute('disabled', '');
             document.getElementById('website_edit').setAttribute('disabled', '');
             document.getElementById('address_edit').setAttribute('disabled', '');
-            
+
         }
     }
 
@@ -1217,14 +1259,14 @@
         var index = $("#idx_edit").val();
         listTempPartnerMOUAdd[index].partnername_add = document.getElementById("partner_name_edit").value;
         listTempPartnerMOUAdd[index].represent_add = document.getElementById("represent_edit").value;
-        listTempPartnerMOUAdd[index].specialization_add = document.getElementById("specialization_edit").value;
+        listTempPartnerMOUAdd[index].specialization_add = $("#specialization_edit").val();
         listTempPartnerMOUAdd[index].nation_add = document.getElementById("nation_edit").value;
         listTempPartnerMOUAdd[index].website_add = document.getElementById("website_edit").value;
         listTempPartnerMOUAdd[index].address_add = document.getElementById("address_edit").value;
         listTempPartnerMOUAdd[index].email_add = document.getElementById("email_edit").value;
         listTempPartnerMOUAdd[index].sign_date_mou_add = document.getElementById("sign_date_mou_edit").value;
         listTempPartnerMOUAdd[index].phone_add = document.getElementById("phone_edit").value;
-        listTempPartnerMOUAdd[index].coop_scope_add = document.getElementById("coop_scope_edit").value;
+        listTempPartnerMOUAdd[index].coop_scope_add = $("#coop_scope_edit").val();
         listTempPartnerMOUAdd[index].partner_id = document.getElementById("partner_id_edit").value;
         initAndRefreshTableMOUAdd();
     }
@@ -1232,9 +1274,11 @@
     function doneStep() {
         if (listTempPartnerMOUAdd.length == 0) {
             toastr.error('Chưa có đối tác nào được thêm');
-            //$('#add_mou_modal').modal('hide');
+        } else {
+            $('#add_mou_modal').modal('hide');
+            toastr.success('Thêm thành công');
+            addMOU();
         }
-        //toastr.success('Thêm thành công');
     }
 
     function nextStep() {
@@ -1244,25 +1288,45 @@
     function updateMOUStartDateAndMainScope() {
         var max_date = '01/01/0001';
         var main_scopes = '';
+        var new_main_scopes = '';
         for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
             if (Date.parse(listTempPartnerMOUAdd[idx].sign_date_mou_add) > Date.parse(max_date)) {
                 max_date = listTempPartnerMOUAdd[idx].sign_date_mou_add;
             }
-            var obj = listScopes.find(x => x.scope_id === listTempPartnerMOUAdd[idx].coop_scope_add);
-            if (obj != null) {
-                if (!main_scopes.includes(obj.scope_name)) {
-                    main_scopes += (obj.scope_name + ",")
-                }
-            }
+            main_scopes += (listTempPartnerMOUAdd[idx].coop_scope_add + ",");
         }
+
+        //remove last element.
         if (main_scopes.endsWith(",")) {
             main_scopes = main_scopes.slice(0, -1);
         }
+
+        //alert(listTempPartnerMOUAdd[0].coop_scope_add);
+        var token = main_scopes.split(",");
+        token.sort();
+
+        //add to new_main_scopes
+        var prev = null;
+        for (j = 0; j < token.length; j++) {
+            if (token[j] != prev) {
+                prev = token[j];
+                var obj = listScopes.find(x => x.scope_id == prev);
+                if (obj != null) {
+                    new_main_scopes += (obj.scope_name + ",");
+                }
+            }
+        }
+        //remove last element of new list
+        if (new_main_scopes.endsWith(",")) {
+            new_main_scopes = new_main_scopes.slice(0, -1);
+        }
+
         if (max_date == '01/01/0001') {
             max_date = '';
         }
+
         $("#sign_date_mou").val(max_date);
-        $("#coop_scope_mou").val(main_scopes);
+        $("#coop_scope_mou").val(new_main_scopes);
     }
 
     function backToStep() {
@@ -1270,7 +1334,56 @@
         toggleBackStep();
     }
 
+    function addMOU() {
+        //collect basicInfo data.
+        var BasicInfo = {
+            mou_code: $('#mou_code_add').val() ,
+            mou_end_date: $('#end_date_mou').val(),
+            office_id: $('#search_coso').val(),
+            mou_status_id: $('#status_mou').val(),
+            reason: $('#note_mou').val(),
+            mou_note: $('#mou_area').val()
+        };
 
-</script>
+        var MOUAdd = {
+            BasicInfo: BasicInfo,
+            PartnerInfo: listTempPartnerMOUAdd,
+        };
+        $.ajax({
+            url: "@Url.Action("Add_Mou", "MOU")",
+            type: "POST",
+            data: JSON.stringify(MOUAdd),
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+
+        //collect Partner data.
+        //Send to controller.
+    }
+
+    function exportExcel() {
+        //alert('haha');
+        $.ajax({
+            url: "@Url.Action("ExportMOUExcel", "MOU")",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+    }
+    </script>
 }
 
