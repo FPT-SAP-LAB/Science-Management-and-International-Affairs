@@ -18,8 +18,7 @@ namespace ENTITIES
         public Partner()
         {
             this.MOUPartners = new HashSet<MOUPartner>();
-            this.MOUPartnerScopes = new HashSet<MOUPartnerScope>();
-            this.Specializations = new HashSet<Specialization>();
+            this.PartnerScopes = new HashSet<PartnerScope>();
         }
     
         public int partner_id { get; set; }
@@ -37,9 +36,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartner> MOUPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOUPartnerScope> MOUPartnerScopes { get; set; }
+        public virtual ICollection<PartnerScope> PartnerScopes { get; set; }
         public virtual Article Article { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Specialization> Specializations { get; set; }
     }
 }
