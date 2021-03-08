@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,18 +61,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
 
-        //public ActionResult Add_Mou(MOUAdd input)
-        //{
-        //    try
-        //    {
-        //        mou.addMOU(input);
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        public ActionResult Add_Mou(MOUAdd input)
+        {
+            try
+            {
+                mou.addMOU(input);
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult CheckPartner(string partner_name)
         {
             try
@@ -92,13 +93,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 mou.ExportMOUExcel();
                 return Json("", JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new HttpStatusCodeResult(400);
             }
         }
         public ActionResult Detail(string id)
         {
+            ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN GHI NHỚ";
             return View();
         }
     }
