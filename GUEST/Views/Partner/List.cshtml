@@ -11,6 +11,10 @@
     table thead tr th {
         font-weight: bolder !important;
     }
+
+    #partner_table_wrapper {
+        overflow-x: auto;
+    }
 </style>
 
 <div class="card card-custom">
@@ -19,7 +23,7 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div class="row mb-2 col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                        <div class="row mb-2">
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                             </div>
@@ -32,26 +36,30 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                             </div>
-                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
-                                <a href="#" class="btn btn-light-primary font-weight-bolder text-nowrap">Tìm kiếm</a>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <a href="#" class="btn btn-light-primary font-weight-bold float-right">Tìm kiếm</a>
                             </div>
                         </div>
-                        <table id="partner_table" class="table table-bordered table-checkable">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên đối tác</th>
-                                    <th>Quốc gia</th>
-                                    <th>Lĩnh vực</th>
-                                    <th>Website</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-112 col-sm-12">
+                                <table id="partner_table" class="table table-bordered table-checkable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên đối tác</th>
+                                            <th>Quốc gia</th>
+                                            <th>Lĩnh vực</th>
+                                            <th>Website</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="row justify-content-center">
                             <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">Xem thêm</a>
                         </div>
@@ -67,6 +75,7 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
     <script>
+
 
         $('#search_nation').select2({
             placeholder: 'Quốc gia',
@@ -103,7 +112,7 @@
                 columns: [
                     {
                         render: function (data) {
-                            return  rowIdx++ ;
+                            return rowIdx++;
                         }
                     },
                     {
@@ -132,7 +141,7 @@
                     },
                 ],
                 drawCallback: function () {
-                    link_icon();
+                    //link_icon();
                     // Show or hide "Load more" button based on whether there is more data available
                     $('#btn-example-load-more').toggle(this.api().page.hasMore());
                 },
