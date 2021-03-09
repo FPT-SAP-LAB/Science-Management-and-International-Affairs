@@ -87,7 +87,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         inner join IA_MasterData.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.mou_id = @mou_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
-                    new SqlParameter("mou_id",mou_id)).ToList();
+                    new SqlParameter("mou_id", mou_id)).ToList();
                 handlingExMOUListData(mouExList);
                 return mouExList;
             }

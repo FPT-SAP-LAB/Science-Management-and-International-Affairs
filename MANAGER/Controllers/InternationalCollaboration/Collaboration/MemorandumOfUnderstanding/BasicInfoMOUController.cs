@@ -13,7 +13,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     {
         // GET: BasicInfoMOU
         private static BasicInfoMOURepo mou = new BasicInfoMOURepo();
-        
+
         public ActionResult Index()
         {
             return View();
@@ -73,7 +73,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 string id = Session["mou_detail_id"].ToString();
-                mou.editMOUBasicInfo(int.Parse(id),input);
+                mou.editMOUBasicInfo(int.Parse(id), input);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
