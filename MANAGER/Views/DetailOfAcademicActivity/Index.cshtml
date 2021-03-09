@@ -137,15 +137,15 @@
                         <a href="javascripts:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_Giaidoan">Thêm giai đoạn</a>
                     </div>
                 </div>
-                <table id="my_list_1" class="table table-bordered table-checkable">
+                <table id="GiaiDoanDatatable" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Giai đoạn</th>
-                            <th>Thời gian bắt đầu</th>
-                            <th>Thời gian kết thúc</th>
-                            <th>Người đăng</th>
-                            <th></th>
+                            <th class="text-center">STT</th>
+                            <th class="text-center">Giai đoạn</th>
+                            <th class="text-center">Thời gian bắt đầu</th>
+                            <th class="text-center">Thời gian kết thúc</th>
+                            <th class="text-center">Người đăng</th>
+                            <th class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,7 +169,55 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
-                3
+                <table id="KinhPhiDatatable" class="table table-bordered table-checkable">
+                    <thead>
+                        <tr class="text-center">
+                            <th rowspan="2">STT</th>
+                            <th rowspan="2">Đơn vị</th>
+                            <th colspan="2">Kinh phí dự trù</th>
+                            <th rowspan="2">Kinh phí thực tế</th>
+                            <th rowspan="2">Chênh lệch</th>
+                            <th rowspan="2">Ghi chú</th>
+                            <th rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <th>Ban đầu</th>
+                            <th>Điều chỉnh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>FPTU Hà Nội</td>
+                            <td>450.000.000</td>
+                            <td>0</td>
+                            <td>368.000.000</td>
+                            <td>82.000.000</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>FPTU Đà Nẵng</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>FPTU HCM</td>
+                            <td>100.000.000</td>
+                            <td>0</td>
+                            <td>150.000.000</td>
+                            <td>-50.000.000</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
                 <div class="row mb-3">
@@ -177,7 +225,7 @@
                         <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_DongToChuc">Bổ sung đơn vị</a>
                     </div>
                 </div>
-                <table id="my_list_3" class="table table-bordered table-checkable">
+                <table id="DongTochucDatatable" class="table table-bordered table-checkable">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -658,7 +706,7 @@
                         <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
-                        <table id="my_list_2" class="table table-bordered table-checkable">
+                        <table id="TuCachDatatable" class="table table-bordered table-checkable">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -692,17 +740,60 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="delete-confirm-giaidoan" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="KPDuTruModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Xác nhận xóa</h4>
+                <h3 class="modal-title font-weight-bolder">Giải trình kinh phí dự trù ban đầu</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
             </div>
-            <div class="modal-body">Bạn có muốn xóa giai đoạn này?</div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-md-6 col-xl-6 col-lg-6 my-3">
+                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_KPDuTru">Thêm nội dung</a>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="KPDuTruDatatable" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Nội dung</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Truyền thông</td>
+                                    <td>30.000.000</td>
+                                    <td>1</td>
+                                    <td>30.000.000</td>
+                                    <td>Truyền thông trong và ngoài FE</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Hỗ trợ suất ăn cho giảng viên và sinh viên</td>
+                                    <td>30.000.000</td>
+                                    <td>1</td>
+                                    <td>30.000.000</td>
+                                    <td>Truyền thông trong và ngoài FE</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary" id="btn_delete_giaidoan" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_giaidoan">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -719,6 +810,8 @@
         let id_edit_tu_cach = 0;
         let id_delete_dong_to_chuc = 0;
         let id_edit_dong_to_chuc = 0;
+        let id_edit_KP = 0;
+        let id_delete_KP = 0;
         function postActivity() {
             return;
         }
@@ -826,6 +919,10 @@
                 }
             });
         }
+        function KPDuTru(id) {
+            id_edit_KP = id;
+            $('#KPDuTruModal').modal('show');
+        }
         $('#add_price_tucach').click(function () {
             if (document.getElementById('add_price_tucach').value == 'MP') {
                 $('#add_control_price').hide();
@@ -836,7 +933,7 @@
 
         $('#edit_price_tucach').click(function () {
             if (document.getElementById('edit_price_tucach').value == 'MP') {
-                $('#edit_cost_tucach').attr('disabled',true);
+                $('#edit_cost_tucach').attr('disabled', true);
             } else
                 $('#edit_cost_tucach').attr('disabled', false);
         });
@@ -932,26 +1029,6 @@
             });
         });
 
-        //$('#btn_edit').click(function () {
-        //    let object = {
-        //        title: document.getElementById('edit_title').value,
-        //        category: document.getElementById('edit_category').value,
-        //        from: document.getElementById('edit_from').value,
-        //        to: document.getElementById('edit_to').value,
-        //        location: document.getElementById('edit_location').value
-        //    }
-        //    $.ajax({
-        //        url: '/AcademicActivity/edit_AcademicActivity',
-        //        data: object,
-        //        success: function (data) {
-        //            if (data.code = 1) {
-        //                toastr.success(data.err_content);
-        //            } else {
-        //                toastr.error(data.err_content);
-        //            }
-        //        },
-        //    });
-        //});
         $('#btn_add_tucach').click(function () {
             let object = {
                 id: 1,
@@ -972,7 +1049,7 @@
                 },
             });
         });
-        $("#my_list_1").DataTable({
+        $("#GiaiDoanDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -993,10 +1070,14 @@
                     render: function (data, type, full, meta) {
                         return '<a href="#" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
                     }
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, 1, 2, 3, 4, -1],
+                },
             ]
         });
-        $("#my_list_2").DataTable({
+        $("#TuCachDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1019,7 +1100,7 @@
                 }
             ]
         });
-        $("#my_list_3").DataTable({
+        $("#DongTochucDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1045,7 +1126,48 @@
                     render: function (data, type, full, meta) {
                         return '<a href="#" onclick="getContactInfo()">' + data + '</a>'
                     }
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, 1, 2, 3, 4, 5, -1],
+                },
+            ]
+        });
+        $("#KinhPhiDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<div class="dropdown">' +
+                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
+                            '</div>' +
+                            '</div>'
+                    }
+                },
+                {
+                    className: "text-center",
+                    targets: [0, -1],
+                },
+
             ]
         });
         var KTBootstrapDatetimepicker = function () {
@@ -1113,7 +1235,7 @@
                 var timeout;
                 var uppyMin = Uppy.Core({
                     debug: true,
-                    autoProceed: true,
+                    autoProceed: false,
                     showProgressDetails: true,
                     restrictions: {
                         maxFileSize: 1000000, // 1mb
