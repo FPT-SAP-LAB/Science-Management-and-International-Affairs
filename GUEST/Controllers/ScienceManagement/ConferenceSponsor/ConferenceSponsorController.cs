@@ -82,6 +82,7 @@ namespace GUEST.Controllers
             public List<FormalityLanguage> FormalityLanguages { get; set; }
             public List<Office> Offices { get; set; }
             public List<TitleLanguage> TitleLanguages { get; set; }
+            public string Link { get; set; }
         }
     }
 }

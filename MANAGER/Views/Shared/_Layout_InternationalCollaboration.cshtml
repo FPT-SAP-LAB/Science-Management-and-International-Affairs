@@ -1,32 +1,22 @@
 ﻿<!DOCTYPE html>
-
-<style>
-    .custom-title {
-        color: cornflowerblue;
-    }
-</style>
 <html lang="en">
 <!--begin::Head-->
 <head>
-    <base href="">
+    <base href="../../../">
     <meta charset="utf-8" />
-    <title>@ViewBag.title | FPT Science and International Affairs</title>
+    <title> @ViewBag.Title | HỆ THỐNG QUẢN LÝ KHOA HỌC - HỢP TÁC QUỐC TẾ</title>
     <meta name="description"
-          content="Updates and statistics" />
+          content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    @*<link rel="canonical" href="https://keenthemes.com/metronic" />*@
     <!--begin::Fonts-->
-    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />*@
     <!--end::Fonts-->
     <!--begin::Page Vendors Styles(used by this page)-->
-    <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    @*<link href="~/Content/assets/plugins/custom/uppy/uppy.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles-->
     <!--begin::Global Theme Styles(used by all pages)-->
-    <link href="~/Content/assets/plugins/global/plugins.bundle.css?v=7.2.2" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.2.2" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/style.bundle.css?v=7.2.2" rel="stylesheet" type="text/css" />
-    @*<link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
     <link href="~/Content/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
@@ -34,7 +24,11 @@
     <link href="~/Content/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
+    <link rel="shortcut icon" href="https://daihoc.fpt.edu.vn/favicon.ico" />
+
+    <!--USED BY THIS PAGE-->
     <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />
+
 
 </head>
 <!--end::Head-->
@@ -46,7 +40,7 @@
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <!--begin::Logo-->
         <a href="#">
-            <img alt="Logo" style="width: 30%"  src="~/Content/assets/media/logos/logo-letter-9.png" />
+            <img alt="Logo" style="width: 30%" src="~/Content/assets/media/logos/logo-letter-9.png" />
         </a>
         <!--end::Logo-->
         <!--begin::Toolbar-->
@@ -1227,110 +1221,24 @@
     </div>
     <!--end::Scrolltop-->
 
-    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <!--end::Scrolltop-->
     <!--begin::Global Config(global config for global JS scripts)-->
     <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" } }, "font-family": "Poppins" };</script>
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
+    <script src="~/Content/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+    <script src="~/Content/assets/js/scripts.bundle.js"></script>
     <!--end::Global Theme Bundle-->
     <!--begin::Page Vendors(used by this page)-->
     <!--begin::Page Vendors(used by this page)-->
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
     <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->
     <!--Auto gen datatable with specified columns-->
-    <script>
-                //var KTDatatablesBasicScrollable = function () {
 
-                //    var initTable1 = function () {
-                //        var table = $('#kt_datatable1');
-
-                //        // begin first table
-                //        table.DataTable({
-                //            scrollY: '50vh',
-                //            scrollX: true,
-                //            scrollCollapse: true,
-                //            columnDefs: [{
-                //                targets: -1,
-                //                title: 'Actions',
-                //                orderable: false,
-                //                width: '125px',
-                //                render: function (data, type, full, meta) {
-                //                    return '\
-                //                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
-                //                                <span class="svg-icon svg-icon-md">\
-                //                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\
-                //                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\
-                //                                            <rect x="0" y="0" width="24" height="24"/>\
-                //                                            <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero"\ transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "/>\
-                //                                            <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"/>\
-                //                                        </g>\
-                //                                    </svg>\
-                //                                </span>\
-                //                            </a>\
-                //                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\
-                //                                <span class="svg-icon svg-icon-md">\
-                //                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\
-                //                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\
-                //                                            <rect x="0" y="0" width="24" height="24"/>\
-                //                                            <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"/>\
-                //                                            <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>\
-                //                                        </g>\
-                //                                    </svg>\
-                //                                </span>\
-                //                            </a>\
-                //                        ';
-                //                },
-                //            },
-                //            {
-                //                targets: 5,
-                //                width: '75px',
-                //                render: function (data, type, full, meta) {
-                //                    var status = {
-                //                        1: {
-                //                            'title': 'Đang chờ',
-                //                            'class': 'label-light-primary'
-                //                        },
-                //                        2: {
-                //                            'title': 'Đã huỷ',
-                //                            'class': ' label-light-danger'
-                //                        },
-                //                        3: {
-                //                            'title': 'Đang duyệt',
-                //                            'class': ' label-light-primary'
-                //                        },
-                //                        4: {
-                //                            'title': 'Đã duyệt',
-                //                            'class': ' label-light-success'
-                //                        }
-                //                    };
-                //                    if (typeof status[data] === 'undefined') {
-                //                        return data;
-                //                    }
-                //                    return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
-                //                },
-                //            },
-                //            ],
-                //        });
-                //    };
-
-                //    return {
-
-                //        //main function to initiate the module
-                //        init: function () {
-                //            initTable1();
-                //            //initTable2();
-                //        },
-
-                //    };
-
-                //}();
-
-                //jQuery(document).ready(function () {
-                //    KTDatatablesBasicScrollable.init();
-                //});
-
-    </script>
 
     <script src="~/Content/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js?v=7.2.2"></script>
 
