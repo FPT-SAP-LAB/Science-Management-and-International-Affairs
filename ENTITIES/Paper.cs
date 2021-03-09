@@ -38,6 +38,7 @@ namespace ENTITIES
         public string reward_type { get; set; }
         public int status_id { get; set; }
         public int paper_type_id { get; set; }
+        public Nullable<System.DateTime> date_request { get; set; }
     
         public virtual Specialization Specialization { get; set; }
         public virtual PaperType PaperType { get; set; }
