@@ -157,12 +157,12 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row mb-5">
-                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
-                                <div class="row align-items-center">
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12">
+                                <div class="row align-items-center my-2">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                         <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                         <div class="dropdown dropdown-inline ml-2">
                                             <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true"
@@ -192,8 +192,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
-                                <div class="row align-items-center float-right" style=" margin-right: -78px; ">
+                            <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12">
+                                <div class="row align-items-center my-2" @*style=" margin-right: -78px; "*@>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
@@ -203,8 +203,8 @@
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
-                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -214,35 +214,39 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered table-hover table-checkable mou_table"
-                               id="">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" class="">S<br />T<br />T</th>
-                                    <th rowspan="2" class="">Số hiệu</th>
-                                    <th colspan="4" class="text-center header-modify">Đối tác</th>
-                                    <th colspan="3" class="text-center header-modify">Người đại diện</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
-                                    <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
-                                    <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
-                                    <th rowspan="2" nowrap="nowrap" class="text-center">Trạng thái</th>
-                                    <th rowspan="2" nowrap="nowrap" class="text-center"></th>
-                                </tr>
-                                <tr>
-                                    <th class="text-center">Tên</th>
-                                    <th class="text-center">Quốc gia</th>
-                                    <th class="text-center">Website</th>
-                                    <th class="text-center">Lĩnh vực</th>
-                                    <th class="text-center">Họ và tên</th>
-                                    <th class="text-center">Email</th>
-                                    <th class="text-center">Điện thoại</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                <table class="table table-bordered table-hover table-checkable mou_table"
+                                       id="">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="">S<br />T<br />T</th>
+                                            <th rowspan="2" class="">Số hiệu</th>
+                                            <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                            <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                            <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
+                                            <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
+                                            <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
+                                            <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
+                                            <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
+                                            <th rowspan="2" nowrap="nowrap" class="text-center">Trạng thái</th>
+                                            <th rowspan="2" nowrap="nowrap" class="text-center"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Tên</th>
+                                            <th class="text-center">Quốc gia</th>
+                                            <th class="text-center">Website</th>
+                                            <th class="text-center">Lĩnh vực</th>
+                                            <th class="text-center">Họ và tên</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Điện thoại</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
