@@ -32,6 +32,7 @@ namespace ENTITIES
         public int paper_file_id { get; set; }
         public bool editable { get; set; }
         public int account_id { get; set; }
+        public Nullable<System.DateTime> date_request { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Conference Conference { get; set; }
