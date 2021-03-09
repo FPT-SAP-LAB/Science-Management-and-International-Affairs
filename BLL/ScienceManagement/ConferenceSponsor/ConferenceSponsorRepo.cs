@@ -15,6 +15,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetAddPageJson(string language_name)
         {
+            var Link = db.RewardPolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
             var ConferenceCriteriaLanguages = db.Database.SqlQuery<string>(@"
                 SELECT   Localization.ConferenceCriteriaLanguage.name
                 FROM     SM_Reward.RewardPolicy INNER JOIN
@@ -48,7 +49,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages });
+            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link });
         }
         public List<Info> GetAllProfileBy(string id)
         {
