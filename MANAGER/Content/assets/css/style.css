@@ -6,3 +6,6 @@
 *:not(.la, .fa, .far, .fas, .fab) {
     font-family: myfont !important;
 }
+thead * {
+    font-weight:bold !important;
+}
