@@ -1242,12 +1242,11 @@
 
     <script src="~/Content/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js?v=7.2.2"></script>
 
-    @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.2.2",
-    "~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.2.2",
-    "~/Content/assets/js/scripts.bundle.js?v=7.2.2",
+    @Scripts.Render(
     "~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6",
     "~/Content/assets/js/pages/widgets.js?v=7.0.6",
-    "~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6"
+    "~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6",
+    "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"
     )
 
     @RenderSection("scripts")
