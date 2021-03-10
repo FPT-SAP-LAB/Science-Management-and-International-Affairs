@@ -23,6 +23,8 @@ namespace GUEST.Controllers.ScientificProducts
             ViewBag.pagesTree = pagesTree;
             List<ListProduct_JournalPaper> list = lpr.getList();
             ViewBag.listJournal = list;
+            List<ListProduct_ConferencePaper> list2 = lpr.getList2();
+            ViewBag.listConferen = list2;
             return View();
         }
 

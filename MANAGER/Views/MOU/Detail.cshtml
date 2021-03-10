@@ -134,12 +134,14 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Số hiệu</label>&nbsp;
+                                    <label class="font-weight-bolder">Số hiệu</label>
+                                    <label style="color:red">*</label>
                                     <label style="font-style: italic;">(Năm/Số thứ tự)</label>
                                     <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="mou_code" />
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
+                                    <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>
+                                    <label style="color:red">*</label>
                                     <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                         <select class="form-control select-search" id="office" name="param" style="width:100% !important">
                                         </select>
@@ -148,9 +150,8 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label class="font-weight-bolder">Thời gian kí kết</label>&nbsp;
+                                    <label class="font-weight-bolder">Thời gian có hiệu lực</label>
                                     <label style="font-style: italic;">(Cập nhật theo đối tác)</label>
-                                    @*<input class="form-control custom-pickdate" type="text" placeholder="Thời gian kí kết"required readonly id="sign_time" />*@
                                     <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
                                         <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
                                         <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
@@ -161,8 +162,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label style="color:red">*</label><label class="font-weight-bolder">Thời gian hết hạn</label>&nbsp;
-                                    @*<input class="form-control custom-pickdate" type="text" placeholder="Thời gian hết hạn" autocomplete="off" required readonly id="end_time" />*@
+                                    <label class="font-weight-bolder">Thời gian hết hạn</label>
+                                    <label style="color:red">*</label>
                                     <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_end_date" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian hết hạn" id="end_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_end_date" />
                                         <div class="input-group-append" data-target="#kt_datetimepicker_end_date" data-toggle="datetimepicker">
@@ -175,8 +176,8 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                                    <label class="font-weight-bolder">Trạng thái</label>
                                     <label style="color:red">*</label>
-                                    <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                                     <select class="form-control" required id="status">
                                     </select>
                                 </div>
@@ -219,7 +220,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center">
                                 <h4 style="font-weight: bold;">
-                                    LỊCH SỬ KÍ KẾT BỔ SUNG BIÊN BẢN GHI NHỚ
+                                    LỊCH SỬ KÝ KẾT BỔ SUNG BIÊN BẢN GHI NHỚ
                                 </h4>
                             </div>
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
@@ -231,14 +232,13 @@
                                    id="">
                                 <thead>
                                     <tr>
-                                        <th>Mã hiệu</th>
-                                        <th>Thời gian kí kết</th>
-                                        <th>Thời gian hết hạn</th>
-                                        <th>Đối tác</th>
-                                        <th>Phạm vi hợp tác</th>
-                                        <th>Bản mềm</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="text-center">Mã hiệu</th>
+                                        <th class="text-center">Thời gian kí kết</th>
+                                        <th class="text-center">Thời gian hết hạn</th>
+                                        <th class="text-center">Đối tác</th>
+                                        <th class="text-center">Phạm vi hợp tác</th>
+                                        <th class="text-center">Bản mềm</th>
+                                        <th class="text-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -264,18 +264,20 @@
                                     DANH SÁCH ĐỐI TÁC HOẠT ĐỘNG
                                 </h4>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
                                     <div class="row align-items-center">
-                                        <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
+                                            <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                <div class="col-lg-11 col-xl-11 col-md-11 col-sm-11">
                                     <div class="row align-items-center justify-content-end">
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
                                                     <option label="Label"></option>
@@ -284,7 +286,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
                                                     <option label="Label"></option>
@@ -293,48 +295,53 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover table-checkable " id="partner_table">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" class="">S<br />T<br />T</th>
-                                        <th colspan="4" class="text-center header-modify">Đối tác</th>
-                                        <th colspan="3" class="text-center header-modify">Người đại diện</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Ngày kí kết</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Phạm vi hợp tác</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center">Tên</th>
-                                        <th class="text-center">Quốc gia</th>
-                                        <th class="text-center">Lĩnh vực</th>
-                                        <th class="text-center">Website</th>
-                                        <th class="text-center">Họ và tên</th>
-                                        <th class="text-center">Điện thoại</th>
-                                        <th class="text-center">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">Bunkyo University</td>
-                                        <td class="text-center">Japan</td>
-                                        <td class="text-center">IT</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center" nowrap="nowrap">Nguyễn Hoàng Sơn</td>
-                                        <td class="text-center">0977626800</td>
-                                        <td class="text-center">sonnhhe130366@fpt.edu.vn</td>
-                                        <td class="text-center" nowrap="nowrap">22/02/2222</td>
-                                        <td class="text-center" nowrap="nowrap">SE</td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" style="overflow-x: auto">
+                                    <table class="table table-bordered table-hover table-checkable " id="partner_table">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" class="">S<br />T<br />T</th>
+                                                <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                                <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                                <th nowrap="nowrap" rowspan="2" class="text-center">Ngày kí kết</th>
+                                                <th nowrap="nowrap" rowspan="2" class="text-center">Phạm vi hợp tác</th>
+                                                <th rowspan="2" class="text-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center jus">Tên</th>
+                                                <th class="text-center">Quốc gia</th>
+                                                <th class="text-center">Lĩnh vực</th>
+                                                <th class="text-center">Website</th>
+                                                <th class="text-center">Họ và tên</th>
+                                                <th class="text-center">Điện thoại</th>
+                                                <th class="text-center">Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td class="text-center">Bunkyo University</td>
+                                                <td class="text-center">Japan</td>
+                                                <td class="text-center">IT</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center" nowrap="nowrap">Nguyễn Hoàng Sơn</td>
+                                                <td class="text-center">0977626800</td>
+                                                <td class="text-center">sonnhhe130366@fpt.edu.vn</td>
+                                                <td class="text-center" nowrap="nowrap">22/02/2222</td>
+                                                <td class="text-center" nowrap="nowrap">SE</td>
+                                                <td nowrap="nowrap"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
 
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
@@ -343,56 +350,62 @@
                                     DANH SÁCH BIÊN BẢN THỎA THUẬN
                                 </h4>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
                                     <div class="row align-items-center">
-                                        <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bolder">Thêm</a>
+                                        <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12 my-1">
+                                            <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                <div class="col-lg-11 col-xl-11 col-md-11 col-sm-11">
                                     <div class="row align-items-center justify-content-end">
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1 mr-3">
                                             <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                         </div>
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1 mr-3">
                                             <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_moa_id" />
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover table-checkable" id="moa_table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">STT</th>
-                                        <th class="text-center">Số hiệu</th>
-                                        <th class="text-center">Đối tác</th>
-                                        <th class="text-center">Bản mềm</th>
-                                        <th class="text-center">Ngày kí kết</th>
-                                        <th class="text-center">Ngày hết hạn</th>
-                                        <th class="text-center">Đơn vị - Cơ sở triển khai</th>
-                                        <th class="text-center">Phạm vi hợp tác</th>
-                                        <th class="text-center">Trạng thái</th>
-                                        <th class="text-center"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center"><a href="/MOA/Detail_MOA">2020/01_MOA/01</a></td>
-                                        <td class="text-center">Bunkyou University</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center" nowrap="nowrap">22/02/2222</td>
-                                        <td class="text-center" nowrap="nowrap">22/02/2223</td>
-                                        <td class="text-center" nowrap="nowrap">FGO</td>
-                                        <td class="text-center" nowrap="nowrap">SE, FE</td>
-                                        <td nowrap="nowrap">1</td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" >
+                                    <table class="table table-bordered table-hover table-checkable" id="moa_table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th class="text-center">Số hiệu</th>
+                                                <th class="text-center">Đối tác</th>
+                                                <th class="text-center">Bản mềm</th>
+                                                <th class="text-center">Ngày kí kết</th>
+                                                <th class="text-center">Ngày hết hạn</th>
+                                                <th class="text-center">Đơn vị - Cơ sở triển khai</th>
+                                                <th class="text-center">Phạm vi hợp tác</th>
+                                                <th class="text-center">Trạng thái</th>
+                                                <th class="text-center"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td class="text-center"><a href="/MOA/Detail_MOA">2020/01_MOA/01</a></td>
+                                                <td class="text-center">Bunkyou University</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center" nowrap="nowrap">22/02/2222</td>
+                                                <td class="text-center" nowrap="nowrap">22/02/2223</td>
+                                                <td class="text-center" nowrap="nowrap">FGO</td>
+                                                <td class="text-center" nowrap="nowrap">SE, FE</td>
+                                                <td nowrap="nowrap">1</td>
+                                                <td nowrap="nowrap"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -977,8 +990,6 @@
         $(document).ready(function () {
             //split card
             //overflow
-            $('#partner_table').parent().css('overflow-x', 'auto');
-            $('#partner_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
 
@@ -1039,14 +1050,23 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
                         return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
                             + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary update_partner_mou px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
                     }
+                },
+                {
+                    targets: [-1, 0, 2, 3, 4, 9],
+                    className: 'text-center',
+                },
+                {
+                    targets: [-1, ],
+                    className: 'text-nowrap',
                 }
+
             ]
         })
 
@@ -1093,11 +1113,11 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick="" href="#" data-toggle="modal" class="btn btn-sm btn-light-primary" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
+                        return '<a onclick="" href="#" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
                     }
                 }
             ]
@@ -1168,26 +1188,6 @@
             });
         };
 
-    </script>
-    @*date-picker*@
-    <script>
-        //var KTBootstrapDatetimepicker = function () {
-        //    var baseDemos = function () {
-        //        $('.kt_datetimepicker_3').datetimepicker({
-        //            format: 'DD/MM/yyyy'
-        //        });
-        //    }
-        //    return {
-        //        // Public functions
-        //        init: function () {
-        //            baseDemos();
-        //        }
-        //    };
-        //}();
-
-        //jQuery(document).ready(function () {
-        //    KTBootstrapDatetimepicker.init();
-        //});
     </script>
     @*dropdown list*@
     <script>
@@ -1565,8 +1565,7 @@
                     type: "POST",
                     datatype: "json",
                     cache: "false"
-                }
-                ,
+                },
             columns: [
                 { data: "mou_bonus_code" },
                 { data: "mou_bonus_decision_date_string" },
@@ -1584,24 +1583,20 @@
                     }
                 },
                 {
-                    title: '',
+                    title: 'Hành động',
                     data: "mou_bonus_id",
                     orderable: false,
                     render: function (data) {
-                        return '<a href="#edit_additional_mou" onclick=editExMOU(' + data + ') data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
-                    }
-                },
-                {
-                    title: '',
-                    data: "mou_bonus_id",
-                    orderable: false,
-                    render: function (data) {
-                        var action = 'Delete_Mou';
-                        var controller = 'MOU';
-                        var id_to_catch_in_controller = 'mou_id';
-                        return '<a onclick="deleteExMOU(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        return '<a onclick=editExMOU(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 }
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
                 ]
             });
         }

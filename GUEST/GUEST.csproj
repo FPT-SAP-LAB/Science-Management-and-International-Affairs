@@ -213,6 +213,7 @@
     <Content Include="Content\assets\css\style.bundle.css" />
     <Content Include="Content\assets\css\style.bundle.min.css" />
     <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\js\bundle.js" />
     <Content Include="Content\assets\js\pages\builder.js" />
     <Content Include="Content\assets\js\pages\builder.min.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\column-rendering.js" />

@@ -110,5 +110,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             ViewBag.partnerList = partnerList;
             return View();
         }
+        public ActionResult PassDataToMOUDetail(int id)
+        {
+            try
+            {
+                mou_detail_id = id;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
     }
 }

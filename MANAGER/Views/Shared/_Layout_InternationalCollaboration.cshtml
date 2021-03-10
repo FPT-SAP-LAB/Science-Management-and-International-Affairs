@@ -2,7 +2,7 @@
 <html lang="en">
 <!--begin::Head-->
 <head>
-    <base href="../../../">
+    <base href="">
     <meta charset="utf-8" />
     <title> @ViewBag.Title | HỆ THỐNG QUẢN LÝ KHOA HỌC - HỢP TÁC QUỐC TẾ</title>
     <meta name="description"
@@ -120,8 +120,8 @@
                         <ul class="menu-nav">
 
                             <!--------------REPORTS-------------->
-                            <li class="menu-item " aria-haspopup="true">
-                                <a href="/Reports/Dashboard" class="menu-link ">
+                            <li class="menu-item">
+                                <a href="#" class="menu-link ">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -1242,14 +1242,11 @@
 
     <script src="~/Content/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js?v=7.2.2"></script>
 
-    @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.2.2",
-    "~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.2.2",
-    "~/Content/assets/js/scripts.bundle.js?v=7.2.2",
+    @Scripts.Render(
     "~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6",
     "~/Content/assets/js/pages/widgets.js?v=7.0.6",
-    "~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6"
-    //"~/Content/assets/js/pages/crud/forms/editors/ckeditor-document.js",
-    //"~/Content/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js?v=7.2.2"
+    "~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6",
+    "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"
     )
 
     @RenderSection("scripts")
