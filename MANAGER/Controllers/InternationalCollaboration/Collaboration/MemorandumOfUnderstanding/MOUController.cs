@@ -13,6 +13,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     {
         // GET: MOU
         private static MOURepo mou = new MOURepo();
+        private int? mou_detail_id;
 
         public ActionResult List()
         {
@@ -98,10 +99,22 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult Detail(string id)
+        public ActionResult Detail()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN GHI NHỚ";
             return View();
+        }
+        public ActionResult PassDataToMOUDetail(int id)
+        {
+            try
+            {
+                mou_detail_id = id;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
         }
     }
 }

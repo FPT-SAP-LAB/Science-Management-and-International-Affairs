@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
-    class BasicInfoMOURepo
+    public class BasicInfoMOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public MOUBasicInfo getBasicInfoMOU(int mou_id)
@@ -19,7 +20,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_mouBasicInfo =
                     @"select 
                         t1.mou_id,t1.mou_code,t2.office_abbreviation,t1.mou_end_date,
-                        t5.mou_status_name,t4.reason,t1.evidence,t1.mou_note
+                        t5.mou_status_name,t4.reason,t1.evidence,t1.mou_note,
+                        t1.office_id,t5.mou_status_id
                         from IA_Collaboration.MOU t1
                         inner join General.Office t2 on t1.office_id = t2.office_id
                         inner join
@@ -28,13 +30,17 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         group by mou_status_id, mou_id) t3 on t3.mou_id = t1.mou_id
                         inner join IA_Collaboration.MOUStatusHistory t4 on 
                         t4.datetime = t3.maxdate and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
-                        inner join iA_Collaboration.MOUStatus t5 on
+                        inner join IA_Collaboration.CollaborationStatus t5 on
                         t5.mou_status_id = t3.mou_status_id
                         where t1.mou_id = @mou_id ";
                 string sql_mouStartDateAndScopes =
                     @"select t2.*,t3.mou_start_date from
                         (select mou_id, STRING_AGG(scope_abbreviation,', ') as scopes from
-                        (select distinct mou_id,scope_abbreviation from IA_Collaboration.MOUPartnerScope tb1a
+                        (select distinct mou_id,scope_abbreviation from 
+                        (select mou_id,partner_id, scope_id
+                        from IA_Collaboration.MOUPartnerScope t1a left join 
+                        IA_Collaboration.PartnerScope t2a 
+                        on t2a.partner_scope_id = t1a.partner_scope_id) tb1a
                         left join IA_MasterData.CollaborationScope tb1b on
                         tb1a.scope_id = tb1b.scope_id
                         where mou_id = @mou_id) t1
@@ -64,19 +70,24 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             basicInfo.mou_start_date_string = dateAndScopes.mou_start_date.ToString("dd'/'MM'/'yyyy");
             basicInfo.scopes = dateAndScopes.scopes;
         }
-        public List<ExtraMOU> listAllExtraMOU()
+        public List<ExtraMOU> listAllExtraMOU(int mou_id)
         {
             try
             {
                 string sql_mouExList =
                     @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,t1.mou_bonus_end_date,
-                        t3.partner_name,t4.scope_abbreviation,t1.evidence,t1.mou_id
+                        t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
                         t1.mou_bonus_id = t2.mou_bonus_id inner join 
-                        IA_Collaboration.Partner t3 on t3.partner_id = t2.partner_id
-                        inner join IA_MasterData.CollaborationScope t4 on t4.scope_id = t2.scope_id";
-                List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList).ToList();
+                        IA_Collaboration.PartnerScope t3 on
+                        t3.partner_scope_id = t2.partner_scope_id
+                        inner join 
+                        IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
+                        inner join IA_MasterData.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        where t1.mou_id = @mou_id";
+                List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
+                    new SqlParameter("mou_id", mou_id)).ToList();
                 handlingExMOUListData(mouExList);
                 return mouExList;
             }
@@ -121,38 +132,24 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
-                    string sql_maxDate = @"select t2.* from
-                        (
-                        select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                        from IA_Collaboration.MOUStatusHistory 
-                        where mou_id = @mou_id
-                        group by mou_status_id, mou_id) t1 
-                        inner join IA_Collaboration.MOUStatusHistory t2
-                        on t2.mou_id = t1.mou_id and t2.mou_status_id = t1.mou_status_id";
+                    DateTime mou_end_date = DateTime.ParseExact(newBasicInfo.mou_end_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //update basicInfo
                     MOU mou = db.MOUs.Find(mou_id);
                     mou.mou_code = newBasicInfo.mou_code;
-                    mou.mou_end_date = newBasicInfo.mou_end_date;
+                    mou.mou_end_date = mou_end_date;
                     mou.mou_note = newBasicInfo.mou_note;
                     mou.evidence = newBasicInfo.evidence;
                     mou.office_id = newBasicInfo.office_id;
                     db.Entry(mou).State = EntityState.Modified;
+                    db.SaveChanges();
 
-                    MOUStatusHistory oldInfo = db.Database.SqlQuery<MOUStatusHistory>(sql_maxDate,
-                        new SqlParameter("mou_id", mou_id)).First();
-                    if (oldInfo.reason is null)
-                    {
-                        oldInfo.reason = "";
-                    }
-                    if (!(oldInfo.reason.Equals(newBasicInfo.reason) && oldInfo.mou_status_id == newBasicInfo.mou_status_id))
-                    {
-                        MOUStatusHistory m = new MOUStatusHistory();
-                        m.mou_status_id = newBasicInfo.mou_status_id;
-                        m.reason = newBasicInfo.reason;
-                        m.mou_id = newBasicInfo.mou_id;
-                        m.datetime = DateTime.Now;
-                        db.MOUStatusHistories.Add(m);
-                    }
+                    //update MOUStatusHistory
+                    MOUStatusHistory m = new MOUStatusHistory();
+                    m.mou_status_id = newBasicInfo.mou_status_id;
+                    m.reason = newBasicInfo.reason;
+                    m.mou_id = mou_id;
+                    m.datetime = DateTime.Now;
+                    db.MOUStatusHistories.Add(m);
                     db.SaveChanges();
                     transaction.Commit();
                 }
@@ -421,6 +418,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         public class ExtraMOU
         {
             public string mou_bonus_code { get; set; }
+            public int mou_bonus_id { get; set; }
             public string mou_bonus_decision_date_string { get; set; }
             public string mou_bonus_end_date_string { get; set; }
             public DateTime mou_bonus_end_date { get; set; }
