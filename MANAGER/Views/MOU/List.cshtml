@@ -156,13 +156,13 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div class="row mb-5">
-                            <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12">
-                                <div class="row align-items-center my-2">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-1">
                                         <a href="#add_mou_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-1">
                                         <div class="dropdown dropdown-inline ml-2">
                                             <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true"
@@ -192,18 +192,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12">
-                                <div class="row align-items-center my-2" @*style=" margin-right: -78px; "*@>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-1">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-1">
                                         <input type="text" class="form-control text-center" placeholder="Tên người đại diện" id="search_contact_point_name" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-1">
                                         <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 my-1">
                                         <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
                                     </div>
                                 </div>
@@ -215,9 +215,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                                <table class="table table-bordered table-hover table-checkable mou_table"
-                                       id="">
+                            <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" style="overflow-x: auto">
+                                <table class="table table-bordered table-hover table-checkable mou_table" id="">
                                     <thead>
                                         <tr>
                                             <th rowspan="2" class="">S<br />T<br />T</th>
@@ -245,7 +244,6 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -368,18 +366,22 @@
                 </div>
                 <table class="table table-bordered table-hover table-checkable"
                        id="mou-partner-table">
-                    <tr>
-                        <th class="text-center" rowspan="2">STT</th>
-                        <th class="text-center" rowspan="2">Tên đối tác</th>
-                        <th class="text-center" colspan="3">Người đại diện</th>
-                        <th class="text-center" rowspan="2"></th>
-                        <th class="text-center" rowspan="2"></th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Họ và tên</th>
-                        <th class="text-center">Điện thoại</th>
-                        <th class="text-center">Email</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2">STT</th>
+                            <th class="text-center" rowspan="2">Tên đối tác</th>
+                            <th class="text-center" colspan="3">Người đại diện</th>
+                            <th class="text-center" rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Họ và tên</th>
+                            <th class="text-center">Điện thoại</th>
+                            <th class="text-center">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
             <div class="modal-footer">
@@ -405,10 +407,18 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
+            <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+        </div>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
-                            <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+                            <select class="form-control select-search" id="partner_name_add" name="param" list="officeList" style="width:100% !important">
+                                @foreach (var item in ViewBag.listPartners)
+                                {
+                                    <option value="@item.partner_name" >@item.partner_name</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -581,12 +591,12 @@
     </div>
 </div>
 
-<datalist id="partnerList">
+@*<datalist id="partnerList">
     @foreach (var item in ViewBag.listPartners)
     {
         <option>@item.partner_name</option>
     }
-</datalist>
+</datalist>*@
 
 
 @*toast alert*@
@@ -614,6 +624,7 @@
 
     @*toast*@
     <script>
+       
 
 
 
@@ -630,6 +641,8 @@
             if (duration < 30) {
                 $('.toast-30').fadeIn('slow');
             }
+
+           
         });
     </script>
 
@@ -655,21 +668,11 @@
         });
     </script>
 
-    @*fixing overflow*@
     <script>
         //overflow
         $(document).ready(function () {
-            $('.mou_table').parent().css('overflow-x', 'auto');
-            //$('.mou_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
 
-        });
-        $(document).ready(function () {
-            //split card
-            //overflow
-            $('#partner_table').parent().css('overflow-x', 'auto');
-            $('#partner_table thead tr th').css('font-weight', 'bold');
-            $('.header-modify').css('padding', '13px');
         });
     </script>
 
@@ -829,6 +832,12 @@
         $('#search_coso').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
+        });
+      
+        $('#partner_name_search').select2({
+            placeholder: 'Tên đối tác',
+            allowClear: true,
+            tags: true,
         });
 
         $('#partner_name').select2({
@@ -1014,11 +1023,10 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a href="./Detail" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-
         ],
         columnDefs: [
             {
@@ -1178,8 +1186,7 @@
             HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-            HTMLdata += '<td class="text-center">' + buttonEdit + '</td>';
-            HTMLdata += '<td class="text-center">' + buttonDel + '</td>';
+            HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel +'</td>';
             HTMLdata += '</tr>';
         }
         $('#mou-partner-table').append(HTMLdata);
@@ -1387,6 +1394,24 @@
             }
         });
     }
-    </script>
+
+    function goDetail(mou_id) {
+        var id = { id: mou_id };
+        $.ajax({
+            url: "@Url.Action("PassDataToMOUDetail", "BasicInfoMOU")",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(id),
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+                window.location.href = './MOU/Detail';
+            },
+            error: function () {
+                
+            }
+        });
+    }
+</script>
 }
 

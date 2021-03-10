@@ -189,6 +189,8 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_JournalPaper.cs" />
     <Compile Include="CustomProfile.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

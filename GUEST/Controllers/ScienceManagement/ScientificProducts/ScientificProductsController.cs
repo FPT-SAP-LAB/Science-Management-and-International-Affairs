@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.ScienceManagement.ScientificProduct;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +11,7 @@ namespace GUEST.Controllers.ScientificProducts
 {
     public class ScientificProductsController : Controller
     {
+        ListProductRepo lpr = new ListProductRepo();
         // GET: ScientificProducts
         public ActionResult Index()
         {
@@ -18,6 +21,10 @@ namespace GUEST.Controllers.ScientificProducts
                 new PageTree("Sản phẩm khoa học","/ScientificProducts"),
             };
             ViewBag.pagesTree = pagesTree;
+            List<ListProduct_JournalPaper> list = lpr.getList();
+            ViewBag.listJournal = list;
+            List<ListProduct_ConferencePaper> list2 = lpr.getList2();
+            ViewBag.listConferen = list2;
             return View();
         }
 
