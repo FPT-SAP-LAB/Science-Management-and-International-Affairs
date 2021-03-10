@@ -161,7 +161,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public ExMOUAdd getExtraMOUDetail(int mou_bonus_id,int mou_id)
+        public ExMOUAdd getExtraMOUDetail(int mou_bonus_id, int mou_id)
         {
             try
             {
@@ -205,7 +205,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     obj.partner_id = item.partner_id;
                     obj.scopes_id.Add(item.scope_id);
                     newObj.PartnerScopeInfo.Add(obj);
-                } else
+                }
+                else
                 {
                     p.scopes_id.Add(item.scope_id);
                 }
@@ -213,7 +214,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             return newObj;
         }
 
-        public void addExtraMOU(ExMOUAdd input,int mou_id)
+        public void addExtraMOU(ExMOUAdd input, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -233,12 +234,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
                     MOUBonu addObj = db.MOUBonus.Where(x => x.mou_bonus_code.Equals(mb.mou_bonus_code)).First();
 
-                    foreach(PartnerScopeInfo partnerScopeItem in input.PartnerScopeInfo.ToList())
+                    foreach (PartnerScopeInfo partnerScopeItem in input.PartnerScopeInfo.ToList())
                     {
                         foreach (int scopeItem in partnerScopeItem.scopes_id.ToList())
                         {
-                            db.MOUPartnerScopes.Add(new MOUPartnerScope 
-                            { 
+                            db.MOUPartnerScopes.Add(new MOUPartnerScope
+                            {
                                 mou_id = mou_id,
                                 mou_bonus_id = addObj.mou_bonus_id
                             });
