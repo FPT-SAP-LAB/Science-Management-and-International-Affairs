@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\PartialViewController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\PolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2365,6 +2366,7 @@
     <Content Include="Views\Partner\Partner_Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
+    <Content Include="Views\Policy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
