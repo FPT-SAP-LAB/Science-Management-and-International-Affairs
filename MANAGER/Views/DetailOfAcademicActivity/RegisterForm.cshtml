@@ -117,17 +117,17 @@
                 </div>
                 <div id="answer-control-0" class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                     @*<div class="form-group row">
-                        <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                            <div class="input-group date kt_datetimepicker_3" id="date-0" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" placeholder="Ngày, tháng, năm" data-target="#date-0" autocomplete="off" id="date-0" readonly />
-                                <div class="input-group-append" data-target="#date-0" data-toggle="datetimepicker">
-                                    <span class="input-group-text">
-                                        <i class="ki ki-calendar"></i>
-                                    </span>
+                            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                                <div class="input-group date kt_datetimepicker_3" id="date-0" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Ngày, tháng, năm" data-target="#date-0" autocomplete="off" id="date-0" readonly />
+                                    <div class="input-group-append" data-target="#date-0" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>*@
+                        </div>*@
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 pl-0">
                         <input type="text" class="form-control" placeholder="Câu trả lời ngắn" />
                     </div>
@@ -157,6 +157,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+        <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right" id="btn_save_form">Xác nhận</button>
     </div>
 </div>
 
@@ -501,6 +504,28 @@
                 }
             };
         }();
+        $('#btn_save_form').click(function () {
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn lưu đơn đăng kí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã lưu thành công.",
+                        "success"
+                    )
+                    setTimeout(function () {
+                        window.close();
+                    }, 2000);
+                }
+            });
+        });
         $(document).ready(function () {
             $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
             arrCMD = createArrMultiDimensional(2, 100);
