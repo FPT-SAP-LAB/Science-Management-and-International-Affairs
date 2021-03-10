@@ -127,9 +127,8 @@
                             <option value="CN">Tiếng Trung</option>
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 mt-5">
-                        <div id="kt-ckeditor-main-content-toolbar"></div>
-                        <div id="kt-ckeditor-main-content"></div>
+                    <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
+                        <div id="editor-main-content" class="summernote"></div>
                     </div>
                     <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
                     </div>
@@ -1962,26 +1961,7 @@
                 }
             };
         }();
-        var KTCkeditorDocument = function () {
-            // Private functions
-            var demos = function (content, toolbar) {
-                DecoupledEditor
-                    .create(document.querySelector(content))
-                    .then(editor => {
-                        const toolbarContainer = document.querySelector(toolbar);
-                        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-            return {
-                // public functions
-                init: function () {
-                    demos('#kt-ckeditor-main-content', '#kt-ckeditor-main-content-toolbar');
-                }
-            };
-        }();
+
         $('#add_name_phamvihoptac').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true
@@ -2088,7 +2068,27 @@
             $('#add_control_btn').hide();
             $('#add_control_price').hide();
             KTBootstrapDatetimepicker.init();
-            KTCkeditorDocument.init();
+        });
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
         });
     </script>
 }
