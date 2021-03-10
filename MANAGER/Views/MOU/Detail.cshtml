@@ -136,15 +136,13 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                                     <label style="color:red">*</label><label class="font-weight-bolder">Số hiệu</label>&nbsp;
                                     <label style="font-style: italic;">(Năm/Số thứ tự)</label>
-                                    <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="id" />
+                                    <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="mou_code" />
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                                     <label style="color:red">*</label><label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
                                     <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                        <select class="form-control select-search" id="facility" name="param" style="width:100% !important">
-                                            <option label="Label"></option>
-                                            <option value="1">FPTU-HN</option>
-                                            <option value="2">FPTGW</option>
+                                        <select class="form-control select-search" id="office" name="param" style="width:100% !important">
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -181,13 +179,12 @@
                                     <label style="color:red">*</label>
                                     <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                                     <select class="form-control" required id="status">
-                                        <option value="0">Inactive</option>
-                                        <option value="1">Active</option>
+
                                     </select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-8 col-sm-8">
                                     <label class="font-weight-bolder">Ghi chú</label>&nbsp;
-                                    <input class="form-control" type="text" placeholder="Ghi chú" autocomplete="off" required id="note" />
+                                    <input class="form-control" type="text" placeholder="Ghi chú" autocomplete="off" required id="reason" />
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -214,12 +211,12 @@
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Lưu ý</label>
-                                    <textarea id="attention" class="form-control" rows="6"></textarea>
+                                    <textarea id="mou_note" class="form-control" rows="6"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="#" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="#" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -232,8 +229,8 @@
                                     <a href="#add_additional_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover table-checkable "
-                                   id="collaboration_update_table">
+                            <table class="table table-bordered table-hover table-checkable ex_mou"
+                                   id="">
                                 <thead>
                                     <tr>
                                         <th>Mã hiệu</th>
@@ -242,11 +239,11 @@
                                         <th>Đối tác</th>
                                         <th>Phạm vi hợp tác</th>
                                         <th>Bản mềm</th>
-                                        <th></th>
+                                        <th colspan="2"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    @*<tr>
                                         <td class="text-center">
                                             2020/01_BS/01
                                         </td>
@@ -258,7 +255,7 @@
                                         <td class="text-center">JC</td>
                                         <td class="text-center"></td>
                                         <td class="text-center" nowrap="nowrap"></td>
-                                    </tr>
+                                    </tr>*@
                                 </tbody>
                             </table>
                         </div>
@@ -405,7 +402,6 @@
     </div>
 </div>
 
-
 @*modal update_modal_mou*@
 <div class="modal fade" id="add_additional_mou" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -506,9 +502,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 @*modal add-partner-scope*@
 <div class="modal fade in" id="add-partner-scope" aria-hidden="true">
@@ -843,6 +836,7 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
+    @*delete alert*@
     <script>
          //funtion delete
         function confirm_delete(id) {
@@ -877,11 +871,11 @@
                 }
             })
         };
-
     </script>
-    <script>
-            // datepicker functions
 
+    @*datatable*@
+    <script>
+        // datepicker functions
         $(document).ready(function () {
             //split card
             //overflow
@@ -899,7 +893,6 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-
             },
             searching: false,
             lengthChange: false,
@@ -1013,7 +1006,7 @@
         });
 
         //modal tab 2
-          function show_status_history(id){
+        function show_status_history(id){
             $.ajax({
                 url: '@Url.Action("Get_MOU_History", "PartnerMOU")',
                 data: { 'id': id },
@@ -1077,10 +1070,9 @@
             });
         };
 
-
-
-
     </script>
+
+    @*dropdown list*@
     <script>
         //jquery for dropdown
         $('#search_nation').select2({
@@ -1210,7 +1202,7 @@
             MultipleDropDownDemo.init();
         });
     </script>
-
+    @*wizard*@
     <script>
         var list = document.getElementsByClassName("progressbar")[0];
         itemList = list.getElementsByTagName("li");
@@ -1251,6 +1243,7 @@
         }
 
     </script>
+    @*upload file*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
         "use strict";
@@ -1363,5 +1356,178 @@
             KTUppy.init('moa_upload');
         });
 
+    </script>
+
+    <script>
+        var listStatus = [
+            {
+                status_id: 1,
+                status_name: 'Inactive'
+            }
+            ,
+            {
+                status_id: 2,
+                status_name: 'Active'
+            }
+        ]
+
+        $(document).ready(function () {
+            getListOffice();
+            loadListExMOU();
+        });
+
+        function getListOffice(){
+            $.ajax({
+                url: "@Url.Action("getOffice", "BasicInfoMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    var listOffice = data;
+                    loadBasicInfo(listOffice);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function loadBasicInfo(listOffice) {
+            $.ajax({
+                url: "@Url.Action("getBasicInfo", "BasicInfoMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    document.getElementById("mou_code").value = data.mou_code == null ? "" : data.mou_code;
+                    document.getElementById("sign_date_mou").value = data.mou_start_date_string == null ? "" : data.mou_start_date_string;
+                    document.getElementById("end_date_mou").value = data.mou_end_date_string == null ? "" : data.mou_end_date_string;
+                    document.getElementById("reason").value = data.reason == null ? "" : data.reason;
+                    document.getElementById("coop_scope").value = data.scopes == null ? "" : data.scopes;
+                    document.getElementById("mou_note").value = data.mou_note == null ? "" : data.mou_note;
+                    var OfficeData =
+                    {
+                        office_id: data.office_id,
+                        office_abbreviation: data.office_abbreviation
+                    };
+                    loadOffice(listOffice, OfficeData);
+                    loadStatus(data.mou_status_id);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function loadListExMOU() {
+            var mou_ex = $(".ex_mou").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            searching: false,
+            lengthChange: false,
+            ajax: {
+                    url: "@Url.Action("ViewExMOU", "BasicInfoMOU")",
+                    type: "POST",
+                    datatype: "json",
+                    cache: "false"
+                }
+                ,
+            columns: [
+                { data: "mou_bonus_code" },
+                { data: "mou_bonus_decision_date_string" },
+                { data: "mou_bonus_end_date_string" },
+                { data: "partner_name" },
+                { data: "scope_abbreviation" },
+                //{
+                //    data: "evidence",
+                //    render: function (data) {
+                //        if (data == null) {
+                //            return "";
+                //        } else {
+                //            return '<a target="blank" href="' + data + '" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
+                //        }
+                //    }
+                //},
+                { data: "mou_id" },
+                { data: "mou_id" },
+                { data: "mou_id" }
+                //{
+                //    title: '',
+                //    data: "mou_bonus_id",
+                //    orderable: false,
+                //    render: function (data) {
+                //        return '<a onclick=editExMOU(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>'
+                //    }
+                //}
+                //},
+                //{
+                //    title: '',
+                //    data: "mou_bonus_id",
+                //    orderable: false,
+                //    render: function (data) {
+                //        var action = 'Delete_Mou';
+                //        var controller = 'MOU';
+                //        var id_to_catch_in_controller = 'mou_id';
+                //        return '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                //    }
+                //}
+                ]
+            });
+        }
+
+        function loadOffice(listOffice, OfficeData) {
+            var HTMLOfficedata = "";
+            for (i = 0; i < listOffice.length; i++) {
+                if (listOffice[i].office_id == OfficeData.office_id) {
+                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '" selected>' + listOffice[i].office_abbreviation + '</option>'
+                } else {
+                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '">' + listOffice[i].office_abbreviation + '</option>'
+                }
+            }
+            $('#office').append(HTMLOfficedata);
+        }
+
+        function loadStatus(mou_status_id) {
+            var HTMLStatusData = "";
+            for (i = 0; i < listStatus.length; i++) {
+                if (listStatus[i].status_id == mou_status_id) {
+                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '" selected>' + listStatus[i].status_name + '</option>'
+                } else {
+                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '">' + listStatus[i].status_name + '</option>'
+                }
+            }
+            $('#status').append(HTMLStatusData);
+        }
+
+        function saveBasicInfo() {
+            var BasicInfo = {
+                mou_code: $('#mou_code').val(),
+                mou_end_date_string: $('#end_date_mou').val(),
+                office_id: $('#office').val(),
+                reason: $('#reason').val(),
+                mou_note: $('#mou_note').val(),
+                mou_status_id: $('#status').val()
+            };
+            $.ajax({
+                url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
+                type: "POST",
+                data: JSON.stringify(BasicInfo),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
     </script>
 }

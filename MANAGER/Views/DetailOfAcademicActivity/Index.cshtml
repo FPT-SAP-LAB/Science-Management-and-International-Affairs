@@ -169,6 +169,11 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+                        <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal_KinhPhi">Thêm đơn vị</a>
+                    </div>
+                </div>
                 <table id="KinhPhiDatatable" class="table table-bordered table-checkable">
                     <thead>
                         <tr class="text-center">
@@ -421,7 +426,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_5_2">
+                        <div class="uppy" id="kt_uppy_5">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -659,7 +664,7 @@
             <div class="modal-body pt-3 pb-0">
                 <div class="form-group row pb-0 mb-0">
                     <div class="col-md-12 col-xl-12 col-lg-12">
-                        <label class="font-weight-bolder">Giai đoạn</label>
+                        <label class="col-form-label font-weight-bolder">Giai đoạn</label>
                         <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" value="Sơ khảo" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
@@ -740,6 +745,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="KPDuTruModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -764,7 +770,7 @@
                                     <th>Số lượng</th>
                                     <th>Thành tiền</th>
                                     <th>Ghi chú</th>
-                                    <th></th>
+                                    <th nowrap="nowrap"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -780,10 +786,19 @@
                                 <tr>
                                     <td>2</td>
                                     <td>Hỗ trợ suất ăn cho giảng viên và sinh viên</td>
-                                    <td>30.000.000</td>
+                                    <td>4.000.000</td>
+                                    <td>27</td>
+                                    <td>108.000.000</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Giải thưởng phụ</td>
+                                    <td>2.000.000</td>
                                     <td>1</td>
-                                    <td>30.000.000</td>
-                                    <td>Truyền thông trong và ngoài FE</td>
+                                    <td>2.000.000</td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -793,12 +808,179 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_giaidoan">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDuTru">Xác nhận</button>
             </div>
         </div>
     </div>
 </div>
-<a href="@Url.Action()"></a>
+
+<div class="modal fade" id="editModal_KinhPhi" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa đơn vị</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Đơn vị</label>
+                        <select class="form-control" id="edit_donvi_kinhphi">
+                            <option selected value="FPTUHN">FPTU Hà Nội</option>
+                            <option value="FPTUDN">FPTU Đà Nẵng</option>
+                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="edit_ghichu_kinhphi" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kinhphi">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal_KinhPhi" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm đơn vị</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Đơn vị</label>
+                        <select class="form-control" id="add_donvi_kinhphi">
+                            <option selected value="FPTUHN">FPTU Hà Nội</option>
+                            <option value="FPTUDN">FPTU Đà Nẵng</option>
+                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="add_ghichu_kinhphi" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_kinhphi">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm kinh phí dự trù ban đầu</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDuTru" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
+                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="add_dongia_kpDuTru" />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="add_soluong_kpDuTru" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
+                        <input type="number" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDuTru" />
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="add_ghichu_kpDuTru" class="form-control"></textarea>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_5_2">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_kpDuTru">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa kinh phí dự trù ban đầu</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông"/>
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
+                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDuTru" value="30.000.000"/>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDuTru" value="1"/>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDuTru" value="30000000"/>
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="edit_ghichu_kpDuTru" class="form-control">Truyền thông trong và ngoài FE</textarea>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_5_3">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDuTru">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -922,6 +1104,54 @@
         function KPDuTru(id) {
             id_edit_KP = id;
             $('#KPDuTruModal').modal('show');
+        }
+        function editKinhPhi(id) {
+            id_edit_KP = id;
+            $('#editModal_KinhPhi').modal('show');
+        }
+        function deleteKinhPhi(id) {
+            id_delete_kinh_phi = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa kinh phí đơn vị này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
+        }
+        function deleteKinhPhiDuTru(id) {
+            id_delete_kinh_phi = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
+        }
+        function editKinhPhiDuTru(id) {
+            id_edit_KP = id;
+            $('#editModal_KPDuTru').modal('show');
         }
         $('#add_price_tucach').click(function () {
             if (document.getElementById('add_price_tucach').value == 'MP') {
@@ -1049,6 +1279,18 @@
                 },
             });
         });
+        $('#btn_edit_kinhphi').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
+        });
+        $('#btn_add_kinhphi').click(function () {
+            toastr.success("Đã thêm thành công");
+        });
+        $('#btn_add_kpDuTru').click(function () {
+            toastr.success("Đã thêm thành công");
+        });
+        $('#btn_edit_kpDuTru').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
+        });
         $("#GiaiDoanDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1170,6 +1412,61 @@
 
             ]
         });
+        $("#KinhPhiDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<div class="dropdown">' +
+                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
+                            '</div>' +
+                            '</div>'
+                    }
+                }
+            ]
+        });
+        $("#KPDuTruDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" class="btn btn-sm px-6 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                    }
+                }
+            ]
+        });
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({
@@ -1227,8 +1524,8 @@
             const Instagram = Uppy.Instagram;
             const Webcam = Uppy.Webcam;
 
-            var initUppy5 = function () {
-                var elemId = 'kt_uppy_5';
+            var initUppy5 = function (id) {
+                var elemId = id;
                 var id = '#' + elemId;
                 var $statusBar = $(id + ' .uppy-status');
                 var $uploadedList = $(id + ' .uppy-list');
@@ -1289,7 +1586,9 @@
             return {
                 // public functions
                 init: function () {
-                    initUppy5();
+                    initUppy5('kt_uppy_5_2');
+                    initUppy5('kt_uppy_5'); 
+                    initUppy5('kt_uppy_5_3');
                     setTimeout(function () {
                     }, 2000);
                 }

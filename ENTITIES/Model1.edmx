@@ -84,7 +84,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.General.AccountRigh
           </Key>
           <Property Name="file_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
-          <Property Name="link" Type="nvarchar" MaxLength="150" />
+          <Property Name="link" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="InternalUnit">
           <Key>
@@ -717,6 +717,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="paper_file_id" Type="int" Nullable="false" />
           <Property Name="editable" Type="bit" Nullable="false" />
           <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="date_request" Type="date" />
         </EntityType>
         <EntityType Name="Cost">
           <Key>
@@ -951,7 +952,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="valid_date" Type="date" Nullable="false" />
           <Property Name="expired_date" Type="date" />
-          <Property Name="file_id" Type="int" />
+          <Property Name="file_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -1005,7 +1006,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="link_scholar" Type="nvarchar(max)" />
           <Property Name="specialization_id" Type="int" />
           <Property Name="type" Type="nvarchar" MaxLength="150" />
-          <Property Name="journal_name" Type="nvarchar" MaxLength="150" />
+          <Property Name="journal_name" Type="nvarchar(max)" />
           <Property Name="page" Type="nvarchar" MaxLength="150" />
           <Property Name="vol" Type="nvarchar" MaxLength="150" />
           <Property Name="company" Type="nvarchar" MaxLength="150" />
@@ -1013,6 +1014,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_type" Type="nvarchar" MaxLength="150" />
           <Property Name="status_id" Type="int" Nullable="false" />
           <Property Name="paper_type_id" Type="int" Nullable="false" />
+          <Property Name="date_request" Type="date" />
         </EntityType>
         <EntityType Name="PaperCriteria">
           <Key>
@@ -3122,7 +3124,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RewardPol__file___24E777C3">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="File" Type="Self.File" Multiplicity="1" />
           <End Role="RewardPolicy" Type="Self.RewardPolicy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="File">
@@ -4253,7 +4255,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="file_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
           <NavigationProperty Name="People" Relationship="Self.FK__People__evidence__251C81ED" FromRole="File" ToRole="People" />
@@ -5059,6 +5061,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="paper_file_id" Type="Int32" Nullable="false" />
           <Property Name="editable" Type="Boolean" Nullable="false" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="date_request" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Conferenc__accou__047AA831" FromRole="ConferenceSupport" ToRole="Account" />
           <NavigationProperty Name="Conference" Relationship="Self.FK__Conferenc__confe__5E54FF49" FromRole="ConferenceSupport" ToRole="Conference" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__confe__11D4A34F" FromRole="ConferenceSupport" ToRole="ConferenceParticipant" />
@@ -5295,7 +5298,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="expired_date" Type="DateTime" Precision="0" />
-          <Property Name="file_id" Type="Int32" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="File" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="RewardPolicy" ToRole="File" />
           <NavigationProperty Name="ConferenceSupports" Relationship="Self.FK__Conferenc__rewar__178D7CA5" FromRole="RewardPolicy" ToRole="ConferenceSupport" />
           <NavigationProperty Name="Criteria" Relationship="Self.FK__Criteria__reward__1A69E950" FromRole="RewardPolicy" ToRole="Criteria" />
@@ -5362,7 +5365,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="link_scholar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="specialization_id" Type="Int32" />
           <Property Name="type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="journal_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="journal_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="page" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="vol" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="company" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -5370,6 +5373,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="reward_type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
           <Property Name="paper_type_id" Type="Int32" Nullable="false" />
+          <Property Name="date_request" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Specialization" Relationship="Self.FK__Paper__specializ__2D7CBDC4" FromRole="Paper" ToRole="Specialization" />
           <NavigationProperty Name="PaperType" Relationship="Self.FK__Paper__paper_typ__2C88998B" FromRole="Paper" ToRole="PaperType" />
           <NavigationProperty Name="AuthorPapers" Relationship="Self.FK__AuthorPap__paper__27C3E46E" FromRole="Paper" ToRole="AuthorPaper" />
@@ -5838,7 +5842,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RewardPol__file___24E777C3">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="File" Type="Self.File" Multiplicity="1" />
           <End Role="RewardPolicy" Type="Self.RewardPolicy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="File">
@@ -8983,6 +8987,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="paper_file_id" ColumnName="paper_file_id" />
                 <ScalarProperty Name="editable" ColumnName="editable" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="date_request" ColumnName="date_request" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9252,6 +9257,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="reward_type" ColumnName="reward_type" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
                 <ScalarProperty Name="paper_type_id" ColumnName="paper_type_id" />
+                <ScalarProperty Name="date_request" ColumnName="date_request" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -405,7 +405,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                             <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
@@ -1014,11 +1014,10 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a href="./Detail" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-
         ],
         columnDefs: [
             {
@@ -1387,6 +1386,24 @@
             }
         });
     }
-    </script>
+
+    function goDetail(mou_id) {
+        var id = { id: mou_id };
+        $.ajax({
+            url: "@Url.Action("PassDataToMOUDetail", "BasicInfoMOU")",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(id),
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+                window.location.href = './Detail';
+            },
+            error: function () {
+                
+            }
+        });
+    }
+</script>
 }
 
