@@ -124,8 +124,8 @@
                         </select>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
-                        <div id="kt-ckeditor-3-toolbar"></div>
-                        <div id="kt-ckeditor-3">
+                        <div id="kt-ckeditor-main-content-toolbar"></div>
+                        <div id="kt-ckeditor-main-content">
 
                         </div>
                     </div>
@@ -282,7 +282,7 @@
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Tên đơn vị</label>
                         <div class="d-flex align-items-center">
-                            <select class="form-control" id="add_name_donvi" style="width: 100% !important">
+                            <select class="form-control" id="add_donvi_DongToChuc" style="width: 100% !important">
                                 <option label="Label"></option>
                                 <option value="1">Fsoft</option>
                                 <option value="2">UTP</option>
@@ -293,25 +293,14 @@
                     <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
                         <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
-                        <label class="font-weight-bolder">Nguồn tài trợ</label>
-                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="add_name_taitro" />
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
-                        <label class="font-weight-bolder">Đơn vị tiền tệ</label>
-                        <div class="d-flex align-items-center">
-                            <select class="form-control" id="add_name_donvitiente" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option value="VND">Đồng</option>
-                                <option value="USD">Dollar</option>
-                                <option value="Yuan">Yuan</option>
-                            </select>
-                        </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                        <label class="font-weight-bolder">Nguồn tài trợ (VNĐ)</label>
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="add_taitro_DongToChuc" />
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center">
-                            <select class="form-control" id="add_name_phamvihoptac" style="width: 100% !important">
+                            <select class="form-control" id="add_phamvihoptac_DongToChuc" style="width: 100% !important">
                                 <option label="Label"></option>
                                 <option value="1">Joint Conferences</option>
                                 <option value="2">Support event</option>
@@ -320,7 +309,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_5">
+                        <div class="uppy" id="add_banmem_DongToChuc">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -332,9 +321,9 @@
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_lienhe" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_lienhe" autocomplete="off" id="add_from_lienhe" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from_lienhe" data-toggle="datetimepicker">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_DongToChuc" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_DongToChuc" autocomplete="off" id="add_from_DongToChuc" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
                                         </span>
@@ -347,9 +336,9 @@
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_lienhe" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_lienhe" autocomplete="off" id="add_to_lienhe" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to_lienhe" data-toggle="datetimepicker">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_DongToChuc" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_DongToChuc" autocomplete="off" id="add_to_DongToChuc" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
                                         </span>
@@ -360,15 +349,15 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="add_name_daumoi" />
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="add_email_daumoi" />
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="add_phone_daumoi" />
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="add_name_DongToChuc" />
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="add_email_DongToChuc" />
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="add_phone_DongToChuc" />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_dongtochuc">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -388,7 +377,7 @@
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
                         <label class="font-weight-bolder">Tên đơn vị</label>
                         <div class="d-flex align-items-center">
-                            <select class="form-control" id="edit_name_donvi" style="width: 100% !important">
+                            <select class="form-control" id="edit_donvi_DongToChuc" style="width: 100% !important">
                                 <option label="Label"></option>
                                 <option selected value="1">Fsoft</option>
                                 <option value="2">UTP</option>
@@ -399,25 +388,14 @@
                     <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
                         <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
-                        <label class="font-weight-bolder">Nguồn tài trợ</label>
-                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_name_taitro" value="100000000" />
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
-                        <label class="font-weight-bolder">Đơn vị tiền tệ</label>
-                        <div class="d-flex align-items-center">
-                            <select class="form-control" id="edit_name_donvitiente" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option selected value="VND">Đồng</option>
-                                <option value="USD">Dollar</option>
-                                <option value="Yuan">Yuan</option>
-                            </select>
-                        </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                        <label class="font-weight-bolder">Nguồn tài trợ (VNĐ)</label>
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_taitro_DongToChuc" value="100000000" />
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center">
-                            <select class="form-control" id="edit_name_phamvihoptac" style="width: 100% !important">
+                            <select class="form-control" id="edit_phamvihoptac_DongToChuc" style="width: 100% !important">
                                 <option label="Label"></option>
                                 <option selected value="1">Joint Conferences</option>
                                 <option value="2">Support event</option>
@@ -426,7 +404,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_5">
+                        <div class="uppy" id="edit_banmem_DongToChuc">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -438,9 +416,9 @@
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_lienhe" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_lienhe" autocomplete="off" id="edit_from_lienhe" value="15/02/2021" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_lienhe" data-toggle="datetimepicker">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_DongToChuc" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_DongToChuc" autocomplete="off" id="edit_from_DongToChuc" value="15/02/2021" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
                                         </span>
@@ -453,9 +431,9 @@
                         <label class="col-form-label font-weight-bolder">đến</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_lienhe" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_lienhe" autocomplete="off" id="edit_to_lienhe" value="22/02/2021" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_lienhe" data-toggle="datetimepicker">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_DongToChuc" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_DongToChuc" autocomplete="off" id="edit_to_DongToChuc" value="22/02/2021" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
                                         </span>
@@ -466,15 +444,15 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_daumoi" value="Hấu Nguyễn" />
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_daumoi" value="default@gmail.com" />
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_daumoi" value="0929232929" />
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_DongToChuc" value="Hấu Nguyễn" />
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_DongToChuc" value="default@gmail.com" />
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_DongToChuc" value="0929232929" />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_dong_to_chuc">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -547,7 +525,7 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-md-12 col-xl-12 col-lg-12">
-                        <label class="font-weight-bolder">Tư cách tham gia</label>
+                        <label class="col-form-label font-weight-bolder">Tư cách tham gia</label>
                         <input class="form-control" type="text" placeholder="Tư cách tham gia" autocomplete="off" id="add_name_tucach" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
@@ -587,7 +565,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
-                        <label class="font-weight-bolder">Chi phí</label>
+                        <label class="col-form-label font-weight-bolder">Chi phí</label>
                         <select class="form-control" id="add_price_tucach">
                             <option value="MP">Miễn phí</option>
                             <option value="CP">Có phí</option>
@@ -595,7 +573,7 @@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <div id="add_control_price">
-                            <label class="font-weight-bolder">Mức giá</label>
+                            <label class="col-form-label font-weight-bolder">Mức giá</label>
                             <input type="number" class="form-control" placeholder="Mức giá" autocomplete="off" id="add_cost_tucach" />
                         </div>
                     </div>
@@ -622,12 +600,44 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-md-12 col-xl-12 col-lg-12">
-                        <label class="font-weight-bolder">Tư cách tham gia</label>
+                        <label class="col-form-label font-weight-bolder">Tư cách tham gia</label>
                         <input class="form-control" type="text" placeholder="Tư cách tham gia" autocomplete="off" id="edit_name_tucach" value="Người tham dự" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <label class="col-form-label col-form-label font-weight-bolder">Số lượng</label>
                         <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_quantity_tucach" value="30" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="checkbox pt-15 ">
+                            <input type="checkbox" id="edit_donvi_tucach" />
+                            <span class="mr-3"></span>
+                            Đơn vị cơ sở
+                        </label>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <div id="edit_control_title">
+                            <div class="row">
+                                <div class="col-md-6 col-xl-6 col-lg-6">
+                                    <label class="col-form-label font-weight-bolder">Đơn vị cơ sở</label>
+                                </div>
+                                <div class="col-md-5 col-xl-5 col-lg-5">
+                                    <label class="col-form-label font-weight-bolder">Số lượng</label>
+                                </div>
+                                <div class="col-md-1 col-xl-1 col-lg-1">
+                                    <label class="col-form-label font-weight-bolder"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="edit_control">
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12 pb-3">
+                        <div id="edit_control_btn">
+                            <a href="#" class="btn-sm btn btn-primary" onclick="bonusRowEdit()">
+                                <i class="fas fa-plus" style="color: #ffffff;"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Chi phí</label>
@@ -638,7 +648,7 @@
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <div id="add_control_price">
-                            <label class="font-weight-bolder">Mức giá</label>
+                            <label class="col-form-label font-weight-bolder">Mức giá</label>
                             <input type="number" class="form-control" placeholder="Mức giá" autocomplete="off" disabled id="edit_cost_tucach" />
                         </div>
                     </div>
@@ -747,7 +757,7 @@
 </div>
 
 <div class="modal fade" id="KPDuTruModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Giải trình kinh phí dự trù ban đầu</h3>
@@ -770,7 +780,7 @@
                                     <th>Số lượng</th>
                                     <th>Thành tiền</th>
                                     <th>Ghi chú</th>
-                                    <th nowrap="nowrap"></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -808,7 +818,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDuTru">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -892,7 +901,7 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDuTru" />
+                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Đơn giá</label>
@@ -912,7 +921,7 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_5_2">
+                        <div class="uppy" id="add_banmem_kpDuTru">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -943,7 +952,7 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông" />
+                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Đơn giá</label>
@@ -963,7 +972,7 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_5_3">
+                        <div class="uppy" id="edit_banmem_kpDuTru">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -976,6 +985,309 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDuTru">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="KPDieuChinhModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Giải trình kinh phí điều chỉnh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-md-6 col-xl-6 col-lg-6 my-3">
+                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_KPDieuChinh">Thêm nội dung</a>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="KPDieuChinhDatatable" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr class="text-center">
+                                    <th rowspan="2">STT</th>
+                                    <th rowspan="2">Nội dung</th>
+                                    <th colspan="3">Kinh phí dự trù ban đầu</th>
+                                    <th colspan="3">Kinh phí dự trù điều chỉnh</th>
+                                    <th rowspan="2">Ghi chú</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Truyền thông</td>
+                                    <td>30.000.000</td>
+                                    <td>1</td>
+                                    <td>30.000.000</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng</td>
+                                    <td>4.000.000</td>
+                                    <td>27</td>
+                                    <td>108.000.000</td>
+                                    <td>4.000.000</td>
+                                    <td>28</td>
+                                    <td>112.000.000</td>
+                                    <td>Thêm đội từ phía sinh viên</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal_KPDieuChinh" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa kinh phí điều chỉnh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDieuChinh" value="Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
+                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDieuChinh" value="30.000.000" />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDieuChinh" value="28" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDieuChinh" value="112.000.000" />
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="edit_ghichu_kpDieuChinh" class="form-control">Thêm đội từ phía sinh viên</textarea>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="edit_banmem_kpDieuChinh">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDieuChinh">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal_KPDieuChinh" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm kinh phí điều chỉnh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDieuChinh" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" id="add_dongia_kpDieuChinh" />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="add_soluong_kpDieuChinh" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
+                        <input type="number" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDieuChinh" />
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="add_ghichu_kpDieuChinh" class="form-control"></textarea>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="add_banmem_kpDieuChinh">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_kpDieuChinh">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="KPThucTeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Giải trình kinh phí thực tế</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="KPThucTeDatatable" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr class="text-center">
+                                    <th rowspan="2">STT</th>
+                                    <th rowspan="2">Nội dung</th>
+                                    <th colspan="3">Kinh phí dự trù lần cuối</th>
+                                    <th colspan="3">Kinh phí thực tế</th>
+                                    <th rowspan="2">Ghi chú</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Truyền thông</td>
+                                    <td>30.000.000</td>
+                                    <td>1</td>
+                                    <td>30.000.000</td>
+                                    <td>30.000.000</td>
+                                    <td>1</td>
+                                    <td>30.000.000</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng</td>
+                                    <td>4.000.000</td>
+                                    <td>27</td>
+                                    <td>108.000.000</td>
+                                    <td>4.000.000</td>
+                                    <td>26</td>
+                                    <td>104.000.000</td>
+                                    <td>Thêm đội từ phía sinh viên</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Giải thưởng phụ</td>
+                                    <td>2.000.000</td>
+                                    <td>1</td>
+                                    <td>2.000.000</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal_KPThucTe" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa kinh phí thực tế</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpThucTe" value="Truyền thông" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
+                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpThucTe" value="30.000.000" />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Số lượng</label>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpThucTe" value="1" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpThucTe" value="30.000.000" />
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="edit_ghichu_kpThucTe" class="form-control"></textarea>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="edit_banmem_kpThucTe">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpThucTe">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1008,6 +1320,10 @@
         let arrDonVi = []
         let numberOfIndexDonvi = 0;
 
+        let arrIndexDonviEdit = []
+        let arrDonViEdit = []
+        let numberOfIndexDonviEdit = 0;
+
         function bonusRow() {
             arrIndexDonvi.push(numberOfIndexDonvi);
             $('#add_control').append("<div class=\"row customrow\" id=\"row-" + numberOfIndexDonvi + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + numberOfIndexDonvi + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
@@ -1017,6 +1333,17 @@
 
         function removeRow(id) {
             $('#row-' + id).remove();
+            // remove bỏ id trong arrIndexDonvi
+        }
+        function bonusRowEdit() {
+            arrIndexDonviEdit.push(numberOfIndexDonviEdit);
+            $('#edit_control').append("<div class=\"row customrow\" id=\"rowedit-" + numberOfIndexDonviEdit + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso_eidt" + numberOfIndexDonviEdit + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
+                "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"number\" id=\"amountedit-" + numberOfIndexDonviEdit + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\"><a href=\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRowEdit(" + numberOfIndexDonviEdit + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;\"></i></a></div></div>");
+            numberOfIndexDonviEdit = numberOfIndexDonviEdit + 1;
+        }
+
+        function removeRowEdit(id) {
+            $('#rowedit-' + id).remove();
             // remove bỏ id trong arrIndexDonvi
         }
         function getContactInfo() {
@@ -1056,6 +1383,8 @@
         function editTuCach(id) {
             id_edit_tu_cach = id;
             $('#editModal_Tucach').modal('show');
+            $('#edit_control_title').hide();
+            $('#edit_control_btn').hide();
         }
         function deleteTuCach(id) {
             id_delete_tu_cach = id;
@@ -1110,7 +1439,7 @@
             $('#editModal_KinhPhi').modal('show');
         }
         function deleteKinhPhi(id) {
-            id_delete_kinh_phi = id;
+            id_delete_KP = id;
             Swal.fire({
                 title: "Bạn có muốn xóa kinh phí đơn vị này không ?",
                 text: "",
@@ -1130,7 +1459,7 @@
             });
         }
         function deleteKinhPhiDuTru(id) {
-            id_delete_kinh_phi = id;
+            id_delete_KP = id;
             Swal.fire({
                 title: "Bạn có muốn xóa nội dung kinh phí này không ?",
                 text: "",
@@ -1152,6 +1481,62 @@
         function editKinhPhiDuTru(id) {
             id_edit_KP = id;
             $('#editModal_KPDuTru').modal('show');
+        }
+        function KPDieuChinh(id) {
+            id_edit_KP = id;
+            $('#KPDieuChinhModal').modal('show');
+        }
+        function editKinhPhiDieuChinh(id) {
+            id_edit_KP = id;
+            $('#editModal_KPDieuChinh').modal('show');
+        }
+        function deleteKinhPhiDieuChinh(id) {
+            id_delete_KP = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
+        }
+        function KPThucTe(id) {
+            id_edit_KP = id;
+            $('#KPThucTeModal').modal('show');
+        }
+        function editKinhPhiThucTe(id) {
+            id_edit_KP = id;
+            $('#editModal_KPThucTe').modal('show');
+        }
+        function deleteKinhPhiThucTe(id) {
+            id_delete_KP = id;
+            Swal.fire({
+                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire(
+                        "",
+                        "Đã xóa thành công.",
+                        "success"
+                    )
+                }
+            });
         }
         $('#add_price_tucach').click(function () {
             if (document.getElementById('add_price_tucach').value == 'MP') {
@@ -1180,6 +1565,19 @@
                 $('#add_quantity_tucach').attr('readonly', false)
             }
         });
+        $('#edit_donvi_tucach').click(function () {
+            if ($(this).prop('checked')) {
+                $('#edit_control_title').show();
+                $('#edit_control_btn').show();
+                $('#edit_control').show();
+                $('#edit_quantity_tucach').attr('readonly', true)
+            } else {
+                $('#edit_control_title').hide();
+                $('#edit_control_btn').hide();
+                $('#edit_control').hide();
+                $('#edit_quantity_tucach').attr('readonly', false)
+            }
+        });
         $('#btn_add_giaidoan').click(function () {
             let object = {
                 id: 1,
@@ -1200,7 +1598,7 @@
             });
         });
 
-        $('#btn_add_dongtochuc').click(function () {
+        $('#btn_add_DongToChuc').click(function () {
             toastr.success("Thêm thành công");
             //let object = {
             //    name: document.getElementById('add_name_giaidoan').value,
@@ -1242,7 +1640,7 @@
         $('#btn_edit_tucach').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });
-        $('#btn_edit_dong_to_chuc').click(function () {
+        $('#btn_edit_DongToChuc').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });
 
@@ -1290,6 +1688,15 @@
             toastr.success("Đã thêm thành công");
         });
         $('#btn_edit_kpDuTru').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
+        });
+        $('#btn_add_kpDieuChinh').click(function () {
+            toastr.success("Đã thêm thành công");
+        });
+        $('#btn_edit_kpDieuChinh').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
+        });
+        $('#btn_edit_kpThucTe').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });
         $("#GiaiDoanDatatable").DataTable({
@@ -1340,6 +1747,10 @@
                     render: function (data, type, full, meta) {
                         return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
                     }
+                },
+                {
+                    className: "text-center",
+                    targets: [-1],
                 }
             ]
         });
@@ -1428,10 +1839,59 @@
             columnDefs: [
                 {
                     targets: -1,
+                    className: "text-nowrap text-center",
                     title: 'Hành động',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                    }
+                }
+            ]
+        });
+        $("#KPDieuChinhDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    className: "text-nowrap text-center",
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDieuChinh(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDieuChinh(1)">Xóa</a>'
+                    }
+                }
+            ]
+        });
+        $("#KPThucTeDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: -1,
+                    className: "text-nowrap text-center",
+                    title: 'Hành động',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiThucTe(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiThucTe(1)">Xóa</a>'
                     }
                 }
             ]
@@ -1452,9 +1912,9 @@
             // Private functions
             var demos = function () {
                 DecoupledEditor
-                    .create(document.querySelector('#kt-ckeditor-3'))
+                    .create(document.querySelector('#kt-ckeditor-main-content'))
                     .then(editor => {
-                        const toolbarContainer = document.querySelector('#kt-ckeditor-3-toolbar');
+                        const toolbarContainer = document.querySelector('#kt-ckeditor-main-content-toolbar');
                         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
                     })
                     .catch(error => {
@@ -1555,9 +2015,12 @@
             return {
                 // public functions
                 init: function () {
-                    initUppy5('kt_uppy_5_2');
-                    initUppy5('kt_uppy_5');
-                    initUppy5('kt_uppy_5_3');
+                    initUppy5('edit_banmem_DongToChuc');
+                    initUppy5('add_banmem_DongToChuc');
+                    initUppy5('add_banmem_kpDuTru');
+                    initUppy5('edit_banmem_kpDuTru');
+                    initUppy5('add_banmem_kpDieuChinh');
+                    initUppy5('edit_banmem_kpDieuChinh');
                     setTimeout(function () {
                     }, 2000);
                 }
