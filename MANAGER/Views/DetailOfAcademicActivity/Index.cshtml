@@ -23,6 +23,10 @@
     .modal {
         overflow-y: auto;
     }
+
+    .ck-content {
+        min-height: 60px !important;
+    }
 </style>
 <div class="card card-custom">
     <div class="card-header card-header-tabs-line">
@@ -125,6 +129,11 @@
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
                         <div id="editor-main-content" class="summernote"></div>
+                    </div>
+                    <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
+                        <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent('#subcontent-control')">Thêm</button>
                     </div>
                 </div>
             </div>
@@ -1295,6 +1304,7 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
+
         let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;
@@ -1321,6 +1331,52 @@
         let arrDonViEdit = []
         let numberOfIndexDonviEdit = 0;
 
+        let arrIndexContent = []
+        let arrContent = []
+        let numberOfIndexContent = 0;
+
+        function bonusRowContent(id) {
+            arrIndexContent.push(numberOfIndexContent);
+            $(id).append(
+                "<div id=\"row-ckeditor-" + numberOfIndexContent + "\" class=\"row\">" +
+                "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
+                "<input type=\"text\" class=\"form-control\" id=\"content-" + numberOfIndexContent + "\" />" +
+                "</div>" +
+                "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
+                "<div id=\"kt-ckeditor-main-content-toolbar-" + numberOfIndexContent + "\"></div>" +
+                "<div id=\"kt-ckeditor-main-content-" + numberOfIndexContent + "\"></div>" +
+                "</div>" +
+                "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
+                "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + numberOfIndexContent + ")\">Xóa</button>" +
+                "</div>" +
+                "</div>");
+            var KTCkeditorDocument = function () {
+                var demos = function () {
+                    DecoupledEditor
+                        .create(document.querySelector('#kt-ckeditor-main-content-' + numberOfIndexContent))
+                        .then(editor => {
+                            const toolbarContainer = document.querySelector('#kt-ckeditor-main-content-toolbar-' + numberOfIndexContent);
+                            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+                return {
+                    init: function () {
+                        demos();
+                    }
+                };
+            }();
+            KTCkeditorDocument.init();
+            numberOfIndexContent = numberOfIndexContent + 1;
+        }
+
+        function removeRowContent(id) {
+            $('#row-ckeditor-' + id).remove();
+            arrIndexContent = arrIndexContent.filter(function (e) { return e !== id });
+        }
+
         function bonusRow() {
             arrIndexDonvi.push(numberOfIndexDonvi);
             $('#add_control').append("<div class=\"row customrow\" id=\"row-" + numberOfIndexDonvi + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + numberOfIndexDonvi + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
@@ -1330,7 +1386,7 @@
 
         function removeRow(id) {
             $('#row-' + id).remove();
-            // remove bỏ id trong arrIndexDonvi
+            arrIndexDonvi = arrIndexDonvi.filter(function (e) { return e !== id });
         }
         function bonusRowEdit() {
             arrIndexDonviEdit.push(numberOfIndexDonviEdit);
@@ -1341,7 +1397,7 @@
 
         function removeRowEdit(id) {
             $('#rowedit-' + id).remove();
-            // remove bỏ id trong arrIndexDonvi
+            arrIndexDonviEdit = arrIndexDonviEdit.filter(function (e) { return e !== id });
         }
         function getContactInfo() {
             return;
@@ -1905,7 +1961,7 @@
                 }
             };
         }();
-        
+
         $('#add_name_phamvihoptac').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true
