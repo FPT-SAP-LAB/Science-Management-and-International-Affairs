@@ -127,7 +127,7 @@
                             <option value="CN">Tiếng Trung</option>
                         </select>
                     </div>
-                    <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
+                    <div class="col-md-12 col-xl-12">
                         <div id="editor-main-content" class="summernote"></div>
                     </div>
                     <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
@@ -1298,13 +1298,30 @@
         </div>
     </div>
 </div>
-
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 400
+                });
+            }
 
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
+        });
+    </script>
+    <script>
         let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;
@@ -2068,27 +2085,6 @@
             $('#add_control_btn').hide();
             $('#add_control_price').hide();
             KTBootstrapDatetimepicker.init();
-        });
-        var KTSummernoteDemo = function () {
-            // Private functions
-            var demos = function () {
-                $('.summernote').summernote({
-                    height: 400,
-                    tabsize: 2
-                });
-            }
-
-            return {
-                // public functions
-                init: function () {
-                    demos();
-                }
-            };
-        }();
-
-        // Initialization
-        jQuery(document).ready(function () {
-            KTSummernoteDemo.init();
         });
     </script>
 }
