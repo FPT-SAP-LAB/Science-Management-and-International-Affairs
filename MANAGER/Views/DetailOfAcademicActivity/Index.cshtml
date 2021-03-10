@@ -943,19 +943,19 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông"/>
+                        <input type="number" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDuTru" value="30.000.000"/>
+                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDuTru" value="30.000.000" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDuTru" value="1"/>
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDuTru" value="1" />
                     </div>
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDuTru" value="30000000"/>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDuTru" value="30000000" />
                     </div>
                     <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
@@ -1182,6 +1182,7 @@
         });
         $('#btn_add_giaidoan').click(function () {
             let object = {
+                id: 1,
                 name: document.getElementById('add_name_giaidoan').value,
                 from: document.getElementById('add_from_giaidoan').value,
                 to: document.getElementById('add_to_giaidoan').value
@@ -1310,13 +1311,13 @@
                     width: '15%',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
                     }
                 },
                 {
                     className: "text-center",
                     targets: [0, 1, 2, 3, 4, -1],
-                },
+                }
             ]
         });
         $("#TuCachDatatable").DataTable({
@@ -1337,7 +1338,7 @@
                     title: 'Hành động',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
                     }
                 }
             ]
@@ -1360,19 +1361,19 @@
                     title: 'Hành động',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editDongToChuc(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editDongToChuc(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc(1)">Xóa</a>'
                     }
                 },
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" onclick="getContactInfo()">' + data + '</a>'
+                        return '<a href="javascript:;" onclick="getContactInfo()">' + data + '</a>'
                     }
                 },
                 {
                     className: "text-center",
                     targets: [0, 1, 2, 3, 4, 5, -1],
-                },
+                }
             ]
         });
         $("#KinhPhiDatatable").DataTable({
@@ -1408,40 +1409,8 @@
                 {
                     className: "text-center",
                     targets: [0, -1],
-                },
-
-            ]
-        });
-        $("#KinhPhiDatatable").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "",
-                sSearch: ""
-            },
-            "searching": false,
-            "lengthChange": false,
-            columnDefs: [
-                {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<div class="dropdown">' +
-                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
-                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
-                            '</div>' +
-                            '</div>'
-                    }
                 }
+
             ]
         });
         $("#KPDuTruDatatable").DataTable({
@@ -1462,7 +1431,7 @@
                     title: 'Hành động',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<a href="#" class="btn btn-sm px-6 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="#" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
                     }
                 }
             ]
@@ -1587,7 +1556,7 @@
                 // public functions
                 init: function () {
                     initUppy5('kt_uppy_5_2');
-                    initUppy5('kt_uppy_5'); 
+                    initUppy5('kt_uppy_5');
                     initUppy5('kt_uppy_5_3');
                     setTimeout(function () {
                     }, 2000);
