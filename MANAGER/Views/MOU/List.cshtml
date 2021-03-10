@@ -614,9 +614,6 @@
 
     @*toast*@
     <script>
-
-
-
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
         })
@@ -640,7 +637,6 @@
                 $('.kt_datetimepicker_3').datetimepicker({
                     format: 'DD/MM/yyyy'
                 });
-
             }
             return {
                 // Public functions
@@ -1397,7 +1393,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location.href = './Detail';
+                window.location.href = 'MOU/Detail';
             },
             error: function () {
                 
