@@ -139,7 +139,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         reward_policy_id = policy.reward_policy_id,
                         paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
                         account_id = 1, // Sẽ chỉnh sau khi xong tạo account
-                        editable = false
+                        editable = false,
+                        date_request = DateTime.Now
                     };
                     db.ConferenceSupports.Add(support);
                     db.SaveChanges();

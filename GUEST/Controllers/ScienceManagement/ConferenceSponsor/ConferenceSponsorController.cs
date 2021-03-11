@@ -42,6 +42,9 @@ namespace GUEST.Controllers
         [HttpPost]
         public string Add(string input)
         {
+            var paper = Request.Files["paper"];
+            var invite = Request.Files["invite"];
+
             string output = repos.AddConference(input);
             return output;
         }
