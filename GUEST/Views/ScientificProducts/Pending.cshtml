@@ -20,6 +20,7 @@
                     </div>
                 </div>
             </div>
+            <button class="btn" id="a">a</button>
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
                     <table id="pending_table" class="table table-bordered table-checkable">
@@ -29,6 +30,7 @@
                                 <th>@rm.GetString("RequestDate")</th>
                                 <th>@rm.GetString("Status")</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,13 +38,15 @@
                                 <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
                                 <td>10/12/2019</td>
                                 <td>1</td>
-                                <td><a href="#" class="btn btn-secondary btn-sm px-6 font-weight-bold">@rm.GetString("Edit")</a></td>
+                                <td>1</td>
+                                <td>5</td>
                             </tr>
                             <tr>
                                 <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
                                 <td>09/12/2019</td>
                                 <td>3</td>
-                                <td><a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold">@rm.GetString("View")</a></td>
+                                <td>3</td>
+                                <td>6</td>
                             </tr>
                         </tbody>
                     </table>
@@ -54,13 +58,17 @@
 
 @section scripts{
     <script>
+        $("#a").click(function () {
+            alert(document.getElementById("pending_table").rows[1].cells.length);
+        });
+
         $(document).ready(function () {
             $("#pending_table").DataTable({
                 responsive: true,
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-          <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -74,10 +82,11 @@
                 order: [[0, 'asc']],
 
                 columns: [
-                    { width: "55%" },
+                    { width: "50%" },
                     { width: "15%" },
                     { width: "15%" },
-                    { width: "15%" }
+                    { width: "15%" },
+                    { width: "5%" },
                 ],
                 columnDefs: [
                     {
@@ -85,20 +94,20 @@
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
-                                    'title': 'Cần chỉnh sửa',
-                                    'class': 'label label-warning label-pill label-inline mr-2'
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
                                 },
                                 2: {
-                                    'title': 'Đã hủy',
-                                    'class': 'label label-danger label-pill label-inline mr-2'
-                                },
-                                3: {
                                     'title': 'Đang phê duyệt',
                                     'class': 'label label-primary label-pill label-inline mr-2'
                                 },
+                                3: {
+                                    'title': 'Cần chỉnh sửa',
+                                    'class': 'label label-warning label-pill label-inline mr-2'
+                                },
                                 4: {
-                                    'title': 'Đã xong',
-                                    'class': 'label label-success label-pill label-inline mr-2'
+                                    'title': 'Đã hủy',
+                                    'class': 'label label-danger label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
@@ -106,6 +115,38 @@
                             }
                             return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
                         },
+                    },
+                    {
+                        targets: 3,
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                1: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-success mr-2'
+                                },
+                                2: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-primary mr-2'
+                                },
+                                3: {
+                                    'title': 'Chỉnh sửa',
+                                    'class': 'btn btn-warning mr-2'
+                                },
+                                4: {
+                                    'title': 'Đã hủy',
+                                    'class': 'btn btn-danger mr-2'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<button class="' + status[data].class + '">' + status[data].title + '</button>';
+                        },
+                    },
+                    {
+                        targets: 4,
+                        visible: false,
+                        searchable: false,
                     },
                 ],
             });
