@@ -29,10 +29,36 @@
     }
 </style>
 <div class="card card-custom">
-    <div class="card-header card-header-tabs-line">
-        <div class="col-sm-8 col-md-8 col-xl-8 pl-0 ml-0">
-            <div class="card-toolbar">
-                <ul class="nav nav-tabs nav-bold nav-tabs-line">
+    <div class="card-body custom-card pt-3">
+        <div class="row">
+            <div class="col-sm-8 col-md-8 col-xl-8 pl-0 ml-0">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#kt_tab_pane_1">
+                            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                            <span class="nav-text">Nội dung</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Đăng kí tham dự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Kinh phí</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Đơn vị đồng tổ chức</span>
+                        </a>
+                    </li>
+                </ul>
+                @*<ul class="nav nav-tabs nav-bold nav-tabs-line">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
                             <span class="nav-text custom_nav">Nội dung</span>
@@ -53,17 +79,15 @@
                             <span class="nav-text custom_nav">Đơn vị đồng tổ chức</span>
                         </a>
                     </li>
-                </ul>
+                </ul>*@
+            </div>
+            <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
+                <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
+            </div>
+            <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
+                <a href="javascripts:;" class="btn btn-light-danger btn-sm font-weight-bold" onclick="postActivity()">Đăng</a>
             </div>
         </div>
-        <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
-            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
-        </div>
-        <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
-            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
-        </div>
-    </div>
-    <div class="card-body custom-card pt-3">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                 <div class="form-group row">
@@ -127,7 +151,7 @@
                             <option value="CN">Tiếng Trung</option>
                         </select>
                     </div>
-                    <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
+                    <div class="col-md-12 col-xl-12">
                         <div id="editor-main-content" class="summernote"></div>
                     </div>
                     <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
@@ -1298,13 +1322,30 @@
         </div>
     </div>
 </div>
-
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 400
+                });
+            }
 
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
+        });
+    </script>
+    <script>
         let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;

@@ -214,44 +214,40 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" style="overflow-x: auto">
-                                <table class="table table-bordered table-hover table-checkable mou_table" id="">
-                                    <thead>
-                                        <tr>
-                                            <th rowspan="2" class="">S<br />T<br />T</th>
-                                            <th rowspan="2" class="">Số hiệu</th>
-                                            <th colspan="4" class="text-center header-modify">Đối tác</th>
-                                            <th colspan="3" class="text-center header-modify">Người đại diện</th>
-                                            <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
-                                            <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
-                                            <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
-                                            <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
-                                            <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
-                                            <th rowspan="2" nowrap="nowrap" class="text-center">Trạng thái</th>
-                                            <th rowspan="2" nowrap="nowrap" class="text-center"></th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center">Tên</th>
-                                            <th class="text-center">Quốc gia</th>
-                                            <th class="text-center">Website</th>
-                                            <th class="text-center">Lĩnh vực</th>
-                                            <th class="text-center">Họ và tên</th>
-                                            <th class="text-center">Email</th>
-                                            <th class="text-center">Điện thoại</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                        </div>
+                        <table class="table table-bordered table-hover table-checkable mou_table" id="">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="">S<br />T<br />T</th>
+                                    <th rowspan="2" class="">Số hiệu</th>
+                                    <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                    <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
+                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
+                                    <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
+                                    <th rowspan="2" nowrap="nowrap" class="text-center">Trạng thái</th>
+                                    <th rowspan="2" nowrap="nowrap" class="text-center"></th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Tên</th>
+                                    <th class="text-center">Quốc gia</th>
+                                    <th class="text-center">Website</th>
+                                    <th class="text-center">Lĩnh vực</th>
+                                    <th class="text-center">Họ và tên</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Điện thoại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @*modal add_mou*@
 <div class="modal fade in" id="add_mou_modal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -380,7 +376,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
             </div>
@@ -409,14 +404,14 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
-            <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
-        </div>*@
+                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+                            </div>*@
+                        <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="partner_name_add" name="param" list="officeList" style="width:100% !important">
                                 @foreach (var item in ViewBag.listPartners)
                                 {
-                                    <option value="@item.partner_name" >@item.partner_name</option>
+                                    <option value="@item.partner_name">@item.partner_name</option>
                                 }
                             </select>
                         </div>
@@ -500,7 +495,6 @@
         </div>
     </div>
 </div>
-
 @*modal edit_partner_mou*@
 <div class="modal fade in" id="edit_partner_mou" aria-hidden="true" style="z-index: 8888">
     <div class="modal-dialog modal-lg">
@@ -525,78 +519,96 @@
                         <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Tên đối tác</label>
+                            <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no" />
+                                <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
+                                <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Quốc gia</label>
+                            <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
+                        </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
+                    <div class="row mt-3">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Website</label>
+                            <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                            <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
+                    <div class="row mt-3">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Đại diện</label>
+                            <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Email</label>
+                            <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
+                        </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Email</label>
-                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
+                    <div class="row mt-3">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label class="font-weight-bolder">Số điện thoại</label>
+                            <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Ngày ký kết</label>
+                            <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_edit" data-target="#kt_datetimepicker_sign_date_edit" />
+                                <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_edit" data-toggle="datetimepicker">
+                                    <span class="input-group-text">
+                                        <i class="ki ki-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Ngày ký kết</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_edit" data-target="#kt_datetimepicker_sign_date_edit" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_edit" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
+                    <div class="row mt-3">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Lĩnh vực</label>
+                            <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <label style="color:red">*</label>
+                            <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <label style="color:red">*</label>
-                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
-                            </select>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
             </div>
         </div>
     </div>
 </div>
 
 @*<datalist id="partnerList">
-    @foreach (var item in ViewBag.listPartners)
-    {
-        <option>@item.partner_name</option>
-    }
-</datalist>*@
+        @foreach (var item in ViewBag.listPartners)
+        {
+            <option>@item.partner_name</option>
+        }
+    </datalist>*@
 
 
 @*toast alert*@
@@ -622,12 +634,10 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     @*@model int*@
 
+
+
     @*toast*@
     <script>
-       
-
-
-
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
         })
@@ -642,7 +652,7 @@
                 $('.toast-30').fadeIn('slow');
             }
 
-           
+
         });
     </script>
 
@@ -655,6 +665,7 @@
                 });
 
             }
+
             return {
                 // Public functions
                 init: function () {
@@ -833,8 +844,14 @@
             placeholder: 'Chọn cơ sở',
             allowClear: true,
         });
-      
-        $('#partner_name_search').select2({
+
+        $('#partner_name_add').select2({
+            placeholder: 'Tên đối tác',
+            allowClear: true,
+            tags: true,
+        });
+
+        $('#partner_name_add').select2({
             placeholder: 'Tên đối tác',
             allowClear: true,
             tags: true,
@@ -1037,7 +1054,12 @@
                 className: "text-nowrap",
                 targets: [5,6,8, -1]
             },
-        ]
+        ],
+        initComplete: function () {
+            $('.mou_table').parent().css('overflow-x', 'auto');
+            $('.mou_table').parent().removeClass();
+
+        }
     });
 
     $(document).ready(function () {
@@ -1179,11 +1201,11 @@
         var HTMLdata = null;
         for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
             HTMLdata += '<tr id="temp' + idx + '" "class="MOUPartnerTempList">';
-            HTMLdata += '<td>' + (idx + 1) + '</td>';
-            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
-            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
-            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
-            HTMLdata += '<td>' + listTempPartnerMOUAdd[idx].email_add + '</td>';
+            HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
+            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
             HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel +'</td>';
@@ -1405,13 +1427,13 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location.href = './MOU/Detail';
+                window.location.href = './Detail';
             },
             error: function () {
-                
+
             }
         });
     }
-</script>
+    </script>
 }
 
