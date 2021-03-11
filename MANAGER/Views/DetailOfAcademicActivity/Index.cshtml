@@ -35,51 +35,25 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#kt_tab_pane_1">
-                            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
                             <span class="nav-text">Nội dung</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
-                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
                             <span class="nav-text">Đăng kí tham dự</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">
-                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
                             <span class="nav-text">Kinh phí</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">
-                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
                             <span class="nav-text">Đơn vị đồng tổ chức</span>
                         </a>
                     </li>
                 </ul>
-                @*<ul class="nav nav-tabs nav-bold nav-tabs-line">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
-                            <span class="nav-text custom_nav">Nội dung</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
-                            <span class="nav-text custom_nav">Đăng kí tham dự</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">
-                            <span class="nav-text custom_nav">Kinh phí</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">
-                            <span class="nav-text custom_nav">Đơn vị đồng tổ chức</span>
-                        </a>
-                    </li>
-                </ul>*@
             </div>
             <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
                 <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
@@ -253,6 +227,20 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row">
+                        <div class="dropdown">
+                            <button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdown-excel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Xuất kinh phí</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a href="javascript:;" class="dropdown-item" onclick="excelDuTru()">Dự trù ban đầu</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelDieuChinh()">Dự trù điều chỉnh</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelThucTe()">Thực tế</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelTonghop()">Tổng hợp</a>
+                            </div>
+                        </div>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold ml-5" data-toggle="modal" data-target="#ThongKeDKTD" style="min-width:max-content !important">Thống kê đăng kí tham dự</a>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
                 <div class="row mb-3">
@@ -293,6 +281,57 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ThongKeDKTD" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thống kê số lượng đăng kí tham dự</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-md-6 col-xl-6 col-lg-6 col-xl-6">
+                        <a href="javascript:;" class="btn btn-light-primary px-6 font-weight-bold" onclick="excelSL()">Xuất excel</a>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3 col-xl-3 justify-content-end pt-3 pr-0 text-right">
+                        Thống kê theo:
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3 col-xl-3 justify-content-end">
+                        <select class="form-control" onchange="filterSLby()" id="filterSL">
+                            <option selected value="DF">Tổng số</option>
+                            <option value="CS">Cơ sở</option>
+                            <option value="DV">Đơn vị</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="ThongKeSLDatatable" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr class="text-center">
+                                    <th></th>
+                                    <th>Người đăng kí</th>
+                                    <th>Người tham dự</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>112</td>
+                                    <td>96</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
@@ -885,6 +924,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="addModal_KinhPhi" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1325,22 +1365,17 @@
 @section scripts{
     <script>
         var KTSummernoteDemo = function () {
-            // Private functions
             var demos = function () {
                 $('.summernote').summernote({
-                    height: 400
+                    height: 100
                 });
             }
-
             return {
-                // public functions
                 init: function () {
                     demos();
                 }
             };
         }();
-
-        // Initialization
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();
         });
@@ -1362,6 +1397,49 @@
         }
         function setUpForm() {
             window.open("/DetailOfAcademicActivity/RegisterForm?id=" + id_edit_giai_doan);
+        }
+        let ls_data = [];
+        function filterSLby() {
+            val = document.getElementById('filterSL').value;
+            switch (val) {
+                case 'CS':
+                    var tableSL = $("#ThongKeSLDatatable").DataTable();
+                    tableSL.column(0).visible(true);
+                    var head_item = tableSL.columns(0).header();
+                    $(head_item).html('Cơ sở');
+                    tableSL.clear().draw();
+                    ls_data = [];
+                    ls_data.push(['Hà Nội', 45, 44]);
+                    ls_data.push(['Đà Nẵng', 40, 40]);
+                    ls_data.forEach(function (x) {
+                        tableSL.row.add(x).draw();
+                    });
+                    break;
+                case 'DV':
+                    var tableSL = $("#ThongKeSLDatatable").DataTable();
+                    tableSL.column(0).visible(true);
+                    var head_item = tableSL.columns(0).header();
+                    $(head_item).html('Đơn vị');
+                    tableSL.clear().draw();
+                    ls_data = [];
+                    ls_data.push(['FPTU', 121, 117]);
+                    ls_data.push(['FPT Poly', 75, 75]);
+                    ls_data.forEach(function (x) {
+                        tableSL.row.add(x).draw();
+                    });
+                    break;
+                case 'DF':
+                    var tableSL = $("#ThongKeSLDatatable").DataTable();
+                    tableSL.column(0).visible(false);
+                    tableSL.clear().draw();
+                    ls_data = [];
+                    ls_data.push(['Hà Nội', 45, 44]);
+                    ls_data.push(['Đà Nẵng', 40, 40]);
+                    ls_data.forEach(function (x) {
+                        tableSL.row.add(x).draw();
+                    });
+                    break;
+            }
         }
 
         let arrIndexDonvi = []
@@ -1971,6 +2049,30 @@
                 }
             ]
         });
+        $("#ThongKeSLDatatable").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: ""
+            },
+            "searching": false,
+            "lengthChange": false,
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: "text-center",
+                },
+                {
+                    targets: [0],
+                    className: "text-center",
+                    visible: false
+                }
+            ]
+        });
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({
@@ -2090,19 +2192,6 @@
             $('#add_control_price').hide();
             KTBootstrapDatetimepicker.init();
         });
-        var KTSummernoteDemo = function () {
-            var demos = function () {
-                $('.summernote').summernote({
-                    height: 100,
-                    tabsize: 2
-                });
-            }
-            return {
-                init: function () {
-                    demos();
-                }
-            };
-        }();
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();
         });

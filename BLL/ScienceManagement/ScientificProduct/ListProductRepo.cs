@@ -26,12 +26,12 @@ namespace BLL.ScienceManagement.ScientificProduct
 				                join [General].People po on ap.people_id = po.people_id
 			                group by p.paper_id) as b on p.paper_id = b.paper_id
                 where p.paper_type_id = 1";
-            if (item.nameS != null && item.nameS != " ") sql += " and p.name like '%@name%'"; else item.nameS = " ";
+            if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(p.publish_date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(p.publish_date) = @year"; else item.yearS = " ";
             sql += " order by p.publish_date desc";
             list = db.Database.SqlQuery<ListProduct_JournalPaper>(sql
-                , new SqlParameter("name", item.nameS)
+                , new SqlParameter("name", "%" + item.nameS + "%")
                 , new SqlParameter("month", item.monthS)
                 , new SqlParameter("year", item.yearS)).ToList();
             return list;
@@ -50,13 +50,13 @@ namespace BLL.ScienceManagement.ScientificProduct
 				                join [General].People po on ap.people_id = po.people_id
 			                group by p.paper_id) as b on p.paper_id = b.paper_id
                 where p.paper_type_id = 2";
-            if (item.nameS != null && item.nameS != " ") sql += " and p.name like '%@name%'"; else item.nameS = " ";
+            if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(p.publish_date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(p.publish_date) = @year"; else item.yearS = " ";
             sql += " order by p.publish_date desc";
             List<ListProduct_ConferencePaper> list = new List<ListProduct_ConferencePaper>();
             list = db.Database.SqlQuery<ListProduct_ConferencePaper>(sql
-                , new SqlParameter("name", item.nameS)
+                , new SqlParameter("name", "%" + item.nameS + "%")
                 , new SqlParameter("month", item.monthS)
                 , new SqlParameter("year", item.yearS)).ToList();
             return list;
@@ -71,13 +71,13 @@ namespace BLL.ScienceManagement.ScientificProduct
 				                join [General].People po on ai.people_id = po.people_id
 			                group by i.invention_id) as a on i.invention_id = a.invention_id
 	                join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id where 1=1";
-            if (item.nameS != null && item.nameS != " ") sql += " and i.name like '%@name%'"; else item.nameS = " ";
+            if (item.nameS != null && item.nameS != " ") sql += " and i.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(i.date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(i.date) = @year"; else item.yearS = " ";
             sql += " order by i.date desc";
             List<ListProdcut_Inven> list = new List<ListProdcut_Inven>();
             list = db.Database.SqlQuery<ListProdcut_Inven>(sql
-                , new SqlParameter("name", item.nameS)
+                , new SqlParameter("name", "%" + item.nameS + "%")
                 , new SqlParameter("month", item.monthS)
                 , new SqlParameter("year", item.yearS)).ToList();
             return list;
