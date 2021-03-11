@@ -23,12 +23,42 @@
     .modal {
         overflow-y: auto;
     }
+
+    .ck-content {
+        min-height: 60px !important;
+    }
 </style>
 <div class="card card-custom">
-    <div class="card-header card-header-tabs-line">
-        <div class="col-sm-8 col-md-8 col-xl-8 pl-0 ml-0">
-            <div class="card-toolbar">
-                <ul class="nav nav-tabs nav-bold nav-tabs-line">
+    <div class="card-body custom-card pt-3">
+        <div class="row">
+            <div class="col-sm-8 col-md-8 col-xl-8 pl-0 ml-0">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#kt_tab_pane_1">
+                            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                            <span class="nav-text">Nội dung</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Đăng kí tham dự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Kinh phí</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">
+                            <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
+                            <span class="nav-text">Đơn vị đồng tổ chức</span>
+                        </a>
+                    </li>
+                </ul>
+                @*<ul class="nav nav-tabs nav-bold nav-tabs-line">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
                             <span class="nav-text custom_nav">Nội dung</span>
@@ -49,17 +79,15 @@
                             <span class="nav-text custom_nav">Đơn vị đồng tổ chức</span>
                         </a>
                     </li>
-                </ul>
+                </ul>*@
+            </div>
+            <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
+                <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
+            </div>
+            <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
+                <a href="javascripts:;" class="btn btn-light-danger btn-sm font-weight-bold" onclick="postActivity()">Đăng</a>
             </div>
         </div>
-        <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
-            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
-        </div>
-        <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
-            <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold min-w-70px" onclick="postActivity()">Đăng</a>
-        </div>
-    </div>
-    <div class="card-body custom-card pt-3">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                 <div class="form-group row">
@@ -123,11 +151,13 @@
                             <option value="CN">Tiếng Trung</option>
                         </select>
                     </div>
-                    <div class="col-md-12 col-xl-12 col-lg-12 mt-5">
-                        <div id="kt-ckeditor-main-content-toolbar"></div>
-                        <div id="kt-ckeditor-main-content">
-
-                        </div>
+                    <div class="col-md-12 col-xl-12">
+                        <div id="editor-main-content" class="summernote"></div>
+                    </div>
+                    <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
+                        <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent('#subcontent-control')">Thêm</button>
                     </div>
                 </div>
             </div>
@@ -1292,11 +1322,29 @@
         </div>
     </div>
 </div>
-
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script>
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 400
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
+        });
+    </script>
     <script>
         let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
@@ -1324,6 +1372,52 @@
         let arrDonViEdit = []
         let numberOfIndexDonviEdit = 0;
 
+        let arrIndexContent = []
+        let arrContent = []
+        let numberOfIndexContent = 0;
+
+        function bonusRowContent(id) {
+            arrIndexContent.push(numberOfIndexContent);
+            $(id).append(
+                "<div id=\"row-ckeditor-" + numberOfIndexContent + "\" class=\"row\">" +
+                "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
+                "<input type=\"text\" class=\"form-control\" id=\"content-" + numberOfIndexContent + "\" />" +
+                "</div>" +
+                "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
+                "<div id=\"kt-ckeditor-main-content-toolbar-" + numberOfIndexContent + "\"></div>" +
+                "<div id=\"kt-ckeditor-main-content-" + numberOfIndexContent + "\"></div>" +
+                "</div>" +
+                "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
+                "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + numberOfIndexContent + ")\">Xóa</button>" +
+                "</div>" +
+                "</div>");
+            var KTCkeditorDocument = function () {
+                var demos = function () {
+                    DecoupledEditor
+                        .create(document.querySelector('#kt-ckeditor-main-content-' + numberOfIndexContent))
+                        .then(editor => {
+                            const toolbarContainer = document.querySelector('#kt-ckeditor-main-content-toolbar-' + numberOfIndexContent);
+                            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+                return {
+                    init: function () {
+                        demos();
+                    }
+                };
+            }();
+            KTCkeditorDocument.init();
+            numberOfIndexContent = numberOfIndexContent + 1;
+        }
+
+        function removeRowContent(id) {
+            $('#row-ckeditor-' + id).remove();
+            arrIndexContent = arrIndexContent.filter(function (e) { return e !== id });
+        }
+
         function bonusRow() {
             arrIndexDonvi.push(numberOfIndexDonvi);
             $('#add_control').append("<div class=\"row customrow\" id=\"row-" + numberOfIndexDonvi + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + numberOfIndexDonvi + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
@@ -1333,7 +1427,7 @@
 
         function removeRow(id) {
             $('#row-' + id).remove();
-            // remove bỏ id trong arrIndexDonvi
+            arrIndexDonvi = arrIndexDonvi.filter(function (e) { return e !== id });
         }
         function bonusRowEdit() {
             arrIndexDonviEdit.push(numberOfIndexDonviEdit);
@@ -1344,7 +1438,7 @@
 
         function removeRowEdit(id) {
             $('#rowedit-' + id).remove();
-            // remove bỏ id trong arrIndexDonvi
+            arrIndexDonviEdit = arrIndexDonviEdit.filter(function (e) { return e !== id });
         }
         function getContactInfo() {
             return;
@@ -1908,26 +2002,7 @@
                 }
             };
         }();
-        var KTCkeditorDocument = function () {
-            // Private functions
-            var demos = function () {
-                DecoupledEditor
-                    .create(document.querySelector('#kt-ckeditor-main-content'))
-                    .then(editor => {
-                        const toolbarContainer = document.querySelector('#kt-ckeditor-main-content-toolbar');
-                        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-            return {
-                // public functions
-                init: function () {
-                    demos();
-                }
-            };
-        }();
+
         $('#add_name_phamvihoptac').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true
@@ -2034,7 +2109,6 @@
             $('#add_control_btn').hide();
             $('#add_control_price').hide();
             KTBootstrapDatetimepicker.init();
-            KTCkeditorDocument.init();
         });
     </script>
 }

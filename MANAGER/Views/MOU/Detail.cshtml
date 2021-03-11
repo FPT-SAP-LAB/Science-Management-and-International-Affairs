@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 mb-3">
                                 <div class="row align-items-center">
-                                    <a href="#add_additional_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                    <a href="#add_additional_mou" onclick="addExMOU()" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                                 </div>
                             </div>
                             <table class="table table-bordered table-hover table-checkable ex_mou"
@@ -414,7 +414,7 @@
     </div>
 </div>
 
-@*modal update_modal_mou*@
+@*modal add_modal_mou*@
 <div class="modal fade" id="add_additional_mou" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -426,7 +426,7 @@
                     <div class="col-md-6">
                         <label style="color:red">*</label><label class="font-weight-bolder">Mã hiệu</label>&nbsp;
                         <label style="font-style: italic;"></label>
-                        <input class="form-control" type="text" placeholder="Mã hiệu MOU_BS/số thứ tự" autocomplete="off" required id="mou_id_addition" />
+                        <input class="form-control" type="text" placeholder="Mã hiệu MOU_BS/số thứ tự" autocomplete="off" required id="ex_mou_id_add" />
                     </div>
                     <div class="col-md-6">
                         <label class="font-weight-bolder">Bản mềm</label>&nbsp;
@@ -476,7 +476,7 @@
                         <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-partner-scope">Thêm</a>
                     </div>
                 </div>
-                <table id="" class="table table-bordered table-hover table-checkable" style="text-align: center;">
+                <table id="ex_mou_table_add" class="table table-bordered table-hover table-checkable" style="text-align: center;">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -486,30 +486,95 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Bunkyou University</td>
-                            <td class="text-center">JC </td>
-                            <td class="text-center" nowrap="nowrap">
-                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a>
-                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="text-center">FPT Software</td>
-                            <td class="text-center">ME </td>
-                            <td class="text-center" nowrap="nowrap">
-                                <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a>
-                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+                <button type="button" onclick="finishExMOUAdd()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal edit_modal_mou*@
+<div class="modal fade" id="edit_additional_mou" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA BIÊN BẢN GHI NHỚ BỔ SUNG</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Mã hiệu</label>&nbsp;
+                        <label style="font-style: italic;"></label>
+                        <input class="form-control" type="text" placeholder="Mã hiệu MOU_BS/số thứ tự" autocomplete="off" required id="ex_mou_id_edit" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="edit_mou_upload">
+                            <div class="uppy-wrapper col-4"></div>
+                            <div class="uppy-list col-7"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Ngày kí kết</label>&nbsp;
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_mou_addition_sign_time_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="mou_addition_sign_time_edit" readonly autocomplete="off" data-target="#kt_datetimepicker_mou_addition_sign_time_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_mou_addition_sign_time_edit" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="font-weight-bolder">Ngày hết hạn</label>&nbsp;
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_mou_addition_end_time_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày hết hạn" id="mou_addition_end_time_edit" readonly autocomplete="off" data-target="#kt_datetimepicker_mou_addition_end_time_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_mou_addition_end_time_edit" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <h5 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h5>
+                    </div>
+                </div>
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-partner-scope">Thêm</a>
+                    </div>
+                </div>
+                <table id="ex_mou_table_edit" class="table table-bordered table-hover table-checkable" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Đối tác</th>
+                            <th>Phạm vi hợp tác</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="finishExMOUEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
             </div>
         </div>
     </div>
@@ -526,23 +591,57 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
-                        <select class="form-control" required id="partner_name_addition">
-                            <option value="1 ">Bunkyou University</option>
-                            <option value="2 ">FPT Software</option>
+                        <select class="form-control" required id="partner_name_ex_mou_add">
+                            @foreach (var item in ViewBag.partnerList)
+                            {
+                                <option value="@item.partner_id">@item.partner_name</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-9">
                         <label style="color:red">*</label><label class="font-weight-bolder">Phạm vi hợp tác</label>&nbsp;
-                        <select class="form-control" required id="coop_scope_mou">
-                            <option value="1">SE</option>
-                            <option value="2">FE</option>
+                        <select class="form-control select2" required id="coop_scope_ex_mou_add" multiple="multiple" style="width:100% !important">
+                            @foreach (var item in ViewBag.scopeList)
+                            {
+                                <option value="@item.scope_id">@item.scope_abbreviation</option>
+                            }
                         </select>
                     </div>
                 </div>
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+                <button type="button" onclick="addExMOUTemp()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal edit-partner-scope*@
+<div class="modal fade in" id="edit-partner-scope" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title">ĐIỀU CHỈNH VỀ PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <input hidden readonly type="text" class="form-control" id="idx_ex_mou_edit" placeholder="" name="idx_edit" value="no" />
+                        <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
+                        <select class="form-control" required id="partner_name_ex_mou_edit">
+                        </select>
+                    </div>
+                    <div class="col-md-9">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Phạm vi hợp tác</label>&nbsp;
+                        <select class="form-control select2" required id="coop_scope_ex_mou_edit" multiple="multiple" style="width:100% !important">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="editExMOUTemp()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Sửa</button>
             </div>
         </div>
     </div>
@@ -887,7 +986,7 @@
 
     @*datatable*@
     <script>
-        // datepicker functions
+        //datepicker functions
         $(document).ready(function () {
             //split card
             //overflow
@@ -1090,7 +1189,6 @@
         };
 
     </script>
-
     @*dropdown list*@
     <script>
         //jquery for dropdown
@@ -1103,7 +1201,14 @@
             placeholder: 'Lĩnh vực',
             allowClear: true,
         })
-
+        $('#coop_scope_ex_mou_add').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        })
+        $('#coop_scope_ex_mou_edit').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        })
         $('#facility').select2({
             placeholder: 'Đơn vị - Cơ sở kí kết',
             allowClear: true,
@@ -1372,6 +1477,7 @@
         KTUtil.ready(function () {
             KTUppy.init('mou_detail_upload');
             KTUppy.init('addition_mou_upload');
+            KTUppy.init('edit_mou_upload');
             KTUppy.init('moa_upload');
         });
 
@@ -1388,7 +1494,11 @@
                 status_id: 2,
                 status_name: 'Active'
             }
-        ]
+        ];
+        var listScopes = [];
+        var listPartner = [];
+        var listTempExMOUPartnerScope = [];
+        var listTempExMOUPartnerScopeEdit = [];
 
         $(document).ready(function () {
             getListOffice();
@@ -1491,6 +1601,201 @@
             });
         }
 
+        function deleteExMOU(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: "@Url.Action("deleteExMOU", "BasicInfoMOU")",
+                        data: { mou_bonus_id : id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
+                        },
+                    })
+                }
+            })
+        };
+
+        function addExMOU() {
+            getNewExMOUCode();
+            pushDataToList();
+        }
+
+        function pushDataToList() {
+            $("#coop_scope_ex_mou_add option").each(function (){
+                listScopes.push({
+                    scope_id: $(this).val(),
+                    scope_abbreviation: $(this).text()
+                });
+            });
+            $("#partner_name_ex_mou_add option").each(function () {
+                listPartner.push({
+                    partner_id: $(this).val(),
+                    partner_name: $(this).text()
+                });
+            });
+        }
+
+        function addExMOUTemp() {
+            var partner_id = $('#partner_name_ex_mou_add').val();
+            var scopes = $('#coop_scope_ex_mou_add').val();
+
+            var scopes_name = '';
+            for (i = 0; i < scopes.length; i++) {
+                var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                scopes_name += objScope.scope_abbreviation + ',';
+            }
+
+            var objPartner = listPartner.find(x => x.partner_id == partner_id);
+            var partner_name = objPartner.partner_name;
+
+            if (scopes_name.endsWith(",")) {
+                scopes_name = scopes_name.slice(0, -1);
+            }
+
+            var temp = {
+                partner_id: partner_id,
+                partner_name: partner_name,
+                scopes_id: scopes,
+                scopes_name: scopes_name,
+            }
+
+            listTempExMOUPartnerScope.push(temp);
+            clearInputAddExMOUPartner();
+            initAndRefreshTableExMOUAdd();
+        }
+
+        function clearInputAddExMOUPartner() {
+            document.getElementById("coop_scope_ex_mou_add").value = "";
+            document.getElementById("partner_name_ex_mou_add").value = "";
+        }
+
+        function initAndRefreshTableExMOUAdd() {
+            resetExMOUAddTable();
+            initExMOUAddTable();
+        }
+
+        function resetExMOUAddTable() {
+            for (idx = 0; idx < listTempExMOUPartnerScope.length; idx++) {
+                $("#tempExMOU" + idx).remove();
+            }
+        }
+
+        function initExMOUAddTable() {
+            var HTMLdata = null;
+            for (idx = 0; idx < listTempExMOUPartnerScope.length; idx++) {
+                HTMLdata += '<tr id="tempExMOU' + idx + '" "class="MOUPartnerTempList">';
+                HTMLdata += '<td>' + (idx + 1) + '</td>';
+                HTMLdata += '<td>' + listTempExMOUPartnerScope[idx].partner_name + '</td>';
+                HTMLdata += '<td>' + listTempExMOUPartnerScope[idx].scopes_name + '</td>';
+
+                var buttonEdit = '<a onclick="loadEditExMOUTemp(' + idx + ')" href="#edit-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
+                var buttonDel = '<a onclick="confirm_delete_ex_mou_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+                HTMLdata += '</tr>';
+            }
+            $('#ex_mou_table_add').append(HTMLdata);
+        }
+
+        function loadEditExMOUTemp(index) {
+            $("#idx_ex_mou_edit").val(index);
+            var HTMLPartnerdata = "";
+            var HTMLScopedata = "";
+            $('#partner_name_ex_mou_edit').empty();
+            $('#coop_scope_ex_mou_edit').empty();
+            for (i = 0; i < listPartner.length; i++) {
+                if (listTempExMOUPartnerScope[index].partner_id == listPartner[i].partner_id) {
+                    HTMLPartnerdata += '<option value = "' + listPartner[i].partner_id + '" selected>' + listPartner[i].partner_name + '</option>'
+                } else {
+                    HTMLPartnerdata += '<option value = "' + listPartner[i].partner_id + '" >' + listPartner[i].partner_name + '</option>'
+                }
+            }
+            for (j = 0; j < listScopes.length; j++) {
+                if (listTempExMOUPartnerScope[index].scopes_id.includes(listScopes[j].scope_id)) {
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation + '</option>'
+                } else {
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+                }
+            }
+
+            $('#partner_name_ex_mou_edit').append(HTMLPartnerdata);
+            $('#coop_scope_ex_mou_edit').append(HTMLScopedata);
+        }
+
+        function editExMOUTemp() {
+            var index = $("#idx_ex_mou_edit").val();
+
+            var partner_id = $('#partner_name_ex_mou_edit').val();
+            var scopes = $('#coop_scope_ex_mou_edit').val();
+
+            var scopes_name = '';
+            for (i = 0; i < scopes.length; i++) {
+                var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                scopes_name += objScope.scope_abbreviation + ',';
+            }
+
+            var objPartner = listPartner.find(x => x.partner_id == partner_id);
+            var partner_name = objPartner.partner_name;
+
+            if (scopes_name.endsWith(",")) {
+                scopes_name = scopes_name.slice(0, -1);
+            }
+
+            listTempExMOUPartnerScope[index].partner_id = partner_id;
+            listTempExMOUPartnerScope[index].partner_name = partner_name;
+            listTempExMOUPartnerScope[index].scopes_id = scopes;
+            listTempExMOUPartnerScope[index].scopes_name = scopes_name;
+            initAndRefreshTableExMOUAdd();
+        }
+
+        function confirm_delete_ex_mou_temp(index) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    resetExMOUAddTable();
+                    listTempExMOUPartnerScope.splice(index, 1);
+                    initAndRefreshTableExMOUAdd();
+                }
+            })
+        }
+
+        function getNewExMOUCode() {
+            $.ajax({
+                url: "@Url.Action("getNewExtraMOUCode", "BasicInfoMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    $('#ex_mou_id_add').val(data);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
         function loadOffice(listOffice, OfficeData) {
             var HTMLOfficedata = "";
             for (i = 0; i < listOffice.length; i++) {
@@ -1538,6 +1843,105 @@
                     //alert("fail");
                 }
             });
+        }
+
+        function finishExMOUAdd() {
+            var ExBasicInfo = {
+                ex_mou_code: $('#ex_mou_id_add').val() ,
+                ex_mou_sign_date: $('#mou_addition_sign_time').val(),
+                ex_mou_end_date: $('#mou_addition_end_time').val()
+            };
+
+            var ExMOUAdd = {
+                ExBasicInfo: ExBasicInfo,
+                PartnerScopeInfo: listTempExMOUPartnerScope,
+            };
+
+            $.ajax({
+                url: "@Url.Action("Add_Mou", "MOU")",
+                type: "POST",
+                data: JSON.stringify(ExMOUAdd),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    listTempExMOUPartnerScope = [];
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function editExMOU(mou_bonus_id) {
+            $.ajax({
+                url: "@Url.Action("ViewExMOUDetail", "BasicInfoMOU")",
+                data: { mou_bonus_id: mou_bonus_id },
+                success: function (data) {
+                    $('#ex_mou_id_edit').val(data.ExBasicInfo.ex_mou_code);
+                    $('#mou_addition_sign_time_edit').val(data.ExBasicInfo.ex_mou_sign_date);
+                    $('#mou_addition_end_time_edit').val(data.ExBasicInfo.ex_mou_end_date);
+                    addToPartnerScopeListEdit(data);
+                },
+                error: function (data) {
+                    
+                },
+            });
+        }
+
+        function addToPartnerScopeListEdit(data) {
+            for (i = 0; i < data.PartnerScopeInfo.length; i++) {
+                var partner_id = data.PartnerScopeInfo[i].partner_id;
+                var scopes = data.PartnerScopeInfo[i].scopes_id;
+
+                var scopes_name = '';
+                for (i = 0; i < scopes.length; i++) {
+                    var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                    scopes_name += objScope.scope_abbreviation + ',';
+                }
+
+                var objPartner = listPartner.find(x => x.partner_id == partner_id);
+                var partner_name = objPartner.partner_name;
+
+                if (scopes_name.endsWith(",")) {
+                    scopes_name = scopes_name.slice(0, -1);
+                }
+                var temp = {
+                    partner_id: partner_id,
+                    partner_name: partner_name,
+                    scopes_id: scopes,
+                    scopes_name: scopes_name,
+                }
+                listTempExMOUPartnerScopeEdit.push(temp);
+            }
+            initAndRefreshTableExMOUEdit();
+        }
+
+        function initAndRefreshTableExMOUEdit(){
+            resetExMOUEditTable();
+            initExMOUEditTable();
+        }
+
+        function resetExMOUEditTable() {
+            for (idx = 0; idx < listTempExMOUPartnerScopeEdit.length; idx++) {
+                $("#tempExMOUEdit" + idx).remove();
+            }
+        }
+
+        function initExMOUEditTable() {
+            var HTMLdata = null;
+            for (idx = 0; idx < listTempExMOUPartnerScopeEdit.length; idx++) {
+                HTMLdata += '<tr id="tempExMOUEdit' + idx + '" "class="MOUPartnerTempList">';
+                HTMLdata += '<td>' + (idx + 1) + '</td>';
+                HTMLdata += '<td>' + listTempExMOUPartnerScopeEdit[idx].partner_name + '</td>';
+                HTMLdata += '<td>' + listTempExMOUPartnerScopeEdit[idx].scopes_name + '</td>';
+
+                var buttonEdit = '<a onclick="loadEditExMOUTemp(' + idx + ')" href="#edit-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
+                var buttonDel = '<a onclick="confirm_delete_ex_mou_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+                HTMLdata += '</tr>';
+            }
+            $('#ex_mou_table_add').append(HTMLdata);
         }
     </script>
 }

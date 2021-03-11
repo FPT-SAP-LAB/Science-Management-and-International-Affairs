@@ -394,12 +394,36 @@
     </div>
 
 
-    @*modal add_partner_mou*@
-    <div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 8888">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center row">
-                    <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+@*modal add_partner_mou*@
+<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 8888">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Tên đối tác</label>
+                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+            <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
+            <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+        </div>*@
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="partner_name_add" name="param" list="officeList" style="width:100% !important">
+                                @foreach (var item in ViewBag.listPartners)
+                                {
+                                    <option value="@item.partner_name" >@item.partner_name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Quốc gia</label>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_add" />
+                    </div>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -624,9 +648,8 @@
         @*toast*@
         <script>
 
-
-
-
+    @*toast*@
+    <script>
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
         })
