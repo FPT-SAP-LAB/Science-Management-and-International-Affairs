@@ -44,71 +44,90 @@
                                 </h4>
                             </div>
                             <div class="row mb-5">
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
                                     <div class="row align-items-center">
-                                        <a href="#" class="btn btn-sm btn-outline-primary px-6 font-weight-bold">Thêm</a>
-                                        <a href="#" class="btn btn-sm btn-outline-primary ml-3 font-weight-bold">Xuất excel</a>
+                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                        </div>
+                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                            <div class="dropdown dropdown-inline ml-2">
+                                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    Export
+                                                </button>
+                                                <!--begin::Dropdown Menu-->
+                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                    <!--begin::Navigation-->
+                                                    <ul class="navi flex-column navi-hover py-2">
+                                                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                            Choose an option:
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <a href="#" class="navi-link" onclick="exportExcel()">
+                                                                <span class="navi-icon">
+                                                                    <i class="la la-file-excel-o"></i>
+                                                                </span>
+                                                                <span class="navi-text">Excel</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!--end::Navigation-->
+                                                </div>
+                                                <!--end::Dropdown Menu-->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle float-right"
-                                                type="button" id="dropdownMenuButton-year" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Năm đi học
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-year">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
+                                    <div class="row align-items-center justify-content-end">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_nation_tab_1_table_1" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">Việt Nam</option>
+                                                    <option value="2">USA</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="mr-3 btn btn-sm btn-outline-primary dropdown-toggle float-right"
-                                                type="button" id="dropdownMenuButton-where" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Đơn vị đào tạo
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-where">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_facility_tab_1_table_1" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">Hòa Lạc</option>
+                                                    <option value="2">Đà Nẵng</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="mr-3 btn btn-sm btn-outline-primary dropdown-toggle float-right"
-                                                type="button" id="dropdownMenuButton-from" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Đơn vị công tác
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-from">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_year_tab_1_table_1" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">2021</option>
+                                                    <option value="2">2020</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="mr-3 btn btn-sm btn-outline-primary dropdown-toggle float-right"
-                                                type="button" id="dropdownMenuButton-facility" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Cơ sở
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-facility">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_training_facility_tab_1_table_1" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">UDP</option>
+                                                    <option value="2">KyouDai</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="mr-3 btn btn-sm btn-outline-primary dropdown-toggle float-right"
-                                                type="button" id="dropdownMenuButton-nation" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Quốc  gia
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-nation">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
+                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                                <select class="form-control text-center" id="search_working_facility_tab_1_table_1" name="param" style="width:100% !important">
+                                                    <option label="Label"></option>
+                                                    <option value="1">FPT-HN</option>
+                                                    <option value="2">FPT-DN</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mb-4">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +144,7 @@
                                         <th rowspan="2" class="text-center">Trạng thái</th>
                                         <th rowspan="2" class="text-center">Hỗ trợ</th>
                                         <th rowspan="2" class="text-center">Ghi chú</th>
-                                        <th rowspan="2"></th>
+                                        <th rowspan="2" class="text-center"></th>
                                     </tr>
                                     <tr>
                                         <th class="text-center">Họ và tên</th>
@@ -599,7 +618,61 @@
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script>
+        //datepicker
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/yyyy'
+                });
 
+            }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
+
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+        });
+    </script>
+
+    @*select2*@
+    <script>
+        $('#search_nation_tab_1_table_1').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_facility_tab_1_table_1').select2({
+            placeholder: 'Cơ sở',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_year_tab_1_table_1').select2({
+            placeholder: 'Năm đi học',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_training_facility_tab_1_table_1').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_working_facility_tab_1_table_1').select2({
+            placeholder: 'Đơn vị công tác',
+            allowClear: true,
+            tags: true,
+        })
+    </script>
     <script>
         var id_row = "";
         //parse id fo delete
@@ -619,8 +692,7 @@
         //overflow
         $(document).ready(function () {
             $('#main-card').parent().css("background-color", "#eef0f8");
-            $('.collaboration_table').parent().css('overflow-x', 'auto');
-            $('.collaboration_table thead tr th').css('font-weight', 'bold');
+            //$('.collaboration_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
 
@@ -687,12 +759,12 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
+            },
+            searching: false,
+            lengthChange: false,
+            initComplete: function () {
+                $('.collaboration_table').parent().css('overflow-x', 'auto');
+                $('.collaboration_table').parent().removeClass();
             },
             columnDefs: [
                 {
@@ -732,11 +804,11 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-outline-primary" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-outline-danger" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
                     }
                 }
             ]
@@ -751,13 +823,9 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sLengthMenu: "Hiển thị <select class='custom-select custom-select-sm'>" +
-                    "<option value='5'>5</option>" +
-                    "<option value='10'>10</option>" +
-                    "<option value='20'>20</option>" +
-                    "</select> bản ghi",
-                sSearch: "Tìm kiếm"
             },
+            searching: false,
+            lengthChange: false,
             columnDefs: [
                 {
                     targets: -1,
