@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     {
         // GET: MOU
         private static MOURepo mou = new MOURepo();
-        private int? mou_detail_id;
+        private static BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
 
         public ActionResult List()
         {
@@ -102,13 +103,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         public ActionResult Detail()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN GHI NHỚ";
+            string id = Session["mou_detail_id"].ToString();
+            List<ENTITIES.Partner> partnerList = mou_detail.getPartnerExMOU(int.Parse(id));
+            List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
+            ViewBag.scopeList = scopeList;
+            ViewBag.partnerList = partnerList;
             return View();
         }
         public ActionResult PassDataToMOUDetail(int id)
         {
             try
             {
-                mou_detail_id = id;
+                //mou_detail_id = id;
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
