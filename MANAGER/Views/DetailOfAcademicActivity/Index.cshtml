@@ -1384,32 +1384,13 @@
                 "<input type=\"text\" class=\"form-control\" id=\"content-" + numberOfIndexContent + "\" />" +
                 "</div>" +
                 "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
-                "<div id=\"kt-ckeditor-main-content-toolbar-" + numberOfIndexContent + "\"></div>" +
-                "<div id=\"kt-ckeditor-main-content-" + numberOfIndexContent + "\"></div>" +
+                "<div id=\"editor-subcontent-" + numberOfIndexContent + "\" class=\"summernote\"></div>" +
                 "</div>" +
                 "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
                 "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + numberOfIndexContent + ")\">Xóa</button>" +
                 "</div>" +
                 "</div>");
-            var KTCkeditorDocument = function () {
-                var demos = function () {
-                    DecoupledEditor
-                        .create(document.querySelector('#kt-ckeditor-main-content-' + numberOfIndexContent))
-                        .then(editor => {
-                            const toolbarContainer = document.querySelector('#kt-ckeditor-main-content-toolbar-' + numberOfIndexContent);
-                            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                }
-                return {
-                    init: function () {
-                        demos();
-                    }
-                };
-            }();
-            KTCkeditorDocument.init();
+            KTSummernoteDemo.init();
             numberOfIndexContent = numberOfIndexContent + 1;
         }
 
@@ -2002,7 +1983,6 @@
                 }
             };
         }();
-
         $('#add_name_phamvihoptac').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true
@@ -2109,6 +2089,22 @@
             $('#add_control_btn').hide();
             $('#add_control_price').hide();
             KTBootstrapDatetimepicker.init();
+        });
+        var KTSummernoteDemo = function () {
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 100,
+                    tabsize: 2
+                });
+            }
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
         });
     </script>
 }
