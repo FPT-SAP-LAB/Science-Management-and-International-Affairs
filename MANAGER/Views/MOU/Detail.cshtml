@@ -301,47 +301,43 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" style="overflow-x: auto">
-                                    <table class="table table-bordered table-hover table-checkable " id="partner_table">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="2" class="">S<br />T<br />T</th>
-                                                <th colspan="4" class="text-center header-modify">Đối tác</th>
-                                                <th colspan="3" class="text-center header-modify">Người đại diện</th>
-                                                <th nowrap="nowrap" rowspan="2" class="text-center">Ngày kí kết</th>
-                                                <th nowrap="nowrap" rowspan="2" class="text-center">Phạm vi hợp tác</th>
-                                                <th rowspan="2" class="text-center"></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center jus">Tên</th>
-                                                <th class="text-center">Quốc gia</th>
-                                                <th class="text-center">Lĩnh vực</th>
-                                                <th class="text-center">Website</th>
-                                                <th class="text-center">Họ và tên</th>
-                                                <th class="text-center">Điện thoại</th>
-                                                <th class="text-center">Email</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center">1</td>
-                                                <td class="text-center">Bunkyo University</td>
-                                                <td class="text-center">Japan</td>
-                                                <td class="text-center">IT</td>
-                                                <td class="text-center"></td>
-                                                <td class="text-center" nowrap="nowrap">Nguyễn Hoàng Sơn</td>
-                                                <td class="text-center">0977626800</td>
-                                                <td class="text-center">sonnhhe130366@fpt.edu.vn</td>
-                                                <td class="text-center" nowrap="nowrap">22/02/2222</td>
-                                                <td class="text-center" nowrap="nowrap">SE</td>
-                                                <td nowrap="nowrap"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <table class="table table-bordered table-hover table-checkable " id="partner_table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="">S<br />T<br />T</th>
+                                        <th colspan="4" class="text-center header-modify">Đối tác</th>
+                                        <th colspan="3" class="text-center header-modify">Người đại diện</th>
+                                        <th nowrap="nowrap" rowspan="2" class="text-center">Ngày kí kết</th>
+                                        <th nowrap="nowrap" rowspan="2" class="text-center">Phạm vi hợp tác</th>
+                                        <th rowspan="2" class="text-center"></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center">Tên</th>
+                                        <th class="text-center">Quốc gia</th>
+                                        <th class="text-center">Lĩnh vực</th>
+                                        <th class="text-center">Website</th>
+                                        <th class="text-center">Họ và tên</th>
+                                        <th class="text-center">Điện thoại</th>
+                                        <th class="text-center">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">Bunkyo University</td>
+                                        <td class="text-center">Japan</td>
+                                        <td class="text-center">IT</td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center" nowrap="nowrap">Nguyễn Hoàng Sơn</td>
+                                        <td class="text-center">0977626800</td>
+                                        <td class="text-center">sonnhhe130366@fpt.edu.vn</td>
+                                        <td class="text-center" nowrap="nowrap">22/02/2222</td>
+                                        <td class="text-center" nowrap="nowrap">SE</td>
+                                        <td nowrap="nowrap"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                                </div>
-                            </div>
 
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
@@ -373,7 +369,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12" >
+                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12">
                                     <table class="table table-bordered table-hover table-checkable" id="moa_table">
                                         <thead>
                                             <tr>
@@ -1039,6 +1035,10 @@
             },
             searching: false,
             lengthChange: false,
+            initComplete: function () {
+                $('#partner_table').parent().css('overflow-x', 'auto');
+                $('#partner_table').parent().removeClass();
+            },
             columnDefs: [
                 {
                     targets: 4,
@@ -1884,7 +1884,7 @@
                     addToPartnerScopeListEdit(data);
                 },
                 error: function (data) {
-                    
+
                 },
             });
         }
