@@ -19,6 +19,7 @@ namespace ENTITIES
         {
             this.AcademicCollaborationStatusTypes = new HashSet<AcademicCollaborationStatusType>();
             this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
+            this.CollaborationTypeDirections = new HashSet<CollaborationTypeDirection>();
             this.AcademicPrograms = new HashSet<AcademicProgram>();
         }
     
@@ -29,6 +30,8 @@ namespace ENTITIES
         public virtual ICollection<AcademicCollaborationStatusType> AcademicCollaborationStatusTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CollaborationTypeDirection> CollaborationTypeDirections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
     }

@@ -19,10 +19,10 @@ namespace ENTITIES
         {
             this.Forms = new HashSet<Form>();
             this.ParticipantRoles = new HashSet<ParticipantRole>();
+            this.AcademicActivityPhaseLanguages = new HashSet<AcademicActivityPhaseLanguage>();
         }
     
         public int phase_id { get; set; }
-        public string phase_name { get; set; }
         public System.DateTime phase_start { get; set; }
         public System.DateTime phase_end { get; set; }
         public int activity_id { get; set; }
@@ -34,5 +34,7 @@ namespace ENTITIES
         public virtual ICollection<Form> Forms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantRole> ParticipantRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
     }
 }

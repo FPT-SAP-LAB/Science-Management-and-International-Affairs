@@ -2,7 +2,17 @@
 @{
     ViewBag.Title = "Tổ chức giáo dục FPT - Khoa học & Hợp tác quốc tế";
 }
-
+<style>
+    #banner {
+        background: url(https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png);
+        transition: background 1.5s ease-in;
+        background-size: 96rem 32rem;
+    }
+    .banner-button{
+        cursor:pointer;
+        opacity:80%
+    }
+</style>
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Subheader-->
     <!--begin::Entry-->
@@ -12,10 +22,28 @@
             <!--begin::Dashboard-->
             <!--begin::Row-->
             <div class="row">
-                <div class="col-xl-12">
-                    <!--begin::Mixed Widget 10-->
-                    <div class="card card-custom gutter-b">
-                        
+                <div class=" d-none d-md-block col-xl-12">
+                    <div class="card card-custom bgi-no-repeat gutter-b"
+                         id="banner" style="height: 31rem">
+                        <div class="card-body">
+                            <div class="">
+
+                            </div>
+                        </div>
+                        <div class="card-footer align-items-center" style="border-top:none ;">
+                            <span class="label pulse mr-10 banner-button" data-banner="0">
+                                <span class="position-relative">1</span>
+                                <span class="pulse-ring"></span>
+                            </span>
+                            <span class="label pulse mr-10 banner-button" data-banner="1">
+                                <span class="position-relative">2</span>
+                                <span class="pulse-ring"></span>
+                            </span>
+                            <span class="label pulse mr-10 banner-button" data-banner="2">
+                                <span class="position-relative">3</span>
+                                <span class="pulse-ring"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,7 +209,7 @@
             <!-- <hr> -->
             <!--begin::Row-->
             <div class="row">
-                <div class="col-xl-6"  style=" margin-bottom: 2rem;">
+                <div class="col-xl-6" style=" margin-bottom: 2rem;">
                     <!--begin::Mixed Widget 10-->
                     <div class="card card-custom">
                         <div class="card-header">
@@ -511,6 +539,39 @@
     </div>
     <!--end::Entry-->
     @section scripts{
+        <script>
+            var imgs = [
+                "https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png",
+                "https://daihoc.fpt.edu.vn/media/2021/02/Bannerweb-FPTU-20214.png",
+                "https://daihoc.fpt.edu.vn/media/2021/02/Screen-Shot-2021-02-03-at-23.03.39.png"
+            ]
+            var banner_index = 0
 
+
+            function change_banner() {
+                console.log(banner_index)
+                $('#banner').fadeTo('slow', 0.95, function () {
+                    $("#banner").css('background-image', 'url(' + imgs[banner_index] + ')');
+                    if (banner_index != 2) {
+                        banner_index = banner_index + 1
+                    } else {
+                        banner_index =0
+                    }
+                }).fadeTo('slow', 1);
+                //if (banner_index == 3) {
+                //    banner_index = 0
+                //}
+                console.log(banner_index)
+            }
+
+            var mybanners = setInterval(change_banner, 5000);
+
+            $(".banner-button").click(async function () {
+                clearInterval(mybanners);
+                banner_index = $(this).data('banner')
+                await change_banner()
+                mybanners = setInterval(change_banner, 5000);
+            })
+        </script>
     }
 </div>
