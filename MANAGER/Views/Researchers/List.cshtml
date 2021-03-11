@@ -9,7 +9,7 @@
     <!--begin::Search Form-->
     <div class="mb-7">
         <div class="row align-items-center">
-            <div class="col-lg-10 col-xl-8">
+            <div class="col-lg-10 col-xl-10">
                 <div class="row align-items-center">
                     <div class="col-md-3 my-2 my-md-0">
                         <div class="input-icon">
@@ -33,18 +33,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3 my-2 my-md-0">
+                    <div class="col-md-4 my-2 my-md-0">
                         <div class="d-flex align-items-center">
-                            <label class="mr-3 mb-0 d-none d-md-block">CS:</label>
+                            <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
                             <select class="form-control"
-                                    id="search_nam">
+                                    id="search_coso">
                                 <option label="Label"></option>
                                 <option value="">FPTU HN</option>
                                 <option value="1">FPTU Cần Thơ</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
+                    <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
                         <a href="#"
                            class="btn btn-light-primary px-6 font-weight-bold">
                             Tìm kiếm
@@ -52,9 +52,8 @@
                     </div>
 
                 </div>
-
             </div>
-            <div class="col-lg-2 col-xl-4 mt-5 mt-lg-0" style="text-align: right;">
+            <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button"
                             class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -142,7 +141,7 @@
                 <th>Tên Nghiên cứu viên</th>
                 <th>Học hàm - Học vị</th>
                 <th>Chức vụ</th>
-                <th>Đơn Vị</th>
+                <th>Cơ sở</th>
                 <th>Lĩnh vực</th>
                 <th>Google Scholar</th>
             </tr>
@@ -332,7 +331,8 @@
         //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
         list_select = {
             "search_nam": "Chọn năm",
-            "search_nganh":"Chọn ngành"
+            "search_nganh": "Chọn ngành",
+            "search_coso": "Chọn cơ sở"
         }
         for (let i in list_select) {
             $('#' + i).select2({

@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    .nav-link{
-        font-size:17px;
-
+    .nav-link {
+        font-size: 17px;
     }
-    #research_avatar{
-        width:15rem;
-        border-radius:50%
+
+    #research_avatar {
+        width: 15rem;
+        border-radius: 50%
     }
 </style>
 <div class="col-12">
@@ -36,8 +36,13 @@
                                 <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin cho nghiên cứu viên</span>
                             </div>
                             <div class="card-toolbar">
-                                <button type="reset" class="btn btn-success mr-2">Lưu</button>
-                                <button type="reset" class="btn btn-secondary">Huỷ</button>
+                                <div id="edit-control-area">
+                                    <button type="reset" id="save-btn" class="btn btn-success mr-2">Lưu</button>
+                                    <button type="reset" id="cancel-btn" class="btn btn-secondary">Huỷ</button>
+                                </div>
+                                <div id="edit-enable-area">
+                                    <button type="reset" id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</button>
+                                </div>
                             </div>
                         </div>
                         <!--end::Header-->
@@ -77,27 +82,34 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid" type="text" value="Bùi Ngọc Anh" />
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Bùi Ngọc Anh" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid" type="text" value="14/10/1999" />
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="14/10/1999" />
                                         @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid" type="text" value="Việt Nam" />
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Việt Nam" />
                                         @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid" type="text" value="Giảng viên" />
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Giảng viên" />
+                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Chức vụ" />
                                         @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
                                     </div>
                                 </div>
@@ -112,7 +124,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="0943169051" placeholder="Phone" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="0943169051" placeholder="Phone" />
                                         </div>
                                         @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
                                     </div>
@@ -122,7 +134,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="sonnt69@fe.edu.vn" placeholder="Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +143,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="abc.com" placeholder="Email" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="abc.com" placeholder="Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +152,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-location-arrow"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="sonnt69@fe.edu.vn" placeholder="Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +161,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-google"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="https://scholar.google.com.vn/citations?user=HUFV96EAAAAJ&hl=en" placeholder="Google Scholar" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="https://scholar.google.com.vn/citations?user=HUFV96EAAAAJ&hl=en" placeholder="Google Scholar" />
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +170,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="far fa-address-card"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="...." placeholder="CV" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="...." placeholder="CV" />
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +179,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
-                                            <select class="form-control select2" id="kt_select2_3" name="param" multiple="multiple">
+                                            <select class="form-control select2  researcher_infomation" disabled id="kt_select2_3" name="param" multiple="multiple">
                                                 <option value="AK" selected>Toán học</option>
                                                 <option value="AK" selected>Khoa học máy tính</option>
                                                 <option value="AK">Toán học</option>
@@ -207,6 +219,7 @@
                 // multi select
                 $('#kt_select2_3').select2({
                     placeholder: 'Chọn lĩnh vực quan tâm',
+                    tags: true
                 });
             }
             // Public functions
@@ -221,6 +234,28 @@
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
+        $(function () {
+            var save_loader = new LoaderBtn($("#save-btn"))
+            $("#edit-control-area").hide()
+            $("#edit-enable-btn").click(function () {
+                enableEdit()
+            })
+            $("#save-btn").click(function () {
+                save_loader.startLoading()
+                $(".researcher_infomation").attr('disabled', false)
+                ////////////////////xử lý ở đây/////////////////////
+
+                 ////////////////////xử lý ở đây/////////////////////
+                
+            })
+        })
+
+        function enableEdit() {
+            $("#edit-control-area").show()
+            $("#edit-enable-area").hide()
+            $(".researcher_infomation").attr('disabled',false)
+        }
+        
     </script>
 }
 

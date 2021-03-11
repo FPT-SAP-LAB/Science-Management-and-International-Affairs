@@ -251,6 +251,22 @@
                         <div class="pb-5">
                             <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Mệnh giá chi phí</label>
+                                    <select class="form-control selectTitle">
+                                        <option value="VND">VND</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Mệnh giá tổng cộng</label>
+                                    <select class="form-control selectTitle">
+                                        <option value="VND">VND</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
@@ -461,7 +477,7 @@
                     var $uploadedList = $(id + ' .uppy-list');
                     var timeout;
 
-                    var uppy2 = Uppy.Core({
+                    uppy2 = Uppy.Core({
                         debug: true,
                         autoProceed: false,
                         showProgressDetails: true,
@@ -660,6 +676,10 @@
         inItSelectPeople(document.getElementsByClassName("selectPeople"))
 
         function submitData() {
+            let fd = new FormData();
+            fd.append('paper', uppy1.getFiles()[0].data)
+            fd.append('invite', uppy2.getFiles()[0].data)
+
             let conferenceSelect = $('#selectConference').select2('data')[0];
             if (conferenceSelect == undefined)
                 return toastr.warning("Bạn chưa điền tên hội nghị");
@@ -712,6 +732,9 @@
                 }
                 this.data.Cost.push(cost)
             })
+
+            fd.append("input", JSON.stringify(this.data));
+
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -727,9 +750,9 @@
                     toastr.error("Có lỗi xảy ra");
                 },
                 dataType: "json",
-                data: {
-                    input: JSON.stringify(this.data)
-                }
+                data: fd,
+                processData: false,
+                contentType: false
             });
         }
     </script>

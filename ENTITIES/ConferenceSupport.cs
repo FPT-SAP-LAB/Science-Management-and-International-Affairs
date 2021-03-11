@@ -32,9 +32,11 @@ namespace ENTITIES
         public int paper_file_id { get; set; }
         public bool editable { get; set; }
         public int account_id { get; set; }
-        public Nullable<System.DateTime> date_request { get; set; }
+        public System.DateTime date_request { get; set; }
+        public int invitation_file_id { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }

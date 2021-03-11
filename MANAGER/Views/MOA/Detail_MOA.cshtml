@@ -145,13 +145,13 @@
                                    id="moa_update_table">
                                 <thead>
                                     <tr>
-                                        <th>Mã hiệu</th>
-                                        <th>Thời gian kí kết</th>
-                                        <th>Thời gian hết hạn</th>
-                                        <th>Đối tác</th>
-                                        <th>Phạm vi hợp tác</th>
-                                        <th>Bản mềm</th>
-                                        <th></th>
+                                        <th class="text-center">Mã hiệu</th>
+                                        <th class="text-center">Thời gian kí kết</th>
+                                        <th class="text-center">Thời gian hết hạn</th>
+                                        <th class="text-center">Đối tác</th>
+                                        <th class="text-center">Phạm vi hợp tác</th>
+                                        <th class="text-center">Bản mềm</th>
+                                        <th class="text-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,18 +177,20 @@
                                     DANH SÁCH ĐỐI TÁC HOẠT ĐỘNG
                                 </h4>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
                                     <div class="row align-items-center">
-                                        <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bolder" data-toggle="modal">Thêm</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
+                                            <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                                <div class="col-lg-11 col-xl-11 col-md-11 col-sm-11">
                                     <div class="row align-items-center justify-content-end">
-                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
                                                     <option label="Label"></option>
@@ -197,7 +199,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
                                                     <option label="Label"></option>
@@ -206,13 +208,13 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
+                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover table-checkable " id="partner_table">
+                            <table class="table table-bordered table-hover table-checkable" id="partner_table">
                                 <thead>
                                     <tr>
                                         <th rowspan="2" class="">S<br />T<br />T</th>
@@ -220,10 +222,10 @@
                                         <th colspan="3" class="text-center header-modify">Người đại diện</th>
                                         <th nowrap="nowrap" rowspan="2" class="text-center">Ngày kí kết</th>
                                         <th nowrap="nowrap" rowspan="2" class="text-center">Phạm vi hợp tác</th>
-                                        <th rowspan="2"></th>
+                                        <th rowspan="2" class="text-center"></th>
                                     </tr>
                                     <tr>
-                                        <th class="text-center">Tên</th>
+                                        <th class="text-center jus">Tên</th>
                                         <th class="text-center">Quốc gia</th>
                                         <th class="text-center">Lĩnh vực</th>
                                         <th class="text-center">Website</th>
@@ -314,7 +316,7 @@
                     <div class="col-lg-6">
                         <h5 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h5>
                     </div>
-                </div> 
+                </div>
                 <div class="row col-lg-11 mb-3 mt-3">
                     <div class="col-lg-6">
                         <a class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-toggle="modal" href="#add-partner-scope">Thêm</a>
@@ -336,7 +338,7 @@
                             <td class="text-center">JC </td>
                             <td class="text-center" nowrap="nowrap">
                                 <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                         <tr>
@@ -345,7 +347,7 @@
                             <td class="text-center">ME </td>
                             <td class="text-center" nowrap="nowrap">
                                 <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                                <a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -533,6 +535,7 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
+
          //funtion delete
         function confirm_delete(id) {
         //function confirm_delete(id, action, controller) {
@@ -642,17 +645,22 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
                         return '<a  href="#add_additional_moa"  data-toggle="modal"  class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a><a  onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
+                },
+                {
+                    targets: '_all',
+                    className: 'text-center'
                 }
             ]
         });
 
         //table tab 2
+
         $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -664,6 +672,11 @@
             },
             searching: false,
             lengthChange: false,
+            initComplete: function () {
+                $('#partner_table').parent().css('overflow-x', 'auto');
+                $('#partner_table').parent().removeClass();
+
+            },
             columnDefs: [
                 {
                     targets: 4,
@@ -675,7 +688,7 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
@@ -730,8 +743,6 @@
         $(document).ready(function () {
             //split card
             //overflow
-            $('#partner_table').parent().css('overflow-x', 'auto');
-            $('#partner_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
     </script>

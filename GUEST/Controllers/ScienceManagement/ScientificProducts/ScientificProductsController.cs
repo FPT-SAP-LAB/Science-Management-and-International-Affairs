@@ -21,9 +21,24 @@ namespace GUEST.Controllers.ScientificProducts
                 new PageTree("Sản phẩm khoa học","/ScientificProducts"),
             };
             ViewBag.pagesTree = pagesTree;
-            List<ListProduct_JournalPaper> list = lpr.getList();
+
+            List<ListProduct_JournalPaper> list = lpr.getList(new DataSearch());
             ViewBag.listJournal = list;
+            List<ListProduct_ConferencePaper> list2 = lpr.getList2(new DataSearch());
+            ViewBag.listConferen = list2;
+            List<ListProdcut_Inven> listInven = lpr.getListInven(new DataSearch());
+            ViewBag.listInven = listInven;
+
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Search(DataSearch item)
+        {
+            List<ListProduct_JournalPaper> list = lpr.getList(item);
+            List<ListProduct_ConferencePaper> list2 = lpr.getList2(item);
+            List<ListProdcut_Inven> listInven = lpr.getListInven(item);
+            return Json(new { Journal = list, Conference = list2, Invention = listInven }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Pending()
