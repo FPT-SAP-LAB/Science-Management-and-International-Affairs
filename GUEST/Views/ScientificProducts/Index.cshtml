@@ -19,7 +19,7 @@
                                             <div class="input-icon">
                                                 <input type="text" class="form-control"
                                                        placeholder="Tên"
-                                                       id="kt_datatable_search_query" />
+                                                       id="name_search" />
                                                 <span>
                                                     <i class="flaticon2-search-1 text-muted"></i>
                                                 </span>
@@ -47,15 +47,15 @@
                                         </div>
                                         <div class="col-md-3 my-2 my-md-0">
                                             <div class="d-flex align-items-center">
-                                                <input type="text" class="form-control custom-pickyear" readonly
+                                                <input type="text" class="form-control custom-pickyear" readonly id="search_nam"
                                                        placeholder="Chọn năm" />
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
-                                            <a href="#"
+                                            <button id="search-btn"
                                                class="btn btn-light-primary px-6 font-weight-bold">
                                                 Tìm kiếm
-                                            </a>
+                                            </button>
                                         </div>
 
                                     </div>
@@ -178,76 +178,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            An Evaluation of Image-Based Malware Classification Using Machine Learning
-                                                        </td>
-                                                        <td>
-                                                            Nguyễn Quốc Long et al
-                                                        </td>
-                                                        <td>ICCCI 2020: Communications in Computer and Information Science</td>
-                                                        <td>Q1</td>
-                                                        <td>
-                                                            Vol. 1287
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>
-                                                            Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks
-                                                        </td>
-                                                        <td>
-                                                            An C. Tran<br /> Nghi C. Tran<br /> Dương Trung Nghĩa
-                                                        </td>
-                                                        <td>FDSE 2020: Communications in Computer and Information Science</td>
-                                                        <td>Q2</td>
-                                                        <td>
-                                                            Vol. 1287
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>
-                                                            HIV and ways to maintain a meaningful life
-                                                        </td>
-                                                        <td>
-                                                            Huỳnh Tấn Hội
-                                                        </td>
-                                                        <td>Biomedicine</td>
-                                                        <td>Scopus</td>
-                                                        <td>
-                                                            Vol. 1287
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>
-                                                            Vector Map Random Encryption Algorithm Based on Multi-Scale Simplification and Gaussian Distribution
-                                                        </td>
-                                                        <td>
-                                                            Phạm Ngọc Giao<br /> Ngô Tùng Sơn<br /> Bùi Ngọc Anh<br /> Trần Văn Định<br /> Suk-Hwan Lee<br /> Ki-Ryong Kwon
-                                                        </td>
-                                                        <td>Applied Sciences</td>
-                                                        <td>Q1</td>
-                                                        <td>
-                                                            Vol. 1287
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>
-                                                            The structure of Leavitt path algebras and the Invariant Basis Number property
-                                                        </td>
-                                                        <td>
-                                                            Trần Giang Nam<br /> Ngô Tấn Phúc
-                                                        </td>
-                                                        <td>Journal of Pure and Applied Algebra</td>
-                                                        <td>Q1</td>
-                                                        <td>
-                                                            Vol. 1287
-                                                        </td>
-                                                    </tr>
+                                                    @{
+                                                        count = 1;
+                                                        foreach (var item in ViewBag.listInven)
+                                                        {
+                                                            <tr>
+                                                                <td>@count</td>
+                                                                <td>@item.name</td>
+                                                                <td>@item.author</td>
+                                                                <td>@item.name_shtt</td>
+                                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
+                                                                <td>@item.no</td>
+                                                            </tr>
+                                                            count++;
+                                                        }
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -265,25 +210,92 @@
 
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
-    @*<script src="~/Content/assets/js/pages/crud/ktdatatable/base/html-table.js"></script>*@
-    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">*@
-    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>*@
     <script>
         $('#search_thang').select2({
             placeholder: 'Chọn tháng',
             allowClear: true
         });
-        $('#search_nam').select2({
-            placeholder: 'Chọn năm',
-            allowClear: true,
-        });
     </script>
     <script>
+        var table_tapchi;
+        $("#search-btn").click(function () {
+            $("#table_tapchi").DataTable().clear().draw();
+            $("#table_kyyeu").DataTable().clear().draw();
+            $("#table_sangche").DataTable().clear().draw();
+            var DataSearch = {
+                nameS: $("#name_search").val(),
+                monthS: $("#search_thang").val(),
+                yearS: $("#search_nam").val()
+            };
+            $.ajax({
+                url: "@Url.Action("Search", "ScientificProducts")",
+                type: "POST",
+                data: JSON.stringify(DataSearch),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    for (var i = 0; i < response.Journal.length; i++) {
+                        var count = i + 1;
+                        $("#table_tapchi").DataTable().row.add([
+                            "" + count,
+                            "" + response.Journal[i].name,
+                            "" + response.Journal[i].author,
+                            "" + response.Journal[i].journal_name,
+                            "" + response.Journal[i].quality,
+                            "" + response.Journal[i].vol,
+                            "" + response.Journal[i].page,
+                            "" + response.Journal[i].link_doi,
+                            "" + response.Journal[i].link_scholar
+                        ]).draw();
+                    }
+                    for (var i = 0; i < response.Conference.length; i++) {
+                        var count = i + 1;
+                        $("#table_kyyeu").DataTable().row.add([
+                            "" + count,
+                            "" + response.Conference[i].name,
+                            "" + response.Conference[i].author,
+                            "" + response.Conference[i].journal_name,
+                            "" + response.Conference[i].quality,
+                            "" + response.Conference[i].vol,
+                            "" + response.Conference[i].page,
+                            "" + response.Conference[i].link_doi,
+                            "" + response.Conference[i].link_scholar
+                        ]).draw();
+                    }
+                    for (var i = 0; i < response.Invention.length; i++) {
+                        var count = i + 1;
+                        $("#table_sangche").DataTable().row.add([
+                            "" + count,
+                            "" + response.Invention[i].name,
+                            "" + response.Invention[i].author,
+                            "" + response.Invention[i].name_shtt,
+                            "" + convertJsonDate(response.Invention[i].date),
+                            "" + response.Invention[i].no
+                        ]).draw();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        function convertJsonDate(dateString) {
+            dateString = dateString.substr(6);
+            var currentTime = new Date(parseInt(dateString));
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            var date = day + "/" + month + "/" + year;
+            return date;
+        }
+
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
             });
-            $('#table_tapchi').DataTable({
+            table_tapchi = $('#table_tapchi').DataTable({
                 "columns": [
                     { width: "5%" },
                     { width: "20%" },
@@ -385,7 +397,12 @@
                 "columns": [
                     { width: "5%" },
                     { width: "25%" },
-                    { width: "20%" },
+                    {
+                        width: "20%",
+                        render: function (data) {
+                            return data.split(",").join("<br/>")
+                        }
+                    },
                     { width: "20%" },
                     { width: "15%" },
                     { width: "15%" }
