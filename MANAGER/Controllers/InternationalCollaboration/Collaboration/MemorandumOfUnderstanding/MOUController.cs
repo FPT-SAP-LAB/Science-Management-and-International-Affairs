@@ -114,7 +114,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou_detail_id = id;
+                //mou_detail_id = id;
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
