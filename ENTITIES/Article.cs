@@ -20,7 +20,6 @@ namespace ENTITIES
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.Procedures = new HashSet<Procedure>();
             this.Partners = new HashSet<Partner>();
-            this.AcademicActivities = new HashSet<AcademicActivity>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
             this.ArticleVersions = new HashSet<ArticleVersion>();
@@ -44,12 +43,11 @@ namespace ENTITIES
         public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Procedure> Procedures { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Partner> Partners { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
+        public virtual ActivityInfo ActivityInfo { get; set; }
         public virtual ArticleStatu ArticleStatu { get; set; }
         public virtual ArticleCategory ArticleCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Partner> Partners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -40,9 +40,9 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public string Add(string input)
+        public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
-            string output = repos.AddConference(input);
+            string output = repos.AddConferenceSupport(input, invite, paper);
             return output;
         }
         public ActionResult Detail(int id)

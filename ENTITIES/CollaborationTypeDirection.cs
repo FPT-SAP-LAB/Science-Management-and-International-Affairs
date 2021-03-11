@@ -12,23 +12,21 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperStatu
+    public partial class CollaborationTypeDirection
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaperStatu()
+        public CollaborationTypeDirection()
         {
-            this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
-            this.Inventions = new HashSet<Invention>();
-            this.Papers = new HashSet<Paper>();
+            this.CollaborationTypeDirectionLanguages = new HashSet<CollaborationTypeDirectionLanguage>();
         }
     
-        public int status_id { get; set; }
+        public int collab_type_direction_id { get; set; }
+        public int direction_id { get; set; }
+        public int collab_type_id { get; set; }
     
+        public virtual AcademicCollaborationType AcademicCollaborationType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperStatusLanguage> PaperStatusLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<CollaborationTypeDirectionLanguage> CollaborationTypeDirectionLanguages { get; set; }
+        public virtual Direction Direction { get; set; }
     }
 }

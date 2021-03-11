@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -103,15 +104,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
-        public string AddConference(string input)
+        public string AddConferenceSupport(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
                     DataTable dt = new DataTable();
-                    //log.Debug("Creating a conference sponsor request");
-                    //int a = int.Parse("43gg34+-");
                     JObject @object = JObject.Parse(input);
 
                     JToken conf = @object["Conference"];
@@ -139,7 +138,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         reward_policy_id = policy.reward_policy_id,
                         paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
                         account_id = 1, // Sẽ chỉnh sau khi xong tạo account
-                        editable = false
+                        editable = false,
+                        date_request = DateTime.Now
                     };
                     db.ConferenceSupports.Add(support);
                     db.SaveChanges();

@@ -2124,6 +2124,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\inputFilter.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
