@@ -461,7 +461,7 @@
                     var $uploadedList = $(id + ' .uppy-list');
                     var timeout;
 
-                    var uppy2 = Uppy.Core({
+                    uppy2 = Uppy.Core({
                         debug: true,
                         autoProceed: false,
                         showProgressDetails: true,
@@ -660,6 +660,10 @@
         inItSelectPeople(document.getElementsByClassName("selectPeople"))
 
         function submitData() {
+            let fd = new FormData();
+            fd.append('paper', uppy1.getFiles()[0].data)
+            fd.append('invite', uppy2.getFiles()[0].data)
+
             let conferenceSelect = $('#selectConference').select2('data')[0];
             if (conferenceSelect == undefined)
                 return toastr.warning("Bạn chưa điền tên hội nghị");
@@ -712,6 +716,9 @@
                 }
                 this.data.Cost.push(cost)
             })
+
+            fd.append("input", JSON.stringify(this.data));
+
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -727,9 +734,9 @@
                     toastr.error("Có lỗi xảy ra");
                 },
                 dataType: "json",
-                data: {
-                    input: JSON.stringify(this.data)
-                }
+                data: fd,
+                processData: false,
+                contentType: false
             });
         }
     </script>
