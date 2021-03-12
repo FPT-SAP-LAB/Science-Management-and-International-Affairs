@@ -47,7 +47,7 @@ namespace GUEST.Controllers.ScientificProducts
         {
             List<ListProduct_OnePerson> list = lpo.getList(item);
             ViewBag.list = list;
-            return Json(new { OnePerson = list}, JsonRequestBehavior.AllowGet);
+            return Json(new { OnePerson = list }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Pending()

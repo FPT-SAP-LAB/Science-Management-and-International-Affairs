@@ -31,7 +31,7 @@ namespace BLL.ScienceManagement.ScientificProduct
             sql += " order by status_id desc";
             list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
                 , new SqlParameter("id", 1)
-                , new SqlParameter("name", "%"+item.nameS+"%")).ToList();
+                , new SqlParameter("name", "%" + item.nameS + "%")).ToList();
             return list;
         }
     }
