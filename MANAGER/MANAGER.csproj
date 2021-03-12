@@ -2196,6 +2196,7 @@
     <Content Include="Views\Partner\List_Deleted.cshtml" />
     <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Reports\TotalBonusByYear.cshtml" />
     <Content Include="Views\Researchers\AddResearcher.cshtml" />
   </ItemGroup>
   <ItemGroup>
