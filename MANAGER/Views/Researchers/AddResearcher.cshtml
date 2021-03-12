@@ -11,7 +11,7 @@
         <div class="tab-content mt-5" id="myTabContent">
             <div class="row">
                 <div class="col-12 text-lg-right">
-                    <a id="create-profile-btn" class="btn btn-light-success mr-2">Tạo hồ sơ nghiên cứu viên</a>
+                    <a id="create-profile-btn" class="btn btn-light-success mr-2">Đăng hồ sơ nghiên cứu viên</a>
                 </div>
             </div>
             <div class="row">
@@ -879,8 +879,6 @@
             </div>
         </div>
     </div>
-
-
 @section scripts{
     <script>
         var KTSelect2 = function () {
@@ -908,7 +906,7 @@
         $("#create-profile-btn").click(function () {
             create_loader.startLoading()
             Swal.fire({
-                title: "Tạo hồ sơ cho nghiên cứu viên này?",
+                title: "Đăng hồ sơ cho nghiên cứu viên này?",
                 text: "!",
                 icon: "warning",
                 showCancelButton: true,
@@ -919,7 +917,7 @@
                 create_loader.stopLoading()
                 if (result.value) {
                     Swal.fire(
-                        "Tạo hồ sơ thành công!",
+                        "Đăng hồ sơ thành công!",
                         "",
                         "success"
                     )
