@@ -25,7 +25,7 @@ namespace ENTITIES
     
         public virtual Country Country { get; set; }
         public virtual Specialization Specialization { get; set; }
-        public virtual ScholarshipStatu ScholarshipStatu { get; set; }
         public virtual Article Article { get; set; }
+        public virtual ScholarshipStatu ScholarshipStatu { get; set; }
     }
 }
