@@ -29,5 +29,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             return View();
         }
+        public ActionResult AddResearcher()
+        {
+            return View();
+        }
     }
 }
