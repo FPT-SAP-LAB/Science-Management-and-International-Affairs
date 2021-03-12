@@ -9,7 +9,7 @@
     <!--begin: Datatable-->
     <div class="col-xl-12 col-xxl-12 table-responsive">
         <br />
-        <table id="mylist" class="table">
+        <table id="mytable" class="table table-bordered table-checkable">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -74,5 +74,23 @@
 </div>
 
 @section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#mytable").DataTable({
+                responsive: true,
 
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                }
+            });
+        });
+    </script>
 }

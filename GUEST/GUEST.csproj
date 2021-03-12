@@ -2340,7 +2340,6 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.ttf" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
-    <Content Include="credentials.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CostTableConferenceRequest.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

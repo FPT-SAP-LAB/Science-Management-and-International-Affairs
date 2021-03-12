@@ -2197,6 +2197,7 @@
     <Content Include="Views\DetailOfAcademicActivity\RegisterForm.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Reports\TotalBonusByYear.cshtml" />
+    <Content Include="Views\Researchers\AddResearcher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
