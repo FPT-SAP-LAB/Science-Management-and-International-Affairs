@@ -22,5 +22,6 @@ namespace ENTITIES
         public int language_id { get; set; }
     
         public virtual Article Article { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

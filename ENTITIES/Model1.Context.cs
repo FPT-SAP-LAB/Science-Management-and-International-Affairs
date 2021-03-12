@@ -43,13 +43,11 @@ namespace ENTITIES
         public virtual DbSet<AcademicCollaborationType> AcademicCollaborationTypes { get; set; }
         public virtual DbSet<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         public virtual DbSet<AcademicProgram> AcademicPrograms { get; set; }
-        public virtual DbSet<AcademicProgramLanguage> AcademicProgramLanguages { get; set; }
         public virtual DbSet<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
         public virtual DbSet<CollaborationTypeDirection> CollaborationTypeDirections { get; set; }
         public virtual DbSet<CollaborationTypeDirectionLanguage> CollaborationTypeDirectionLanguages { get; set; }
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Procedure> Procedures { get; set; }
-        public virtual DbSet<ProcedureLanguage> ProcedureLanguages { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
         public virtual DbSet<ArticleStatu> ArticleStatus { get; set; }
@@ -141,6 +139,7 @@ namespace ENTITIES
         public virtual DbSet<PlanParticipant> PlanParticipants { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
+        public virtual DbSet<MOAPartner> MOAPartners { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }
 }
