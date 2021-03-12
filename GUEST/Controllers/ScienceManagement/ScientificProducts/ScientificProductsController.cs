@@ -12,6 +12,7 @@ namespace GUEST.Controllers.ScientificProducts
     public class ScientificProductsController : Controller
     {
         ListProductRepo lpr = new ListProductRepo();
+        ListProductOnePersonRepo lpo = new ListProductOnePersonRepo();
         // GET: ScientificProducts
         public ActionResult Index()
         {
@@ -41,6 +42,14 @@ namespace GUEST.Controllers.ScientificProducts
             return Json(new { Journal = list, Conference = list2, Invention = listInven }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult SearchOnePerson(DataSearch item)
+        {
+            List<ListProduct_OnePerson> list = lpo.getList(item);
+            ViewBag.list = list;
+            return Json(new { OnePerson = list }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Pending()
         {
             ViewBag.title = "Sản phẩm khoa học đang chờ phê duyệt";
@@ -49,6 +58,8 @@ namespace GUEST.Controllers.ScientificProducts
                 new PageTree("Sản phẩm khoa học đang chờ phê duyệt","/ScientificProducts/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
+            List<ListProduct_OnePerson> list = lpo.getList(new DataSearch());
+            ViewBag.list = list;
             return View();
         }
     }
