@@ -24,7 +24,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:SkipInvalidConfigurations=true /p:publishUrl=$(build.artifactstagingdirectory)\website'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -32,3 +32,16 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: FtpUpload@2
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: 'ftp://103.77.167.209'
+    username: 'Administrator'
+    password: '24061999Dlx'
+    rootDirectory: '$(build.artifactStagingDirectory)/website'
+    filePatterns: '**'
+    remoteDirectory: 'DEPLOYMENT/TEST/'
+    clean: false
+    cleanContents: false
+    preservePaths: true
+    trustSSL: false
