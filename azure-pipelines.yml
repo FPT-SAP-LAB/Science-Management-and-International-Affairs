@@ -40,7 +40,7 @@ steps:
     password: '24061999Dlx'
     rootDirectory: '$(build.artifactStagingDirectory)/website'
     filePatterns: '**'
-    remoteDirectory: '/DEPLOYMENT/TEST/'
+    remoteDirectory: '/TEST'
     clean: false
     cleanContents: false
     preservePaths: true
