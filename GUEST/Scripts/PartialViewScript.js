@@ -55,7 +55,7 @@ $("#add_author_save").click(function () {
         + "<td>" + add_author_bank + "</td>"
         + "<td>" + add_author_accno + "</td>"
         + "<td>" + add_author_reward + "</td>"
-        + "<td>" + "<span style='cursor:pointer' class='delete-author' data-id='" + row_id + "'><i  style='color:red' class='fas fa-times icon-md'></i></span>" + "</td>"
+        + "<td>" + "<span style='cursor:pointer' class='delete-author' data-id='" + row_id + "'><a class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a>" + "</td>"
         + "</tr>\
                 ")
     $(".tacgia").show()
