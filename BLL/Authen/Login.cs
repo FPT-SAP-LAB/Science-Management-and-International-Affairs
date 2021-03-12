@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ENTITIES;
 
-
 namespace BLL.Authen
 {
     public class Login
@@ -37,7 +36,6 @@ namespace BLL.Authen
             {
                 return String.Empty;
             }
-
         }
     }
 }
