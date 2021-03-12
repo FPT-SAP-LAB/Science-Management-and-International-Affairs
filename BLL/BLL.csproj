@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authen\Login.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorRepo.cs" />
+    <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
   </ItemGroup>
   <ItemGroup />
