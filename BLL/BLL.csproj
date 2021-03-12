@@ -78,6 +78,7 @@
     <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorRepo.cs" />
+    <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -8,19 +8,24 @@
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-            <div class="col-xl-12 px-0">
+            <div class="col-xl-12 px-0 row">
                 <div class="col-md-3 my-2 my-md-0 float-left">
                     <div class="input-icon">
                         <input type="text" class="form-control"
                                placeholder="Tên"
-                               id="kt_datatable_search_query" />
+                               id="name_search" />
                         <span>
                             <i class="flaticon2-search-1 text-muted"></i>
                         </span>
                     </div>
                 </div>
+                <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
+                    <button id="search-btn"
+                            class="btn btn-light-primary px-6 font-weight-bold">
+                        Tìm kiếm
+                    </button>
+                </div>
             </div>
-            <button class="btn" id="a">a</button>
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
                     <table id="pending_table" class="table table-bordered table-checkable">
@@ -34,20 +39,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
-                                <td>10/12/2019</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
-                                <td>09/12/2019</td>
-                                <td>3</td>
-                                <td>3</td>
-                                <td>6</td>
-                            </tr>
+                            @{
+                                foreach (var item in ViewBag.list)
+                                {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.status_id</td>
+                                        <td>@item.status_id</td>
+                                        <td>paper @item.paper_id</td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -58,17 +61,57 @@
 
 @section scripts{
     <script>
-        $("#a").click(function () {
-            alert(document.getElementById("pending_table").rows[1].cells.length);
+        function convertJsonDate(dateString) {
+            dateString = dateString.substr(6);
+            var currentTime = new Date(parseInt(dateString));
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            var date = day + "/" + month + "/" + year;
+            return date;
+        }
+        $("#search-btn").click(function () {
+            $("#pending_table").DataTable().clear().draw();
+            var DataSearch = {
+                nameS: $("#name_search").val()
+            };
+            $.ajax({
+                url: "@Url.Action("SearchOnePerson", "ScientificProducts")",
+                type: "POST",
+                data: JSON.stringify(DataSearch),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    for (var i = 0; i < response.OnePerson.length; i++) {
+                        $("#pending_table").DataTable().row.add([
+                            "" + response.OnePerson[i].name,
+                            "" + convertJsonDate(response.OnePerson[i].date_request),
+                            "" + response.OnePerson[i].status_id,
+                            "" + response.OnePerson[i].status_id,
+                            "" + response.OnePerson[i].paper_id
+                        ]).draw();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
         });
 
+        $('#pending_table').on('click', ".mybtn", function () {
+            var rowIndex = $(this).closest("tr").index();
+            selectedIndex = $("#pending_table").DataTable().row(rowIndex).data()[4];
+            alert(selectedIndex);
+            //$.ajax
+        });
         $(document).ready(function () {
             $("#pending_table").DataTable({
                 responsive: true,
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -79,7 +122,7 @@
                 },
 
                 // Order settings
-                order: [[0, 'asc']],
+                order: [[3, 'desc']],
 
                 columns: [
                     { width: "50%" },
@@ -122,19 +165,19 @@
                             var status = {
                                 1: {
                                     'title': 'Chi tiết',
-                                    'class': 'btn btn-success mr-2'
+                                    'class': 'btn btn-success mr-2 mybtn'
                                 },
                                 2: {
                                     'title': 'Chi tiết',
-                                    'class': 'btn btn-primary mr-2'
+                                    'class': 'btn btn-primary mr-2 mybtn'
                                 },
                                 3: {
                                     'title': 'Chỉnh sửa',
-                                    'class': 'btn btn-warning mr-2'
+                                    'class': 'btn btn-warning mr-2 mybtn'
                                 },
                                 4: {
                                     'title': 'Đã hủy',
-                                    'class': 'btn btn-danger mr-2'
+                                    'class': 'btn btn-danger mr-2 mybtn'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {

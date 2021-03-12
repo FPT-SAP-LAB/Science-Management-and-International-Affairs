@@ -227,6 +227,7 @@
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_JournalPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_OnePerson.cs" />
     <Compile Include="CustomProfile.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
