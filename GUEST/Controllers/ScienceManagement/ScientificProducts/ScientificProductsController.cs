@@ -46,8 +46,8 @@ namespace GUEST.Controllers.ScientificProducts
         public JsonResult SearchOnePerson(DataSearch item)
         {
             List<ListProduct_OnePerson> list = lpo.getList(item);
-            ViewBag.list = list;
-            return Json(new { OnePerson = list }, JsonRequestBehavior.AllowGet);
+            List<ListProduct_OnePerson> list2 = lpo.getListInven(item);
+            return Json(new { Paper = list, Inven = list2 }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Pending()
@@ -59,7 +59,9 @@ namespace GUEST.Controllers.ScientificProducts
             };
             ViewBag.pagesTree = pagesTree;
             List<ListProduct_OnePerson> list = lpo.getList(new DataSearch());
-            ViewBag.list = list;
+            ViewBag.listPaper = list;
+            List<ListProduct_OnePerson> list2 = lpo.getListInven(new DataSearch());
+            ViewBag.listInven = list2;
             return View();
         }
     }

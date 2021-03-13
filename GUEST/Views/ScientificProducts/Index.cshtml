@@ -29,7 +29,6 @@
                                             <div class="d-flex align-items-center">
                                                 <select class="form-control" id="search_thang" name="param">
                                                     <option label="Label"></option>
-                                                    <option value="0">@rm.GetString("All")</option>
                                                     <option value="1">@rm.GetString("Jan")</option>
                                                     <option value="2">@rm.GetString("Feb")</option>
                                                     <option value="3">@rm.GetString("Mar")</option>
@@ -306,13 +305,13 @@
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='"+data+"'>Link</a>"
                         }
                     },
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     }
                 ],
@@ -355,13 +354,13 @@
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     },
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     }
                 ],
