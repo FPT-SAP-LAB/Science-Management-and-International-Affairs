@@ -39,7 +39,7 @@
                         </thead>
                         <tbody>
                             @{
-                                foreach (var item in ViewBag.list)
+                                foreach (var item in ViewBag.listPaper)
                                 {
                                     int count = 1;
                                     <tr>
@@ -49,6 +49,18 @@
                                         <td>@item.note</td>
                                     </tr>
                                     count++;
+                                }
+                            }
+                            @{
+                                foreach (var item in ViewBag.listInven)
+                                {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.status_id</td>
+                                        <td>@item.status_id</td>
+                                        <td>invention @item.paper_id</td>
+                                    </tr>
                                 }
                             }
                         </tbody>
@@ -91,7 +103,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    for (var i = 0; i < response.OnePerson.length; i++) {
+                    for (var i = 0; i < response.Paper.length; i++) {
                         $("#pending_table").DataTable().row.add([
                             "" + response.OnePerson[i].name,
                             "" + convertJsonDate(response.OnePerson[i].date_request),
