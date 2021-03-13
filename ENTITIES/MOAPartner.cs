@@ -12,13 +12,14 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ProcedureLanguage
+    public partial class MOAPartner
     {
-        public int procedure_id { get; set; }
-        public int language_id { get; set; }
-        public string procedure_name { get; set; }
+        public int moa_partner_id { get; set; }
+        public Nullable<int> moa_id { get; set; }
+        public System.DateTime moa_start_date { get; set; }
+        public int partner_id { get; set; }
     
-        public virtual Procedure Procedure { get; set; }
-        public virtual Language Language { get; set; }
+        public virtual MOA MOA { get; set; }
+        public virtual Partner Partner { get; set; }
     }
 }

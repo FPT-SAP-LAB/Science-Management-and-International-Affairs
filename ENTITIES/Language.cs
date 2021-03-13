@@ -18,9 +18,8 @@ namespace ENTITIES
         public Language()
         {
             this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
-            this.AcademicProgramLanguages = new HashSet<AcademicProgramLanguage>();
             this.CollaborationTypeDirectionLanguages = new HashSet<CollaborationTypeDirectionLanguage>();
-            this.ProcedureLanguages = new HashSet<ProcedureLanguage>();
+            this.ArticleVersions = new HashSet<ArticleVersion>();
             this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
             this.DegreeLanguages = new HashSet<DegreeLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
@@ -42,11 +41,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicProgramLanguage> AcademicProgramLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CollaborationTypeDirectionLanguage> CollaborationTypeDirectionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcedureLanguage> ProcedureLanguages { get; set; }
+        public virtual ICollection<ArticleVersion> ArticleVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
