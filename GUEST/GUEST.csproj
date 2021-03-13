@@ -2388,6 +2388,9 @@
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
     <Content Include="Views\Policy\Index.cshtml" />
     <Content Include="Views\AcademicActivity\Index.cshtml" />
+    <Content Include="Views\Researchers\EditInfo.cshtml" />
+    <Content Include="Views\Researchers\_ResearcherSideBar.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
