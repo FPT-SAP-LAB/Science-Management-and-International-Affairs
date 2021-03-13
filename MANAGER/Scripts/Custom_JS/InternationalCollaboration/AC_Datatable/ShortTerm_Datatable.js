@@ -14,7 +14,7 @@
             targets: 8,
             width: '75px',
             className: 'text-center',
-            render: function (data, type, full, meta) {
+            render: function (data) {
                 var status = {
                     1: {
                         'title': 'Không hoàn thành',
@@ -60,7 +60,7 @@
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         }
@@ -89,7 +89,7 @@ $('#exchange_coming_table').DataTable({
             targets: 8,
             width: '75px',
             className: 'text-center',
-            render: function (data, type, full, meta) {
+            render: function (data) {
                 var status = {
                     1: {
                         'title': 'Không hoàn thành',
@@ -135,7 +135,7 @@ $('#exchange_coming_table').DataTable({
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         }
@@ -167,7 +167,7 @@ $('#procedure_going_table').DataTable({
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_procedure">Sửa</a><a href="#delete" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         },
@@ -202,7 +202,7 @@ $('#procedure_coming_table').DataTable({
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_procedure">Sửa</a><a href="#delete" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         },
@@ -242,7 +242,7 @@ $("#program_going_table").DataTable({
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         }
@@ -272,7 +272,7 @@ $("#program_coming_table").DataTable({
             className: 'text-center text-nowrap',
             orderable: false,
             width: '125px',
-            render: function (data, type, full, meta) {
+            render: function () {
                 return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
         }
