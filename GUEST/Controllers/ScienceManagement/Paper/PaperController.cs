@@ -19,7 +19,7 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Edit(string id, string editable)
         {

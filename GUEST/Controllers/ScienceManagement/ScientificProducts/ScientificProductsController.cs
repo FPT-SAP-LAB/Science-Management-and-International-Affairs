@@ -45,7 +45,7 @@ namespace GUEST.Controllers.ScientificProducts
         [HttpPost]
         public JsonResult SearchOnePerson(DataSearch item)
         {
-            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>(); 
+            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             if (item.monthS == "paper")
             {
                 list = lpo.getList(item);
