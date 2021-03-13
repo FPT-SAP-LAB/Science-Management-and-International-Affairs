@@ -14,7 +14,7 @@ const Informer = Uppy.Informer;
 
 // Private functions
 
-var initUppy5 = function (data) {
+function initUppy5(data) {
     // Uppy variables
     // For more info refer: https://uppy.io/
     var elemId = data;
@@ -50,7 +50,7 @@ var initUppy5 = function (data) {
 
     var $fileLabel = $(id + ' .uppy-input-label');
 
-    uppyMin.on('upload', function (data) {
+    uppyMin.on('upload', function () {
         $fileLabel.text("Uploading...");
         $statusBar.addClass('uppy-status-ongoing');
         $statusBar.removeClass('uppy-status-hidden');
