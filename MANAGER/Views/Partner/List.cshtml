@@ -3,7 +3,19 @@
     ViewBag.Title = "Danh sách đối tác";
     Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
 }
+<style>
+    .modal {
+        overflow-y: auto;
+    }
 
+    .uppy-list-item {
+        margin: 0 !important;
+    }
+
+    .select2-dropdown {
+        z-index: 8888;
+    }
+</style>
 
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
@@ -12,12 +24,12 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row mb-2">
-                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
                                 <div class="row align-items-center">
-                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-3">
-                                        <a href="/Partner/Detail" class="btn btn-light-primary px-6 font-weight-bolder">Thêm</a>
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                        <a href="/Partner/Detail" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
                                     </div>
-                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-3">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
                                         <div class="dropdown dropdown-inline ml-2">
                                             <button type="button"
                                                     class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -48,12 +60,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
+                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
                                 <div class="row align-items-center justify-content-end">
-                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                             <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
                                                 <option label="Label"></option>
@@ -62,10 +74,10 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                     </div>
-                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                             <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
                                                 <option label="Label"></option>
@@ -74,7 +86,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 my-3">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
                                         <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
                                     </div>
                                 </div>
@@ -96,7 +108,7 @@
                                     <th class="text-center">Lĩnh vực</th>
                                     <th class="text-center">Thỏa thuận hợp tác</th>
                                     <th class="text-center">Địa chỉ</th>
-                                    <th nowrap="nowrap"></th>
+                                    <th nowrap="nowrap" class="text-center"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,7 +150,7 @@
             </div>
             <div class="modal-body">Có muốn xóa thông tin này?</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Hủy</button>
                 <button type="button" class="btn btn-sm btn-light-danger px-6 font-weight-bold" id="btn_delete">Xóa</button>
             </div>
         </div>
@@ -176,6 +188,7 @@
             lengthChange: false,
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
                 //$(this).parent().removeClass();
 
             },
@@ -209,7 +222,7 @@
                 },
                 {
                     targets: -1,
-                    title: '',
+                    title: 'Hành động',
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
