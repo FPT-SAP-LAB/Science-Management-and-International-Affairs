@@ -144,6 +144,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
@@ -2386,10 +2387,11 @@
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
     <Content Include="Views\Policy\Index.cshtml" />
+    <Content Include="Views\AcademicActivity\Index.cshtml" />
+    <Content Include="Views\Researchers\EditInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Controllers\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
@@ -2402,6 +2404,7 @@
     <Folder Include="Views\InternationalCollaboration\News\" />
     <Folder Include="Views\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Scholarship\" />
+    <Folder Include="Views\List\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

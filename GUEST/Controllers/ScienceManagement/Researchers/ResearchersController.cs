@@ -81,6 +81,16 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        public ActionResult EditInfo()
+        {
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
+                new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
         public class Researchers_ListView
         {
             public string name { get; set; }
