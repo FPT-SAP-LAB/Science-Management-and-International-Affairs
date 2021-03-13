@@ -64,10 +64,5 @@ namespace GUEST.Controllers.ScientificProducts
             ViewBag.listInven = list2;
             return View();
         }
-
-        public void ViewDetail(string id)
-        {
-
-        }
     }
 }
