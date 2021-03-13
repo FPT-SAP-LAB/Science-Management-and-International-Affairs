@@ -17,6 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Paper()
         {
+            this.ConferenceSupports = new HashSet<ConferenceSupport>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
             this.Comments = new HashSet<Comment>();
             this.Decisions = new HashSet<Decision>();
@@ -39,8 +40,12 @@ namespace ENTITIES
         public int status_id { get; set; }
         public int paper_type_id { get; set; }
         public Nullable<System.DateTime> date_request { get; set; }
+        public Nullable<int> file_id { get; set; }
     
+        public virtual File File { get; set; }
         public virtual Specialization Specialization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
         public virtual PaperType PaperType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorPaper> AuthorPapers { get; set; }
