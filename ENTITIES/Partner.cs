@@ -20,6 +20,7 @@ namespace ENTITIES
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.MOUPartners = new HashSet<MOUPartner>();
             this.PartnerScopes = new HashSet<PartnerScope>();
+            this.MOAPartners = new HashSet<MOAPartner>();
         }
     
         public int partner_id { get; set; }
@@ -41,5 +42,7 @@ namespace ENTITIES
         public virtual ICollection<MOUPartner> MOUPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerScope> PartnerScopes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOAPartner> MOAPartners { get; set; }
     }
 }

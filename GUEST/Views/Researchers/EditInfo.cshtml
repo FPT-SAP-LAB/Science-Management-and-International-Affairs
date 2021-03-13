@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "Chỉnh sửa thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nav-link {
+        font-size: 17px;
+    }
+
+    #research_avatar {
+        width: 15rem;
+        border-radius: 50%
+    }
+</style>
+<div class="col-12">
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <!--begin::Profile Personal Information-->
+            <div class="d-flex flex-row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="flex-row-fluid ml-lg-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">THÔNG TIN CHUNG</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin cho nghiên cứu viên</span>
+                            </div>
+                            <div class="card-toolbar">
+                                <div id="edit-control-area">
+                                    <button type="reset" id="save-btn" class="btn btn-success mr-2">Lưu</button>
+                                    <a href="/Researchers/ViewInfo" id="cancel-btn" class="btn btn-secondary">Huỷ</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Form-->
+                        <form class="form">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="col-xl-3"></label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        @*<h5 class="font-weight-bold mb-6">Customer Info</h5>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh cá nhân</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="        background-image: url(https://2.pik.vn/2021cd188198-38f1-43f1-ad94-9874818439c9.jpg)">
+                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
+
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="profile_avatar_remove" />
+                                            </label>
+
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                        </div>
+                                        <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Bùi Ngọc Anh" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="14/10/1999" />
+                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Việt Nam" />
+                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Giảng viên" />
+                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Chức vụ" />
+                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xl-3"></label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">SĐT</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="0943169051" placeholder="Phone" />
+                                        </div>
+                                        @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Website</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="abc.com" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-location-arrow"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Google Scholar</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-google"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="https://scholar.google.com.vn/citations?user=HUFV96EAAAAJ&hl=en" placeholder="Google Scholar" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">CV</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="far fa-address-card"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="...." placeholder="CV" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Lĩnh vực quan tâm</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                            <select class="form-control select2  researcher_infomation"  id="kt_select2_3" name="param" multiple="multiple">
+                                                <option value="AK" selected>Toán học</option>
+                                                <option value="AK" selected>Khoa học máy tính</option>
+                                                <option value="AK">Toán học</option>
+                                                <option value="AK">Kinh tế</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Profile Personal Information-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Entry-->
+</div>
+@section scripts{
+    <script>
+        $(".research-info-link").each(function () {
+            if ($(this).attr('href').trim() == window.location.pathname) {
+                $(this).addClass('active')
+            }
+        })
+        // Class definition
+        var KTSelect2 = function () {
+            // Private functions
+            var demos = function () {
+                // basic
+
+                // multi select
+                $('#kt_select2_3').select2({
+                    placeholder: 'Chọn lĩnh vực quan tâm',
+                    tags: true
+                });
+            }
+            // Public functions
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSelect2.init();
+        });
+        $(function () {
+            var save_loader = new LoaderBtn($("#save-btn"))
+
+            $("#save-btn").click(function () {
+                save_loader.startLoading()
+                $(".researcher_infomation").attr('disabled', false)
+            })
+        })
+    </script>
+    }

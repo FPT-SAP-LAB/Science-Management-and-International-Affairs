@@ -29,11 +29,11 @@ namespace ENTITIES
         public int status_id { get; set; }
         public Nullable<int> decision_id { get; set; }
         public int reward_policy_id { get; set; }
-        public int paper_file_id { get; set; }
         public bool editable { get; set; }
         public int account_id { get; set; }
         public System.DateTime date_request { get; set; }
         public int invitation_file_id { get; set; }
+        public int paper_id { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual File File { get; set; }
@@ -42,6 +42,7 @@ namespace ENTITIES
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         public virtual ConferenceStatu ConferenceStatu { get; set; }
         public virtual Decision Decision { get; set; }
+        public virtual Paper Paper { get; set; }
         public virtual RewardPolicy RewardPolicy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cost> Costs { get; set; }
