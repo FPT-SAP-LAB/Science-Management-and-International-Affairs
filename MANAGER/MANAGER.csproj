@@ -2144,7 +2144,10 @@
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
     <Content Include="Scripts\inputFilter.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\uppy.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2178,7 +2181,7 @@
     <Content Include="Views\DetailOfAcademicActivity\Index.cshtml" />
     <Content Include="Views\Paper\Pending.cshtml" />
     <Content Include="Views\Paper\Detail.cshtml" />
-    <Content Include="Views\AcademicCollaboration\List.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Longterm_List.cshtml" />
     <Content Include="Views\MOU\List.cshtml" />
     <Content Include="Views\MOU\Detail.cshtml" />
     <Content Include="Views\Paper\WaitDecision.cshtml" />
@@ -2216,6 +2219,19 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Reports\TotalBonusByYear.cshtml" />
     <Content Include="Views\Researchers\AddResearcher.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Shortterm_List.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Exchange_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Exchange_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Procedure.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Procedure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

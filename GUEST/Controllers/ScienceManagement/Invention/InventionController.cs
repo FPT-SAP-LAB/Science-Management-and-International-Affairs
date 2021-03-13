@@ -32,7 +32,8 @@ namespace GUEST.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Edit(string id, string editable)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bằng sáng chế";
             var pagesTree = new List<PageTree>
@@ -40,6 +41,7 @@ namespace GUEST.Controllers
                 new PageTree("Chỉnh sửa khen thưởng bằng sáng chế","/Invention/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
+            ViewBag.ckEdit = editable;
             return View();
         }
     }

@@ -12,5 +12,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public DateTime date_request { get; set; }
         public int status_id { get; set; }
         public int paper_id { get; set; }
+
+        public string note { get; set; }
     }
 }
