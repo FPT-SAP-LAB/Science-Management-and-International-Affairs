@@ -73,7 +73,10 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 float-left">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm" />
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm" />
+                                    <span><i class="flaticon2-search-1 text-muted"></i></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,13 +86,13 @@
     </div>
 </div>
 <div class="card-body">
-    <div class="row">
+    <div class="row" id="content-control">
         <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
             <div class="card card-custom gutter-b card-stretch">
                 <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
                     <div class="font-content">
                         <h4 class="font-size-h4">
-                            <a href="@Url.Action("Detail","AcademicActivity")" class="text-dark-75 font-weight-bolder">[Workshop] Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</a>
+                            <a href="javascript:;" onclick="goDetail(0)" class="text-dark-75 font-weight-bolder">[Workshop] Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</a>
                         </h4>
                         <div class="">
                             Thời gian: 09h00 - 11h30 - 22/10/2020
@@ -196,5 +199,9 @@
 </div>
 
 @section scripts{
-
+    <script>
+        function goDetail(id) {
+            window.location.href = 'AcademicActivity/Detail?id=' + id;
+        }
+    </script>
 }
