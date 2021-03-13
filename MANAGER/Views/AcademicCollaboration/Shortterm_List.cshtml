@@ -281,6 +281,7 @@
 
     @*--------------init datepicker and rangepicker-----------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    
     @*--------------init datepicker and rangepicker-----------------*@
 
 
@@ -526,13 +527,12 @@
 
         $(document).ready(function () {
             $('.uppy-input-label').removeClass('btn-sm');
+            initUppy5('add_officer_upload');
+            initUppy5('edit_officer_upload');
+            initUppy5('change_status_upload');
         })
 
-        KTUtil.ready(function () {
-            KTUppy.init('edit_officer_upload');
-            KTUppy.init('add_officer_upload');
-            KTUppy.init('change_status_upload');
-        });
+       
 
     </script>
 }
