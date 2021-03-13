@@ -20,7 +20,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 								join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where ap.people_id = @id and ap.author_request = 1";
             if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
-            sql += " order by status_id desc";
+            sql += " order by status_id desc, paper_id desc";
             list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
                 , new SqlParameter("id", 1)
                 , new SqlParameter("name", "%" + item.nameS + "%")).ToList();

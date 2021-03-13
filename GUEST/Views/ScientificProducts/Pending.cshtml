@@ -35,32 +35,20 @@
                                 <th>@rm.GetString("RequestDate")</th>
                                 <th>@rm.GetString("Status")</th>
                                 <th></th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (var item in ViewBag.listPaper)
+                                foreach (var item in ViewBag.list)
                                 {
+                                    int count = 1;
                                     <tr>
                                         <td>@item.name</td>
                                         <td>@item.date_request.ToString("dd/MM/yyyy")</td>
                                         <td>@item.status_id</td>
-                                        <td>@item.status_id</td>
-                                        <td>paper @item.paper_id</td>
+                                        <td>@item.note</td>
                                     </tr>
-                                }
-                            }
-                            @{
-                                foreach (var item in ViewBag.listInven)
-                                {
-                                    <tr>
-                                        <td>@item.name</td>
-                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.status_id</td>
-                                        <td>@item.status_id</td>
-                                        <td>invention @item.paper_id</td>
-                                    </tr>
+                                    count++;
                                 }
                             }
                         </tbody>
@@ -70,7 +58,14 @@
         </div>
     </div>
 </div>
-
+<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
+<form style="visibility: hidden" method="post" action="/Invention/Edit" id="InvenForm">
+    <input name="id" id="nameEdit2" />
+    <input name="editable" id="ckEdit2" />
+</form>
 @section scripts{
     <script>
         function convertJsonDate(dateString) {
@@ -85,7 +80,8 @@
         $("#search-btn").click(function () {
             $("#pending_table").DataTable().clear().draw();
             var DataSearch = {
-                nameS: $("#name_search").val()
+                nameS: $("#name_search").val(),
+                monthS: "@ViewBag.type"
             };
             $.ajax({
                 url: "@Url.Action("SearchOnePerson", "ScientificProducts")",
@@ -95,24 +91,12 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    for (var i = 0; i < response.Paper.length; i++) {
+                    for (var i = 0; i < response.OnePerson.length; i++) {
                         $("#pending_table").DataTable().row.add([
-                            "" + response.Paper[i].name,
-                            "" + convertJsonDate(response.Paper[i].date_request),
-                            "" + response.Paper[i].status_id,
-                            "" + response.Paper[i].status_id,
-                            "paper " + response.Paper[i].paper_id
-                        ]).draw();
-                    }
-
-
-                    for (var i = 0; i < response.Inven.length; i++) {
-                        $("#pending_table").DataTable().row.add([
-                            "" + response.Inven[i].name,
-                            "" + convertJsonDate(response.Inven[i].date_request),
-                            "" + response.Inven[i].status_id,
-                            "" + response.Inven[i].status_id,
-                            "inven " + response.Inven[i].paper_id
+                            "" + response.OnePerson[i].name,
+                            "" + convertJsonDate(response.OnePerson[i].date_request),
+                            "" + response.OnePerson[i].status_id,
+                            "" + response.OnePerson[i].note
                         ]).draw();
                     }
                 },
@@ -123,12 +107,17 @@
         });
 
         $('#pending_table').on('click', ".mybtn", function () {
-            var rowIndex = $(this).closest("tr").index();
-            selectedIndex = $("#pending_table").DataTable().row(rowIndex).data()[4];
-            //alert(selectedIndex);
-            $.ajax({
-
-            });
+            var selectedIndex = $(this).attr('id');
+            if (selectedIndex.split('_')[2] == "paper") {
+                $("#nameEdit").val(selectedIndex.split('_')[1]);
+                $("#ckEdit").val(selectedIndex.split('_')[0]);
+                $("#PaperForm").submit();
+            }
+            else if (selectedIndex.split('_')[2] == "invention") {
+                $("#nameEdit2").val(selectedIndex.split('_')[1]);
+                $("#ckEdit2").val(selectedIndex.split('_')[0]);
+                $("#InvenForm").submit();
+            }
         });
         $(document).ready(function () {
             $("#pending_table").DataTable({
@@ -147,14 +136,13 @@
                 },
 
                 // Order settings
-                order: [[2, 'desc']],
+                order: [[2, 'asc']],
 
                 columns: [
-                    { width: "50%" },
+                    { width: "55%" },
                     { width: "15%" },
                     { width: "15%" },
                     { width: "15%" },
-                    { width: "5%" },
                 ],
                 columnDefs: [
                     {
@@ -187,6 +175,7 @@
                     {
                         targets: 3,
                         render: function (data, type, full, meta) {
+                            var temp = data.split("_");
                             var status = {
                                 1: {
                                     'title': 'Đã hủy',
@@ -205,16 +194,11 @@
                                     'class': 'btn btn-warning mr-2 mybtn'
                                 }
                             };
-                            if (typeof status[data] === 'undefined') {
+                            if (typeof status[temp[0]] === 'undefined') {
                                 return data;
                             }
-                            return '<button class="' + status[data].class + '">' + status[data].title + '</button>';
+                            return '<button id="'+data+'" class="' + status[temp[0]].class + '">' + status[temp[0]].title + '</button>';
                         },
-                    },
-                    {
-                        targets: 4,
-                        visible: false,
-                        searchable: false,
                     },
                 ],
             });
