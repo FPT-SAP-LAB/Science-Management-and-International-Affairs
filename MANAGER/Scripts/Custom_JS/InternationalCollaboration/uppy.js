@@ -3,17 +3,17 @@
 // Class definition
 var KTUppy = function () {
     const Tus = Uppy.Tus;
-    const ProgressBar = Uppy.ProgressBar;
+    //const ProgressBar = Uppy.ProgressBar;
     const StatusBar = Uppy.StatusBar;
     const FileInput = Uppy.FileInput;
     const Informer = Uppy.Informer;
 
     // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
-    const Dashboard = Uppy.Dashboard;
-    const Dropbox = Uppy.Dropbox;
-    const GoogleDrive = Uppy.GoogleDrive;
-    const Instagram = Uppy.Instagram;
-    const Webcam = Uppy.Webcam;
+    //const Dashboard = Uppy.Dashboard;
+    //const Dropbox = Uppy.Dropbox;
+    //const GoogleDrive = Uppy.GoogleDrive;
+    //const Instagram = Uppy.Instagram;
+    //const Webcam = Uppy.Webcam;
 
     // Private functions
 
@@ -53,7 +53,7 @@ var KTUppy = function () {
 
         var $fileLabel = $(id + ' .uppy-input-label');
 
-        uppyMin.on('upload', function (data) {
+        uppyMin.on('upload', function () {
             $fileLabel.text("Uploading...");
             $statusBar.addClass('uppy-status-ongoing');
             $statusBar.removeClass('uppy-status-hidden');
@@ -61,7 +61,7 @@ var KTUppy = function () {
         });
 
         uppyMin.on('complete', function (file) {
-            $.each(file.successful, function (index, value) {
+            $.each(file.successful, function (value) {
                 var sizeLabel = "bytes";
                 var filesize = value.size;
                 if (filesize > 1024) {
