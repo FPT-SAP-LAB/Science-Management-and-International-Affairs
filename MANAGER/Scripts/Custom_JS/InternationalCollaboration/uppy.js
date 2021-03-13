@@ -88,14 +88,10 @@ function initUppy5(data) {
 }
 
 
-    //return {
-    //    // public functions
-    //    init: function (data) {
-    //        initUppy5(data);
-    //        setTimeout(function () {
-
-    //        }, 2000);
-    //    }
-    //};
-//}();
+$(document).ready(function () {
+    $('.uppy-input-label').removeClass('btn-sm');
+    initUppy5('add_officer_upload');
+    initUppy5('edit_officer_upload');
+    initUppy5('change_status_upload');
+})
 
