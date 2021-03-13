@@ -27,7 +27,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             ViewBag.listPartners = mou.GetPartners();
             ViewBag.listScopes = mou.GetCollaborationScopes();
             ViewBag.listSpe = mou.GetSpecializations();
-            
+
             return View();
         }
 

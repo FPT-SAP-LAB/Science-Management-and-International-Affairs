@@ -43,14 +43,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult ViewListMOUPartner(string partner_name,string nation, string specialization)
+        public ActionResult ViewListMOUPartner(string partner_name, string nation, string specialization)
         {
             try
             {
                 string id = Session["mou_detail_id"].ToString();
                 string nation_name = nation is null ? "" : nation;
                 string specialization_name = specialization is null ? "" : specialization;
-                List<ListMOUPartner> mouList = mou.listAllMOUPartner(partner_name,nation_name,specialization_name,int.Parse(id));
+                List<ListMOUPartner> mouList = mou.listAllMOUPartner(partner_name, nation_name, specialization_name, int.Parse(id));
                 return Json(new { success = true, data = mouList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

@@ -45,7 +45,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         order by tb1.mou_partner_id";
                 List<ListMOUPartner> mouList = db.Database.SqlQuery<ListMOUPartner>(sql_mouPartnerList,
                     new SqlParameter("mou_id", mou_id),
-                    new SqlParameter("nation_name", '%'+ nation_name +'%'),
+                    new SqlParameter("nation_name", '%' + nation_name + '%'),
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("specialization_name", '%' + specialization_name + '%')).ToList();
                 handlingPartnerListData(mouList);
@@ -91,84 +91,84 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public void addMOUPartner(PartnerInfo input,int mou_id)
+        public void addMOUPartner(PartnerInfo input, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                        int partner_id_item = 0;
-                        //new partner
-                        if (input.partner_id == 0)
+                    int partner_id_item = 0;
+                    //new partner
+                    if (input.partner_id == 0)
+                    {
+                        db.Partners.Add(new ENTITIES.Partner
                         {
-                            db.Partners.Add(new ENTITIES.Partner
-                            {
-                                partner_name = input.partnername_add,
-                                website = input.website_add,
-                                address = input.address_add,
-                                country_id = 13
-                            });
-                            //checkpoint 2
-                            db.SaveChanges();
-                            ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
-                            partner_id_item = objPartner.partner_id;
-                        }
-                        else //old partner
-                        {
-                            partner_id_item = input.partner_id;
-                        }
-                        //add to MOUPartner via each partner of MOU
-                        db.MOUPartners.Add(new ENTITIES.MOUPartner
-                        {
-                            mou_id = mou_id,
-                            partner_id = partner_id_item,
-                            mou_start_date = DateTime.ParseExact(input.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                            contact_point_name = input.represent_add,
-                            contact_point_email = input.email_add,
-                            contact_point_phone = input.phone_add
+                            partner_name = input.partnername_add,
+                            website = input.website_add,
+                            address = input.address_add,
+                            country_id = 13
                         });
-                        //PartnerScope and MOUPartnerScope
-                        foreach (int tokenScope in input.coop_scope_add.ToList())
-                        {
-                            PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
-                            int partner_scope_id = 0;
-                            if (objPS == null)
-                            {
-                                db.PartnerScopes.Add(new PartnerScope
-                                {
-                                    partner_id = partner_id_item,
-                                    scope_id = tokenScope,
-                                    reference_count = 0
-                                });
-                                //checkpoint 3
-                                db.SaveChanges();
-                                PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
-                                partner_scope_id = newObjPS.partner_scope_id;
-                            }
-                            else
-                            {
-                                objPS.reference_count += 1;
-                                db.Entry(objPS).State = EntityState.Modified;
-                                partner_scope_id = objPS.partner_scope_id;
-                            }
-                            db.MOUPartnerScopes.Add(new MOUPartnerScope
-                            {
-                                partner_scope_id = partner_scope_id,
-                                mou_id = mou_id
-                            });
-                        }
-                        //checkpoint 4
+                        //checkpoint 2
                         db.SaveChanges();
-                        //MOUPartnerSpe
-                        MOUPartner objMOUPartner = db.MOUPartners.Where(x => (x.mou_id == mou_id && x.partner_id == partner_id_item)).First();
-                        foreach (int tokenSpe in input.specialization_add.ToList())
+                        ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
+                        partner_id_item = objPartner.partner_id;
+                    }
+                    else //old partner
+                    {
+                        partner_id_item = input.partner_id;
+                    }
+                    //add to MOUPartner via each partner of MOU
+                    db.MOUPartners.Add(new ENTITIES.MOUPartner
+                    {
+                        mou_id = mou_id,
+                        partner_id = partner_id_item,
+                        mou_start_date = DateTime.ParseExact(input.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        contact_point_name = input.represent_add,
+                        contact_point_email = input.email_add,
+                        contact_point_phone = input.phone_add
+                    });
+                    //PartnerScope and MOUPartnerScope
+                    foreach (int tokenScope in input.coop_scope_add.ToList())
+                    {
+                        PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
+                        int partner_scope_id = 0;
+                        if (objPS == null)
                         {
-                            db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
+                            db.PartnerScopes.Add(new PartnerScope
                             {
-                                mou_partner_id = objMOUPartner.mou_partner_id,
-                                specialization_id = tokenSpe,
+                                partner_id = partner_id_item,
+                                scope_id = tokenScope,
+                                reference_count = 0
                             });
+                            //checkpoint 3
+                            db.SaveChanges();
+                            PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
+                            partner_scope_id = newObjPS.partner_scope_id;
                         }
+                        else
+                        {
+                            objPS.reference_count += 1;
+                            db.Entry(objPS).State = EntityState.Modified;
+                            partner_scope_id = objPS.partner_scope_id;
+                        }
+                        db.MOUPartnerScopes.Add(new MOUPartnerScope
+                        {
+                            partner_scope_id = partner_scope_id,
+                            mou_id = mou_id
+                        });
+                    }
+                    //checkpoint 4
+                    db.SaveChanges();
+                    //MOUPartnerSpe
+                    MOUPartner objMOUPartner = db.MOUPartners.Where(x => (x.mou_id == mou_id && x.partner_id == partner_id_item)).First();
+                    foreach (int tokenSpe in input.specialization_add.ToList())
+                    {
+                        db.MOUPartnerSpecializations.Add(new MOUPartnerSpecialization
+                        {
+                            mou_partner_id = objMOUPartner.mou_partner_id,
+                            specialization_id = tokenSpe,
+                        });
+                    }
                     db.SaveChanges();
                     transaction.Commit();
                 }
@@ -180,7 +180,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public void editMOUPartner(PartnerInfo input, int mou_id,int mou_partner_id)
+        public void editMOUPartner(PartnerInfo input, int mou_id, int mou_partner_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -242,7 +242,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t1.partner_scope_id = t2.partner_scope_id
                         where mou_id = @mou_id";
                     List<PartnerScope> listOldPS = db.Database.SqlQuery<PartnerScope>(sql_old_partnerScope,
-                        new SqlParameter("mou_id",mou_id)).ToList();
+                        new SqlParameter("mou_id", mou_id)).ToList();
 
                     //reset old records of scopes of partner.
                     foreach (PartnerScope token in listOldPS.ToList())
@@ -324,7 +324,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     //checkpoint 1
                     db.SaveChanges();
-                    
+
                     db.MOUPartnerSpecializations.RemoveRange(db.MOUPartnerSpecializations.Where(x => x.mou_partner_id == mou_partner_id).ToList());
                     db.MOUPartners.Remove(db.MOUPartners.Find(mou_partner_id));
                 }
@@ -370,7 +370,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     select partner_id from IA_Collaboration.MOUPartner
                     where mou_id = @mou_id)";
                 List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList
-                    ,new SqlParameter("mou_id",mou_id)).ToList();
+                    , new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
             }
             catch (Exception ex)
