@@ -9,9 +9,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
     public class AcademicCollaborationController : Controller
     {
         // GET: AcademicCollaboration
-        public ActionResult List()
+        public ActionResult Longterm_List()
         {
             ViewBag.pageTitle = "Danh sách đào tạo sau đại học";
+            return View();
+        }
+
+        public ActionResult Shortterm_List()
+        {
+            ViewBag.pageTitle = "Danh sách trao đổi cán bộ giảng viên";
             return View();
         }
 

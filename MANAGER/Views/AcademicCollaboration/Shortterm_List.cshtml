@@ -1,0 +1,549 @@
+﻿@{
+    ViewBag.Title = "Danh sách trao đổi cán bộ giảng viên";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+<style>
+    .collapse-title {
+        width: auto;
+        height: auto;
+    }
+
+    .collapse-div {
+        background-color: #1616a8;
+        border-radius: 6px;
+        color: white;
+        opacity: 0.6;
+        transition: 0.3s;
+    }
+
+        .collapse-div:hover {
+            opacity: 1;
+        }
+
+    .modal {
+        overflow-y: auto;
+    }
+
+    .uppy-list-item {
+        margin: 0 !important;
+    }
+
+    .select2-dropdown {
+        z-index: 8888;
+    }
+
+    .label-lg {
+        width: 76% !important;
+    }
+</style>
+<div class="card card-custom mb-1 collapse-title" id="collapse-title">
+    <div class="card-body p-0 collapse-div">
+        <div class="row justify-content-center px-lg-10">
+            <div class=" col-lg-12 col-xl-12 col-md-12 col-sm-12 text-center " id="collapse_btn_tab_1">
+                <h3 style="margin-top: 0.5rem;">
+                    CHIỀU ĐI
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs nav-tabs-line" style="margin-bottom: 10px;">
+                        <li class="nav-item ">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_1">CÁN BỘ GIẢNG VIÊN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_1">THỦ TỤC</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_table_1">CHƯƠNG TRÌNH TRAO ĐỔI</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="kt_tab_pane_1_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_1">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    DANH SÁCH CÁN BỘ GIẢNG VIÊN
+                                </h4>
+                            </div>
+
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Exchange_Going_Table");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_2_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_2_table_1">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    DANH SÁCH THỦ TỤC ĐỐI VỚI CHƯƠNG TRÌNH ĐÀO TẠO CỦA ĐỐI TÁC
+                                </h4>
+                            </div>
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Procedure_Going_Table");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_3_table_1">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    CHƯƠNG TRÌNH ĐÀO TẠO
+                                </h4>
+                            </div>
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Program_Going_Table");
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-custom mb-1 collapse-title" id="collapse-title" style="margin-top: 20px;">
+    <div class="card-body p-0 collapse-div">
+        <div class="row justify-content-center px-lg-10">
+            <div class=" col-lg-12 col-xl-12 col-md-12 col-sm-12 text-center " id="collapse_btn_tab_2">
+                <h3 style="margin-top: 0.5rem;">
+                    CHIỀU ĐẾN
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-custom collapse_tab_2" style="display:none">
+    <div class="card-body p-0">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs nav-tabs-line" style="margin-bottom: 10px;">
+                        <li class="nav-item ">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_2">CÁN BỘ GIẢNG VIÊN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_2">THỦ TỤC</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_table_2">CHƯƠNG TRÌNH TRAO ĐỔI</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="kt_tab_pane_1_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_2">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    DANH SÁCH CÁN BỘ ĐÀO TẠO SAU ĐẠI HỌC
+                                </h4>
+                            </div>
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Exchange_Coming_Table");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_2_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_2_table_2">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    DANH SÁCH THỦ TỤC ĐỐI VỚI CHƯƠNG TRÌNH ĐÀO TẠO CỦA ĐH FPT
+                                </h4>
+                            </div>
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Procedure_Coming_Table");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_3_table_2">
+                            <div class="row mb-4">
+                                <h4 style="font-weight: bold;">
+                                    CHƯƠNG TRÌNH ĐÀO TẠO
+                                </h4>
+                            </div>
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Program_Coming_Table");
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*modal modify status*@
+<div class="modal fade" id="add_status" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CHUYỂN ĐỔI TRẠNG THÁI</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Trạng thái</label>
+                        <select class="form-control" required id="change_status">
+                            <option value="1">Đang thực hiện</option>
+                            <option value="2">Không hoàn thành</option>
+                            <option value="3">Đã hoàn thành</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Bản mềm</label>
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="change_status_upload">
+                            <div class="uppy-wrapper col-6"></div>
+                            <div class="uppy-list col-6"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="note" class="form-control" rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm px-6 btn-secondary font-weight-bold" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-sm px-6 btn-light-success font-weight-bold" data-dismiss="modal" id="btn_add">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal status hisory*@
+<div class="modal fade in" id="status_history" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">LỊCH SỬ TRẠNG THÁI</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">STT</th>
+                            <th class="text-center">Thời gian</th>
+                            <th class="text-center">Trạng thái</th>
+                            <th class="text-center">Cá nhân thay đổi</th>
+                            <th class="text-center">Bản mềm</th>
+                            <th class="text-center">Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody id="status_history_table">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal add officer*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Officer");
+}
+
+@*modal edit officer*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Officer");
+}
+
+@*modal add procedure*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Procedure");
+}
+
+@*modal edit procedure*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Procedure");
+}
+
+@*modal add program*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Program");
+}
+
+@*modal edit program*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Program");
+}
+
+
+
+@section scripts{
+    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
+    @*-------------------datatable check this file-------------*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ShortTerm_Datatable.js"></script>
+    @*-------------------datatable check this file-------------*@
+
+    @*--------------init datepicker and rangepicker-----------*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    <script>
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+            KTBootstrapDaterangepicker.init();
+
+        });
+    </script>
+    @*--------------init datepicker and rangepicker-----------------*@
+
+
+
+    <script>
+        //select2 officer going
+        $('#search_nation_tab_1_table_1').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_year_tab_1_table_1').select2({
+            placeholder: 'Năm đi học',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_training_facility_tab_1_table_1').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_working_facility_tab_1_table_1').select2({
+            placeholder: 'Đơn vị công tác',
+            allowClear: true,
+            tags: true,
+        })
+
+        //select modal table 1
+        $('#add_officer_name').select2({
+            placeholder: 'Họ và tên',
+            allowClear: true,
+            tags: true,
+        })
+        $('#add_officer_facility').select2({
+            placeholder: 'Đơn vị - Cơ sở',
+            allowClear: true,
+            tags: true,
+        })
+        $('#add_officer_traning').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            tags: true,
+        })
+        $('#add_officer_coop_scope').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+            tags: true,
+        })
+        $('#add_officer_status').select2({
+            placeholder: 'Trạng thái',
+            allowClear: true,
+            tags: true,
+        })
+    </script>
+    <script>
+        //select2 officer coming
+
+        $('#search_nation_tab_1_table_2').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_year_tab_1_table_2').select2({
+            placeholder: 'Năm đi học',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_training_facility_tab_1_table_2').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_working_facility_tab_1_table_2').select2({
+            placeholder: 'Đơn vị công tác',
+            allowClear: true,
+            tags: true,
+        })
+    </script>
+    <script>
+        //select2 procedure going
+
+        $('.modal_procedure_language').select2({
+            placeholder: 'Ngôn ngữ',
+            allowClear: true,
+            tags: true,
+        })
+
+    </script>
+    <script>
+        //table 3
+        $('#search_status_tab_2_table_1').select2({
+            placeholder: 'Trạng thái',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#add_program_partner').select2({
+            placeholder: 'Đối tác',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#add_program_language').select2({
+            placeholder: 'Ngôn ngữ',
+            allowClear: true,
+            tags: true,
+        })
+
+    </script>
+    <script>
+        //table 4
+        $('#search_status_tab_2_table_2').select2({
+            placeholder: 'Trạng thái',
+            allowClear: true,
+            tags: true,
+        })
+
+    </script>
+    <script>
+        var id_row = "";
+        //parse id fo delete
+        function parse_id(id) {
+            id_row = id;
+        }
+        //collapse div
+        $('#collapse_btn_tab_1').click(function () {
+            $('.collapse_tab_1').toggle(700)
+        });
+
+        $('#collapse_btn_tab_2').click(function () {
+            $('.collapse_tab_2').toggle(700)
+        })
+
+        $('#collapse_btn_tab_2').on('click', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+
+        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        //});
+        //split card
+        //overflow
+        $(document).ready(function () {
+            $('#main-card').parent().css("background-color", "#eef0f8");
+            //$('.collaboration_table thead tr th').css('font-weight', 'bold');
+            $('.header-modify').css('padding', '13px');
+        });
+
+        //funtion delete
+        $('#btn_delete').click(function() {
+            $.ajax({
+                url: '@Url.Action("Delete_Longterm", "AcademicCollaboration")',
+                data: { 'id': id_row },
+                success: function (data) {
+                    if (data = "") {
+                        toastr.error("Có lỗi xảy ra");
+                    } else {
+                        toastr.success("Đã xóa thành công");
+                    }
+
+                },
+            });
+        });
+
+        //load status history table
+        function show_status_history(id){
+            $.ajax({
+                url: '@Url.Action("Get_Status_History", "AcademicCollaboration")',
+                data: { 'id': id },
+                success: function (data) {
+                    if (data = "") {
+                        toastr.error("Có lỗi xảy ra");
+                    } else {
+                        var status = {
+                            1: {
+                                'title': 'Không hoàn thành',
+                                'class': 'label-secondary'
+                            },
+                            2: {
+                                'title': 'Đã hoàn thành',
+                                'class': 'label-success'
+                            },
+                            3: {
+                                'title': 'Đang thực hiện',
+                                'class': 'label-danger'
+                            }
+                        };
+                        var temp = '';
+                        for (i = 0; i < 3; i++) {
+                            temp += '<tr><td  class="text-center">' + eval(i+1) + '</td> ' +
+                                '<td class="text-center">01/01/2021 12:10:11</td> ' +
+                                '<td class="text-center"> ' +
+                                '<span class="label label-lg label-pill font-weight-bold ' + status[eval(i+1)].class +
+                                ' label-inline">' + status[eval(i + 1)].title + '</span></td> ' +
+                                '<td class="text-center">Lê Phương Anh</td> ' +
+                                '<td class="text-center">abc.pdf</td>' +
+                                '<td class="text-center">Đã học xong</td></tr>';
+                        }
+                        $('#status_history_table').html(temp);
+                    }
+                },
+            });
+        };
+
+    </script>
+
+    @*text editor*@
+    <script>
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
+        });
+    </script>
+
+
+    @*upload*@
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('.uppy-input-label').removeClass('btn-sm');
+        })
+
+        KTUtil.ready(function () {
+            KTUppy.init('edit_officer_upload');
+            KTUppy.init('add_officer_upload');
+            KTUppy.init('change_status_upload');
+        });
+
+    </script>
+}
+
+
+
