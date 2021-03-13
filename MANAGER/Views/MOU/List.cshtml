@@ -1246,7 +1246,7 @@
         $('#coop_scope_edit').empty();
         for (i = 0; i < listSpe.length; i++) {
             //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
-            if (listTempPartnerMOUAdd[index].specialization_add.includes(listSpe[i].spe_id)) {
+            if (listTempPartnerMOUAdd[index].specialization_name.includes(listSpe[i].spe_id)) {
                 HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
 
             } else {

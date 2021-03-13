@@ -15,6 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         // GET: MOU
         private static MOURepo mou = new MOURepo();
         private static BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
+        private static PartnerMOURepo mou_partner = new PartnerMOURepo();
 
         public ActionResult List()
         {
@@ -26,6 +27,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             ViewBag.listPartners = mou.GetPartners();
             ViewBag.listScopes = mou.GetCollaborationScopes();
             ViewBag.listSpe = mou.GetSpecializations();
+            
             return View();
         }
 
@@ -108,6 +110,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
             ViewBag.scopeList = scopeList;
             ViewBag.partnerList = partnerList;
+
+            //MOU Partner
+            ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
+            ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope();
+            ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
             return View();
         }
         public ActionResult PassDataToMOUDetail(int id)
