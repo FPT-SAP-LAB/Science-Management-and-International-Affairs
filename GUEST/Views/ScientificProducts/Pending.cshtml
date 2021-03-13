@@ -40,7 +40,7 @@
                         </thead>
                         <tbody>
                             @{
-                                foreach (var item in ViewBag.list)
+                                foreach (var item in ViewBag.listPaper)
                                 {
                                     <tr>
                                         <td>@item.name</td>
@@ -48,6 +48,18 @@
                                         <td>@item.status_id</td>
                                         <td>@item.status_id</td>
                                         <td>paper @item.paper_id</td>
+                                    </tr>
+                                }
+                            }
+                            @{
+                                foreach (var item in ViewBag.listInven)
+                                {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.status_id</td>
+                                        <td>@item.status_id</td>
+                                        <td>invention @item.paper_id</td>
                                     </tr>
                                 }
                             }
@@ -83,13 +95,24 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    for (var i = 0; i < response.OnePerson.length; i++) {
+                    for (var i = 0; i < response.Paper.length; i++) {
                         $("#pending_table").DataTable().row.add([
-                            "" + response.OnePerson[i].name,
-                            "" + convertJsonDate(response.OnePerson[i].date_request),
-                            "" + response.OnePerson[i].status_id,
-                            "" + response.OnePerson[i].status_id,
-                            "" + response.OnePerson[i].paper_id
+                            "" + response.Paper[i].name,
+                            "" + convertJsonDate(response.Paper[i].date_request),
+                            "" + response.Paper[i].status_id,
+                            "" + response.Paper[i].status_id,
+                            "paper " + response.Paper[i].paper_id
+                        ]).draw();
+                    }
+
+
+                    for (var i = 0; i < response.Inven.length; i++) {
+                        $("#pending_table").DataTable().row.add([
+                            "" + response.Inven[i].name,
+                            "" + convertJsonDate(response.Inven[i].date_request),
+                            "" + response.Inven[i].status_id,
+                            "" + response.Inven[i].status_id,
+                            "inven " + response.Inven[i].paper_id
                         ]).draw();
                     }
                 },
@@ -102,8 +125,10 @@
         $('#pending_table').on('click', ".mybtn", function () {
             var rowIndex = $(this).closest("tr").index();
             selectedIndex = $("#pending_table").DataTable().row(rowIndex).data()[4];
-            alert(selectedIndex);
-            //$.ajax
+            //alert(selectedIndex);
+            $.ajax({
+
+            });
         });
         $(document).ready(function () {
             $("#pending_table").DataTable({
@@ -122,7 +147,7 @@
                 },
 
                 // Order settings
-                order: [[3, 'desc']],
+                order: [[2, 'desc']],
 
                 columns: [
                     { width: "50%" },
@@ -137,20 +162,20 @@
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
+                                    'title': 'Đã hủy',
+                                    'class': 'label label-danger label-pill label-inline mr-2'
+                                },
+                                2: {
                                     'title': 'Đã xong',
                                     'class': 'label label-success label-pill label-inline mr-2'
                                 },
-                                2: {
+                                3: {
                                     'title': 'Đang phê duyệt',
                                     'class': 'label label-primary label-pill label-inline mr-2'
                                 },
-                                3: {
+                                4: {
                                     'title': 'Cần chỉnh sửa',
                                     'class': 'label label-warning label-pill label-inline mr-2'
-                                },
-                                4: {
-                                    'title': 'Đã hủy',
-                                    'class': 'label label-danger label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
@@ -164,20 +189,20 @@
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
-                                    'title': 'Chi tiết',
-                                    'class': 'btn btn-success mr-2 mybtn'
+                                    'title': 'Đã hủy',
+                                    'class': 'btn btn-danger mr-2 mybtn'
                                 },
                                 2: {
                                     'title': 'Chi tiết',
-                                    'class': 'btn btn-primary mr-2 mybtn'
+                                    'class': 'btn btn-success mr-2 mybtn'
                                 },
                                 3: {
-                                    'title': 'Chỉnh sửa',
-                                    'class': 'btn btn-warning mr-2 mybtn'
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-primary mr-2 mybtn'
                                 },
                                 4: {
-                                    'title': 'Đã hủy',
-                                    'class': 'btn btn-danger mr-2 mybtn'
+                                    'title': 'Chỉnh sửa',
+                                    'class': 'btn btn-warning mr-2 mybtn'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
