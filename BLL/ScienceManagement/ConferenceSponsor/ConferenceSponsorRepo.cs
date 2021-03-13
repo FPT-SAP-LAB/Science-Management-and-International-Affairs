@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -103,15 +105,14 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
-        public string AddConference(string input)
+        public string AddConferenceSupport(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
+                    Account account = db.Accounts.Find(1);  // Sẽ chỉnh sau khi xong tạo account
                     DataTable dt = new DataTable();
-                    //log.Debug("Creating a conference sponsor request");
-                    //int a = int.Parse("43gg34+-");
                     JObject @object = JObject.Parse(input);
 
                     JToken conf = @object["Conference"];
@@ -129,6 +130,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         db.SaveChanges();
                     }
 
+                    string PaperID = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, account.email);
+                    string InviteID = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, account.email);
+
                     RewardPolicy policy = db.RewardPolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
                     ConferenceSupport support = new ConferenceSupport()
@@ -137,9 +141,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         status_id = 1,
                         decision_id = null,
                         reward_policy_id = policy.reward_policy_id,
-                        paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
-                        account_id = 1, // Sẽ chỉnh sau khi xong tạo account
-                        editable = false
+                        account_id = account.account_id,
+                        editable = false,
+                        date_request = DateTime.Now,
+                        reimbursement = 0
                     };
                     db.ConferenceSupports.Add(support);
                     db.SaveChanges();

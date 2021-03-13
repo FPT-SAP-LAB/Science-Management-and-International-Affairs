@@ -12,13 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class DirectionLanguage
+    public partial class CollaborationTypeDirectionLanguage
     {
+        public int collab_type_direction_id { get; set; }
         public int language_id { get; set; }
-        public int direction_id { get; set; }
         public string description { get; set; }
     
-        public virtual Direction Direction { get; set; }
+        public virtual CollaborationTypeDirection CollaborationTypeDirection { get; set; }
         public virtual Language Language { get; set; }
     }
 }

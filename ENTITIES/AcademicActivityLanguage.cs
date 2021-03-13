@@ -16,10 +16,9 @@ namespace ENTITIES
     {
         public int activity_id { get; set; }
         public int language_id { get; set; }
-        public string activity_name { get; set; }
         public string location { get; set; }
     
-        public virtual AcademicActivity AcademicActivity { get; set; }
         public virtual Language Language { get; set; }
+        public virtual AcademicActivity AcademicActivity { get; set; }
     }
 }

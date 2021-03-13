@@ -54,7 +54,7 @@
 <!--begin::Body-->
 
 <body id="kt_body"
-    class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
     <div class="d-flex flex-column flex-root">
         <div class="login login-5 login-signin-on d-flex flex-row-fluid" id="kt_login">
             <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid"
@@ -153,56 +153,34 @@
     <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
-    <script type="text/javascript">
-        if ('WebSocket' in window) {
-            (function () {
-                function refreshCSS() {
-                    var sheets = [].slice.call(document.getElementsByTagName("link"));
-                    var head = document.getElementsByTagName("head")[0];
-                    for (var i = 0; i < sheets.length; ++i) {
-                        var elem = sheets[i];
-                        var parent = elem.parentElement || head;
-                        parent.removeChild(elem);
-                        var rel = elem.rel;
-                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-                        }
-                        parent.appendChild(elem);
-                    }
-                }
-                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-                var address = protocol + window.location.host + window.location.pathname + '/ws';
-                var socket = new WebSocket(address);
-                socket.onmessage = function (msg) {
-                    if (msg.data == 'reload') window.location.reload();
-                    else if (msg.data == 'refreshcss') refreshCSS();
-                };
-                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-                    console.log('Live reload enabled.');
-                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-                }
-            })();
-        }
-        else {
-            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-        }
-    </script>
     <script>
-        //FOR GOOGLE AUTHENTICATION
         function onSignIn(googleUser) {
-            // Useful data for your client-side scripts:
             var profile = googleUser.getBasicProfile();
-            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log("Image URL: " + profile.getImageUrl());
-            console.log("Email: " + profile.getEmail());
-
-            // The ID token you need to pass to your backend:
-            var id_token = googleUser.getAuthResponse().id_token;
-            console.log("ID Token: " + id_token);
+            var user = {
+                id: profile.getId(),
+                name: profile.getName(),
+                imageurl: profile.getImageUrl(),
+                email: profile.getEmail()
+            }
+            $.ajax({
+                url: "/Authen/SigninGoogle",
+                data: JSON.stringify(user),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (url) {
+                    if (url == "not allow") {
+                        alert("Email của bạn chưa được cho phép truy cập vào hệ thống. Vui lòng liên hệ quản lí hệ thống để biết thêm chi tiết.");
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                        });
+                    } else {
+                        window.location.href = url;
+                    }
+                },
+                error: function (errormessage) {
+                }
+            });
         }
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click()

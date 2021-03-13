@@ -17,8 +17,10 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Partner()
         {
+            this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.MOUPartners = new HashSet<MOUPartner>();
             this.PartnerScopes = new HashSet<PartnerScope>();
+            this.MOAPartners = new HashSet<MOAPartner>();
         }
     
         public int partner_id { get; set; }
@@ -34,9 +36,13 @@ namespace ENTITIES
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicProgram> AcademicPrograms { get; set; }
+        public virtual Article Article { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartner> MOUPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerScope> PartnerScopes { get; set; }
-        public virtual Article Article { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOAPartner> MOAPartners { get; set; }
     }
 }

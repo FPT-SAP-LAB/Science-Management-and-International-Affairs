@@ -10,52 +10,55 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div class="row mb-5">
-                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
                                 <div class="row align-items-center">
-                                    <a href="/MOU/List" class="btn btn-light-primary px-6 font-weight-bolder">Quay lại</a>
-                                    <div class="dropdown dropdown-inline ml-2">
-                                        <button type="button"
-                                                class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Export
-                                        </button>
-                                        <!--begin::Dropdown Menu-->
-                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                            <!--begin::Navigation-->
-                                            <ul class="navi flex-column navi-hover py-2">
-                                                <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                                    Choose an option:
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-excel-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">Excel</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <!--end::Navigation-->
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-3">
+                                        <a href="/MOU/List" class="btn btn-light-primary px-6 font-weight-bolder">Quay lại</a>
+                                    </div>
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 my-3">
+                                        <div class="dropdown dropdown-inline ml-2">
+                                            <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Export
+                                            </button>
+                                            <!--begin::Dropdown Menu-->
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi flex-column navi-hover py-2">
+                                                    <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                        Choose an option:
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link" onclick="exportExcel()">
+                                                            <span class="navi-icon">
+                                                                <i class="la la-file-excel-o"></i>
+                                                            </span>
+                                                            <span class="navi-text">Excel</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <!--end::Navigation-->
+                                            </div>
+                                            <!--end::Dropdown Menu-->
                                         </div>
-                                        <!--end::Dropdown Menu-->
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
+                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
                                 <div class="row align-items-center justify-content-end">
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control text-center" placeholder="Tên người đại diện" id="search_" />
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                        <input type="text" class="form-control text-center" placeholder="Tên người đại diện" id="search_contact_point_name" />
                                     </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_id" />
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 my-3">
+                                        <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
-                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 my-3">
+                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +117,7 @@
                                 <tr>
                                     <td class="text-center">2</td>
                                     <td class="text-center" nowrap="nowrap">
-                                       2020/01
+                                        2020/01
                                     </td>
                                     <td class="text-center">
                                         Bunkyou University
@@ -169,6 +172,10 @@
             },
             searching: false,
             lengthChange: false,
+            initComplete: function () {
+                $('.mou_table').parent().css('overflow-x', 'auto');
+                $('.mou_table').parent().removeClass();
+            },
             columnDefs: [
                 {
                     targets: 4,

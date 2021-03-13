@@ -843,17 +843,13 @@
                                         <h4 class="text-white font-weight-bold">
                                             Danh sách đề nghị
                                         </h4>
-                                        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
-                                            23 tasks
-                                            pending
-                                        </span>
                                     </div>
                                     <!--end:Header-->
                                     <!--begin:Nav-->
                                     <div class="row row-paddingless">
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="/ScientificProducts/Pending" class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom">
+                                            <a href="/ScientificProducts/Pending?type=paper" class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom">
                                                 <span class="svg-icon svg-icon-3x svg-icon-success">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Euro.svg--><svg xmlns="http://www.w3.org/2000/svg"
                                                                                                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -916,7 +912,7 @@
                                         <!--end:Item-->
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="#" class="d-block py-10 px-5 text-center bg-hover-light">
+                                            <a href="/ScientificProducts/Pending?type=invention" class="d-block py-10 px-5 text-center bg-hover-light">
                                                 <span class="svg-icon svg-icon-3x svg-icon-success">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg--><svg xmlns="http://www.w3.org/2000/svg"
                                                                                                                                      xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -971,7 +967,7 @@
                                         </div><div class="add_request_btn col-12">
                                             <div class="row">
                                                 <div class="col-1" style="text-align:center"><i class="far fa-share-square icon-md"></i></div>
-                                                <div class="col-11"> <a href="/Citaion/AddRequest" class="text-secondary">Yêu cầu khen thưởng trích dẫn</a></div>
+                                                <div class="col-11"> <a href="/Citation/AddRequest" class="text-secondary">Yêu cầu khen thưởng trích dẫn</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1378,6 +1374,7 @@
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
         })
     </script>
+    <script src="~/Content/assets/js/sci/sci-bundle.js"></script>
 </body>
 <!--end::Body-->
 

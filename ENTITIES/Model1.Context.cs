@@ -41,10 +41,18 @@ namespace ENTITIES
         public virtual DbSet<AcademicCollaboration> AcademicCollaborations { get; set; }
         public virtual DbSet<AcademicCollaborationStatusType> AcademicCollaborationStatusTypes { get; set; }
         public virtual DbSet<AcademicCollaborationType> AcademicCollaborationTypes { get; set; }
+        public virtual DbSet<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         public virtual DbSet<AcademicProgram> AcademicPrograms { get; set; }
         public virtual DbSet<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        public virtual DbSet<CollaborationTypeDirection> CollaborationTypeDirections { get; set; }
+        public virtual DbSet<CollaborationTypeDirectionLanguage> CollaborationTypeDirectionLanguages { get; set; }
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Procedure> Procedures { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
+        public virtual DbSet<ArticleStatu> ArticleStatus { get; set; }
+        public virtual DbSet<ArticleVersion> ArticleVersions { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<CollaborationStatu> CollaborationStatus { get; set; }
         public virtual DbSet<MOA> MOAs { get; set; }
         public virtual DbSet<MOABonu> MOABonus { get; set; }
@@ -62,29 +70,19 @@ namespace ENTITIES
         public virtual DbSet<CollaborationScope> CollaborationScopes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ScholarshipStatu> ScholarshipStatus { get; set; }
-        public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
-        public virtual DbSet<ArticleStatu> ArticleStatus { get; set; }
-        public virtual DbSet<ArticleVersion> ArticleVersions { get; set; }
-        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<ProjectProduct> ProjectProducts { get; set; }
         public virtual DbSet<ResearchCollaboration> ResearchCollaborations { get; set; }
         public virtual DbSet<ResearchContactPoint> ResearchContactPoints { get; set; }
         public virtual DbSet<ResearchPartner> ResearchPartners { get; set; }
         public virtual DbSet<Scholarship> Scholarships { get; set; }
-        public virtual DbSet<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
-        public virtual DbSet<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
-        public virtual DbSet<AcademicProgramLanguage> AcademicProgramLanguages { get; set; }
         public virtual DbSet<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
         public virtual DbSet<DegreeLanguage> DegreeLanguages { get; set; }
-        public virtual DbSet<DirectionLanguage> DirectionLanguages { get; set; }
         public virtual DbSet<FormalityLanguage> FormalityLanguages { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<LevelAcademicLanguage> LevelAcademicLanguages { get; set; }
         public virtual DbSet<NotificationLanguage> NotificationLanguages { get; set; }
         public virtual DbSet<PaperStatusLanguage> PaperStatusLanguages { get; set; }
         public virtual DbSet<PositionLanguage> PositionLanguages { get; set; }
-        public virtual DbSet<ProcedureLanguage> ProcedureLanguages { get; set; }
         public virtual DbSet<ResearchAreaLanguage> ResearchAreaLanguages { get; set; }
         public virtual DbSet<SpecializationLanguage> SpecializationLanguages { get; set; }
         public virtual DbSet<TitleLanguage> TitleLanguages { get; set; }
@@ -123,12 +121,15 @@ namespace ENTITIES
         public virtual DbSet<PaperCriteria> PaperCriterias { get; set; }
         public virtual DbSet<PaperStatu> PaperStatus { get; set; }
         public virtual DbSet<AcademicActivity> AcademicActivities { get; set; }
+        public virtual DbSet<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         public virtual DbSet<AcademicActivityPhase> AcademicActivityPhases { get; set; }
+        public virtual DbSet<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
         public virtual DbSet<AcademicActivityStatu> AcademicActivityStatus { get; set; }
         public virtual DbSet<AcademicActivityType> AcademicActivityTypes { get; set; }
         public virtual DbSet<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
         public virtual DbSet<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
         public virtual DbSet<ActivityExpenseType> ActivityExpenseTypes { get; set; }
+        public virtual DbSet<ActivityInfo> ActivityInfoes { get; set; }
         public virtual DbSet<ActivityOffice> ActivityOffices { get; set; }
         public virtual DbSet<ActivityPartner> ActivityPartners { get; set; }
         public virtual DbSet<AnswerType> AnswerTypes { get; set; }
@@ -138,6 +139,7 @@ namespace ENTITIES
         public virtual DbSet<PlanParticipant> PlanParticipants { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
+        public virtual DbSet<MOAPartner> MOAPartners { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }
 }

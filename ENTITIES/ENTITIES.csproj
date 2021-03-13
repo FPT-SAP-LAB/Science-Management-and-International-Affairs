@@ -40,11 +40,33 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.50.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.50.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.50.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.50.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Drive.v3, Version=1.50.0.2250, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.50.0.2250\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.50.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +82,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="AcademicActivityPhase.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AcademicActivityPhaseLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="AcademicActivityStatu.cs">
@@ -86,9 +111,6 @@
     <Compile Include="AcademicProgram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="AcademicProgramLanguage.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Account.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -99,6 +121,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ActivityExpenseType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ActivityOffice.cs">
@@ -149,6 +174,12 @@
     <Compile Include="CollaborationStatusHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CollaborationTypeDirection.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CollaborationTypeDirectionLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Comment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -182,6 +213,8 @@
     <Compile Include="Criterion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\Authen\Gmail.cs" />
+    <Compile Include="CustomModels\GlobalUploadDrive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\BasicInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomOffice.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomPartner.cs" />
@@ -189,8 +222,11 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_JournalPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_OnePerson.cs" />
     <Compile Include="CustomProfile.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -207,9 +243,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Direction.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DirectionLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EligibilityCriteria.cs">
@@ -249,6 +282,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="MOABonu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MOAPartner.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="MOAPartnerScope.cs">
@@ -347,9 +383,6 @@
     <Compile Include="Procedure.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProcedureLanguage.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -423,6 +456,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DriveConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

@@ -17,41 +17,41 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Language()
         {
-            this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
-            this.AcademicProgramLanguages = new HashSet<AcademicProgramLanguage>();
+            this.CollaborationTypeDirectionLanguages = new HashSet<CollaborationTypeDirectionLanguage>();
+            this.ArticleVersions = new HashSet<ArticleVersion>();
             this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
             this.DegreeLanguages = new HashSet<DegreeLanguage>();
-            this.DirectionLanguages = new HashSet<DirectionLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
+            this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.LevelAcademicLanguages = new HashSet<LevelAcademicLanguage>();
             this.NotificationLanguages = new HashSet<NotificationLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
             this.PositionLanguages = new HashSet<PositionLanguage>();
-            this.ProcedureLanguages = new HashSet<ProcedureLanguage>();
             this.ResearchAreaLanguages = new HashSet<ResearchAreaLanguage>();
             this.SpecializationLanguages = new HashSet<SpecializationLanguage>();
             this.TitleLanguages = new HashSet<TitleLanguage>();
+            this.AcademicActivityPhaseLanguages = new HashSet<AcademicActivityPhaseLanguage>();
         }
     
         public int language_id { get; set; }
         public string language_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicProgramLanguage> AcademicProgramLanguages { get; set; }
+        public virtual ICollection<CollaborationTypeDirectionLanguage> CollaborationTypeDirectionLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticleVersion> ArticleVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DegreeLanguage> DegreeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DirectionLanguage> DirectionLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormalityLanguage> FormalityLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -63,12 +63,12 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PositionLanguage> PositionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcedureLanguage> ProcedureLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchAreaLanguage> ResearchAreaLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecializationLanguage> SpecializationLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TitleLanguage> TitleLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
     }
 }

@@ -17,6 +17,16 @@
     .major {
         margin-bottom: 1rem !important
     }
+
+    .social-link {
+        margin-top: 1rem;
+        color: white !important;
+        text-align: center;
+    }
+
+        .social-link i {
+            padding-right: 0rem !important;
+        }
 </style>
 <!--begin::Card-->
 <div class="card card-custom gutter-b">
@@ -67,77 +77,16 @@
             <!--end::Info-->
         </div>
         <!--end::Details-->
-
         <div class="separator separator-solid"></div>
-
-        <!--begin::Items-->
-        <div class="d-flex align-items-center flex-wrap mt-8">
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                <span class="mr-4">
-                    <i class="fab fa-google display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column text-dark-75">
-                    <a href="#" class="font-weight-bolder font-size-sm">Google Scholar</a>
-                    @*<span class="font-weight-bolder font-size-h5"><span class="text-dark-50 font-weight-bold">$</span>50</span>*@
+        <div class="row" id="social-link">
+            <div class="col-12">
+                <div class="form-group">
+                    <a href="#" class="social-link btn btn-light-danger mr-2" data-toggle="tooltip" data-theme="dark" title="Google Scholar"><i class="fab fa-google "></i></a>
+                    <a href="#" class="social-link btn btn-light-primary mr-2" data-toggle="tooltip" data-theme="dark" title="Linkedin"><i class="fab fa-linkedin "></i></a>
+                    <a href="#" class="social-link btn btn-light-success mr-2" data-toggle="tooltip" data-theme="dark" title="Website"><i class="fas fa-globe icon-md"></i></a>
+                    <a href="#" class="social-link btn btn-light-warning mr-2" data-toggle="tooltip" data-theme="dark" title="CV"><i class="fas fa-id-card icon-md"></i></a>
                 </div>
             </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                <span class="mr-4">
-                    <i class="fab fa-linkedin display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column text-dark-75">
-                    <a href="#" class="font-weight-bolder font-size-sm">Linkedin</a>
-                    @*<span class="font-weight-bolder font-size-h5"><span class="text-dark-50 font-weight-bold">$</span>50</span>*@
-                </div>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                <span class="mr-4">
-                    <i class="far fa-bookmark display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column text-dark-75">
-                    <a href="#" class="font-weight-bolder font-size-sm">Website</a>
-                    @*<span class="font-weight-bolder font-size-h5"><span class="text-dark-50 font-weight-bold">$</span>50</span>*@
-                </div>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                <span class="mr-4">
-                    <i class="far fa-user-circle display-4 text-muted font-weight-bold"></i>
-                </span>
-                <div class="d-flex flex-column">
-                    @*<span class="text-dark-75 font-weight-bolder font-size-sm">CV</span>*@
-                    <a href="#" class="text-primary font-weight-bolder">CV</a>
-                </div>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                @*<span class="mr-4">
-                        <i class="flaticon-file-2 display-4 text-muted font-weight-bold"></i>
-                    </span>
-                    <div class="d-flex flex-column flex-lg-fill">
-                        <span class="text-dark-75 font-weight-bolder font-size-sm">73 Tasks</span>
-                        <a href="#" class="text-primary font-weight-bolder">View</a>
-                    </div>*@
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
-                @*<span class="mr-4">
-                        <i class="flaticon-chat-1 display-4 text-muted font-weight-bold"></i>
-                    </span>
-                    <div class="d-flex flex-column">
-                        <span class="text-dark-75 font-weight-bolder font-size-sm">648 Comments</span>
-                        <a href="#" class="text-primary font-weight-bolder">View</a>
-                    </div>*@
-            </div>
-            <!--end::Item-->
         </div>
         <!--begin::Items-->
     </div>
@@ -222,7 +171,7 @@
             </div>
         </div>
         <!------------------------->
-        <div class="row">
+        <div class="row" style="margin-bottom:1rem">
             <div class="col-12">
                 <div class="card card-custom card-stretch gutster-b">
                     <div class="card-header border-0 pt-5">
@@ -270,35 +219,35 @@
                                     <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
                                     <td>dummy text</td>
                                     <td>2019</td>
-                                    <td><a href="#">Xem</a></td>
+                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
                                     <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
                                     <td>dummy text</td>
                                     <td>2019</td>
-                                    <td><a href="#">Xem</a></td>
+                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
                                     <td>dummy text</td>
                                     <td>2019</td>
-                                    <td><a href="#">Xem</a></td>
+                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
                                     <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
                                     <td>dummy text</td>
                                     <td>2019</td>
-                                    <td><a href="#">Xem</a></td>
+                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                                 </tr>
                                 <tr>
                                     <td>5</td>
                                     <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
                                     <td>dummy text</td>
                                     <td>2019</td>
-                                    <td><a href="#">Xem</a></td>
+                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                                 </tr>
                             </tbody>
                         </table>

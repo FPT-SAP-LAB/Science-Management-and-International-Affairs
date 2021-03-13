@@ -12,13 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class AcademicProgramLanguage
+    public partial class AcademicActivityPhaseLanguage
     {
-        public int program_id { get; set; }
+        public int phase_id { get; set; }
         public int language_id { get; set; }
-        public string program_name { get; set; }
+        public string phase_name { get; set; }
     
-        public virtual AcademicProgram AcademicProgram { get; set; }
         public virtual Language Language { get; set; }
+        public virtual AcademicActivityPhase AcademicActivityPhase { get; set; }
     }
 }
