@@ -2389,6 +2389,7 @@
     <Content Include="Views\Policy\Index.cshtml" />
     <Content Include="Views\AcademicActivity\Index.cshtml" />
     <Content Include="Views\Researchers\EditInfo.cshtml" />
+    <Content Include="Views\AcademicActivity\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
