@@ -21,14 +21,22 @@ namespace BLL.ScienceManagement.ScientificProduct
 	                            join [Localization].PaperStatusLanguage psl on ps.status_id = psl.status_id
                             where ap.people_id = @id and ap.author_request = 1";
             if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
-            sql += " union ";
-            sql += @"select i.name, i.date_request, psl.name, i.status, i.invention_id
+            sql += " order by status_id desc";
+            list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
+                , new SqlParameter("id", 1)
+                , new SqlParameter("name", "%" + item.nameS + "%")).ToList();
+            return list;
+        }
+
+        public List<ListProduct_OnePerson> getListInven(DataSearch item)
+        {
+            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
+            string sql = @"select i.name, i.date_request, psl.name, i.status as 'status_id', i.invention_id
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [SM_ScientificProduct].PaperStatus ps on i.status = ps.status_id
 	                            join [Localization].PaperStatusLanguage psl on ps.status_id = psl.status_id
                             where ai.people_id = 1 and ai.author_request = 1";
             if (item.nameS != null && item.nameS != " ") sql += " and i.name like @name"; else item.nameS = " ";
-            sql += " order by status_id desc";
             list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
                 , new SqlParameter("id", 1)
                 , new SqlParameter("name", "%" + item.nameS + "%")).ToList();

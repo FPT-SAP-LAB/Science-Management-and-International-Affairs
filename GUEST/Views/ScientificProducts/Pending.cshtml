@@ -40,7 +40,19 @@
                         </thead>
                         <tbody>
                             @{
-                                foreach (var item in ViewBag.list)
+                                foreach (var item in ViewBag.listPaper)
+                                {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.status_id</td>
+                                        <td>@item.status_id</td>
+                                        <td>paper @item.paper_id</td>
+                                    </tr>
+                                }
+                            }
+                            @{
+                                foreach (var item in ViewBag.listInven)
                                 {
                                     <tr>
                                         <td>@item.name</td>
