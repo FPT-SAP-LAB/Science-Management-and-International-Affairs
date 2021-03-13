@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ENTITIES.CustomModels;
+using Google.Apis.Drive.v3;
+using Google.Apis.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
@@ -12,6 +15,7 @@ namespace GUEST.Controllers
     {
         public ActionResult Index()
         {
+            GlobalUploadDrive.FindFirstFolder("SonNT69");
             var pagesTree = new List<PageTree>
             {
                 new PageTree("Bảng tin","/"),

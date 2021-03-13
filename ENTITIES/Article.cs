@@ -27,8 +27,6 @@ namespace ENTITIES
         }
     
         public int article_id { get; set; }
-        public string article_title { get; set; }
-        public System.DateTime publish_time { get; set; }
         public Nullable<bool> is_pinned { get; set; }
         public Nullable<System.DateTime> pin_time { get; set; }
         public bool need_approved { get; set; }
