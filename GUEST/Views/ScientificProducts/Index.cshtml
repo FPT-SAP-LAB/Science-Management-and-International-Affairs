@@ -29,7 +29,6 @@
                                             <div class="d-flex align-items-center">
                                                 <select class="form-control" id="search_thang" name="param">
                                                     <option label="Label"></option>
-                                                    <option value="0">@rm.GetString("All")</option>
                                                     <option value="1">@rm.GetString("Jan")</option>
                                                     <option value="2">@rm.GetString("Feb")</option>
                                                     <option value="3">@rm.GetString("Mar")</option>
@@ -65,7 +64,7 @@
                         </div>
                         <div class="col-xl-12">
                                     <div class="card-toolbar">
-                                        <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                                        <ul class="nav nav-tabs nav-bold">
                                             <li class="nav-item">
                                                 <a class="nav-link active" data-toggle="tab" href="#tapchi">
                                                     <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
@@ -306,13 +305,13 @@
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='"+data+"'>Link</a>"
                         }
                     },
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     }
                 ],
@@ -355,13 +354,13 @@
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     },
                     {
                         width: "5%",
                         render: function (data) {
-                            return "<a class='btn btn-outline-primary' href='#'>Link</a>"
+                            return "<a class='btn btn-outline-primary' target='_blank' href='" + data +"'>Link</a>"
                         }
                     }
                 ],

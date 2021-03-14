@@ -14,12 +14,6 @@ namespace ENTITIES
     
     public partial class AcademicProgram
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AcademicProgram()
-        {
-            this.AcademicProgramLanguages = new HashSet<AcademicProgramLanguage>();
-        }
-    
         public int program_id { get; set; }
         public System.DateTime program_start_date { get; set; }
         public System.DateTime program_end_date { get; set; }
@@ -27,13 +21,11 @@ namespace ENTITIES
         public string note { get; set; }
         public int collab_type_id { get; set; }
         public int direction_id { get; set; }
-        public int partner_id { get; set; }
+        public Nullable<int> partner_id { get; set; }
     
         public virtual AcademicCollaborationType AcademicCollaborationType { get; set; }
         public virtual Article Article { get; set; }
         public virtual Partner Partner { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicProgramLanguage> AcademicProgramLanguages { get; set; }
         public virtual Direction Direction { get; set; }
     }
 }

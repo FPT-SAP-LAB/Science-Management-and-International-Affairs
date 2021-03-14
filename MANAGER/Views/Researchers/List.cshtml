@@ -56,78 +56,10 @@
             <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button"
-                            class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                            data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                        <span class="svg-icon svg-icon-md">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                             width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                             version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none"
-                                   fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24" />
-                                    <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z"
-                                          fill="#000000" opacity="0.3" />
-                                    <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z"
-                                          fill="#000000" />
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span> Export
+                            class="btn btn-light-success font-weight-bolder"
+                            data-toggle="modal" data-target="#list-researcher-candidates">
+                        Đăng thông tin nghiên cứu viên
                     </button>
-
-                    <!--begin::Dropdown Menu-->
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                        <!--begin::Navigation-->
-                        <ul class="navi flex-column navi-hover py-2">
-                            <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                Choose an option:
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-print"></i>
-                                    </span>
-                                    <span class="navi-text">Print</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-copy"></i>
-                                    </span>
-                                    <span class="navi-text">Copy</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-excel-o"></i>
-                                    </span>
-                                    <span class="navi-text">Excel</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-text-o"></i>
-                                    </span>
-                                    <span class="navi-text">CSV</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-pdf-o"></i>
-                                    </span>
-                                    <span class="navi-text">PDF</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!--end::Navigation-->
-                    </div>
-                    <!--end::Dropdown Menu-->
                 </div>
             </div>
         </div>
@@ -208,6 +140,89 @@
     <!--end: Datatable-->
 
 </div>
+<!-- Modal-->
+<div class="modal fade " id="list-researcher-candidates" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>DANH SÁCH GIẢNG VIÊN, NGHIÊN CỨU VIÊN</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-7">
+                    <div class="row align-items-center">
+                        <div class="col-lg-10 col-xl-10">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 my-2 my-md-0">
+                                    <div class="input-icon">
+                                        <input type="text" class="form-control"
+                                               placeholder="Tên..."
+                                               id="kt_datatable_search_query" />
+                                        <span>
+                                            <i class="flaticon2-search-1 text-muted"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
+                                        <select class="form-control"
+                                                id="search_nganh_modal">
+                                            <option label="Label"></option>
+                                            <option value="">Khoa học máy tính</option>
+                                            <option value="1">Toán học</option>
+                                            <option value="2">Kinh tế</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
+                                        <select class="form-control"
+                                                id="search_coso_modal">
+                                            <option label="Label"></option>
+                                            <option value="">FPTU HN</option>
+                                            <option value="1">FPTU Cần Thơ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
+                                    <a href="#"
+                                       class="btn btn-light-primary px-6 font-weight-bold">
+                                        Tìm kiếm
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
+
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-checkable" id="kt_datatable">
+                    <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tên</th><th>chức vụ</th><th>số bài báo</th><th>Đăng hồ sơ</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Nguyên Trân</td><td>Giảng viên</td><td>22</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>2</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>3</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>3</td><td>Sơn Bá</td><td>Giảng viên</td><td>6</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>4</td><td>Dũng Power</td><td>Giảng viên</td><td>9</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>5</td><td>Nguyên Trân</td><td>Giảng viên</td><td>8</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>6</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>7</td><td>Sơn Bá</td><td>Giảng viên</td><td>16</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>8</td><td>Dũng Power</td><td>Giảng viên</td><td>13</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        <tr><td>9</td><td>Nguyên Trân</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         var KTDatatablesBasicBasic = function () {
@@ -221,7 +236,7 @@
 
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                     lengthMenu: [5, 10, 25, 50],
 
@@ -276,7 +291,7 @@
 
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                     lengthMenu: [5, 10, 25, 50],
 
@@ -330,9 +345,8 @@
         });
         //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
         list_select = {
-            "search_nam": "Chọn năm",
-            "search_nganh": "Chọn ngành",
-            "search_coso": "Chọn cơ sở"
+            "search_chucvu_modal": "Chọn chức vụ",
+            "search_coso_modal": "Chọn cơ sở"
         }
         for (let i in list_select) {
             $('#' + i).select2({
@@ -341,6 +355,16 @@
             });
         }
         //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        
+
+    </script>
+    <script>
+        $('#search_nganh').select2({
+            placeholder: 'Chọn ngành',
+            allowClear: true
+        });
+        $('#search_coso').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        });
     </script>
 }

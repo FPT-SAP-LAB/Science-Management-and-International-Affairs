@@ -1,0 +1,207 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .border-side {
+        border-left: 7px solid #0094ff !important;
+    }
+
+    .font-content {
+        font-size: 14px !important;
+    }
+
+    .cs-pd {
+        padding: 1rem 1rem !important;
+    }
+
+    #custom-zone .custom-checkbox {
+        outline: none !important;
+        cursor: default !important;
+    }
+    #custom-zone .checkbox{
+        margin-right: 0px !important;
+    }
+    #custom-zone a {
+        color: #3F4254 !important;
+    }
+</style>
+
+
+
+<div class="card-body pb-0">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded justify-content-between cs-pd">
+                    <div class="row" id="custom-zone">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left">
+                                <div class="checkbox-inline mt-3">
+                                    <label class="checkbox">
+                                        <input type="checkbox" disabled />
+                                        <span class="custom-checkbox" style="background-color: #0094ff !important;"></span>
+                                    </label>
+                                    <span><a href="javascript:;">Hội nghị, hội thảo</a></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left justify-content-center">
+                                <div class="checkbox-inline mt-3">
+                                    <label class="checkbox">
+                                        <input type="checkbox" disabled />
+                                        <span class="custom-checkbox" style="background-color: #ff6a00 !important;"></span>
+                                    </label>
+                                    <span><a href="javascript:;">Seminar</a></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left">
+                                <div class="checkbox-inline mt-3">
+                                    <label class="checkbox">
+                                        <input type="checkbox" disabled />
+                                        <span class="custom-checkbox" style="background-color: #39a73b !important;"></span>
+                                    </label>
+                                    <span><a href="javascript:;">Khóa học</a></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left">
+                                <div class="checkbox-inline">
+                                    <label class="checkbox">
+                                        <input type="checkbox" disabled />
+                                        <span class="custom-checkbox" style="background-color: #b200ff !important;"></span>
+                                    </label>
+                                    <span style="white-space: unset !important"><a href="javascript:;">Hội thảo thường niên FPT Edu</a></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 float-left">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm" />
+                                    <span><i class="flaticon2-search-1 text-muted"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="row" id="content-control">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" onclick="goDetail(0)" class="text-dark-75 font-weight-bolder">[Workshop] Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</a>
+                        </h4>
+                        <div class="">
+                            Thời gian: 09h00 - 11h30 - 22/10/2020
+                        </div>
+                        <div class="">
+                            Địa điểm: Hội trường FPoly, Tòa P, FPT Polytechnic, Phố Trịnh Văn Bô, Xuân Phương.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" class="text-dark-75 font-weight-bolder">Hội thảo khoa học Đào tạo đáp ứng nhu cầu xã hội và hội nhập</a>
+                        </h4>
+                        <div class="">
+                            Thời gian: 24/12/2020
+                        </div>
+                        <div class="">
+                            Địa điểm: Trường Đại học Thủ Dầu Một - Số 06, đường Trần Văn Ơn, phường Phú Hòa.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" class="text-dark-75 font-weight-bolder">The 15th International conference and Workshops on Algorithms</a>
+                        </h4>
+                        <div class="">
+                            Date: February 28 - March 2, 2021
+                        </div>
+                        <div class="">
+                            Location: University of Information Technology, Yangon, Myanmar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" class="text-dark-75 font-weight-bolder">The 15th International conference and Workshops on Algorithms</a>
+                        </h4>
+                        <div class="">
+                            Date: February 28 - March 2, 2021
+                        </div>
+                        <div class="">
+                            Location: University of Information Technology, Yangon, Myanmar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" class="text-dark-75 font-weight-bolder">Hội thảo khoa học Đào tạo đáp ứng nhu cầu xã hội và hội nhập</a>
+                        </h4>
+                        <div class="">
+                            Thời gian: 24/12/2020
+                        </div>
+                        <div class="">
+                            Địa điểm: Trường Đại học Thủ Dầu Một - Số 06, đường Trần Văn Ơn, phường Phú Hòa.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-preview float-right">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="d-flex flex-wrap py-2 mr-3">
+                @*<a href="javascript:;" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+                        <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+                        <i class="ki ki-bold-arrow-back icon-xs"></i>
+                    </a>*@
+                <a href="javascript:;" class="btn btn-icon border-0 btn-light mr-2 my-1 btn-hover-primary active">1</a>
+                <a href="javascript:;" class="btn btn-icon border-0 btn-light mr-2 my-1">2</a>
+                <a href="javascript:;" class="btn btn-icon border-0 btn-light mr-2 my-1">3</a>
+                <a href="javascript:;" class="btn btn-icon border-0 btn-light mr-2 my-1">4</a>
+                <a href="javascript:;" class="btn btn-icon border-0 btn-light mr-2 my-1">5</a>
+                <a href="javascript:;" class="btn btn-icon btn-light mr-2 my-1">
+                    <i class="ki ki-bold-arrow-next icon-xs"></i>
+                </a>
+                <a href="javascript:;" class="btn btn-icon btn-sm btn-light mr-2 my-1">
+                    <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function goDetail(id) {
+            window.location.href = 'AcademicActivity/Detail?id=' + id;
+        }
+    </script>
+}

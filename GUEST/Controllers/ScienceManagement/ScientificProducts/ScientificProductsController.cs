@@ -12,6 +12,7 @@ namespace GUEST.Controllers.ScientificProducts
     public class ScientificProductsController : Controller
     {
         ListProductRepo lpr = new ListProductRepo();
+        ListProductOnePersonRepo lpo = new ListProductOnePersonRepo();
         // GET: ScientificProducts
         public ActionResult Index()
         {
@@ -41,7 +42,26 @@ namespace GUEST.Controllers.ScientificProducts
             return Json(new { Journal = list, Conference = list2, Invention = listInven }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Pending()
+        [HttpPost]
+        public JsonResult SearchOnePerson(DataSearch item)
+        {
+            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
+            if (item.monthS == "paper")
+            {
+                list = lpo.getList(item);
+            }
+            else
+            {
+                list = lpo.getListInven(item);
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].note = list[i].status_id + "_" + list[i].paper_id + "_" + item.monthS;
+            }
+            return Json(new { OnePerson = list }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Pending(string type)
         {
             ViewBag.title = "Sản phẩm khoa học đang chờ phê duyệt";
             var pagesTree = new List<PageTree>
@@ -49,6 +69,21 @@ namespace GUEST.Controllers.ScientificProducts
                 new PageTree("Sản phẩm khoa học đang chờ phê duyệt","/ScientificProducts/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
+            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
+            if (type == "paper")
+            {
+                list = lpo.getList(new DataSearch());
+            }
+            else
+            {
+                list = lpo.getListInven(new DataSearch());
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].note = list[i].status_id + "_" + list[i].paper_id + "_" + type;
+            }
+            ViewBag.list = list;
+            ViewBag.type = type;
             return View();
         }
     }

@@ -16,6 +16,7 @@ namespace ENTITIES
     {
         public int article_id { get; set; }
         public Nullable<int> activity_id { get; set; }
+        public Nullable<bool> main_article { get; set; }
     
         public virtual Article Article { get; set; }
         public virtual AcademicActivity AcademicActivity { get; set; }
