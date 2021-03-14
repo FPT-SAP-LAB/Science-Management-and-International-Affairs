@@ -61,7 +61,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         location = obj.location
                     });
                     db.SaveChanges();
-
                     ENTITIES.Article ar = db.Articles.Add(new ENTITIES.Article
                     {
                         account_id = 1,
@@ -69,7 +68,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         need_approved = false
                     });
                     db.SaveChanges();
-
                     db.ActivityInfoes.Add(new ENTITIES.ActivityInfo
                     {
                         activity_id = aa.activity_id,
@@ -77,7 +75,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         main_article = true
                     });
                     db.SaveChanges();
-
                     db.ArticleVersions.Add(new ENTITIES.ArticleVersion
                     {
                         article_id = ar.article_id,
@@ -87,7 +84,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         article_content = ""
                     });
                     db.SaveChanges();
-
                     transaction.Commit();
                     return true;
                 }
@@ -145,17 +141,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     aa.activity_type_id = activity_type_id;
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
-
                     AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == 1).FirstOrDefault();
                     al.location = location;
                     db.Entry(al).State = EntityState.Modified;
                     db.SaveChanges();
-
                     ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
                     ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == 1).FirstOrDefault();
                     av.version_title = title;
                     db.SaveChanges();
-
                     transaction.Commit();
                     return true;
                 }
@@ -173,9 +166,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 try
                 {
                     ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
-
-
-
                     transaction.Commit();
                     return true;
                 }
