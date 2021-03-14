@@ -40,12 +40,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-    }
-    public class ListAA
-    {
-        public int activity_id { get; set; }
-        public string activity_name { get; set; }
-        public string activity_type_name { get; set; }
-        public string activity_status_name { get; set; }
+        public class ListAA
+        {
+            public int activity_id { get; set; }
+            public string activity_name { get; set; }
+            public string activity_type_name { get; set; }
+            public string activity_status_name { get; set; }
+        }
     }
 }

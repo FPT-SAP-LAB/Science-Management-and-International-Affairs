@@ -21,7 +21,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                List<ListAA> data = repo.listAllAA(year);
+                List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
