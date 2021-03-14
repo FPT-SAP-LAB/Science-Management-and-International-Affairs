@@ -105,7 +105,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 return new List<ENTITIES.AcademicActivityType>();
             }
-
         }
         public baseAA GetbaseAA(int id)
         {
@@ -126,11 +125,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 return new baseAA();
             }
-
         }
         public bool updateBaseAA(int id, int activity_type_id, string title, string from, string to, string location)
         {
-
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
