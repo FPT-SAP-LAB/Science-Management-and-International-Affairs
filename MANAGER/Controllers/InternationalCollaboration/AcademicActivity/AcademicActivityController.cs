@@ -14,88 +14,51 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult List()
         {
             ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
+            ViewBag.AAType = repo.getType();
             return View();
         }
-
+        [HttpPost]
         public ActionResult getDatatable(int year)
         {
-            try
-            {
-                List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
-                return Json(data, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(400);
-            }
+            List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
+            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult getBaseAA(int id)
+        {
+            AcademicActivityRepo.baseAA data = repo.GetbaseAA(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
         public ActionResult Detail(int id)
         {
             return View();
         }
-
+        [HttpPost]
         public JsonResult delete_AcademicActivity(int id)
         {
-            try
+            bool res = repo.deleteAA(id);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã xóa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Đã xóa thành công", JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult add_AcademicActivity(string title, string category, string from, string to, string location)
+        [HttpPost]
+        public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            try
+            bool res = repo.AddAA(obj);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã thêm thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult edit_AcademicActivity(string title, string category, string from, string to, string location)
+        [HttpPost]
+        public JsonResult edit_AcademicActivity(int id,int activity_type_id, string activity_name,string from, string to, string location)
         {
-            try
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã chỉnh sửa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

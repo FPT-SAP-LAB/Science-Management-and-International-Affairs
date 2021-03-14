@@ -10,7 +10,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
     public class CheckInController : Controller
     {
         // GET: CheckIn
-        public ActionResult List()
+        public ActionResult List(int id)
         {
             ViewBag.pageTitle = "Check-in hoạt động học thuật trong năm";
             return View();
