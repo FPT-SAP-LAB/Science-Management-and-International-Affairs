@@ -34,7 +34,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         from IA_Collaboration.MOUPartnerScope t1 inner join
                         IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
                         on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
-                        inner join IA_MasterData.CollaborationScope tb5 on
+                        inner join IA_Collaboration.CollaborationScope tb5 on
                         tb5.scope_id  = tb4.scope_id
                         inner join IA_Collaboration.MOUPartnerSpecialization tb6
                         on tb6.mou_partner_id = tb2.mou_partner_id 
@@ -83,7 +83,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     from IA_Collaboration.MOUPartnerScope t1 inner join
                     IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
                     on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
-                    inner join IA_MasterData.CollaborationScope tb5 on
+                    inner join IA_Collaboration.CollaborationScope tb5 on
                     tb5.scope_id  = tb4.scope_id
                     inner join IA_Collaboration.MOUPartnerSpecialization tb6
                     on tb6.mou_partner_id = tb2.mou_partner_id 
@@ -371,7 +371,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
+                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
                 return scopeList;
             }

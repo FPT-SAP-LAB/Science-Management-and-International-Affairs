@@ -32,7 +32,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb5.partner_id = tb1.partner_id
                         inner join IA_Collaboration.MOUPartnerScope tb6 on 
                         tb6.partner_scope_id = tb5.partner_scope_id
-                        inner join IA_MasterData.CollaborationScope tb7 on 
+                        inner join IA_Collaboration.CollaborationScope tb7 on 
                         tb7.scope_id = tb5.scope_id
                         inner join General.Country tb8 on 
                         tb8.country_id = tb2.country_id
@@ -407,7 +407,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
+                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
                 return scopeList;
             }
@@ -435,7 +435,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb5.partner_id = tb1.partner_id
                         inner join IA_Collaboration.MOUPartnerScope tb6 on 
                         tb6.partner_scope_id = tb5.partner_scope_id
-                        inner join IA_MasterData.CollaborationScope tb7 on 
+                        inner join IA_Collaboration.CollaborationScope tb7 on 
                         tb7.scope_id = tb5.scope_id
                         inner join General.Country tb8 on 
                         tb8.country_id = tb2.country_id

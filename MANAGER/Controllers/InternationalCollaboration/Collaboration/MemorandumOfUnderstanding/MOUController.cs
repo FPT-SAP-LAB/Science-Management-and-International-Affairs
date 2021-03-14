@@ -1,4 +1,5 @@
-﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
@@ -16,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         private static MOURepo mou = new MOURepo();
         private static BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
         private static PartnerMOURepo mou_partner = new PartnerMOURepo();
-
+        private static MOARepo moa = new MOARepo();
         public ActionResult List()
         {
             ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
@@ -115,19 +116,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
             ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope();
             ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+
+            //MOA
+            //ViewBag.listOffice = moa.GetOffice();
+            ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
+            ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
+            //ViewBag.listScopesMOA = moa.GetCollaborationScopes();
+            //ViewBag.listSpeMOA = moa.GetSpecializations();
+
             return View();
-        }
-        public ActionResult PassDataToMOUDetail(int id)
-        {
-            try
-            {
-                //mou_detail_id = id;
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult(400);
-            }
         }
     }
 }

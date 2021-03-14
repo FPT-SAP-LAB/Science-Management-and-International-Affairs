@@ -41,7 +41,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         from IA_Collaboration.MOUPartnerScope t1a left join 
                         IA_Collaboration.PartnerScope t2a 
                         on t2a.partner_scope_id = t1a.partner_scope_id) tb1a
-                        left join IA_MasterData.CollaborationScope tb1b on
+                        left join IA_Collaboration.CollaborationScope tb1b on
                         tb1a.scope_id = tb1b.scope_id
                         where mou_id = @mou_id) t1
                         group by mou_id) t2
@@ -84,7 +84,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t3.partner_scope_id = t2.partner_scope_id
                         inner join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-                        inner join IA_MasterData.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.mou_id = @mou_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
                     new SqlParameter("mou_id", mou_id)).ToList();
@@ -176,7 +176,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t3.partner_scope_id = t2.partner_scope_id
                         inner join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-                        inner join IA_MasterData.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.mou_id = @mou_id and t1.mou_bonus_id = @mou_bonus_id order by partner_id ";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouEx
                     , new SqlParameter("mou_id", mou_id)
@@ -401,7 +401,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope
+                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope
                     where scope_id not in (
                     select distinct t2.scope_id from IA_Collaboration.MOUPartnerScope t1 left join
                     IA_Collaboration.PartnerScope t2 on 
