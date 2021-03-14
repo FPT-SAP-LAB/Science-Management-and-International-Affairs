@@ -2,11 +2,8 @@
 <html lang="en">
 <!--begin::Head-->
 <head>
-    <base href="">
     <meta charset="utf-8" />
     <title> @ViewBag.Title | HỆ THỐNG QUẢN LÝ KHOA HỌC - HỢP TÁC QUỐC TẾ</title>
-    <meta name="description"
-          content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!--begin::Fonts-->
     <!--end::Fonts-->
@@ -31,34 +28,18 @@
 
 
 </head>
-<!--end::Head-->
-<!--begin::Body-->
 <body id="kt_body"
       class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
-    <!--begin::Main-->
-    <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
-        <!--begin::Logo-->
         <a href="#">
             <img alt="Logo" style="width: 30%" src="~/Content/assets/media/logos/logo-letter-9.png" />
         </a>
-        <!--end::Logo-->
-        <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
-            <!--begin::Aside Mobile Toggle-->
             <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
                 <span></span>
             </button>
-            <!--end::Aside Mobile Toggle-->
-            <!--begin::Header Menu Mobile Toggle-->
-            <!-- <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
-                <span></span>
-            </button> -->
-            <!--end::Header Menu Mobile Toggle-->
-            <!--begin::Topbar Mobile Toggle-->
             <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
                 <span class="svg-icon svg-icon-xl">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                          height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -69,30 +50,19 @@
                                   fill="#000000" fill-rule="nonzero" />
                         </g>
                     </svg>
-                    <!--end::Svg Icon-->
                 </span>
             </button>
-            <!--end::Topbar Mobile Toggle-->
         </div>
-        <!--end::Toolbar-->
     </div>
-    <!--end::Header Mobile-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Page-->
         <div class="d-flex flex-row flex-column-fluid page">
-            <!--begin::Aside-->
             <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
-                <!--begin::Brand-->
                 <div class="brand flex-column-auto" id="kt_brand">
-                    <!--begin::Logo-->
                     <a href="#" class="brand-logo">
                         <img alt="Logo" style="width: 60%" src="~/Content/assets/media/logos/logo-letter-9.png" />
                     </a>
-                    <!--end::Logo-->
-                    <!--begin::Toggle-->
                     <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
                         <span class="svg-icon svg-icon svg-icon-xl">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                  width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -105,137 +75,67 @@
                                           transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999)" />
                                 </g>
                             </svg>
-                            <!--end::Svg Icon-->
                         </span>
                     </button>
-                    <!--end::Toolbar-->
                 </div>
-                <!--end::Brand-->
-                <!--begin::Aside Menu-->
                 <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
-                    <!--begin::Menu Container-->
                     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1"
                          data-menu-dropdown-timeout="500">
-                        <!--begin::Menu Nav-->
                         <ul class="menu-nav">
 
-                            <!--------------NEWS-------------->
+                            <!--------------TÀI KHOẢN HỆ THỐNG-------------->
                             <li class="menu-section ">
-                                <h4 class="menu-text">TIN TỨC - SỰ KIỆN</h4>
+                                <h4 class="menu-text">TÀI KHOẢN HỆ THỐNG</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                             </li>
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="/ConferenceSponsor" class="menu-link">
+                                <a href="#!" class="menu-link">
                                     <span class="svg-icon menu-icon">
                                         <i class="fas fa-clipboard-list icon-lg"></i>
                                     </span>
-                                    <span class="menu-text">QUẢN LÝ TIN TỨC - SỰ KIỆN</span></i>
+                                    <span class="menu-text">QUẢN LÍ TÀI KHOẢN</span></i>
                                 </a>
                             </li>
 
-                            <!--------------ACADEMIC ACTIVITY-------------->
+                            <!--------------CHỨC DANH-------------->
                             <li class="menu-section ">
-                                <h4 class="menu-text">HOẠT ĐỘNG HỌC THUẬT TRONG NĂM</h4>
+                                <h4 class="menu-text">CHỨC DANH</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                             </li>
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="@Url.Action("List", "AcademicActivity")" class="menu-link">
+                                <a href="#!" class="menu-link">
                                     <span class="svg-icon menu-icon">
                                         <i class="fas fa-clipboard-list icon-lg"></i>
                                     </span>
-                                    <span class="menu-text">QUẢN LÝ HOẠT ĐỘNG HỌC THUẬT</span></i>
+                                    <span class="menu-text">QUẢN LÝ CHỨC DANH</span></i>
                                 </a>
                             </li>
 
-                            <!--------------COLLABORATION-------------->
+                            <!--------------CÀI ĐẶT HỆ THỐNG-------------->
                             <li class="menu-section ">
-                                <h4 class="menu-text">THỎA THUẬN HỢP TÁC</h4>
+                                <h4 class="menu-text">CÀI ĐẶT HỆ THỐNG</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                             </li>
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="@Url.Action("List", "MOU")" class="menu-link">
-                                    <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
-                                    </span>
-                                    <span class="menu-text">BIÊN BẢN GHI NHỚ</span></i>
-                                </a>
-                            </li>
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="@Url.Action("List", "Partner")" class="menu-link">
-                                    <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
-                                    </span>
-                                    <span class="menu-text">ĐỐI TÁC</span></i>
-                                </a>
-                            </li>
-
-                            <!--------------ACADEMIC COLLABORATION-------------->
-                            <li class="menu-section ">
-                                <h4 class="menu-text">HỢP TÁC HỌC THUẬT</h4>
-                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                            </li>
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="@Url.Action("List","AcademicCollaboration")" class="menu-link">
-                                    <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
-                                    </span>
-                                    <span class="menu-text">QUẢN LÝ HỢP TÁC HỌC THUẬT</span></i>
-                                </a>
-                            </li>
-
-                            <!--------------RESEARCH COLLABORATION-------------->
-                            <li class="menu-section ">
-                                <h4 class="menu-text">HỢP TÁC NGHIÊN CỨU</h4>
-                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                            </li>
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="#" class="menu-link">
-                                    <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
-                                    </span>
-                                    <span class="menu-text">QUẢN LÝ HỢP TÁC NGHIÊN CỨU</span></i>
-                                </a>
-                            </li>
-
-                            <!--------------SCHOLARSHIP-------------->
-                            <li class="menu-section ">
-                                <h4 class="menu-text">HỌC BỔNG</h4>
-                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                            </li>
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="#" class="menu-link">
-                                    <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
-                                    </span>
-                                    <span class="menu-text">THÔNG TIN HỌC BỔNG</span></i>
-                                </a>
-                            </li>
+                            @*<li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+            <a href="@Url.Action("List", "AcademicActivity")" class="menu-link">
+                <span class="svg-icon menu-icon">
+                    <i class="fas fa-clipboard-list icon-lg"></i>
+                </span>
+                <span class="menu-text">QUẢN LÝ HOẠT ĐỘNG HỌC THUẬT</span></i>
+            </a>
+        </li>*@
 
                         </ul>
-                        <!--end::Menu Nav-->
                     </div>
-                    <!--end::Menu Container-->
                 </div>
-                <!--end::Aside Menu-->
             </div>
-            <!--end::Aside-->
-            <!--begin::Wrapper-->
             <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-                <!--begin::Header-->
                 <div id="kt_header" class="header header-fixed">
-                    <!--begin::Container-->
                     <div class="container-fluid d-flex align-items-stretch justify-content-between">
-                        <!--begin::Header Menu Wrapper-->
                         <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
-                            <!--begin::Header Menu-->
                             <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
-                                <!--begin::Header Nav-->
-                                <!--end::Header Nav-->
                             </div>
-                            <!--end::Header Menu-->
                         </div>
-                        <!--end::Header Menu Wrapper-->
-                        <!--begin::Topbar-->
                         <div class="topbar">
                             <div class="topbar-item">
                                 <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
@@ -251,75 +151,46 @@
                                 </div>
                             </div>
                         </div>
-                        <!--end::Topbar-->
                     </div>
-                    <!--end::Container-->
                 </div>
-                <!--end::Header-->
-                <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                    <!--begin::Subheader-->
                     <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
                         <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                             <div class="d-flex align-items-center flex-wrap mr-2">
                                 <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                                     <b>
-                                         dddd @ViewBag.pageTitle
+                                        @ViewBag.pageTitle
                                     </b>
                                 </h5>
                             </div>
                         </div>
                     </div>
-                    <!--end::Subheader-->
-                    <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
-                        <!--begin::Container-->
                         <div class="container">
-                            <!--begin::Row-->
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <!--begin::Card-->
                                     <div id="main-container" class="card card-custom gutter-b">
                                         @RenderBody()
                                     </div>
-                                    <!--end::Card-->
                                 </div>
                             </div>
-                            <!--end::Row-->
-                            <!--end::Dashboard-->
                         </div>
-                        <!--end::Container-->
                     </div>
-                    <!--end::Entry-->
                 </div>
-                <!--end::Content-->
-                <!--begin::Footer-->
                 <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
-                    <!--begin::Container-->
                     <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted font-weight-bold mr-2">2021©</span>
                             <a href="#" target="_blank" class="text-dark-75 text-hover-primary">FPT Education</a>
                         </div>
-                        <!--end::Copyright-->
-                        <!--begin::Nav-->
                         <div class="nav nav-dark">
-
                             <a href="#" target="_blank" class="nav-link pl-0 pr-0">Contact</a>
                         </div>
-                        <!--end::Nav-->
                     </div>
-                    <!--end::Container-->
                 </div>
-                <!--end::Footer-->
             </div>
-            <!--end::Wrapper-->
         </div>
-        <!--end::Page-->
     </div>
-    <!--end::Main-->
-    <!-- begin::User Panel-->
     <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
         <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
             <h3 class="font-weight-bold m-0">
@@ -364,9 +235,7 @@
                     </div>
                 </div>
             </div>
-
             <div class="separator separator-dashed mt-8 mb-5"></div>
-
             <div class="navi navi-spacer-x-0 p-0">
                 <a href="custom/apps/user/profile-1/personal-information.html" class="navi-item">
                     <div class="navi-link">
@@ -395,15 +264,11 @@
                     </div>
                 </a>
             </div>
-
             <div class="separator separator-dashed my-7"></div>
-
         </div>
     </div>
-    <!-- end::User Panel-->
     <div id="kt_scrolltop" class="scrolltop">
         <span class="svg-icon">
-            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                  height="24px" viewBox="0 0 24 24" version="1.1">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -413,7 +278,6 @@
                           fill="#000000" fill-rule="nonzero" />
                 </g>
             </svg>
-            <!--end::Svg Icon-->
         </span>
     </div>
 
@@ -433,5 +297,4 @@
     @RenderSection("scripts")
 
 </body>
-<!--end::Body-->
 </html>
