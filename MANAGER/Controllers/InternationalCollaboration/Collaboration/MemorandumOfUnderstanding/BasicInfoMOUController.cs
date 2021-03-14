@@ -132,5 +132,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult Edit_Ex_Mou(ExMOUAdd input)
+        {
+            try
+            {
+                string id = Session["mou_detail_id"].ToString();
+                mou.editExtraMOU(input, int.Parse(id));
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

@@ -257,50 +257,50 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        //public void editExtraMOU(ExtraMOU input, int mou_bonus_id)
-        //{
-        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            //edit MOUBonus
-        //            MOUBonu mb = db.MOUBonus.Find(mou_bonus_id);
-        //            mb.mou_bonus_code = input.mou_bonus_code;
-        //            mb.mou_bonus_decision_date = input.mou_bonus_decision_date;
-        //            mb.mou_bonus_end_date = input.mou_bonus_end_date;
-        //            mb.mou_id = input.mou_id;
-        //            mb.evidence = input.evidence;
-        //            db.Entry(mb).State = EntityState.Modified;
+        public void editExtraMOU(ExMOUAdd input, int mou_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    //edit MOUBonus
+                    //MOUBonu mb = db.MOUBonus.Find(mou_bonus_id);
+                    //mb.mou_bonus_code = input.mou_bonus_code;
+                    //mb.mou_bonus_decision_date = input.mou_bonus_decision_date;
+                    //mb.mou_bonus_end_date = input.mou_bonus_end_date;
+                    //mb.mou_id = input.mou_id;
+                    //mb.evidence = input.evidence;
+                    //db.Entry(mb).State = EntityState.Modified;
 
-        //            //finding old exScope of exMOU.
-        //            List<MOUPartnerScope> exList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == mou_bonus_id).ToList();
-        //            exList.Clear();
-        //            db.Entry(exList).State = EntityState.Modified;
+                    //finding old exScope of exMOU.
+                    //List<MOUPartnerScope> exList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == mou_bonus_id).ToList();
+                    //exList.Clear();
+                    //db.Entry(exList).State = EntityState.Modified;
 
-        //            //add new record of MOuPartnerScope
-        //            foreach (CustomPartner cp in input.ListPartnerExMOU.ToList())
-        //            {
-        //                foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
-        //                {
-        //                    MOUPartnerScope m = new MOUPartnerScope();
-        //                    m.mou_id = input.mou_id;
-        //                    m.partner_id = cp.partner_id;
-        //                    m.scope_id = cs.scope_id;
-        //                    m.mou_bonus_id = mou_bonus_id;
-        //                    db.MOUPartnerScopes.Add(m);
-        //                }
-        //            }
-
-        //            db.SaveChanges();
-        //            transaction.Commit();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            transaction.Rollback();
-        //            throw ex;
-        //        }
-        //    }
-        //}
+                    //add new record of MOuPartnerScope
+                    //foreach (CustomPartner cp in input.ListPartnerExMOU.ToList())
+                    //{
+                    //    foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
+                    //    {
+                    //        MOUPartnerScope m = new MOUPartnerScope();
+                    //        m.mou_id = input.mou_id;
+                    //        m.partner_id = cp.partner_id;
+                    //        m.scope_id = cs.scope_id;
+                    //        m.mou_bonus_id = mou_bonus_id;
+                    //        db.MOUPartnerScopes.Add(m);
+                    //    }
+                    //}
+                    //checkpoint 2
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
         public void deleteExtraMOU(int mou_bonus_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
