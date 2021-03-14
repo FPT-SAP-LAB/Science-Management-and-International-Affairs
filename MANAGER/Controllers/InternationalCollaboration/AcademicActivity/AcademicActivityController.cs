@@ -55,7 +55,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult edit_AcademicActivity(int id,int activity_type_id, string activity_name,string from, string to, string location)
+        public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string from, string to, string location)
         {
 
             return Json("", JsonRequestBehavior.AllowGet);
