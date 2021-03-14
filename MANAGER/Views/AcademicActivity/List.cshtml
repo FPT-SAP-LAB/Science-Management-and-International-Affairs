@@ -46,7 +46,7 @@
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" value="2021" readonly/>
+                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" value="2020" onchange="refreshData(this.value)"/>
                 <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
                     <span class="input-group-text">
                         <i class="ki ki-calendar"></i>
@@ -66,41 +66,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>RESFES 2021</td>
-                <td>Hội nghị, hội thảo</td>
-                <td>1</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Edu Camp 2021</td>
-                <td>Hội nghị, hội thảo</td>
-                <td>3</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Nghiên cứu khoa học và viết bài báo cáo khoa học tại FPoly</td>
-                <td>Khóa học</td>
-                <td>2</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Hội thảo khoa học toàn khổi FPT Edu</td>
-                <td>Hội nghị, hội thảo</td>
-                <td>4</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>F-Talent Code 2021</td>
-                <td>HĐTN FPT Edu</td>
-                <td>4</td>
-                <td></td>
-            </tr>
         </tbody>
     </table>
 </div>
@@ -354,13 +319,15 @@
 </div>
 
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    @*<link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>*@
 
     <script>
         let id_delete = "";
         let id_edit = "";
         let id_checkin = "";
+        let id_clone = "";
+        let stt = 1;
         function saveTempIdDelete(id) {
             id_delete = id;
             Swal.fire({
@@ -390,6 +357,15 @@
         function saveTempIdCheckin(id) {
             id_checkin = id;
             window.location.href = "/CheckIn/List"
+        }
+
+        function showCloneModal(id) {
+            id_clone = id;
+            $('#cloneModal').modal('show');
+        }
+
+        function goDetail(id) {
+            window.location.href = 'DetailOfAcademicActivity/Index?id=' + id;
         }
 
         function getDataByID(id) {
@@ -451,74 +427,94 @@
                 },
             });
         });
-        $("#my_list").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "",
-                sSearch: ""
-            },
-            "searching": false,
-            "lengthChange" : false,
-            columnDefs: [
-                {
-                    className: "text-center",
-                    targets: [0, 3, -1],
-                },
-                {
-                    targets: 3,
-                    render: function (data, type, full, meta) {
-                        var status = {
-                            1: {
-                                'title': 'Chưa chạy',
-                                'class': 'label-light-warning'
-                            },
-                            2: {
-                                'title': 'Đã huỷ',
-                                'class': ' label-light-danger'
-                            },
-                            3: {
-                                'title': 'Đang chạy',
-                                'class': ' label-light-primary'
-                            },
-                            4: {
-                                'title': 'Đã xong',
-                                'class': ' label-light-success'
-                            }
-                        };
-                        if (typeof status[data] === 'undefined') {
-                            return data;
-                        }
-                        return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+
+        function refreshData(val) {
+            alert(val);
+        }
+
+        var datatable =  $("#my_list").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
                     },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "",
+                    sSearch: ""
                 },
-                {
-                    targets: 1,
-                    render: function (data, type, full, meta) {
-                        return '<a href="@Url.Action("Index", "DetailOfAcademicActivity")">' + data +'</a>'
-                    }
+                "searching": false,
+                "lengthChange": false,
+                ajax: {
+                        url: "@Url.Action("getDatatable", "AcademicActivity")",
+                        type: "POST",
+                        datatype: "json",
+                        data: { "year": function () { return $('#search_year').val() } },
+                        cache: "false"
                 },
-                {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<div class="dropdown">' +
-                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
-                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdEdit(1)">Sửa</a>' +
-                            '<a href="javascript:;" class="dropdown-item" data-toggle="modal" data-target="#cloneModal">Clone</a>' +
-                            '<a href="javascript:;" class="dropdown-item" target="_tab" onclick="saveTempIdCheckin(1)">Checkin</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdDelete(1)">Xóa</a>' +
-                            '</div>' +
-                            '</div>'
-                    }
-                }
-            ]
-        });
+                columns: [
+                    {
+                        render: function () {
+                            return stt++;
+                        }
+                    },
+                    {
+                        data: "activity_name",
+                        render: function (data) {
+                            if (data != "") {
+                                var id = data.split('$')[0]
+                                var name = data.split('$')[1]
+                                return '<a href="javascript:;" onclick="goDetail(' + id + ')">' + name + '</a>'
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        data: "activity_type_name"
+                    },
+                    {
+                        data: "activity_status_name",
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                'Chưa chạy': {
+                                    'class': 'label-light-warning'
+                                },
+                                'Đang chạy': {
+                                    'class': 'label-light-primary'
+                                },
+                                'Đã xong': {
+                                    'class': 'label-light-success'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + data + '</span>';
+                        },
+                    },
+                    {
+                        data: "activity_id",
+                        render: function (data, type, full, meta) {
+                            return '<div class="dropdown">' +
+                                '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                                '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdEdit(' + data+')">Sửa</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="showCloneModal('+data+')">Clone</a>' +
+                                '<a href="javascript:;" class="dropdown-item" target="_tab" onclick="saveTempIdCheckin(' + data+')">Checkin</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdDelete(' + data+')">Xóa</a>' +
+                                '</div>' +
+                                '</div>'
+                        }
+                    },
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: [3,-1],
+                    },
+                ]
+            });
+
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({
