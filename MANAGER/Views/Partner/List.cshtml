@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <table class="table table-bordered table-hover table-checkable"
-                               id="partner-table">
+                               id="partner_table">
                             <thead>
                                 <tr>
                                     <th class="text-center">S<br />T<br />T</th>
@@ -174,7 +174,7 @@
     <script>
 
         //datatable
-        $("#partner-table").DataTable({
+        $("#partner_table").DataTable({
                     oLanguage: {
                         oPaginate: {
                             sPrevious: "Trang trước",
@@ -236,8 +236,8 @@
 
         //overflow
         $(document).ready(function () {
-            $('#partner-table').parent().css('overflow-x', 'auto');
-            $('#partner-table thead tr th').css('font-weight', 'bold');
+            $('#partner_table').parent().css('overflow-x', 'auto');
+            $('#partner_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
 
         });
