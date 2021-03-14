@@ -12,7 +12,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
     public class MOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOA> listAllMOA(string partner_name, string moa_code,string mou_id)
+        public List<ListMOA> listAllMOA(string partner_name, string moa_code, string mou_id)
         {
             try
             {
@@ -198,7 +198,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     where t1.mou_id = @mou_id
                     order by t2.partner_id";
                 List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
-                    new SqlParameter("mou_id",mou_id)).ToList();
+                    new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
             }
             catch (Exception ex)
