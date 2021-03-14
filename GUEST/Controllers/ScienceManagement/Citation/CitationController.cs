@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.ScienceManagement.Citation;
+using ENTITIES.CustomModels.ScienceManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +11,7 @@ namespace User.Controllers
 {
     public class CitationController : Controller
     {
+        CitationRepo cr = new CitationRepo();
         // GET: Citation
         public ActionResult List()
         {
@@ -40,10 +43,16 @@ namespace User.Controllers
                 new PageTree("Số trích dẫn đang xử lý","/Citation/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
+            List<ListOnePerson_Citation> list = cr.GetList("1");
+            ViewBag.list = list;
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].note = list[i].status_id + "_" + list[i].request_id;
+            }
             return View();
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(string id, string editable)
         {
             ViewBag.title = "Chỉnh sửa số trích dẫn";
             var pagesTree = new List<PageTree>
@@ -51,6 +60,7 @@ namespace User.Controllers
                 new PageTree("Chỉnh sửa số trích dẫn","/Citation/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
+            ViewBag.ckEdit = editable;
             return View();
         }
     }

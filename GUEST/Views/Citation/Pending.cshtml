@@ -22,22 +22,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Google Scholar, Scopus</td>
-                                <td>100</td>
-                                <td>10/12/2019</td>
-                                <td>1</td>
-                                <td>
-                                    <a onclick="" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Scopus</td>
-                                <td>50</td>
-                                <td>09/12/2019</td>
-                                <td>3</td>
-                                <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                            </tr>
+                            @{
+                                foreach (var item in ViewBag.list)
+                                {
+                                    int count = 1;
+                                    <tr>
+                                        <td>@item.source</td>
+                                        <td>@item.count</td>
+                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.status_id</td>
+                                        <td>@item.status_id</td>
+                                    </tr>
+                                    count++;
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -45,16 +43,26 @@
         </div>
     </div>
 </div>
-
+<form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
 @section scripts{
     <script>
+        $('#pending_table').on('click', ".mybtn", function () {
+            var selectedIndex = $(this).attr('id');
+            $("#nameEdit").val(selectedIndex.split('_')[1]);
+            $("#ckEdit").val(selectedIndex.split('_')[0]);
+            $("#CitationForm").submit();;
+        });
+
         $(document).ready(function () {
             $("#pending_table").DataTable({
                 responsive: true,
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                          <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -63,6 +71,7 @@
                 language: {
                     'lengthMenu': 'Display _MENU_',
                 },
+                order: [[3, 'asc']],
                 columns: [
                     { width: "30%" },
                     { width: "25%" },
@@ -76,26 +85,54 @@
                         render: function (data, type, full, meta) {
                             var status = {
                                 1: {
-                                    'title': 'Cần chỉnh sửa',
-                                    'class': 'label-light-warning'
+                                    'title': 'Đã hủy',
+                                    'class': 'label label-danger label-pill label-inline mr-2'
                                 },
                                 2: {
-                                    'title': 'Đã hủy',
-                                    'class': ' label-light-danger'
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
                                 },
                                 3: {
                                     'title': 'Đang phê duyệt',
-                                    'class': ' label-light-primary'
+                                    'class': 'label label-primary label-pill label-inline mr-2'
                                 },
                                 4: {
-                                    'title': 'Đã xong',
-                                    'class': ' label-light-success'
+                                    'title': 'Cần chỉnh sửa',
+                                    'class': 'label label-warning label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
                                 return data;
                             }
-                            return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+                            return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
+                        },
+                    },
+                    {
+                        targets: 4,
+                        render: function (data, type, full, meta) {
+                            var temp = data.split("_");
+                            var status = {
+                                1: {
+                                    'title': 'Đã hủy',
+                                    'class': 'btn btn-danger mr-2 mybtn'
+                                },
+                                2: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-success mr-2 mybtn'
+                                },
+                                3: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-primary mr-2 mybtn'
+                                },
+                                4: {
+                                    'title': 'Chỉnh sửa',
+                                    'class': 'btn btn-warning mr-2 mybtn'
+                                }
+                            };
+                            if (typeof status[temp[0]] === 'undefined') {
+                                return data;
+                            }
+                            return '<button id="' + data + '" class="' + status[temp[0]].class + '">' + status[temp[0]].title + '</button>';
                         },
                     },
                 ],
