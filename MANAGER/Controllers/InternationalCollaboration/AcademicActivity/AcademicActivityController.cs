@@ -4,17 +4,36 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MANAGER.Models;
+using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityController : Controller
     {
-        // GET: AcademicActivity
+        private static AcademicActivityRepo repo = new AcademicActivityRepo();
         public ActionResult List()
         {
             ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
             return View();
         }
+
+        public ActionResult getDatatable(int year)
+        {
+            try
+            {
+                List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult Detail(int id)
+        {
+            return View();
+        }
+
         public JsonResult delete_AcademicActivity(int id)
         {
             try
