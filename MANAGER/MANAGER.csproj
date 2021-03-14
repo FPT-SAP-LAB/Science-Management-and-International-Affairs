@@ -2232,6 +2232,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Procedure.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Procedure.cshtml" />
+    <Content Include="Views\Partner\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
