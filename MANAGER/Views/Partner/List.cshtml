@@ -24,10 +24,41 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row mb-2">
-                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
+                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
                                 <div class="row align-items-center">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                    </div>
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                                <option label="Label"></option>
+                                                <option value="1">Việt Nam</option>
+                                                <option value="2">USA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
+                                    </div>
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
+                                                <option label="Label"></option>
+                                                <option value="1">Chưa có</option>
+                                                <option value="2">Đã có</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
+                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
+                                <div class="row align-items-center justify-content-end">
                                     <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                        <a href="/Partner/Detail" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                        <a href="/Partner/Add" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
                                     </div>
                                     <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
                                         <div class="dropdown dropdown-inline ml-2">
@@ -60,45 +91,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
-                                <div class="row align-items-center justify-content-end">
-                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
-                                    </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                                <option label="Label"></option>
-                                                <option value="1">Việt Nam</option>
-                                                <option value="2">USA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
-                                    </div>
-                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
-                                                <option label="Label"></option>
-                                                <option value="1">Chưa có</option>
-                                                <option value="2">Đã có</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <div class="row align-items-center justify-content-end">
-                                    <a href="#" class="px-7">Đối tác đã xóa</a>
+                                    <a href="/Partner/List_Deleted" class="px-7">Đối tác đã xóa</a>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-hover table-checkable"
-                               id="partner-table">
+                               id="partner_table">
                             <thead>
                                 <tr>
                                     <th class="text-center">S<br />T<br />T</th>
@@ -174,7 +174,7 @@
     <script>
 
         //datatable
-        $("#partner-table").DataTable({
+        $("#partner_table").DataTable({
                     oLanguage: {
                         oPaginate: {
                             sPrevious: "Trang trước",
@@ -236,8 +236,8 @@
 
         //overflow
         $(document).ready(function () {
-            $('#partner-table').parent().css('overflow-x', 'auto');
-            $('#partner-table thead tr th').css('font-weight', 'bold');
+            $('#partner_table').parent().css('overflow-x', 'auto');
+            $('#partner_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
 
         });

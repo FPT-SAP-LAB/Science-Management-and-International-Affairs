@@ -12,44 +12,12 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row mb-2">
-                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
                                 <div class="row align-items-center">
-                                    <a href="#" class="btn btn-light-primary px-6 font-weight-bolder">Quay lại</a>
-                                    <div class="dropdown dropdown-inline ml-2">
-                                        <button type="button"
-                                                class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Export
-                                        </button>
-                                        <!--begin::Dropdown Menu-->
-                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                            <!--begin::Navigation-->
-                                            <ul class="navi flex-column navi-hover py-2">
-                                                <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                                    Choose an option:
-                                                </li>
-                                                <li class="navi-item">
-                                                    <a href="#" class="navi-link">
-                                                        <span class="navi-icon">
-                                                            <i class="la la-file-excel-o"></i>
-                                                        </span>
-                                                        <span class="navi-text">Excel</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <!--end::Navigation-->
-                                        </div>
-                                        <!--end::Dropdown Menu-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12">
-                                <div class="row align-items-center justify-content-end">
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                             <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
                                                 <option label="Label"></option>
@@ -58,11 +26,56 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                     </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bolder text-nowrap">Tìm kiếm</a>
+                                    @*<div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
+                                                <option label="Label"></option>
+                                                <option value="1">Chưa có</option>
+                                                <option value="2">Đã có</option>
+                                            </select>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
+                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                        <a href="/Partner/List" class="btn btn-light-primary px-6 font-weight-bold">Quay lại</a>
+                                    </div>
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                        <div class="dropdown dropdown-inline ml-2">
+                                            <button type="button"
+                                                    class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Export
+                                            </button>
+                                            <!--begin::Dropdown Menu-->
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi flex-column navi-hover py-2">
+                                                    <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                        Choose an option:
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon">
+                                                                <i class="la la-file-excel-o"></i>
+                                                            </span>
+                                                            <span class="navi-text">Excel</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <!--end::Navigation-->
+                                            </div>
+                                            <!--end::Dropdown Menu-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +184,13 @@
                         return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
                     }
                 }
-            ]
+            ],
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+
+            },
         });
     </script>
 }

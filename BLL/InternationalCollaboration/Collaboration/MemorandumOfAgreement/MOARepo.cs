@@ -9,30 +9,43 @@ using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 {
-    class MOARepo
+    public class MOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOA> listAllMOA(int mou_id)
+        public List<ListMOA> listAllMOA(string partner_name, string moa_code, string mou_id)
         {
             try
             {
-                string sql_moaList =
-                    @"select t1.mou_id,t1.moa_code,t11.partner_name,t1.evidence,t2.moa_start_date,t1.moa_end_date,
-                        t5.office_abbreviation,t8.scope_abbreviation,t10.mou_status_name as moa_status_name
-                        from IA_Collaboration.MOA t1 inner join
-                        IA_Collaboration.MOAPartner t2 on t1.moa_id = t2.moa_id
-                        inner join IA_Collaboration.MOUPartner t3 on t3.mou_partner_id = t2.mou_partner_id
-                        inner join IA_Collaboration.MOU t4 on t4.mou_id = t1.mou_id
-                        inner join General.Office t5 on t5.office_id = t4.office_id
-                        inner join IA_Collaboration.MOAPartnerScope t6 on t6.moa_partner_id = t2.moa_partner_id
-                        inner join IA_Collaboration.MOUPartnerScope t7 on t6.mou_partner_scope_id = t7.mou_partner_scope_id
-                        inner join IA_MasterData.CollaborationScope t8 on t8.scope_id = t7.scope_id
-                        inner join IA_Collaboration.MOAStatusHistory t9 on t9.moa_id = t1.moa_id
-                        inner join IA_Collaboration.MOUStatus t10 on t10.mou_status_id = t9.mou_status_id
-                        inner join IA_Collaboration.Partner t11 on t11.partner_id = t3.partner_id
-                        where t1.mou_id = @mou_id";
-                List<ListMOA> moaList = db.Database.SqlQuery<ListMOA>(sql_moaList,
-                    new SqlParameter("mou_id", mou_id)).ToList();
+                string sql_mouList =
+                    @"select t1.moa_id,t1.moa_code,t3.partner_name,t1.evidence,t2.moa_start_date,
+                        t1.moa_end_date,t5.office_name,t8.scope_abbreviation,t9.mou_status_id
+                        from IA_Collaboration.MOA t1
+                        left join IA_Collaboration.MOAPartner t2 
+                        on t2.moa_id = t1.moa_id 
+                        left join IA_Collaboration.Partner t3
+                        on t3.partner_id = t2.partner_id
+                        left join IA_Collaboration.MOU t4 
+                        on t4.mou_id = t1.mou_id
+                        left join General.Office t5 
+                        on t5.office_id = t4.office_id
+                        left join IA_Collaboration.MOAPartnerScope t6
+                        on t6.moa_id = t1.moa_id
+                        left join IA_Collaboration.PartnerScope t7
+                        on t7.partner_scope_id = t6.partner_scope_id
+                        left join IA_Collaboration.CollaborationScope t8 
+                        on t8.scope_id = t7.scope_id
+                        left join (
+                        select max([datetime]) as 'maxdate',mou_status_id, moa_id
+                        from IA_Collaboration.MOAStatusHistory 
+                        group by mou_status_id, moa_id) t9
+                        on t9.moa_id = t1.moa_id
+                        where t1.mou_id = @mou_id
+                        and t3.partner_name like @partner_name
+                        and t1.moa_code like @moa_code";
+                List<ListMOA> moaList = db.Database.SqlQuery<ListMOA>(sql_mouList,
+                    new SqlParameter("mou_id", mou_id),
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("moa_code", '%' + moa_code + '%')).ToList();
                 handlingMOAListData(moaList);
                 return moaList;
             }
@@ -54,7 +67,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
                 else
                 {
-                    if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
+                    if (item.moa_partner_id.Equals(previousItem.moa_partner_id))
                     {
                         if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
                         {
@@ -175,29 +188,40 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
+        public List<ENTITIES.Partner> GetMOAPartners(int mou_id)
+        {
+            try
+            {
+                string sql_partnerList = @"select t2.* from IA_Collaboration.MOUPartner t1
+                    inner join IA_Collaboration.Partner t2 
+                    on t2.partner_id = t1.partner_id
+                    where t1.mou_id = @mou_id
+                    order by t2.partner_id";
+                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
+                    new SqlParameter("mou_id", mou_id)).ToList();
+                return partnerList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public class ListMOA
         {
             public ListMOA() { }
-            public string mou_code { get; set; }
-            public int mou_partner_id { get; set; }
+            public string moa_code { get; set; }
+            public int moa_partner_id { get; set; }
+            public int moa_id { get; set; }
             public string partner_name { get; set; }
             public string evidence { get; set; }
             public DateTime moa_start_date { get; set; }
             public DateTime moa_end_date { get; set; }
             public string moa_start_date_string { get; set; }
             public string moa_end_date_string { get; set; }
-            public string office_abbreviation { get; set; }
+            public string office_name { get; set; }
             public string scope_abbreviation { get; set; }
-            public string moa_status_name { get; set; }
+            public string mou_status_name { get; set; }
+            public int mou_status_id { get; set; }
         }
-        //public class MOAAdd
-        //{
-        //    public MOAAdd() { }
-        //    public MOA MOA { get; set; }
-        //    public MOAStatusHistory MOAStatusHistory { get; set; }
-        //    public List<MOAPartner> listMOAPartner { get; set; }
-        //    public List<MOAPartnerSpecialization> listMOAPartnerSpe { get; set; }
-        //    public List<MOAPartnerScope> listMOAPartnerScope { get; set; }
-        //}
     }
 }

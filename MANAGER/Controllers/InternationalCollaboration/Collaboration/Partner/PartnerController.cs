@@ -33,6 +33,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner
             }
         }
 
+        public ActionResult Add()
+        {
+            ViewBag.pageTitle = "THÊM ĐỐI TÁC";
+            return View();
+        }
+
         public ActionResult Detail()
         {
             ViewBag.pageTitle = "CHI TIẾT ĐỐI TÁC";
