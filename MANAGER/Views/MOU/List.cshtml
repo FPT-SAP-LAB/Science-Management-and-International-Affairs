@@ -380,7 +380,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button id="step-1-close-btn" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Đóng</button>
+                <button id="step-1-close-btn" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
                 <button id='step-1-button' type="button" class="btn btn-sm btn-light-primary font-weight-bold px-6" onclick="nextStep()">Tiếp</button>
                 <button id='step-2-backbutton' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" onclick="backToStep()" style="display:none">Quay về</button>
                 <button id='step-2-button' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6" onclick="doneStep()" style="display:none">Hoàn thành</button>
@@ -402,7 +402,8 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right">
+                        <a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -489,7 +490,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
                 <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="addToTemp()" disabled>Thêm</button>
             </div>
         </div>
@@ -595,7 +596,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
                     <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
                 </div>
             </div>
@@ -1245,7 +1246,7 @@
         $('#coop_scope_edit').empty();
         for (i = 0; i < listSpe.length; i++) {
             //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
-            if (listTempPartnerMOUAdd[index].specialization_add.includes(listSpe[i].spe_id)) {
+            if (listTempPartnerMOUAdd[index].specialization_name.includes(listSpe[i].spe_id)) {
                 HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
 
             } else {

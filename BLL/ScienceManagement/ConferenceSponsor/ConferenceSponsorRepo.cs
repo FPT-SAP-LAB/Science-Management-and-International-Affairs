@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -110,6 +111,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 try
                 {
+                    Account account = db.Accounts.Find(1);  // Sẽ chỉnh sau khi xong tạo account
                     DataTable dt = new DataTable();
                     JObject @object = JObject.Parse(input);
 
@@ -128,6 +130,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         db.SaveChanges();
                     }
 
+                    string PaperID = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, account.email);
+                    string InviteID = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, account.email);
+
                     RewardPolicy policy = db.RewardPolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
                     ConferenceSupport support = new ConferenceSupport()
@@ -136,10 +141,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         status_id = 1,
                         decision_id = null,
                         reward_policy_id = policy.reward_policy_id,
-                        paper_file_id = 1, // Sẽ chỉnh sau khi xong upload file
-                        account_id = 1, // Sẽ chỉnh sau khi xong tạo account
+                        account_id = account.account_id,
                         editable = false,
-                        date_request = DateTime.Now
+                        date_request = DateTime.Now,
+                        reimbursement = 0
                     };
                     db.ConferenceSupports.Add(support);
                     db.SaveChanges();

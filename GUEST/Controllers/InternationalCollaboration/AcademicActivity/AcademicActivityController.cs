@@ -25,7 +25,8 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.title = "Hoạt động học thuật";
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Hoạt động học thuật","/AcademicActivity/Detail"),
+                new PageTree("Hoạt động học thuật","/AcademicActivity"),
+                new PageTree("Chi tiết","/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
             return View();
