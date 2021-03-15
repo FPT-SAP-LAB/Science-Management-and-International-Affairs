@@ -22,11 +22,11 @@ namespace ENTITIES
         }
     
         public int criteria_id { get; set; }
-        public int reward_policy_id { get; set; }
+        public int policy_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
-        public virtual RewardPolicy RewardPolicy { get; set; }
+        public virtual RequestConferencePolicy RequestConferencePolicy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
     }

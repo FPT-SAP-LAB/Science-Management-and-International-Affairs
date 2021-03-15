@@ -17,13 +17,13 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public File()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.RequestConferences = new HashSet<RequestConference>();
             this.Decisions = new HashSet<Decision>();
             this.Inventions = new HashSet<Invention>();
             this.Papers = new HashSet<Paper>();
             this.People = new HashSet<Person>();
             this.Profiles = new HashSet<Profile>();
-            this.RewardPolicies = new HashSet<RewardPolicy>();
+            this.RequestConferencePolicies = new HashSet<RequestConferencePolicy>();
         }
     
         public int file_id { get; set; }
@@ -31,7 +31,7 @@ namespace ENTITIES
         public string link { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Decision> Decisions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -43,6 +43,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RewardPolicy> RewardPolicies { get; set; }
+        public virtual ICollection<RequestConferencePolicy> RequestConferencePolicies { get; set; }
     }
 }

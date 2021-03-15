@@ -12,18 +12,24 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class AcademicActivityStatu
+    public partial class RequestConferencePolicy
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AcademicActivityStatu()
+        public RequestConferencePolicy()
         {
-            this.AcademicActivities = new HashSet<AcademicActivity>();
+            this.Criteria = new HashSet<Criterion>();
+            this.RequestConferences = new HashSet<RequestConference>();
         }
     
-        public int activity_status_id { get; set; }
-        public string activity_status_name { get; set; }
+        public int policy_id { get; set; }
+        public System.DateTime valid_date { get; set; }
+        public Nullable<System.DateTime> expired_date { get; set; }
+        public int file_id { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
+        public virtual ICollection<Criterion> Criteria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
     }
 }
