@@ -12,16 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ResearcherDegree
+    public partial class PaperWithCriteria
     {
-        public int degree_id { get; set; }
-        public int people_id { get; set; }
-        public string start_year { get; set; }
-        public string end_year { get; set; }
-        public string note { get; set; }
-        public string study_place { get; set; }
+        public int criteria_id { get; set; }
+        public int paper_id { get; set; }
+        public string link { get; set; }
     
-        public virtual Person Person { get; set; }
-        public virtual Degree Degree { get; set; }
+        public virtual Paper Paper { get; set; }
+        public virtual PaperCriteria PaperCriteria { get; set; }
     }
 }
