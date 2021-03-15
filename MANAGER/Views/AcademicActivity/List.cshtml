@@ -46,7 +46,7 @@
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" value="2020" onchange="refreshData(this.value)"/>
+                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" onchange="refreshData(this.value)" />
                 <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
                     <span class="input-group-text">
                         <i class="ki ki-calendar"></i>
@@ -70,21 +70,6 @@
     </table>
 </div>
 
-<div class="modal fade" id="delete-confirm" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Xác nhận xóa</h4>
-            </div>
-            <div class="modal-body">Bạn có muốn xóa hoạt động học thuật này?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-sm btn-primary" id="btn_delete" data-dismiss="modal">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -103,10 +88,10 @@
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="add_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
@@ -123,7 +108,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="Thời hạn từ" required readonly autocomplete="off" id="add_from" />*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">đến</label>
@@ -139,7 +123,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<input type="text" class="form-control custom-pickdate" placeholder="đến" required readonly autocomplete="off" id="add_to" />*@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
@@ -173,10 +156,10 @@
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="edit_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
@@ -241,10 +224,10 @@
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" required id="clone_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
@@ -319,17 +302,13 @@
 </div>
 
 @section scripts{
-    @*<link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>*@
-
     <script>
-        let id_delete = "";
         let id_edit = "";
-        let id_checkin = "";
         let id_clone = "";
         let stt = 1;
+        document.getElementById('search_year').value = new Date().getFullYear();
+
         function saveTempIdDelete(id) {
-            id_delete = id;
             Swal.fire({
                 title: "Bạn có muốn xóa hoạt động học thuật này không ?",
                 text: "",
@@ -339,24 +318,56 @@
                 cancelButtonText: "Hủy",
                 reverseButtons: true
             }).then(function (result) {
+                let object = {
+                    id : id
+                }
                 if (result.value) {
-                    toast.success('Đã xóa thành công');
+                    $.ajax({
+                        url: '/AcademicActivity/delete_AcademicActivity',
+                        data: JSON.stringify(object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                            alert(data)
+                        }
+                    });
                 }
             });
         }
         function saveTempIdEdit(id) {
             id_edit = id;
-            data = getDataByID(id);
-            document.getElementById('edit_title').value = 'RESFES 2021';
-            document.getElementById('edit_category').value = 'CO';
-            document.getElementById('edit_from').value = '02/02/2021';
-            document.getElementById('edit_to').value = '26/02/2021';
-            document.getElementById('edit_location').value = 'Hà Nội';
-            $('#editModal').modal('show');
+            let obj = {
+                id : id
+            }
+            $.ajax({
+                url: '/AcademicActivity/getBaseAA',
+                data: JSON.stringify(obj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        document.getElementById('edit_title').value = data.activity_name;
+                        document.getElementById('edit_category').value = data.activity_type_id;
+                        document.getElementById('edit_from').value = data.from;
+                        document.getElementById('edit_to').value = data.to;
+                        document.getElementById('edit_location').value = data.location;
+                        $('#editModal').modal('show');
+                    }
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
         }
         function saveTempIdCheckin(id) {
-            id_checkin = id;
-            window.location.href = "/CheckIn/List"
+            window.location.href = "/CheckIn/List?id=" + id;
         }
 
         function showCloneModal(id) {
@@ -365,59 +376,76 @@
         }
 
         function goDetail(id) {
-            window.location.href = 'DetailOfAcademicActivity/Index?id=' + id;
+            window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
         }
 
-        function getDataByID(id) {
-
-        }
-
-        $('#btn_delete').click(function () {
-            $.ajax({
-                url: '/AcademicActivity/delete_AcademicActivity',
-                data: { 'id': id_delete },
-                success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
-                    } else {
-                        toastr.error(data.err_content);
-                    }
-                },
-            });
-        });
 
         $('#btn_add').click(function () {
-            let object = {
-                title: document.getElementById('add_title').value,
-                category: document.getElementById('add_category').value,
-                from: document.getElementById('add_from').value,
-                to: document.getElementById('add_to').value,
-                location: document.getElementById('add_location').value
+            let activity_name = document.getElementById('add_title').value;
+            let activity_type_id = document.getElementById('add_category').value;
+            let from = document.getElementById('add_from').value;
+            let to = document.getElementById('add_to').value;
+            let location = document.getElementById('add_location').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                return false;
             }
+            //var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
+            //if (!(date_regex.test(from))) {
+            //    toastr.warning("Vui lòng nhập đúng định dạng cho thời hạn");
+            //    return false;
+            //}
+
+            let object = {
+                activity_name: activity_name,
+                activity_type_id: activity_type_id,
+                location: location,
+                from: from,
+                to: to
+            }
+            console.log(object);
             $.ajax({
-                url: '/AcademicActivity/add_AcademicActivity',
-                data: object,
+                url: "@Url.Action("add_AcademicActivity", "AcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
+                    if (data != '') {
+                        toastr.success(data);
+                        datatable.ajax.reload();
                     } else {
-                        toastr.error(data.err_content);
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
                 },
+                error: function (data) {
+                    alert(data)
+                }
             });
         });
 
         $('#btn_edit').click(function () {
+            let activity_name = document.getElementById('edit_title').value;
+            let activity_type_id = document.getElementById('edit_category').value;
+            let from = document.getElementById('edit_from').value;
+            let to = document.getElementById('edit_to').value;
+            let location = document.getElementById('edit_location').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                return false;
+            }
             let object = {
-                title: document.getElementById('edit_title').value,
-                category: document.getElementById('edit_category').value,
-                from: document.getElementById('edit_from').value,
-                to: document.getElementById('edit_to').value,
-                location: document.getElementById('edit_location').value
+                id: id_edit,
+                activity_name: title,
+                activity_type_id: category,
+                from: from,
+                to: to,
+                location: location
             }
             $.ajax({
                 url: '/AcademicActivity/edit_AcademicActivity',
-                data: object,
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     if (data.code = 1) {
                         toastr.success(data.err_content);
@@ -425,12 +453,19 @@
                         toastr.error(data.err_content);
                     }
                 },
+                error: function (data) {
+                    alert(data)
+                }
             });
         });
 
         function refreshData(val) {
             alert(val);
         }
+
+        $('#search_year').on('changeDate', function () {
+            alert($('#search_year').val());
+        });
 
         var datatable =  $("#my_list").DataTable({
                 oLanguage: {
@@ -489,7 +524,7 @@
                             if (typeof status[data] === 'undefined') {
                                 return data;
                             }
-                            return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + data + '</span>';
+                            return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + data + '</span>';
                         },
                     },
                     {
@@ -510,7 +545,7 @@
                 columnDefs: [
                     {
                         className: "text-center",
-                        targets: [3,-1],
+                        targets: '_all',
                     },
                 ]
             });

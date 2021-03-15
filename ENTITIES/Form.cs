@@ -25,8 +25,6 @@ namespace ENTITIES
         public int phase_id { get; set; }
         public string title { get; set; }
         public string title_description { get; set; }
-        public Nullable<System.DateTime> start_duration { get; set; }
-        public Nullable<System.DateTime> end_duration { get; set; }
     
         public virtual AcademicActivityPhase AcademicActivityPhase { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

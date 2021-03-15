@@ -18,7 +18,7 @@ namespace ENTITIES
         public Specialization()
         {
             this.MOUPartnerSpecializations = new HashSet<MOUPartnerSpecialization>();
-            this.Papers = new HashSet<Paper>();
+            this.RequestPapers = new HashSet<RequestPaper>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
             this.SpecializationLanguages = new HashSet<SpecializationLanguage>();
@@ -30,7 +30,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOUPartnerSpecialization> MOUPartnerSpecializations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<RequestPaper> RequestPapers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
