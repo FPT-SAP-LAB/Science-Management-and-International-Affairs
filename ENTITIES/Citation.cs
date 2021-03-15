@@ -14,13 +14,18 @@ namespace ENTITIES
     
     public partial class Citation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Citation()
+        {
+            this.RequestCitations = new HashSet<RequestCitation>();
+        }
+    
         public int citation_id { get; set; }
         public string source { get; set; }
         public Nullable<int> count { get; set; }
         public string link { get; set; }
-        public int people_id { get; set; }
-        public string currnet_mssv_msnv { get; set; }
     
-        public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
     }
 }

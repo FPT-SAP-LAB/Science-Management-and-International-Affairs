@@ -12,11 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class CitationDecision
+    public partial class AcademicDegreeTypeLanguage
     {
-        public int citation_id { get; set; }
-        public int decision_id { get; set; }
+        public int language_id { get; set; }
+        public int type_id { get; set; }
+        public string name { get; set; }
     
-        public virtual Decision Decision { get; set; }
+        public virtual Language Language { get; set; }
+        public virtual AcademicDegreeType AcademicDegreeType { get; set; }
     }
 }
