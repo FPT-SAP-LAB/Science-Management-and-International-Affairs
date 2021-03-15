@@ -42,7 +42,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
-            string output = repos.AddConferenceSupport(input, invite, paper);
+            string output = repos.AddRequestConference(input, invite, paper);
             return output;
         }
         public ActionResult Detail(int id)

@@ -12,43 +12,33 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ConferenceSupport
+    public partial class RequestConference
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ConferenceSupport()
+        public RequestConference()
         {
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.Costs = new HashSet<Cost>();
-            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
-            this.Comments = new HashSet<Comment>();
         }
     
-        public int conference_support_id { get; set; }
         public int conference_id { get; set; }
         public int reimbursement { get; set; }
         public int status_id { get; set; }
-        public Nullable<int> decision_id { get; set; }
-        public int reward_policy_id { get; set; }
+        public int policy_id { get; set; }
         public bool editable { get; set; }
-        public int account_id { get; set; }
-        public System.DateTime date_request { get; set; }
         public int invitation_file_id { get; set; }
         public int paper_id { get; set; }
+        public int request_id { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual File File { get; set; }
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         public virtual ConferenceStatu ConferenceStatu { get; set; }
-        public virtual Decision Decision { get; set; }
-        public virtual Paper Paper { get; set; }
-        public virtual RewardPolicy RewardPolicy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cost> Costs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual RequestConferencePolicy RequestConferencePolicy { get; set; }
+        public virtual Paper Paper { get; set; }
+        public virtual BaseRequest BaseRequest { get; set; }
     }
 }

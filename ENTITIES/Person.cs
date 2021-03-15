@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
         {
-            this.Comments = new HashSet<Comment>();
+            this.CommentBases = new HashSet<CommentBase>();
             this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
             this.AuthorInventions = new HashSet<AuthorInvention>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
@@ -46,7 +46,7 @@ namespace ENTITIES
         public Nullable<int> account_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<CommentBase> CommentBases { get; set; }
         public virtual Account Account { get; set; }
         public virtual File File { get; set; }
         public virtual Office Office { get; set; }

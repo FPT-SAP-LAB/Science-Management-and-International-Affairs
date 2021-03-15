@@ -17,14 +17,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetAddPageJson(string language_name)
         {
-            var Link = db.RewardPolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
-            var ConferenceCriteriaLanguages = db.Database.SqlQuery<string>(@"
-                SELECT   Localization.ConferenceCriteriaLanguage.name
-                FROM     SM_Reward.RewardPolicy INNER JOIN
-                         SM_Conference.Criteria ON SM_Reward.RewardPolicy.reward_policy_id = SM_Conference.Criteria.reward_policy_id AND SM_Reward.RewardPolicy.reward_policy_id = SM_Conference.Criteria.reward_policy_id INNER JOIN
-                         Localization.ConferenceCriteriaLanguage ON SM_Conference.Criteria.criteria_id = Localization.ConferenceCriteriaLanguage.criteria_id INNER JOIN
-                         Localization.Language ON Localization.ConferenceCriteriaLanguage.language_id = Localization.Language.language_id
-                WHERE    SM_Reward.RewardPolicy.expired_date IS NULL AND Localization.Language.language_name = @language_name", new SqlParameter("language_name", language_name)).ToList();
+            var Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
+            var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
+                                               join b in db.Criteria on a.policy_id equals b.policy_id
+                                               join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
+                                               join d in db.Languages on c.language_id equals d.language_id
+                                               where a.expired_date == null && d.language_name.Equals(language_name)
+                                               select c.name).ToList();
             var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
                 .Select(x => new Country
                 {
@@ -105,7 +104,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
-        public string AddConferenceSupport(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
+        public string AddRequestConference(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -133,20 +132,17 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     string PaperID = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, account.email);
                     string InviteID = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, account.email);
 
-                    RewardPolicy policy = db.RewardPolicies.Where(x => x.expired_date == null).FirstOrDefault();
+                    RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
-                    ConferenceSupport support = new ConferenceSupport()
+                    RequestConference support = new RequestConference()
                     {
                         conference_id = conference.conference_id,
                         status_id = 1,
-                        decision_id = null,
-                        reward_policy_id = policy.reward_policy_id,
-                        account_id = account.account_id,
+                        policy_id = policy.policy_id,
                         editable = false,
-                        date_request = DateTime.Now,
                         reimbursement = 0
                     };
-                    db.ConferenceSupports.Add(support);
+                    db.RequestConferences.Add(support);
                     db.SaveChanges();
 
                     List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
@@ -156,13 +152,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         item.editable = false;
                         item.sponsoring_organization = "FPTU";
                         item.total = total;
-                        item.conference_support_id = support.conference_support_id;
+                        item.request_id = support.request_id;
                     }
                     db.Costs.AddRange(costs);
 
                     List<ConferenceParticipant> participants = @object["ConferenceParticipant"].ToObject<List<ConferenceParticipant>>();
                     List<Person> Persons = @object["Persons"].ToObject<List<Person>>();
-                    participants.ForEach(x => x.conference_support_id = support.conference_support_id);
+                    participants.ForEach(x => x.request_id = support.request_id);
                     List<string> codes = participants.Select(x => x.current_mssv_msnv).ToList();
                     List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
                     Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
@@ -186,7 +182,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     db.ConferenceParticipants.AddRange(participants);
                     db.SaveChanges();
                     trans.Commit();
-                    return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.conference_support_id });
+                    return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.request_id });
                 }
                 catch (Exception e)
                 {
