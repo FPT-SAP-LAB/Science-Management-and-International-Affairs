@@ -252,15 +252,8 @@
                                 </h4>
                             </div>
                             <div class="row">
-                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
-                                            <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-lg-11 col-xl-11 col-md-11 col-sm-11">
-                                    <div class="row align-items-center justify-content-end">
+                                    <div class="row align-items-center">
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
                                         </div>
@@ -285,6 +278,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
+                                    <div class="row align-items-center justify-content-end">
+                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
+                                            <a href="#add_partner_mou" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <table class="table table-bordered table-hover table-checkable " id="partner_table">
                                 <thead>
@@ -298,8 +298,8 @@
                                     </tr>
                                     <tr>
                                         <th class="text-center">Tên</th>
-                                        <th class="text-center">Quốc gia</th>
-                                        <th class="text-center">Lĩnh vực</th>
+                                        <th class="text-center text-nowrap">Quốc gia</th>
+                                        <th class="text-center text-nowrap">Lĩnh vực</th>
                                         <th class="text-center">Website</th>
                                         <th class="text-center">Họ và tên</th>
                                         <th class="text-center">Điện thoại</th>
@@ -330,15 +330,8 @@
                                 </h4>
                             </div>
                             <div class="row">
-                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12 my-1">
-                                            <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-lg-11 col-xl-11 col-md-11 col-sm-11">
-                                    <div class="row align-items-center justify-content-end">
+                                    <div class="row align-items-center">
                                         <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1 mr-3">
                                             <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name_moa" />
                                         </div>
@@ -350,41 +343,44 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12">
-                                    <table class="table table-bordered table-hover table-checkable" id="moa_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">STT</th>
-                                                <th class="text-center">Số hiệu</th>
-                                                <th class="text-center">Đối tác</th>
-                                                <th class="text-center">Bản mềm</th>
-                                                <th class="text-center">Ngày kí kết</th>
-                                                <th class="text-center">Ngày hết hạn</th>
-                                                <th class="text-center">Đơn vị - Cơ sở triển khai</th>
-                                                <th class="text-center">Phạm vi hợp tác</th>
-                                                <th class="text-center">Trạng thái</th>
-                                                <th class="text-center"></th>
-                                            </tr>
-                                        </thead>
-                                        @*<tbody>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center"><a href="/MOA/Detail_MOA">2020/01_MOA/01</a></td>
-                                                    <td class="text-center">Bunkyou University</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center" nowrap="nowrap">22/02/2222</td>
-                                                    <td class="text-center" nowrap="nowrap">22/02/2223</td>
-                                                    <td class="text-center" nowrap="nowrap">FGO</td>
-                                                    <td class="text-center" nowrap="nowrap">SE, FE</td>
-                                                    <td nowrap="nowrap">1</td>
-                                                    <td nowrap="nowrap"></td>
-                                                </tr>
-                                            </tbody>*@
-                                    </table>
+                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
+                                    <div class="row align-items-center justify-content-end">
+                                        <div class="col-lg-offset-12 col-md-offset-12 col-sm-offset-12 my-1">
+                                            <a id="add_moa" href="#add_moa_modal" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bold">Thêm</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <table class="table table-bordered table-hover table-checkable" id="moa_table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Số hiệu</th>
+                                        <th class="text-center">Đối tác</th>
+                                        <th class="text-center">Bản mềm</th>
+                                        <th class="text-center">Ngày kí kết</th>
+                                        <th class="text-center">Ngày hết hạn</th>
+                                        <th class="text-center">Đơn vị - Cơ sở triển khai</th>
+                                        <th class="text-center">Phạm vi hợp tác</th>
+                                        <th class="text-center">Trạng thái</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center"><a href="/MOA/Detail_MOA">2020/01_MOA/01</a></td>
+                                            <td class="text-center">Bunkyou University</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center" nowrap="nowrap">22/02/2222</td>
+                                            <td class="text-center" nowrap="nowrap">22/02/2223</td>
+                                            <td class="text-center" nowrap="nowrap">FGO</td>
+                                            <td class="text-center" nowrap="nowrap">SE, FE</td>
+                                            <td nowrap="nowrap">1</td>
+                                            <td nowrap="nowrap"></td>
+                                        </tr>
+                                    </tbody>*@
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -957,33 +953,33 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_add" disabled/>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_add" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_add" disabled/>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_add" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_add" disabled/>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_add" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_add" disabled/>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_add" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_add" disabled/>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_add" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_add" disabled/>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_add" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
@@ -1004,7 +1000,7 @@
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <input class="form-control " type="text" id="moa_partner_specialization_add" disabled value=""/>
+                            <input class="form-control " type="text" id="moa_partner_specialization_add" disabled value="" />
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -1013,7 +1009,6 @@
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="moa_partner_scope_add" name="param" multiple="multiple" style="width:100% !important">
-                                
                             </select>
                         </div>
                     </div>
@@ -1041,8 +1036,8 @@
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEditMOA()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-            <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
-        </div>*@
+                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+                            </div>*@
                         <input hidden readonly type="text" class="form-control" id="partner_id_moa_edit" placeholder="" name="" value="" />
                         <input hidden readonly type="text" class="form-control" id="idx_moa_edit" placeholder="" name="idx_edit" value="no" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
@@ -1052,33 +1047,33 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_edit" disabled/>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_edit" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_edit" disabled/>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_edit" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_edit" disabled/>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_edit" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_edit" disabled/>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_edit" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_edit" disabled/>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_edit" disabled />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_edit" disabled/>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_edit" disabled />
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
@@ -1243,27 +1238,27 @@
                         <th>Email</th>
                     </tr>
                     @*<tr>
-                        <td>1</td>
-                        <td>Bunkyo University</td>
-                        <td>Toshie Miyatake</td>
-                        <td>+81 48 974 8811</td>
-                        <td>kiec@stf.bunkyou.ac.jp</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>FPT Greenwich</td>
-                        <td>Cuong Minh Tran</td>
-                        <td>+84 12 345 2345</td>
-                        <td>cuong@fptgr.edu.vn</td>
-                        <td nowrap="nowrap">
-                            <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
-                            <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
-                        </td>
-                    </tr>*@
+                            <td>1</td>
+                            <td>Bunkyo University</td>
+                            <td>Toshie Miyatake</td>
+                            <td>+81 48 974 8811</td>
+                            <td>kiec@stf.bunkyou.ac.jp</td>
+                            <td nowrap="nowrap">
+                                <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>FPT Greenwich</td>
+                            <td>Cuong Minh Tran</td>
+                            <td>+84 12 345 2345</td>
+                            <td>cuong@fptgr.edu.vn</td>
+                            <td nowrap="nowrap">
+                                <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                            </td>
+                        </tr>*@
                 </table>
             </div>
             <div class="modal-footer">
@@ -1956,6 +1951,7 @@
                 {
                     title: 'Hành động',
                     data: "mou_bonus_id",
+                    className: "text-nowrap text-center",
                     orderable: false,
                     render: function (data) {
                         return '<a href="#edit_additional_mou" onclick=editExMOU(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-toggle="modal" style="margin-right: 10px;">Sửa</a>' +
@@ -2518,8 +2514,14 @@
                         }
                     }
                 },
-                { data: "contact_point_name" },
-                { data: "contact_point_phone" },
+                {
+                    data: "contact_point_name",
+                    className: 'text-nowrap',
+                },
+                {
+                    data: "contact_point_phone",
+                    className: 'text-nowrap',
+                },
                 { data: "contact_point_email" },
                 { data: "mou_start_date_string" },
                 { data: "scope_abbreviation" }
@@ -2532,6 +2534,7 @@
                         mou_code: "mou_code",
                         partner_name: "partner_name"
                     },
+                    className: 'text-nowrap text-center',
                     orderable: false,
                     width: '250px',
                     render: function (data, type, full, meta, row) {
@@ -2540,6 +2543,13 @@
                             '<a onclick="confirm_delete_partner_mou(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
+            ],
+            columnDefs: [
+                {
+                    targets: [ 0, 2, 3, 4, 5, 6, 7, 8, 9],
+                    className: 'text-center'
+                },
+
             ],
             initComplete: function () {
                 $('#partner_table').parent().css('overflow-x', 'auto');
@@ -2801,14 +2811,13 @@
                 ],
             initComplete: function () {
                 $('#history-table').parent().css('overflow-x', 'auto');
-                $('#history-table').parent().removeClass();
             }
         });
     }
     </script>
 
     @*moa*@
-<script>
+    <script>
     var moa_table;
     var listTempPartnerMOAAdd = [];
     var listScopesMOA = [];
@@ -2818,9 +2827,13 @@
         moa_table.ajax.reload();
     }
 
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+
     function loadMOAList() {
         var rowIdx = 1;
-            moa_table = $("#moa_table").DataTable({
+        moa_table = $("#moa_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2830,21 +2843,21 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
-                lengthChange: false
+            lengthChange: false
             ,
-            //initComplete: function () {
-            //    $('#moa_table').parent().css('overflow-x', 'auto');
-            //    $('#moa_table').parent().removeClass();
-            //},
+            initComplete: function () {
+                $('#moa_table').parent().css('overflow-x', 'auto');
+                $('#moa_table').parent().removeClass();
+            },
             ajax: {
-                    url: "@Url.Action("ViewMOA", "MOA")",
-                    type: "POST",
-                    datatype: "json",
-                    data: {
-                        "partner_name": function () { return $('#search_partner_name_moa').val() },
-                        "moa_code": function () { return $('#search_moa_code_moa').val() },
-                    },
-                    cache: "false"
+                url: "@Url.Action("ViewMOA", "MOA")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "partner_name": function () { return $('#search_partner_name_moa').val() },
+                    "moa_code": function () { return $('#search_moa_code_moa').val() },
+                },
+                cache: "false"
             },
             columns: [
                 {
@@ -2891,26 +2904,23 @@
                 {
                     title: 'Hành động',
                     data: "moa_id",
+                    className: "text-nowrap",
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick=goDetailMOA('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetailMOA(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete_moa(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-                ]
-            //,
-            //columnDefs: [
-            //    {
-            //        className: "text-center",
-            //        targets: [0, 4, 9, 12, 13, 14],
-            //    },
-            //    {
-            //        className: "text-nowrap",
-            //        targets: [5, 6, 8, -1]
-            //    },
-            //],
-    });
+            ]
+            ,
+            columnDefs: [
+                {
+                    targets:'_all',
+                    className: "text-center",
+                },
+            ],
+        });
         }
 
     function nextStep() {
@@ -3326,5 +3336,5 @@
                 }
             })
     }
-</script>
+    </script>
 }
