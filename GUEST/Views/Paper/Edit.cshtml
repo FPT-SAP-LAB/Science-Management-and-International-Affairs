@@ -15,33 +15,36 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PaperName")</label>
-                            <input class="form-control form-control-lg edit edit" type="text" value="An Efficient Algorithm for the k-Dominating Set Problem on Very Large-Scale Networks" />
+                            <input class="form-control form-control-lg edit edit" type="text" value="@ViewBag.Paper.name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishDate")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="11/2019" />
+                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.Paper.publish_date.ToString("MM/yyyy")" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("LinkFull")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="https://doi.org/10.1007/978-3-030-34980-6_9" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_doi" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Link scholar</label>
-                            <input class="form-control form-control-lg edit" type="text" value="https://scholar.google.com.vn/scholar?cluster=783580201061751&hl=en&as_sdt=0,5" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_scholar" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Loại ấn phẩm</label>
-                            <select class="form-control form-control-lg edit">
-                                <option selected value="1">@rm.GetString("JournalPaper")</option>
+                            <select id="paper_type" class="form-control form-control-lg edit">
+                                <option value="1">@rm.GetString("JournalPaper")</option>
                                 <option value="2">@rm.GetString("ConferencePaper")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Specialized")</label>
-                            <select class="form-control form-control-lg edit">
-                                <option selected value="1">Công nghệ thông tin</option>
-                                <option value="2">Kinh tế</option>
-                                <option value="3">Truyền thông</option>
+                            <select id="chuyennganh" class="form-control form-control-lg edit">
+                                @{
+                                    foreach (var item in ViewBag.listSpec)
+                                    {
+                                        <option value="@item.specialization_id">@item.name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
@@ -49,19 +52,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("JournalName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value=" Lecture Notes in Computer Science: International Conference on Computational Data and Social Networks" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.journal_name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Vol")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="11917" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Page")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="74 - 76" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
@@ -69,7 +72,7 @@
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("CriteriaType")</label>
                             <select id="loaithuong" class="form-control form-control-lg edit">
-                                <option selected value="1">@rm.GetString("International")</option>
+                                <option value="1">@rm.GetString("International")</option>
                                 <option value="2">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
@@ -77,9 +80,12 @@
                             <label>@rm.GetString("Criteria")</label>
                             <select id="tieuchi" class="form-control form-control-lg edit">
                                 <option value="0" selected disabled>@rm.GetString("Criteria")</option>
-                                <option class="optiontieuchi" value="Q1">Q1</option>
-                                <option class="optiontieuchi" disabled value="Q2">Q2</option>
-                                <option class="optiontieuchi" value="Q3">Q3</option>
+                                @{
+                                    foreach (var item in ViewBag.listCriteria)
+                                    {
+                                        <option class="optiontieuchi" value="@item.name">@item.name</option>
+                                    }
+                                }
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
@@ -88,7 +94,7 @@
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
-                            <input class="form-control form-control-lg edit" type="text" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index"/>
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
@@ -96,20 +102,26 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
-                            <input class="form-control form-control-lg edit" readonly type="text" />
+                            <input class="form-control form-control-lg edit" readonly type="text" value="@ViewBag.Paper.total_reward" ; />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("RewardType")</label>
-                            <select class="form-control form-control-lg edit">
-                                <option selected value="1">@rm.GetString("According")</option>
+                            <select id="kieuthuong" class="form-control form-control-lg edit">
+                                <option value="1">@rm.GetString("According")</option>
                                 <option value="2">@rm.GetString("Repre")</option>
                             </select>
                         </div>
-                        <div class='col-xl-12 d-flex justify-content-center onetieuchi'>
-                            <span class='col-xl-2'><input readonly value="Q2" class='form-control form-control-lg edit' name='tieuchiname' type='text' /></span>
-                            <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit' type='text' /></span>
-                            <span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>
-                        </div>
+                        @{
+                            foreach (var item in ViewBag.listCriteriaOne)
+                            {
+                                <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
+                                    <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchivalue' name='tieuchiname' type='text' /></span>
+                                    <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit' type='text' value="@item.link" /></span>
+                                    <span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>
+                                </div>
+                            }
+                        }
+
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                     <div class="row">
@@ -212,10 +224,38 @@
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
+
+            var paper_type = "@ViewBag.Paper.paper_type_id";
+            $("#paper_type").val(paper_type);
+
+            var paper_TNQT = "@ViewBag.Paper.type";
+            if (paper_TNQT == "Quocte") {
+                $("#loaithuong").val(1);
+                $(".thuongqt").show();
+                $(".thuongtn").hide();
+            }
+            else {
+                $("#loaithuong").val(2);
+                $(".thuongqt").hide();
+                $(".thuongtn").show();
+            }
+
+            var kieuthuong = "@ViewBag.Paper.reward_type";
+            if (kieuthuong == "Quydinh") $("#loaithuong").val(1);
+            if (kieuthuong == "Canhan") $("#loaithuong").val(2);
+
+            var spec = "@ViewBag.Paper.specialization_id";
+            $("#chuyennganh").val(spec);
+
+            $(".tieuchivalue").each(function () {
+                var temp = $(this).val();
+                var option = $("#tieuchi option[value='" + temp + "']");
+                option.prop('disabled', true);
+            });
         });
         $("#loaithuong").change(function () {
             var temp = $(this).val();
-            console.log(temp);
+            //console.log(temp);
             if (temp == 1) {
                 $(".thuongqt").show();
                 $(".thuongtn").hide();
@@ -230,7 +270,7 @@
 
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
-            $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi'>" +
+            $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
                 "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg edit' name='tieuchiname' type='text' /></span>" +
                 "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit' type='text' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +

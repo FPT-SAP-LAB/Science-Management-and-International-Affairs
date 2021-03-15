@@ -155,32 +155,14 @@
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
     <script>
         function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var user = {
-                id: profile.getId(),
-                name: profile.getName(),
-                imageurl: profile.getImageUrl(),
-                email: profile.getEmail()
-            }
-            $.ajax({
-                url: "/Authen/SigninGoogle",
-                data: JSON.stringify(user),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (url) {
-                    if (url == "not allow") {
-                        alert("Email của bạn chưa được cho phép truy cập vào hệ thống. Vui lòng liên hệ quản lí hệ thống để biết thêm chi tiết.");
-                        var auth2 = gapi.auth2.getAuthInstance();
-                        auth2.signOut().then(function () {
-                        });
-                    } else {
-                        window.location.href = url;
-                    }
-                },
-                error: function (errormessage) {
-                }
-            });
+            var id_token = googleUser.getAuthResponse().id_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://localhost:44362/Authen/SigninGoogleAsync');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
         }
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
