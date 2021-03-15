@@ -347,22 +347,19 @@
                 id : id
             }
             $.ajax({
-                url: '/AcademicActivity/getBaseAA',
+                url: "@Url.Action("getBaseAA", "AcademicActivity")",
                 data: JSON.stringify(obj),
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data != '') {
-                        document.getElementById('edit_title').value = data.activity_name;
+                    document.getElementById('edit_title').value = data.activity_name;
                         document.getElementById('edit_category').value = data.activity_type_id;
                         document.getElementById('edit_from').value = data.from;
                         document.getElementById('edit_to').value = data.to;
                         document.getElementById('edit_location').value = data.location;
                         $('#editModal').modal('show');
-                    }
                 },
-                error: function (data) {
-                    alert(data)
+                error: function () {
                 }
             });
         }
@@ -390,12 +387,10 @@
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
-            //var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
-            //if (!(date_regex.test(from))) {
-            //    toastr.warning("Vui lòng nhập đúng định dạng cho thời hạn");
-            //    return false;
-            //}
-
+            if (from > to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
             let object = {
                 activity_name: activity_name,
                 activity_type_id: activity_type_id,
@@ -403,7 +398,6 @@
                 from: from,
                 to: to
             }
-            console.log(object);
             $.ajax({
                 url: "@Url.Action("add_AcademicActivity", "AcademicActivity")",
                 data: JSON.stringify(object),
@@ -412,6 +406,8 @@
                 success: function (data) {
                     if (data != '') {
                         toastr.success(data);
+                        clearModal('#addModal');
+                        stt = 1;
                         datatable.ajax.reload();
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
@@ -423,6 +419,13 @@
             });
         });
 
+        function clearModal(id) {
+            $(id).find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+        }
+
         $('#btn_edit').click(function () {
             let activity_name = document.getElementById('edit_title').value;
             let activity_type_id = document.getElementById('edit_category').value;
@@ -433,13 +436,17 @@
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
+            if (from > to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
             let object = {
                 id: id_edit,
-                activity_name: title,
-                activity_type_id: category,
+                activity_type_id: activity_type_id,
+                activity_name: activity_name,
+                location: location,
                 from: from,
-                to: to,
-                location: location
+                to: to
             }
             $.ajax({
                 url: '/AcademicActivity/edit_AcademicActivity',
@@ -447,10 +454,13 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#editModal');
+                        stt = 1;
+                        datatable.ajax.reload();
                     } else {
-                        toastr.error(data.err_content);
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
                 },
                 error: function (data) {
@@ -467,7 +477,7 @@
             alert($('#search_year').val());
         });
 
-        var datatable =  $("#my_list").DataTable({
+        var datatable = $("#my_list").DataTable({
                 oLanguage: {
                     oPaginate: {
                         sPrevious: "Trang trước",
@@ -493,7 +503,7 @@
                         }
                     },
                     {
-                        data: "activity_name",
+                        data: "activity_id_activity_name",
                         render: function (data) {
                             if (data != "") {
                                 var id = data.split('$')[0]
@@ -508,16 +518,16 @@
                         data: "activity_type_name"
                     },
                     {
-                        data: "activity_status_name",
+                        data: "academic_status_name",
                         render: function (data, type, full, meta) {
                             var status = {
-                                'Chưa chạy': {
+                                'Chưa hoạt động': {
                                     'class': 'label-light-warning'
                                 },
-                                'Đang chạy': {
+                                'Đang hoạt động': {
                                     'class': 'label-light-primary'
                                 },
-                                'Đã xong': {
+                                'Đã kết thúc': {
                                     'class': 'label-light-success'
                                 }
                             };

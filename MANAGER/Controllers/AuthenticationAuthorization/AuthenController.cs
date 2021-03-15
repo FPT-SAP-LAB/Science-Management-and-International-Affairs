@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ENTITIES;
 using BLL;
+using Google.Apis.Auth;
 
 namespace MANAGER.Controllers.AuthenticationAuthorization
 {
@@ -17,14 +18,42 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
             return View();
         }
         [HttpPost]
-        public JsonResult SigninGoogle(ENTITIES.CustomModels.Authen.Gmail user)
+        public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
+            ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
             string url = authen.getAccount(user);
             if (String.IsNullOrEmpty(url))
             {
-                return Json("not allow", JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Login");
             }
-            return Json(url, JsonRequestBehavior.AllowGet);
+            return Redirect(url);
+        }
+        private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
+        public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
+        {
+            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(providerToken);
+            if (!payload.Audience.Equals("24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com"))
+                return null;
+            if (!payload.Issuer.Equals("accounts.google.com") && !payload.Issuer.Equals("https://accounts.google.com"))
+                return null;
+            if (payload.ExpirationTimeSeconds == null)
+                return null;
+            else
+            {
+                DateTime now = DateTime.Now.ToUniversalTime();
+                DateTime expiration = DateTimeOffset.FromUnixTimeSeconds((long)payload.ExpirationTimeSeconds).DateTime;
+                if (now > expiration)
+                {
+                    return null;
+                }
+            }
+            return new ENTITIES.CustomModels.Authen.Gmail
+            {
+                email = payload.Email,
+                id = payload.Subject,
+                name = payload.Name,
+                imageurl = payload.Picture
+            };
         }
     }
 }
