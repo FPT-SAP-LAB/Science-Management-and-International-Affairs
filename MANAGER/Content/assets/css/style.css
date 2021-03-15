@@ -12,3 +12,6 @@ thead * {
 .nav-tabs{
     margin-bottom:2rem !important
 }
+.field-value {
+    font-weight: bold !important;
+}
