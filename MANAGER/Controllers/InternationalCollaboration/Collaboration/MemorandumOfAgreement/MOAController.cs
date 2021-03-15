@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using ENTITIES;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
     {
         // GET: Partner
         private static MOARepo moa = new MOARepo();
-        public ActionResult Detail_MOA(string id)
+        public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
             //string id = Session["moa_detail_id"].ToString();
@@ -41,29 +42,56 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
-        //public ActionResult Delete_Moa(int mou_id)
-        //{
-        //    try
-        //    {
-        //        mou.deleteMOU(mou_id);
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new HttpStatusCodeResult(400);
-        //    }
-        //}
-        //public ActionResult Add_Moa(MOUAdd input)
-        //{
-        //    try
-        //    {
-        //        mou.addMOU(input);
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        public ActionResult CheckPartner(string partner_name)
+        {
+            try
+            {
+                string mou_id = Session["mou_detail_id"].ToString();
+                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_name);
+                return partner is null ? Json("") : Json(partner);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult GetMOAScopesByPartner(string partner_name)
+        {
+            try
+            {
+                string mou_id = Session["mou_detail_id"].ToString();
+                List<CustomScopesMOA> scopeList = moa.getMOAScope(int.Parse(mou_id), partner_name);
+                return Json(scopeList);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult Delete_Moa(int moa_id)
+        {
+            try
+            {
+                moa.deleteMOA(moa_id);
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult Add_Moa(MOAAdd input)
+        {
+            try
+            {
+                string mou_id = Session["mou_detail_id"].ToString();
+                moa.addMOA(input, int.Parse(mou_id));
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
