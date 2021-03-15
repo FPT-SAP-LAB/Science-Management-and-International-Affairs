@@ -934,18 +934,18 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center row">
-                <h4 class="modal-title font-weight-bolder" id="add_partner_moa_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+                <h4 class="modal-title font-weight-bolder" id="add_partner_moa_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN THỎA THUẬN</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAddMOA()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
-                        <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
+                        <input hidden readonly type="text" class="form-control" id="moa_partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="moa_partner_name_add" name="param" list="officeList" style="width:100% !important">
                                 @foreach (var item in ViewBag.listPartnersMOA)
@@ -957,40 +957,40 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_add" />
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_add" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_add" />
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_add" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_add" />
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_add" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_add" />
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_add" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_add" />
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_add" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_add" />
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_add" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_add" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" id="moa_sign_date_partner_add" data-target="#kt_datetimepicker_sign_date_add" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_add" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_sign_date_add" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="moa_sign_date_partner_add" data-target="#kt_datetimepicker_moa_sign_date_add" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_sign_date_add" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -1004,12 +1004,7 @@
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="moa_partner_specialization_add" name="param" multiple="multiple" style="width:100% !important">
-                                @foreach (var item in ViewBag.listSpeMOUPartner)
-                                {
-                                    <option value="@item.specialization_id">@item.specialization_name</option>
-                                }
-                            </select>
+                            <input class="form-control " type="text" id="moa_partner_specialization_add" disabled value=""/>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -1018,10 +1013,7 @@
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="moa_partner_scope_add" name="param" multiple="multiple" style="width:100% !important">
-                                @foreach (var item in ViewBag.listScopesMOUPartner)
-                                {
-                                    <option value="@item.scope_id">@item.scope_abbreviation</option>
-                                }
+                                
                             </select>
                         </div>
                     </div>
@@ -1060,40 +1052,40 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_edit" />
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_edit" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_edit" />
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_edit" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_edit" />
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_edit" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Đại diện</label>
-                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_edit" />
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_edit" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_edit" />
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_edit" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Số điện thoại</label>
-                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_edit" />
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_edit" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_add" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" id="moa_sign_date_partner_edit" data-target="#kt_datetimepicker_sign_date_add" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_add" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_sign_date_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="moa_sign_date_partner_edit" data-target="#kt_datetimepicker_moa_sign_date_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_sign_date_edit" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -1107,8 +1099,7 @@
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="moa_partner_specialization_edit" name="param" multiple="multiple" style="width:100% !important">
-                            </select>
+                            <input class="form-control " type="text" id="moa_partner_specialization_edit" disabled value="" />
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -1195,8 +1186,8 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                         <select class="form-control" required id="status_moa">
-                            <option value="0">Inactive</option>
-                            <option value="1">Active</option>
+                            <option value="1">Inactive</option>
+                            <option value="2">Active</option>
                         </select>
                     </div>
                     <div class="col-xl-7 col-lg-7 col-md-8 col-sm-8">
@@ -1251,7 +1242,7 @@
                         <th>Điện thoại</th>
                         <th>Email</th>
                     </tr>
-                    <tr>
+                    @*<tr>
                         <td>1</td>
                         <td>Bunkyo University</td>
                         <td>Toshie Miyatake</td>
@@ -1272,7 +1263,7 @@
                             <a onclick="" href="#add_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
                             <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
                         </td>
-                    </tr>
+                    </tr>*@
                 </table>
             </div>
             <div class="modal-footer">
@@ -1570,6 +1561,14 @@
             placeholder: 'Lĩnh vực',
             allowClear: true,
         })
+        $('#moa_partner_scope_add').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+        })
+        $('#moa_partner_scope_edit').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+        })
         $('#mou_partner_scope_add').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
@@ -1734,10 +1733,6 @@
             div_step2.style.display = "none";
             button_step2.style.display = "none";
             backbutton_step2.style.display = "none";
-        }
-
-        function doneStep() {
-            toastr.success('Thêm thành công')
         }
 
     </script>
@@ -2813,11 +2808,10 @@
     </script>
 
     @*moa*@
-    <script>
+<script>
     var moa_table;
     var listTempPartnerMOAAdd = [];
     var listScopesMOA = [];
-    var listSpeMOA = [];
     var listPartnersMOA = [];
 
     function searchMOA() {
@@ -2900,7 +2894,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick=goMOADetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetailMOA('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete_moa(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
@@ -2939,7 +2933,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location.href = '../MOA/Detail';
+                window.location.href = '../MOA/Detail_MOA';
             },
             error: function () {
 
@@ -2956,10 +2950,9 @@
             reason: $('#note_moa').val(),
             moa_note: $('#moa_area').val()
         };
-
         var MOAAdd = {
-            BasicInfo: BasicInfo,
-            PartnerInfo: listTempPartnerMOUAdd,
+            MOABasicInfo: BasicInfo,
+            MOAPartnerInfo: listTempPartnerMOAAdd,
         };
         $.ajax({
             url: "@Url.Action("Add_Moa", "MOA")",
@@ -2983,12 +2976,18 @@
     function updateMOAStartDateAndMainScope() {
         var max_date = '01/01/0001';
         var main_scopes = '';
-        var new_main_scopes = '';
-        for (idx = 0; idx < listTempPartnerMOAAdd.length; idx++) {
+
+        for (idx = 0; idx < listTempPartnerMOAAdd.length; idx++){
             if (Date.parse(listTempPartnerMOAAdd[idx].sign_date_mou_add) > Date.parse(max_date)) {
                 max_date = listTempPartnerMOAAdd[idx].sign_date_mou_add;
             }
-            main_scopes += (listTempPartnerMOAAdd[idx].coop_scope_add + ",");
+            for (i = 0; i < listTempPartnerMOAAdd[idx].list_scope.length; i++){
+                if ((listTempPartnerMOAAdd[idx].coop_scope_add+'').includes(listTempPartnerMOAAdd[idx].list_scope[i].scope_id)) {
+                    if (!main_scopes.includes(listTempPartnerMOAAdd[idx].list_scope[i].scope_abbreviation)) {
+                        main_scopes += listTempPartnerMOAAdd[idx].list_scope[i].scope_abbreviation + ',';
+                    }
+                }
+            }
         }
 
         //remove last element.
@@ -2996,94 +2995,52 @@
             main_scopes = main_scopes.slice(0, -1);
         }
 
-        //alert(listTempPartnerMOUAdd[0].coop_scope_add);
-        var token = main_scopes.split(",");
-        token.sort();
-
-        //add to new_main_scopes
-        var prev = null;
-        for (j = 0; j < token.length; j++) {
-            if (token[j] != prev) {
-                prev = token[j];
-                var obj = listScopes.find(x => x.scope_id == prev);
-                if (obj != null) {
-                    new_main_scopes += (obj.scope_name + ",");
-                }
-            }
-        }
-        //remove last element of new list
-        if (new_main_scopes.endsWith(",")) {
-            new_main_scopes = new_main_scopes.slice(0, -1);
-        }
-
         if (max_date == '01/01/0001') {
             max_date = '';
         }
 
         $("#sign_date_moa").val(max_date);
-        $("#coop_scope_moa").val(new_main_scopes);
-    }
-
-    function editTempMOA() {
-        var index = $("#idx_edit_moa").val();
-        listTempPartnerMOAAdd[index].partnername_add = document.getElementById("moa_partner_name_edit").value;
-        listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_represent_edit").value;
-        listTempPartnerMOAAdd[index].specialization_add = $("#moa_specialization_edit").val();
-        listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_nation_edit").value;
-        listTempPartnerMOAAdd[index].website_add = document.getElementById("moa_website_edit").value;
-        listTempPartnerMOAAdd[index].address_add = document.getElementById("moa_address_edit").value;
-        listTempPartnerMOAAdd[index].email_add = document.getElementById("moa_email_edit").value;
-        listTempPartnerMOAAdd[index].sign_date_mou_add = document.getElementById("moa_sign_date_mou_edit").value;
-        listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_phone_edit").value;
-        listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_coop_scope_edit").val();
-        listTempPartnerMOAAdd[index].partner_id = document.getElementById("moa_partner_id_edit").value;
-        initAndRefreshTableMOAAdd();
+        $("#coop_scope_moa").val(main_scopes);
     }
 
     function loadEditTempMOA(index) {
         $("#idx_moa_edit").val(index);
-        var HTMLSpedata = "";
-        var HTMLScopedata = "";
-        $('#moa_specialization_edit').empty();
-        $('#moa_coop_scope_edit').empty();
-        for (i = 0; i < listSpe.length; i++){
-            //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
-            if (listTempPartnerMOAAdd[index].specialization_name.includes(listSpeMOA[i].spe_id)) {
-                HTMLSpedata += '<option value = "' + listSpeMOA[i].spe_id + '" selected>' + listSpeMOA[i].spe_name + '</option>'
+        var HTMLScopesdata = "";
+        var HTMLPartnerdata = "";
 
+        $('#moa_partner_scope_edit').empty();
+        $('#moa_partner_name_edit').empty();
+
+        var coop_scope_add = listTempPartnerMOAAdd[index].coop_scope_add + '';
+        var partnername_add = listTempPartnerMOAAdd[index].partnername_add + '';
+        var list_scope = listTempPartnerMOAAdd[index].list_scope;
+
+        for (i = 0; i < list_scope.length; i++) {
+            if (coop_scope_add.includes(list_scope[i].scope_id)) {
+                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '" selected>' + list_scope[i].scope_abbreviation + '</option>';
             } else {
-                HTMLSpedata += '<option value = "' + listSpeMOA[i].spe_id + '" >' + listSpeMOA[i].spe_name + '</option>'
+                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '">' + list_scope[i].scope_abbreviation + '</option>';
             }
         }
-        for (j = 0; j < listScopesMOA.length; j++){
-            if (listTempPartnerMOAAdd[index].coop_scope_add.includes(listScopesMOA[j].scope_id)) {
-                HTMLScopedata += '<option value = "' + listScopesMOA[j].scope_id + '" selected>' + listScopesMOA[j].scope_name + '</option>'
+        $('#moa_partner_scope_edit').append(HTMLScopesdata);
+        for (j = 0; j < listPartnersMOA.length; j++) {
+            if (partnername_add == listPartnersMOA[j].partner_name) {
+                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_name + '" selected>' + listPartnersMOA[j].partner_name + '</option>';
             } else {
-                HTMLScopedata += '<option value = "' + listScopesMOA[j].scope_id + '">' + listScopesMOA[j].scope_name + '</option>'
+                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_name + '">' + listPartnersMOA[j].partner_name + '</option>';
             }
         }
-        $('#moa_specialization_edit').append(HTMLSpedata);
-        $('#moa_coop_scope_edit').append(HTMLScopedata);
+        $('#moa_partner_name_edit').append(HTMLPartnerdata);
 
-        $('#moa_partner_name_edit').val(listTempPartnerMOAAdd[index].partnername_add);
-        $('#moa_represent_edit').val(listTempPartnerMOAAdd[index].represent_add);
-        $('#moa_nation_edit').val(listTempPartnerMOAAdd[index].nation_add);
-        $('#moa_website_edit').val(listTempPartnerMOAAdd[index].website_add);
-        $('#moa_address_edit').val(listTempPartnerMOAAdd[index].address_add);
-        $('#moa_email_edit').val(listTempPartnerMOAAdd[index].email_add);
+        $('#moa_partner_represent_edit').val(listTempPartnerMOAAdd[index].represent_add);
+        $('#moa_partner_nation_edit').val(listTempPartnerMOAAdd[index].nation_add);
+        $('#moa_partner_website_edit').val(listTempPartnerMOAAdd[index].website_add);
+        $('#moa_partner_address_edit').val(listTempPartnerMOAAdd[index].address_add);
+        $('#moa_partner_email_edit').val(listTempPartnerMOAAdd[index].email_add);
         $('#moa_sign_date_partner_edit').val(listTempPartnerMOAAdd[index].sign_date_mou_add);
-        $('#moa_phone_edit').val(listTempPartnerMOAAdd[index].phone_add);
+        $('#moa_partner_specialization_edit').val(listTempPartnerMOAAdd[index].specialization_add);
+        $('#moa_partner_phone_edit').val(listTempPartnerMOAAdd[index].phone_add);
         $('#moa_partner_id_edit').val(listTempPartnerMOAAdd[index].partner_id);
-
-        if (listTempPartnerMOAAdd[index].partner_id == "") {
-            document.getElementById('moa_nation_edit').removeAttribute('disabled');
-            document.getElementById('moa_website_edit').removeAttribute('disabled');
-            document.getElementById('moa_address_edit').removeAttribute('disabled');
-        } else {
-            document.getElementById('moa_nation_edit').setAttribute('disabled', '');
-            document.getElementById('moa_website_edit').setAttribute('disabled', '');
-            document.getElementById('moa_address_edit').setAttribute('disabled', '');
-        }
     }
 
     function confirm_delete_temp_moa(index) {
@@ -3106,15 +3063,15 @@
 
     function initTableMOA() {
         var HTMLdata = null;
-        for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
+        for (idx = 0; idx < listTempPartnerMOAAdd.length; idx++) {
             HTMLdata += '<tr id="tempMOA' + idx + '" "class="MOAPartnerTempList">';
             HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
             HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].partnername_add + '</td>';
             HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].represent_add + '</td>';
             HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].phone_add + '</td>';
             HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].email_add + '</td>';
-            var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
-            var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+            var buttonEdit = '<a onclick="loadEditTempMOA(' + idx + ')" href="#edit_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
+            var buttonDel = '<a onclick="confirm_delete_temp_moa(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
             HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
             HTMLdata += '</tr>';
         }
@@ -3134,33 +3091,53 @@
 
     function clearInputAddMOA() {
         document.getElementById("moa_partner_name_add").value = "";
-        document.getElementById("moa_represent_add").value = "";
-        document.getElementById("moa_specialization_add").value = "";
-        document.getElementById("moa_nation_add").value = "";
-        document.getElementById("moa_website_add").value = "";
-        document.getElementById("moa_address_add").value = "";
-        document.getElementById("moa_email_add").value = "";
-        document.getElementById("moa_sign_date_mou_add").value = "";
-        document.getElementById("moa_phone_add").value = "";
-        document.getElementById("moa_coop_scope_add").value = "";
+        document.getElementById("moa_partner_represent_add").value = "";
+        document.getElementById("moa_partner_specialization_add").value = "";
+        document.getElementById("moa_partner_nation_add").value = "";
+        document.getElementById("moa_partner_website_add").value = "";
+        document.getElementById("moa_partner_address_add").value = "";
+        document.getElementById("moa_partner_email_add").value = "";
+        document.getElementById("moa_sign_date_partner_add").value = "";
+        document.getElementById("moa_partner_phone_add").value = "";
+        $('#moa_partner_scope_add').empty();
     }
 
     function addToTempMOA() {
         var TempObj = {
             partnername_add: document.getElementById("moa_partner_name_add").value,
-            represent_add: document.getElementById("moa_represent_add").value,
-            specialization_add: $("#moa_specialization_add").val(),
-            nation_add: document.getElementById("moa_nation_add").value,
-            website_add: document.getElementById("moa_website_add").value,
-            address_add: document.getElementById("moa_address_add").value,
-            email_add: document.getElementById("moa_email_add").value,
-            sign_date_mou_add: document.getElementById("moa_sign_date_mou_add").value,
-            phone_add: document.getElementById("moa_phone_add").value,
-            coop_scope_add: $("#moa_coop_scope_add").val(),
+            represent_add: document.getElementById("moa_partner_represent_add").value,
+            specialization_add: $("#moa_partner_specialization_add").val(),
+            nation_add: document.getElementById("moa_partner_nation_add").value,
+            website_add: document.getElementById("moa_partner_website_add").value,
+            address_add: document.getElementById("moa_partner_address_add").value,
+            email_add: document.getElementById("moa_partner_email_add").value,
+            sign_date_moa_add: document.getElementById("moa_sign_date_partner_add").value,
+            phone_add: document.getElementById("moa_partner_phone_add").value,
+            coop_scope_add: $("#moa_partner_scope_add").val(),
             partner_id: document.getElementById("moa_partner_id_add").value,
+            list_scope: listScopesMOA
         }
+        listScopesMOA = [];
         listTempPartnerMOAAdd.push(TempObj);
-        clearInputAdd();
+        clearInputAddMOA();
+        initAndRefreshTableMOAAdd();
+    }
+
+    function editTempMOA() {
+        var index = $("#idx_edit_moa").val();
+        listTempPartnerMOAAdd[index].partnername_add = document.getElementById("moa_partner_name_edit").value;
+        listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_partner_represent_edit").value;
+        listTempPartnerMOAAdd[index].specialization_add = $("#moa_partner_specialization_edit").val();
+        listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_partner_nation_edit").value;
+        listTempPartnerMOAAdd[index].website_add = document.getElementById("moa_partner_website_edit").value;
+        listTempPartnerMOAAdd[index].address_add = document.getElementById("moa_partner_address_edit").value;
+        listTempPartnerMOAAdd[index].email_add = document.getElementById("moa_partner_email_edit").value;
+        listTempPartnerMOAAdd[index].sign_date_mou_add = document.getElementById("moa_sign_date_partner_edit").value;
+        listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_partner_phone_edit").value;
+        listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_partner_scope_edit").val();
+        listTempPartnerMOAAdd[index].partner_id = document.getElementById("moa_partner_id_edit").value;
+        listTempPartnerMOAAdd[index].list_scope = listScopesMOA;
+        listScopesMOA = [];
         initAndRefreshTableMOAAdd();
     }
 
@@ -3172,9 +3149,65 @@
         document.getElementById("add_moa_partner_button").setAttribute('disabled', '');
     }
 
-    function checkPartnerAddMOA() {
-        var partner_name = document.getElementById("moa_partner_name_add").value;
+    function clearInputAdd() {
+        document.getElementById("moa_partner_name_add").value = "";
+        document.getElementById("moa_partner_represent_add").value = "";
+        document.getElementById("moa_partner_specialization_add").value = "";
+        document.getElementById("moa_partner_nation_add").value = "";
+        document.getElementById("moa_partner_website_add").value = "";
+        document.getElementById("moa_partner_address_add").value = "";
+        document.getElementById("moa_partner_email_add").value = "";
+        document.getElementById("moa_sign_date_partner_add").value = "";
+        document.getElementById("moa_partner_phone_add").value = "";
+        document.getElementById("moa_partner_scope_add").value = "";
+    }
+
+    function updateListScopeMOA(data){
+        $('#moa_partner_scope_add').empty();
+        var HTMLScopesdata = "";
+        for (j = 0; j < data.length; j++) {
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            var obj = {
+                scope_id: data[j].scope_id,
+                scope_abbreviation: data[j].scope_abbreviation
+            }
+            listScopesMOA.push(obj);
+        }
+        $('#moa_partner_scope_add').append(HTMLScopesdata);
+    }
+
+    function updateListScopeMOAEdit(data) {
+        $('#moa_partner_scope_edit').empty();
+        var HTMLScopesdata = "";
+        for (j = 0; j < data.length; j++) {
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            var obj = {
+                scope_id: data[j].scope_id,
+                scope_abbreviation: data[j].scope_abbreviation
+            }
+            listScopesMOA.push(obj);
+        }
+        alert('Test 1:' + HTMLScopesdata);
+        $('#moa_partner_scope_edit').append(HTMLScopesdata);
+    }
+
+    function checkPartnerEditMOA(){
+        var partner_name = document.getElementById("moa_partner_name_edit").value;
         var em = { partner_name: partner_name };
+        $.ajax({
+            url: "@Url.Action("GetMOAScopesByPartner", "MOA")",
+            type: "POST",
+            data: JSON.stringify(em),
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                updateListScopeMOAEdit(data);
+                document.getElementById("edit_moa_partner_button").removeAttribute('disabled');
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
         $.ajax({
             url: "@Url.Action("CheckPartner", "MOA")",
             type: "POST",
@@ -3183,56 +3216,16 @@
             datatype: "json",
             success: function (data) {
                 if (data == "") {
-                    document.getElementById('moa_nation_add').removeAttribute('disabled');
-                    document.getElementById('moa_website_add').removeAttribute('disabled');
-                    document.getElementById('moa_address_add').removeAttribute('disabled');
-                    document.getElementById("moa_nation_add").value = "";
-                    document.getElementById("moa_website_add").value = "";
-                    document.getElementById("moa_address_add").value = "";
-                    document.getElementById("moa_partner_id_add").value = "";
-                } else {
-                    document.getElementById('moa_nation_add').setAttribute('disabled', '');
-                    document.getElementById('moa_website_add').setAttribute('disabled', '');
-                    document.getElementById('moa_address_add').setAttribute('disabled', '');
-                    document.getElementById("moa_nation_add").value = data.country_name == null ? "" : data.country_name;
-                    document.getElementById("moa_website_add").value = data.website == null ? "" : data.website;
-                    document.getElementById("moa_address_add").value = data.address == null ? "" : data.address;
-                    document.getElementById("moa_partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
-                }
-                document.getElementById("add_moa_partner_button").removeAttribute('disabled');
-            },
-            error: function () {
-                //alert("fail");
-            }
-        });
-    }
 
-    function checkPartnerEditMOA(){
-        var partner_name = document.getElementById("moa_partner_name_edit").value;
-        var em = { partner_name: partner_name };
-        $.ajax({
-            url: "@Url.Action("CheckPartner", "MOA")",
-            type: "POST",
-            data: JSON.stringify(em),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                if (data == "") {
-                    document.getElementById('moa_nation_edit').removeAttribute('disabled');
-                    document.getElementById('moa_website_edit').removeAttribute('disabled');
-                    document.getElementById('moa_address_edit').removeAttribute('disabled');
-                    document.getElementById("moa_moa_nation_edit").value = "";
-                    document.getElementById("moa_website_edit").value = "";
-                    document.getElementById("moa_address_edit").value = "";
-                    document.getElementById("moa_partner_id_edit").value = "";
                 } else {
-                    document.getElementById('moa_nation_edit').setAttribute('disabled', '');
-                    document.getElementById('moa_website_edit').setAttribute('disabled', '');
-                    document.getElementById('moa_address_edit').setAttribute('disabled', '');
-                    document.getElementById("moa_nation_edit").value = data.country_name == null ? "" : data.country_name;
-                    document.getElementById("moa_website_edit").value = data.website == null ? "" : data.website;
-                    document.getElementById("moa_address_edit").value = data.address == null ? "" : data.address;
+                    document.getElementById("moa_partner_represent_edit").value = data.contact_point_name == null ? "" : data.contact_point_name;
+                    document.getElementById("moa_partner_website_edit").value = data.website == null ? "" : data.website;
+                    document.getElementById("moa_partner_address_edit").value = data.address == null ? "" : data.address;
+                    document.getElementById("moa_partner_email_edit").value = data.contact_point_email == null ? "" : data.contact_point_email;
+                    document.getElementById("moa_partner_nation_edit").value = data.country_name == null ? "" : data.country_name;
+                    document.getElementById("moa_partner_phone_edit").value = data.contact_point_phone == null ? "" : data.contact_point_phone;
                     document.getElementById("moa_partner_id_edit").value = data.partner_id == null ? "" : data.partner_id;
+                    document.getElementById("moa_partner_specialization_edit").value = data.specialization_name == null ? "" : data.specialization_name;
                 }
                 document.getElementById("edit_moa_partner_button").removeAttribute('disabled');
             },
@@ -3242,19 +3235,96 @@
         });
     }
 
-    $(document).ready(function () {
-        $("#moa_specialization_add option").each(function () {
-            listSpeMOA.push({
-                spe_id: $(this).val(),
-                spe_name: $(this).text()
-            });
+    function checkPartnerAddMOA() {
+        var partner_name = document.getElementById("moa_partner_name_add").value;
+        var em = { partner_name: partner_name };
+        $.ajax({
+            url: "@Url.Action("GetMOAScopesByPartner", "MOA")",
+            type: "POST",
+            data: JSON.stringify(em),
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                updateListScopeMOA(data);
+                document.getElementById("add_moa_partner_button").removeAttribute('disabled');
+            },
+            error: function () {
+                //alert("fail");
+            }
         });
-        $("#moa_coop_scope_add option").each(function () {
-            listScopesMOA.push({
-                scope_id: $(this).val(),
-                scope_name: $(this).text()
+        $.ajax({
+            url: "@Url.Action("CheckPartner", "MOA")",
+            type: "POST",
+            data: JSON.stringify(em),
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                if (data == "") {
+
+                } else {
+                    document.getElementById("moa_partner_represent_add").value = data.contact_point_name == null ? "" : data.contact_point_name;
+                    document.getElementById("moa_partner_website_add").value = data.website == null ? "" : data.website;
+                    document.getElementById("moa_partner_address_add").value = data.address == null ? "" : data.address;
+                    document.getElementById("moa_partner_email_add").value = data.contact_point_email == null ? "" : data.contact_point_email;
+                    document.getElementById("moa_partner_nation_add").value = data.country_name == null ? "" : data.country_name;
+                    document.getElementById("moa_partner_phone_add").value = data.contact_point_phone == null ? "" : data.contact_point_phone;
+                    document.getElementById("moa_partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
+                    document.getElementById("moa_partner_specialization_add").value = data.specialization_name == null ? "" : data.specialization_name;
+                }
+                document.getElementById("add_moa_partner_button").removeAttribute('disabled');
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#moa_partner_name_add option").each(function () {
+            listPartnersMOA.push({
+                partner_name: $(this).text()
             });
         });
     });
-    </script>
+
+    function doneStep() {
+        if (listTempPartnerMOAAdd.length == 0) {
+            toastr.error('Chưa có đối tác nào được thêm');
+        } else {
+            $('#add_moa_modal').modal('hide');
+            toastr.success('Thêm thành công');
+            addMOA();
+        }
+    }
+
+    function confirm_delete_moa(id){
+        var link = '@Url.Action("Delete_Moa", "MOA")'
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: link,
+                        data: { moa_id : id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
+                        },
+                    })
+                }
+            })
+    }
+</script>
 }
