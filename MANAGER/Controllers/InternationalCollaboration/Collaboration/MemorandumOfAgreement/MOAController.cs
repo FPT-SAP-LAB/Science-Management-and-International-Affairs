@@ -47,7 +47,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             try
             {
                 string mou_id = Session["mou_detail_id"].ToString();
-                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id),partner_name);
+                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_name);
                 return partner is null ? Json("") : Json(partner);
             }
             catch (Exception)

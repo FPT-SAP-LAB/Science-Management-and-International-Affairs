@@ -85,7 +85,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public CustomPartnerMOA CheckPartner(int mou_id,string partner_name)
+        public CustomPartnerMOA CheckPartner(int mou_id, string partner_name)
         {
             try
             {
@@ -126,8 +126,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //add MOAPartnerScope
                     //add MOAStatusHistory
                     DateTime moa_end_date = DateTime.ParseExact(input.MOABasicInfo.moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    MOA m = db.MOAs.Add(new MOA 
-                    { 
+                    MOA m = db.MOAs.Add(new MOA
+                    {
                         moa_code = input.MOABasicInfo.moa_code,
                         moa_end_date = moa_end_date,
                         moa_note = input.MOABasicInfo.moa_note,
@@ -141,7 +141,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 
                     foreach (MOAPartnerInfo item in input.MOAPartnerInfo.ToList())
                     {
-                        db.MOAPartners.Add(new MOAPartner 
+                        db.MOAPartners.Add(new MOAPartner
                         {
                             moa_id = m.moa_id,
                             moa_start_date = DateTime.ParseExact(item.sign_date_moa_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
@@ -162,8 +162,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         //checkpoint 2
                         db.SaveChanges();
                     }
-                    db.MOAStatusHistories.Add(new MOAStatusHistory 
-                    { 
+                    db.MOAStatusHistories.Add(new MOAStatusHistory
+                    {
                         datetime = DateTime.Now,
                         reason = input.MOABasicInfo.reason,
                         moa_id = m.moa_id,
@@ -241,7 +241,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<CustomScopesMOA> getMOAScope(int mou_id,string partner_name)
+        public List<CustomScopesMOA> getMOAScope(int mou_id, string partner_name)
         {
             try
             {
@@ -255,8 +255,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     where t1.mou_id = @mou_id and t4.partner_name like @partner_name
                     order by t3.scope_id";
                 List<CustomScopesMOA> scopeList = db.Database.SqlQuery<CustomScopesMOA>(sql_scopeList
-                    ,new SqlParameter("mou_id",mou_id)
-                    , new SqlParameter("partner_name", '%' + partner_name + '%') 
+                    , new SqlParameter("mou_id", mou_id)
+                    , new SqlParameter("partner_name", '%' + partner_name + '%')
                     ).ToList();
                 return scopeList;
             }
@@ -312,9 +312,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string contact_point_email { get; set; }
             public string specialization_name { get; set; }
         }
-        public class CustomScopesMOA 
+        public class CustomScopesMOA
         {
-            public string scope_abbreviation{ get; set; }
+            public string scope_abbreviation { get; set; }
             public int scope_id { get; set; }
         }
         public class MOAAdd
