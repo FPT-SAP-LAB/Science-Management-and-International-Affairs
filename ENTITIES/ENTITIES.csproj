@@ -87,9 +87,6 @@
     <Compile Include="AcademicActivityPhaseLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="AcademicActivityStatu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="AcademicActivityType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

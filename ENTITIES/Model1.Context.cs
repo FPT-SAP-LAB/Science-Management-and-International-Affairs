@@ -126,7 +126,6 @@ namespace ENTITIES
         public virtual DbSet<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         public virtual DbSet<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         public virtual DbSet<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
-        public virtual DbSet<AcademicActivityStatu> AcademicActivityStatus { get; set; }
         public virtual DbSet<AcademicActivityType> AcademicActivityTypes { get; set; }
         public virtual DbSet<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
         public virtual DbSet<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
