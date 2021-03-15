@@ -12,7 +12,7 @@ namespace BLL.ScienceManagement.ScientificProduct
     public class ListProductOnePersonRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListProduct_OnePerson> getList(DataSearch item)
+        public List<ListProduct_OnePerson> getList(DataSearch item, string id)
         {
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             string sql = @"select p.name, rp.date_request,rp.status_id, p.paper_id
@@ -22,12 +22,12 @@ namespace BLL.ScienceManagement.ScientificProduct
             if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
             sql += " order by status_id desc";
             list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
-                , new SqlParameter("id", 1)
+                , new SqlParameter("id", id)
                 , new SqlParameter("name", "%" + item.nameS + "%")).ToList();
             return list;
         }
 
-        public List<ListProduct_OnePerson> getListInven(DataSearch item)
+        public List<ListProduct_OnePerson> getListInven(DataSearch item, string id)
         {
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             string sql = @"select i.name, ri.date_request, ri.status_id, i.invention_id as 'paper_id'
@@ -37,7 +37,7 @@ namespace BLL.ScienceManagement.ScientificProduct
             if (item.nameS != null && item.nameS != " ") sql += " and i.name like @name"; else item.nameS = " ";
             sql += " order by status_id desc";
             list = db.Database.SqlQuery<ListProduct_OnePerson>(sql
-                , new SqlParameter("id", 1)
+                , new SqlParameter("id", id)
                 , new SqlParameter("name", "%" + item.nameS + "%")).ToList();
             return list;
         }
