@@ -22,11 +22,9 @@ namespace ENTITIES
             this.AuthorInventions = new HashSet<AuthorInvention>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
             this.Awards = new HashSet<Award>();
-            this.Citations = new HashSet<Citation>();
+            this.RequestCitations = new HashSet<RequestCitation>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.CustomProfiles = new HashSet<CustomProfile>();
-            this.ResearcherDegrees = new HashSet<ResearcherDegree>();
-            this.ResearcherLevelAcademics = new HashSet<ResearcherLevelAcademic>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.ResearchAreas = new HashSet<ResearchArea>();
             this.ContractTypes = new HashSet<ContractType>();
@@ -61,16 +59,12 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Award> Awards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Citation> Citations { get; set; }
+        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomProfile> CustomProfiles { get; set; }
         public virtual Profile Profile { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearcherDegree> ResearcherDegrees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearcherLevelAcademic> ResearcherLevelAcademics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

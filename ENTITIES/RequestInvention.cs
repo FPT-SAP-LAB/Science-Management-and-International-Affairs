@@ -12,19 +12,23 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperCriteria
+    public partial class RequestInvention
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaperCriteria()
+        public RequestInvention()
         {
-            this.PaperWithCriterias = new HashSet<PaperWithCriteria>();
+            this.Decisions = new HashSet<Decision>();
         }
     
-        public int criteria_id { get; set; }
-        public string status { get; set; }
-        public string name { get; set; }
+        public int request_id { get; set; }
+        public Nullable<System.DateTime> date_request { get; set; }
+        public Nullable<int> status_id { get; set; }
+        public string total_reward { get; set; }
+        public int invention_id { get; set; }
     
+        public virtual Invention Invention { get; set; }
+        public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperWithCriteria> PaperWithCriterias { get; set; }
+        public virtual ICollection<Decision> Decisions { get; set; }
     }
 }
