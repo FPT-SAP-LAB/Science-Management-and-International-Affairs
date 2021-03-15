@@ -16,7 +16,7 @@ namespace ENTITIES
     {
         public int people_id { get; set; }
         public int paper_id { get; set; }
-        public string currnet_mssv_msnv { get; set; }
+        public string current_mssv_msnv { get; set; }
         public Nullable<bool> author_request { get; set; }
         public string money_reward { get; set; }
     

@@ -12,13 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class LevelAcademicLanguage
+    public partial class AcademicDegreeLanguage
     {
         public int language_id { get; set; }
-        public int level_academic_id { get; set; }
+        public int academic_degree_id { get; set; }
         public string name { get; set; }
     
+        public virtual AcademicDegree AcademicDegree { get; set; }
         public virtual Language Language { get; set; }
-        public virtual LevelAcademic LevelAcademic { get; set; }
     }
 }
