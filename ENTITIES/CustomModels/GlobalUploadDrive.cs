@@ -142,20 +142,21 @@ namespace ENTITIES.CustomModels
         }
         public static Google.Apis.Drive.v3.Data.File FindFirstFolder(string FolderName, string ParentID = null)
         {
-            ParentID = ParentID ?? ParentDrive;
-            ListRequest listRequest = new ListRequest(driveService)
-            {
-                Q = "name = '" + FolderName + "' and mimeType = 'application/vnd.google-apps.folder' and '" + ParentID + "' in parents and trashed = false",
-                Spaces = "drive",
-                Fields = "files(id)",
-                SupportsAllDrives = true,
-                IncludeItemsFromAllDrives = true,
-            };
-            FileList result = listRequest.Execute();
-            if (result.Files.Count == 0)
-                return null;
-            else
-                return result.Files[0];
+            //ParentID = ParentID ?? ParentDrive;
+            //ListRequest listRequest = new ListRequest(driveService)
+            //{
+            //    Q = "name = '" + FolderName + "' and mimeType = 'application/vnd.google-apps.folder' and '" + ParentID + "' in parents and trashed = false",
+            //    Spaces = "drive",
+            //    Fields = "files(id)",
+            //    SupportsAllDrives = true,
+            //    IncludeItemsFromAllDrives = true,
+            //};
+            //FileList result = listRequest.Execute();
+            //if (result.Files.Count == 0)
+            //    return null;
+            //else
+            //    return result.Files[0];
+            return null;
         }
         public static bool ChangeParentDrive(string ParentID)
         {
