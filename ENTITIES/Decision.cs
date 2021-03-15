@@ -18,9 +18,9 @@ namespace ENTITIES
         public Decision()
         {
             this.ConferenceSupports = new HashSet<ConferenceSupport>();
-            this.CitationDecisions = new HashSet<CitationDecision>();
-            this.Inventions = new HashSet<Invention>();
-            this.Papers = new HashSet<Paper>();
+            this.RequestCitations = new HashSet<RequestCitation>();
+            this.RequestInventions = new HashSet<RequestInvention>();
+            this.RequestPapers = new HashSet<RequestPaper>();
         }
     
         public int decision_id { get; set; }
@@ -32,12 +32,12 @@ namespace ENTITIES
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CitationDecision> CitationDecisions { get; set; }
         public virtual DecisionType DecisionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
+        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<RequestInvention> RequestInventions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestPaper> RequestPapers { get; set; }
     }
 }

@@ -81,6 +81,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorRepo.cs" />
+    <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
+    <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
   </ItemGroup>

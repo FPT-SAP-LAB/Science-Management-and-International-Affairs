@@ -12,20 +12,20 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class LevelAcademic
+    public partial class AcademicDegreeType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LevelAcademic()
+        public AcademicDegreeType()
         {
-            this.LevelAcademicLanguages = new HashSet<LevelAcademicLanguage>();
-            this.ResearcherLevelAcademics = new HashSet<ResearcherLevelAcademic>();
+            this.AcademicDegreeTypeLanguages = new HashSet<AcademicDegreeTypeLanguage>();
+            this.AcademicDegrees = new HashSet<AcademicDegree>();
         }
     
-        public int level_academic_id { get; set; }
+        public int type_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LevelAcademicLanguage> LevelAcademicLanguages { get; set; }
+        public virtual ICollection<AcademicDegreeTypeLanguage> AcademicDegreeTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearcherLevelAcademic> ResearcherLevelAcademics { get; set; }
+        public virtual ICollection<AcademicDegree> AcademicDegrees { get; set; }
     }
 }
