@@ -916,7 +916,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đơn vị.
+        ///   Looks up a localized string similar to Cơ sở.
         /// </summary>
         public static string WorkUnit {
             get {

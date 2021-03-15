@@ -61,6 +61,80 @@
                                     <input value="Address:9th Floor, Pacific Century Place Marunouchi, 1-11-1 Marunouchi, Chiyoda-ku, Tokyo" class="form-control" type="text" placeholder="Địa chỉ" autocomplete="off" required id="partner_address" />
                                 </div>
                             </div>
+
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <label class="font-weight-bolder">Lịch sử hoạt động</label>
+                                    <label style="font-style: italic;">
+                                    </label>
+                                    <table class="table table-bordered table-hover table-checkable"
+                                           id="partner_acitivity_table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" rowspan="2">STT</th>
+                                                <th class="text-center" rowspan="2">Mã</th>
+                                                <th class="text-center" rowspan="2">Hoạt động</th>
+                                                <th class="text-center" colspan="3">Đại diện</th>
+                                                <th class="text-center" rowspan="2">Người thao tác</th>
+                                                <th class="text-center" rowspan="2">Thời gian bắt đầu</th>
+                                                <th class="text-center" rowspan="2">Thời gian kết thúc</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Tên</th>
+                                                <th class="text-center">Email</th>
+                                                <th class="text-center">SĐT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td class="text-center">2020/01</td>
+                                                <td class="text-center">Ký kết biên bản ghi nhớ</td>
+                                                <td class="text-center">JAMES K. W. LEE</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center">61 2 9850 7111</td>
+                                                <td class="text-center">Le Thi Phuong Anh</td>
+                                                <td class="text-center">18/03/2020</td>
+                                                <td class="text-center">18/04/2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center">Hoạt động hợp tác học thuật</td>
+                                                <td class="text-center">Plato Hampton</td>
+                                                <td class="text-center">elementum.lorem@aliquam.com</td>
+                                                <td class="text-center">05112-402024</td>
+                                                <td class="text-center">Le Thi Phuong Anh</td>
+                                                <td class="text-center">19/04/2021</td>
+                                                <td class="text-center">20/07/2021</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center">Hoạt động hợp tác nghiên cứu</td>
+                                                <td class="text-center">Herman Mays</td>
+                                                <td class="text-center">mauris.aliquam.eu@sedleo.net</td>
+                                                <td class="text-center">62 19 673 8307</td>
+                                                <td class="text-center">Ha Thi Hai Yen</td>
+                                                <td class="text-center">19/05/2021</td>
+                                                <td class="text-center">20/08/2021</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td class="text-center">2020/01_BS/01</td>
+                                                <td class="text-center">Ký kết biên bản ghi nhớ bổ sung</td>
+                                                <td class="text-center">Tyler Horne</td>
+                                                <td class="text-center">semper@sitametorci.com</td>
+                                                <td class="text-center">62 15 812 0688</td>
+                                                <td class="text-center">Le Thi Phuong Anh</td>
+                                                <td class="text-center">19/06/2021</td>
+                                                <td class="text-center">20/08/2021</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             <div class="row justify-content-center mb-5">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Mô tả</label>
@@ -147,52 +221,32 @@
     </script>
 
     <script>
-
-        // Class definition
-        var content_ckeditor = '<figure class="table"><table><tbody><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table></figure>'
-        var KTCkeditorDocument = function () {
-            // Private functions
-            var editorData
-            var demos = function () {
-                DecoupledEditor
-                    .create(document.querySelector('.ckeditor'))
-                    .then(editor => {
-                        const toolbarContainer = document.querySelector('.ckeditor-toolbar');
-                        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-                        editorData = editor
-                        editorData.setData(content_ckeditor);
-
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-            var get_data = function () {
-                let temp = editorData.getData();
-                console.log(temp)
-                return temp;
-            }
-
-            return {
-                // public functions
-                init: function () {
-                    demos();
+        var rowIdx = 1;
+        $('#partner_acitivity_table').DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
                 },
-                get_data: function () {
-                    get_data();
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center'
                 }
-            };
-        }();
+            ],
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
 
-        $(document).ready(function () {
-            KTCkeditorDocument.init();
-            $('#card-container').parent().removeClass();
-        })
-
-        $('#submit').click(function () {
-            KTCkeditorDocument.get_data();
+            }
         });
-
     </script>
+
 
 }
