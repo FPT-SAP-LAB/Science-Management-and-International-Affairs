@@ -90,7 +90,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-
         public ActionResult ExportMOUExcel()
         {
             try
@@ -121,9 +120,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             //ViewBag.listOffice = moa.GetOffice();
             ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
             ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
-            //ViewBag.listScopesMOA = moa.GetCollaborationScopes();
-            //ViewBag.listSpeMOA = moa.GetSpecializations();
-
             return View();
         }
     }

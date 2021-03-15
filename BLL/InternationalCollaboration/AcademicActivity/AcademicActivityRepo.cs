@@ -48,7 +48,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     ENTITIES.AcademicActivity aa = db.AcademicActivities.Add(new ENTITIES.AcademicActivity
                     {
-                        activity_status_id = 1,
+                        //activity_status_id = 1,
                         activity_type_id = obj.activity_type_id,
                         activity_date_start = DateTime.ParseExact(obj.from, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         activity_date_end = DateTime.ParseExact(obj.to, "dd/MM/yyyy", CultureInfo.InvariantCulture)

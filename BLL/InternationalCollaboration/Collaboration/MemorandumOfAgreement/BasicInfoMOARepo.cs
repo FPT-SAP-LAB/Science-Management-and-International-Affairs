@@ -10,7 +10,7 @@ using static BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement.
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 {
-    class BasicInfoMOARepo
+    public class BasicInfoMOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public MOABasicInfo getBasicInfoMOA(int moa_id)
@@ -19,29 +19,40 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql_moaBasicInfo =
                     @"select 
-                        t1.moa_id,t1.moa_code,t7.office_abbreviation,t1.moa_end_date,
-                        t5.mou_status_name,t4.reason,t1.evidence,t1.moa_note,t5.mou_status_id
-                        from IA_Collaboration.MOA t1
+                        moa.moa_id, moa.moa_code, mou.office_abbreviation, moap.moa_start_date, moa.moa_end_date,
+                        moah.mou_status_name, moah.reason, moaps.scope_abbreviation, moa.evidence, moa.moa_note
+                        from IA_Collaboration.MOA moa
                         inner join
-                        (select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                        from IA_Collaboration.MOUStatusHistory 
-                        group by mou_status_id, mou_id) t3 on t3.mou_id = t1.mou_id
-                        inner join IA_Collaboration.MOUStatusHistory t4 on 
-                        t4.datetime = t3.maxdate and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
-                        inner join IA_Collaboration.MOUStatus t5 on
-                        t5.mou_status_id = t3.mou_status_id
-                        inner join IA_Collaboration.MOU t6 on
-                        t6.mou_id = t1.mou_id
-                        inner join General.Office t7 on
-                        t7.office_id = t6.office_id
-                        where t1.mou_id = @mou_id ";
-                string sql_mouStartDateAndScopes =
-                    @"";
+	                        (select moa_id, max(moa_start_date) 'moa_start_date'
+	                        from IA_Collaboration.MOAPartner
+	                        where moa_id = @moa_id
+	                        group by moa_id) as moap on moap.moa_id = moa.moa_id
+                        inner join
+	                        (select moah1.moa_id, cs.mou_status_name, moah2.reason, moah1.[datetime]  
+	                        from
+	                        (select moa_id, max([datetime]) 'datetime'
+	                        from IA_Collaboration.MOAStatusHistory
+	                        group by moa_id) as moah1
+	                        left join
+	                        IA_Collaboration.MOAStatusHistory moah2 on moah1.moa_id = moah2.moa_id and moah1.[datetime] = moah2.[datetime] 
+	                        left join
+	                        IA_Collaboration.CollaborationStatus cs on cs.mou_status_id = moah2.mou_status_id
+	                        where moah1.moa_id = @moa_id) as moah on moah.moa_id = moa.moa_id
+                        inner join
+	                        (select moaps.moa_id, ps.partner_id, cs.scope_abbreviation
+	                        from IA_Collaboration.MOAPartnerScope moaps
+	                        inner join IA_Collaboration.PartnerScope ps on moaps.partner_scope_id = ps.partner_scope_id
+	                        inner join IA_Collaboration.CollaborationScope cs on cs.[scope_id] = ps.[scope_id]
+	                        where moaps.moa_id = @moa_id) as moaps on moaps.moa_id = moa.moa_id
+                        inner join
+	                        (select mou.mou_id, offi.office_abbreviation
+	                        from IA_Collaboration.MOU mou
+                            inner join General.Office offi on offi.office_id = mou.office_id) as mou on mou.mou_id = moa.mou_id ";
                 MOABasicInfo basicInfo = db.Database.SqlQuery<MOABasicInfo>(sql_moaBasicInfo,
-                    new SqlParameter("moa_id", moa_id)).First();
-                MOABasicInfo dateAndScopes = db.Database.SqlQuery<MOABasicInfo>(sql_mouStartDateAndScopes,
-                    new SqlParameter("moa_id", moa_id)).First();
-                handlingMOAData(basicInfo, dateAndScopes);
+                        new SqlParameter("moa_id", moa_id)).First();
+                //MOABasicInfo dateAndScopes = db.Database.SqlQuery<MOABasicInfo>(sql_mouStartDateAndScopes,
+                //    new SqlParameter("moa_id", moa_id)).First();
+                //handlingMOAData(basicInfo, dateAndScopes);
                 return basicInfo;
             }
             catch (Exception ex)
@@ -99,13 +110,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        private void handlingMOAData(MOABasicInfo basicInfo, MOABasicInfo dateAndScopes)
-        {
-            //handle date display
-            basicInfo.moa_end_date_string = basicInfo.moa_end_date.ToString("dd'/'MM'/'yyyy");
-            basicInfo.moa_start_date_string = dateAndScopes.moa_start_date.ToString("dd'/'MM'/'yyyy");
-            basicInfo.scopes = dateAndScopes.scopes;
-        }
+        //private void handlingMOAData(MOABasicInfo basicInfo, MOABasicInfo dateAndScopes)
+        //{
+        //    //handle date display
+        //    basicInfo.moa_end_date_string = basicInfo.moa_end_date.ToString("dd'/'MM'/'yyyy");
+        //    basicInfo.moa_start_date_string = dateAndScopes.moa_start_date.ToString("dd'/'MM'/'yyyy");
+        //    basicInfo.scopes = dateAndScopes.scopes;
+        //}
         public void editMOABasicInfo(int moa_id, MOABasicInfo newBasicInfo)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -324,14 +335,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public int moa_id { get; set; }
             public string moa_code { get; set; }
             public string evidence { get; set; }
-            public string scopes { get; set; }
+            public string scope_abbreviation { get; set; }
             public string reason { get; set; }
             public DateTime moa_end_date { get; set; }
             public DateTime moa_start_date { get; set; }
             public string moa_end_date_string { get; set; }
             public string moa_start_date_string { get; set; }
             public string office_abbreviation { get; set; }
-            public string moa_status_name { get; set; }
+            public string mou_status_name { get; set; }
             public int office_id { get; set; }
             public int moa_status_id { get; set; }
             public string moa_note { get; set; }
