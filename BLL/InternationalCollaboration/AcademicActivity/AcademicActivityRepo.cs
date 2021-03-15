@@ -136,7 +136,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         public string changeFormatDate(string date)
         {
             string[] sp = date.Split('-');
-            return sp[2]+'/'+sp[1]+'/'+sp[0];
+            return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
         public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to)
         {

@@ -60,7 +60,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.updateBaseAA(id, activity_type_id, activity_name, location, from, to);
             if (res)
             {
-                return Json("Đã chỉnh sửa thành công",JsonRequestBehavior.AllowGet);
+                return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);
             }
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
