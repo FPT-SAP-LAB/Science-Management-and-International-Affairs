@@ -11,5 +11,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string type { get; set; }
         public string reward_type { get; set; }
         public string total_reward { get; set; }
+        public int specialization_id { get; set; }
     }
 }

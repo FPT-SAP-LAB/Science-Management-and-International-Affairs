@@ -43,7 +43,7 @@ namespace User.Controllers
                 new PageTree("Số trích dẫn đang xử lý","/Citation/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
-            List<ListOnePerson_Citation> list = cr.GetList("1");
+            List<ListOnePerson_Citation> list = cr.GetList("10");
             ViewBag.list = list;
             for (int i = 0; i < list.Count; i++)
             {
