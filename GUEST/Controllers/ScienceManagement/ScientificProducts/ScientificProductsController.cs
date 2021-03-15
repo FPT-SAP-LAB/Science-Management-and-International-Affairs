@@ -48,11 +48,11 @@ namespace GUEST.Controllers.ScientificProducts
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             if (item.monthS == "paper")
             {
-                list = lpo.getList(item, "1");
+                list = lpo.getList(item, "10");
             }
             else
             {
-                list = lpo.getListInven(item, "1");
+                list = lpo.getListInven(item, "10");
             }
             for (int i = 0; i < list.Count; i++)
             {
@@ -72,11 +72,11 @@ namespace GUEST.Controllers.ScientificProducts
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             if (type == "paper")
             {
-                list = lpo.getList(new DataSearch(), "1");
+                list = lpo.getList(new DataSearch(), "10");
             }
             else
             {
-                list = lpo.getListInven(new DataSearch(), "1");
+                list = lpo.getListInven(new DataSearch(), "10");
             }
             for (int i = 0; i < list.Count; i++)
             {
