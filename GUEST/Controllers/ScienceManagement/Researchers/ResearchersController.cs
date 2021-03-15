@@ -42,9 +42,9 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                         join o in db.Offices on rp.office_id equals o.office_id
                         select new Researchers_ListView
                         {
-                            name = p.name,
+                            name = rp.name,
                             avatar_id = p.avatar_id,
-                            email = p.email,
+                            email = rp.email,
                             google_scholar = p.google_scholar,
                             website = p.website,
                             office_name = o.office_name,

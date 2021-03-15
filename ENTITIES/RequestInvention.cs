@@ -12,20 +12,23 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Degree
+    public partial class RequestInvention
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Degree()
+        public RequestInvention()
         {
-            this.DegreeLanguages = new HashSet<DegreeLanguage>();
-            this.ResearcherDegrees = new HashSet<ResearcherDegree>();
+            this.Decisions = new HashSet<Decision>();
         }
     
-        public int degree_id { get; set; }
+        public int request_id { get; set; }
+        public Nullable<System.DateTime> date_request { get; set; }
+        public Nullable<int> status_id { get; set; }
+        public string total_reward { get; set; }
+        public int invention_id { get; set; }
     
+        public virtual Invention Invention { get; set; }
+        public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DegreeLanguage> DegreeLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearcherDegree> ResearcherDegrees { get; set; }
+        public virtual ICollection<Decision> Decisions { get; set; }
     }
 }

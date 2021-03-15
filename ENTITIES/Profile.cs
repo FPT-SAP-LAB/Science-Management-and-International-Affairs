@@ -14,12 +14,16 @@ namespace ENTITIES
     
     public partial class Profile
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Profile()
+        {
+            this.ProfileAcademicDegrees = new HashSet<ProfileAcademicDegree>();
+        }
+    
         public int people_id { get; set; }
-        public string name { get; set; }
         public Nullable<System.DateTime> birth_date { get; set; }
         public string nationality { get; set; }
         public string working_address { get; set; }
-        public string email { get; set; }
         public string phone { get; set; }
         public string website { get; set; }
         public string google_scholar { get; set; }
@@ -29,5 +33,7 @@ namespace ENTITIES
     
         public virtual File File { get; set; }
         public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
     }
 }
