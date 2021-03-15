@@ -10,7 +10,7 @@
         data: JSON.stringify(temp),
         contentType: "application/json;charset=utf-8",
         cache: false,
-        success: function (data) {
+        success: function () {
             window.open('./Preview');
         },
         error: function () {
