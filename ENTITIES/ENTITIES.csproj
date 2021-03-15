@@ -87,6 +87,9 @@
     <Compile Include="AcademicActivityPhaseLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AcademicActivityStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="AcademicActivityType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -230,6 +233,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />

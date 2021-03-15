@@ -1060,6 +1060,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="activity_date_start" Type="date" />
           <Property Name="activity_date_end" Type="date" />
           <Property Name="activity_type_id" Type="int" Nullable="false" />
+          <Property Name="activity_status_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivityLanguage">
           <Key>
@@ -1088,6 +1089,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="phase_id" Type="int" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
           <Property Name="phase_name" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="AcademicActivityStatus">
+          <Key>
+            <PropertyRef Name="activity_status_id" />
+          </Key>
+          <Property Name="activity_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activity_status_name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivityType">
           <Key>
@@ -1242,6 +1250,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="AcademicActivity">
               <PropertyRef Name="activity_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AcademicA__activ__3F9B6DFF">
+          <End Role="AcademicActivityStatus" Type="Self.AcademicActivityStatus" Multiplicity="1" />
+          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicActivityStatus">
+              <PropertyRef Name="activity_status_id" />
+            </Principal>
+            <Dependent Role="AcademicActivity">
+              <PropertyRef Name="activity_status_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3655,6 +3675,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="AcademicActivityLanguage" EntityType="Self.AcademicActivityLanguage" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityPhase" EntityType="Self.AcademicActivityPhase" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityPhaseLanguage" EntityType="Self.AcademicActivityPhaseLanguage" Schema="SMIA_AcademicActivity" store:Type="Tables" />
+          <EntitySet Name="AcademicActivityStatus" EntityType="Self.AcademicActivityStatus" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityType" EntityType="Self.AcademicActivityType" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityExpenseCategory" EntityType="Self.ActivityExpenseCategory" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityExpenseDetail" EntityType="Self.ActivityExpenseDetail" Schema="SMIA_AcademicActivity" store:Type="Tables" />
@@ -3697,6 +3718,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </AssociationSet>
           <AssociationSet Name="FK__AcademicA__activ__3EA749C6" Association="Self.FK__AcademicA__activ__3EA749C6">
             <End Role="AcademicActivityType" EntitySet="AcademicActivityType" />
+            <End Role="AcademicActivity" EntitySet="AcademicActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicA__activ__3F9B6DFF" Association="Self.FK__AcademicA__activ__3F9B6DFF">
+            <End Role="AcademicActivityStatus" EntitySet="AcademicActivityStatus" />
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicA__activ__408F9238" Association="Self.FK__AcademicA__activ__408F9238">
@@ -5695,8 +5720,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="activity_date_start" Type="DateTime" Precision="0" />
           <Property Name="activity_date_end" Type="DateTime" Precision="0" />
           <Property Name="activity_type_id" Type="Int32" Nullable="false" />
+          <Property Name="activity_status_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__activ__2610A626" FromRole="AcademicActivity" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="AcademicActivityType" Relationship="Self.FK__AcademicA__activ__3EA749C6" FromRole="AcademicActivity" ToRole="AcademicActivityType" />
+          <NavigationProperty Name="AcademicActivityStatu" Relationship="Self.FK__AcademicA__activ__3F9B6DFF" FromRole="AcademicActivity" ToRole="AcademicActivityStatus" />
           <NavigationProperty Name="AcademicActivityLanguages" Relationship="Self.FK__AcademicA__activ__408F9238" FromRole="AcademicActivity" ToRole="AcademicActivityLanguage" />
           <NavigationProperty Name="ActivityOffices" Relationship="Self.FK__ActivityE__activ__27F8EE98" FromRole="AcademicActivity" ToRole="ActivityOffice" />
           <NavigationProperty Name="ActivityInfoes" Relationship="Self.FK__ActivityI__activ__4924D839" FromRole="AcademicActivity" ToRole="ActivityInfo" />
@@ -5738,6 +5765,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="phase_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Language" Relationship="Self.FK_AcademicActivityPhaseLanguage_Language" FromRole="AcademicActivityPhaseLanguage" ToRole="Language" />
           <NavigationProperty Name="AcademicActivityPhase" Relationship="Self.FK_AcademicActivityPhaseLanguage_AcademicActivityPhase" FromRole="AcademicActivityPhaseLanguage" ToRole="AcademicActivityPhase" />
+        </EntityType>
+        <EntityType Name="AcademicActivityStatu">
+          <Key>
+            <PropertyRef Name="activity_status_id" />
+          </Key>
+          <Property Name="activity_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activity_status_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AcademicActivities" Relationship="Self.FK__AcademicA__activ__3F9B6DFF" FromRole="AcademicActivityStatus" ToRole="AcademicActivity" />
         </EntityType>
         <EntityType Name="AcademicActivityType">
           <Key>
@@ -7725,6 +7760,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__AcademicA__activ__3F9B6DFF">
+          <End Role="AcademicActivityStatus" Type="Self.AcademicActivityStatu" Multiplicity="1" />
+          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicActivityStatus">
+              <PropertyRef Name="activity_status_id" />
+            </Principal>
+            <Dependent Role="AcademicActivity">
+              <PropertyRef Name="activity_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__AcademicA__activ__408F9238">
           <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -8085,6 +8132,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="AcademicActivityLanguages" EntityType="Self.AcademicActivityLanguage" />
           <EntitySet Name="AcademicActivityPhases" EntityType="Self.AcademicActivityPhase" />
           <EntitySet Name="AcademicActivityPhaseLanguages" EntityType="Self.AcademicActivityPhaseLanguage" />
+          <EntitySet Name="AcademicActivityStatus" EntityType="Self.AcademicActivityStatu" />
           <EntitySet Name="AcademicActivityTypes" EntityType="Self.AcademicActivityType" />
           <EntitySet Name="ActivityExpenseCategories" EntityType="Self.ActivityExpenseCategory" />
           <EntitySet Name="ActivityExpenseDetails" EntityType="Self.ActivityExpenseDetail" />
@@ -8699,6 +8747,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </AssociationSet>
           <AssociationSet Name="FK__AcademicA__activ__3EA749C6" Association="Self.FK__AcademicA__activ__3EA749C6">
             <End Role="AcademicActivityType" EntitySet="AcademicActivityTypes" />
+            <End Role="AcademicActivity" EntitySet="AcademicActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicA__activ__3F9B6DFF" Association="Self.FK__AcademicA__activ__3F9B6DFF">
+            <End Role="AcademicActivityStatus" EntitySet="AcademicActivityStatus" />
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicA__activ__408F9238" Association="Self.FK__AcademicA__activ__408F9238">
@@ -9819,6 +9871,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="activity_date_start" ColumnName="activity_date_start" />
                 <ScalarProperty Name="activity_date_end" ColumnName="activity_date_end" />
                 <ScalarProperty Name="activity_type_id" ColumnName="activity_type_id" />
+                <ScalarProperty Name="activity_status_id" ColumnName="activity_status_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9848,6 +9901,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="phase_id" ColumnName="phase_id" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="phase_name" ColumnName="phase_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AcademicActivityStatus">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.AcademicActivityStatu">
+              <MappingFragment StoreEntitySet="AcademicActivityStatus">
+                <ScalarProperty Name="activity_status_id" ColumnName="activity_status_id" />
+                <ScalarProperty Name="activity_status_name" ColumnName="activity_status_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
