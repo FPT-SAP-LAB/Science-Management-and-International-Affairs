@@ -52,7 +52,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                                     <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
                                     <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                        <select disabled class="form-control select-search" id="facility_detail_mou" name="param" style="width:100% !important">
+                                        <select disabled class="form-control select-search" id="facility_detail_moa" name="param" style="width:100% !important">
                                             <option label="Label"></option>
                                             <option value="1">FPTU-HN</option>
                                             <option value="2">FPTGW</option>
@@ -660,7 +660,6 @@
         });
 
         //table tab 2
-
         $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -716,7 +715,7 @@
         };
 
          //modal tab 2
-          function show_status_history(id){
+        function show_status_history(id){
             $.ajax({
                 url: '@Url.Action("Get_MOU_History", "MOU")',
                 data: { 'id': id },
@@ -737,8 +736,6 @@
                 },
             });
         };
-
-
 
         $(document).ready(function () {
             //split card

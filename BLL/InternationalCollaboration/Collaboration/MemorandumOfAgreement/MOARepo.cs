@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,36 +85,101 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        //public void addMOA(MOAAdd input)
-        //{
-        //    using (DbContextTransaction transaction = db.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            db.MOAs.Add(input.MOA);
-        //            db.MOAStatusHistories.Add(input.MOAStatusHistory);
-        //            foreach (MOAPartner item in input.listMOAPartner)
-        //            {
-        //                db.MOAPartners.Add(item);
-        //            }
-        //            foreach (MOAPartnerSpecialization item in input.listMOAPartnerSpe)
-        //            {
-        //                db.MOAPartnerSpecializations.Add(item);
-        //            }
-        //            foreach (MOAPartnerScope item in input.listMOAPartnerScope)
-        //            {
-        //                db.MOAPartnerScopes.Add(item);
-        //            }
-        //            db.SaveChanges();
-        //            transaction.Commit();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            transaction.Rollback();
-        //            throw ex;
-        //        }
-        //    }
-        //}
+        public CustomPartnerMOA CheckPartner(int mou_id, string partner_name)
+        {
+            try
+            {
+                string sql = @"select t4.country_name,t3.website,t3.address,
+                    t2.contact_point_name,t2.contact_point_email,t2.contact_point_phone,
+                    t6.specialization_name,t2.partner_id
+                    from IA_Collaboration.MOA t1 inner join
+                    IA_Collaboration.MOUPartner t2 on 
+                    t1.mou_id = t2.mou_id
+                    inner join IA_Collaboration.Partner t3 on
+                    t3.partner_id = t2.partner_id
+                    inner join General.Country t4 on 
+                    t4.country_id = t3.country_id
+                    inner join IA_Collaboration.MOUPartnerSpecialization t5 on 
+                    t5.mou_partner_id = t2.mou_partner_id
+                    inner join General.Specialization t6 on
+                    t6.specialization_id = t5.specialization_id
+                    where t2.mou_id = @mou_id and t3.partner_name like @partner_name";
+                CustomPartnerMOA p = db.Database.SqlQuery<CustomPartnerMOA>(sql,
+                    new SqlParameter("mou_id", mou_id),
+                    new SqlParameter("partner_name", partner_name)).FirstOrDefault();
+                return p;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void addMOA(MOAAdd input, int mou_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    //add MOA
+                    //add MOAPartner => 
+                    //update PartnerScope =>
+                    //add MOAPartnerScope
+                    //add MOAStatusHistory
+                    DateTime moa_end_date = DateTime.ParseExact(input.MOABasicInfo.moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    MOA m = db.MOAs.Add(new MOA
+                    {
+                        moa_code = input.MOABasicInfo.moa_code,
+                        moa_end_date = moa_end_date,
+                        moa_note = input.MOABasicInfo.moa_note,
+                        mou_id = mou_id,
+                        account_id = 1,
+                        add_time = DateTime.Now,
+                        is_deleted = false
+                    });
+                    //checkpoint 1
+                    db.SaveChanges();
+
+                    foreach (MOAPartnerInfo item in input.MOAPartnerInfo.ToList())
+                    {
+                        db.MOAPartners.Add(new MOAPartner
+                        {
+                            moa_id = m.moa_id,
+                            moa_start_date = DateTime.ParseExact(item.sign_date_moa_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            partner_id = item.partner_id
+                        });
+                        foreach (int scopeItem in item.coop_scope_add.ToList())
+                        {
+                            PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == item.partner_id && x.scope_id == scopeItem).First();
+                            ps.reference_count -= 1;
+
+                            db.Entry(ps).State = EntityState.Modified;
+                            db.MOAPartnerScopes.Add(new MOAPartnerScope
+                            {
+                                partner_scope_id = ps.partner_scope_id,
+                                moa_id = m.moa_id
+                            });
+                        }
+                        //checkpoint 2
+                        db.SaveChanges();
+                    }
+                    db.MOAStatusHistories.Add(new MOAStatusHistory
+                    {
+                        datetime = DateTime.Now,
+                        reason = input.MOABasicInfo.reason,
+                        moa_id = m.moa_id,
+                        mou_status_id = 2
+                    });
+                    //checkpoint 3
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
         public void deleteMOA(int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -175,12 +241,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<CollaborationScope> getMOAScope()
+        public List<CustomScopesMOA> getMOAScope(int mou_id, string partner_name)
         {
             try
             {
-                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
-                List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
+                string sql_scopeList = @"select distinct t3.scope_id,t3.scope_abbreviation from IA_Collaboration.MOUPartnerScope t1
+                    inner join IA_Collaboration.PartnerScope t2 on
+                    t1.partner_scope_id = t2.partner_scope_id
+                    inner join IA_Collaboration.CollaborationScope t3 on
+                    t3.scope_id = t2.scope_id
+                    inner join IA_Collaboration.Partner t4 on
+                    t4.partner_id = t2.partner_id
+                    where t1.mou_id = @mou_id and t4.partner_name like @partner_name
+                    order by t3.scope_id";
+                List<CustomScopesMOA> scopeList = db.Database.SqlQuery<CustomScopesMOA>(sql_scopeList
+                    , new SqlParameter("mou_id", mou_id)
+                    , new SqlParameter("partner_name", '%' + partner_name + '%')
+                    ).ToList();
                 return scopeList;
             }
             catch (Exception ex)
@@ -222,6 +299,45 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string scope_abbreviation { get; set; }
             public string mou_status_name { get; set; }
             public int mou_status_id { get; set; }
+        }
+        public class CustomPartnerMOA
+        {
+            public string website { get; set; }
+            public string country_name { get; set; }
+            public int partner_id { get; set; }
+            public string partner_name { get; set; }
+            public string address { get; set; }
+            public string contact_point_name { get; set; }
+            public string contact_point_phone { get; set; }
+            public string contact_point_email { get; set; }
+            public string specialization_name { get; set; }
+        }
+        public class CustomScopesMOA
+        {
+            public string scope_abbreviation { get; set; }
+            public int scope_id { get; set; }
+        }
+        public class MOAAdd
+        {
+            public MOAAdd() { }
+            public MOABasicInfo MOABasicInfo { get; set; }
+            public List<MOAPartnerInfo> MOAPartnerInfo { get; set; }
+        }
+        public class MOABasicInfo
+        {
+            public string moa_code { get; set; }
+            public string moa_end_date { get; set; }
+            public int mou_status_id { get; set; }
+            public string reason { get; set; }
+            public string moa_note { get; set; }
+            public string evidence { get; set; }
+        }
+        public class MOAPartnerInfo
+        {
+            public string partnername_add { get; set; }
+            public string sign_date_moa_add { get; set; }
+            public List<int> coop_scope_add { get; set; }
+            public int partner_id { get; set; }
         }
     }
 }
