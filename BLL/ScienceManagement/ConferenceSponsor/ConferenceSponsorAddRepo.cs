@@ -12,7 +12,7 @@ using System.Web;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
-    public class ConferenceSponsorRepo
+    public class ConferenceSponsorAddRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetAddPageJson(string language_name)

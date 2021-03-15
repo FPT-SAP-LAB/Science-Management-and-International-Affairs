@@ -9,12 +9,14 @@ using GUEST.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ENTITIES;
+using ENTITIES.CustomModels;
 
 namespace GUEST.Controllers
 {
     public class ConferenceSponsorController : Controller
     {
-        readonly ConferenceSponsorRepo repos = new ConferenceSponsorRepo();
+        readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
+        readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         // GET: ConferenceSponsor
         public ActionResult Index()
         {
@@ -25,6 +27,20 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        public JsonResult List()
+        {
+            BaseDatatable datatable = new BaseDatatable(Request);
+            string output = IndexRepos.GetIndexPageJson(datatable, LanguageResource.GetCurrentLanguageID());
+            JObject json = JObject.Parse(output);
+            List<DataIndex> data = json["data"].ToObject<List<DataIndex>>();
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].RowNumber = datatable.Start + 1 + i;
+                data[i].CreatedDate = data[i].Date.ToString("dd/MM/yyyy");
+            }
+            int recordsTotal = json.Value<int>("recordsTotal");
+            return Json(new { success = true, data, draw = Request["draw"], recordsTotal, recordsFiltered = recordsTotal }, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Add()
         {
@@ -33,7 +49,7 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
-            string output = repos.GetAddPageJson(LanguageResource.GetCurrentLanguageName());
+            string output = AppRepos.GetAddPageJson(LanguageResource.GetCurrentLanguageName());
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
             ViewBag.data = data;
             ViewBag.pagesTree = pagesTree;
@@ -42,7 +58,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
-            string output = repos.AddRequestConference(input, invite, paper);
+            string output = AppRepos.AddRequestConference(input, invite, paper);
             return output;
         }
         public ActionResult Detail(int id)
@@ -67,12 +83,12 @@ namespace GUEST.Controllers
         }
         public JsonResult GetInformationPeopleWithID(string id)
         {
-            var infos = repos.GetAllProfileBy(id);
+            var infos = AppRepos.GetAllProfileBy(id);
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetConferenceWithName(string name)
         {
-            var confer = repos.GetAllConferenceBy(name);
+            var confer = AppRepos.GetAllConferenceBy(name);
             return Json(confer, JsonRequestBehavior.AllowGet);
         }
         public class DataAddPage
@@ -83,6 +99,15 @@ namespace GUEST.Controllers
             public List<Office> Offices { get; set; }
             public List<TitleLanguage> TitleLanguages { get; set; }
             public string Link { get; set; }
+        }
+        private class DataIndex
+        {
+            public int RowNumber { get; set; }
+            public string PaperName { get; set; }
+            public string ConferenceName { get; set; }
+            public DateTime Date { get; set; }
+            public string CreatedDate { get; set; }
+            public string StatusName { get; set; }
         }
     }
 }
