@@ -86,7 +86,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 string moa_id = Session["moa_detail_id"].ToString();
-                ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id),moa_bonus_id);
+                ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id);
                 return Json(mouObj, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

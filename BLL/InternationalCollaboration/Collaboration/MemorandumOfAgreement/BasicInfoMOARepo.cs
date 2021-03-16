@@ -76,7 +76,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         inner join IA_Collaboration.CollaborationScope cs on cs.[scope_id] = ps.[scope_id]
                         where moab.moa_id = @moa_id";
                 List<ExtraMOA> moaExList = db.Database.SqlQuery<ExtraMOA>(sql_moaExList,
-                    new SqlParameter("moa_id",moa_id)).ToList();
+                    new SqlParameter("moa_id", moa_id)).ToList();
                 handlingExMOAListData(moaExList);
                 return moaExList;
             }
@@ -135,7 +135,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.Entry(moa).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    db.MOAStatusHistories.Add(new MOAStatusHistory 
+                    db.MOAStatusHistories.Add(new MOAStatusHistory
                     {
                         mou_status_id = newBasicInfo.moa_status_id,
                         reason = newBasicInfo.reason,
@@ -153,7 +153,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public List<CollaborationScope> GetScopesExMOA(int moa_id,int mou_id)
+        public List<CollaborationScope> GetScopesExMOA(int moa_id, int mou_id)
         {
             try
             {
@@ -409,7 +409,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public ExMOAAdd getExtraMOADetail(int moa_id,int moa_bonus_id)
+        public ExMOAAdd getExtraMOADetail(int moa_id, int moa_bonus_id)
         {
             try
             {

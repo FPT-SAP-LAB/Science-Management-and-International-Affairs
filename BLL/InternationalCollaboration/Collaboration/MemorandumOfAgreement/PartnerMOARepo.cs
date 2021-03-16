@@ -14,7 +14,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
     public class PartnerMOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOAPartner> listAllMOAPartner(string partner_name, string nation, string specialization,int moa_id)
+        public List<ListMOAPartner> listAllMOAPartner(string partner_name, string nation, string specialization, int moa_id)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         order by moap.moa_start_date";
                 List<ListMOAPartner> moaList = db.Database.SqlQuery<ListMOAPartner>(sql_moaPartnerList,
                     new SqlParameter("moa_id", moa_id),
-                    new SqlParameter("partner_name", '%'+ partner_name + '%'),
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("nation", '%' + nation + '%'),
                     new SqlParameter("specialization", '%' + specialization + '%')).ToList();
                 handlingPartnerListData(moaList);
@@ -86,7 +86,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public void addMOAPartner(MOAPartnerInfo input,int moa_id)
+        public void addMOAPartner(MOAPartnerInfo input, int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -112,7 +112,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 partner_scope_id = psCheck.partner_scope_id,
                                 moa_id = moa_id
                             });
-                        } else
+                        }
+                        else
                         {
                             PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
                             {
@@ -213,7 +214,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void deleteMOAPartner(int moa_id,int moa_partner_id)
+        public void deleteMOAPartner(int moa_id, int moa_partner_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -380,7 +381,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string moa_start_date_string { get; set; }
             public DateTime moa_start_date { get; set; }
             public string scope_abbreviation { get; set; }
-            
+
         }
         public class MOAPartnerAdd : ListMOAPartner
         {

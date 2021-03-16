@@ -61,7 +61,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 string id = Session["moa_detail_id"].ToString();
-                moa.addMOAPartner(input,int.Parse(id));
+                moa.addMOAPartner(input, int.Parse(id));
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
