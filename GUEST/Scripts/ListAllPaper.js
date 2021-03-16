@@ -142,7 +142,9 @@ var ConfigDatepicker = function () {
             rtl: KTUtil.isRTL(),
             orientation: "bottom left",
             todayHighlight: true,
-            templates: arrows
+            templates: arrows,
+            format: "dd/mm/yyyy",
+            //maxDate: new Date().getDate()
         });
     }
 

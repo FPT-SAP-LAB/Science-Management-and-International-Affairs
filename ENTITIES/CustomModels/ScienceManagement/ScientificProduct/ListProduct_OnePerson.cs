@@ -9,7 +9,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
     public class ListProduct_OnePerson
     {
         public string name { get; set; }
-        public DateTime date_request { get; set; }
+        public DateTime created_date { get; set; }
         public int status_id { get; set; }
         public int paper_id { get; set; }
 

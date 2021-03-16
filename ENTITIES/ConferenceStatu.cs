@@ -17,14 +17,14 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ConferenceStatu()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.RequestConferences = new HashSet<RequestConference>();
             this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
         }
     
         public int status_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }

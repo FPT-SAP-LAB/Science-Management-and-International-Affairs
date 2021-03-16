@@ -1,4 +1,10 @@
-﻿using System;
+﻿using BLL.ScienceManagement.Comment;
+using BLL.ScienceManagement.MasterData;
+using BLL.ScienceManagement.Paper;
+using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Comment;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +15,9 @@ namespace GUEST.Controllers
 {
     public class PaperController : Controller
     {
+        PaperRepo pr = new PaperRepo();
+        MasterDataRepo md = new MasterDataRepo();
+        CommentRepo cr = new CommentRepo();
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bài báo";
@@ -30,6 +39,33 @@ namespace GUEST.Controllers
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.ckEdit = editable;
+
+            DetailPaper item = pr.getDetail(id);
+            ViewBag.Paper = item;
+
+            int request_id = item.request_id;
+
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            ViewBag.listSpec = listSpec;
+
+            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            ViewBag.listCriteria = listCriteria;
+
+            List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
+            ViewBag.listCriteriaOne = listCriteriaOne;
+
+            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            ViewBag.listAuthor = listAuthor;
+            ViewBag.numberAuthor = listAuthor.Count();
+
+            List<DetailComment> listCmt = cr.getComment(request_id);
+            ViewBag.cmt = listCmt;
+
             return View();
         }
 

@@ -12,24 +12,21 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class RewardPolicy
+    public partial class CommentBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RewardPolicy()
+        public CommentBase()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
-            this.Criteria = new HashSet<Criterion>();
+            this.BaseRequests = new HashSet<BaseRequest>();
         }
     
-        public int reward_policy_id { get; set; }
-        public System.DateTime valid_date { get; set; }
-        public Nullable<System.DateTime> expired_date { get; set; }
-        public int file_id { get; set; }
+        public int comment_id { get; set; }
+        public Nullable<int> people_id { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public string content { get; set; }
     
-        public virtual File File { get; set; }
+        public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Criterion> Criteria { get; set; }
+        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
     }
 }

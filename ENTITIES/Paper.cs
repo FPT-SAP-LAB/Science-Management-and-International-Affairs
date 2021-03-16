@@ -17,11 +17,10 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Paper()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.RequestConferences = new HashSet<RequestConference>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
             this.PaperWithCriterias = new HashSet<PaperWithCriteria>();
             this.RequestPapers = new HashSet<RequestPaper>();
-            this.Comments = new HashSet<Comment>();
         }
     
         public int paper_id { get; set; }
@@ -39,7 +38,7 @@ namespace ENTITIES
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
         public virtual PaperType PaperType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorPaper> AuthorPapers { get; set; }
@@ -47,7 +46,5 @@ namespace ENTITIES
         public virtual ICollection<PaperWithCriteria> PaperWithCriterias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestPaper> RequestPapers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
