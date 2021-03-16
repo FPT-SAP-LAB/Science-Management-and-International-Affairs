@@ -1,4 +1,10 @@
-﻿using System;
+﻿using BLL.ScienceManagement.Comment;
+using BLL.ScienceManagement.Invention;
+using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Comment;
+using ENTITIES.CustomModels.ScienceManagement.Invention;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,17 +15,8 @@ namespace GUEST.Controllers
 {
     public class InventionController : Controller
     {
-        // GET: Invention
-        //public ActionResult ListAll()
-        //{
-        //    ViewBag.title = "Bằng sáng chế";
-        //    var pagesTree = new List<PageTree>
-        //    {
-        //        new PageTree("Bằng sáng chế","/Invention/ListAll"),
-        //    };
-        //    ViewBag.pagesTree = pagesTree;
-        //    return View();
-        //}
+        InventionRepo ir = new InventionRepo();
+        CommentRepo cr = new CommentRepo();
 
         public ActionResult AddRequest()
         {
@@ -42,6 +39,21 @@ namespace GUEST.Controllers
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.ckEdit = editable;
+
+            DetailInvention item = ir.getDetail(id);
+            ViewBag.item = item;
+
+            int request_id = item.request_id;
+            List<DetailComment> listCmt = cr.getComment(request_id);
+            ViewBag.cmt = listCmt;
+
+            List<Country> listCountry = ir.getCountry();
+            ViewBag.listCountry = listCountry;
+
+            List<AuthorInfo> listAuthor = ir.getAuthor(id);
+            ViewBag.listAuthor = listAuthor;
+            ViewBag.numberAuthor = listAuthor.Count();
+
             return View();
         }
     }
