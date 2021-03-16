@@ -5,13 +5,13 @@
     var imgInp = $('#imgInp').val();
     var temp = { content: content, website: website, address: address, imgInp: imgInp };
     $.ajax({
-        url: './pass_content',
+        url: '/Partner/pass_content',
         type: "POST",
         data: JSON.stringify(temp),
         contentType: "application/json;charset=utf-8",
         cache: false,
         success: function () {
-            window.open('./Preview');
+            window.open('/Partner/Preview');
         },
         error: function () {
 
