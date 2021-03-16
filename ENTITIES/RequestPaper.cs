@@ -14,25 +14,17 @@ namespace ENTITIES
     
     public partial class RequestPaper
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RequestPaper()
-        {
-            this.Decisions = new HashSet<Decision>();
-        }
-    
         public int request_id { get; set; }
         public Nullable<int> specialization_id { get; set; }
         public string type { get; set; }
         public string reward_type { get; set; }
         public int status_id { get; set; }
-        public Nullable<System.DateTime> date_request { get; set; }
         public string total_reward { get; set; }
         public int paper_id { get; set; }
     
         public virtual Specialization Specialization { get; set; }
+        public virtual BaseRequest BaseRequest { get; set; }
         public virtual Paper Paper { get; set; }
         public virtual PaperStatu PaperStatu { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
     }
 }
