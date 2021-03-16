@@ -227,6 +227,9 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
