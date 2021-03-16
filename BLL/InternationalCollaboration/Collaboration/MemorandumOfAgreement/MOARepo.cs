@@ -91,7 +91,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql = @"select t4.country_name,t3.website,t3.address,
                     t2.contact_point_name,t2.contact_point_email,t2.contact_point_phone,
-                    t6.specialization_name,t2.partner_id
+                    t6.specialization_name,t2.partner_name
                     from IA_Collaboration.MOA t1 inner join
                     IA_Collaboration.MOUPartner t2 on 
                     t1.mou_id = t2.mou_id
@@ -311,6 +311,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string contact_point_phone { get; set; }
             public string contact_point_email { get; set; }
             public string specialization_name { get; set; }
+            public int moa_partner_id { get; set; }
+            public List<int> scopes { get; set; }
+            public DateTime moa_start_date { get; set; }
+            public string moa_start_date_string { get; set; }
         }
         public class CustomScopesMOA
         {

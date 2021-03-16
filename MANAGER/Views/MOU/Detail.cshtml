@@ -1892,6 +1892,18 @@
             });
         }
 
+        function loadOffice(listOffice, OfficeData) {
+            var HTMLOfficedata = "";
+            for (i = 0; i < listOffice.length; i++) {
+                if (listOffice[i].office_id == OfficeData.office_id) {
+                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '" selected>' + listOffice[i].office_abbreviation + '</option>'
+                } else {
+                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '">' + listOffice[i].office_abbreviation + '</option>'
+                }
+            }
+            $('#office').append(HTMLOfficedata);
+        }
+
         function loadBasicInfo(listOffice) {
             $.ajax({
                 url: "@Url.Action("getBasicInfo", "BasicInfoMOU")",
@@ -1912,6 +1924,43 @@
                     };
                     loadOffice(listOffice, OfficeData);
                     loadStatus(data.mou_status_id);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+    }
+
+        function loadStatus(mou_status_id) {
+            var HTMLStatusData = "";
+            for (i = 0; i < listStatus.length; i++) {
+                if (listStatus[i].status_id == mou_status_id) {
+                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '" selected>' + listStatus[i].status_name + '</option>'
+                } else {
+                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '">' + listStatus[i].status_name + '</option>'
+                }
+            }
+            $('#status').append(HTMLStatusData);
+        }
+
+        function saveBasicInfo() {
+            var BasicInfo = {
+                mou_code: $('#mou_code').val(),
+                mou_end_date_string: $('#end_date_mou').val(),
+                office_id: $('#office').val(),
+                reason: $('#reason').val(),
+                mou_note: $('#mou_note').val(),
+                mou_status_id: $('#status').val()
+            };
+            $.ajax({
+                url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
+                type: "POST",
+                data: JSON.stringify(BasicInfo),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+
                 },
                 error: function () {
                     //alert("fail");
@@ -2167,55 +2216,6 @@
             });
         }
 
-        function loadOffice(listOffice, OfficeData) {
-            var HTMLOfficedata = "";
-            for (i = 0; i < listOffice.length; i++) {
-                if (listOffice[i].office_id == OfficeData.office_id) {
-                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '" selected>' + listOffice[i].office_abbreviation + '</option>'
-                } else {
-                    HTMLOfficedata += '<option value = "' + listOffice[i].office_id + '">' + listOffice[i].office_abbreviation + '</option>'
-                }
-            }
-            $('#office').append(HTMLOfficedata);
-        }
-
-        function loadStatus(mou_status_id) {
-            var HTMLStatusData = "";
-            for (i = 0; i < listStatus.length; i++) {
-                if (listStatus[i].status_id == mou_status_id) {
-                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '" selected>' + listStatus[i].status_name + '</option>'
-                } else {
-                    HTMLStatusData += '<option value = "' + listStatus[i].status_id + '">' + listStatus[i].status_name + '</option>'
-                }
-            }
-            $('#status').append(HTMLStatusData);
-        }
-
-        function saveBasicInfo() {
-            var BasicInfo = {
-                mou_code: $('#mou_code').val(),
-                mou_end_date_string: $('#end_date_mou').val(),
-                office_id: $('#office').val(),
-                reason: $('#reason').val(),
-                mou_note: $('#mou_note').val(),
-                mou_status_id: $('#status').val()
-            };
-            $.ajax({
-                url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
-                type: "POST",
-                data: JSON.stringify(BasicInfo),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (data) {
-
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
-        }
-
         function finishExMOUAdd() {
             var ExBasicInfo = {
                 ex_mou_code: $('#ex_mou_id_add').val() ,
@@ -2244,7 +2244,7 @@
             });
         }
 
-        function editExMOU(mou_bonus_id) {
+        function editExMOU(mou_bonus_id){
             $.ajax({
                 url: "@Url.Action("ViewExMOUDetail", "BasicInfoMOU")",
                 data: { mou_bonus_id: mou_bonus_id },
@@ -2441,7 +2441,7 @@
                 }
             });
         }
-    </script>
+</script>
 
     @*mou_partner*@
     <script>
@@ -2498,7 +2498,8 @@
                         "specialization": function () { return $('#search_specialization').val() },
                     },
                     cache: "false"
-                },
+            }
+            ,
             columns: [
                 {
                     render: function () {
@@ -2808,7 +2809,7 @@
     </script>
 
     @*moa*@
-<script>
+    <script>
     var moa_table;
     var listTempPartnerMOAAdd = [];
     var listScopesMOA = [];
@@ -3187,7 +3188,6 @@
             }
             listScopesMOA.push(obj);
         }
-        alert('Test 1:' + HTMLScopesdata);
         $('#moa_partner_scope_edit').append(HTMLScopesdata);
     }
 
