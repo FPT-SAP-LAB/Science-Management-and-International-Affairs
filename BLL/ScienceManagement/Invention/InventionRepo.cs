@@ -1,4 +1,5 @@
-﻿using ENTITIES.CustomModels.ScienceManagement.Invention;
+﻿using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Invention;
 using System;
 using System.Collections.Generic;
 using System.Linq;
