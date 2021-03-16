@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOABasicInfo;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -196,34 +197,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        //public ExMOUAdd getExtraMOUDetail(int mou_bonus_id, int mou_id)
-        //{
-        //    try
-        //    {
-        //        string sql_mouEx =
-        //            @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,t1.mou_bonus_end_date,
-        //                t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id,
-        //                t5.scope_id,t4.partner_id
-        //                from IA_Collaboration.MOUBonus t1 left join 
-        //                IA_Collaboration.MOUPartnerScope t2 on 
-        //                t1.mou_bonus_id = t2.mou_bonus_id inner join 
-        //                IA_Collaboration.PartnerScope t3 on
-        //                t3.partner_scope_id = t2.partner_scope_id
-        //                inner join 
-        //                IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-        //                inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
-        //                where t1.mou_id = @mou_id and t1.mou_bonus_id = @mou_bonus_id order by partner_id ";
-        //        List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouEx
-        //            , new SqlParameter("mou_id", mou_id)
-        //            , new SqlParameter("mou_bonus_id", mou_bonus_id)).ToList();
-        //        ExMOUAdd mouEx = handlingExMOUDetailData(mouExList);
-        //        return mouEx;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
         public void addExtraMOA(ExMOAAdd input, int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -466,82 +439,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
             return newObj;
-        }
-        public class MOABasicInfo
-        {
-            public MOABasicInfo() { }
-            public int moa_id { get; set; }
-            public string moa_code { get; set; }
-            public string evidence { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string reason { get; set; }
-            public DateTime moa_end_date { get; set; }
-            public DateTime moa_start_date { get; set; }
-            public string moa_end_date_string { get; set; }
-            public string moa_start_date_string { get; set; }
-            public string office_abbreviation { get; set; }
-            public string mou_status_name { get; set; }
-            public int office_id { get; set; }
-            public int moa_status_id { get; set; }
-            public string moa_note { get; set; }
-        }
-        public class ExtraMOA
-        {
-            public int moa_bonus_id { get; set; }
-            public string moa_bonus_code { get; set; }
-            public string moa_bonus_decision_date_string { get; set; }
-            public string moa_bonus_end_date_string { get; set; }
-            public DateTime moa_bonus_end_date { get; set; }
-            public DateTime moa_bonus_decision_date { get; set; }
-            public string partner_name { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string evidence { get; set; }
-            public int moa_id { get; set; }
-            public int partner_id { get; set; }
-            public int scope_id { get; set; }
-            public List<CustomPartner> ListPartnerExMOA { get; set; }
-            public class CustomPartner
-            {
-                public CustomPartner(int partner_id, string partner_name)
-                {
-                    this.partner_id = partner_id;
-                    this.partner_name = partner_name;
-                }
-                public CustomPartner() { }
-                public List<CustomScope> ListScopeExMOU { get; set; }
-                public int partner_id { get; set; }
-                public string partner_name { get; set; }
-            }
-            public class CustomScope
-            {
-                public CustomScope(int scope_id, string scope_name)
-                {
-                    this.scope_id = scope_id;
-                    this.scope_name = scope_name;
-                }
-                public CustomScope() { }
-                public int scope_id { get; set; }
-                public string scope_name { get; set; }
-            }
-        }
-        public class ExMOAAdd
-        {
-            public ExMOAAdd() { }
-            public ExMOABasicInfo ExMOABasicInfo { get; set; }
-            public List<PartnerScopeInfoMOA> PartnerScopeInfoMOA { get; set; }
-        }
-        public class ExMOABasicInfo
-        {
-            public string ex_moa_code { get; set; }
-            public string ex_moa_sign_date { get; set; }
-            public string ex_moa_end_date { get; set; }
-        }
-        public class PartnerScopeInfoMOA
-        {
-            public List<int> scopes_id { get; set; }
-            public int partner_id { get; set; }
-            public string partner_name { get; set; }
-            public string scopes_name { get; set; }
         }
     }
 }
