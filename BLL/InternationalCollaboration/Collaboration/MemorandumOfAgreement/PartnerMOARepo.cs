@@ -381,7 +381,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             public string moa_start_date_string { get; set; }
             public DateTime moa_start_date { get; set; }
             public string scope_abbreviation { get; set; }
-
         }
         public class MOAPartnerAdd : ListMOAPartner
         {
