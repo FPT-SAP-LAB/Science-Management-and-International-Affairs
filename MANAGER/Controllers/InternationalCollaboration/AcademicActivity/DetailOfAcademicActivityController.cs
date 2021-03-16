@@ -9,7 +9,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
     public class DetailOfAcademicActivityController : Controller
     {
-        // GET: DetailOfAcademicActivity
         public ActionResult Index(int id)
         {
             ViewBag.pageTitle = "Thông tin hoạt động học thuật";
