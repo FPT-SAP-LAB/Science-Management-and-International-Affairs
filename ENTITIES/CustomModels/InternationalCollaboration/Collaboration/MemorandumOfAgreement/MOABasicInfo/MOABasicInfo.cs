@@ -8,7 +8,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
 {
     public class MOABasicInfo
     {
-
         public MOABasicInfo() { }
         public int moa_id { get; set; }
         public string moa_code { get; set; }
@@ -24,6 +23,5 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public int office_id { get; set; }
         public int moa_status_id { get; set; }
         public string moa_note { get; set; }
-
     }
 }

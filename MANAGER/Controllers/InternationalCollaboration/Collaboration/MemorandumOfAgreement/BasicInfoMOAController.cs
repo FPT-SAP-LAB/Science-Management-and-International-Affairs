@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOABasicInfo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;

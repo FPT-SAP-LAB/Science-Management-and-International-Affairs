@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement.BasicInfoMOARepo.ExtraMOA;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 {
