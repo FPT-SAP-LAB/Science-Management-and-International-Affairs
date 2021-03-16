@@ -40,6 +40,20 @@
                             <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control edit">Upload</button>
                         </div>
                     </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("TotalReward")</label>
+                            <input class="form-control form-control-lg edit" readonly type="text" value="" ; />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("RewardType")</label>
+                            <select id="kieuthuong" class="form-control form-control-lg edit">
+                                <option value="1">@rm.GetString("According")</option>
+                                <option value="2">@rm.GetString("Repre")</option>
+                            </select>
+                        </div>
+                    </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">

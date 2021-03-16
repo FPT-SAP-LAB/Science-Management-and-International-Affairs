@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index"/>
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" />
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
@@ -144,6 +144,41 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tacgia_body">
+                                    @{
+                                        int count = 1;
+                                        foreach (var item in ViewBag.listAuthor)
+                                        {
+                                            string id = count + "idauthor";
+                                            <tr id="@id">
+                                                <td>@item.office_abbreviation</td>
+                                                <td>@item.mssv_msnv</td>
+                                                <td>@item.name</td>
+                                                <td>@item.title_name</td>
+                                                <td>@item.contract_name</td>
+                                                <td>@item.tax_code</td>
+                                                <td>@item.identification_number</td>
+                                                <td>
+                                                    <a target="_blank" href="@item.link" class='btn btn-sm btn-clean btn-icon '>
+                                                        <i class='la la-eye'></i>
+                                                    </a>
+                                                </td>
+                                                <td>@item.bank_branch</td>
+                                                <td>@item.bank_number</td>
+                                                <td>@item.money_reward</td>
+                                                <td>
+                                                    <a onclick='' class='btn btn-sm btn-clean btn-icon editbtn edit' title='Edit'>
+                                                        <i class='far fa-edit'></i>
+                                                    </a>
+                                                    <span style='cursor:pointer' class='delete-author edit' data-id='@id'>
+                                                        <a class='btn btn-sm btn-clean btn-icon' title='Delete'>
+                                                            <i class='la la-trash'></i>
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -178,11 +213,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01/01/21-10:00AM</td>
-                                        <td>Ngô Tùng Sơn</td>
-                                        <td>Sao lâu có phản hồi thế em</td>
-                                    </tr>
+                                    @{
+                                        foreach (var item in ViewBag.cmt)
+                                        {
+                                            <tr>
+                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.email</td>
+                                                <td>@item.content</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -220,6 +260,7 @@
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
+        var numberOfAuthors = parseInt("@ViewBag.numberAuthor");
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
