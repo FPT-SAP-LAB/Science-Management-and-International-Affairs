@@ -129,7 +129,6 @@ namespace ENTITIES
         public virtual DbSet<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
         public virtual DbSet<ActivityExpenseType> ActivityExpenseTypes { get; set; }
         public virtual DbSet<ActivityInfo> ActivityInfoes { get; set; }
-        public virtual DbSet<ActivityOffice> ActivityOffices { get; set; }
         public virtual DbSet<ActivityPartner> ActivityPartners { get; set; }
         public virtual DbSet<AnswerType> AnswerTypes { get; set; }
         public virtual DbSet<Form> Forms { get; set; }

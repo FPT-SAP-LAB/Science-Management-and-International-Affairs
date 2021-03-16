@@ -22,7 +22,7 @@ namespace ENTITIES
         }
     
         public int request_id { get; set; }
-        public Nullable<int> account_id { get; set; }
+        public int account_id { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<System.DateTime> finished_date { get; set; }
     
