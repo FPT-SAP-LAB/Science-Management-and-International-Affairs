@@ -13,31 +13,48 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("InvenName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="Máy in ba chiều" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentNumber")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="1-0015677" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.no" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentType")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="Vietnam Patent" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.type_name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentDate")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="25/08/2016" />
+                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Country")</label>
-                            <select class="form-control edit" id="search_nam" name="param">
-                                <option selected>Việt Nam</option>
-                                <option>Mỹ</option>
-                                <option>Nga</option>
+                            <select class="form-control edit" id="search_country" name="param">
+                                @{
+                                    foreach (var item in ViewBag.listCountry)
+                                    {
+                                        <option value="@item.country_id">@item.country_name</option>
+                                    }
+                                }
                             </select>
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("FileCM")</label>
                             <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control edit">Upload</button>
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("TotalReward")</label>
+                            <input class="form-control form-control-lg edit" readonly type="text" value="@ViewBag.item.total_reward" ; />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("RewardType")</label>
+                            <select id="kieuthuong" class="form-control form-control-lg edit">
+                                <option value="1">@rm.GetString("According")</option>
+                                <option value="2">@rm.GetString("Repre")</option>
+                            </select>
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
@@ -61,6 +78,41 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tacgia_body">
+                                    @{
+                                        int count = 1;
+                                        foreach (var item in ViewBag.listAuthor)
+                                        {
+                                            string id = count + "idauthor";
+                                            <tr id="@id">
+                                                <td>@item.office_abbreviation</td>
+                                                <td>@item.mssv_msnv</td>
+                                                <td>@item.name</td>
+                                                <td>@item.title_name</td>
+                                                <td>@item.contract_name</td>
+                                                <td>@item.tax_code</td>
+                                                <td>@item.identification_number</td>
+                                                <td>
+                                                    <a target="_blank" href="@item.link" class='btn btn-sm btn-clean btn-icon '>
+                                                        <i class='la la-eye'></i>
+                                                    </a>
+                                                </td>
+                                                <td>@item.bank_branch</td>
+                                                <td>@item.bank_number</td>
+                                                <td>@item.money_reward</td>
+                                                <td>
+                                                    <a onclick='' class='btn btn-sm btn-clean btn-icon editbtn edit' title='Edit'>
+                                                        <i class='far fa-edit'></i>
+                                                    </a>
+                                                    <span style='cursor:pointer' class='delete-author edit' data-id='@id'>
+                                                        <a class='btn btn-sm btn-clean btn-icon' title='Delete'>
+                                                            <i class='la la-trash'></i>
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -95,11 +147,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01/01/21-10:00AM</td>
-                                        <td>Ngô Tùng Sơn</td>
-                                        <td>Sao lâu có phản hồi thế em</td>
-                                    </tr>
+                                    @{
+                                        foreach (var item in ViewBag.cmt)
+                                        {
+                                            <tr>
+                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.email</td>
+                                                <td>@item.content</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -130,10 +187,23 @@
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
+        var numberOfAuthors = parseInt("@ViewBag.numberAuthor");
+        $('#search_country').select2({
+            allowClear: true
+        });
+
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
+
+            var kieuthuong = "@ViewBag.item.reward_type";
+            if (kieuthuong == "Quydinh") $("#kieuthuong").val(1);
+            if (kieuthuong == "Canhan") $("#kieuthuong").val(2);
+
+            var country = "@ViewBag.item.country_id";
+            $("#search_country").val(country);
+            $("#search_country").trigger('change');
         });
     </script>
 }
