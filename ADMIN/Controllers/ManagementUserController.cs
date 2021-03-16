@@ -70,7 +70,7 @@ namespace ADMIN.Controllers
             }
             else
             {
-                users = db.Database.SqlQuery<GetAllAccountInfo_Result>("Account.GetAllAccountInfoByDepartmentID {0}",Session["departID"].ToString()).ToList();
+                users = db.Database.SqlQuery<GetAllAccountInfo_Result>("Account.GetAllAccountInfoByDepartmentID {0}", Session["departID"].ToString()).ToList();
             }
 
             var search = users.ToList();
@@ -150,7 +150,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult GetRightInModule(string module, int UserID)
         {
-            
+
             if (!UserID.Equals(""))
             {
                 Rights rights = new Rights();
@@ -159,7 +159,7 @@ namespace ADMIN.Controllers
 
                 if (UserID == 1)
                 {
-                    var rightAccept = db.Database.SqlQuery<GetUserFunction_Result>("Account.GetUserAcceptByModuleAndUID {0}, {1}", module,UserID).ToList();
+                    var rightAccept = db.Database.SqlQuery<GetUserFunction_Result>("Account.GetUserAcceptByModuleAndUID {0}, {1}", module, UserID).ToList();
                     foreach (var r in rightAccept)
                     {
                         rights.Accept.Add(new GetUserFunction_Result()
@@ -228,7 +228,7 @@ namespace ADMIN.Controllers
             if (module == 1)
             {
                 var listRight = db.Account_Right.Where(x => x.ModuleID == moduleID + "").ToList();
-                var rightRemove = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByModuleAndUID {0}, {1}",ID,moduleID).ToList();
+                var rightRemove = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByModuleAndUID {0}, {1}", ID, moduleID).ToList();
                 foreach (var r in rightRemove)
                 {
                     var del = db.Account_Right_Detail.Where(x => x.ID == r.ID).SingleOrDefault();
@@ -451,7 +451,7 @@ namespace ADMIN.Controllers
             else
             {
                 var listRight = db.Account_Right.Where(x => x.ModuleID == moduleID + "").ToList();
-                var rightRemoveup = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByModuleAndUID {0}, {1}",ID,moduleID).ToList();
+                var rightRemoveup = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByModuleAndUID {0}, {1}", ID, moduleID).ToList();
                 foreach (var r in rightRemoveup)
                 {
                     var del = db.Account_Right_Detail.Where(a => a.ID == r.ID).SingleOrDefault();
@@ -584,7 +584,7 @@ namespace ADMIN.Controllers
                     else
                     {
                         var listRight = db.Account_Right.ToList();
-                        var rightRemoveup = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByUID {0}",ID).ToList();
+                        var rightRemoveup = db.Database.SqlQuery<Account_Right_Detail>("Account.GetFunctionsByUID {0}", ID).ToList();
                         foreach (var r in rightRemoveup)
                         {
                             var del = db.Account_Right_Detail.Where(a => a.ID == r.ID).SingleOrDefault();

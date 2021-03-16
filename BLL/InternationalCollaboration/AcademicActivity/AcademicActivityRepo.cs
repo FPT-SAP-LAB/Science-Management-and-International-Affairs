@@ -216,7 +216,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         List<int> ids_article = new List<int>();
                         List<ActivityInfo> activityInfos = db.ActivityInfoes.Where(x => x.activity_id == obj.id).ToList();
-                        foreach(ActivityInfo info in activityInfos)
+                        foreach (ActivityInfo info in activityInfos)
                         {
                             Article a = db.Articles.Add(new Article
                             {
@@ -226,7 +226,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             });
                             db.SaveChanges();
                             List<ArticleVersion> old = db.ArticleVersions.Where(x => x.article_id == info.article_id).ToList();
-                            foreach(ArticleVersion o in old)
+                            foreach (ArticleVersion o in old)
                             {
                                 db.ArticleVersions.Add(new ArticleVersion
                                 {
@@ -250,7 +250,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     if (obj.content.Contains("TD"))
                     {
                         List<AcademicActivityPhase> activityPhaseOld = db.AcademicActivityPhases.Where(x => x.activity_id == obj.id).ToList();
-                        foreach(AcademicActivityPhase aap in activityPhaseOld)
+                        foreach (AcademicActivityPhase aap in activityPhaseOld)
                         {
                             AcademicActivityPhase aap_new = db.AcademicActivityPhases.Add(new AcademicActivityPhase
                             {
@@ -259,7 +259,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             });
                             db.SaveChanges();
                             Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
-                            Form f_new =  db.Forms.Add(new Form
+                            Form f_new = db.Forms.Add(new Form
                             {
                                 phase_id = aap_new.phase_id,
                                 title = f_old.title,
@@ -267,7 +267,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             });
                             db.SaveChanges();
                             List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
-                            foreach(Question q in ques_old)
+                            foreach (Question q in ques_old)
                             {
                                 db.Questions.Add(new Question
                                 {
@@ -279,7 +279,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 db.SaveChanges();
                             }
                             List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
-                            foreach(AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
+                            foreach (AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
                             {
                                 db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
                                 {
