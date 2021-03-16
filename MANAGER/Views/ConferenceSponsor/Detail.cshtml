@@ -65,6 +65,12 @@
                     <p>Ngày tạo: 30/01/2021</p>
                     <p>Thư mời hội nghị: <a href="#">Xem</a></p>
                 </div>
+                <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                    <div class="dropdown dropdown-inline mr-2">
+                        <a class="btn btn-success" href="#">Xét duyệt</a>
+                        <a class="btn btn-danger" href="#">Yêu cầu chỉnh sửa</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -157,7 +163,7 @@
             </div>
         </div>
         <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
-            <div class="card-body table-responsive">
+            <div class="card-body table-responsive row">
                 @{
                     Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
                 }
