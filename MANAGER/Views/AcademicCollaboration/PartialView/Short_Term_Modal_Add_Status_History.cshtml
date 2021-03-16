@@ -1,0 +1,40 @@
+﻿
+<div class="modal fade" id="add_status" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CHUYỂN ĐỔI TRẠNG THÁI</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Trạng thái</label>
+                        <select class="form-control" required id="change_status">
+                            <option value="1">Đang thực hiện</option>
+                            <option value="2">Không hoàn thành</option>
+                            <option value="3">Đã hoàn thành</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Bản mềm</label>
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="change_status_upload">
+                            <div class="uppy-wrapper col-6"></div>
+                            <div class="uppy-list col-6"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
+                        <textarea id="note" class="form-control" rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm px-6 btn-secondary font-weight-bold" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-sm px-6 btn-light-success font-weight-bold" data-dismiss="modal" id="btn_add">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

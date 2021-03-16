@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AcademicCollaborationType()
         {
-            this.AcademicCollaborationStatusTypes = new HashSet<AcademicCollaborationStatusType>();
+            this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
             this.AcademicCollaborationTypeLanguages = new HashSet<AcademicCollaborationTypeLanguage>();
             this.CollaborationTypeDirections = new HashSet<CollaborationTypeDirection>();
             this.AcademicPrograms = new HashSet<AcademicProgram>();
@@ -27,7 +27,7 @@ namespace ENTITIES
         public string collab_type_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicCollaborationStatusType> AcademicCollaborationStatusTypes { get; set; }
+        public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaborationTypeLanguage> AcademicCollaborationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

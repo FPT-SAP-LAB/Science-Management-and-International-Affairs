@@ -19,8 +19,8 @@ namespace ENTITIES
         {
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
             this.Articles = new HashSet<Article>();
+            this.BaseRequests = new HashSet<BaseRequest>();
             this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
             this.MOAs = new HashSet<MOA>();
             this.MOUs = new HashSet<MOU>();
             this.Notifications = new HashSet<Notification>();
@@ -42,9 +42,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOA> MOAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

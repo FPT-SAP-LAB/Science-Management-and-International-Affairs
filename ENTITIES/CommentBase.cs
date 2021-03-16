@@ -12,18 +12,21 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class DecisionType
+    public partial class CommentBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DecisionType()
+        public CommentBase()
         {
-            this.Decisions = new HashSet<Decision>();
+            this.BaseRequests = new HashSet<BaseRequest>();
         }
     
-        public int decision_type_id { get; set; }
-        public string name { get; set; }
+        public int comment_id { get; set; }
+        public Nullable<int> people_id { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public string content { get; set; }
     
+        public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
+        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
     }
 }

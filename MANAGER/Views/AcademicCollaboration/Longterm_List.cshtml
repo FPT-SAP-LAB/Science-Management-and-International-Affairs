@@ -33,9 +33,14 @@
     }
 
     .label-lg {
-        width: 76% !important;
+        width: 78% !important;
     }
 </style>
+<div class="row mb-5">
+    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+        <a class="" data-toggle="modal" href="#add_status">Chỉnh sửa nội dung miêu tả</a>
+    </div>
+</div>
 <div class="card card-custom mb-1 collapse-title" id="collapse-title">
     <div class="card-body p-0 collapse-div">
         <div class="row justify-content-center px-lg-10">
@@ -52,14 +57,21 @@
         <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
-                    <ul class="nav nav-tabs nav-tabs-line" style="margin-bottom: 10px;">
-                        <li class="nav-item ">
-                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_1">CÁN BỘ GIẢNG VIÊN</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_1">CHƯƠNG TRÌNH ĐÀO TẠO</a>
-                        </li>
-                    </ul>
+                    <div class="row">
+                        <ul class="nav nav-tabs nav-tabs-line col-8">
+                            <li class="nav-item ">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_1">CÁN BỘ GIẢNG VIÊN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_1">CHƯƠNG TRÌNH ĐÀO TẠO</a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="modal" href="#add_status">Chỉnh sửa nội dung miêu tả</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_1">
                             <div class="row mb-4">
@@ -67,153 +79,9 @@
                                     DANH SÁCH CÁN BỘ ĐÀO TẠO SAU ĐẠI HỌC
                                 </h4>
                             </div>
-                            <div class="row mb-4">
-                                <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_nation_tab_1_table_1" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">Việt Nam</option>
-                                                    <option value="2">USA</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_year_tab_1_table_1" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">2021</option>
-                                                    <option value="2">2020</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_training_facility_tab_1_table_1" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">UDP</option>
-                                                    <option value="2">KyouDai</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_working_facility_tab_1_table_1" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">FPT-HN</option>
-                                                    <option value="2">FPT-DN</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mb-4">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
-                                    <div class="row align-items-center justify-content-end">
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <a href="#add_office" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
-                                        </div>
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <div class="dropdown dropdown-inline ml-2">
-                                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    Export
-                                                </button>
-                                                <!--begin::Dropdown Menu-->
-                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                    <!--begin::Navigation-->
-                                                    <ul class="navi flex-column navi-hover py-2">
-                                                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                                            Choose an option:
-                                                        </li>
-                                                        <li class="navi-item">
-                                                            <a href="#" class="navi-link" onclick="exportExcel()">
-                                                                <span class="navi-icon">
-                                                                    <i class="la la-file-excel-o"></i>
-                                                                </span>
-                                                                <span class="navi-text">Excel</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                    <!--end::Navigation-->
-                                                </div>
-                                                <!--end::Dropdown Menu-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered table-hover table-checkable colab-table"
-                                   id="colab_going_table">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" class="">S<br />T<br />T</th>
-                                        <th colspan="3" class="text-center header-modify">Thông tin cá nhân</th>
-                                        <th colspan="2" class="text-center header-modify">Đơn vị đào tào</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Thời gian bắt đầu đi học</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Thời hạn dự kiến kết thúc</th>
-                                        <th rowspan="2" class="text-center">Trạng thái</th>
-                                        <th rowspan="2" class="text-center">Hỗ trợ</th>
-                                        <th rowspan="2" class="text-center">Ghi chú</th>
-                                        <th rowspan="2" class="text-center"></th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center">Họ và tên</th>
-                                        <th class="text-center">Email</th>
-                                        <th nowrap="nowrap" class="text-center">Đơn vị công tác</th>
-                                        <th class="text-center">Tên</th>
-                                        <th class="text-center">Quốc gia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center" nowrap="nowrap">Ngô Tùng Sơn</td>
-                                        <td class="text-center">sonnt69@fpt.edu.vn</td>
-                                        <td class="text-center text-nowrap">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">1</td>
-                                        <td class="text-center"><input type="checkbox" disabled /></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center" nowrap="nowrap">Trần Quý Ban</td>
-                                        <td class="text-center">bantq@fpt.edu.vn</td>
-                                        <td class="text-center">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">2</td>
-                                        <td class="text-center"><input type="checkbox" checked disabled /></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center" nowrap="nowrap">Đoàn Văn Thắng</td>
-                                        <td class="text-center">nguyenttt@fpt.edu.vn</td>
-                                        <td class="text-center">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">3</td>
-                                        <td class="text-center"><input type="checkbox" disabled /></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Training_Going_Table");
+                            }
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_2_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_2_table_1">
                             <div class="row mb-4">
@@ -221,77 +89,9 @@
                                     CHƯƠNG TRÌNH ĐÀO TẠO
                                 </h4>
                             </div>
-                            <div class="row mb-4">
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_status_tab_2_table_1" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">Còn hạn</option>
-                                                    <option value="2">Hết hạn</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                                    <div class="row align-items-center justify-content-end">
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <a href="#add_program" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bold">Thêm chương trình</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered table-hover table-checkable colab-table"
-                                   id="colab_program_going_table">
-                                <thead>
-                                    <tr>
-                                        <th class="">S<br />T<br />T</th>
-                                        <th class="text-center">Đối tác</th>
-                                        <th class="text-center">Tiêu đề</th>
-                                        <th class="text-center">Người đăng</th>
-                                        <th class="text-center">Thời gian đăng ký</th>
-                                        <th class="text-center">Thời gian đăng</th>
-                                        <th class="text-center text-nowrap"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">USTH</td>
-                                        <td class="text-center">
-                                            Thông báo tuyển sinh Đào tạo trình độ Tiến sĩ USTH – Đợt I năm 2021
-                                        </td>
-                                        <td class="text-center">Lê Phương Anh</td>
-                                        <td class="text-center">
-                                            01/01/2020 – 31/01/202
-                                        </td>
-                                        <td class="text-center">
-                                            21/01/2021 12:01:34
-                                        </td>
-                                        <td nowrap="nowrap" class="text-center"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">UTP</td>
-                                        <td class="text-center">
-                                            Thông báo tuyển sinh Đào tạo trình độ Tiến sĩ UTP
-                                        </td>
-                                        <td class="text-center">Lê Phương Anh</td>
-                                        <td class="text-center">
-                                            01/01/2020 – 31/01/202
-                                        </td>
-                                        <td class="text-center">
-                                            21/01/2021 12:01:34
-                                        </td>
-                                        <td nowrap="nowrap" class="text-center"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Program_Going_Table");
+                            }
                         </div>
                     </div>
                 </div>
@@ -316,14 +116,21 @@
         <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
-                    <ul class="nav nav-tabs nav-tabs-line" style="margin-bottom: 10px;">
-                        <li class="nav-item ">
-                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_2">CÁN BỘ GIẢNG VIÊN</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_2">CHƯƠNG TRÌNH ĐÀO TẠO</a>
-                        </li>
-                    </ul>
+                    <div class="row">
+                        <ul class="nav nav-tabs nav-tabs-line col-8">
+                            <li class="nav-item ">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_table_2">CÁN BỘ GIẢNG VIÊN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_table_2">CHƯƠNG TRÌNH ĐÀO TẠO</a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="modal" href="#add_status">Chỉnh sửa nội dung miêu tả</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_2">
                             <div class="row mb-4">
@@ -331,153 +138,9 @@
                                     DANH SÁCH CÁN BỘ ĐÀO TẠO SAU ĐẠI HỌC
                                 </h4>
                             </div>
-                            <div class="row mb-4">
-                                <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_nation_tab_1_table_2" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">Việt Nam</option>
-                                                    <option value="2">USA</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_year_tab_1_table_2" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">2021</option>
-                                                    <option value="2">2020</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_training_facility_tab_1_table_2" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">UDP</option>
-                                                    <option value="2">KyouDai</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_working_facility_tab_1_table_2" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">FPT-HN</option>
-                                                    <option value="2">FPT-DN</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mb-4">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
-                                    <div class="row align-items-center justify-content-end">
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <a href="#add_office" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
-                                        </div>
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <div class="dropdown dropdown-inline ml-2">
-                                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    Export
-                                                </button>
-                                                <!--begin::Dropdown Menu-->
-                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                    <!--begin::Navigation-->
-                                                    <ul class="navi flex-column navi-hover py-2">
-                                                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                                            Choose an option:
-                                                        </li>
-                                                        <li class="navi-item">
-                                                            <a href="#" class="navi-link" onclick="exportExcel()">
-                                                                <span class="navi-icon">
-                                                                    <i class="la la-file-excel-o"></i>
-                                                                </span>
-                                                                <span class="navi-text">Excel</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                    <!--end::Navigation-->
-                                                </div>
-                                                <!--end::Dropdown Menu-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered table-hover table-checkable colab-table"
-                                   id="colab_coming_table">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" class="">S<br />T<br />T</th>
-                                        <th colspan="3" class="text-center header-modify">Thông tin cá nhân</th>
-                                        <th colspan="2" class="text-center header-modify">Đơn vị đào tào</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Thời gian bắt đầu đi học</th>
-                                        <th nowrap="nowrap" rowspan="2" class="text-center">Thời hạn dự kiến kết thúc</th>
-                                        <th rowspan="2" class="text-center">Trạng thái</th>
-                                        <th rowspan="2" class="text-center">Hỗ trợ</th>
-                                        <th rowspan="2" class="text-center">Ghi chú</th>
-                                        <th rowspan="2" class="text-center"></th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center">Họ và tên</th>
-                                        <th class="text-center">Email</th>
-                                        <th nowrap="nowrap" class="text-center">Đơn vị công tác</th>
-                                        <th class="text-center">Tên</th>
-                                        <th class="text-center">Quốc gia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center" nowrap="nowrap">Ngô Tùng Sơn</td>
-                                        <td class="text-center">sonnt69@fpt.edu.vn</td>
-                                        <td class="text-center text-nowrap">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">1</td>
-                                        <td class="text-center"><input type="checkbox" checked disabled/></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center" nowrap="nowrap">Trần Quý Ban</td>
-                                        <td class="text-center">bantq@fpt.edu.vn</td>
-                                        <td class="text-center">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">2</td>
-                                        <td class="text-center"><input type="checkbox" disabled/></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center" nowrap="nowrap">Đoàn Văn Thắng</td>
-                                        <td class="text-center">nguyenttt@fpt.edu.vn</td>
-                                        <td class="text-center">FPTU-HN</td>
-                                        <td class="text-center" nowrap="nowrap">UTP</td>
-                                        <td class="text-center">Malaysia</td>
-                                        <td class="text-center">22/02/2222</td>
-                                        <td class="text-center">23/03/2223</td>
-                                        <td nowrap="nowrap">3</td>
-                                        <td class="text-center"><input type="checkbox" disabled /></td>
-                                        <td nowrap="nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Training_Coming_Table");
+                            }
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_2_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_2_table_2">
                             <div class="row mb-4">
@@ -485,75 +148,9 @@
                                     CHƯƠNG TRÌNH ĐÀO TẠO
                                 </h4>
                             </div>
-
-                            <div class="row mb-4">
-                                <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_status_tab_2_table_2" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">Còn hạn</option>
-                                                    <option value="2">Hết hạn</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                                    <div class="row align-items-center justify-content-end">
-                                        <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                                            <a href="#add_program" data-toggle="modal" class="btn btn-light-primary px-6 font-weight-bold">Thêm chương trình</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered table-hover table-checkable "
-                                   id="colab_program_coming_table">
-                                <thead>
-                                    <tr>
-                                        <th class="">S<br />T<br />T</th>
-                                        <th class="text-center">Tiêu đề</th>
-                                        <th class="text-center">Người đăng</th>
-                                        <th class="text-center">Thời gian đăng ký</th>
-                                        <th class="text-center">Thời gian đăng</th>
-                                        <th class="text-center text-nowrap"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">
-                                            Thông báo tuyển sinh Đào tạo trình độ Tiến sĩ USTH – Đợt I năm 2021
-                                        </td>
-                                        <td class="text-center">Lê Phương Anh</td>
-                                        <td class="text-center">
-                                            01/01/2020 – 31/01/202
-                                        </td>
-                                        <td class="text-center">
-                                            21/01/2021 12:01:34
-                                        </td>
-                                        <td nowrap="nowrap"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">
-                                            Thông báo tuyển sinh Đào tạo trình độ Tiến sĩ UTP
-                                        </td>
-                                        <td class="text-center">Lê Phương Anh</td>
-                                        <td class="text-center">
-                                            01/01/2020 – 31/01/202
-                                        </td>
-                                        <td class="text-center">
-                                            21/01/2021 12:01:34
-                                        </td>
-                                        <td nowrap="nowrap" class="text-center"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Program_Coming_Table");
+                            }
                         </div>
                     </div>
                 </div>
@@ -563,556 +160,36 @@
 </div>
 
 
-@*modal delete*@
-
-@*modal modify status*@
-<div class="modal fade" id="add_status" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">CHUYỂN ĐỔI TRẠNG THÁI</h3>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Trạng thái</label>
-                        <select class="form-control" required id="change_status">
-                            <option value="1">Đang thực hiện</option>
-                            <option value="2">Không hoàn thành</option>
-                            <option value="3">Đã hoàn thành</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Bản mềm</label>
-                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
-                        <div class="uppy row" id="change_status_upload">
-                            <div class="uppy-wrapper col-6"></div>
-                            <div class="uppy-list col-6"></div>
-                            <div class="uppy-status"></div>
-                            <div class="uppy-informer uppy-informer-min"></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="note" class="form-control" rows="6"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm px-6 btn-secondary font-weight-bold" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm px-6 btn-light-success font-weight-bold" data-dismiss="modal" id="btn_add">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
+@*modal add status*@
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_Add_Status_History");
+}
 
 @*modal status hisory*@
-<div class="modal fade in" id="status_history" aria-hidden="true">
-    <div class="modal-dialog modal-lg ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">LỊCH SỬ TRẠNG THÁI</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="text-center">STT</th>
-                            <th class="text-center">Thời gian</th>
-                            <th class="text-center">Trạng thái</th>
-                            <th class="text-center">Cá nhân thay đổi</th>
-                            <th class="text-center">Bản mềm</th>
-                            <th class="text-center">Ghi chú</th>
-                        </tr>
-                    </thead>
-                    <tbody id="status_history_table">
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-    </div>
-</div>
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_View_Status_History");
+}
 
-@*modal add office*@
-<div class="modal fade in" id="add_office" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title">BỔ SUNG CÁN BỘ</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <h5 class="font-weight-bolder">THÔNG TIN CÁ NHÂN</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Họ và tên</label>
-                        <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_office_name" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Ngô Tùng Sơn</option>
-                                <option value="2">Trần Quý Ban</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Email</label>
-                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_office_email" />
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_office_facility" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">FPTU-HN</option>
-                                <option value="2">FPTU-ĐN</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <h5 class="font-weight-bolder">ĐƠN VỊ ĐÀO TẠO</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Tên đơn vị đào tạo</label>
-                        <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_office_traning" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">UTP</option>
-                                <option value="2">KyouDai</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_office_nation" />
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_office_coop_scope" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">SE</option>
-                                <option value="2">FE</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <h5 class="font-weight-bolder">CHI TIẾT</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">Trạng thái</label>
-                        <label style="color:red">*</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_office_status" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Đang thực hiện</option>
-                                <option value="2">Đã hoàn thành</option>
-                                <option value="3">Chưa hoàn thành</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học dự kiến</label>
-                        <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_office_start_plan_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="add_office_start_plan_date" data-target="#kt_datetimepicker_add_office_start_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_add_office_start_plan_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG kết thúc dự kiến</label>
-                        <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_office_end_plan_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="add_office_end_plan_date" data-target="#kt_datetimepicker_add_office_end_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_add_office_end_plan_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">Bản mềm</label>
-                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
-                        <div class="uppy row" id="add_office_upload">
-                            <div class="uppy-wrapper col-6"></div>
-                            <div class="uppy-list col-6"></div>
-                            <div class="uppy-status"></div>
-                            <div class="uppy-informer uppy-informer-min"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_office_start_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="add_office_start_date" data-target="#kt_datetimepicker_add_office_start_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_add_office_start_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG kết thúc thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_office_end_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="add_office_end_date" data-target="#kt_datetimepicker_add_office_end_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_add_office_end_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <div class="checkbox-list">
-                                <label class="checkbox font-weight-bolder">
-                                    <input type="checkbox" name="" id="add_office_support" />
-                                    <span></span>
-                                    Hỗ trợ qua phòng QLKH & HTQT
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" id="add_office_note" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-primary px-6">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
+@*modal add officer*@
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_Add_Officer");
+}
 
-@*modal edit office*@
-<div class="modal fade in" id="edit_office" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title">CHỈNH SỬA CÁN BỘ</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <h5 class="font-weight-bolder">THÔNG TIN CÁ NHÂN</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Họ và tên</label>
-                        <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_office_name" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>Ngô Tùng Sơn</option>
-                                <option value="2">Trần Quý Ban</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Email</label>
-                        <input value="sonnt69@fpt.edu.vn" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_office_email" />
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_office_facility" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>FPTU-HN</option>
-                                <option value="2">FPTU-ĐN</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <h5 class="font-weight-bolder">ĐƠN VỊ ĐÀO TẠO</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Tên đơn vị đào tạo</label>
-                        <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_office_traning" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>UTP</option>
-                                <option value="2">KyouDai</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Quốc gia</label>
-                        <input value="Việt Nam" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_office_nation" />
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_office_coop_scope" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>SE</option>
-                                <option value="2">FE</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <h5 class="font-weight-bolder">CHI TIẾT</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">Trạng thái</label>
-                        <label style="color:red">*</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_office_status" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>Đang thực hiện</option>
-                                <option value="2">Đã hoàn thành</option>
-                                <option value="3">Chưa hoàn thành</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học dự kiến</label>
-                        <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_office_start_plan_date" data-target-input="nearest">
-                            <input value="01/01/2021" type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="edit_office_start_plan_date" data-target="#kt_datetimepicker_edit_office_start_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_office_start_plan_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG kết thúc dự kiến</label>
-                        <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_office_end_plan_date" data-target-input="nearest">
-                            <input value="01/01/2022" type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="edit_office_end_plan_date" data-target="#kt_datetimepicker_edit_office_end_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_office_end_plan_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">Bản mềm</label>
-                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
-                        <div class="uppy row" id="edit_office_upload">
-                            <div class="uppy-wrapper col-6"></div>
-                            <div class="uppy-list col-6"></div>
-                            <div class="uppy-status"></div>
-                            <div class="uppy-informer uppy-informer-min"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_office_start_date" data-target-input="nearest">
-                            <input value="01/01/2021" type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="edit_office_start_date" data-target="#kt_datetimepicker_edit_office_start_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_office_start_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG kết thúc thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_office_end_date" data-target-input="nearest">
-                            <input value="01/01/2022" type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="edit_office_end_date" data-target="#kt_datetimepicker_edit_office_end_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_office_end_date" data-toggle="datetimepicker">
-                                <span class="input-group-text">
-                                    <i class="ki ki-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="form-group">
-                            <div class="checkbox-list">
-                                <label class="checkbox font-weight-bolder">
-                                    <input type="checkbox" name="" id="edit_office_support" />
-                                    <span></span>
-                                    Hỗ trợ qua phòng QLKH & HTQT
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" id="edit_office_note" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-primary px-6">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
+@*modal edit officer*@
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_Edit_Officer");
+}
 
 @*modal add program*@
-<div class="modal fade in" id="add_program" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title">THÊM CHƯƠNG TRÌNH</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <label class="font-weight-bolder">Đối tác</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_program_partner" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">UTP</option>
-                                <option value="2">KyouDai</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <label class="font-weight-bolder">Thời hạn đăng ký</label>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <input type='text' class="form-control kt_daterangepicker_1"
-                                       id="add_program_range_date" readonly
-                                       placeholder="Từ ngày - Đến ngày" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" autocomplete="off" id="note"></textarea>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Nội dung</label>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                                <label class="radio">
-                                    <input type="radio" checked name="language" id="add_program_vietnamese" />
-                                    <span></span>
-                                    &nbsp;Tiếng Việt
-                                </label>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                                <label class="radio">
-                                    <input type="radio" name="language" id="add_program_english" />
-                                    <span></span>
-                                    &nbsp;English
-                                </label>
-                            </div>
-                        </div>
-                        <div class="summernote"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-success px-6">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_Add_Program");
+}
 
 @*modal edit program*@
-<div class="modal fade in" id="edit_program" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h4 class="modal-title">SỬA CHƯƠNG TRÌNH</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Tiêu đề</label>
-                        <input value="Thông báo tuyển sinh Đào tạo trình độ Tiến sĩ USTH – Đợt I năm 2021" class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <label class="font-weight-bolder">Đối tác</label>
-                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_program_partner" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option selected value="1">UTP</option>
-                                <option value="2">KyouDai</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <label class="font-weight-bolder">Thời hạn đăng ký</label>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <input value="03/13/2021 - 03/13/2021" type='text' class="form-control kt_daterangepicker_1"
-                                       id="edit_program_range_date" readonly
-                                       placeholder="Từ ngày - Đến ngày" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" autocomplete="off" id="note"></textarea>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <label class="font-weight-bolder">Nội dung</label>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                                <label class="radio">
-                                    <input type="radio" checked name="language" id="edit_program_vietnamese" />
-                                    <span></span>
-                                    &nbsp;Tiếng Việt
-                                </label>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
-                                <label class="radio">
-                                    <input type="radio" name="language" id="edit_program_english" />
-                                    <span></span>
-                                    &nbsp;English
-                                </label>
-                            </div>
-                        </div>
-                        <div class="summernote"></div>
+@{
+    Html.RenderPartial("PartialView/Long_Term_Modal_Edit_Program");
+}
 
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-success px-6">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -1194,27 +271,27 @@
         })
 
         //select modal table 1
-        $('#add_office_name').select2({
+        $('#add_officer_name').select2({
             placeholder: 'Họ và tên',
             allowClear: true,
             tags: true,
         })
-        $('#add_office_facility').select2({
+        $('#add_officer_facility').select2({
             placeholder: 'Đơn vị - Cơ sở',
             allowClear: true,
             tags: true,
         })
-        $('#add_office_traning').select2({
+        $('#add_officer_traning').select2({
             placeholder: 'Đơn vị đào tạo',
             allowClear: true,
             tags: true,
         })
-        $('#add_office_coop_scope').select2({
+        $('#add_officer_coop_scope').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
             tags: true,
         })
-        $('#add_office_status').select2({
+        $('#add_officer_status').select2({
             placeholder: 'Trạng thái',
             allowClear: true,
             tags: true,
@@ -1422,7 +499,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_office">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
                     }
                 }
             ],
@@ -1493,7 +570,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_office">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                        return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
                     }
                 }
             ],
@@ -1705,8 +782,8 @@
         }();
 
         KTUtil.ready(function () {
-            KTUppy.init('edit_office_upload');
-            KTUppy.init('add_office_upload');
+            KTUppy.init('edit_officer_upload');
+            KTUppy.init('add_officer_upload');
             KTUppy.init('change_status_upload');
         });
 

@@ -15,12 +15,28 @@ namespace GUEST.Models
             if (cookie == null)
             {
                 HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_name", "vi-VN"));
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_id", "1"));
             }
             else
             {
                 language_name = cookie.Value;
             }
             return language_name;
+        }
+        public static int GetCurrentLanguageID()
+        {
+            int language_id = 1;
+            var cookie = HttpContext.Current.Request.Cookies["language_id"];
+            if (cookie == null)
+            {
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_name", "vi-VN"));
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("language_id", "1"));
+            }
+            else
+            {
+                language_id = int.Parse(cookie.Value);
+            }
+            return language_id;
         }
         public static ResourceManager GetResourceManager()
         {
