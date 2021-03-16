@@ -12,24 +12,28 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class RewardPolicy
+    public partial class BaseRequest
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RewardPolicy()
+        public BaseRequest()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
-            this.Criteria = new HashSet<Criterion>();
+            this.CommentBases = new HashSet<CommentBase>();
+            this.Decisions = new HashSet<Decision>();
         }
     
-        public int reward_policy_id { get; set; }
-        public System.DateTime valid_date { get; set; }
-        public Nullable<System.DateTime> expired_date { get; set; }
-        public int file_id { get; set; }
+        public int request_id { get; set; }
+        public Nullable<int> account_id { get; set; }
+        public Nullable<System.DateTime> created_date { get; set; }
+        public Nullable<System.DateTime> finished_date { get; set; }
     
-        public virtual File File { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual RequestCitation RequestCitation { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
+        public virtual RequestInvention RequestInvention { get; set; }
+        public virtual RequestPaper RequestPaper { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<CommentBase> CommentBases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Criterion> Criteria { get; set; }
+        public virtual ICollection<Decision> Decisions { get; set; }
     }
 }

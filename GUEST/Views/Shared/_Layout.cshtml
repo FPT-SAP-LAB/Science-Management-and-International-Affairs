@@ -990,7 +990,7 @@
                                     <ul class="navi navi-hover py-4">
                                         <!--begin::Item-->
                                         <li class="navi-item">
-                                            <a href="#" data-language="vi-VN" class="navi-link change-language">
+                                            <a href="#" data-language="vi-VN" data-id="1" class="navi-link change-language">
                                                 <span class="symbol symbol-20 mr-3">
                                                     <img src="~/Content/assets/media/svg/flags/220-vietnam.svg" alt="" />
                                                 </span>
@@ -998,7 +998,7 @@
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a href="#" data-language="en-US" class="navi-link change-language">
+                                            <a href="#" data-language="en-US" data-id="2" class="navi-link change-language">
                                                 <span class="symbol symbol-20 mr-3">
                                                     <img src="~/Content/assets/media/svg/flags/226-united-states.svg" alt="" />
                                                 </span>
@@ -1365,15 +1365,16 @@
         <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
     @RenderSection("scripts")
 
-    <script>
-        $(".change-language").click(function () {
-            document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
-            location.reload();
-        })
-        $("#login_btn").click(function () {
-            $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
-        })
-    </script>
+<script>
+    $(".change-language").click(function () {
+        document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
+        document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
+        location.reload();
+    })
+    $("#login_btn").click(function () {
+        $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
+    })
+</script>
     <script src="~/Content/assets/js/sci/sci-bundle.js"></script>
 </body>
 <!--end::Body-->

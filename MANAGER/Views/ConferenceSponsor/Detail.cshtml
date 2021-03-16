@@ -3,7 +3,6 @@
     ViewBag.Title = "Chi tiết đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConferenceDetail">
     <div class="card">
         <div class="card-header" id="ConferenceDetailHeading">
@@ -23,22 +22,25 @@
         <div id="ConferenceDetailChild1" class="collapse show" data-parent="#ConferenceDetail">
             <div class="card-body row">
                 <div class="col-3">
-                    <p>Tên hội nghị: ICCI 2021</p>
-                    <p>Tên diễn giả QS: Todd Howard</p>
-                    <p>Quốc gia: Japan</p>
+                    <p>Tên hội nghị: <span class="field-value ">ICCI 2021</span></p>
+                    <p>Tên diễn giả QS: <span class="field-value ">Todd Howard</span></p>
+                    <p>Quốc gia: <span class="field-value ">Japan</span></p>
                     <p>Bài báo: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a></p>
+                    <p>
+                        Tên bài báo: <span class="field-value ">Lorem ipsum dolor sit amet</span>
+                    </p>
+                </div>
+                <div class="col-3">
+                    <p>Website hội nghị: <span class="field-value ">ACC.com</span></p>
+                    <p>Thuộc trường đại học: <span class="field-value ">Todai</span></p>
+                    <p>Thời gian: <span class="field-value ">02/02/2021 – 05/02/2021</span></p>
+                    <p>Hình thức: <span class="field-value ">Online quốc tế</span></p>
                     <p>
                         Trạng thái:
                         <span class="label label-lg label-inline label-light-primary font-weight-bold">
                             đã hoàn ứng
                         </span>
                     </p>
-                </div>
-                <div class="col-3">
-                    <p>Website hội nghị: ACC.com</p>
-                    <p>Thuộc trường đại học: Todai</p>
-                    <p>Thời gian: 02/02/2021 – 05/02/2021</p>
-                    <p>Hình thức: Online quốc tế</p>
                 </div>
                 <div class="col-3">
                     <p><b>Chính sách xét hỗ trợ tham dự hội nghị: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Xem thêm</a></b></p>
@@ -61,6 +63,7 @@
                     <p>Quyết định: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a></p>
                     <p>Số quyết định: QĐ-0635</p>
                     <p>Ngày tạo: 30/01/2021</p>
+                    <p>Thư mời hội nghị: <a href="#">Xem</a></p>
                 </div>
             </div>
         </div>

@@ -30,8 +30,10 @@ namespace ENTITIES
         public Nullable<int> partner_scope_id { get; set; }
         public Nullable<System.DateTime> actual_study_start_date { get; set; }
         public Nullable<System.DateTime> actual_study_end_date { get; set; }
+        public Nullable<int> collab_type_id { get; set; }
     
         public virtual Person Person { get; set; }
+        public virtual AcademicCollaborationType AcademicCollaborationType { get; set; }
         public virtual Direction Direction { get; set; }
         public virtual PartnerScope PartnerScope { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

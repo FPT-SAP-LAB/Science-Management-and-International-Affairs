@@ -12,21 +12,21 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class AcademicCollaborationStatusType
+    public partial class CommentBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AcademicCollaborationStatusType()
+        public CommentBase()
         {
-            this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
+            this.BaseRequests = new HashSet<BaseRequest>();
         }
     
-        public int collab_status_type_id { get; set; }
-        public Nullable<int> collab_type_id { get; set; }
-        public Nullable<int> collab_status_id { get; set; }
+        public int comment_id { get; set; }
+        public Nullable<int> people_id { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public string content { get; set; }
     
-        public virtual AcademicCollaborationType AcademicCollaborationType { get; set; }
-        public virtual AcademicCollaborationStatu AcademicCollaborationStatu { get; set; }
+        public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
     }
 }

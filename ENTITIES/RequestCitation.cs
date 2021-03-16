@@ -12,24 +12,24 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class RequestCitation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comment()
+        public RequestCitation()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
-            this.Papers = new HashSet<Paper>();
+            this.Citations = new HashSet<Citation>();
         }
     
-        public int comment_id { get; set; }
-        public Nullable<int> people_id { get; set; }
-        public Nullable<System.DateTime> date { get; set; }
-        public string content { get; set; }
+        public int request_id { get; set; }
+        public int status_id { get; set; }
+        public int people_id { get; set; }
+        public string current_mssv_msnv { get; set; }
+        public string total_reward { get; set; }
     
         public virtual Person Person { get; set; }
+        public virtual BaseRequest BaseRequest { get; set; }
+        public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<Citation> Citations { get; set; }
     }
 }

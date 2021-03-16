@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PaperCriteria()
         {
-            this.Papers = new HashSet<Paper>();
+            this.PaperWithCriterias = new HashSet<PaperWithCriteria>();
         }
     
         public int criteria_id { get; set; }
@@ -25,6 +25,6 @@ namespace ENTITIES
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<PaperWithCriteria> PaperWithCriterias { get; set; }
     }
 }

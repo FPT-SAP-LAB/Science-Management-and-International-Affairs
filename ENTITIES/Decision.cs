@@ -17,27 +17,16 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Decision()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
-            this.CitationDecisions = new HashSet<CitationDecision>();
-            this.Inventions = new HashSet<Invention>();
-            this.Papers = new HashSet<Paper>();
+            this.BaseRequests = new HashSet<BaseRequest>();
         }
     
         public int decision_id { get; set; }
-        public int decision_type_id { get; set; }
         public System.DateTime valid_date { get; set; }
         public int file_id { get; set; }
         public string decision_number { get; set; }
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CitationDecision> CitationDecisions { get; set; }
-        public virtual DecisionType DecisionType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invention> Inventions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Paper> Papers { get; set; }
+        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
     }
 }

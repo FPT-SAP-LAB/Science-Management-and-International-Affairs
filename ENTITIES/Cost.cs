@@ -15,13 +15,13 @@ namespace ENTITIES
     public partial class Cost
     {
         public int cost_id { get; set; }
-        public int conference_support_id { get; set; }
         public string content { get; set; }
         public string sponsoring_organization { get; set; }
         public string detail { get; set; }
         public int total { get; set; }
         public bool editable { get; set; }
+        public int request_id { get; set; }
     
-        public virtual ConferenceSupport ConferenceSupport { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }

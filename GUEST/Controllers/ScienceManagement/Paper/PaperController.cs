@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BLL.ScienceManagement.MasterData;
+using BLL.ScienceManagement.Paper;
+using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +13,8 @@ namespace GUEST.Controllers
 {
     public class PaperController : Controller
     {
+        PaperRepo pr = new PaperRepo();
+        MasterDataRepo md = new MasterDataRepo();
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bài báo";
@@ -30,6 +36,24 @@ namespace GUEST.Controllers
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.ckEdit = editable;
+
+            DetailPaper item = pr.getDetail(id);
+            ViewBag.Paper = item;
+
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            ViewBag.listSpec = listSpec;
+
+            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            ViewBag.listCriteria = listCriteria;
+
+            List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
+            ViewBag.listCriteriaOne = listCriteriaOne;
+
             return View();
         }
 

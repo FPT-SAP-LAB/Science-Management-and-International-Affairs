@@ -15,14 +15,14 @@ namespace ENTITIES
     public partial class ConferenceParticipant
     {
         public int people_id { get; set; }
-        public int conference_support_id { get; set; }
+        public int request_id { get; set; }
         public int title_id { get; set; }
         public int office_id { get; set; }
         public string current_mssv_msnv { get; set; }
     
         public virtual Office Office { get; set; }
         public virtual Person Person { get; set; }
-        public virtual ConferenceSupport ConferenceSupport { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
         public virtual Title Title { get; set; }
     }
 }

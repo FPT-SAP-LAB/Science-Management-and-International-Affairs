@@ -12,13 +12,15 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class DegreeLanguage
+    public partial class ProfileAcademicDegree
     {
-        public int language_id { get; set; }
-        public int degree_id { get; set; }
-        public string name { get; set; }
+        public Nullable<int> people_id { get; set; }
+        public Nullable<int> academic_degree_id { get; set; }
+        public int start_year { get; set; }
+        public int end_year { get; set; }
+        public string study_place { get; set; }
     
-        public virtual Degree Degree { get; set; }
-        public virtual Language Language { get; set; }
+        public virtual AcademicDegree AcademicDegree { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }
