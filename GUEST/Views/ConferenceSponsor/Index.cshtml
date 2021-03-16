@@ -39,13 +39,20 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
+        var label_status = {
+            1: "primary",
+            2: "success",
+            3: "success",
+            4: "secondary",
+            5: "success"
+        }
+
         $(document).ready(function () {
             $("#mytable").DataTable({
                 responsive: true,
 
                 // DOM Layout settings
-                dom: `<'row'<'col-sm-12'tr>>
-                                      <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -67,7 +74,11 @@
                     { data: "PaperName", name: "PaperName" },
                     { data: "ConferenceName", name: "ConferenceName" },
                     { data: "CreatedDate", name: "Date" },
-                    { data: "StatusName", name: "StatusName" },
+                    {
+                        data: {}, name: "StatusID", render: function (data) {
+                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline mr-2'>" + data.StatusName + "</span>"
+                        }, width: "77px", className: "text-center"
+                    },
                     {
                         data: "PaperName", orderable: false, render: function (data) {
                             return "<a href='/ConferenceSponsor/Detail?id=5' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"

@@ -96,8 +96,11 @@
 </table>
 @if (ViewBag.CheckboxColumn)
 {
-    <button type="button" onclick="saveCost()" class="btn btn-primary float-right">Lưu</button>
-
+    <div class="col-lg-12 col-xl-12" style="text-align: right;">
+        <div class="dropdown dropdown-inline mr-2">
+            <button type="button" onclick="saveCost()" class="btn btn-success">Xét duyệt</button>
+        </div>
+    </div>
     <script>
         function saveCost() {
             toastr.success('Đã lưu và thông báo đến người đề nghị', 'Thành công')
