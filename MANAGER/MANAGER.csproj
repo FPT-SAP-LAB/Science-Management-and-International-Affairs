@@ -2144,6 +2144,7 @@
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\Partner\Preview.js" />
@@ -2237,6 +2238,20 @@
     <Content Include="Views\Partner\PartialView\Partner_Modal_View_History.cshtml" />
     <Content Include="Views\Shared\_Layout _Guest_Preview.cshtml" />
     <Content Include="Views\Partner\Preview.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Status_History.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_View_Status_History.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Training_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Program_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Training_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Program_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Add_Status_History.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_View_Status_History.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Add_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Edit_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Add_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Edit_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Description.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Description.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

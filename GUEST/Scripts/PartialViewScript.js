@@ -27,7 +27,7 @@ donvife = {
     3: "Fpoly",
     4: "Khác"
 }
-var numberOfAuthors = 0
+
 $("#add_author_save").click(function () {
     ckfe = $("#ckfe").val()
     add_author_workplace = $("#add_author_workplace").val()
@@ -55,7 +55,7 @@ $("#add_author_save").click(function () {
         + "<td>" + add_author_bank + "</td>"
         + "<td>" + add_author_accno + "</td>"
         + "<td>" + add_author_reward + "</td>"
-        + "<td>" + "<a onclick='' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i> </a> <span style='cursor:pointer' class='delete-author' data-id='" + row_id + "'> <a class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a> </span>" + "</td>"
+        + "<td>" + "<a onclick='' class='btn btn-sm btn-clean btn-icon editbtn edit' title='Edit'> <i class='far fa-edit'></i> </a> <span style='cursor:pointer' class='delete-author edit' data-id='" + row_id + "'> <a class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a> </span>" + "</td>"
         + "</tr>\
                 ")
     $(".tacgia").show()
@@ -66,5 +66,11 @@ $("#tacgia_body").on('click', '.delete-author', function () {
     numberOfAuthors--
     if (numberOfAuthors == 0) {
         $(".tacgia").hide()
+    }
+});
+
+$(document).ready(function () {
+    if (numberOfAuthors > 0) {
+        $(".tacgia").show()
     }
 });

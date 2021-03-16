@@ -3,375 +3,378 @@
     ViewBag.Title = "DANH SÁCH NGHIÊN CỨU VIÊN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <!--begin: Search Form-->
+        <!--begin::Search Form-->
+        <div class="mb-7">
+            <div class="row align-items-center">
+                <div class="col-lg-10 col-xl-10">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 my-2 my-md-0">
+                            <div class="input-icon">
+                                <input type="text" class="form-control"
+                                       placeholder="Tên..."
+                                       id="kt_datatable_search_query" />
+                                <span>
+                                    <i class="flaticon2-search-1 text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 my-2 my-md-0">
+                            <div class="d-flex align-items-center">
+                                <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
+                                <select class="form-control"
+                                        id="search_nganh">
+                                    <option label="Label"></option>
+                                    <option value="">Khoa học máy tính</option>
+                                    <option value="1">Toán học</option>
+                                    <option value="2">Kinh tế</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 my-2 my-md-0">
+                            <div class="d-flex align-items-center">
+                                <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
+                                <select class="form-control"
+                                        id="search_coso">
+                                    <option label="Label"></option>
+                                    <option value="">FPTU HN</option>
+                                    <option value="1">FPTU Cần Thơ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
+                            <a href="#"
+                               class="btn btn-light-primary px-6 font-weight-bold">
+                                Tìm kiếm
+                            </a>
+                        </div>
 
-<div class="card-body">
-    <!--begin: Search Form-->
-    <!--begin::Search Form-->
-    <div class="mb-7">
-        <div class="row align-items-center">
-            <div class="col-lg-10 col-xl-10">
-                <div class="row align-items-center">
-                    <div class="col-md-3 my-2 my-md-0">
-                        <div class="input-icon">
-                            <input type="text" class="form-control"
-                                   placeholder="Tên..."
-                                   id="kt_datatable_search_query" />
-                            <span>
-                                <i class="flaticon2-search-1 text-muted"></i>
-                            </span>
-                        </div>
                     </div>
-                    <div class="col-md-3 my-2 my-md-0">
-                        <div class="d-flex align-items-center">
-                            <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
-                            <select class="form-control"
-                                    id="search_nganh">
-                                <option label="Label"></option>
-                                <option value="">Khoa học máy tính</option>
-                                <option value="1">Toán học</option>
-                                <option value="2">Kinh tế</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 my-2 my-md-0">
-                        <div class="d-flex align-items-center">
-                            <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
-                            <select class="form-control"
-                                    id="search_coso">
-                                <option label="Label"></option>
-                                <option value="">FPTU HN</option>
-                                <option value="1">FPTU Cần Thơ</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
-                        <a href="#"
-                           class="btn btn-light-primary px-6 font-weight-bold">
-                            Tìm kiếm
-                        </a>
-                    </div>
-
                 </div>
-            </div>
-            <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
-                <div class="dropdown dropdown-inline mr-2">
-                    <button type="button"
-                            class="btn btn-light-success font-weight-bolder"
-                            data-toggle="modal" data-target="#list-researcher-candidates">
-                        Đăng thông tin nghiên cứu viên
-                    </button>
+                <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
+                    <div class="dropdown dropdown-inline mr-2">
+                        <button type="button"
+                                class="btn btn-light-success font-weight-bolder"
+                                data-toggle="modal" data-target="#list-researcher-candidates">
+                            Đăng thông tin nghiên cứu viên
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--end::Search Form-->
-    <!--begin: Datatable-->
-    <table class="table table-bordered table-checkable" id="kt_datatable">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>Tên Nghiên cứu viên</th>
-                <th>Học hàm - Học vị</th>
-                <th>Chức vụ</th>
-                <th>Cơ sở</th>
-                <th>Lĩnh vực</th>
-                <th>Google Scholar</th>
-                <th></th>
-            </tr>
-        </thead>
+        <!--end::Search Form-->
+        <!--begin: Datatable-->
+        <table class="table table-bordered table-checkable" id="kt_datatable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Nghiên cứu viên</th>
+                    <th>Học hàm - Học vị</th>
+                    <th>Chức vụ</th>
+                    <th>Cơ sở</th>
+                    <th>Lĩnh vực</th>
+                    <th>Google Scholar</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Bùi Ngọc Anh</td>
-                <td>Thạc sĩ</td>
-                <td>&nbsp;</td>
-                <td>FPTU HN</td>
-                <td>Toán</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Ngô Tùng Sơn</td>
-                <td>Thạc sĩ</td>
-                <td>&nbsp;</td>
-                <td>FPTU HN</td>
-                <td>Toán</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>...</td>
-                <td>...</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>...</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>...</td>
-                <td>...</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>...</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                <td><a  class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-            </tr>
-        </tbody>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td> Ngô Tùng Sơn</td>
+                    <td>Thạc sĩ</td>
+                    <td>&nbsp;</td>
+                    <td>FPTU HN</td>
+                    <td>Toán</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Bùi Ngọc Anh</td>
+                    <td>Thạc sĩ</td>
+                    <td>&nbsp;</td>
+                    <td>FPTU HN</td>
+                    <td>Toán</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>...</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>...</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
+                    <td><a class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
+                </tr>
+            </tbody>
 
-    </table>
-    <!--end: Datatable-->
+        </table>
+        <!--end: Datatable-->
 
-</div>
-<!-- Modal-->
-<div class="modal fade " id="list-researcher-candidates" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><b>DANH SÁCH GIẢNG VIÊN, NGHIÊN CỨU VIÊN</b></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-7">
-                    <div class="row align-items-center">
-                        <div class="col-lg-10 col-xl-10">
-                            <div class="row align-items-center">
-                                <div class="col-md-3 my-2 my-md-0">
-                                    <div class="input-icon">
-                                        <input type="text" class="form-control"
-                                               placeholder="Tên..."
-                                               id="kt_datatable_search_query" />
-                                        <span>
-                                            <i class="flaticon2-search-1 text-muted"></i>
-                                        </span>
+    </div></div>
+    <!-- Modal-->
+    <div class="modal fade " id="list-researcher-candidates" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>DANH SÁCH GIẢNG VIÊN, NGHIÊN CỨU VIÊN</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="mb-7">
+                        <div class="row align-items-center">
+                            <div class="col-lg-10 col-xl-10">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3 my-2 my-md-0">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên..."
+                                                   id="kt_datatable_search_query" />
+                                            <span>
+                                                <i class="flaticon2-search-1 text-muted"></i>
+                                            </span>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-md-3 my-2 my-md-0">
-                                    <div class="d-flex align-items-center">
-                                        <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
-                                        <select class="form-control"
-                                                id="search_nganh_modal">
-                                            <option label="Label"></option>
-                                            <option value="">Khoa học máy tính</option>
-                                            <option value="1">Toán học</option>
-                                            <option value="2">Kinh tế</option>
-                                        </select>
+                                    <div class="col-md-3 my-2 my-md-0">
+                                        <div class="d-flex align-items-center">
+                                            <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
+                                            <select class="form-control"
+                                                    id="search_nganh_modal">
+                                                <option label="Label"></option>
+                                                <option value="">Khoa học máy tính</option>
+                                                <option value="1">Toán học</option>
+                                                <option value="2">Kinh tế</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4 my-2 my-md-0">
-                                    <div class="d-flex align-items-center">
-                                        <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
-                                        <select class="form-control"
-                                                id="search_coso_modal">
-                                            <option label="Label"></option>
-                                            <option value="">FPTU HN</option>
-                                            <option value="1">FPTU Cần Thơ</option>
-                                        </select>
+                                    <div class="col-md-4 my-2 my-md-0">
+                                        <div class="d-flex align-items-center">
+                                            <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
+                                            <select class="form-control"
+                                                    id="search_coso_modal">
+                                                <option label="Label"></option>
+                                                <option value="">FPTU HN</option>
+                                                <option value="1">FPTU Cần Thơ</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                    <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
+                                        <a href="#"
+                                           class="btn btn-light-primary px-6 font-weight-bold">
+                                            Tìm kiếm
+                                        </a>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
-                                    <a href="#"
-                                       class="btn btn-light-primary px-6 font-weight-bold">
-                                        Tìm kiếm
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
 
                             </div>
                         </div>
-                        <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
-
-                        </div>
                     </div>
+                    <table class="table table-bordered table-checkable" id="kt_datatable">
+                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tên</th><th>chức vụ</th><th>số bài báo</th><th>Đăng hồ sơ</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>Nguyên Trân</td><td>Giảng viên</td><td>22</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>2</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>3</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>3</td><td>Sơn Bá</td><td>Giảng viên</td><td>6</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>4</td><td>Dũng Power</td><td>Giảng viên</td><td>9</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>5</td><td>Nguyên Trân</td><td>Giảng viên</td><td>8</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>6</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>7</td><td>Sơn Bá</td><td>Giảng viên</td><td>16</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>8</td><td>Dũng Power</td><td>Giảng viên</td><td>13</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                            <tr><td>9</td><td>Nguyên Trân</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table class="table table-bordered table-checkable" id="kt_datatable">
-                    <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tên</th><th>chức vụ</th><th>số bài báo</th><th>Đăng hồ sơ</th></tr></thead>
-                    <tbody>
-                        <tr><td>1</td><td>Nguyên Trân</td><td>Giảng viên</td><td>22</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>2</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>3</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>3</td><td>Sơn Bá</td><td>Giảng viên</td><td>6</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>4</td><td>Dũng Power</td><td>Giảng viên</td><td>9</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>5</td><td>Nguyên Trân</td><td>Giảng viên</td><td>8</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>6</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>7</td><td>Sơn Bá</td><td>Giảng viên</td><td>16</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>8</td><td>Dũng Power</td><td>Giảng viên</td><td>13</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>9</td><td>Nguyên Trân</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@section scripts{
-    <script>
-        var KTDatatablesBasicBasic = function () {
+    @section scripts{
+        <script>
+            var KTDatatablesBasicBasic = function () {
 
-            var initTable1 = function () {
-                var table = $('#kt_datatable');
+                var initTable1 = function () {
+                    var table = $('#kt_datatable');
 
-                // begin first table
-                table.DataTable({
-                    responsive: true,
+                    // begin first table
+                    table.DataTable({
+                        responsive: true,
 
-                    // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                        // DOM Layout settings
+                        dom: `<'row'<'col-sm-12'tr>>
+                                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
-                    lengthMenu: [5, 10, 25, 50],
+                        lengthMenu: [5, 10, 25, 50],
 
-                    pageLength: 10,
+                        pageLength: 10,
 
-                    language: {
-                        'lengthMenu': 'Display _MENU_',
-                    },
+                        language: {
+                            'lengthMenu': 'Display _MENU_',
+                        },
 
-                    // Order settings
-                    order: [[1, 'desc']],
+                        // Order settings
+                        order: [[1, 'desc']],
 
-                    columnDefs: [
-                        {
-                            "targets": 1,
-                            "render": function (data, type, row, meta) {
-                                return "<a href='Researchers/ViewInfo'>" + data + "</a>"
-                                return "<a href='#'>" + data + "</a>"
+                        columnDefs: [
+                            {
+                                "targets": 1,
+                                "render": function (data, type, row, meta) {
+                                    return "<a href='Researchers/ViewInfo'>" + data + "</a>"
+                                    return "<a href='#'>" + data + "</a>"
 
+                                }
                             }
-                        }
-                    ],
-                });
-
-                table.on('change', '.group-checkable', function () {
-                    var set = $(this).closest('table').find('td:first-child .checkable');
-                    var checked = $(this).is(':checked');
-
-                    $(set).each(function () {
-                        if (checked) {
-                            $(this).prop('checked', true);
-                            $(this).closest('tr').addClass('active');
-                        }
-                        else {
-                            $(this).prop('checked', false);
-                            $(this).closest('tr').removeClass('active');
-                        }
+                        ],
                     });
-                });
 
-                table.on('change', 'tbody tr .checkbox', function () {
-                    $(this).parents('tr').toggleClass('active');
-                });
-            };
+                    table.on('change', '.group-checkable', function () {
+                        var set = $(this).closest('table').find('td:first-child .checkable');
+                        var checked = $(this).is(':checked');
 
-            var initTable2 = function () {
-                var table = $('#kt_datatable_2');
-
-                // begin first table
-                table.DataTable({
-                    responsive: true,
-
-                    // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                    lengthMenu: [5, 10, 25, 50],
-
-                    pageLength: 10,
-
-                    language: {
-                        'lengthMenu': 'Display _MENU_',
-                    },
-
-                    // Order settings
-                    // order: [[0, 'desc']],
-
-                    columnDefs: [
-
-                    ],
-                });
-
-                table.on('change', '.group-checkable', function () {
-                    var set = $(this).closest('table').find('td:first-child .checkable');
-                    var checked = $(this).is(':checked');
-
-                    $(set).each(function () {
-                        if (checked) {
-                            $(this).prop('checked', true);
-                            $(this).closest('tr').addClass('active');
-                        }
-                        else {
-                            $(this).prop('checked', false);
-                            $(this).closest('tr').removeClass('active');
-                        }
+                        $(set).each(function () {
+                            if (checked) {
+                                $(this).prop('checked', true);
+                                $(this).closest('tr').addClass('active');
+                            }
+                            else {
+                                $(this).prop('checked', false);
+                                $(this).closest('tr').removeClass('active');
+                            }
+                        });
                     });
+
+                    table.on('change', 'tbody tr .checkbox', function () {
+                        $(this).parents('tr').toggleClass('active');
+                    });
+                };
+
+                var initTable2 = function () {
+                    var table = $('#kt_datatable_2');
+
+                    // begin first table
+                    table.DataTable({
+                        responsive: true,
+
+                        // DOM Layout settings
+                        dom: `<'row'<'col-sm-12'tr>>
+                                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                        lengthMenu: [5, 10, 25, 50],
+
+                        pageLength: 10,
+
+                        language: {
+                            'lengthMenu': 'Display _MENU_',
+                        },
+
+                        // Order settings
+                        // order: [[0, 'desc']],
+
+                        columnDefs: [
+
+                        ],
+                    });
+
+                    table.on('change', '.group-checkable', function () {
+                        var set = $(this).closest('table').find('td:first-child .checkable');
+                        var checked = $(this).is(':checked');
+
+                        $(set).each(function () {
+                            if (checked) {
+                                $(this).prop('checked', true);
+                                $(this).closest('tr').addClass('active');
+                            }
+                            else {
+                                $(this).prop('checked', false);
+                                $(this).closest('tr').removeClass('active');
+                            }
+                        });
+                    });
+
+                    table.on('change', 'tbody tr .checkbox', function () {
+                        $(this).parents('tr').toggleClass('active');
+                    });
+                };
+
+                return {
+
+                    //main function to initiate the module
+                    init: function () {
+                        initTable1();
+                        initTable2();
+                    }
+                };
+            }();
+
+            jQuery(document).ready(function () {
+                KTDatatablesBasicBasic.init();
+            });
+            //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
+            list_select = {
+                "search_chucvu_modal": "Chọn chức vụ",
+                "search_coso_modal": "Chọn cơ sở"
+            }
+            for (let i in list_select) {
+                $('#' + i).select2({
+                    placeholder: list_select[i],
+                    allowClear: true
                 });
+            }
+            //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
 
-                table.on('change', 'tbody tr .checkbox', function () {
-                    $(this).parents('tr').toggleClass('active');
-                });
-            };
-
-            return {
-
-                //main function to initiate the module
-                init: function () {
-                    initTable1();
-                    initTable2();
-                }
-            };
-        }();
-
-        jQuery(document).ready(function () {
-            KTDatatablesBasicBasic.init();
-        });
-        //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-        list_select = {
-            "search_chucvu_modal": "Chọn chức vụ",
-            "search_coso_modal": "Chọn cơ sở"
-        }
-        for (let i in list_select) {
-            $('#' + i).select2({
-                placeholder: list_select[i],
+        </script>
+        <script>
+            $('#search_nganh').select2({
+                placeholder: 'Chọn ngành',
                 allowClear: true
             });
-        }
-        //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-
-    </script>
-    <script>
-        $('#search_nganh').select2({
-            placeholder: 'Chọn ngành',
-            allowClear: true
-        });
-        $('#search_coso').select2({
-            placeholder: 'Chọn cơ sở',
-            allowClear: true,
-        });
-    </script>
-}
+            $('#search_coso').select2({
+                placeholder: 'Chọn cơ sở',
+                allowClear: true,
+            });
+        </script>
+    }
