@@ -59,7 +59,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult cloneAA(AcademicActivityRepo.exBaseAA obj)
+        public JsonResult cloneAA(AcademicActivityRepo.cloneBaseAA obj)
         {
             bool res = repo.cloneAA(obj);
             if (res)
