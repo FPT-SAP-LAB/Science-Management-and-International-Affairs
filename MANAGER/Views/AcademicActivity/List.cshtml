@@ -70,240 +70,240 @@
             </tbody>
         </table>
     </div>
-    </div>
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title font-weight-bolder">Thêm hoạt động học thuật</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Tiêu đề</label>
-                            <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
-                        </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Loại</label>
-                            <select class="form-control" required id="add_category">
-                                @foreach (var item in ViewBag.AAType)
-                                {
-                                    <option value="@item.activity_type_id">@item.activity_type_name</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm hoạt động học thuật</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Loại</label>
+                        <select class="form-control" required id="add_category">
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">đến</label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_add_to" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                            <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" />
                         </div>
                     </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" />
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title font-weight-bolder">Chỉnh sửa hoạt động học thuật</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Tiêu đề</label>
-                            <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
-                        </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Loại</label>
-                            <select class="form-control" required id="edit_category">
-                                @foreach (var item in ViewBag.AAType)
-                                {
-                                    <option value="@item.activity_type_id">@item.activity_type_name</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_edit_from" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa hoạt động học thuật</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Loại</label>
+                        <select class="form-control" required id="edit_category">
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">đến</label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_edit_to" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                            <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
                         </div>
                     </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title font-weight-bolder">Clone sự kiện</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Tiêu đề</label>
-                            <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title" />
-                        </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="font-weight-bolder">Loại</label>
-                            <select class="form-control" required id="clone_category">
-                                @foreach (var item in ViewBag.AAType)
-                                {
-                                    <option value="@item.activity_type_id">@item.activity_type_name</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_from" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_clone_from" autocomplete="off" id="clone_from" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_clone_from" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
+<div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Clone sự kiện</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="font-weight-bolder">Loại</label>
+                        <select class="form-control" required id="clone_category">
+                            @foreach (var item in ViewBag.AAType)
+                            {
+                                <option value="@item.activity_type_id">@item.activity_type_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_from" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_clone_from" autocomplete="off" id="clone_from" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_clone_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xl-3 col-lg-3">
-                            <label class="col-form-label font-weight-bolder">đến</label>
-                            <div class="form-group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
-                                    <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_to" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_clone_to" autocomplete="off" id="clone_to" />
-                                        <div class="input-group-append" data-target="#kt_datetimepicker_clone_to" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <i class="ki ki-calendar"></i>
-                                            </span>
-                                        </div>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_clone_to" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_clone_to" autocomplete="off" id="clone_to" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_clone_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-6 col-lg-6">
-                            <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                            <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location" />
-                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label font-weight-bolder">Chọn các hạng mục cần sao chép</label>
-                        <div class="col-10 col-form-label">
-                            <div class="checkbox-list">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" value="1" />
-                                    <span></span>
-                                    Kinh phí
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" value="2" />
-                                    <span></span>
-                                    Đơn vị đồng tổ chức
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" value="3" />
-                                    <span></span>
-                                    Nội dung
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" value="4" />
-                                    <span></span>
-                                    Đăng kí tham dự
-                                </label>
-                            </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Địa điểm</label>
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="clone_location" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label font-weight-bolder">Chọn các hạng mục cần sao chép</label>
+                    <div class="col-10 col-form-label">
+                        <div class="checkbox-list">
+                            <label class="checkbox">
+                                <input type="checkbox" value="KP" name="clone-content" />
+                                <span></span>
+                                Kinh phí
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" value="DTC" name="clone-content" />
+                                <span></span>
+                                Đơn vị đồng tổ chức
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" value="ND" name="clone-content" />
+                                <span></span>
+                                Nội dung
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" value="TD" name="clone-content" />
+                                <span></span>
+                                Đăng kí tham dự
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal">Xác nhận</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_clone">Xác nhận</button>
             </div>
         </div>
     </div>
+</div>
 
-    @section scripts{
-        <script>
+@section scripts{
+    <script>
         let id_edit = "";
         let id_clone = "";
         let stt = 1;
@@ -374,7 +374,12 @@
         }
 
         function goDetail(id) {
-            window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/DetailOfAcademicActivity/Index');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+            };
+            xhr.send('id=' + id);
         }
 
 
@@ -472,6 +477,68 @@
 
         function refreshData(val) {
             alert(val);
+        }
+
+        $('#btn_clone').click(function () {
+            let activity_name = document.getElementById('clone_title').value;
+            let activity_type_id = document.getElementById('clone_category').value;
+            let from = document.getElementById('clone_from').value;
+            let to = document.getElementById('clone_to').value;
+            let location = document.getElementById('clone_location').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                return false;
+            }
+            if (from > to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
+            let object = {
+                id: id_clone,
+                activity_name: activity_name,
+                activity_type_id: activity_type_id,
+                location: location,
+                from: from,
+                to: to,
+                content: getSelectedCheckboxValues('clone-content')
+            }
+            $.ajax({
+                url: '/AcademicActivity/cloneAA',
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#cloneModal');
+                        unCheckbox('#cloneModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+
+        });
+
+        function unCheckbox(id) {
+            $(id).find('input:checkbox')
+                .each(function () {
+                    $(this).prop("checked", false);
+                });
+        }
+
+        function getSelectedCheckboxValues(name) {
+            const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            let values = [];
+            checkboxes.forEach((checkbox) => {
+                values.push(checkbox.value);
+            });
+            return values;
         }
 
         $('#search_year').on('changeDate', function () {
@@ -589,5 +656,5 @@
             KTBootstrapDatetimepicker.init();
             KTBootstrapDateYeartimepicker.init();
         });
-        </script>
-    }
+    </script>
+}
