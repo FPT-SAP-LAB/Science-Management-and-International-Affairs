@@ -1,6 +1,8 @@
-﻿using BLL.ScienceManagement.MasterData;
+﻿using BLL.ScienceManagement.Comment;
+using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ namespace GUEST.Controllers
     {
         PaperRepo pr = new PaperRepo();
         MasterDataRepo md = new MasterDataRepo();
+        CommentRepo cr = new CommentRepo();
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bài báo";
@@ -40,6 +43,8 @@ namespace GUEST.Controllers
             DetailPaper item = pr.getDetail(id);
             ViewBag.Paper = item;
 
+            int request_id = item.request_id;
+
             string lang = "";
             if (Request.Cookies["language_name"] != null)
             {
@@ -53,6 +58,13 @@ namespace GUEST.Controllers
 
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
+
+            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            ViewBag.listAuthor = listAuthor;
+            ViewBag.numberAuthor = listAuthor.Count();
+
+            List<DetailComment> listCmt = cr.getComment(request_id);
+            ViewBag.cmt = listCmt;
 
             return View();
         }
