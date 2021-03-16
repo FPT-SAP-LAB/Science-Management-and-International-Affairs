@@ -18,7 +18,6 @@ namespace ENTITIES
         public int conference_support_id { get; set; }
         public bool is_accepted { get; set; }
     
-        public virtual ConferenceSupport ConferenceSupport { get; set; }
         public virtual Criterion Criterion { get; set; }
     }
 }

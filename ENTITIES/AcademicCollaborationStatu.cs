@@ -17,13 +17,14 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AcademicCollaborationStatu()
         {
-            this.AcademicCollaborationStatusTypes = new HashSet<AcademicCollaborationStatusType>();
+            this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
         }
     
         public int collab_status_id { get; set; }
         public string collab_status_name { get; set; }
+        public Nullable<int> status_type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicCollaborationStatusType> AcademicCollaborationStatusTypes { get; set; }
+        public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
     }
 }
