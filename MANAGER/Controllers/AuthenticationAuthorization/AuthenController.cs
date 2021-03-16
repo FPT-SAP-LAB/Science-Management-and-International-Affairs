@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ENTITIES;
-using BLL;
+using BLL.Authen;
 using Google.Apis.Auth;
 
 namespace MANAGER.Controllers.AuthenticationAuthorization
@@ -12,7 +12,7 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
     public class AuthenController : Controller
     {
         // GET: Authen
-        private static BLL.Authen.Login authen = new BLL.Authen.Login();
+        private static Login authen = new Login();
         public ActionResult Login()
         {
             return View();
@@ -28,7 +28,6 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
             }
             return Redirect(url);
         }
-        private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
         public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
         {
             GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(providerToken);
