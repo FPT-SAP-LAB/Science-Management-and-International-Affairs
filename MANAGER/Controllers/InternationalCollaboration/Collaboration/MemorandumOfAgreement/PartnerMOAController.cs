@@ -48,7 +48,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                moa.deleteMOAPartner(moa_partner_id);
+                string id = Session["moa_detail_id"].ToString();
+                moa.deleteMOAPartner(int.Parse(id), moa_partner_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
