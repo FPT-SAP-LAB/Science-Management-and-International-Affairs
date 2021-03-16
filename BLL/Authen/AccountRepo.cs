@@ -11,9 +11,6 @@ namespace BLL.Authen
     class AccountRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-
-
-
         public class Account_Rights
         {
             public int ID { get; set; }
