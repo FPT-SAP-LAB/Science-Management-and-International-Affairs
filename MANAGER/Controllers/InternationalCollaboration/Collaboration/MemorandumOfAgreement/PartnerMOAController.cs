@@ -48,7 +48,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                moa.deleteMOAPartner(moa_partner_id);
+                //moa.deleteMOAPartner(moa_partner_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

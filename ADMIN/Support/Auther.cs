@@ -1,17 +1,14 @@
-﻿using QUANGHANH2.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Filters;
 
-namespace QUANGHANH2.SupportClass
+namespace ADMIN.Support
 {
     public class Auther : ActionFilterAttribute, IAuthorizationFilter
     {
         public string RightID { get; set; }
-
         public void OnAuthorization(AuthorizationContext filterContext)
         {
             if (string.IsNullOrEmpty(Convert.ToString(filterContext.HttpContext.Session["UserID"])))

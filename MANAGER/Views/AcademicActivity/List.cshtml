@@ -47,7 +47,7 @@
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
                 <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" onchange="refreshData(this.value)" />
+                    <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" />
                     <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
                         <span class="input-group-text">
                             <i class="ki ki-calendar"></i>
@@ -374,12 +374,7 @@
         }
 
         function goDetail(id) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/DetailOfAcademicActivity/Index');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-            };
-            xhr.send('id=' + id);
+            window.location.href = '/DetailOfAcademicActivity/Index?id' + id;
         }
 
 
@@ -475,9 +470,9 @@
             });
         });
 
-        function refreshData(val) {
-            alert(val);
-        }
+        $("#kt_datetimepicker_3_year").on("change.datetimepicker", ({ date, oldDate }) => {
+            datatable.ajax.reload();
+        });
 
         $('#btn_clone').click(function () {
             let activity_name = document.getElementById('clone_title').value;

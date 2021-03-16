@@ -42,8 +42,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            int res = repo.AddAA(obj);
-            if (res != 0)
+            bool res = repo.AddAA(obj);
+            if (res)
             {
                 return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
             }
