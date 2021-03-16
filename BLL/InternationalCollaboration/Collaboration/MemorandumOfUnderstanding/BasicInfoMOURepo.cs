@@ -213,7 +213,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return newObj;
         }
-
         public void addExtraMOU(ExMOUAdd input, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -256,7 +255,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-
         public void editExtraMOU(ExMOUAdd input, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
