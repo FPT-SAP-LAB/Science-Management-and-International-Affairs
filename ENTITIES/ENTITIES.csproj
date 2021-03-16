@@ -219,6 +219,13 @@
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOABasicInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExtraMOA.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\MOABasicInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\PartnerScopeInfoMOA.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\BasicInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomOffice.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomPartner.cs" />
@@ -482,7 +489,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\" />
     <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\" />
     <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\" />
     <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\" />
