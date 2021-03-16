@@ -197,7 +197,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     int activity_id = AddAA(clone);
                     if (obj.content.Contains("KP"))
                     {
-                        List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.);
+                        //List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.);
                     }
                     if (obj.content.Contains("DTC"))
                     {
