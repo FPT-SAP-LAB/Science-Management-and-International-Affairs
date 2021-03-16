@@ -151,6 +151,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
@@ -2234,13 +2235,13 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Procedure.cshtml" />
     <Content Include="Views\Partner\Add.cshtml" />
     <Content Include="Views\Partner\PartialView\Partner_Modal_View_History.cshtml" />
+    <Content Include="Views\AcademicActivityType\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
-    <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
   </ItemGroup>
