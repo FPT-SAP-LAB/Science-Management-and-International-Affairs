@@ -6,20 +6,20 @@
 
 <div class="card card-custom">
     <div class="card-body">
-        <div class="row mb-7">
-                <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                    <div class="dropdown dropdown-inline mr-2">
-                        <a href="/ConferenceSponsor/Add"
-                                class="btn btn-light-success font-weight-bolder">
-                            Thêm đề nghị
-                        </a>
-                    </div>
+        <div class="row">
+            <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                <div class="dropdown dropdown-inline mr-2">
+                    <a href="/ConferenceSponsor/Add"
+                       class="btn btn-light-success font-weight-bolder">
+                        Thêm đề nghị
+                    </a>
                 </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-xl-12 col-xxl-12 table-responsive">
                 <br />
-                <table id="mylist" class="table table-bordered table-checkable ">
+                <table id="mytable" class="table table-bordered table-checkable ">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -30,58 +30,6 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Advances in Intelligent Systems and Computing</td>
-                            <td>Toward an Privacy Protection Based on Access Control Model in Hybrid Cloud for Healthcare Systems</td>
-                            <td>1/1/2020</td>
-                            <td>Đang duyệt</td>
-                            <td>
-                                <a href='/ConferenceSponsor/Detail?id=1' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Discovered changes in rice occupation with satellite images based on random forest approach</td>
-                            <td>Proceedings of the 4th International Conference on Machine Learning and Soft Computing</td>
-                            <td>1/1/2020</td>
-                            <td>Được tham dự</td>
-                            <td>
-                                <a href='/ConferenceSponsor/Detail?id=2' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Movie Recommender Systems Made Through Tag Interpolation</td>
-                            <td>Proceedings of the 4th International Conference on Machine Learning and Soft Computing</td>
-                            <td>1/1/2020</td>
-                            <td>Đã duyệt</td>
-                            <td>
-                                <a href='/ConferenceSponsor/Detail?id=3' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Attractiveness of Online Marketing in the Age of Industry 4.0</td>
-                            <td>ICEBA 2020: Proceedings of the 2020 The 6th International Conference on E-Business and Applications</td>
-                            <td>1/1/2020</td>
-                            <td>Chưa&nbsp;hoàn&nbsp;ứng</td>
-                            <td>
-                                <a href='/ConferenceSponsor/Detail?id=4' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Automatic Keywords-based Classification of Vietnamese Texts</td>
-                            <td>2020 RIVF International Conference on Computing and Communication Technologies</td>
-                            <td>1/1/2020</td>
-                            <td>Đã&nbsp;hoàn&nbsp;ứng</td>
-                            <td>
-                                <a href='/ConferenceSponsor/Detail?id=5' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -91,6 +39,54 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
-        $("#mylist").DataTable();
+        var label_status = {
+            1: "primary",
+            2: "success",
+            3: "success",
+            4: "secondary",
+            5: "success"
+        }
+
+        $(document).ready(function () {
+            $("#mytable").DataTable({
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                pageLength: 10,
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+                serverSide: true,
+                ajax: {
+                    url: "/ConferenceSponsor/List",
+                    datatype: "json",
+                    //data: {
+                    //},
+                    cache: true
+                },
+                columns: [
+                    { data: "RowNumber", name: "RowNumber", orderable: false },
+                    { data: "PaperName", name: "PaperName" },
+                    { data: "ConferenceName", name: "ConferenceName" },
+                    { data: "CreatedDate", name: "Date" },
+                    {
+                        data: {}, name: "StatusID", render: function (data) {
+                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline mr-2'>" + data.StatusName + "</span>"
+                        }, width: "77px", className: "text-center"
+                    },
+                    {
+                        data: "PaperName", orderable: false, render: function (data) {
+                            return "<a href='/ConferenceSponsor/Detail?id=5' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
+                        }
+                    }
+                ],
+                order: [3, "desc"]
+            });
+        });
     </script>
 }

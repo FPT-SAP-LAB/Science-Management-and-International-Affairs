@@ -24,9 +24,9 @@
     margin-right: 1rem;
 }
 
-.news * {
-    cursor: pointer;
-}
+    .news * {
+        cursor: pointer;
+    }
 
 .news-thumbnail {
     position: relative;
@@ -54,16 +54,22 @@ h3.news-title {
 /* .card {
     margin-bottom: 1rem !important;
 } */
-.add_request_btn{
+.add_request_btn {
     padding-left: 2rem;
     padding-top: 1rem;
     font-size: 14px;
     padding-bottom: 1rem;
-    cursor:pointer
+    cursor: pointer
 }
-.add_request_btn:active {
-color:cornflowerblue;
-}
+
+    .add_request_btn:active {
+        color: cornflowerblue;
+    }
+
     .add_request_btn:hover {
         color: cornflowerblue;
     }
+
+.field-value {
+    font-weight: bold !important;
+}

@@ -1,12 +1,9 @@
 ﻿
 @{
     ViewBag.Title = "Chi tiết đối tác";
-    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    #div-image {
-        height: fit-content;
-    }
 
     #avata {
         width: 100%;
@@ -16,52 +13,66 @@
 </style>
 
 <div class="row justify-content-center" id="card-container">
-    <div class="card card-custom col-xl-8 col-lg-8 col-md-8 col-sm-8 mr-3" id="main-card">
+    <div class="card card-custom col-xl-12 col-lg-12 col-md-12 col-sm-12" id="main-card">
         <div class="card-body p-0 ">
             <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
                 <div class="col-xl-12 col-xxl-12">
                     <div class="tabbable-line">
                         <div class="tab-content" id="myTabContent">
-                            <div class="row justify-content-center mb-5">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <label class="font-weight-bolder">Tên đối tác</label>
-                                    <label style="color:red">*</label>
-                                    <label style="font-style: italic;">
-                                    </label>
-                                    <input value="Bunkyo" class="form-control" type="text" placeholder="Tên đối tác" autocomplete="off" required id="partner_name" />
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <label class="font-weight-bolder">Quốc gia</label>
-                                    <label style="color:red">*</label>
-                                    <label style="font-style: italic;">
-                                    </label>
-                                    <input value="Nhật Bản" class="form-control" type="text" placeholder="Quốc gia" autocomplete="off" required id="partner_nation" />
-                                </div>
-                            </div>
-                            <div class="row justify-content-center mb-5">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <label class="font-weight-bolder">Lĩnh vực</label>
-                                    <label style="color:red">*</label>
-                                    <label style="font-style: italic;">
-                                    </label>
-                                    <input value="IA, BA" disabled class="form-control" type="text" placeholder="Lĩnh vực" autocomplete="off" required id="partner_specialization" />
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <label class="font-weight-bolder">Website</label>
-                                    <label style="font-style: italic;">
-                                    </label>
-                                    <input value="http://www.sbi-u.ac.jp/" class="form-control" type="text" placeholder="Website" autocomplete="off" required id="partner_website" />
-                                </div>
-                            </div>
-                            <div class="row justify-content-center mb-5">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <label class="font-weight-bolder">Địa chỉ</label>
-                                    <label style="font-style: italic;">
-                                    </label>
-                                    <input value="Address:9th Floor, Pacific Century Place Marunouchi, 1-11-1 Marunouchi, Chiyoda-ku, Tokyo" class="form-control" type="text" placeholder="Địa chỉ" autocomplete="off" required id="partner_address" />
-                                </div>
-                            </div>
+                            <div class="row mb-5">
 
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-center">
+                                    <label class="font-weight-bolder">Ảnh đại diện</label>
+                                    <div id="image ">
+                                        <form id="form1" runat="server">
+                                            <img id="avata" src="~/Content/assets/media/custom-image/Placeholder.jpg" />
+                                            <input class="mt-1" type='file' id="imgInp" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <div class="row justify-content-center mb-5">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <label class="font-weight-bolder">Tên đối tác</label>
+                                            <label style="color:red">*</label>
+                                            <label style="font-style: italic;">
+                                            </label>
+                                            <input value="Bunkyo" class="form-control" type="text" placeholder="Tên đối tác" autocomplete="off" required id="partner_name" />
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <label class="font-weight-bolder">Quốc gia</label>
+                                            <label style="color:red">*</label>
+                                            <label style="font-style: italic;">
+                                            </label>
+                                            <input value="Nhật Bản" class="form-control" type="text" placeholder="Quốc gia" autocomplete="off" required id="partner_nation" />
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mb-5">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <label class="font-weight-bolder">Lĩnh vực</label>
+                                            <label style="color:red">*</label>
+                                            <label style="font-style: italic;">
+                                            </label>
+                                            <input value="IA, BA" disabled class="form-control" type="text" placeholder="Lĩnh vực" autocomplete="off" required id="partner_specialization" />
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <label class="font-weight-bolder">Website</label>
+                                            <label style="font-style: italic;">
+                                            </label>
+                                            <input value="http://www.sbi-u.ac.jp/" class="form-control" type="text" placeholder="Website" autocomplete="off" required id="partner_website" />
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mb-5">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <label class="font-weight-bolder">Địa chỉ</label>
+                                            <label style="font-style: italic;">
+                                            </label>
+                                            <input value="Address:9th Floor, Pacific Century Place Marunouchi, 1-11-1 Marunouchi, Chiyoda-ku, Tokyo" class="form-control" type="text" placeholder="Địa chỉ" autocomplete="off" required id="partner_address" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row justify-content-center mb-5">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Lịch sử hoạt động</label>
@@ -146,32 +157,8 @@
                             <div class="row float-right mb-5">
                                 <a class="btn btn-sm btn-secondary px-6 font-weight-bold mx-1">Quay về</a>
                                 <a class="btn btn-sm btn-light-success px-6 font-weight-bold mx-1" id="submit">Lưu</a>
-                                <a class="btn btn-sm btn-light-primary px-6 font-weight-bold mx-1">Xem trước</a>
+                                <a id="preview" class="btn btn-sm btn-light-primary px-6 font-weight-bold mx-1">Xem trước</a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-custom col-xl-3 col-lg-3 col-md-3 col-sm-3" id="div-image">
-        <div class="card-body p-0 ">
-            <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
-                <div class="row mb-5 justify-content-center">
-                    <div class="col-8 text-center">
-                        <label class="font-weight-bolder">Ảnh đại diện</label>
-                        <div id="image ">
-                            <form id="form1" runat="server">
-                                <img id="avata" src="~/Content/assets/media/custom-image/Placeholder.jpg" />
-                                <input class="" type='file' id="imgInp" />
-                                @*<div class="uppy row" id="mou_upload">
-                                        <div class="uppy-wrapper col-3"></div>
-                                        <div class="uppy-list col-7"></div>
-                                        <div class="uppy-status"></div>
-                                        <div class="uppy-informer uppy-informer-min"></div>
-                                    </div>*@
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -180,6 +167,7 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/Partner/Preview.js"></script>
     <script>
         var KTSummernoteDemo = function () {
             // Private functions

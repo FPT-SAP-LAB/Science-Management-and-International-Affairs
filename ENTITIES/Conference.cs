@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Conference()
         {
-            this.ConferenceSupports = new HashSet<ConferenceSupport>();
+            this.RequestConferences = new HashSet<RequestConference>();
         }
     
         public int conference_id { get; set; }
@@ -32,7 +32,7 @@ namespace ENTITIES
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceSupport> ConferenceSupports { get; set; }
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
         public virtual Formality Formality { get; set; }
     }
 }
