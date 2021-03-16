@@ -7,11 +7,9 @@
     .custom-btn {
         width: 25% !important;
     }
-
     .modal-title {
         font-size: 1.5rem !important;
     }
-
     .modal {
         overflow-y: auto;
     }
@@ -308,7 +306,6 @@
         let id_clone = "";
         let stt = 1;
         document.getElementById('search_year').value = new Date().getFullYear();
-
         function saveTempIdDelete(id) {
             Swal.fire({
                 title: "Bạn có muốn xóa hoạt động học thuật này không ?",
@@ -367,12 +364,10 @@
         function saveTempIdCheckin(id) {
             window.location.href = "/CheckIn/List?id=" + id;
         }
-
         function showCloneModal(id) {
             id_clone = id;
             $('#cloneModal').modal('show');
         }
-
         function goDetail(id) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/DetailOfAcademicActivity/Index');
@@ -381,8 +376,6 @@
             };
             xhr.send('id=' + id);
         }
-
-
         $('#btn_add').click(function () {
             let activity_name = document.getElementById('add_title').value;
             let activity_type_id = document.getElementById('add_category').value;
@@ -424,14 +417,12 @@
                 }
             });
         });
-
         function clearModal(id) {
             $(id).find('input:text, input:password, select')
                 .each(function () {
                     $(this).val('');
                 });
         }
-
         $('#btn_edit').click(function () {
             let activity_name = document.getElementById('edit_title').value;
             let activity_type_id = document.getElementById('edit_category').value;
@@ -474,11 +465,9 @@
                 }
             });
         });
-
         function refreshData(val) {
             alert(val);
         }
-
         $('#btn_clone').click(function () {
             let activity_name = document.getElementById('clone_title').value;
             let activity_type_id = document.getElementById('clone_category').value;
@@ -522,16 +511,13 @@
                     alert(data)
                 }
             });
-
         });
-
         function unCheckbox(id) {
             $(id).find('input:checkbox')
                 .each(function () {
                     $(this).prop("checked", false);
                 });
         }
-
         function getSelectedCheckboxValues(name) {
             const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
             let values = [];
@@ -540,11 +526,9 @@
             });
             return values;
         }
-
         $('#search_year').on('changeDate', function () {
             alert($('#search_year').val());
         });
-
         var datatable = $("#my_list").DataTable({
                 oLanguage: {
                     oPaginate: {
@@ -627,7 +611,6 @@
                     },
                 ]
             });
-
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({
