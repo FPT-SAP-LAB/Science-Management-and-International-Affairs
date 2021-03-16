@@ -180,7 +180,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool cloneAA(extendBaseAA obj)
+        public bool cloneAA(exBaseAA obj)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -376,7 +376,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string from { get; set; }
             public string to { get; set; }
         }
-        public class extendBaseAA : baseAA
+        public class exBaseAA : baseAA
         {
             public int id { get; set; }
             public List<string> content { get; set; }
