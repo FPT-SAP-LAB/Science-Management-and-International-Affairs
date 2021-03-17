@@ -178,7 +178,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool cloneAA(cloneBaseAA obj)
+        public bool clone(cloneBase obj)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -372,7 +372,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string from { get; set; }
             public string to { get; set; }
         }
-        public class cloneBaseAA : baseAA
+        public class cloneBase : baseAA
         {
             public int id { get; set; }
             public List<string> content { get; set; }

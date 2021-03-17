@@ -59,9 +59,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult cloneAA(AcademicActivityRepo.cloneBaseAA obj)
+        public JsonResult clone(AcademicActivityRepo.cloneBase obj)
         {
-            bool res = repo.cloneAA(obj);
+            bool res = repo.clone(obj);
             if (res)
             {
                 return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);
