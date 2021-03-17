@@ -22,14 +22,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             ViewBag.pageTitle = "QUẢN LÝ LOẠI HOẠT ĐỘNG HỌC THUẬT";
             return View();
         }
-        
+
         public ActionResult listAcademicActivityType()
         {
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 List<AcademicActivityType> academicActivityTypes = academicActivityTypeRepo.getlistAcademicActivityType(baseDatatable);
-                return Json(new { success = true, data = academicActivityTypes}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = academicActivityTypes }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

@@ -21,11 +21,12 @@ namespace BLL.InternationalCollaboration.MasterData
                 //List<AcademicActivityType> academicActivityTypes = db.AcademicActivityTypes.ToList();
 
                 List<AcademicActivityType> academicActivityTypes = db.Database.SqlQuery<AcademicActivityType>("select * from SMIA_AcademicActivity.AcademicActivityType " +
-                                                                    "ORDER BY "+ baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                                                                    "ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                                                                     " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY").ToList();
 
                 return academicActivityTypes;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -44,17 +45,19 @@ namespace BLL.InternationalCollaboration.MasterData
                         content = "Tên loại hoạt động học thuật không được để trống."
                     };
                     return alertModal;
-                } else
+                }
+                else
                 {
-                    
+
                 }
 
                 return null;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
-           
+
         }
     }
 }
