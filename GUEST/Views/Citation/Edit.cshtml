@@ -25,16 +25,16 @@
                                     </tr>
                                 </thead>
                                 <tbody id="trichdan_body">
-                                    <tr>
-                                        <td><input class="form-control edit" type="text" value="Google scholar" /></td>
-                                        <td><input class="form-control edit" type="number" value="10" /></td>
-                                        <td><input class="form-control edit" type="text" value="https://scholar.google.com/citations?view_op=list_works&hl=en&user=qbbO_4UAAAAJ" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-control edit" type="text" /></td>
-                                        <td><input class="form-control edit" type="number" min="0" /></td>
-                                        <td><input class="form-control edit" type="text" /></td>
-                                    </tr>
+                                    @{
+                                        foreach (var item in ViewBag.citation)
+                                        {
+                                            <tr>
+                                                <td><input class="form-control edit" type="text" value="@item.source" /></td>
+                                                <td><input class="form-control edit" type="number" value="@item.count" /></td>
+                                                <td><input class="form-control edit" type="text" value="@item.link" /></td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -44,13 +44,6 @@
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
                             <input class="form-control form-control-lg edit" readonly type="text" value="" ; />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("RewardType")</label>
-                            <select id="kieuthuong" class="form-control form-control-lg edit">
-                                <option value="1">@rm.GetString("According")</option>
-                                <option value="2">@rm.GetString("Repre")</option>
-                            </select>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -79,11 +72,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01/01/21-10:00AM</td>
-                                        <td>Ngô Tùng Sơn</td>
-                                        <td>Sao lâu có phản hồi thế em</td>
-                                    </tr>
+                                    @{
+                                        foreach (var item in ViewBag.cmt)
+                                        {
+                                            <tr>
+                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.email</td>
+                                                <td>@item.content</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -94,6 +92,7 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
@@ -101,6 +100,21 @@
             else $(".edit").prop("disabled", false);
 
             $('.citationE').attr('style', 'display:none !important');
+
+            $("#ckfe").val("@ViewBag.author.office_abbreviation");
+            $("#ckfe").trigger('change');
+            $("#add_author_workplace").val("@ViewBag.author.area_id");
+            $("#add_author_workplace").trigger('change');
+            $("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
+            $("#add_author_name").val("@ViewBag.author.name");
+            $("#add_author_title").val("@ViewBag.author.title_id");
+            $("#add_author_title").trigger('change');
+            $("#add_author_contractType").val("@ViewBag.author.contract_id");
+            $("#add_author_contractType").trigger('change');
+            $("#add_author_cmnd").val("@ViewBag.author.identification_number");
+            $("#add_author_tax").val("@ViewBag.author.tax_code");
+            $("#add_author_bank").val("@ViewBag.author.bank_branch");
+            $("#add_author_accno").val("@ViewBag.author.bank_number");
         });
 
         $(".addrow").click(function () {
