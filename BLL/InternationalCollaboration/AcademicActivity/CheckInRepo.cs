@@ -64,7 +64,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     return false;
                 }
             }
-
         }
         public bool Checkout(int participant_id)
         {
@@ -85,7 +84,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     return false;
                 }
             }
-
         }
         public List<PartiRole> GetParticipantRolesByPhase(int phase_id)
         {
