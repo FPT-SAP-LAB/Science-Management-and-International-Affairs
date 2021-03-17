@@ -19,5 +19,17 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult Load_More_List()
+        {
+            try
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

@@ -2290,6 +2290,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\demo_partner_detail_guest.jpg" />
+    <Content Include="Content\Picture1.jpg" />
+    <Content Include="Content\Picture2.jpg" />
+    <Content Include="Content\Picture3.jpg" />
+    <Content Include="Content\Picture4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2392,6 +2396,9 @@
     <Content Include="Views\Researchers\EditInfo.cshtml" />
     <Content Include="Views\AcademicActivity\Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\Long_Term.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_1.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_2.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
