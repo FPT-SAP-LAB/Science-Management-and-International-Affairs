@@ -129,7 +129,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 });
                 db.SaveChanges();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
