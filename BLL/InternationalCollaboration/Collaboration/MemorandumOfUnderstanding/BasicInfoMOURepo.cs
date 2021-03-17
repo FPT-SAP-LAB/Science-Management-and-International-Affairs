@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUBasicInfo;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -382,19 +383,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<Specialization> GetSpecializations()
-        {
-            try
-            {
-                string sql_speList = @"select * from General.Specialization";
-                List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
-                return speList;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         public List<CollaborationScope> GetScopesExMOU(int mou_id)
         {
             try
@@ -413,80 +401,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 throw ex;
             }
-        }
-        public class MOUBasicInfo
-        {
-            public MOUBasicInfo() { }
-            public int mou_id { get; set; }
-            public string mou_code { get; set; }
-            public string evidence { get; set; }
-            public string scopes { get; set; }
-            public string reason { get; set; }
-            public DateTime mou_end_date { get; set; }
-            public DateTime mou_start_date { get; set; }
-            public string mou_end_date_string { get; set; }
-            public string mou_start_date_string { get; set; }
-            public string mou_note { get; set; }
-            public string office_abbreviation { get; set; }
-            public string mou_status_name { get; set; }
-            public int office_id { get; set; }
-            public int mou_status_id { get; set; }
-        }
-        public class ExtraMOU
-        {
-            public string mou_bonus_code { get; set; }
-            public int mou_bonus_id { get; set; }
-            public string mou_bonus_decision_date_string { get; set; }
-            public string mou_bonus_end_date_string { get; set; }
-            public DateTime mou_bonus_end_date { get; set; }
-            public DateTime mou_bonus_decision_date { get; set; }
-            public string partner_name { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string evidence { get; set; }
-            public int mou_id { get; set; }
-            public int partner_id { get; set; }
-            public int scope_id { get; set; }
-            public List<CustomPartner> ListPartnerExMOU { get; set; }
-        }
-        public class CustomPartner
-        {
-            public CustomPartner(int partner_id, string partner_name)
-            {
-                this.partner_id = partner_id;
-                this.partner_name = partner_name;
-            }
-            public CustomPartner() { }
-            public List<CustomScope> ListScopeExMOU { get; set; }
-            public int partner_id { get; set; }
-            public string partner_name { get; set; }
-        }
-        public class CustomScope
-        {
-            public CustomScope(int scope_id, string scope_name)
-            {
-                this.scope_id = scope_id;
-                this.scope_name = scope_name;
-            }
-            public CustomScope() { }
-            public int scope_id { get; set; }
-            public string scope_name { get; set; }
-        }
-        public class ExMOUAdd
-        {
-            public ExMOUAdd() { }
-            public ExBasicInfo ExBasicInfo = new ExBasicInfo();
-            public List<PartnerScopeInfo> PartnerScopeInfo = new List<PartnerScopeInfo>();
-        }
-        public class ExBasicInfo
-        {
-            public string ex_mou_code { get; set; }
-            public string ex_mou_sign_date { get; set; }
-            public string ex_mou_end_date { get; set; }
-        }
-        public class PartnerScopeInfo
-        {
-            public List<int> scopes_id = new List<int>();
-            public int partner_id { get; set; }
         }
     }
 }

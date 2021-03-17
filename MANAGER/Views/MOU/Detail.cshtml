@@ -215,7 +215,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="#" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="MOU/Detail#" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -274,7 +274,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
-                                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                            <a href="MOU/Detail#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +339,7 @@
                                             <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_moa_code_moa" />
                                         </div>
                                         <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1">
-                                            <a href="#" onclick="searchMOA()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                            <a href="MOU/Detail#" onclick="searchMOA()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -737,7 +737,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -798,7 +798,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="mou_partner_specialization_add" name="param" multiple="multiple" style="width:100% !important">
                                 @foreach (var item in ViewBag.listSpeMOUPartner)
@@ -811,7 +811,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="mou_partner_scope_add" name="param" multiple="multiple" style="width:100% !important">
                                 @foreach (var item in ViewBag.listScopesMOUPartner)
@@ -843,7 +843,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -900,7 +900,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="mou_partner_specialization_edit" name="param" multiple="multiple" style="width:100% !important">
                             </select>
@@ -909,7 +909,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="mou_partner_scope_edit" name="param" multiple="multiple" style="width:100% !important">
                             </select>
@@ -937,7 +937,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -998,7 +998,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <input class="form-control " type="text" id="moa_partner_specialization_add" disabled value="" />
                         </div>
@@ -1006,7 +1006,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="moa_partner_scope_add" name="param" multiple="multiple" style="width:100% !important">
                             </select>
@@ -1034,7 +1034,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEditMOA()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#" onclick="checkPartnerEditMOA()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -1092,7 +1092,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <input class="form-control " type="text" id="moa_partner_specialization_edit" disabled value="" />
                         </div>
@@ -1100,7 +1100,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="moa_partner_scope_edit" name="param" multiple="multiple" style="width:100% !important">
                             </select>
