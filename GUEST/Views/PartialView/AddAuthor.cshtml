@@ -14,15 +14,8 @@
         </select>
     </div>
     <div class="col-xl-6 form-group">
-        <label class="required-field">@rm.GetString("Area")</label>
-        <select class="form-control edit editfe select-custom" id="add_author_workplace" name="param" style="width: 100% !important">
-            @{
-                foreach (var item in ViewBag.area)
-                {
-                    <option value="@item.area_id">@item.name</option>
-                }
-            }
-        </select>
+        <label class="required-field">Email</label>
+        <input class="form-control editfe edit" id="add_author_mail" type="text" />
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("MSNV")</label>
@@ -59,8 +52,16 @@
         <input class="form-control editfe edit " id="add_author_cmnd" type="text" />
     </div>
     <div class="col-xl-6 form-group">
-        <label class="required-field">@rm.GetString("CMND")</label>
-        <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>
+        <label class="required-field">@rm.GetString("CMND") File</label>
+        @*<button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>*@
+        <div class="col-lg-6">
+            <div class="uppy" id="kt_uppy_5">
+                <div class="uppy-wrapper"></div>
+                <div class="uppy-list"></div>
+                <div class="uppy-status"></div>
+                <div class="uppy-informer uppy-informer-min"></div>
+            </div>
+        </div>
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("Tax")</label>
@@ -88,5 +89,4 @@
         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save" data-dismiss="modal">@rm.GetString("AddAu")</button>
     </div>
 </div>
-
-
+<script src="assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
