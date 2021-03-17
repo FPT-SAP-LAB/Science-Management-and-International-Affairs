@@ -1,4 +1,6 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOAPartner;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -362,51 +364,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 throw ex;
             }
-        }
-        public class ListMOAPartner
-        {
-            public ListMOAPartner() { }
-            public int moa_partner_id { get; set; }
-            public int moa_id { get; set; }
-            public string moa_code { get; set; }
-            public string partner_name { get; set; }
-            public string country_name { get; set; }
-            public int partner_id { get; set; }
-            public string specialization_name { get; set; }
-            public string specialization_abbreviation { get; set; }
-            public string website { get; set; }
-            public string contact_point_name { get; set; }
-            public string contact_point_phone { get; set; }
-            public string contact_point_email { get; set; }
-            public string moa_start_date_string { get; set; }
-            public DateTime moa_start_date { get; set; }
-            public string scope_abbreviation { get; set; }
-        }
-        public class MOAPartnerAdd : ListMOAPartner
-        {
-            public string address { get; set; }
-            public int partner_id { get; set; }
-            public List<int> list_spe { get; set; }
-            public List<int> list_scope { get; set; }
-        }
-        public class PartnerHistory
-        {
-            public string full_name { get; set; }
-            public string content { get; set; }
-            public DateTime add_time { get; set; }
-            public string add_time_string { get; set; }
-        }
-        public class ScopeAndStartDate
-        {
-            public int scope_id { get; set; }
-            public DateTime moa_start_date { get; set; }
-        }
-        public class MOAPartnerEdited
-        {
-            public List<int> scopes { get; set; }
-            public string partner_name { get; set; }
-            public string sign_date_string { get; set; }
-            public int moa_partner_id { get; set; }
         }
     }
 }

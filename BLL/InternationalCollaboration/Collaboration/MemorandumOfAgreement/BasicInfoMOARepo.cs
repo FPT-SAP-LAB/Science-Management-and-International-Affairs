@@ -51,8 +51,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                             inner join General.Office offi on offi.office_id = mou.office_id) as mou on mou.mou_id = moa.mou_id ";
                 MOABasicInfo basicInfo = db.Database.SqlQuery<MOABasicInfo>(sql_moaBasicInfo,
                         new SqlParameter("moa_id", moa_id)).First();
-                //MOABasicInfo dateAndScopes = db.Database.SqlQuery<MOABasicInfo>(sql_mouStartDateAndScopes,
-                //    new SqlParameter("moa_id", moa_id)).First();
                 handlingMOAData(basicInfo);
                 return basicInfo;
             }
@@ -349,32 +347,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
                 } while (isDuplicated);
                 return newCode;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public List<Specialization> getMOASpecialization()
-        {
-            try
-            {
-                string sql_speList = @"select * from General.Specialization";
-                List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
-                return speList;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public List<CollaborationScope> getExMOACollabScope()
-        {
-            try
-            {
-                string sql_scopeList = @"select * from IA_MasterData.CollaborationScope";
-                List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
-                return scopeList;
             }
             catch (Exception ex)
             {
