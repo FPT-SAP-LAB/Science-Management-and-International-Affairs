@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.Invention;
+using BLL.ScienceManagement.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
@@ -17,6 +18,7 @@ namespace GUEST.Controllers
     {
         InventionRepo ir = new InventionRepo();
         CommentRepo cr = new CommentRepo();
+        MasterDataRepo md = new MasterDataRepo();
 
         public ActionResult AddRequest()
         {

@@ -67,41 +67,48 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<ListMOU> listAllMOUDeleted()
+        public List<ListMOU> listAllMOUDeleted(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
-                string sql_mouList_deleted = @"select tb2.mou_partner_id,
-                    tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
-                    ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
-                    tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
-                    ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
-                    from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
-                    on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
-                    on tb2.partner_id = tb3.partner_id inner join
-                    (select t1.mou_id,t2.partner_id,t2.scope_id
-                    from IA_Collaboration.MOUPartnerScope t1 inner join
-                    IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
-                    on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
-                    inner join IA_Collaboration.CollaborationScope tb5 on
-                    tb5.scope_id  = tb4.scope_id
-                    inner join IA_Collaboration.MOUPartnerSpecialization tb6
-                    on tb6.mou_partner_id = tb2.mou_partner_id 
-                    inner join General.Specialization tb7
-                    on tb7.specialization_id = tb6.specialization_id
-                    inner join 
-                    (select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                    from IA_Collaboration.MOUStatusHistory 
-                    group by mou_status_id, mou_id) tb8 on
-                    tb8.mou_id = tb1.mou_id
-                    inner join IA_Collaboration.CollaborationStatus tb9 on
-                    tb9.mou_status_id = tb8.mou_status_id
-                    inner join General.Office tb10 on
-                    tb10.office_id = tb1.office_id
-                    inner join General.Country tb11 on 
-                    tb11.country_id = tb3.country_id
-                    where tb1.is_deleted = 1";
-                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList_deleted).ToList();
+                string sql_mouList =
+                    @"select tb2.mou_partner_id,
+                        tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
+                        ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
+                        ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
+                        from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
+                        on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
+                        on tb2.partner_id = tb3.partner_id inner join
+                        (select t1.mou_id,t2.partner_id,t2.scope_id
+                        from IA_Collaboration.MOUPartnerScope t1 inner join
+                        IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
+                        on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
+                        inner join IA_Collaboration.CollaborationScope tb5 on
+                        tb5.scope_id  = tb4.scope_id
+                        inner join IA_Collaboration.MOUPartnerSpecialization tb6
+                        on tb6.mou_partner_id = tb2.mou_partner_id 
+                        inner join General.Specialization tb7
+                        on tb7.specialization_id = tb6.specialization_id
+                        inner join 
+                        (select max([datetime]) as 'maxdate',mou_status_id, mou_id
+                        from IA_Collaboration.MOUStatusHistory 
+                        group by mou_status_id, mou_id) tb8 on
+                        tb8.mou_id = tb1.mou_id
+                        inner join IA_Collaboration.CollaborationStatus tb9 on
+                        tb9.mou_status_id = tb8.mou_status_id
+                        inner join General.Office tb10 on
+                        tb10.office_id = tb1.office_id
+                        inner join General.Country tb11 on 
+                        tb11.country_id = tb3.country_id
+                        where tb1.is_deleted = 1
+                        and partner_name like @partner_name
+                        and contact_point_name like @contact_point_name
+                        and mou_code like @mou_code";
+                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
+                    new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
                 handlingMOUListData(mouList);
                 return mouList;
             }
