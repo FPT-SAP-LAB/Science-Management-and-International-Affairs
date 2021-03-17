@@ -1,71 +1,154 @@
-﻿@model IEnumerable<ENTITIES.AcademicActivityType>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+﻿@{
+    ViewBag.Title = "Quản lý loại hoạt động học thuật";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card-body">
-    <h2>Index</h2>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table table-bordered table-checkable" id="academic_activity_type_table">
-        <thead>
-            <tr>
-                <th>
-                    Loại hoạt động học thuật
-                </th>
-                <th>
-                    Hành động
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div>
+                            <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        </div>
+                        <table class="table table-bordered" id="academic_activity_type_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Loại hoạt động học thuật
+                                    </th>
+                                    <th>
+                                        Hành động
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section scripts {
+<!--ADD-->
+<div class="modal fade in" id="academic_activity_type_add_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder" id="e">THÊM LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                    <input class="form-control" type="text" placeholder="Loại hoạt động" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='academic_activity_typpe_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EDIT-->
+<div class="modal fade in" id="academic_activity_type_edit_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder" id="e">SỬA LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                    <input class="form-control" type="text" placeholder="Loại hoạt động" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='academic_activity_typpe_model_add_type_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6">Hủy</button>
+                <button id='academic_activity_typpe_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--DELETE-->
+
+@section scripts{
     <script>
-        $(document).ready(function () {
-            $("#academic_activity_type_table").DataTable({
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
-                    },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "",
-                    sSearch: ""
+        $("#academic_activity_type_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
                 },
-                ajax: {
-                    url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
-                    datatype: "json",
-                    cache: "false"
-                },
-                "searching": false,
-                "lengthChange": false,
-                columns: [
-                    {
-                        data: "activity_type_name"
-                    },
-                    {
-                        data: "activity_type_id",
-                        render: function (data) {
-                            return `<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="#" style="margin-right: 10px;">Sửa</a>
-                                        <a onclick="#" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>`
-                        }
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "activity_type_name", name: "activity_type_name" },
+                {
+                    data: "activity_type_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="" href="#academic_activity_type_edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="" href="" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
-                ],
-                columnDefs: [
-                    {
-                        className: "text-center",
-                        targets: '_all',
-                    },
-                ]
-            });
+                }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
         });
     </script>
 
+    <!--ADD-->
+    <script>
+        $("#academic_activity_typpe_model_add_type_confirm").click(function () {
+                $.ajax({
+                url: "@Url.Action("CheckPartner", "MOU")",
+                type: "POST",
+                data: JSON.stringify(em),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    if (data == "") {
+                        document.getElementById('nation_add').removeAttribute('disabled');
+                        document.getElementById('website_add').removeAttribute('disabled');
+                        document.getElementById('address_add').removeAttribute('disabled');
+                        document.getElementById("nation_add").value = "";
+                        document.getElementById("website_add").value = "";
+                        document.getElementById("address_add").value = "";
+                        document.getElementById("partner_id_add").value = "";
+                    } else {
+                        document.getElementById('nation_add').setAttribute('disabled', '');
+                        document.getElementById('website_add').setAttribute('disabled', '');
+                        document.getElementById('address_add').setAttribute('disabled', '');
+                        document.getElementById("nation_add").value = data.country_name == null ? "" : data.country_name;
+                        document.getElementById("website_add").value = data.website == null ? "" : data.website;
+                        document.getElementById("address_add").value = data.address == null ? "" : data.address;
+                        document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
+                    }
+                    document.getElementById("add_mou_partner_button").removeAttribute('disabled');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+    </script>
 }
