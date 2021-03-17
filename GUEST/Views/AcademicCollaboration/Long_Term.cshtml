@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Đào tạo sau đại học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .training-type {
+        border: none;
+        outline: none;
+        padding: 10px 16px;
+        background-color: #f1f1f1;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 0.42rem;
+        transition: 0.3s;
+    }
+
+    .active {
+        background-color: #e46d27;
+        color: white;
+    }
+
+    .training-type:hover {
+        background-color: #a5a5a5;
+        color: white;
+    }
+</style>
+<div class="card card-custom" style="background-color: #f0f8ff00">
+    <div class="card-body p-0">
+        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row justify-content-center training-type-list">
+                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type active">
+                                <a class="">
+                                    <label>GIỚI THIỆU<br /> CHƯƠNG TRÌNH</label>
+                                </a>
+                            </div>
+                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type">
+                                <a class="">
+                                    <label>ĐÀO TẠO<br /> CỦA ĐỐI TÁC</label>
+                                </a>
+                            </div>
+                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type">
+                                <a class="">
+                                    <label>ĐÀO TẠO<br /> CỦA ĐH FPT</label>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $('.training-type').click(function () {
+            $('.training-type').each(function () {
+                $('.active').removeClass('active')
+            })
+            $(this).addClass('active')
+        })
+
+    </script>
+}

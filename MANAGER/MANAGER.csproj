@@ -151,6 +151,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityExpenseTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
@@ -2262,6 +2263,7 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Views\AcademicActivityExpenseType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
