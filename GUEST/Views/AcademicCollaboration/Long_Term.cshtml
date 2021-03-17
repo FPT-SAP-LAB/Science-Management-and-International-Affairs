@@ -16,7 +16,7 @@
         transition: 0.3s;
     }
 
-    .active {
+    .active-nav {
         background-color: #e46d27;
         color: white;
     }
@@ -25,28 +25,39 @@
         background-color: #a5a5a5;
         color: white;
     }
+
+    .item-picture {
+        height: 100%;
+        width: 100%;
+    }
 </style>
-<div class="card card-custom" style="background-color: #f0f8ff00">
+<div class="card card-custom pb-4" style="background-color: #f0f8ff80">
     <div class="card-body p-0">
-        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+        <div class="row justify-content-center mt-10 px-8 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row justify-content-center training-type-list">
-                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type active">
-                                <a class="">
+                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-1 active-nav">
+                                <a class="nav-link" id="button-tab-1">
                                     <label>GIỚI THIỆU<br /> CHƯƠNG TRÌNH</label>
                                 </a>
                             </div>
-                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type">
-                                <a class="">
+                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
+                                <a class="nav-link" id="button-tab-2">
                                     <label>ĐÀO TẠO<br /> CỦA ĐỐI TÁC</label>
                                 </a>
                             </div>
-                            <div class="mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type">
-                                <a class="">
+                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
+                                <a class="nav-link" id="button-tab-3">
                                     <label>ĐÀO TẠO<br /> CỦA ĐH FPT</label>
                                 </a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-lg-6 col-md-6 col-sm-6 px-0 font-weight-bolder" style="height: 100px">
+                                <span id="content-description">
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -55,13 +66,205 @@
         </div>
     </div>
 </div>
+
+<div class="card card-custom pt-4">
+    <div class="card-body p-0">
+        <div class="row justify-content-center mb-10 px-8 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="" id="tab-1">
+                            @{ 
+                                Html.RenderPartial("PartialView/Long_Term_Tab_1");
+                            }
+                        </div>
+                        <div class="" id="tab-2" style="display: none">
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Tab_2");
+                            }
+                        </div>
+                        <div class="" id="tab-3" style="display: none">
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Tab_3");
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <script>
         $('.training-type').click(function () {
             $('.training-type').each(function () {
-                $('.active').removeClass('active')
+                $('.active-nav').removeClass('active-nav')
             })
-            $(this).addClass('active')
+            $(this).addClass('active-nav')
+        })
+
+
+        $('#button-tab-1').click(function () {
+            $('#tab-2').fadeOut()
+            $('#tab-3').fadeOut()
+            $('#tab-1').fadeIn(1000)
+        })
+
+        $('#button-tab-2').click(function () {
+
+            $('#tab-1').fadeOut()
+            $('#tab-3').fadeOut()
+            $('#tab-2').fadeIn(1000)
+        })
+
+        $('#button-tab-3').click(function () {
+
+            $('#tab-1').fadeOut()
+            $('#tab-2').fadeOut()
+            $('#tab-3').fadeIn(1000)
+        })
+
+        $(document).ready(function () {
+            $('#content-description').text('Chương trình Đào tạo sau đại học nhằm phát triển hợp tác trong việc thúc đẩy đào tạo, tăng cường việc giới thiệu các cán bộ Chương giảng viên giữa Tổ chức giáo dục FPT và các tổ chức đối tác học tập tại các chương trình đào tạo sau Đại học thuộc các bên.')
+        })
+
+        $('.type-1').click(function () {
+            $('#content-description').text('Chương trình Đào tạo sau đại học nhằm phát triển hợp tác trong việc thúc đẩy đào tạo, tăng cường việc giới thiệu các cán bộ Chương giảng viên giữa Tổ chức giáo dục FPT và các tổ chức đối tác học tập tại các chương trình đào tạo sau Đại học thuộc các bên.')
+        })
+
+        $('.type-2').click(function () {
+            $('#content-description').text('Danh sách các chương trình dành cho những cán bộ đi học tại đơn vị đào tạo của đối tác.')
+        })
+
+        $('.type-3').click(function () {
+            $('#content-description').text('Danh sách chương trình đào tạo dành cho những cán bộ đi học tại đơn vị đào tạo của Đại học FPT.')
+        })
+    </script>
+
+    <script>
+
+        $('#load-more').click(function () {
+            $.ajax({
+                url: "@Url.Action("Load_More_List", "AcademicCollaboration")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    var temp = `<div class="row justify-content-between">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                                    <img src="../Content/Picture1.jpg" class="item-picture" />
+                                                    <label>
+                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
+                                                    </label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                                    <img src="../Content/Picture2.jpg" class="item-picture" />
+                                                    <label>
+                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
+                                                    </label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                                    <img src="../Content/Picture3.jpg" class="item-picture" />
+                                                    <label>
+                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
+                                                    </label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                                    <img src="../Content/Picture4.jpg" class="item-picture" />
+                                                    <label>
+                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
+                                                    </label>
+                                                </div>
+                                            </div>`
+
+                    $(temp).hide().appendTo($("#detail-content")).slideDown(1000);
+
+                },
+                 error: function () {
+
+
+                }
+        });
+            return false;
+        })
+
+    </script>
+    <script>
+
+
+        $("#colab_program_going_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
+        $("#colab_program_coming_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+    </script>
+    <script>
+        $('#search_nation_tab_2').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_year_tab_2').select2({
+            placeholder: 'Năm đi học',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_nation_tab_3').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+            tags: true,
+        })
+
+        $('#search_year_tab_3').select2({
+            placeholder: 'Năm đi học',
+            allowClear: true,
+            tags: true,
         })
 
     </script>
