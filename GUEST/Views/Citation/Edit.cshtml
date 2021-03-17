@@ -9,25 +9,10 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RequestInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("MSNV")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="1234"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("AuthorName")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="Đoàn Văn Thắng"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("WorkUnit")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="FU-HL"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Area")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="Hà Nội"  />
-                        </div>
-                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    @{
+                        Html.RenderAction("AddAuthor", "PartialView");
+                    }
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">
@@ -41,9 +26,9 @@
                                 </thead>
                                 <tbody id="trichdan_body">
                                     <tr>
-                                        <td><input class="form-control edit" type="text" value="Google scholar"  /></td>
-                                        <td><input class="form-control edit" type="number" value="10"  /></td>
-                                        <td><input class="form-control edit" type="text" value="https://scholar.google.com/citations?view_op=list_works&hl=en&user=qbbO_4UAAAAJ"  /></td>
+                                        <td><input class="form-control edit" type="text" value="Google scholar" /></td>
+                                        <td><input class="form-control edit" type="number" value="10" /></td>
+                                        <td><input class="form-control edit" type="text" value="https://scholar.google.com/citations?view_op=list_works&hl=en&user=qbbO_4UAAAAJ" /></td>
                                     </tr>
                                     <tr>
                                         <td><input class="form-control edit" type="text" /></td>
@@ -52,10 +37,20 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="col-xl-12" style="text-align: end">
-                                <button class="btn btn-light-danger px-6 font-weight-bold deleterow edit">@rm.GetString("DelRow")</button>
-                                <button class="btn btn-light-primary px-6 font-weight-bold addrow edit">@rm.GetString("AddRow")</button>
-                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("TotalReward")</label>
+                            <input class="form-control form-control-lg edit" readonly type="text" value="" ; />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("RewardType")</label>
+                            <select id="kieuthuong" class="form-control form-control-lg edit">
+                                <option value="1">@rm.GetString("According")</option>
+                                <option value="2">@rm.GetString("Repre")</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -104,6 +99,8 @@
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
+
+            $('.citationE').attr('style', 'display:none !important');
         });
 
         $(".addrow").click(function () {
