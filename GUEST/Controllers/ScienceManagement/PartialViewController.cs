@@ -27,7 +27,7 @@ namespace GUEST.Controllers.ScienceManagement
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<TitleWithName> listTitle= md.getTitle(lang);
+            List<TitleWithName> listTitle = md.getTitle(lang);
             ViewBag.title = listTitle;
 
             List<ContractType> listContract = md.getContract();
