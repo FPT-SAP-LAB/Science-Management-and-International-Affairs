@@ -47,33 +47,45 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public bool Checkin(int participant_id)
         {
-            try
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
-                Participant p = db.Participants.Where(x => x.participant_id == participant_id).FirstOrDefault();
-                p.is_checked = true;
-                db.Entry(p).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                try
+                {
+                    Participant p = db.Participants.Where(x => x.participant_id == participant_id).FirstOrDefault();
+                    p.is_checked = true;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
-            catch (Exception e)
-            {
-                return false;
-            }
+
         }
         public bool Checkout(int participant_id)
         {
-            try
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
-                Participant p = db.Participants.Where(x => x.participant_id == participant_id).FirstOrDefault();
-                p.is_checked = false;
-                db.Entry(p).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                try
+                {
+                    Participant p = db.Participants.Where(x => x.participant_id == participant_id).FirstOrDefault();
+                    p.is_checked = false;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
-            catch (Exception e)
-            {
-                return false;
-            }
+
         }
         public List<PartiRole> GetParticipantRolesByPhase(int phase_id)
         {
@@ -116,23 +128,28 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public bool addParticipant(infoParticipant obj)
         {
-            try
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
-                db.Participants.Add(new Participant
+                try
                 {
-                    participant_role_id = obj.participant_role_id,
-                    participant_name = obj.name,
-                    email = obj.email,
-                    participant_number = obj.participant_number,
-                    office_id = obj.office_id,
-                    is_checked = false
-                });
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
+                    db.Participants.Add(new Participant
+                    {
+                        participant_role_id = obj.participant_role_id,
+                        participant_name = obj.name,
+                        email = obj.email,
+                        participant_number = obj.participant_number,
+                        office_id = obj.office_id,
+                        is_checked = false
+                    });
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
         public class dataParticipant
