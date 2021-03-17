@@ -2399,6 +2399,10 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_1.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_2.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_3.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Short_Term.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Tab_1.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Tab_2.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Tab_3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
