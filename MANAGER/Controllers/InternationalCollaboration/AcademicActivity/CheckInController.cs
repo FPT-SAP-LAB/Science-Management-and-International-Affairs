@@ -22,29 +22,29 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableByPhase(int phase_id)
         {
             List<CheckInRepo.dataParticipant> data = repo.getParticipantByPhase(phase_id);
-            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult Checkin(int participant_id)
         {
             bool res = repo.Checkin(participant_id);
             if (res)
-                return Json("Checkin thành công", JsonRequestBehavior.AllowGet);
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+                return Json("Checkin thành công");
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult Checkout(int participant_id)
         {
             bool res = repo.Checkout(participant_id);
             if (res)
-                return Json("Thu hồi thành công", JsonRequestBehavior.AllowGet);
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+                return Json("Thu hồi thành công");
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult getRoleByPhase(int phase_id)
         {
             List<CheckInRepo.PartiRole> data = repo.GetParticipantRolesByPhase(phase_id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public JsonResult getAreaByUnit(int unit_id)
         {
@@ -57,9 +57,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.addParticipant(obj);
             if (res)
             {
-                return Json("Thêm người tham dự thành công", JsonRequestBehavior.AllowGet);
+                return Json("Thêm người tham dự thành công");
             }
-            return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            return Json(String.Empty);
         }
     }
 }
