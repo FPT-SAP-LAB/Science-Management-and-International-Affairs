@@ -215,6 +215,7 @@
     </Compile>
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
+    <Compile Include="CustomModels\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />

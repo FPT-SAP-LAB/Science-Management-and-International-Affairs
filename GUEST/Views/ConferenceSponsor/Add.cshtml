@@ -52,16 +52,6 @@
                                         <!--end::Input-->
                                     </div>
                                     <div class="col-md-6">
-                                        <!--begin::Input-->
-                                        <div class="form-group fv-plugins-icon-container">
-                                            <label>Đơn vị tổ chức (Top QS)<span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
                                         <!--begin::Select-->
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Quốc gia <span style='color:red'>*</span>:</label>
@@ -74,15 +64,42 @@
                                         </div>
                                         <!--end::Select-->
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Đơn vị tổ chức (Top QS) <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Đơn vị đồng tổ chức:</label>
+                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị tổ chức" value="">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="date form-group fv-plugins-icon-container">
-                                            <label>Thời gian diễn ra<span style='color:red'>*</span>:</label>
+                                            <label>Thời gian diễn ra <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" readonly="" id="kt_daterangepicker_1">
                                         </div>
                                         <!--end::Input-->
                                     </div>
-
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="date form-group fv-plugins-icon-container">
+                                            <label>Thời gian tham dự <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" readonly="" id="kt_daterangepicker_2">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -93,7 +110,7 @@
                                             <div class="uppy-status"></div>
                                             <div class="uppy-informer uppy-informer-min"></div>
                                         </div>
-                                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                                        <span class="form-text text-muted">Max file size is 15MB and max number of files is 1.</span>
                                     </div>
                                     <div class="col-md-6">
                                         <!--begin::Input-->
@@ -104,7 +121,7 @@
                                             <div class="uppy-status"></div>
                                             <div class="uppy-informer uppy-informer-min"></div>
                                         </div>
-                                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                                        <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
                                         <!--end::Input-->
                                     </div>
                                 </div>
@@ -329,7 +346,7 @@
         </div>
         <div class="card-footer">
             <div class="row justify-content-center">
-                <button class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+                <button onclick="submitData()" class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
@@ -351,7 +368,7 @@
                 width: '100%',
             });
 
-            inItDateRangePicker("#kt_daterangepicker_1");
+            inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2");
 
             $("#selectConference").select2({
                 placeholder: "Tên hội nghị",
@@ -407,9 +424,10 @@
                         autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
-                            maxFileSize: 15000000, // 1mb
+                            maxFileSize: 15728640, // 15mb
                             maxNumberOfFiles: 1,
-                            minNumberOfFiles: 1
+                            minNumberOfFiles: 1,
+                            allowedFileTypes: ['.pdf']
                         }
                     });
 
@@ -483,9 +501,10 @@
                         autoProceed: false,
                         showProgressDetails: true,
                         restrictions: {
-                            maxFileSize: 5000000, // 1mb
+                            maxFileSize: 5242880, // 5mb
                             maxNumberOfFiles: 1,
-                            minNumberOfFiles: 1
+                            minNumberOfFiles: 1,
+                            allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
                         }
                     });
 
@@ -618,8 +637,9 @@
                 $('#country').val(repo.country_id).trigger('change');
                 startDate = new Date(parseInt(repo.time_start.substr(6)));
                 endDate = new Date(parseInt(repo.time_end.substr(6)));
-                inItDateRangePicker("#kt_daterangepicker_1");
+                inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2");
                 document.getElementById("formality").value = repo.formality_id;
+                document.getElementById("co_organized_unit").value = repo.co_organized_unit;
                 conferenceID = repo.id;
             }
             return repo.conference_name || repo.text;
@@ -686,6 +706,8 @@
                 return toastr.warning("Bạn chưa điền tên hội nghị");
             let time_start = moment($("#kt_daterangepicker_1").val().split(" - ")[0] + "+0000", "@rm.GetString("DateFormat") Z");
             let time_end = moment($("#kt_daterangepicker_1").val().split(" - ")[1] + "+0000", "@rm.GetString("DateFormat") Z");
+            let attendance_start = moment($("#kt_daterangepicker_2").val().split(" - ")[0] + "+0000", "@rm.GetString("DateFormat") Z");
+            let attendance_end = moment($("#kt_daterangepicker_2").val().split(" - ")[1] + "+0000", "@rm.GetString("DateFormat") Z");
             this.data = {
                 Conference: {
                     conference_id: conferenceID,
@@ -696,8 +718,11 @@
                     country_id: $("#country").val(),
                     time_start: time_start,
                     time_end: time_end,
-                    formality_id: $("#formality").val()
+                    formality_id: $("#formality").val(),
+                    co_organized_unit: $("#co_organized_unit").val(),
                 },
+                attendance_start: attendance_start,
+                attendance_end: attendance_end,
                 ConferenceParticipant: [],
                 Cost: [],
                 Persons: []
@@ -739,12 +764,12 @@
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
-                complete: function (output) {
-                    if (output.success) {
-                        location.href = "/ConferenceSponsor/Detail?id=" + output.id;
+                complete: function (data) {
+                    if (data.responseJSON.id) {
+                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
                     }
                     else {
-                        toastr.error(output.message);
+                        toastr.error(data.responseJSON.message);
                     }
                 },
                 error: function () {

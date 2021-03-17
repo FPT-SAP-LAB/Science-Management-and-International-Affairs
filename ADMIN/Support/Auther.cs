@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 
-namespace QUANGHANH2.SupportClass
+namespace ADMIN.SupportClass
 {
     public class Auther : ActionFilterAttribute, IAuthorizationFilter
     {

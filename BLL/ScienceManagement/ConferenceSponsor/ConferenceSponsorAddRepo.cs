@@ -98,7 +98,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     country_id = 1,
                     time_start = DateTime.Today,
                     time_end = DateTime.Today,
-                    formality_id = 1
+                    formality_id = 1,
+                    co_organized_unit = ""
                 };
                 Conferences.Add(c);
             }
@@ -115,7 +116,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     JObject @object = JObject.Parse(input);
 
                     JToken conf = @object["Conference"];
-                    int conference_id = conf["conference_id"].ToObject<int>();
 
                     Conference conference = conf.ToObject<Conference>();
                     Conference temp = db.Conferences.Find(conference.conference_id);
@@ -129,18 +129,45 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         db.SaveChanges();
                     }
 
-                    string PaperID = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, account.email);
-                    string InviteID = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, account.email);
+                    string PaperLink = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    string InviteLink = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
+                    BaseRequest @base = new BaseRequest()
+                    {
+                        account_id = account.account_id,
+                        created_date = DateTime.Now,
+                        finished_date = null
+                    };
+                    db.BaseRequests.Add(@base);
+
+                    File Fpaper = new File()
+                    {
+                        link = PaperLink,
+                        name = paper.FileName
+                    };
+                    File Finvite = new File()
+                    {
+                        link = InviteLink,
+                        name = invite.FileName
+                    };
+                    db.Files.Add(Fpaper);
+                    db.Files.Add(Finvite);
+                    db.SaveChanges();
+
                     RequestConference support = new RequestConference()
                     {
+                        request_id = @base.request_id,
                         conference_id = conference.conference_id,
                         status_id = 1,
                         policy_id = policy.policy_id,
                         editable = false,
-                        reimbursement = 0
+                        reimbursement = 0,
+                        attendance_start = DateTime.Parse(@object["attendance_start"].ToString()),
+                        attendance_end = DateTime.Parse(@object["attendance_end"].ToString()),
+                        invitation_file_id = Finvite.file_id,
+                        paper_id = Fpaper.file_id,
                     };
                     db.RequestConferences.Add(support);
                     db.SaveChanges();
