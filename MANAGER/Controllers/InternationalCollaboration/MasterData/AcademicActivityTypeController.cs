@@ -23,7 +23,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             List<ENTITIES.AcademicActivityType> academicActivityTypes = academicActivityTypeRepo.getlistAcademicActivityType();
             return Json(new { academicActivityTypes, JsonRequestBehavior.AllowGet });
         }
-
-
     }
 }
