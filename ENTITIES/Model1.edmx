@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentBase">
           <Key>
             <PropertyRef Name="comment_id" />
@@ -1149,7 +1149,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Key>
             <PropertyRef Name="participant_id" />
           </Key>
-          <Property Name="participant_id" Type="int" Nullable="false" />
+          <Property Name="participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="participant_role_id" Type="int" Nullable="false" />
           <Property Name="participant_name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="150" />
@@ -2536,7 +2536,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__offic__02C769E9">
+        <Association Name="FK__Participa__offic__278EDA44">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2548,10 +2548,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__parti__2F9A1060">
-          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Participa__parti__269AB60B">
+          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ParticipantRole">
@@ -4056,11 +4054,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Paper" EntitySet="Paper" />
             <End Role="PaperWithCriteria" EntitySet="PaperWithCriteria" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__offic__02C769E9" Association="Self.FK__Participa__offic__02C769E9">
+          <AssociationSet Name="FK__Participa__offic__278EDA44" Association="Self.FK__Participa__offic__278EDA44">
             <End Role="Office" EntitySet="Office" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__parti__2F9A1060" Association="Self.FK__Participa__parti__2F9A1060">
+          <AssociationSet Name="FK__Participa__parti__269AB60B" Association="Self.FK__Participa__parti__269AB60B">
             <End Role="ParticipantRole" EntitySet="ParticipantRole" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
@@ -4357,8 +4355,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="RightByRole" EntitySet="RightByRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ScienceAndInternationalAffairsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
