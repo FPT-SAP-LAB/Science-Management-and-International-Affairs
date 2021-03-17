@@ -462,6 +462,7 @@
         });
 
         $("#kt_datetimepicker_3_year").on("change.datetimepicker", ({ date, oldDate }) => {
+            stt = 1;
             datatable.ajax.reload();
         });
 

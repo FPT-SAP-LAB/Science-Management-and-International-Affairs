@@ -60,7 +60,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         activity_id = aa.activity_id,
                         location = obj.location
                     });
-                    db.SaveChanges();
                     ENTITIES.Article ar = db.Articles.Add(new ENTITIES.Article
                     {
                         account_id = 1,
@@ -74,7 +73,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         article_id = ar.article_id,
                         main_article = true
                     });
-                    db.SaveChanges();
                     db.ArticleVersions.Add(new ENTITIES.ArticleVersion
                     {
                         article_id = ar.article_id,
@@ -199,7 +197,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         activity_id = aa.activity_id,
                         location = obj.location
                     });
-                    db.SaveChanges();
                     Article ar = db.Articles.Add(new ENTITIES.Article
                     {
                         account_id = 1,
@@ -213,7 +210,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         article_id = ar.article_id,
                         main_article = true
                     });
-                    db.SaveChanges();
                     ArticleVersion av_new = db.ArticleVersions.Add(new ENTITIES.ArticleVersion
                     {
                         article_id = ar.article_id,
@@ -249,8 +245,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                         expense_type_id = ard.expense_type_id,
                                         note = ard.note
                                     });
-                                    db.SaveChanges();
                                 }
+                                db.SaveChanges();
                             }
                         }
                         if (obj.content.Contains("DTC"))
@@ -263,8 +259,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     activity_id = activity_id,
                                     partner_scope_id = ap.partner_scope_id
                                 });
-                                db.SaveChanges();
                             }
+                            db.SaveChanges();
                         }
                         if (obj.content.Contains("ND"))
                         {
@@ -290,8 +286,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                         language_id = o.language_id,
                                         article_content = o.article_content
                                     });
-                                    db.SaveChanges();
                                 }
+                                db.SaveChanges();
                                 db.ActivityInfoes.Add(new ActivityInfo
                                 {
                                     article_id = a.article_id,
@@ -335,8 +331,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                         title = q.title,
                                         form_id = f_new.form_id
                                     });
-                                    db.SaveChanges();
                                 }
+                                db.SaveChanges();
                                 List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
                                 foreach (AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
                                 {
@@ -346,8 +342,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                         phase_name = aapl.phase_name,
                                         phase_id = aap_new.phase_id
                                     });
-                                    db.SaveChanges();
                                 }
+                                db.SaveChanges();
                             }
                         }
                     }
