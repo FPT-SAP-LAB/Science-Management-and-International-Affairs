@@ -99,6 +99,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
                 throw e;
             }
         }
-
     }
 }
