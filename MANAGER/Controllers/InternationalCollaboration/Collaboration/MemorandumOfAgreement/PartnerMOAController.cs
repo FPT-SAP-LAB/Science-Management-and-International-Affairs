@@ -1,4 +1,6 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOAPartner;
 using System;
 using System.Collections.Generic;
 using System.Linq;

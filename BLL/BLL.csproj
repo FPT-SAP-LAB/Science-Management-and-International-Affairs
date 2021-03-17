@@ -82,11 +82,13 @@
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\AcademicActivityExpenseTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityTypeRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
+    <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorIndexRepo.cs" />
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />

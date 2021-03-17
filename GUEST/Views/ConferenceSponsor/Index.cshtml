@@ -80,8 +80,9 @@
                         }, width: "80px", className: "text-center"
                     },
                     {
-                        data: "PaperName", orderable: false, render: function (data) {
+                        data: "RequestID", orderable: false, render: function (data) {
                             return "<a href='/ConferenceSponsor/Detail?id=5' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
+                            return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
                         }
                     }
                 ],

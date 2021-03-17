@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.Conference;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,13 @@ namespace MANAGER.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            string output = IndexRepos.GetIndexPageManager(datatable);
-            JObject json = JObject.Parse(output);
-            List<DataIndex> data = json["data"].ToObject<List<DataIndex>>();
-            for (int i = 0; i < data.Count; i++)
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageManager(datatable);
+            for (int i = 0; i < output.Data.Count; i++)
             {
-                data[i].RowNumber = datatable.Start + 1 + i;
-                data[i].CreatedDate = data[i].Date.ToString("dd/MM/yyyy");
+                output.Data[i].RowNumber = datatable.Start + 1 + i;
+                output.Data[i].CreatedDate = output.Data[i].Date.ToString("dd/MM/yyyy");
             }
-            int recordsTotal = json.Value<int>("recordsTotal");
-            return Json(new { success = true, data, draw = Request["draw"], recordsTotal, recordsFiltered = recordsTotal }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Detail(int id)
         {
@@ -48,17 +46,6 @@ namespace MANAGER.Controllers
             ViewBag.CheckboxColumn = id == 2;
             ViewBag.ReimbursementColumn = id >= 3;
             return PartialView();
-        }
-        private class DataIndex
-        {
-            public int RowNumber { get; set; }
-            public string PaperName { get; set; }
-            public string ConferenceName { get; set; }
-            public DateTime Date { get; set; }
-            public string CreatedDate { get; set; }
-            public string StatusName { get; set; }
-            public string FullName { get; set; }
-            public int StatusID { get; set; }
         }
     }
 }
