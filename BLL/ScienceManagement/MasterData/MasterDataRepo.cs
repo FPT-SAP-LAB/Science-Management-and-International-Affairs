@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -29,6 +30,35 @@ namespace BLL.ScienceManagement.MasterData
                             from [SM_ScientificProduct].PaperCriteria c
                             where c.status = 'active'";
             list = db.Database.SqlQuery<PaperCriteria>(sql).ToList();
+            return list;
+        }
+
+        public List<Office> getOffice()
+        {
+            List<Office> list = db.Offices.ToList();
+            return list;
+        }
+
+        public List<Area> GetAreas()
+        {
+            List<Area> list = db.Areas.ToList();
+            return list;
+        }
+
+        public List<TitleWithName> getTitle(string lang)
+        {
+            List<TitleWithName> list = new List<TitleWithName>();
+            string sql = @"select tl.name, t.*
+                            from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+	                            join [Localization].Language l on l.language_id = tl.language_id
+                            where l.language_name = @lang";
+            list = db.Database.SqlQuery<TitleWithName>(sql, new SqlParameter("lang", lang)).ToList();
+            return list;
+        }
+
+        public List<ContractType> getContract()
+        {
+            List<ContractType> list = db.ContractTypes.ToList();
             return list;
         }
     }

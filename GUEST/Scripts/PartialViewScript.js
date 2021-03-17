@@ -14,7 +14,13 @@
 $('#ckfe').select2({
     allowClear: true
 });
-$('#area').select2({
+$('#add_author_workplace').select2({
+    allowClear: true
+});
+$('#add_author_title').select2({
+    allowClear: true
+});
+$('#add_author_contractType').select2({
     allowClear: true
 });
 

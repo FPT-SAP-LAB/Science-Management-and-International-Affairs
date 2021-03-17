@@ -192,6 +192,9 @@
             allowClear: true
         });
 
+        $('#kieuthuong').select2({
+            allowClear: true
+        });
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
@@ -200,6 +203,7 @@
             var kieuthuong = "@ViewBag.item.reward_type";
             if (kieuthuong == "Quydinh") $("#kieuthuong").val(1);
             if (kieuthuong == "Canhan") $("#kieuthuong").val(2);
+            $("#kieuthuong").trigger('change');
 
             var country = "@ViewBag.item.country_id";
             $("#search_country").val(country);
