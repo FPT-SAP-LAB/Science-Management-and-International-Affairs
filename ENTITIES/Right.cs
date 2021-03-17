@@ -18,6 +18,7 @@ namespace ENTITIES
         public Right()
         {
             this.Accounts = new HashSet<Account>();
+            this.Roles = new HashSet<Role>();
         }
     
         public int right_id { get; set; }
@@ -28,5 +29,7 @@ namespace ENTITIES
         public virtual Module Module { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

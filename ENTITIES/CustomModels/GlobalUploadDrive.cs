@@ -97,7 +97,7 @@ namespace ENTITIES.CustomModels
 
             FilesResource.CreateMediaUpload request = driveService.Files.Create(fileMetadata, InputStream, ContentType);
             // Cấu hình thông tin lấy về là ID
-            request.Fields = "id";
+            request.Fields = "id,webViewLink";
             request.SupportsAllDrives = true;
             request.Upload();
 
@@ -118,7 +118,7 @@ namespace ENTITIES.CustomModels
                 createRequest.Execute();
             }
 
-            return file.Id;
+            return file.WebViewLink;
         }
         public static Google.Apis.Drive.v3.Data.File CreateFolder(string FolderName, string ParentID = null)
         {
@@ -142,21 +142,20 @@ namespace ENTITIES.CustomModels
         }
         public static Google.Apis.Drive.v3.Data.File FindFirstFolder(string FolderName, string ParentID = null)
         {
-            //ParentID = ParentID ?? ParentDrive;
-            //ListRequest listRequest = new ListRequest(driveService)
-            //{
-            //    Q = "name = '" + FolderName + "' and mimeType = 'application/vnd.google-apps.folder' and '" + ParentID + "' in parents and trashed = false",
-            //    Spaces = "drive",
-            //    Fields = "files(id)",
-            //    SupportsAllDrives = true,
-            //    IncludeItemsFromAllDrives = true,
-            //};
-            //FileList result = listRequest.Execute();
-            //if (result.Files.Count == 0)
-            //    return null;
-            //else
-            //    return result.Files[0];
-            return null;
+            ParentID = ParentID ?? ParentDrive;
+            ListRequest listRequest = new ListRequest(driveService)
+            {
+                Q = "name = '" + FolderName + "' and mimeType = 'application/vnd.google-apps.folder' and '" + ParentID + "' in parents and trashed = false",
+                Spaces = "drive",
+                Fields = "files(id)",
+                SupportsAllDrives = true,
+                IncludeItemsFromAllDrives = true,
+            };
+            FileList result = listRequest.Execute();
+            if (result.Files.Count == 0)
+                return null;
+            else
+                return result.Files[0];
         }
         public static bool ChangeParentDrive(string ParentID)
         {

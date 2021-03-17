@@ -7,69 +7,68 @@
     .custom-btn {
         width: 25% !important;
     }
-
     .modal-title {
         font-size: 1.5rem !important;
     }
-
     .modal {
         overflow-y: auto;
     }
 </style>
-<div class="card-body">
-    <div class="row mb-5">
-        <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
-            <a href="#" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
-            <div class="dropdown dropdown-inline ml-2">
-                <button type="button"
-                        class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                    Export
-                </button>
-                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                    <ul class="navi flex-column navi-hover py-2">
-                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                            Choose an option:
-                        </li>
-                        <li class="navi-item">
-                            <a href="#" class="navi-link">
-                                <span class="navi-icon">
-                                    <i class="la la-file-excel-o"></i>
-                                </span>
-                                <span class="navi-text">Excel</span>
-                            </a>
-                        </li>
-                    </ul>
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="row mb-5">
+            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+                <a href="#" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
+                <div class="dropdown dropdown-inline ml-2">
+                    <button type="button"
+                            class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        Export
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <ul class="navi flex-column navi-hover py-2">
+                            <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                Choose an option:
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+                                    <span class="navi-icon">
+                                        <i class="la la-file-excel-o"></i>
+                                    </span>
+                                    <span class="navi-text">Excel</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" onchange="refreshData(this.value)" />
+                    <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
+                        <span class="input-group-text">
+                            <i class="ki ki-calendar"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-            <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#kt_datetimepicker_3_year" autocomplete="off" id="search_year" onchange="refreshData(this.value)" />
-                <div class="input-group-append" data-target="#kt_datetimepicker_3_year" data-toggle="datetimepicker">
-                    <span class="input-group-text">
-                        <i class="ki ki-calendar"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <table id="my_list" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Tiêu đề</th>
+                    <th class="text-center">Loại</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-    <table id="my_list" class="table table-bordered table-checkable">
-        <thead>
-            <tr>
-                <th class="text-center">STT</th>
-                <th class="text-center">Tiêu đề</th>
-                <th class="text-center">Loại</th>
-                <th class="text-center">Trạng thái</th>
-                <th class="text-center">Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 </div>
-
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -270,22 +269,22 @@
                     <div class="col-10 col-form-label">
                         <div class="checkbox-list">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="1" />
+                                <input type="checkbox" value="KP" name="clone-content" />
                                 <span></span>
                                 Kinh phí
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="2" />
+                                <input type="checkbox" value="DTC" name="clone-content" />
                                 <span></span>
                                 Đơn vị đồng tổ chức
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="3" />
+                                <input type="checkbox" value="ND" name="clone-content" />
                                 <span></span>
                                 Nội dung
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes4" value="4" />
+                                <input type="checkbox" value="TD" name="clone-content" />
                                 <span></span>
                                 Đăng kí tham dự
                             </label>
@@ -295,7 +294,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_clone">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -307,7 +306,6 @@
         let id_clone = "";
         let stt = 1;
         document.getElementById('search_year').value = new Date().getFullYear();
-
         function saveTempIdDelete(id) {
             Swal.fire({
                 title: "Bạn có muốn xóa hoạt động học thuật này không ?",
@@ -366,17 +364,18 @@
         function saveTempIdCheckin(id) {
             window.location.href = "/CheckIn/List?id=" + id;
         }
-
         function showCloneModal(id) {
             id_clone = id;
             $('#cloneModal').modal('show');
         }
-
         function goDetail(id) {
-            window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/DetailOfAcademicActivity/Index');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+            };
+            xhr.send('id=' + id);
         }
-
-
         $('#btn_add').click(function () {
             let activity_name = document.getElementById('add_title').value;
             let activity_type_id = document.getElementById('add_category').value;
@@ -418,14 +417,12 @@
                 }
             });
         });
-
         function clearModal(id) {
             $(id).find('input:text, input:password, select')
                 .each(function () {
                     $(this).val('');
                 });
         }
-
         $('#btn_edit').click(function () {
             let activity_name = document.getElementById('edit_title').value;
             let activity_type_id = document.getElementById('edit_category').value;
@@ -468,15 +465,70 @@
                 }
             });
         });
-
         function refreshData(val) {
             alert(val);
         }
-
+        $('#btn_clone').click(function () {
+            let activity_name = document.getElementById('clone_title').value;
+            let activity_type_id = document.getElementById('clone_category').value;
+            let from = document.getElementById('clone_from').value;
+            let to = document.getElementById('clone_to').value;
+            let location = document.getElementById('clone_location').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                return false;
+            }
+            if (from > to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
+            let object = {
+                id: id_clone,
+                activity_name: activity_name,
+                activity_type_id: activity_type_id,
+                location: location,
+                from: from,
+                to: to,
+                content: getSelectedCheckboxValues('clone-content')
+            }
+            $.ajax({
+                url: '/AcademicActivity/cloneAA',
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#cloneModal');
+                        unCheckbox('#cloneModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+        });
+        function unCheckbox(id) {
+            $(id).find('input:checkbox')
+                .each(function () {
+                    $(this).prop("checked", false);
+                });
+        }
+        function getSelectedCheckboxValues(name) {
+            const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            let values = [];
+            checkboxes.forEach((checkbox) => {
+                values.push(checkbox.value);
+            });
+            return values;
+        }
         $('#search_year').on('changeDate', function () {
             alert($('#search_year').val());
         });
-
         var datatable = $("#my_list").DataTable({
                 oLanguage: {
                     oPaginate: {
@@ -559,7 +611,6 @@
                     },
                 ]
             });
-
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
                 $('.kt_datetimepicker_3').datetimepicker({

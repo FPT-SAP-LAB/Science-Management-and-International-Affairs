@@ -30,7 +30,7 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            string output = IndexRepos.GetIndexPageJson(datatable, LanguageResource.GetCurrentLanguageID());
+            string output = IndexRepos.GetIndexPageGuest(datatable, 6, LanguageResource.GetCurrentLanguageID());
             JObject json = JObject.Parse(output);
             List<DataIndex> data = json["data"].ToObject<List<DataIndex>>();
             for (int i = 0; i < data.Count; i++)
@@ -108,6 +108,7 @@ namespace GUEST.Controllers
             public DateTime Date { get; set; }
             public string CreatedDate { get; set; }
             public string StatusName { get; set; }
+            public int StatusID { get; set; }
         }
     }
 }
