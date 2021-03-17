@@ -213,6 +213,7 @@
     <Compile Include="Criterion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\AlertModal.cs" />
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
