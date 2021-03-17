@@ -29,9 +29,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 BaseServerSideData<AcademicActivityType> academicActivityTypes = academicActivityTypeRepo.getlistAcademicActivityType(baseDatatable);
-                return Json(new { success = true, data = academicActivityTypes.Data, draw = Request["draw"], 
-                    recordsTotal = academicActivityTypes.RecordsTotal, 
-                    recordsFiltered = academicActivityTypes.RecordsTotal }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = true,
+                    data = academicActivityTypes.Data,
+                    draw = Request["draw"],
+                    recordsTotal = academicActivityTypes.RecordsTotal,
+                    recordsFiltered = academicActivityTypes.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -46,7 +51,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             {
                 AlertModal<AcademicActivityType> alertModal = academicActivityTypeRepo.addAcademicActivityType(academic_activity_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -59,7 +65,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             {
                 AlertModal<AcademicActivityType> alertModal = academicActivityTypeRepo.getAcademicActivityType(academic_activity_type_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -72,7 +79,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             {
                 AlertModal<AcademicActivityType> alertModal = academicActivityTypeRepo.editAcademicActivityType(academic_activity_type_id, academic_activity_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -85,7 +93,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             {
                 AlertModal<AcademicActivityType> alertModal = academicActivityTypeRepo.deleteAcademicActivityType(academic_activity_type_id);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
