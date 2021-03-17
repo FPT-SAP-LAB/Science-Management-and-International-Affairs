@@ -260,6 +260,21 @@
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
+        $('#chuyennganh').select2({
+            allowClear: true
+        });
+        $('#tieuchi').select2({
+            allowClear: true
+        });
+        $('#kieuthuong').select2({
+            allowClear: true
+        });
+        $('#loaithuong').select2({
+            allowClear: true
+        });
+        $('#paper_type').select2({
+            allowClear: true
+        });
         var numberOfAuthors = parseInt("@ViewBag.numberAuthor");
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
@@ -268,6 +283,7 @@
 
             var paper_type = "@ViewBag.Paper.paper_type_id";
             $("#paper_type").val(paper_type);
+            $("#paper_type").trigger('change');
 
             var paper_TNQT = "@ViewBag.Paper.type";
             if (paper_TNQT == "Quocte") {
@@ -280,13 +296,16 @@
                 $(".thuongqt").hide();
                 $(".thuongtn").show();
             }
+            $("#loaithuong").trigger('change');
 
             var kieuthuong = "@ViewBag.Paper.reward_type";
             if (kieuthuong == "Quydinh") $("#kieuthuong").val(1);
             if (kieuthuong == "Canhan") $("#kieuthuong").val(2);
+            $("#kieuthuong").trigger('change');
 
             var spec = "@ViewBag.Paper.specialization_id";
             $("#chuyennganh").val(spec);
+            $("#chuyennganh").trigger('change');
 
             $(".tieuchivalue").each(function () {
                 var temp = $(this).val();
