@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.MasterData
 {
-    
     class AcademicActivityExpenseTypeRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
