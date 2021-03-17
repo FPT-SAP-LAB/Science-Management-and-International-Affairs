@@ -87,6 +87,7 @@
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
+    <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorIndexRepo.cs" />
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
