@@ -69,7 +69,7 @@ namespace GUEST.Controllers
             };
             string output = DetailRepos.GetDetailPageGuest(id, 6, LanguageResource.GetCurrentLanguageID());
             ViewBag.pagesTree = pagesTree;
-            ViewBag.id = id;
+            ViewBag.output = output;
             return View();
         }
         [ChildActionOnly]
