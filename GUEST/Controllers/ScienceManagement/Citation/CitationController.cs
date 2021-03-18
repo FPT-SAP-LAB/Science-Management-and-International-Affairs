@@ -1,5 +1,10 @@
 ﻿using BLL.ScienceManagement.Citation;
+using BLL.ScienceManagement.Comment;
+using BLL.ScienceManagement.MasterData;
+using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement;
+using ENTITIES.CustomModels.ScienceManagement.Comment;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +17,8 @@ namespace User.Controllers
     public class CitationController : Controller
     {
         CitationRepo cr = new CitationRepo();
+        MasterDataRepo md = new MasterDataRepo();
+        CommentRepo crr = new CommentRepo();
         // GET: Citation
         public ActionResult List()
         {
@@ -61,6 +68,16 @@ namespace User.Controllers
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.ckEdit = editable;
+
+            AuthorInfo author = cr.getAuthor(id);
+            ViewBag.author = author;
+
+            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
+            ViewBag.citation = listCitation;
+
+            List<DetailComment> listCmt = crr.getComment(Int32.Parse(id));
+            ViewBag.cmt = listCmt;
+
             return View();
         }
     }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ee9f482529814fe687efe519e5311443" Name="Diagram1">
+      <Diagram DiagramId="598ee8016bc24bb1ae0d22787d00da15" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="0.75" PointY="29.125" IsExpanded="true" />
@@ -148,7 +148,7 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__ActivityE__offic__1EF99443" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__offic__5B78929E" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__MOU__office_id__2334397B" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Participa__offic__02C769E9" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Participa__offic__278EDA44" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__People__office_i__756D6ECB" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PlanParti__offic__05A3D694" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicC__peopl__0D44F85C" ManuallyRouted="false" />
@@ -282,7 +282,7 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Question__answer__5772F790" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Question__form_i__345EC57D" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Response__form_i__3552E9B6" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Participa__parti__2F9A1060" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Participa__parti__269AB60B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PlanParti__parti__32767D0B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.CommentRequest" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.ArticleTag" ManuallyRouted="false" />

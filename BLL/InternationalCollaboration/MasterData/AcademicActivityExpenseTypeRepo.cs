@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,14 @@ namespace BLL.InternationalCollaboration.MasterData
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
 
-        public HashSet<ENTITIES.ActivityExpenseType> activityExpenseTypes()
+        public BaseServerSideData<ActivityExpenseType> getListActivityExpenseType(BaseDatatable baseDatatable)
         {
-            HashSet<ActivityExpenseType> activityExpenseTypes = db.ActivityExpenseTypes.ToHashSet();
-            return activityExpenseTypes;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<ActivityExpenseType> activityExpenseTypes = db.Database.SqlQuery<ActivityExpenseType>("select * from SMIA_AcademicActivity.ActivityExpenseType " +
+                                                                    "ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                                                                    " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY").ToList();
+            int recordsTotal = db.Database.SqlQuery<int>("select count(*) from SMIA_AcademicActivity.ActivityExpenseType").FirstOrDefault();
+            return new BaseServerSideData<ActivityExpenseType>(activityExpenseTypes, recordsTotal);
         }
     }
 }
