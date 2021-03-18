@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentBase">
           <Key>
             <PropertyRef Name="comment_id" />
@@ -1149,7 +1149,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Key>
             <PropertyRef Name="participant_id" />
           </Key>
-          <Property Name="participant_id" Type="int" Nullable="false" />
+          <Property Name="participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="participant_role_id" Type="int" Nullable="false" />
           <Property Name="participant_name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="150" />
@@ -2536,7 +2536,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__offic__02C769E9">
+        <Association Name="FK__Participa__offic__278EDA44">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2548,10 +2548,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__parti__2F9A1060">
-          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Participa__parti__269AB60B">
+          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ParticipantRole">
@@ -4056,11 +4054,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Paper" EntitySet="Paper" />
             <End Role="PaperWithCriteria" EntitySet="PaperWithCriteria" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__offic__02C769E9" Association="Self.FK__Participa__offic__02C769E9">
+          <AssociationSet Name="FK__Participa__offic__278EDA44" Association="Self.FK__Participa__offic__278EDA44">
             <End Role="Office" EntitySet="Office" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__parti__2F9A1060" Association="Self.FK__Participa__parti__2F9A1060">
+          <AssociationSet Name="FK__Participa__parti__269AB60B" Association="Self.FK__Participa__parti__269AB60B">
             <End Role="ParticipantRole" EntitySet="ParticipantRole" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
@@ -4357,8 +4355,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="RightByRole" EntitySet="RightByRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ScienceAndInternationalAffairsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -4473,7 +4470,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK__ActivityE__offic__1EF99443" FromRole="Office" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="Office" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="Office" ToRole="MOU" />
-          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__offic__02C769E9" FromRole="Office" ToRole="Participant" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__offic__278EDA44" FromRole="Office" ToRole="Participant" />
           <NavigationProperty Name="People" Relationship="Self.FK__People__office_i__756D6ECB" FromRole="Office" ToRole="People" />
           <NavigationProperty Name="PlanParticipants" Relationship="Self.FK__PlanParti__offic__05A3D694" FromRole="Office" ToRole="PlanParticipant" />
         </EntityType>
@@ -5706,15 +5703,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Key>
             <PropertyRef Name="participant_id" />
           </Key>
-          <Property Name="participant_id" Type="Int32" Nullable="false" />
+          <Property Name="participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="participant_role_id" Type="Int32" Nullable="false" />
           <Property Name="participant_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="participant_number" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="is_checked" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Office" Relationship="Self.FK__Participa__offic__02C769E9" FromRole="Participant" ToRole="Office" />
-          <NavigationProperty Name="ParticipantRole" Relationship="Self.FK__Participa__parti__2F9A1060" FromRole="Participant" ToRole="ParticipantRole" />
+          <NavigationProperty Name="Office" Relationship="Self.FK__Participa__offic__278EDA44" FromRole="Participant" ToRole="Office" />
+          <NavigationProperty Name="ParticipantRole" Relationship="Self.FK__Participa__parti__269AB60B" FromRole="Participant" ToRole="ParticipantRole" />
         </EntityType>
         <EntityType Name="ParticipantRole">
           <Key>
@@ -5726,7 +5723,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="price" Type="Double" />
           <Property Name="phase_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AcademicActivityPhase" Relationship="Self.FK__Participa__phase__308E3499" FromRole="ParticipantRole" ToRole="AcademicActivityPhase" />
-          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__parti__2F9A1060" FromRole="ParticipantRole" ToRole="Participant" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__parti__269AB60B" FromRole="ParticipantRole" ToRole="Participant" />
           <NavigationProperty Name="PlanParticipants" Relationship="Self.FK__PlanParti__parti__32767D0B" FromRole="ParticipantRole" ToRole="PlanParticipant" />
         </EntityType>
         <EntityType Name="PlanParticipant">
@@ -6139,7 +6136,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__offic__02C769E9">
+        <Association Name="FK__Participa__offic__278EDA44">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
@@ -7769,10 +7766,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Participa__parti__2F9A1060">
-          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Participa__parti__269AB60B">
+          <End Role="ParticipantRole" Type="Self.ParticipantRole" Multiplicity="1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ParticipantRole">
@@ -8069,7 +8064,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Office" EntitySet="Offices" />
             <End Role="MOU" EntitySet="MOUs" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__offic__02C769E9" Association="Self.FK__Participa__offic__02C769E9">
+          <AssociationSet Name="FK__Participa__offic__278EDA44" Association="Self.FK__Participa__offic__278EDA44">
             <End Role="Office" EntitySet="Offices" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>
@@ -8605,7 +8600,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Form" EntitySet="Forms" />
             <End Role="Response" EntitySet="Responses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Participa__parti__2F9A1060" Association="Self.FK__Participa__parti__2F9A1060">
+          <AssociationSet Name="FK__Participa__parti__269AB60B" Association="Self.FK__Participa__parti__269AB60B">
             <End Role="ParticipantRole" EntitySet="ParticipantRoles" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>

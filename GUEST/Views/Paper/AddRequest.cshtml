@@ -4,7 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
-
+<style>
+    .author-info-card {
+        font-size: 14px;
+    }
+</style>
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -137,35 +141,15 @@
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    <div class="row" id="authors-info-container">
+                    </div>
+                    <!--end:: Row-->
                     <div class="row">
-                        <div class="col-xl-12 table-responsive">
-                            <table class="table table-bordered table-checkable tacgia">
-                                <thead>
-                                    <tr>
-                                        <th>@rm.GetString("WorkUnit")</th>
-                                        <th>@rm.GetString("MSNV")</th>
-                                        <th>@rm.GetString("Name")</th>
-                                        <th>@rm.GetString("Title")</th>
-                                        <th>@rm.GetString("ContractType")</th>
-                                        <th>@rm.GetString("Tax")</th>
-                                        <th>@rm.GetString("CMND")</th>
-                                        <th>@rm.GetString("CMND")</th>
-                                        <th>@rm.GetString("Bank")</th>
-                                        <th>@rm.GetString("AccNo")</th>
-                                        <th>@rm.GetString("Reward")</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tacgia_body">
-                                </tbody>
-                            </table>
-                        </div>
                         <div class="col-xl-12" style="text-align: left">
-                            @*   <button class="btn btn-light-danger px-6 font-weight-bold deletetacgia">@rm.GetString("DelAu")</button>*@
                             <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_btn" data-toggle="modal" data-target="#addModal">@rm.GetString("AddAu")</button>
                         </div>
+
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -202,6 +186,7 @@
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Scripts/PartialViewScript.js"></script>
+    <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
         $(document).ready(function () {
             $("#add_author_reward").prop('disabled', true);
@@ -252,6 +237,148 @@
             var option = $("#tieuchi option[value='" + text + "']");
             option.prop('disabled', false);
             $(this).closest(".onetieuchi").remove();
+        });
+    </script>
+    <script>
+        //$(document).ready(function () {
+        //    if (numberOfAuthors > 0) {
+        //        $(".tacgia").show()
+        //    }
+        //});
+        //////////////////////////////////////////////////////////////////
+        class AuthorInfoView {
+            constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax
+                , add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
+                this.add_author_msnv = add_author_msnv;
+                this.add_author_email = add_author_email;
+                this.add_author_workplace = add_author_workplace;
+                this.add_author_name = add_author_name;
+                this.add_author_title = add_author_title;
+                this.add_author_contractType = add_author_contractType;
+                this.add_author_cmnd = add_author_cmnd;
+                this.add_author_tax = add_author_tax;
+                this.add_author_bank = add_author_bank;
+                this.add_author_accno = add_author_accno;
+                this.add_author_reward = add_author_reward;
+                this.add_author_note = add_author_note;
+                this.add_author_info_id = id
+            }
+            getHTML() {
+                return `
+                 <div class='col-lg-6' id='`+ this.add_author_info_id + `'>
+                                <!--begin::Card-->
+                                <div class='card card-custom gutter-b'>
+                                    <div class='card-header'>
+                                        <div class='card-title'>
+                                            <h3 class='card-label'>`+ this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
+                                        </div>
+                                        <div class='card-toolbar'>
+                                            <a data-id='`+ this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                                <i class='far fa-edit'></i>
+                                            </a>
+                                            <a data-id='`+ this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                                <i class='la la-trash'></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class='card-body author-info-card'>
+                                        <div class='row'>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Khu Vực:</span>
+                                                        <span class='text-muted font-weight-bold'>`+ this.add_author_workplace + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Cơ sở:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_workplace + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_title + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_contractType + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_tax + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Email:</span>
+                                                        <span class='text-muted font-weight-bold'>`+ this.add_author_email + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_cmnd + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ảnh CMND:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>C://Users/hieuvm/../cmt.jpg</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ngân hàng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_bank + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Số tài khoản: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_accno + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Tiền thưởng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_reward + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card-->
+                            </div>
+                            `
+            }
+        }
+        //////////////////////////////////////////////////////////////////
+        $("#add_author_save").click(function () {
+            ckfe = $("#ckfe").val()
+            add_author_workplace = $("#ckfe").val()
+            add_author_msnv = $("#add_author_msnv").val()
+            add_author_name = $("#add_author_name").val()
+            add_author_title = $("#add_author_title option:selected").text()
+            add_author_contractType = $("#add_author_contractType option:selected").text()
+            add_author_cmnd = $("#add_author_cmnd").val()
+            add_author_tax = $("#add_author_tax").val()
+            add_author_bank = $("#add_author_bank").val()
+            add_author_accno = $("#add_author_accno").val()
+            add_author_reward = $("#add_author_reward").val()
+            add_author_note = $("#add_author_note").val()
+            add_author_email = 'tuankq@hsđsd.com'
+            id = new Date().getTime()
+            au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
+                add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
+                add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id)
+            $("#authors-info-container").append(au.getHTML());
+        });
+        $("#authors-info-container").on('click', '.del-author', function () {
+            let id = $(this).data("id")
+            Swal.fire({
+                title: "Xoá tác giả này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Huỷ",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $("#" + id).remove()
+                } else if (result.dismiss === "cancel") {
+                }
+            });
         });
     </script>
 }

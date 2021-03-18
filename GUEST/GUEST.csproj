@@ -2398,7 +2398,13 @@
     <Content Include="Views\AcademicCollaboration\Long_Term.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_1.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_2.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Short_Term.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Tab_1.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Going_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_3.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
