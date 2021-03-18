@@ -104,7 +104,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 case "1":
                     pagesTree = new List<PageTree>
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Long_Term"),
+                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
                 new PageTree("Thủ tục với đối tác", "/AcademicCollaboration/Procedure_Detail"),
                 //new PageTree("Đào tạo của đối tác", "/AcademicCollaboration/Procedure_Detail?id=" + id),
             };
@@ -112,7 +112,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 case "2":
                     pagesTree = new List<PageTree>
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Long_Term"),
+                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
                 new PageTree("Thủ tục với FPT", "/AcademicCollaboration/Procedure_Detail"),
                 //new PageTree("Đào tạo của FPT", "/AcademicCollaboration/Procedure_Detail?id=" + id),
             };
