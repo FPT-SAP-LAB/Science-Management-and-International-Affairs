@@ -1,32 +1,31 @@
-﻿using System;
+﻿using BLL.InternationalCollaboration.MasterData;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BLL.InternationalCollaboration.MasterData;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
 {
-    public class AcademicActivityExpenseTypeController : Controller
+    public class CollaborationStatusController : Controller
     {
-        private static AcademicActivityExpenseTypeRepo activityExpenseTypeRepo = new AcademicActivityExpenseTypeRepo();
+        private static CollaborationStatusRepo collaborationStatusRepo = new CollaborationStatusRepo();
 
-        // GET: AcademicActivityExpenseType
+        // GET: Collaboration Status
         public ActionResult List()
         {
-            ViewBag.title = "QUẢN LÝ LOẠI KINH PHÍ";
+            ViewBag.title = "QUẢN LÝ TRẠNG THÁI THỎA THUẬN HỢP TÁC";
             return View();
         }
 
-        public ActionResult listAcademicActivityExpenseType()
+        public ActionResult listCollaborationStatus()
         {
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<ActivityExpenseType> baseServerSideData = activityExpenseTypeRepo.getListActivityExpenseType(baseDatatable);
+                BaseServerSideData<CollaborationStatu> baseServerSideData = collaborationStatusRepo.getListCollaborationStatu(baseDatatable);
                 return Json(new
                 {
                     success = true,
@@ -43,11 +42,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult addAcademicActivityExpenseType(string expense_type_name)
+        public ActionResult addCollaborationStatus(string mou_status_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.addAcademicActivityExpenseType(expense_type_name);
+                AlertModal<CollaborationStatu> alertModal = collaborationStatusRepo.addCollaborationStatu(mou_status_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -57,11 +56,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult getAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult getCollaborationStatus(int mou_status_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.getActivityExpenseType(expense_type_id);
+                AlertModal<CollaborationStatu> alertModal = collaborationStatusRepo.getCollaborationStatu(mou_status_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -71,11 +70,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult editAcademicActivityExpenseType(int expense_type_id, string expense_type_name)
+        public ActionResult editCollaborationStatus(int mou_status_id, string mou_status_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.editActivityExpenseType(expense_type_id, expense_type_name);
+                AlertModal<CollaborationStatu> alertModal = collaborationStatusRepo.editCollaborationStatu(mou_status_id, mou_status_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -85,11 +84,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult deleteAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult deleteCollaborationStatus(int mou_status_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.deleteActivityExpenseType(expense_type_id);
+                AlertModal<CollaborationStatu> alertModal = collaborationStatusRepo.deleteCollaborationStatu(mou_status_id);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -97,6 +96,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
                 throw e;
             }
         }
-
     }
 }
