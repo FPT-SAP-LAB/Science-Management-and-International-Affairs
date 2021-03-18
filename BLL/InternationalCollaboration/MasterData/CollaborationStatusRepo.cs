@@ -165,6 +165,5 @@ namespace BLL.InternationalCollaboration.MasterData
                 return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
-
     }
 }
