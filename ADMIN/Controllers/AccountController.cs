@@ -12,7 +12,7 @@ namespace ADMIN.Controllers
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public ActionResult List()
         {
-            ViewBag.Title = "Quản lí hệ thống";
+            ViewBag.pageTitle = "Quản lí tài khoản";
             return View();
         }
     }

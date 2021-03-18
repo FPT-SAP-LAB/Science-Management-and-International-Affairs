@@ -218,6 +218,8 @@
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationStatu_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaboration\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />
@@ -509,7 +511,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

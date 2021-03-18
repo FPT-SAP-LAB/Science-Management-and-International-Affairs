@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "Quản lý loại hoạt động học thuật";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -41,13 +40,13 @@
                 <h3 class="modal-title font-weight-bolder">THÊM LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
             </div>
             <div class="modal-body">
-                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <input id="add_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="academic_activity_typpe_model_add_type_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
-                <button id='academic_activity_typpe_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+                <button id="academic_activity_type_model_add_type_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='academic_activity_type_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
             </div>
         </div>
     </div>
@@ -61,13 +60,13 @@
                 <h3 class="modal-title font-weight-bolder">SỬA LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
             </div>
             <div class="modal-body">
-                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <input id="edit_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button id='academic_activity_typpe_model_edit_type_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
-                <button id='academic_activity_typpe_model_edit_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+                <button id='academic_activity_type_model_edit_type_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='academic_activity_type_model_edit_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
             </div>
         </div>
     </div>
@@ -116,7 +115,7 @@
 
     <!--ADD-->
     <script>
-        $("#academic_activity_typpe_model_add_type_confirm").click(function () {
+        $("#academic_activity_type_model_add_type_confirm").click(function () {
             $.ajax({
                 url: "@Url.Action("addAcademicActivityType", "AcademicActivityType")",
                 type: "POST",
@@ -127,17 +126,17 @@
                 success: function (data) {
                     if (data.success == true) {
                         toastr.success(data.content);
+                        //clear content
+                        $("#add_modal_academic_activity_type_name").val("");
+                        //close modal
+                        $("#academic_activity_type_model_add_type_close").click();
                     } else {
                         toastr.error(data.content);
                     }
-                    //clear content
-                    $("#add_modal_academic_activity_type_name").val("");
-                    //close modal
-                    $("#academic_activity_typpe_model_add_type_close").click();
                     //reload datatable
                     dataTable.ajax.reload();
                 },
-                error: function () {
+                error: function (data) {
                     toastr.error(data.content);
                     dataTable.ajax.reload();
                 }
@@ -166,7 +165,7 @@
                         toastr.error(data.content);
                     }
                 },
-                error: function () {
+                error: function (data) {
                     toastr.error(data.content);
                     dataTable.ajax.reload();
                 }
@@ -174,9 +173,9 @@
         }
 
         //confirm edit
-        $("#academic_activity_typpe_model_edit_type_confirm").click(function () {
+        $("#academic_activity_type_model_edit_type_confirm").click(function () {
             $.ajax({
-                url: "@Url.Action("editAcademicActivty", "AcademicActivityType")",
+                url: "@Url.Action("editAcademicActivtyType", "AcademicActivityType")",
                 type: "POST",
                 data: {
                     academic_activity_type_id: academic_activity_type_id_temp,
@@ -186,17 +185,17 @@
                 success: function (data) {
                     if (data.success == true) {
                         toastr.success(data.content);
+                        //clear content
+                        $("#edit_modal_academic_activity_type_name").val("");
+                        //close modal
+                        $("#academic_activity_type_model_edit_type_close").click();
                     } else {
                         toastr.error(data.content);
                     }
-                    //clear content
-                    $("#edit_modal_academic_activity_type_name").val("");
-                    //close modal
-                    $("#academic_activity_typpe_model_edit_type_close").click();
                     //reload datatable
                     dataTable.ajax.reload();
                 },
-                error: function () {
+                error: function (data) {
                     toastr.error(data.content);
                     dataTable.ajax.reload();
                 }
@@ -232,7 +231,7 @@
                             }
                             dataTable.ajax.reload();
                         },
-                error: function () {
+                error: function (data) {
                     toastr.error(data.content);
                     dataTable.ajax.reload();
                 }
@@ -241,6 +240,4 @@
             });
         }
     </script>
-
-
 }

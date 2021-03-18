@@ -41,9 +41,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         inner join General.Specialization tb7
                         on tb7.specialization_id = tb6.specialization_id
                         inner join 
-                        (select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                        from IA_Collaboration.MOUStatusHistory 
-                        group by mou_status_id, mou_id) tb8 on
+                        (select a.mou_id,a.mou_status_id from IA_Collaboration.MOUStatusHistory a
+                        inner join 
+                        (select max(datetime) as max_date,mou_id from IA_Collaboration.MOUStatusHistory
+                        group by mou_id) b on
+                        a.datetime = b.max_date and a.mou_id = b.mou_id) tb8 on
                         tb8.mou_id = tb1.mou_id
                         inner join IA_Collaboration.CollaborationStatus tb9 on
                         tb9.mou_status_id = tb8.mou_status_id
@@ -54,7 +56,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         where tb1.is_deleted = 0
                         and partner_name like @partner_name
                         and contact_point_name like @contact_point_name
-                        and mou_code like @mou_code";
+                        and mou_code like @mou_code
+                        order by mou_code desc";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
@@ -321,20 +324,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public bool partnerIsExisted(int partner_id)
-        {
-            try
-            {
-                string sql_partner = $"select * from IA_Collaboration.Partner where partner_id = @partner_id";
-                ENTITIES.Partner partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner,
-                    new SqlParameter("partner_id", partner_id)).FirstOrDefault();
-                return partner is null ? false : true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         public List<CustomOffice> GetOffice()
         {
             try
@@ -404,28 +393,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-
-        public CustomPartner CheckPartnerEdit(string partner_name)
-        {
-            try
-            {
-                string sql = @"select t1.partner_id,t1.partner_name,t2.country_id,t2.country_name
-                    ,t1.address,t1.website from IA_Collaboration.Partner t1
-                    left join General.Country t2 on
-                    t1.country_id = t2.country_id where t1.partner_name = @partner_name";
-                CustomPartner p = db.Database.SqlQuery<CustomPartner>(sql,
-                    new SqlParameter("partner_name", partner_name)).FirstOrDefault();
-                return p;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public void checkCollabStatus()
-        {
-            //?
-        }
         private void handlingMOUListData(List<ListMOU> mouList)
         {
             //handling spe and scope data.
@@ -457,6 +424,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     else
                     {
                         previousItem = item;
+                        previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
+                        previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
                     }
                 }
             }
@@ -486,11 +455,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         on tb1.mou_id = tb2.mou_id
                         where tb1.is_deleted = 0";
                 string sql_expired
-                    = @"select * from IA_Collaboration.MOU
+                    = @"select mou_code from IA_Collaboration.MOU
                         where (mou_end_date < @next3Months and noti_count = 0) or 
                         (mou_end_date < @nextMonth and noti_count = 1)";
                 noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
-                noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired).ToList();
+                noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
+                    new SqlParameter("@next3Months", next3Months),
+                    new SqlParameter("@nextMonth", nextMonth)).ToList();
                 updateNotiCount(noti);
                 return noti;
             }
@@ -530,7 +501,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
-                    string sql_expired = @"select mou_id from IA_Collaboration.MOU tb1 where tb1.mou_end_date > @current_date";
+                    string sql_expired = @"select mou_id from IA_Collaboration.MOU tb1 where tb1.mou_end_date < @current_date
+                        and tb1.mou_id in(
+                        select t1.mou_id from IA_Collaboration.MOUStatusHistory t1
+                        inner join 
+                        (select max(datetime) as max_date,mou_id from IA_Collaboration.MOUStatusHistory
+                        group by mou_id) t2 on
+                        t1.datetime = t2.max_date and t1.mou_id = t2.mou_id
+                        where mou_status_id = 1)";
                     List<int> mouIdList = db.Database.SqlQuery<int>(sql_expired,
                         new SqlParameter("current_date", DateTime.Now)).ToList();
                     if (mouIdList.Count > 0)

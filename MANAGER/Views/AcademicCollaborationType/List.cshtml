@@ -1,0 +1,248 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div>
+                            <a href="#add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        </div>
+                        <table class="table table-bordered" id="academic_collab_type_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Loại
+                                    </th>
+                                    <th>
+                                        Hành động
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ADD-->
+<div class="modal fade in" id="add_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">THÊM LOẠI HỢP TÁC HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <input id="add_modal_collab_type_name" class="form-control" type="text" placeholder="Trạng thái" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add_modal_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='add_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EDIT-->
+<div class="modal fade in" id="edit_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA LOẠI HỢP TÁC HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <input id="edit_modal_collab_type_name" class="form-control" type="text" placeholder="Trạng thái" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='edit_modal_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='edit_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var dataTable = $("#academic_collab_type_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("listAcademicCollaborationType", "AcademicCollaborationType")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "collab_type_name", name: "collab_type_name" },
+                {
+                    data: "collab_type_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="loadDataToEditModal('+ data +')" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteAcademicCollaborationType('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+    </script>
+
+    <!--ADD-->
+    <script>
+        $("#add_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("addAcademicCollaborationType", "AcademicCollaborationType")",
+                type: "POST",
+                data: {
+                    collab_type_name: $("#add_modal_collab_type_name").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#add_modal_collab_type_name").val("");
+                        //close modal
+                        $("#add_modal_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function () {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        });
+    </script>
+
+    <!--EDIT-->
+    <script>
+        var collab_type_id_temp;
+        //loading data to modal
+        function loadDataToEditModal(collab_type_id) {
+            collab_type_id_temp = collab_type_id;
+            $.ajax({
+                url: "@Url.Action("getAcademicCollaborationType", "AcademicCollaborationType")",
+                type: "POST",
+                data: {
+                    collab_type_id: collab_type_id
+                },
+                cache: true,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#edit_modal_collab_type_name").val(data.obj.collab_type_name);
+
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        }
+
+        //confirm edit
+        $("#edit_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("editAcademicCollaborationType", "AcademicCollaborationType")",
+                type: "POST",
+                data: {
+                    collab_type_id: collab_type_id_temp,
+                    collab_type_name: $("#edit_modal_collab_type_name").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#edit_modal_collab_type_name").val("");
+                        //close modal
+                        $("#edit_modal_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        });
+    </script>
+
+    <!--DELETE-->
+    <script>
+        function deleteAcademicCollaborationType(collab_type_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa loại kinh phí này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Action("deleteAcademicCollaborationType", "AcademicCollaborationType")",
+                        type: "POST",
+                        data: {
+                            collab_type_id: collab_type_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == true) {
+                                toastr.success(data.content);
+                            } else {
+                                toastr.error(data.content);
+                            }
+                            dataTable.ajax.reload();
+                        },
+                        error: function (data) {
+                            toastr.error(data.content);
+                            dataTable.ajax.reload();
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+}
+
+
