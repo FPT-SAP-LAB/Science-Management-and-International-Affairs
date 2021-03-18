@@ -79,21 +79,54 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        
                         <div class="" id="tab-1">
                             @{
                                 Html.RenderPartial("PartialView/Short_Term_Tab_1");
                             }
                         </div>
                         <div class="" id="tab-2" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Short_Term_Tab_2");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Going_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC ĐỐI TÁC
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Going_Table");
+                                }
+                            </div>
                         </div>
                         <div class="" id="tab-3" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Short_Term_Tab_3");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Coming_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC GIÁO DỤC FPT
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Coming_Table");
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,7 +236,55 @@
 
     <script>
 
+        $("#going_procedure_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
         $("#colab_program_going_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
+        $("#coming_procedure_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -271,7 +352,7 @@
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })
@@ -283,7 +364,7 @@
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })
