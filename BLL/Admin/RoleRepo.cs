@@ -17,7 +17,8 @@ namespace BLL.Admin
             {
                 List<infoRole> data = db.Database.SqlQuery<infoRole>("select * from General.[Role]").ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<infoRole>();
             }
@@ -28,7 +29,7 @@ namespace BLL.Admin
             {
                 string sql = @"select rt.right_id,rt.right_name,rt.module_id from General.RightByRole rr inner join General.[Role] r on rr.role_id = r.role_id
                                 inner join General.[Right] rt on rr.right_id = rt.right_id where r.role_id = @role_id";
-                List<baseRight> data = db.Database.SqlQuery<baseRight>(sql,new SqlParameter("role_id",role_id)).ToList();
+                List<baseRight> data = db.Database.SqlQuery<baseRight>(sql, new SqlParameter("role_id", role_id)).ToList();
                 return data;
             }
             catch (Exception e)
@@ -42,7 +43,8 @@ namespace BLL.Admin
             {
                 List<Right> data = db.Rights.Where(x => x.module_id == module_id).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<Right>();
             }
@@ -112,7 +114,7 @@ namespace BLL.Admin
         //    {
         //        foreach(int x in arrAccept)
         //        {
-                    
+
         //        }
         //        return true;
         //    }catch(Exception e)

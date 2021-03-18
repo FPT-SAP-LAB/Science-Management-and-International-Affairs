@@ -68,7 +68,7 @@ namespace ADMIN.Controllers
             return Json(data);
         }
         [HttpPost]
-        public JsonResult UpdateRight(int[] arrAccept,int role_id)
+        public JsonResult UpdateRight(int[] arrAccept, int role_id)
         {
             //bool res = repo.UpdateRight(arrAccept,role_id);
             return Json(String.Empty);
