@@ -1,32 +1,31 @@
-﻿using System;
+﻿using BLL.InternationalCollaboration.MasterData;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BLL.InternationalCollaboration.MasterData;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
 {
-    public class AcademicActivityExpenseTypeController : Controller
+    public class AcademicCollaborationTypeController : Controller
     {
-        private static AcademicActivityExpenseTypeRepo activityExpenseTypeRepo = new AcademicActivityExpenseTypeRepo();
+        private static AcademicCollaborationTypeRepo academicCollaborationTypeRepo = new AcademicCollaborationTypeRepo();
 
-        // GET: AcademicActivityExpenseType
+        // GET: AcademicCollaborationType
         public ActionResult List()
         {
-            ViewBag.title = "QUẢN LÝ LOẠI KINH PHÍ";
+            ViewBag.title = "QUẢN LÝ LOẠI HỢP TÁC HỌC THUẬT";
             return View();
         }
 
-        public ActionResult listAcademicActivityExpenseType()
+        public ActionResult listAcademicCollaborationType()
         {
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<ActivityExpenseType> baseServerSideData = activityExpenseTypeRepo.getListActivityExpenseType(baseDatatable);
+                BaseServerSideData<AcademicCollaborationType> baseServerSideData = academicCollaborationTypeRepo.getListAcademicCollaborationType(baseDatatable);
                 return Json(new
                 {
                     success = true,
@@ -43,11 +42,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult addAcademicActivityExpenseType(string expense_type_name)
+        public ActionResult addAcademicCollaborationType(string collab_type_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.addAcademicActivityExpenseType(expense_type_name);
+                AlertModal<AcademicCollaborationType> alertModal = academicCollaborationTypeRepo.addAcademicCollaborationType(collab_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -57,11 +56,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult getAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult getAcademicCollaborationType(int collab_type_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.getActivityExpenseType(expense_type_id);
+                AlertModal<AcademicCollaborationType> alertModal = academicCollaborationTypeRepo.getAcademicCollaborationType(collab_type_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -71,11 +70,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult editAcademicActivityExpenseType(int expense_type_id, string expense_type_name)
+        public ActionResult editAcademicCollaborationType(int collab_type_id, string collab_type_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.editActivityExpenseType(expense_type_id, expense_type_name);
+                AlertModal<AcademicCollaborationType> alertModal = academicCollaborationTypeRepo.editAcademicCollaborationType(collab_type_id, collab_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -85,11 +84,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult deleteAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult deleteAcademicCollaborationType(int collab_type_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.deleteActivityExpenseType(expense_type_id);
+                AlertModal<AcademicCollaborationType> alertModal = academicCollaborationTypeRepo.deleteAcademicCollaborationType(collab_type_id);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)

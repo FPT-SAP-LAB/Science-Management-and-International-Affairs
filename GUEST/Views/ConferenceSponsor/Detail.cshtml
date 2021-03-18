@@ -1,7 +1,12 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Conference
+@using Newtonsoft.Json.Linq
 @{
     ViewBag.Title = "Chi tiết đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
+    ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
+    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
 <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConferenceDetail">
@@ -25,10 +30,10 @@
                 <table class="col-12 table">
                     <tr>
                         <td>
-                            Tên hội nghị: <span class="field-value">ICCI 2021</span>
+                            Tên hội nghị: @ConferenceDetail.ConferenceName
                         </td>
                         <td>
-                            Website hội nghị: <span class="field-value">ACC.com</span>
+                            Website hội nghị: @ConferenceDetail.Website
                         </td>
                         <td>
                             Quyết định: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a>
@@ -36,43 +41,59 @@
                     </tr>
                     <tr>
                         <td>
-                            Tên diễn giả QS: <span class="field-value">Todd Howard</span>
+                            Diễn giả/ Thành viên BTC: @ConferenceDetail.KeynoteSpeaker
                         </td>
                         <td>
-                            Thuộc trường đại <span class="field-value">học: Todai</span>
+                            Quốc gia: @ConferenceDetail.CountryName
                         </td>
                         <td>
-                            Số quyết định: <span class="field-value">QĐ-0635</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Quốc gia: <span class="field-value">Japan</span>
-                        </td>
-                        <td>
-                            Thời gian: <span class="field-value">02/02/2021 – 05/02/2021</span>
-                        </td>
-                        <td>
-                            Ngày tạo: <span class="field-value">30/01/2021</span>
+                            Số quyết định: QĐ-0635
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Bài báo: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a>
+                            Đơn vị tổ chức (Top QS): @ConferenceDetail.QsUniversity
                         </td>
                         <td>
-                            Hình thức: <span class="field-value">Online quốc tế</span>
+                            Đơn vị đồng tổ chức: @ConferenceDetail.Co_organizedUnit
+                        </td>
+                        <td>
+                            Ngày ban hành: @ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian diễn ra: @ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))
+                        </td>
+                        <td>
+                            Thời gian tham dự: @ConferenceDetail.AttendanceStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.AttendanceEnd.ToString(rm.GetString("DateFormat"))
                         </td>
                         <td>
                             Trạng thái:
                             <span class="label label-lg label-inline label-light-primary font-weight-bold">
-                                đã hoàn ứng
+                                @ConferenceDetail.StatusName
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Tên bài báo: <span class="field-value ">Lorem ipsum dolor sit amet</span></td>
-                        <td>Thư mời hội nghị: <a href="#">Xem</a></td>
+                        <td>
+                            Tên bài báo: @ConferenceDetail.PaperName
+                        </td>
+                        <td>
+                            File bài báo: <a href="@ConferenceDetail.PaperLink">Google Drive</a>
+                        </td>
+                        <td>
+                            Ngày tạo đề nghị: @ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Hình thức: @ConferenceDetail.FormalityName
+                        </td>
+                        <td>
+                            Thư mời hội nghị: <a href="@ConferenceDetail.InvitationLink">Google Drive</a>
+                        </td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -104,36 +125,21 @@
                             <th scope="col">STT</th>
                             <th scope="col">MSNV/MSSV</th>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Đơn vị công tác</th>
-                            <th scope="col">Khu vực công tác</th>
+                            <th scope="col">Cơ sở công tác</th>
                             <th scope="col">Chức danh</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>ABC123</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td>FPTU</td>
-                            <td>Hà Nội</td>
-                            <td>Giảng viên</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>HE130214</td>
-                            <td>Đoàn Văn Thắng</td>
-                            <td>FPTU</td>
-                            <td>Hà Nội</td>
-                            <td>Sinh viên</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>HE130020</td>
-                            <td>Trần Thị Thúy Nguyên</td>
-                            <td>FPTU</td>
-                            <td>Hà Nội</td>
-                            <td>Sinh viên</td>
-                        </tr>
+                        @foreach (var item in Participants)
+                        {
+                            <tr>
+                                <th scope="row">@item.RowNumber</th>
+                                <td>@item.ID</td>
+                                <td>@item.FullName</td>
+                                <td>@item.OfficeName</td>
+                                <td>@item.TitleName</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
