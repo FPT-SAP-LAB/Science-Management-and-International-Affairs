@@ -17,14 +17,15 @@ namespace BLL.Admin
                 db.Configuration.LazyLoadingEnabled = false;
                 string sql = @"select r.right_id,r.right_name,m.module_name,r.group_id
                                 from General.[Right] r inner join General.Module m on r.module_id = m.module_id 
-                                ORDER BY " + baseDatatable.SortColumnName + " " +baseDatatable.SortDirection +
+                                ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                                 " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 int recordTotal = db.Database.SqlQuery<int>("select count(*) from General.[Right] r inner join General.Module m on r.module_id = m.module_id").FirstOrDefault();
                 List<infoRight> data = db.Database.SqlQuery<infoRight>(sql).ToList();
                 return new BaseServerSideData<infoRight>(data, recordTotal);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                return new BaseServerSideData<infoRight>(new List<infoRight>() , 0);
+                return new BaseServerSideData<infoRight>(new List<infoRight>(), 0);
             }
         }
         public List<Module> getModules()
@@ -33,7 +34,8 @@ namespace BLL.Admin
             {
                 List<Module> data = db.Modules.ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<Module>();
             }
@@ -44,7 +46,8 @@ namespace BLL.Admin
             {
                 Right data = db.Rights.Find(right_id);
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new Right();
             }
@@ -61,7 +64,8 @@ namespace BLL.Admin
                 });
                 db.SaveChanges();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
@@ -91,7 +95,8 @@ namespace BLL.Admin
                 db.Rights.Remove(r);
                 db.SaveChanges();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
