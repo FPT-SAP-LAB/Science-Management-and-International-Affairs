@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -91,7 +92,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql = @"select t4.country_name,t3.website,t3.address,
                     t2.contact_point_name,t2.contact_point_email,t2.contact_point_phone,
-                    t6.specialization_name,t2.partner_id
+                    t6.specialization_name,t2.partner_name
                     from IA_Collaboration.MOA t1 inner join
                     IA_Collaboration.MOUPartner t2 on 
                     t1.mou_id = t2.mou_id
@@ -199,20 +200,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public bool partnerIsExistedMOA(int partner_id)
-        {
-            try
-            {
-                string sql_partner = $"select * from IA_Collaboration.Partner where partner_id = @partner_id";
-                ENTITIES.Partner partner = db.Database.SqlQuery<ENTITIES.Partner>(sql_partner,
-                    new SqlParameter("partner_id", partner_id)).FirstOrDefault();
-                return partner is null ? false : true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         public string getSuggestedMOACode(int moa_id)
         {
             try
@@ -282,62 +269,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 throw ex;
             }
-        }
-        public class ListMOA
-        {
-            public ListMOA() { }
-            public string moa_code { get; set; }
-            public int moa_partner_id { get; set; }
-            public int moa_id { get; set; }
-            public string partner_name { get; set; }
-            public string evidence { get; set; }
-            public DateTime moa_start_date { get; set; }
-            public DateTime moa_end_date { get; set; }
-            public string moa_start_date_string { get; set; }
-            public string moa_end_date_string { get; set; }
-            public string office_name { get; set; }
-            public string scope_abbreviation { get; set; }
-            public string mou_status_name { get; set; }
-            public int mou_status_id { get; set; }
-        }
-        public class CustomPartnerMOA
-        {
-            public string website { get; set; }
-            public string country_name { get; set; }
-            public int partner_id { get; set; }
-            public string partner_name { get; set; }
-            public string address { get; set; }
-            public string contact_point_name { get; set; }
-            public string contact_point_phone { get; set; }
-            public string contact_point_email { get; set; }
-            public string specialization_name { get; set; }
-        }
-        public class CustomScopesMOA
-        {
-            public string scope_abbreviation { get; set; }
-            public int scope_id { get; set; }
-        }
-        public class MOAAdd
-        {
-            public MOAAdd() { }
-            public MOABasicInfo MOABasicInfo { get; set; }
-            public List<MOAPartnerInfo> MOAPartnerInfo { get; set; }
-        }
-        public class MOABasicInfo
-        {
-            public string moa_code { get; set; }
-            public string moa_end_date { get; set; }
-            public int mou_status_id { get; set; }
-            public string reason { get; set; }
-            public string moa_note { get; set; }
-            public string evidence { get; set; }
-        }
-        public class MOAPartnerInfo
-        {
-            public string partnername_add { get; set; }
-            public string sign_date_moa_add { get; set; }
-            public List<int> coop_scope_add { get; set; }
-            public int partner_id { get; set; }
         }
     }
 }

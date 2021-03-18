@@ -29,6 +29,8 @@ namespace ENTITIES
         public int invitation_file_id { get; set; }
         public int paper_id { get; set; }
         public int request_id { get; set; }
+        public System.DateTime attendance_start { get; set; }
+        public System.DateTime attendance_end { get; set; }
     
         public virtual File File { get; set; }
         public virtual Conference Conference { get; set; }

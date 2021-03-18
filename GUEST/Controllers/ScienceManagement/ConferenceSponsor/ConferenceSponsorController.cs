@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.Conference;
 
 namespace GUEST.Controllers
 {
@@ -17,6 +18,7 @@ namespace GUEST.Controllers
     {
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
+        readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
         // GET: ConferenceSponsor
         public ActionResult Index()
         {
@@ -30,16 +32,13 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            string output = IndexRepos.GetIndexPageGuest(datatable, 6, LanguageResource.GetCurrentLanguageID());
-            JObject json = JObject.Parse(output);
-            List<DataIndex> data = json["data"].ToObject<List<DataIndex>>();
-            for (int i = 0; i < data.Count; i++)
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageGuest(datatable, 6, LanguageResource.GetCurrentLanguageID());
+            for (int i = 0; i < output.Data.Count; i++)
             {
-                data[i].RowNumber = datatable.Start + 1 + i;
-                data[i].CreatedDate = data[i].Date.ToString("dd/MM/yyyy");
+                output.Data[i].RowNumber = datatable.Start + 1 + i;
+                output.Data[i].CreatedDate = output.Data[i].Date.ToString("dd/MM/yyyy");
             }
-            int recordsTotal = json.Value<int>("recordsTotal");
-            return Json(new { success = true, data, draw = Request["draw"], recordsTotal, recordsFiltered = recordsTotal }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult Add()
@@ -68,6 +67,7 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
             };
+            string output = DetailRepos.GetDetailPageGuest(id, 6, LanguageResource.GetCurrentLanguageID());
             ViewBag.pagesTree = pagesTree;
             ViewBag.id = id;
             return View();
@@ -99,16 +99,6 @@ namespace GUEST.Controllers
             public List<Office> Offices { get; set; }
             public List<TitleLanguage> TitleLanguages { get; set; }
             public string Link { get; set; }
-        }
-        private class DataIndex
-        {
-            public int RowNumber { get; set; }
-            public string PaperName { get; set; }
-            public string ConferenceName { get; set; }
-            public DateTime Date { get; set; }
-            public string CreatedDate { get; set; }
-            public string StatusName { get; set; }
-            public int StatusID { get; set; }
         }
     }
 }

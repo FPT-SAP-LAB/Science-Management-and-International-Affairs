@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ENTITIES.AcademicActivityType>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+}
+
+<div class="card-body">
+    <h2>Index</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-bordered table-checkable" id="academic_activity_type_table">
+        <thead>
+            <tr>
+                <th>
+                    Loại hoạt động học thuật
+                </th>
+                <th>
+                    Hành động
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#academic_activity_type_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "",
+                    sSearch: ""
+                },
+                ajax: {
+                    url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
+                    datatype: "json",
+                    cache: "false"
+                },
+                "searching": false,
+                "lengthChange": false,
+                columns: [
+                    {
+                        data: "activity_type_name"
+                    },
+                    {
+                        data: "activity_type_id",
+                        render: function (data) {
+                            return `<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="#" style="margin-right: 10px;">Sửa</a>
+                                        <a onclick="#" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>`
+                        }
+                    }
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                ]
+            });
+        });
+    </script>
+
+}

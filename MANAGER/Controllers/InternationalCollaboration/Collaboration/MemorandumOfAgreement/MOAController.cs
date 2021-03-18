@@ -1,5 +1,6 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
     {
         // GET: Partner
         private static MOARepo moa = new MOARepo();
+        private static BasicInfoMOARepo moa_detail = new BasicInfoMOARepo();
+        private static PartnerMOARepo moa_partner = new PartnerMOARepo();
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
-            //string id = Session["moa_detail_id"].ToString();
-
-            //List<ENTITIES.Partner> partnerList = mou_detail.getPartnerExMOU(int.Parse(id));
-            //List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
-            //ViewBag.scopeList = scopeList;
-            //ViewBag.partnerList = partnerList;
+            string moa_id = Session["moa_detail_id"].ToString();
+            string mou_id = Session["mou_detail_id"].ToString();
+            ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
+            ViewBag.partnerList = moa_detail.getPartnerExMOA(int.Parse(moa_id));
+            ViewBag.newExMOACode = moa_detail.getNewExMOACode(int.Parse(moa_id));
 
             ////MOA Partner
-            //ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
-            //ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope();
-            //ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+            ViewBag.listScopesMOAPartner = moa_partner.getPartnerMOAScope(int.Parse(moa_id), int.Parse(mou_id));
+            ViewBag.listPartnerMOAPartner = moa_partner.getPartnerMOA(int.Parse(moa_id));
             return View();
         }
         public ActionResult ViewMOA(string partner_name, string moa_code)

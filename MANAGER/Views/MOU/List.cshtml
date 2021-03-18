@@ -170,7 +170,7 @@
                                         <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
                                     <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 my-3">
-                                        <a href="#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
+                                        <a href="MOU/List#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                                                         Choose an option:
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="#" class="navi-link" onclick="exportExcel()">
+                                                        <a href="MOU/List#" class="navi-link" onclick="exportExcel()">
                                                             <span class="navi-icon">
                                                                 <i class="la la-file-excel-o"></i>
                                                             </span>
@@ -277,7 +277,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
                         <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>&nbsp;
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="search_coso" name="param" list="officeList" style="width:100% !important">
+                            <select class="form-control select-search" id="search_office" name="param" list="officeList" style="width:100% !important">
                                 @foreach (var item in ViewBag.listOffice)
                                 {
                                     <option value="@item.office_id">@item.office_abbreviation</option>
@@ -405,7 +405,7 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right">
-                        <a href="#top" onclick="checkPartnerAdd()">Kiểm tra</a></label>
+                        <a href="MOU/List#" onclick="checkPartnerAdd()">Kiểm tra</a></label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
@@ -466,7 +466,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important">
                                 @foreach (var item in ViewBag.listSpe)
@@ -479,7 +479,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important">
                                 @foreach (var item in ViewBag.listScopes)
@@ -510,7 +510,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no" />
                             <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
@@ -522,122 +522,101 @@
                         <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
                     </div>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label style="color:red">*</label>
-                            <label class="font-weight-bolder">Tên đối tác</label>
-                            <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
-                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no" />
-                                <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
-                                <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Quốc gia</label>
-                            <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
-                        </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Website</label>
-                            <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                            <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
-                        </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Đại diện</label>
-                            <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Email</label>
-                            <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
-                        </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label class="font-weight-bolder">Số điện thoại</label>
-                            <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label style="color:red">*</label>
-                            <label class="font-weight-bolder">Ngày ký kết</label>
-                            <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_edit" data-target="#kt_datetimepicker_sign_date_edit" />
-                                <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_edit" data-toggle="datetimepicker">
-                                    <span class="input-group-text">
-                                        <i class="ki ki-calendar"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Email</label>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label style="color:red">*</label>
-                            <label class="font-weight-bolder">Lĩnh vực</label>
-                            <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
-                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                            <label style="color:red">*</label>
-                            <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
-                                </select>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Ngày ký kết</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_edit" data-target="#kt_datetimepicker_sign_date_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_edit" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
             </div>
         </div>
     </div>
 </div>
 
-@*<datalist id="partnerList">
-        @foreach (var item in ViewBag.listPartners)
-        {
-            <option>@item.partner_name</option>
-        }
-    </datalist>*@
-
-
 @*toast alert*@
-<!--<div id="toast-container-custom" class="toast-bottom-left-custom">-->
-@*toastr notice 90 days left*@
-<!--<div class="toast toast-warning toast-90" aria-live="assertive" style="display:none">
-    <button type="button" class="toast-close-button" role="button">×</button>
-    <div class="toast-message">
-        Hiện có biên bản 2020/01 sắp hết hạn cccccccccccccccccccccc
-    </div>
-</div>-->
-@*toastr notice 30 days left*@
-<!--<div class="toast toast-warning toast-30" aria-live="assertive" style="background-color: #f64e60; display:none">
+<div id="toast-container-custom" class="toast-bottom-left-custom">
+    @*toastr notice inactive*@
+    <div class="toast toast-warning toast-90" aria-live="assertive" style="display:none">
         <button type="button" class="toast-close-button" role="button">×</button>
         <div class="toast-message">
-            Clear itself?
+            Hiện có 3 biên bản ghi nhớ chưa hoạt động.
         </div>
     </div>
-</div>-->
+    @*toastr notice 90 days left*@
+    <div class="toast toast-warning toast-90" aria-live="assertive" style="background-color: #f64e60; display:none">
+        <button type="button" class="toast-close-button" role="button">×</button>
+        <div class="toast-message">
+            Hiện có biên bản 2020/01 sắp hết hạn.
+        </div>
+    </div>
+    @*toastr notice 30 days left*@
+    <div class="toast toast-warning toast-30" aria-live="assertive" style="background-color: #f64e60; display:none">
+        <button type="button" class="toast-close-button" role="button">×</button>
+        <div class="toast-message">
+            Hiện có biên bản 2020/01 sắp hết hạn.
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     @*@model int*@
-
-
 
     @*toast*@
     <script>
@@ -664,9 +643,7 @@
                 $('.kt_datetimepicker_3').datetimepicker({
                     format: 'DD/MM/yyyy'
                 });
-
             }
-
             return {
                 // Public functions
                 init: function () {
@@ -841,76 +818,15 @@
     @*custom select*@
     <script>
 
-        $('#search_coso').select2({
+        $('#search_office').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
         });
-
-        $('#partner_name_add').select2({
-            placeholder: 'Tên đối tác',
-            allowClear: true,
-            tags: true,
-        });
-
-        $('#partner_name_add').select2({
-            placeholder: 'Tên đối tác',
-            allowClear: true,
-            tags: true,
-        });
-
-        $('#partner_name').select2({
-            placeholder: 'Tên đối tác',
-            allowClear: true,
-        });
-
-        $('#specialization').select2({
-            placeholder: 'Lĩnh vực',
-            allowClear: true,
-        });
-
-        $('#coop-scope').select2({
-            placeholder: 'Phạm vi hợp tác',
-            allowClear: true,
-        });
-
-    </script>
-
-    @*delete alert*@
-    <script>
-         //funtion delete
-       function confirm_delete(id) {
-        //function confirm_delete(id, action, controller) {
-            var link = '@Url.Action("action", "controller")'
-            link = link.replace("action", "Delete_MOU");
-            link = link.replace("controller", "MOU");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: link,
-                        data: { mou_id : id },
-                        success: function (data) {
-                            if (data = "") {
-                                Swal.fire("Good job!", "You clicked the button!", "error");
-                            } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
-                            }
-                        },
-                        error: function (data) {
-                            Swal.fire("Good job!", "You clicked the button!", "error");
-                        },
-                    })
-                }
-            })
-        };
-
+        //$('#partner_name_add').select2({
+        //    placeholder: 'Tên đối tác',
+        //    allowClear: true,
+        //    tags: true,
+        //});
     </script>
 
     @*multi select*@
@@ -950,7 +866,7 @@
     </script>
 
     @*mou*@
-    <script>
+<script>
     var rowIdx = 1;
     var listTempPartnerMOUAdd = [];
     var listScopes = [];
@@ -1063,21 +979,33 @@
     });
 
     $(document).ready(function () {
+        getSpeListForAdd();
+        getScopeListForAdd();
+    });
+
+    function getSpeListForAdd() {
         $("#specialization_add option").each(function () {
             listSpe.push({
                 spe_id: $(this).val(),
                 spe_name: $(this).text()
             });
         });
+    }
+
+    function getScopeListForAdd() {
         $("#coop_scope_add option").each(function () {
             listScopes.push({
                 scope_id: $(this).val(),
                 scope_name: $(this).text()
             });
         });
-    });
+    }
 
     function searchMOU() {
+        reloadMOUTable();
+    }
+
+    function reloadMOUTable() {
         mou_table.ajax.reload();
     }
 
@@ -1246,7 +1174,7 @@
         $('#coop_scope_edit').empty();
         for (i = 0; i < listSpe.length; i++) {
             //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
-            if (listTempPartnerMOUAdd[index].specialization_name.includes(listSpe[i].spe_id)) {
+            if ((listTempPartnerMOUAdd[index].specialization_add + '').includes(listSpe[i].spe_id)) {
                 HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
 
             } else {
@@ -1322,9 +1250,11 @@
         var main_scopes = '';
         var new_main_scopes = '';
         for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
-            if (Date.parse(listTempPartnerMOUAdd[idx].sign_date_mou_add) > Date.parse(max_date)) {
-                max_date = listTempPartnerMOUAdd[idx].sign_date_mou_add;
+            var current = listTempPartnerMOUAdd[idx].sign_date_mou_add;
+            if (compareDate(current, max_date)) { //compare == true <=> current > max_date
+                max_date = current;
             }
+            //alert('Test : ' + current_obj + ' and ' + max_date_obj)
             main_scopes += (listTempPartnerMOUAdd[idx].coop_scope_add + ",");
         }
 
@@ -1356,9 +1286,23 @@
         if (max_date == '01/01/0001') {
             max_date = '';
         }
-
+        
         $("#sign_date_mou").val(max_date);
         $("#coop_scope_mou").val(new_main_scopes);
+    }
+
+    function compareDate(current, max){
+        var currentToken = current.split("/");
+        var maxToken = max.split("/");
+        if (parseInt(currentToken[2]) == parseInt(maxToken[2])) {    //year
+            if (parseInt(currentToken[1]) == parseInt(maxToken[1])) {   //month
+                return parseInt(currentToken[0]) <= parseInt(maxToken[0]) ? false : true;   //date.
+            } else {
+                return parseInt(currentToken[1]) < parseInt(maxToken[1]) ? false : true;
+            }
+        } else {
+            return parseInt(currentToken[2]) < parseInt(maxToken[2]) ? false : true;
+        }
     }
 
     function backToStep() {
@@ -1371,7 +1315,7 @@
         var BasicInfo = {
             mou_code: $('#mou_code_add').val() ,
             mou_end_date: $('#end_date_mou').val(),
-            office_id: $('#search_coso').val(),
+            office_id: $('#search_office').val(),
             mou_status_id: $('#status_mou').val(),
             reason: $('#note_mou').val(),
             mou_note: $('#mou_area').val()
@@ -1389,19 +1333,18 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-
+                reloadMOUTable();
+                Swal.fire("Thành công!", "Đã thêm biên bản ghi nhớ thành công.", "success");
             },
             error: function () {
                 //alert("fail");
             }
         });
-
         //collect Partner data.
         //Send to controller.
     }
 
     function exportExcel() {
-        //alert('haha');
         $.ajax({
             url: "@Url.Action("ExportMOUExcel", "MOU")",
             type: "POST",
@@ -1412,7 +1355,6 @@
 
             },
             error: function () {
-                //alert("fail");
             }
         });
     }
@@ -1427,13 +1369,45 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location.href = './Detail';
+                window.location.href = 'MOU/Detail';
             },
             error: function () {
 
             }
         });
-    }
-    </script>
+        }
+
+    function confirm_delete(id) {
+        //function confirm_delete(id, action, controller) {
+            var link = '@Url.Action("Delete_MOU", "MOU")'
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: link,
+                        data: { mou_id : id },
+                        success: function (data) {
+                            if (data = "") {
+                                Swal.fire("Good job!", "You clicked the button!", "error");
+                            } else {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                                reloadMOUTable();
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire("Good job!", "You clicked the button!", "error");
+                        },
+                    })
+                }
+            })
+        };
+</script>
 }
 

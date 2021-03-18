@@ -9,6 +9,7 @@ namespace ADMIN.Controllers
 {
     public class AccountController : Controller
     {
+        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public ActionResult List()
         {
             ViewBag.Title = "Quản lí hệ thống";

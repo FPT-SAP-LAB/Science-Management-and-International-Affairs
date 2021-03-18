@@ -1,5 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUPartner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +40,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 ListMOUPartner mouObj = mou.getMOUPartnerDetail(int.Parse(mou_partner_id));
                 return Json(mouObj, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }

@@ -30,11 +30,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Detail(int id)
-        {
-            return View();
-        }
-        [HttpPost]
         public JsonResult delete_AcademicActivity(int id)
         {
             bool res = repo.deleteAA(id);
@@ -47,8 +42,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            bool res = repo.AddAA(obj);
-            if (res)
+            int res = repo.AddAA(obj);
+            if (res != 0)
             {
                 return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
             }
@@ -61,6 +56,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);
+            }
+            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult cloneAA(AcademicActivityRepo.extendBaseAA obj)
+        {
+            bool res = repo.cloneAA(obj);
+            if (res)
+            {
+                return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);
             }
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
