@@ -36,6 +36,7 @@ namespace ENTITIES
         public virtual DbSet<Office> Offices { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Right> Rights { get; set; }
+        public virtual DbSet<RightByRole> RightByRoles { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<AcademicCollaboration> AcademicCollaborations { get; set; }

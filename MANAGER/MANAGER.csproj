@@ -2292,8 +2292,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
   </ItemGroup>
