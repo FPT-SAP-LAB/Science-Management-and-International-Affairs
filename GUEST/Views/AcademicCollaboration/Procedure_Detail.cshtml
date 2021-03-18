@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết thủ tục";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #content img {
+        width: 100% !important;
+        height: 100%;
+    }
+</style>
+<div class="card card-custom pb-4">
+    <div class="card-body p-0">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row my-4">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <h4 style="font-weight: bold;">
+                                    THỦ TỤC HỖ TRỢ CÁN BỘ ĐI HỌC
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label style="font-style: italic;">
+                                    23/01/2021 12:01:45
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-12 col-md-12 col-sm-12" id="content">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#content').html(`<p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-size:10.5pt;
+font-family:Calibri;mso-ascii-font-family:Calibri;mso-fareast-font-family:+mn-ea;
+mso-bidi-font-family:Calibri;mso-fareast-theme-font:minor-fareast;color:black;
+mso-color-index:1;mso-font-kerning:12.0pt;language:vi;mso-style-textfill-type:
+solid;mso-style-textfill-fill-themecolor:text1;mso-style-textfill-fill-color:
+black;mso-style-textfill-fill-alpha:100.0%">Theo kế hoạch hợp tác quốc tế về
+đào tạo và nghiên cứu khoa học hàng năm, năm 2020 trường Đại học FPT tiếp tục
+tổ chức các chương trình trao đổi giảng viên ngắn hạn và dài hạn đối với giảng
+viên của Trường và các Trường đối tác.&nbsp;Phòng QLKH&amp;HTQT trân trọng gửi
+tới các Thầy, Cô thông báo về việc đăng ký tham gia chương trình Trao đổi giảng
+viên với đối tác Trường Đại học Đào tạo Sau đại học về Thông tin
+Kyoto&nbsp;(The Kyoto College of Graduate Studies for Informatics – KCGI) Nhật
+Bản. Thông tin cụ thể như sau:</span></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-size:10.5pt;
+font-family:Calibri;mso-ascii-font-family:Calibri;mso-fareast-font-family:+mn-ea;
+mso-bidi-font-family:Calibri;mso-fareast-theme-font:minor-fareast;color:black;
+mso-color-index:1;mso-font-kerning:12.0pt;language:en-US;font-weight:bold;
+mso-style-textfill-type:solid;mso-style-textfill-fill-themecolor:text1;
+mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100.0%">1. </span><span style="font-size:10.5pt;font-family:Calibri;mso-ascii-font-family:Calibri;
+mso-fareast-font-family:+mn-ea;mso-bidi-font-family:Calibri;mso-fareast-theme-font:
+minor-fareast;color:black;mso-color-index:1;mso-font-kerning:12.0pt;language:
+vi;font-weight:bold;mso-style-textfill-type:solid;mso-style-textfill-fill-themecolor:
+text1;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100.0%">Thông
+tin đối tác</span></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt; margin-left: 0in; direction: ltr; unicode-bidi: embed; word-break: normal;"><span style="font-size: 10.5pt; font-family: Calibri; color: black;">Tháng 4 năm 2004, trường Đại học
+Đào tạo Sau Đại học về Thông tin Kyoto (KCGI) đã được thành lập và bắt đầu hoạt
+động đào tạo như một Trường đào tạo sau đại học chuyên ngành IT đầu tiên và duy
+nhất của Nhật Bản. Trải qua nhiều năm hoạt động, Nhà trường đã và đang kế thừa
+thành tích và truyền thống của “Học viện Máy tính Kyoto” – cơ quan giáo dục máy
+tính đầu tiên của Nhật Bản đã đào tạo những kỹ sư xử lý thông tin đáp ứng nhu
+cầu của ngành công nghiệp. Trường nằm ở thành phố Kyoto- cố đô của Nhật Bản, nơi
+hội tụ những nét văn hóa truyền thống đặc sắc, tinh tế nhất của Nhật
+Bản.&nbsp;Nhà trường hiện đang thực hiện chương trình giảng dạy để đào tạo
+nguồn nhân lực IT cao cấp đáp ứng yêu cầu của ngành nghề. Những người hoàn
+thành khóa học tại trường được chào đón vào làm việc trong các ngành hệ thống
+IT như sau: Quản lý hệ thống thông tin; Quản lý dự án; Kỹ sư cao cấp, kỹ sư xây
+dựng hệ thống web; Quản lý sản xuất nội dung; Cố vấn tích hợp hệ thống; Chuyên
+gia tiếp thị Web; Kiến trúc sư hệ thống và Tư vấn bảo mật thông tin. Trường
+KCGI thu hút nhiều sinh viên quốc tế với hệ thống chương trình đào tạo bằng cả
+tiếng Anh và tiếng Nhật</span><span style="font-size: 10.5pt; font-family: Calibri; color: black;">.</span></p>`)
+
+        })
+    </script>
+}
