@@ -1,18 +1,18 @@
-﻿using System;
+﻿using ENTITIES;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ENTITIES;
 
 namespace ADMIN.Controllers
 {
-    public class AccountController : Controller
+    public class RoleController : Controller
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public ActionResult List()
+        public ActionResult Index()
         {
-            ViewBag.pageTitle = "Quản lí tài khoản";
+            ViewBag.pageTitle = "Quản lí chức danh";
             return View();
         }
     }

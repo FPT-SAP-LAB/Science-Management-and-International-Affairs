@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             bool res = repo.Checkin(participant_id);
             if (res)
-                return Json("Checkin thành công");
+                return Json("Checkin thành công", JsonRequestBehavior.AllowGet);
             else return Json(String.Empty);
         }
         [HttpPost]
@@ -37,7 +37,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             bool res = repo.Checkout(participant_id);
             if (res)
-                return Json("Thu hồi thành công");
+                return Json("Thu hồi thành công", JsonRequestBehavior.AllowGet);
             else return Json(String.Empty);
         }
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getAreaByUnit(int unit_id)
         {
             List<CheckInRepo.Area> data = repo.getAreaByUnit(unit_id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         [HttpPost]
         public JsonResult addParticipant(CheckInRepo.infoParticipant obj)
@@ -57,7 +57,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.addParticipant(obj);
             if (res)
             {
-                return Json("Thêm người tham dự thành công");
+                return Json("Thêm người tham dự thành công", JsonRequestBehavior.AllowGet);
             }
             return Json(String.Empty);
         }

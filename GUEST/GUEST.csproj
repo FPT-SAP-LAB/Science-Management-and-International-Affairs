@@ -2348,6 +2348,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CostTableConferenceRequest.js" />
+    <Content Include="Scripts\Custome_JS\InternationalCollaboration\Load_Detail_AC.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2405,6 +2406,8 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_3.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Program_Detail.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
