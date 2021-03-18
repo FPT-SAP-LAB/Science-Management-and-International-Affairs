@@ -43,7 +43,7 @@ namespace GUEST.Controllers.ScienceManagement
         public JsonResult fillData(AddAuthor item)
         {
             AddAuthor result = md.getAuthor(item.mssv_msnv);
-            return Json(new { author = result}, JsonRequestBehavior.AllowGet);
+            return Json(new { author = result }, JsonRequestBehavior.AllowGet);
         }
     }
 }
