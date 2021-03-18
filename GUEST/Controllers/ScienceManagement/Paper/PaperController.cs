@@ -4,6 +4,7 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,24 @@ namespace GUEST.Controllers
             List<PaperCriteria> listCriteria = md.getPaperCriteria();
             ViewBag.listCriteria = listCriteria;
             return View();
+        }
+
+        [HttpPost]
+        public void AddPaper(Paper dataPaper)
+        {
+            return;
+        }
+
+        [HttpPost]
+        public void AddRequest(RequestPaper item)
+        {
+            return;
+        }
+
+        [HttpPost]
+        public void AddAuthor(List<AddAuthor> item)
+        {
+            return;
         }
 
         [HttpPost]

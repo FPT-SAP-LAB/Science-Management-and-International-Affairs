@@ -8,7 +8,7 @@
             @{
                 foreach (var item in ViewBag.office)
                 {
-                    <option value="@item.office_abbreviation">@item.office_name</option>
+                    <option value="@item.office_abbreviation" name="@item.office_id">@item.office_name</option>
                 }
             }
         </select>
@@ -19,7 +19,15 @@
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("MSNV")</label>
-        <input class="form-control editfe edit" id="add_author_msnv" type="text" />
+        <select class="form-control edit select-custom" id="add_author_msnv" name="param" style="width: 100% !important">
+            @{
+                foreach (var item in ViewBag.people)
+                {
+                    <option value="@item.mssv_msnv" name="@item.people_id">@item.mssv_msnv</option>
+                }
+            }
+        </select>
+        @*<input class="form-control editfe edit" id="add_author_msnv" type="text" />*@
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("Name")</label>
@@ -51,7 +59,7 @@
         <label class="required-field">@rm.GetString("CMND")</label>
         <input class="form-control editfe edit " id="add_author_cmnd" type="text" />
     </div>
-    <div class="col-xl-6 form-group">
+    <div class="col-xl-6 form-group" id="upCM">
         <label class="required-field">@rm.GetString("CMND") File</label>
         @*<button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>*@
         <div class="col-lg-6">
@@ -89,4 +97,45 @@
         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save" data-dismiss="modal">@rm.GetString("AddAu")</button>
     </div>
 </div>
-<script src="assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+@*<script src="assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#add_author_msnv').select2({
+            allowClear: true,
+            tags: true
+        });
+        $("#add_author_msnv").on("select2:select", function (e) {
+            var AddAuthor = {
+            mssv_msnv: $("#add_author_msnv").val()
+            }
+            $.ajax({
+                url: "@Url.Action("fillData", "PartialView")",
+                type: "POST",
+                data: JSON.stringify(AddAuthor),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    var author = response.author;
+                    $("#ckfe").val(author.office_abbreviation);
+                    $("#ckfe").trigger('change');
+                    $("#add_author_name").val(author.name);
+                    $("#add_author_title").val(author.title_id);
+                    $("#add_author_title").trigger('change');
+                    $("#add_author_contractType").val(author.contract_id);
+                    $("#add_author_contractType").trigger('change');
+                    $("#add_author_cmnd").val(author.identification_number);
+                    $("#add_author_tax").val(author.tax_code);
+                    $("#add_author_bank").val(author.bank_branch);
+                    $("#add_author_accno").val(author.bank_number);
+                    $("#add_author_mail").val(author.email);
+                    $("#add_author_reward").prop('disabled', true);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+    });
+</script>

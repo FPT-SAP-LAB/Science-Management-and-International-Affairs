@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
+{
+    public class AddAuthor : Person
+    {
+        public int contract_id { get; set; }
+        public int title_id { get; set; }
+        public string office_abbreviation { get; set; }
+    }
+}

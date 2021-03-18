@@ -1,6 +1,7 @@
 ﻿using BLL.ScienceManagement.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,16 @@ namespace GUEST.Controllers.ScienceManagement
             List<ContractType> listContract = md.getContract();
             ViewBag.contract = listContract;
 
+            List<AddAuthor> listPeople = md.getListPeopleFE();
+            ViewBag.people = listPeople;
+
             return PartialView();
+        }
+
+        public JsonResult fillData(AddAuthor item)
+        {
+            AddAuthor result = md.getAuthor(item.mssv_msnv);
+            return Json(new { author = result}, JsonRequestBehavior.AllowGet);
         }
     }
 }
