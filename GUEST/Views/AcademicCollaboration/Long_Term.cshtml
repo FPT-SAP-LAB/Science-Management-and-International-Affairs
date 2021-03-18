@@ -29,10 +29,17 @@
     .item-picture {
         height: 100%;
         width: 100%;
+        border-radius: 5%;
     }
-    .nav-link-custom{
+
+    .nav-link-custom {
         display: block;
         padding: 1rem 0;
+    }
+
+    .link-load-detail:hover {
+        color: #2196f3 !important;
+        cursor: pointer;
     }
 </style>
 <div class="card card-custom pb-4" style="background-color: #f0f8ff80">
@@ -78,7 +85,7 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="" id="tab-1">
-                            @{ 
+                            @{
                                 Html.RenderPartial("PartialView/Long_Term_Tab_1");
                             }
                         </div>
@@ -100,6 +107,8 @@
 </div>
 
 @section scripts{
+
+    <script src="~/Scripts/Custome_JS/InternationalCollaboration/Load_Detail_AC.js"></script>
     <script>
         $('.training-type').click(function () {
             $('.training-type').each(function () {
@@ -157,31 +166,39 @@
                 cache: false,
                 success: function (data) {
                     var temp = `<div class="row justify-content-between">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture1.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture2.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture3.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture4.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
-                                                    </label>
-                                                </div>
-                                            </div>`
+                                    <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_program_detail(1,1)" class="link-load-detail">
+                                            <img src="../Content/Picture1.jpg" class="item-picture" />
+                                            <label>
+                                                Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
+                                            </label>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_program_detail(1,1)" class="link-load-detail">
+                                            <img src="../Content/Picture2.jpg" class="item-picture" />
+                                            <label>
+                                                Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
+                                            </label>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_program_detail(1,2)" class="link-load-detail">
+                                            <img src="../Content/Picture3.jpg" class="item-picture" />
+                                            <label>
+                                                Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
+                                            </label>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_program_detail(1,2)" class="link-load-detail">
+                                            <img src="../Content/Picture4.jpg" class="item-picture" />
+                                            <label>
+                                                Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
+                                            </label>
+                                        </a>
+                                    </div>
+                                </div>`
 
                     $(temp).hide().appendTo($("#detail-content")).slideDown(1000);
 
@@ -196,7 +213,6 @@
 
     </script>
     <script>
-
 
         $("#colab_program_going_table").DataTable({
             oLanguage: {
