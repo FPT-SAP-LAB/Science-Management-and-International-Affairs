@@ -1,0 +1,88 @@
+﻿<div class="modal fade in" id="edit_partner_mou" aria-hidden="true" style="z-index: 8888">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Tên đối tác</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#" onclick="checkPartnerEdit()">Kiểm tra</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <input hidden readonly type="text" class="form-control" id="idx_edit" placeholder="" name="idx_edit" value="no" />
+                            <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
+                            <input type="text" class="form-control" id="partner_name_edit" list="partnerList" onchange="preventEdit()" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Quốc gia</label>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_edit" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_edit" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Email</label>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_edit" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_edit" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Ngày ký kết</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_edit" data-target="#kt_datetimepicker_sign_date_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_edit" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="specialization_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="coop_scope_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                <button id="edit_mou_partner_button" onclick="editTemp()" data-dismiss="modal" type="button" class="btn btn-sm btn-light-primary">Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
