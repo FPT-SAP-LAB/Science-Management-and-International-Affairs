@@ -29,11 +29,17 @@
     .item-picture {
         height: 100%;
         width: 100%;
+        border-radius: 5%;
     }
 
     .nav-link-custom {
         display: block;
         padding: 1rem 0;
+    }
+
+    .link-load-detail:hover {
+        color: #2196f3 !important;
+        cursor: pointer;
     }
 </style>
 
@@ -79,21 +85,54 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        
                         <div class="" id="tab-1">
                             @{
                                 Html.RenderPartial("PartialView/Short_Term_Tab_1");
                             }
                         </div>
                         <div class="" id="tab-2" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Short_Term_Tab_2");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Going_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC ĐỐI TÁC
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Going_Table");
+                                }
+                            </div>
                         </div>
                         <div class="" id="tab-3" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Short_Term_Tab_3");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Coming_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC GIÁO DỤC FPT
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Coming_Table");
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,6 +142,7 @@
 </div>
 
 @section scripts{
+    <script src="~/Scripts/Custome_JS/InternationalCollaboration/Load_Detail_AC.js"></script>
     <script>
 
         $('.training-type').click(function () {
@@ -162,32 +202,39 @@
                 cache: false,
                 success: function (data) {
                     var temp = `<div class="row justify-content-between">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture1.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture2.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture3.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                                    <img src="../Content/Picture4.jpg" class="item-picture" />
-                                                    <label>
-                                                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
-                                                    </label>
-                                                </div>
-                                            </div>`
-
+                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                            <a onclick="load_detail.load_program_detail(1,3)" class="link-load-detail">
+                                                <img src="../Content/Picture1.jpg" class="item-picture" />
+                                                <label>
+                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
+                                                </label>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                            <a onclick="load_detail.load_program_detail(1,3)" class="link-load-detail">
+                                                <img src="../Content/Picture2.jpg" class="item-picture" />
+                                                <label>
+                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
+                                                </label>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                            <a onclick="load_detail.load_program_detail(1,4)" class="link-load-detail">
+                                                <img src="../Content/Picture3.jpg" class="item-picture" />
+                                                <label>
+                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
+                                                </label>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                            <a onclick="load_detail.load_program_detail(1,4)" class="link-load-detail">
+                                                <img src="../Content/Picture4.jpg" class="item-picture" />
+                                                <label>
+                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
+                                                </label>
+                                            </a>
+                                        </div>
+                                    </div>`
                     $(temp).hide().appendTo($("#detail-content")).slideDown(1000);
 
                 },
@@ -203,7 +250,55 @@
 
     <script>
 
+        $("#going_procedure_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
         $("#colab_program_going_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
+        $("#coming_procedure_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -271,7 +366,7 @@
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })
@@ -283,7 +378,7 @@
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })

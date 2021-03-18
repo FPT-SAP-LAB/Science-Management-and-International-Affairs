@@ -2100,6 +2100,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom_CSS\MOU\MOU.css" />
+    <Content Include="Content\Custom_CSS\MOU\MOUDetail.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2156,6 +2158,12 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\addMOU.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\Custom_wizard.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\date-picker.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\listMOU.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\Toast.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\upload.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\Partner\Preview.js" />
     <Content Include="Scripts\inputFilter.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\uppy.js" />
@@ -2269,10 +2277,22 @@
     <Content Include="Views\AcademicCollaborationType\List.cshtml" />
     <Content Include="Views\AcademicCollaborationStatus\List.cshtml" />
     <Content Include="Views\InternalUnit\List.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\List_MOU_Table.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\Add_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\Add_Partner_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\Edit_Partner_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUBasicInfo\List_Ex_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUPartner\List_Partner_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUBasicInfo\Add_Ex_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUBasicInfo\Edit_Ex_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUPartner\List_History_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUPartner\Add_Partner_MOU.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOUPartner\Edit_Partner_MOU.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
+    <Folder Include="Content\Custom_CSS\MOA\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
