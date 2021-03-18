@@ -10,7 +10,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
     {
         public int status_type { get; set; }
         public string status_type_name { get; set; }
-        
+
         public StatusType(int status_type, string status_type_name)
         {
             this.status_type = status_type;

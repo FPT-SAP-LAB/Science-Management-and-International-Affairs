@@ -10,7 +10,7 @@ namespace BLL.InternationalCollaboration.MasterData
 {
     public class AcademicActivityExpenseTypeRepo
     {
-        
+
 
         public BaseServerSideData<ActivityExpenseType> getListActivityExpenseType(BaseDatatable baseDatatable)
         {
@@ -25,7 +25,8 @@ namespace BLL.InternationalCollaboration.MasterData
                     int recordsTotal = db.Database.SqlQuery<int>("select count(*) from SMIA_AcademicActivity.ActivityExpenseType").FirstOrDefault();
                     return new BaseServerSideData<ActivityExpenseType>(activityExpenseTypes, recordsTotal);
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }

@@ -111,7 +111,7 @@ namespace BLL.InternationalCollaboration.MasterData
                 {
                     db.Configuration.LazyLoadingEnabled = false;
                     //empty error
-                    if (collab_status_name == "" || status_type.ToString() ==  "")
+                    if (collab_status_name == "" || status_type.ToString() == "")
                     {
                         return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Tên Trạng thái hợp tác học thuật không được để trống.");
                     }
