@@ -12,3 +12,4 @@ class Load_detail {
     }
 }
 var load_detail = new Load_detail()
+load_detail.load_procedure_detail(1,1)
