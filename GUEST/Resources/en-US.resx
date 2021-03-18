@@ -187,7 +187,7 @@
     <value>Date</value>
   </data>
   <data name="DateFormat" xml:space="preserve">
-    <value>MM/DD/YYYY</value>
+    <value>MM/dd/yyyy</value>
   </data>
   <data name="Dec" xml:space="preserve">
     <value>December</value>
