@@ -22,7 +22,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableByPhase(int phase_id)
         {
             List<CheckInRepo.dataParticipant> data = repo.getParticipantByPhase(phase_id);
-            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult Checkin(int participant_id)
@@ -30,7 +30,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.Checkin(participant_id);
             if (res)
                 return Json("Checkin thành công", JsonRequestBehavior.AllowGet);
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult Checkout(int participant_id)
@@ -38,18 +38,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.Checkout(participant_id);
             if (res)
                 return Json("Thu hồi thành công", JsonRequestBehavior.AllowGet);
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult getRoleByPhase(int phase_id)
         {
             List<CheckInRepo.PartiRole> data = repo.GetParticipantRolesByPhase(phase_id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public JsonResult getAreaByUnit(int unit_id)
         {
             List<CheckInRepo.Area> data = repo.getAreaByUnit(unit_id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         [HttpPost]
         public JsonResult addParticipant(CheckInRepo.infoParticipant obj)
@@ -59,7 +59,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 return Json("Thêm người tham dự thành công", JsonRequestBehavior.AllowGet);
             }
-            return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            return Json(String.Empty);
         }
     }
 }
