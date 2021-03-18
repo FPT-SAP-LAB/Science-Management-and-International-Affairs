@@ -31,7 +31,7 @@ li {
         height: 50px;
         border: 2px solid #bebebe;
         display: block;
-        margin: 0 auto 10px auto;
+        margin: 0 auto 10px;
         border-radius: 50%;
         line-height: 44px;
         font-size: 19px;
@@ -98,7 +98,7 @@ li {
     margin: 0 0 6px;
     padding: 15px 15px 15px 50px;
     width: 300px;
-    border-radius: 3px 3px 3px 3px;
+    border-radius: 3px;
     background-position: 15px center;
     background-repeat: no-repeat;
     -webkit-box-shadow: 0 0 12px #999999;
