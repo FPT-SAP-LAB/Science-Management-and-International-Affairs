@@ -119,11 +119,10 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     if (data != '') {
-                        toastr.success(data);
-                        document.getElementById('edit_right_name') = data.right_name;
-                        document.getElementById('edit_module') = data.module_id;
-                        document.getElementById('edit_group') = data.group_id;
-                        $('editModal').modal('show');
+                        document.getElementById('edit_right_name').value = data.right_name;
+                        document.getElementById('edit_module').value = data.module_id;
+                        document.getElementById('edit_group').value = data.group_id;
+                        $('#editModal').modal('show');
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
@@ -205,37 +204,38 @@
         }
         $('#btn_edit').click(function () {
             let right_name = document.getElementById('edit_right_name').value;
-            let module = document.getElementById('edit_module').value;
-            let group = document.getElementById('edit_group').value;
-            if (right_name == '' || module == '' || group == '') {
+            let module_name = document.getElementById('edit_module').value;
+            let group_id = document.getElementById('edit_group').value;
+            if (right_name == '' || module_name == '' || group_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin.");
                 return false;
-            }
-            let object = {
-                right_id : temp_id,
-                right_name: right_name,
-                module_name: module_id,
-                group_id: group
-            }
-            $.ajax({
-                url: "@Url.Action("edit", "Right")",
-                data: JSON.stringify(object),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
-                        clearModal('#editModal');
-                        stt = 1;
-                        datatable.ajax.reload();
-                    } else {
-                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
-                    }
-                },
-                error: function (data) {
-                    alert(data)
+            } else {
+                let object = {
+                    right_id: temp_id,
+                    right_name: right_name,
+                    module_name: module_name,
+                    group_id: group_id
                 }
-            });
+                $.ajax({
+                    url: "@Url.Action("edit", "Right")",
+                    data: JSON.stringify(object),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        if (data != '') {
+                            toastr.success(data);
+                            clearModal('#editModal');
+                            stt = 1;
+                            datatable.ajax.reload();
+                        } else {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                        }
+                    },
+                    error: function (data) {
+                        alert(data)
+                    }
+                });
+            }
         });
         var datatable = $("#datatable_right").DataTable({
             oLanguage: {
@@ -247,43 +247,49 @@
                 sInfo: "",
                 sSearch: "Tìm kiếm"
             },
+            serverSide: true,
             "lengthChange": false,
-                ajax: {
-                        url: "@Url.Action("getDatatable", "Right")",
-                        type: "POST",
-                        datatype: "json",
-                        data: { },
-                        cache: "false"
+            ajax: {
+                url: "@Url.Action("getDatatable", "Right")",
+                type: "POST",
+                datatype: "json",
+                data: {},
+                cache: "false"
+            },
+            columns: [
+                {
+                    name: "right_id",
+                    render: function () {
+                        return stt++;
+                    }
                 },
-                columns: [
-                    {
-                        render: function () {
-                            return stt++;
-                        }
-                    },
-                    {
-                        data: "right_name"
-                    },
-                    {
-                        data: "group_id"
-                    },
-                    {
-                        data: "module_name"
-                    },
-                    {
-                        data : "right_id",
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editRight('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteRight('+data+')">Xóa</a>'
-                        }
-                    },
-                ],
-                columnDefs: [
-                    {
-                        className: "text-center",
-                        targets: '_all',
-                    },
-                ]
+                {
+                    data: "right_name",
+                    name: "right_name"
+                },
+                {
+                    data: "group_id",
+                    name: "group_id"
+                },
+                {
+                    data: "module_name",
+                    name: "module_name"
+                },
+                {
+                    data: "right_id",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return `<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editRight(`+ data + `)">Sửa</a>
+                            <a href ="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick = "deleteRight(`+ data + `)" > Xóa</a >`
+                    }
+                },
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+            ]
         });
         $(document).ready(function () {
 
