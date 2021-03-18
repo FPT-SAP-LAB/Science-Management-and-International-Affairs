@@ -101,15 +101,15 @@ namespace BLL.Admin
                 return false;
             }
         }
-    }
-    public class infoRight : baseRight
-    {
-        public int right_id { get; set; }
-    }
-    public class baseRight
-    {
-        public string right_name { get; set; }
-        public string module_name { get; set; }
-        public int group_id { get; set; }
+        public class infoRight : baseRight
+        {
+            public int right_id { get; set; }
+        }
+        public class baseRight
+        {
+            public string right_name { get; set; }
+            public string module_name { get; set; }
+            public int group_id { get; set; }
+        }
     }
 }

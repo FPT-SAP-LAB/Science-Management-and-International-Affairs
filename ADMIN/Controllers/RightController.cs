@@ -22,7 +22,7 @@ namespace ADMIN.Controllers
         public ActionResult getDatatable()
         {
             BaseDatatable baseDatatable = new BaseDatatable(Request);
-            BaseServerSideData<infoRight> data = repo.getRights(baseDatatable);
+            BaseServerSideData<RightRepo.infoRight> data = repo.getRights(baseDatatable);
             return Json(new
             {
                 success = true,
@@ -33,7 +33,7 @@ namespace ADMIN.Controllers
             });
         }
         [HttpPost]
-        public JsonResult add(baseRight obj)
+        public JsonResult add(RightRepo.baseRight obj)
         {
             bool res = repo.add(obj);
             if (res)
@@ -53,7 +53,7 @@ namespace ADMIN.Controllers
             else return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult edit(infoRight obj)
+        public JsonResult edit(RightRepo.infoRight obj)
         {
             bool res = repo.edit(obj);
             if (res)
