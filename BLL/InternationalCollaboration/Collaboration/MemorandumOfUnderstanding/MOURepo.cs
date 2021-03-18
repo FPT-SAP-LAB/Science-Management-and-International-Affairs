@@ -460,7 +460,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         (mou_end_date < @nextMonth and noti_count = 1)";
                 noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
                 noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
-                    new SqlParameter("@next3Months",next3Months),
+                    new SqlParameter("@next3Months", next3Months),
                     new SqlParameter("@nextMonth", nextMonth)).ToList();
                 updateNotiCount(noti);
                 return noti;
