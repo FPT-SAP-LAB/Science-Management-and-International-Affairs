@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
@@ -19,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         // GET: AcademicActivityType
         public ActionResult List()
         {
-            ViewBag.pageTitle = "QUẢN LÝ LOẠI HOẠT ĐỘNG HỌC THUẬT";
+            ViewBag.title = "QUẢN LÝ LOẠI HOẠT ĐỘNG HỌC THUẬT";
             return View();
         }
 
@@ -73,7 +71,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult editAcademicActivty(int academic_activity_type_id, string academic_activity_type_name)
+        public ActionResult editAcademicActivtyType(int academic_activity_type_id, string academic_activity_type_name)
         {
             try
             {
