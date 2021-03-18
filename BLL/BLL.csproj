@@ -75,6 +75,7 @@
     <Compile Include="Authen\AccountRepo.cs" />
     <Compile Include="Authen\Login.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\AcademicActivityExpenseTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityTypeRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />

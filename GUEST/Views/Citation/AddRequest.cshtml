@@ -9,25 +9,10 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RequestInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("MSNV")</label>
-                            <input class="form-control form-control-lg" type="text" />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("AuthorName")</label>
-                            <input class="form-control form-control-lg custom-pickdate" type="text" />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("WorkUnit")</label>
-                            <input class="form-control form-control-lg" type="text" />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Area")</label>
-                            <input class="form-control form-control-lg" type="text" />
-                        </div>
-                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    @{
+                        Html.RenderAction("AddAuthor", "PartialView");
+                    }
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">
@@ -67,6 +52,9 @@
 </div>
 @section scripts{
     <script>
+        $(document).ready(function () {
+            $('.citationE').attr('style', 'display:none !important');
+        });
         $(".addrow").click(function () {
             $("#trichdan_body tr:last").after("<tr>" +
                 "<td><input type='text' class='form-control' /></td>" +

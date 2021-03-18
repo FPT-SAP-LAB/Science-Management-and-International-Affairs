@@ -19,5 +19,39 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
+        public ActionResult Load_More_List_Long_Term()
+        {
+            try
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult Short_Term()
+        {
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
+
+        public ActionResult Load_More_List_Short_Term()
+        {
+            try
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

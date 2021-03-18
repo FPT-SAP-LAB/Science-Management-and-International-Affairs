@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Đào tạo sau đại học";
+    ViewBag.Title = "Trao đổi cán bộ giảng viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,11 +30,13 @@
         height: 100%;
         width: 100%;
     }
-    .nav-link-custom{
+
+    .nav-link-custom {
         display: block;
         padding: 1rem 0;
     }
 </style>
+
 <div class="card card-custom pb-4" style="background-color: #f0f8ff80">
     <div class="card-body p-0">
         <div class="row justify-content-center mt-10 px-8 px-lg-10">
@@ -44,17 +46,17 @@
                         <div class="row justify-content-center training-type-list">
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-1 active-nav">
                                 <a class="nav-link-custom" id="button-tab-1">
-                                    <label>GIỚI THIỆU<br /> CHƯƠNG TRÌNH</label>
+                                    <label>CHƯƠNG TRÌNH TRAO ĐỔI CBGV</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>ĐÀO TẠO<br /> CỦA ĐỐI TÁC</label>
+                                    <label>TỪ TỔ CHỨC ĐỐI TÁC</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>ĐÀO TẠO<br /> CỦA ĐH FPT</label>
+                                    <label>TỬ TỔ CHỨC GIÁO DỤC FPT</label>
                                 </a>
                             </div>
                         </div>
@@ -78,19 +80,53 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="" id="tab-1">
-                            @{ 
-                                Html.RenderPartial("PartialView/Long_Term_Tab_1");
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Tab_1");
                             }
                         </div>
                         <div class="" id="tab-2" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Long_Term_Tab_2");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Going_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC ĐỐI TÁC
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Going_Table");
+                                }
+                            </div>
                         </div>
                         <div class="" id="tab-3" style="display: none">
-                            @{
-                                Html.RenderPartial("PartialView/Long_Term_Tab_3");
-                            }
+                            <div class="mb-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        CÁC THỦ TỤC LIÊN QUAN
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Procedure_Coming_Table");
+                                }
+                            </div>
+                            <div class="mt-10">
+                                <div class="row mb-4">
+                                    <h4 style="font-weight: bold;">
+                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC GIÁO DỤC FPT
+                                    </h4>
+                                </div>
+                                @{
+                                    Html.RenderPartial("PartialView/Short_Term_Program_Coming_Table");
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,6 +137,7 @@
 
 @section scripts{
     <script>
+
         $('.training-type').click(function () {
             $('.training-type').each(function () {
                 $('.active-nav').removeClass('active-nav')
@@ -130,27 +167,28 @@
         })
 
         $(document).ready(function () {
-            $('#content-description').text('Chương trình Đào tạo sau đại học nhằm phát triển hợp tác trong việc thúc đẩy đào tạo, tăng cường việc giới thiệu các cán bộ Chương giảng viên giữa Tổ chức giáo dục FPT và các tổ chức đối tác học tập tại các chương trình đào tạo sau Đại học thuộc các bên.')
+            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
         })
 
         $('.type-1').click(function () {
-            $('#content-description').text('Chương trình Đào tạo sau đại học nhằm phát triển hợp tác trong việc thúc đẩy đào tạo, tăng cường việc giới thiệu các cán bộ Chương giảng viên giữa Tổ chức giáo dục FPT và các tổ chức đối tác học tập tại các chương trình đào tạo sau Đại học thuộc các bên.')
+            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
         })
 
         $('.type-2').click(function () {
-            $('#content-description').text('Danh sách các chương trình dành cho những cán bộ đi học tại đơn vị đào tạo của đối tác.')
+            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
         })
 
         $('.type-3').click(function () {
-            $('#content-description').text('Danh sách chương trình đào tạo dành cho những cán bộ đi học tại đơn vị đào tạo của Đại học FPT.')
+            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
         })
+
     </script>
 
     <script>
 
         $('#load-more').click(function () {
             $.ajax({
-                url: "@Url.Action("Load_More_List_Long_Term", "AcademicCollaboration")",
+                url: "@Url.Action("Load_More_List_Short_Term", "AcademicCollaboration")",
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
@@ -195,10 +233,58 @@
         })
 
     </script>
+
     <script>
 
+        $("#going_procedure_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
 
         $("#colab_program_going_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+                //$(this).parent().removeClass();
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-center',
+                }
+            ]
+        });
+
+        $("#coming_procedure_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -266,7 +352,7 @@
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })
@@ -278,7 +364,7 @@
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm đi học',
+            placeholder: 'Năm',
             allowClear: true,
             tags: true,
         })
