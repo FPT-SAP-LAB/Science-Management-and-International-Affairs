@@ -10,8 +10,6 @@ namespace BLL.InternationalCollaboration.MasterData
 {
     public class AcademicActivityExpenseTypeRepo
     {
-
-
         public BaseServerSideData<ActivityExpenseType> getListActivityExpenseType(BaseDatatable baseDatatable)
         {
             try
