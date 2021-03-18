@@ -14,12 +14,21 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public string GetDetailPageGuest(int request_id, int account_id, int language_id)
         {
             BaseRequest request = db.BaseRequests.Where(x => x.account_id == account_id && x.request_id == request_id).FirstOrDefault();
-            RequestConference requestConference = request.RequestConference;
-            if (request == null || request.RequestConference == null)
-                return null;
-
-            db.Configuration.LazyLoadingEnabled = false;
-            return JsonConvert.SerializeObject(new { request, requestConference });
+            var output = (from a in db.RequestConferences
+                          join b in db.Conferences on a.conference_id equals b.conference_id
+                          join c in db.Countries on b.country_id equals c.country_id
+                          join d in db.Files on a.invitation_file_id equals d.file_id
+                          join e in db.Files on a.paper_id equals e.file_id
+                          select new
+                          {
+                              a.attendance_end,
+                              a.attendance_start,
+                              a.conference_id,
+                              a.editable,
+                              InvitationLink = d.link,
+                              PaperLink = e.link
+                          }).FirstOrDefault();
+            return JsonConvert.SerializeObject(output);
         }
     }
 }
