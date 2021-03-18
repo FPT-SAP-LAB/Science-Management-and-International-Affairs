@@ -15,27 +15,36 @@
 <div class="card card-custom">
     <div class="card-header card-header-tabs-line">
         <div class="card-toolbar">
-            <ul class="nav nav-tabs nav-bold nav-tabs-line">
-                @{
-                    foreach (var phase in ViewBag.list_phase)
-                    {
-                        <li class="nav-item">
-                            @if (phase.phase_id == ViewBag.list_phase[0].phase_id)
-                            {
-                                <a class="nav-link active" data-toggle="tab" href="#tab_@phase.phase_id">
-                                    <span class="nav-text custom_nav">@phase.phase_name</span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="nav-link" data-toggle="tab" href="#tab_@phase.phase_id">
-                                    <span class="nav-text custom_nav">@phase.phase_name</span>
-                                </a>
-                            }
-                        </li>
-                    }
+
+            @{
+                if (ViewBag.list_phase.Count > 0)
+                {
+
+                    <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                        @foreach (var phase in ViewBag.list_phase)
+                        {
+                            <li class="nav-item">
+                                @if (phase.phase_id == ViewBag.list_phase[0].phase_id)
+                                {
+                                    <a class="nav-link active" data-toggle="tab" href="#tab_@phase.phase_id">
+                                        <span class="nav-text custom_nav">@phase.phase_name</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link" data-toggle="tab" href="#tab_@phase.phase_id">
+                                        <span class="nav-text custom_nav">@phase.phase_name</span>
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ul>
                 }
-            </ul>
+                else
+                {
+                    <h4>Hoạt động học thuật chưa có giai đoạn nào cho người tham dự</h4>
+                }
+            }
         </div>
     </div>
     <div class="card-body custom-card" id="main-control">
@@ -130,8 +139,8 @@
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" required id="add_don_vi" onchange="getAreaByUnit()">
-                            @{ 
-                                foreach(var unit in ViewBag.internalunit)
+                            @{
+                                foreach (var unit in ViewBag.internalunit)
                                 {
                                     <option value="@unit.unit_id">@unit.unit_name</option>
                                 }
@@ -141,7 +150,6 @@
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Cơ Sở</label>
                         <select class="form-control" required id="add_co_so">
-
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
@@ -181,7 +189,7 @@
                 error: function (data) {
                 }
             });
-            
+
         }
         function getAreaByUnit(){
             var unit_id = document.getElementById('add_don_vi').value;
@@ -203,7 +211,7 @@
         $('#btn_add').click(function () {
             let name = document.getElementById('add_name').value;
             let participant_role_id = document.getElementById('add_tu_cach').value;
-            let email = document.getElementById('add_email').value; 
+            let email = document.getElementById('add_email').value;
             let participant_number = document.getElementById('add_msnv_mssv').value;
             let office_id = document.getElementById('add_co_so').value;
             if (name == '' || participant_role_id == '' || email == '' || participant_number == '' || office_id == '') {
