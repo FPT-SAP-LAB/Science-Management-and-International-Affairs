@@ -75,19 +75,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult ViewMOUDeleted(string partner_name, string contact_point_name, string mou_code)
-        {
-            try
-            {
-                List<ListMOU> listMOU = mou.listAllMOUDeleted(partner_name, contact_point_name, mou_code);
-                return Json(new { success = true, data = listMOU }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult(400);
-            }
-        }
-
         public ActionResult Delete_Mou(int mou_id)
         {
             try
