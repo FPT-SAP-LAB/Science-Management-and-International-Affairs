@@ -268,7 +268,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DD/MM/YYYY.
+        ///   Looks up a localized string similar to dd/MM/yyyy.
         /// </summary>
         public static string DateFormat {
             get {

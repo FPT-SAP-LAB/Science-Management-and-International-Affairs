@@ -369,7 +369,7 @@
             $('#cloneModal').modal('show');
         }
         function goDetail(id) {
-            window.location.href = '/DetailOfAcademicActivity/Index?id' + id;
+            window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
         }
         $('#btn_add').click(function () {
             let activity_name = document.getElementById('add_title').value;
@@ -490,7 +490,7 @@
                 content: getSelectedCheckboxValues('clone-content')
             }
             $.ajax({
-                url: '/AcademicActivity/cloneAA',
+                url: '/AcademicActivity/clone',
                 data: JSON.stringify(object),
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
