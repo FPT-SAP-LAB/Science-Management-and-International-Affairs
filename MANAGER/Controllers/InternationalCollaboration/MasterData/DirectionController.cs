@@ -1,32 +1,31 @@
-﻿using System;
+﻿using BLL.InternationalCollaboration.MasterData;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BLL.InternationalCollaboration.MasterData;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
 {
-    public class AcademicActivityExpenseTypeController : Controller
+    public class DirectionController : Controller
     {
-        private static AcademicActivityExpenseTypeRepo activityExpenseTypeRepo = new AcademicActivityExpenseTypeRepo();
+        private static DirectionRepo directionRepo = new DirectionRepo();
 
-        // GET: AcademicActivityExpenseType
+        // GET: Direction
         public ActionResult List()
         {
-            ViewBag.title = "QUẢN LÝ LOẠI KINH PHÍ";
+            ViewBag.title = "QUẢN LÝ CHIỀU HỢP TÁC HỌC THUẬT";
             return View();
         }
 
-        public ActionResult listAcademicActivityExpenseType()
+        public ActionResult listDirection()
         {
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<ActivityExpenseType> baseServerSideData = activityExpenseTypeRepo.getListActivityExpenseType(baseDatatable);
+                BaseServerSideData<Direction> baseServerSideData = directionRepo.getListDirection(baseDatatable);
                 return Json(new
                 {
                     success = true,
@@ -43,11 +42,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult addAcademicActivityExpenseType(string expense_type_name)
+        public ActionResult addDirection(string direction_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.addAcademicActivityExpenseType(expense_type_name);
+                AlertModal<Direction> alertModal = directionRepo.addDirection(direction_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -57,11 +56,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult getAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult getDirection(int direction_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.getActivityExpenseType(expense_type_id);
+                AlertModal<Direction> alertModal = directionRepo.getDirection(direction_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -71,11 +70,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult editAcademicActivityExpenseType(int expense_type_id, string expense_type_name)
+        public ActionResult editDirection(int direction_id, string direction_name)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.editActivityExpenseType(expense_type_id, expense_type_name);
+                AlertModal<Direction> alertModal = directionRepo.editDirection(direction_id, direction_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -85,11 +84,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         }
 
         [HttpPost]
-        public ActionResult deleteAcademicActivityExpenseType(int expense_type_id)
+        public ActionResult deleteDirection(int direction_id)
         {
             try
             {
-                AlertModal<ActivityExpenseType> alertModal = activityExpenseTypeRepo.deleteActivityExpenseType(expense_type_id);
+                AlertModal<Direction> alertModal = directionRepo.deleteDirection(direction_id);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)

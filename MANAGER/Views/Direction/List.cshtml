@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,13 +10,13 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div>
-                            <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                            <a href="#add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
                         </div>
-                        <table class="table table-bordered" id="academic_activity_type_table">
+                        <table class="table table-bordered" id="direction_table">
                             <thead>
                                 <tr>
                                     <th>
-                                        Loại hoạt động học thuật
+                                        Trạng thái
                                     </th>
                                     <th>
                                         Hành động
@@ -33,40 +34,40 @@
 </div>
 
 <!--ADD-->
-<div class="modal fade in" id="academic_activity_type_add_modal" aria-hidden="true">
+<div class="modal fade in" id="add_modal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title font-weight-bolder">THÊM LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+                <h3 class="modal-title font-weight-bolder">THÊM CHIỀU</h3>
             </div>
             <div class="modal-body">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    <input id="add_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
+                    <input id="add_modal_direction_name" class="form-control" type="text" placeholder="Trạng thái" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="academic_activity_type_model_add_type_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
-                <button id='academic_activity_type_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+                <button id="add_modal_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='add_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--EDIT-->
-<div class="modal fade in" id="academic_activity_type_edit_modal" aria-hidden="true">
+<div class="modal fade in" id="edit_modal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title font-weight-bolder">SỬA LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+                <h3 class="modal-title font-weight-bolder">SỬA CHIỀU</h3>
             </div>
             <div class="modal-body">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    <input id="edit_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
+                    <input id="edit_modal_direction_name" class="form-control" type="text" placeholder="Trạng thái" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button id='academic_activity_type_model_edit_type_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
-                <button id='academic_activity_type_model_edit_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+                <button id='edit_modal_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='edit_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
             </div>
         </div>
     </div>
@@ -74,7 +75,7 @@
 
 @section scripts{
     <script>
-        var dataTable = $("#academic_activity_type_table").DataTable({
+        var dataTable = $("#direction_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -87,20 +88,20 @@
             lengthChange: false,
             serverSide: true,
             ajax: {
-                url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
+                url: "@Url.Action("listDirection", "Direction")",
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 cache: "false"
             },
             columns: [
-                { data: "activity_type_name", name: "activity_type_name" },
+                { data: "direction_name", name: "direction_name" },
                 {
-                    data: "activity_type_id",
+                    data: "direction_id",
                     orderable: false,
                     render: function (data) {
-                        return '<a onclick="loadDataToEditModal('+data+')" href="#academic_activity_type_edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
-                            '<a onclick="deleteAcademicActivityType('+data+')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        return '<a onclick="loadDataToEditModal('+ data +')" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteDirection('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 }
             ],
@@ -115,28 +116,28 @@
 
     <!--ADD-->
     <script>
-        $("#academic_activity_type_model_add_type_confirm").click(function () {
+        $("#add_modal_confirm").click(function () {
             $.ajax({
-                url: "@Url.Action("addAcademicActivityType", "AcademicActivityType")",
+                url: "@Url.Action("addDirection", "Direction")",
                 type: "POST",
                 data: {
-                    academic_activity_type_name: $("#add_modal_academic_activity_type_name").val()
+                    direction_name: $("#add_modal_direction_name").val()
                 },
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
                         toastr.success(data.content);
                         //clear content
-                        $("#add_modal_academic_activity_type_name").val("");
+                        $("#add_modal_direction_name").val("");
                         //close modal
-                        $("#academic_activity_type_model_add_type_close").click();
+                        $("#add_modal_close").click();
                     } else {
                         toastr.error(data.content);
                     }
                     //reload datatable
                     dataTable.ajax.reload();
                 },
-                error: function (data) {
+                error: function () {
                     toastr.error(data.content);
                     dataTable.ajax.reload();
                 }
@@ -146,21 +147,22 @@
 
     <!--EDIT-->
     <script>
-        var academic_activity_type_id_temp;
+        var direction_id_temp;
         //loading data to modal
-        function loadDataToEditModal(academic_activity_type_id) {
-            academic_activity_type_id_temp = academic_activity_type_id;
+        function loadDataToEditModal(direction_id) {
+            direction_id_temp = direction_id;
             $.ajax({
-                url: "@Url.Action("getAcademicActivityType", "AcademicActivityType")",
+                url: "@Url.Action("getDirection", "Direction")",
                 type: "POST",
                 data: {
-                    academic_activity_type_id: academic_activity_type_id
+                    direction_id: direction_id
                 },
                 cache: true,
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
-                        $("#edit_modal_academic_activity_type_name").val(data.obj.activity_type_name);
+                        $("#edit_modal_direction_name").val(data.obj.direction_name);
+
                     } else {
                         toastr.error(data.content);
                     }
@@ -173,22 +175,22 @@
         }
 
         //confirm edit
-        $("#academic_activity_type_model_edit_type_confirm").click(function () {
+        $("#edit_modal_confirm").click(function () {
             $.ajax({
-                url: "@Url.Action("editAcademicActivtyType", "AcademicActivityType")",
+                url: "@Url.Action("editDirection", "Direction")",
                 type: "POST",
                 data: {
-                    academic_activity_type_id: academic_activity_type_id_temp,
-                    academic_activity_type_name: $("#edit_modal_academic_activity_type_name").val()
+                    direction_id: direction_id_temp,
+                    direction_name: $("#edit_modal_direction_name").val()
                 },
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
                         toastr.success(data.content);
                         //clear content
-                        $("#edit_modal_academic_activity_type_name").val("");
+                        $("#edit_modal_direction_name").val("");
                         //close modal
-                        $("#academic_activity_type_model_edit_type_close").click();
+                        $("#edit_modal_close").click();
                     } else {
                         toastr.error(data.content);
                     }
@@ -205,10 +207,10 @@
 
     <!--DELETE-->
     <script>
-        function deleteAcademicActivityType(academic_activity_type_id) {
+        function deleteDirection(direction_id) {
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: "Xóa loại hoạt động học thuật này?",
+                text: "Xóa chiều này?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Xác nhận",
@@ -217,10 +219,10 @@
             }).then(function (result) {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "@Url.Action("deleteAcademicActivityType", "AcademicActivityType")",
+                        url: "@Url.Action("deleteDirection", "Direction")",
                         type: "POST",
                         data: {
-                            academic_activity_type_id: academic_activity_type_id
+                            direction_id: direction_id
                         },
                         dataType: "json",
                         success: function (data) {
@@ -231,13 +233,14 @@
                             }
                             dataTable.ajax.reload();
                         },
-                error: function (data) {
-                    toastr.error(data.content);
-                    dataTable.ajax.reload();
-                }
+                        error: function (data) {
+                            toastr.error(data.content);
+                            dataTable.ajax.reload();
+                        }
                     });
                 }
             });
         }
     </script>
+
 }
