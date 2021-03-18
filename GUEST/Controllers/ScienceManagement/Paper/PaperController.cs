@@ -26,6 +26,17 @@ namespace GUEST.Controllers
                 new PageTree("Đăng ký khen thưởng bài báo","/Paper/AddRequest"),
             };
             ViewBag.pagesTree = pagesTree;
+
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            ViewBag.listSpec = listSpec;
+
+            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            ViewBag.listCriteria = listCriteria;
             return View();
         }
 

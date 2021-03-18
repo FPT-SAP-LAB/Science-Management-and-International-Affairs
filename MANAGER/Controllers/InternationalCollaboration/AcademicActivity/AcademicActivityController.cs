@@ -42,8 +42,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            int res = repo.AddAA(obj);
-            if (res != 0)
+            bool res = repo.AddAA(obj);
+            if (res)
             {
                 return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
             }
@@ -59,9 +59,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult cloneAA(AcademicActivityRepo.extendBaseAA obj)
+        public JsonResult clone(AcademicActivityRepo.cloneBase obj)
         {
-            bool res = repo.cloneAA(obj);
+            bool res = repo.clone(obj);
             if (res)
             {
                 return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);

@@ -213,6 +213,7 @@
     <Compile Include="Criterion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\AlertModal.cs" />
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
@@ -224,6 +225,26 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExtraMOA.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\MOABasicInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\PartnerScopeInfoMOA.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\ListMOAPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\MOAPartnerEdited.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\PartnerHistory.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\ScopeAndStartDate.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\CustomPartnerMOA.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\CustomScopesMOA.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\ListMOA.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\MOAAdd.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\MOABasicInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\MOAPartnerInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\CustomPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\CustomScope.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\ExBasicInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\ExMOUAdd.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\ExtraMOU.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\MOUBasicInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\PartnerScopeInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUPartner\ListMOUPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUPartner\MOUPartnerAdd.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUPartner\PartnerHistory.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\BasicInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomOffice.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomPartner.cs" />
@@ -235,6 +256,7 @@
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
+    <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
@@ -486,12 +508,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAPartner\" />
-    <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOA\" />
-    <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUBasicInfo\" />
-    <Folder Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUPartner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model1.Context.tt">
