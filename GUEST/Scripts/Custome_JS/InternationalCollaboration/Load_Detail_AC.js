@@ -1,6 +1,8 @@
 ﻿
 
 class Load_detail {
+    load_somthing() { }
+
     load_procedure_detail(id, type_procedure) {
         var url = '/AcademicCollaboration/Procedure_Detail?id=' + id + '&type_procedure=' + type_procedure
         window.location.href = url
@@ -12,4 +14,4 @@ class Load_detail {
     }
 }
 var load_detail = new Load_detail()
-load_detail.load_procedure_detail(1,1)
+load_detail.load_somthing() 
