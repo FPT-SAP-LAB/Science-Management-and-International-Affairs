@@ -235,130 +235,146 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             if (obj.content != null)
             {
-                if (obj.content.Contains("KP"))
+                cloneKP(obj, obj.content.Contains("KP"), activity_id);
+                cloneDTC(obj, obj.content.Contains("DTC"), activity_id);
+                cloneND(obj, obj.content.Contains("ND"), activity_id,av_new);
+                cloneTD(obj, obj.content.Contains("TD"), activity_id);
+            }
+        }
+        public void cloneKP(cloneBase obj, bool start, int activity_id)
+        {
+            if (start)
+            {
+                List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
+                foreach (ActivityExpenseCategory arc in activityExpenses_old)
                 {
-                    List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
-                    foreach (ActivityExpenseCategory arc in activityExpenses_old)
+                    ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
                     {
-                        ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
-                        {
-                            activity_id = activity_id,
-                            office_id = arc.office_id,
-                            expense_category_name = arc.expense_category_name
-                        });
-                        db.SaveChanges();
-                        List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
-                        foreach (ActivityExpenseDetail ard in expenseDetails_old)
-                        {
-                            db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
-                            {
-                                expense_category_id = activityExpense_new.expense_category_id,
-                                expense_price = ard.expense_price,
-                                expense_quantity = ard.expense_quantity,
-                                expense_type_id = ard.expense_type_id,
-                                note = ard.note
-                            });
-                        }
-                        db.SaveChanges();
-                    }
-                }
-                if (obj.content.Contains("DTC"))
-                {
-                    List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
-                    foreach (ActivityPartner ap in partners)
+                        activity_id = activity_id,
+                        office_id = arc.office_id,
+                        expense_category_name = arc.expense_category_name
+                    });
+                    db.SaveChanges();
+                    List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
+                    foreach (ActivityExpenseDetail ard in expenseDetails_old)
                     {
-                        db.ActivityPartners.Add(new ActivityPartner
+                        db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
                         {
-                            activity_id = activity_id,
-                            partner_scope_id = ap.partner_scope_id
+                            expense_category_id = activityExpense_new.expense_category_id,
+                            expense_price = ard.expense_price,
+                            expense_quantity = ard.expense_quantity,
+                            expense_type_id = ard.expense_type_id,
+                            note = ard.note
                         });
                     }
                     db.SaveChanges();
                 }
-                if (obj.content.Contains("ND"))
+            }
+        }
+        public void cloneTD(cloneBase obj, bool start, int activity_id)
+        {
+            if (start)
+            {
+                List<AcademicActivityPhase> activityPhaseOld = db.AcademicActivityPhases.Where(x => x.activity_id == obj.id).ToList();
+                foreach (AcademicActivityPhase aap in activityPhaseOld)
                 {
-                    List<int> ids_article = new List<int>();
-                    List<ActivityInfo> activityInfos = db.ActivityInfoes.Where(x => x.activity_id == obj.id && x.main_article == false).ToList();
-                    foreach (ActivityInfo info in activityInfos)
+                    AcademicActivityPhase aap_new = db.AcademicActivityPhases.Add(new AcademicActivityPhase
                     {
-                        Article a = db.Articles.Add(new Article
+                        created_by = 1,
+                        activity_id = activity_id
+                    });
+                    db.SaveChanges();
+                    Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
+                    Form f_new = db.Forms.Add(new Form
+                    {
+                        phase_id = aap_new.phase_id,
+                        title = f_old.title,
+                        title_description = f_old.title_description
+                    });
+                    db.SaveChanges();
+                    List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
+                    foreach (Question q in ques_old)
+                    {
+                        db.Questions.Add(new Question
                         {
-                            account_id = 1,
-                            article_status_id = 1,
-                            need_approved = false
+                            answer_type_id = q.answer_type_id,
+                            is_compulsory = q.is_compulsory,
+                            title = q.title,
+                            form_id = f_new.form_id
                         });
-                        db.SaveChanges();
-                        List<ArticleVersion> old = db.ArticleVersions.Where(x => x.article_id == info.article_id).ToList();
-                        foreach (ArticleVersion o in old)
+                    }
+                    db.SaveChanges();
+                    List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
+                    foreach (AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
+                    {
+                        db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
                         {
-                            db.ArticleVersions.Add(new ArticleVersion
-                            {
-                                article_id = a.article_id,
-                                publish_time = DateTime.Now,
-                                version_title = o.version_title,
-                                language_id = o.language_id,
-                                article_content = o.article_content
-                            });
-                        }
-                        db.SaveChanges();
-                        db.ActivityInfoes.Add(new ActivityInfo
+                            language_id = aapl.language_id,
+                            phase_name = aapl.phase_name,
+                            phase_id = aap_new.phase_id
+                        });
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
+        public void cloneDTC(cloneBase obj, bool start, int activity_id)
+        {
+            if (start)
+            {
+                List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
+                foreach (ActivityPartner ap in partners)
+                {
+                    db.ActivityPartners.Add(new ActivityPartner
+                    {
+                        activity_id = activity_id,
+                        partner_scope_id = ap.partner_scope_id
+                    });
+                }
+                db.SaveChanges();
+            }
+        }
+        public void cloneND(cloneBase obj, bool start, int activity_id,ArticleVersion av_new)
+        {
+            if (start)
+            {
+                List<int> ids_article = new List<int>();
+                List<ActivityInfo> activityInfos = db.ActivityInfoes.Where(x => x.activity_id == obj.id && x.main_article == false).ToList();
+                foreach (ActivityInfo info in activityInfos)
+                {
+                    Article a = db.Articles.Add(new Article
+                    {
+                        account_id = 1,
+                        article_status_id = 1,
+                        need_approved = false
+                    });
+                    db.SaveChanges();
+                    List<ArticleVersion> old = db.ArticleVersions.Where(x => x.article_id == info.article_id).ToList();
+                    foreach (ArticleVersion o in old)
+                    {
+                        db.ArticleVersions.Add(new ArticleVersion
                         {
                             article_id = a.article_id,
-                            activity_id = activity_id,
-                            main_article = info.main_article
+                            publish_time = DateTime.Now,
+                            version_title = o.version_title,
+                            language_id = o.language_id,
+                            article_content = o.article_content
                         });
-                        db.SaveChanges();
                     }
-                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == obj.id && x.main_article == true).FirstOrDefault();
-                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id).FirstOrDefault();
-                    av_new.article_content = av.article_content;
-                    db.Entry(av_new).State = EntityState.Modified;
+                    db.SaveChanges();
+                    db.ActivityInfoes.Add(new ActivityInfo
+                    {
+                        article_id = a.article_id,
+                        activity_id = activity_id,
+                        main_article = info.main_article
+                    });
                     db.SaveChanges();
                 }
-                if (obj.content.Contains("TD"))
-                {
-                    List<AcademicActivityPhase> activityPhaseOld = db.AcademicActivityPhases.Where(x => x.activity_id == obj.id).ToList();
-                    foreach (AcademicActivityPhase aap in activityPhaseOld)
-                    {
-                        AcademicActivityPhase aap_new = db.AcademicActivityPhases.Add(new AcademicActivityPhase
-                        {
-                            created_by = 1,
-                            activity_id = activity_id
-                        });
-                        db.SaveChanges();
-                        Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
-                        Form f_new = db.Forms.Add(new Form
-                        {
-                            phase_id = aap_new.phase_id,
-                            title = f_old.title,
-                            title_description = f_old.title_description
-                        });
-                        db.SaveChanges();
-                        List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
-                        foreach (Question q in ques_old)
-                        {
-                            db.Questions.Add(new Question
-                            {
-                                answer_type_id = q.answer_type_id,
-                                is_compulsory = q.is_compulsory,
-                                title = q.title,
-                                form_id = f_new.form_id
-                            });
-                        }
-                        db.SaveChanges();
-                        List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
-                        foreach (AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
-                        {
-                            db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
-                            {
-                                language_id = aapl.language_id,
-                                phase_name = aapl.phase_name,
-                                phase_id = aap_new.phase_id
-                            });
-                        }
-                        db.SaveChanges();
-                    }
-                }
+                ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == obj.id && x.main_article == true).FirstOrDefault();
+                ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id).FirstOrDefault();
+                av_new.article_content = av.article_content;
+                db.Entry(av_new).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
         public class ListAA
