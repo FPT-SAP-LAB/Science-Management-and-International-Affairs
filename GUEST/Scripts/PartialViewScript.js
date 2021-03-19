@@ -96,7 +96,7 @@ var KTUppy = function () {
 
         var $fileLabel = $(id + ' .uppy-input-label');
 
-        uppy2.on('upload', function (data) {
+        uppy2.on('upload', function (/*data*/) {
             $fileLabel.text("Uploading...");
             $statusBar.addClass('uppy-status-ongoing');
             $statusBar.removeClass('uppy-status-hidden');
