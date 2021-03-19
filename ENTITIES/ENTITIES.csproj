@@ -262,6 +262,7 @@
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />

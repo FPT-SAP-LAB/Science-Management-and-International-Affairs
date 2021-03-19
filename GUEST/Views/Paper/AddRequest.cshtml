@@ -187,10 +187,50 @@
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
-        var files_data = [];
+        var paper_id;
         var people = [];
+        function addRequest() {
+            var RequestPaper = {
+                specialization_id: $("#chuyennganh").val(),
+                type: $("#loaithuong").val(),
+                reward_type: $("#kieuthuong").val(),
+                paper_id: paper_id
+            }
+            $.ajax({
+                url: "@Url.Action("AddRequest", "Paper")",
+                type: "POST",
+                data: JSON.stringify(RequestPaper),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    //alert(response.mess);
+                    addAuthor();
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+        function addAuthor() {
+            $.ajax({
+                url: "@Url.Action("AddAuthor", "Paper")",
+                type: "POST",
+                data: JSON.stringify(people),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+        var files_data = [];
+        var criteria = [];
         $("#submitPaper").click(function () {
-            console.log(people);
             let fd = new FormData();
             var Paper = {
                 name: $("#paper_name").val(),
@@ -203,10 +243,14 @@
                 page: $("#paper_page").val(),
                 company: $("#paper_publish_name").val()
             };
-            var RequestPaper = {
-                specialization_id: $("#chuyennganh").val(),
-                type: $("#loaithuong").val(),
-                reward_type: $("#kieuthuong").val()
+            var inputs = $(".tieuchiname");
+            var inputs2 = $(".tieuchilink");
+            for (var i = 0; i < inputs.length; i++) {
+                var PaperWithCriteria = {
+                    link: $(inputs2[i]).val(),
+                    name: $(inputs[i]).val()
+                }
+                criteria.push(PaperWithCriteria);
             }
             $.ajax({
                 url: "@Url.Action("AddPaper", "Paper")",
@@ -216,30 +260,20 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-
+                    if (response.mess == "ss") {
+                        paper_id = response.id;
+                        addRequest();
+                    }
+                    else alert('loi');
                 },
                 error: function () {
                     //alert("fail");
                 }
             });
             $.ajax({
-                url: "@Url.Action("AddRequest", "Paper")",
+                url: "@Url.Action("AddCriteria", "Paper")",
                 type: "POST",
-                data: JSON.stringify(RequestPaper),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
-            $.ajax({
-                url: "@Url.Action("AddAuthor", "Paper")",
-                type: "POST",
-                data: JSON.stringify(people),
+                data: JSON.stringify(criteria),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
@@ -291,9 +325,9 @@
 
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
-            $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi'>" +
-                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg' name='tieuchiname' type='text' /></span>" +
-                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg' type='text' /></span>" +
+            $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
+                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg tieuchiname' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg tieuchilink' type='text' name='tieuchilink' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
             var option = $("#tieuchi option[value='" + temp + "']");

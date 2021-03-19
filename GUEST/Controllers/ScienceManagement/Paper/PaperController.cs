@@ -42,19 +42,30 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public void AddPaper(Paper dataPaper)
+        public JsonResult AddPaper(Paper paper)
         {
-            return;
+            Paper p = pr.addPaper(paper);
+            if(p != null) return Json(new { id = p.paper_id, mess = "ss"}, JsonRequestBehavior.AllowGet);
+            else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public void AddRequest(RequestPaper item)
+        public JsonResult AddRequest(RequestPaper item)
         {
-            return;
+            BaseRequest b = pr.addBaseRequest("10");
+            string mess = pr.addRequestPaper(b.request_id, item);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet); ;
         }
 
         [HttpPost]
         public void AddAuthor(List<AddAuthor> item)
+        {
+
+            return;
+        }
+
+        [HttpPost]
+        public void AddCriteria(List<CustomCriteria> item)
         {
             return;
         }

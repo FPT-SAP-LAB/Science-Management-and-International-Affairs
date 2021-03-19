@@ -268,12 +268,13 @@ $("#add_author_save").click(function () {
         office_id: $("#ckfe option:selected").attr("name"),
         contract_id: $("#add_author_contractType").val(),
         title_id: $("#add_author_title").val(),
-        people_id: $("#add_author_msnv").attr("name")
+        people_id: $("#add_author_msnv").attr("name"),
+        temp_id: id
     }
     people.push(AddAuthor);
 
-    filename = [];
-    $("div").remove(".uppy-list-item");
+    //filename = [];
+    //$("div").remove(".uppy-list-item");
 
     //var files = uppy2.getFiles();
     //var temp_array = [];
@@ -297,7 +298,12 @@ $("#authors-info-container").on('click', '.del-author', function () {
         reverseButtons: true
     }).then(function (result) {
         if (result.value) {
-            $("#" + id).remove()
+            $("#" + id).remove();
+            for (var i = 0; i < people.length; i++) {
+                if (people[i].temp_id == id) {
+                    people.splice(i, 1);
+                }
+            }
         }
         //else if (result.dismiss === "cancel") {
         //}
