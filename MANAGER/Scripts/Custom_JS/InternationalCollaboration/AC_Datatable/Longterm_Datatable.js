@@ -1,6 +1,7 @@
 ﻿
-//table 1
-$('#colab_going_table').DataTable({
+//table long-term - going
+let rowNum = 0;
+$('#collab_going_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -9,8 +10,71 @@ $('#colab_going_table').DataTable({
         sEmptyTable: "Không có dữ liệu",
         sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
     },
+    ajax: {
+        url: "/AcademicCollaboration/getListAcademicCollaboration",
+        type: "POST",
+        datatype: "json",
+        data: {
+            direction: 1, /*going*/
+            collab_status_type: 2 /*long-term*/
+        },
+        cache: "false"
+    },
     searching: false,
     lengthChange: false,
+    serverSide: true,
+    columns: [
+        {
+            name: 'collab_id',
+            render: () => {
+                return rowNum++;
+            }
+        },
+        {
+            data: 'people_name',
+            name: 'people_name'
+        },
+        {
+            data: 'email',
+            name: 'email'
+        },
+        {
+            data: 'office_name',
+            name: 'office_name'
+        },
+        {
+            data: 'partner_name',
+            name: 'partner_name'
+        },
+        {
+            data: 'country_name',
+            name: 'country_name'
+        },
+        {
+            data: 'plan_study_start_date',
+            name: 'plan_study_start_date'
+        },
+        {
+            data: 'plan_study_end_date',
+            name: 'plan_study_end_date'
+        },
+        {
+            data: 'collab_status_name',
+            name: 'collab_status_name'
+        },
+        {
+            data: 'is_supported', //bit 0 || 1
+            name: 'is_supported',
+            render: function (data) {
+                if (data == 1) `<input type="checkbox" enable/>`
+                else `<input type="checkbox" disable/>`
+            }
+        },
+        {
+            data: 'note',
+            name: 'note'
+        }
+    ],
     columnDefs: [
         {
             targets: 8,
@@ -19,16 +83,20 @@ $('#colab_going_table').DataTable({
             render: function (data) {
                 var status = {
                     1: {
-                        'title': 'Không hoàn thành',
-                        'class': 'label-secondary'
+                        'title': 'Đề xuất',
+                        'class': 'label-inline'
                     },
                     2: {
-                        'title': 'Đã hoàn thành',
-                        'class': 'label-success'
+                        'title': 'Đang thực hiện',
+                        'class': 'label-warning'
                     },
                     3: {
-                        'title': 'Đang thực hiện',
+                        'title': 'Không hoàn thành',
                         'class': 'label-danger'
+                    },
+                    4: {
+                        'title': 'Đã hoàn thành',
+                        'class': 'label-secondary'
                     }
                 };
                 if (typeof status[data] === 'undefined') {
@@ -66,12 +134,12 @@ $('#colab_going_table').DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().removeClass();
-        //$('.colab-table thead th').removeAttr('style');
+        //$('.collab-table thead th').removeAttr('style');
 
     },
 })
 //table 2
-$('#colab_coming_table').DataTable({
+$('#collab_coming_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -137,14 +205,14 @@ $('#colab_coming_table').DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().removeClass();
-        //$('.colab-table thead th').removeAttr('style');
+        //$('.collab-table thead th').removeAttr('style');
 
 
     },
 })
 
 //table 3
-$("#colab_program_going_table").DataTable({
+$("#collab_program_going_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -175,7 +243,7 @@ $("#colab_program_going_table").DataTable({
 });
 
 //table 4
-$("#colab_program_coming_table").DataTable({
+$("#collab_program_coming_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
