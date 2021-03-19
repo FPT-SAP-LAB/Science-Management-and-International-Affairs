@@ -298,7 +298,8 @@ $("#authors-info-container").on('click', '.del-author', function () {
     }).then(function (result) {
         if (result.value) {
             $("#" + id).remove()
-        } else if (result.dismiss === "cancel") {
         }
+        //else if (result.dismiss === "cancel") {
+        //}
     });
 });
