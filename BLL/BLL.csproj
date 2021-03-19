@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RightRepo.cs" />
+    <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\AccountRepo.cs" />
     <Compile Include="Authen\Login.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
@@ -86,6 +87,12 @@
     <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityExpenseTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityTypeRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\AcademicCollaborationStatusRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\AcademicCollaborationTypeRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\CollaborationScopeRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\CollaborationStatusRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\DirectionRepo.cs" />
+    <Compile Include="InternationalCollaboration\MasterData\InternalUnitRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />

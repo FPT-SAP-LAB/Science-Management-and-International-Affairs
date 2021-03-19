@@ -35,6 +35,7 @@ namespace ENTITIES
         public string google_id { get; set; }
         public string picture { get; set; }
         public int role_id { get; set; }
+        public Nullable<bool> login { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }

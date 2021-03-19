@@ -154,6 +154,12 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityExpenseTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicCollaborationStatusController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicCollaborationTypeController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\CollaborationScopeController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\CollaborationStatusController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\DirectionController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\InternalUnitController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
@@ -2187,7 +2193,6 @@
     <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
-    <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
     <Content Include="Views\Scholarship\List.cshtml" />
     <Content Include="Views\Convention\Index.cshtml" />
     <Content Include="Views\CheckIn\List.cshtml" />
@@ -2264,6 +2269,13 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Edit_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Description.cshtml" />
+    <Content Include="Views\AcademicActivityExpenseType\List.cshtml" />
+    <Content Include="Views\CollaborationStatus\List.cshtml" />
+    <Content Include="Views\CollaborationScope\List.cshtml" />
+    <Content Include="Views\Direction\List.cshtml" />
+    <Content Include="Views\AcademicCollaborationType\List.cshtml" />
+    <Content Include="Views\AcademicCollaborationStatus\List.cshtml" />
+    <Content Include="Views\InternalUnit\List.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\List_MOU_Table.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Add_MOU.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Add_Partner_MOU.cshtml" />
@@ -2280,11 +2292,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\AcademicActivityExpenseType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

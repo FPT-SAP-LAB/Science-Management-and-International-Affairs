@@ -14,14 +14,17 @@ namespace BLL.Admin
         {
             try
             {
-                db.Configuration.LazyLoadingEnabled = false;
-                string sql = @"select r.right_id,r.right_name,m.module_name,r.group_id
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    string sql = @"select r.right_id,r.right_name,m.module_name,r.group_id
                                 from General.[Right] r inner join General.Module m on r.module_id = m.module_id 
                                 ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                                 " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
-                int recordTotal = db.Database.SqlQuery<int>("select count(*) from General.[Right] r inner join General.Module m on r.module_id = m.module_id").FirstOrDefault();
-                List<infoRight> data = db.Database.SqlQuery<infoRight>(sql).ToList();
-                return new BaseServerSideData<infoRight>(data, recordTotal);
+                    int recordTotal = db.Database.SqlQuery<int>("select count(*) from General.[Right] r inner join General.Module m on r.module_id = m.module_id").FirstOrDefault();
+                    List<infoRight> data = db.Database.SqlQuery<infoRight>(sql).ToList();
+                    return new BaseServerSideData<infoRight>(data, recordTotal);
+                }
             }
             catch (Exception e)
             {
@@ -32,8 +35,12 @@ namespace BLL.Admin
         {
             try
             {
-                List<Module> data = db.Modules.ToList();
-                return data;
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    List<Module> data = db.Modules.ToList();
+                    return data;
+                }
             }
             catch (Exception e)
             {
@@ -44,8 +51,13 @@ namespace BLL.Admin
         {
             try
             {
-                Right data = db.Rights.Find(right_id);
-                return data;
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+                    Right data = db.Rights.Find(right_id);
+                    return data;
+                }
             }
             catch (Exception e)
             {
@@ -56,14 +68,18 @@ namespace BLL.Admin
         {
             try
             {
-                db.Rights.Add(new Right
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
                 {
-                    right_name = obj.right_name,
-                    group_id = obj.group_id,
-                    module_id = int.Parse(obj.module_name)
-                });
-                db.SaveChanges();
-                return true;
+                    db.Configuration.LazyLoadingEnabled = false;
+                    db.Rights.Add(new Right
+                    {
+                        right_name = obj.right_name,
+                        group_id = obj.group_id,
+                        module_id = int.Parse(obj.module_name)
+                    });
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception e)
             {
@@ -74,13 +90,17 @@ namespace BLL.Admin
         {
             try
             {
-                Right r = db.Rights.Find(obj.right_id);
-                r.right_name = obj.right_name;
-                r.module_id = int.Parse(obj.module_name);
-                r.group_id = obj.group_id;
-                db.Entry(r).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    Right r = db.Rights.Find(obj.right_id);
+                    r.right_name = obj.right_name;
+                    r.module_id = int.Parse(obj.module_name);
+                    r.group_id = obj.group_id;
+                    db.Entry(r).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception e)
             {
@@ -91,10 +111,14 @@ namespace BLL.Admin
         {
             try
             {
-                Right r = db.Rights.Find(right_id);
-                db.Rights.Remove(r);
-                db.SaveChanges();
-                return true;
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    Right r = db.Rights.Find(right_id);
+                    db.Rights.Remove(r);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception e)
             {

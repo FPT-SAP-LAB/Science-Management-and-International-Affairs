@@ -30,9 +30,11 @@ namespace ENTITIES
         public string cv { get; set; }
         public string research_area { get; set; }
         public Nullable<int> avatar_id { get; set; }
+        public Nullable<int> current_academic_degree_id { get; set; }
     
         public virtual File File { get; set; }
         public virtual Person Person { get; set; }
+        public virtual AcademicDegree AcademicDegree { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
     }

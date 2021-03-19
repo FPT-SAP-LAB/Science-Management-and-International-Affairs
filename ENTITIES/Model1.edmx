@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ScienceAndInternationalAffairsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentBase">
           <Key>
             <PropertyRef Name="comment_id" />
@@ -42,6 +42,7 @@
           <Property Name="google_id" Type="nvarchar" MaxLength="150" />
           <Property Name="picture" Type="nvarchar" MaxLength="150" />
           <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="login" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ScienceAndInternationalAffairs.General.AccountRight' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -129,13 +130,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.General.AccountRigh
           <Property Name="module_id" Type="int" />
           <Property Name="group_id" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.General.RightByRole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RightByRole">
           <Key>
-            <PropertyRef Name="role_id" />
-            <PropertyRef Name="right_id" />
+            <PropertyRef Name="right_by_role_id" />
           </Key>
+          <Property Name="right_by_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role_id" Type="int" Nullable="false" />
           <Property Name="right_id" Type="int" Nullable="false" />
         </EntityType>
@@ -176,7 +175,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.General.RightByRole
           </Key>
           <Property Name="collab_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="collab_status_name" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="status_type" Type="int" />
+          <Property Name="status_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicCollaborationType">
           <Key>
@@ -919,6 +918,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="cv" Type="nvarchar" MaxLength="150" />
           <Property Name="research_area" Type="nvarchar" MaxLength="150" />
           <Property Name="avatar_id" Type="int" />
+          <Property Name="current_academic_degree_id" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.ProfileAcademicDegree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2804,6 +2804,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Profile__current__297722B6">
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicDegree">
+              <PropertyRef Name="academic_degree_id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="current_academic_degree_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Profile__people___3335971A">
           <End Role="People" Type="Self.People" Multiplicity="1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
@@ -3463,6 +3475,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="Office" EntityType="Self.Office" Schema="General" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="General" store:Type="Tables" />
           <EntitySet Name="Right" EntityType="Self.Right" Schema="General" store:Type="Tables" />
+          <EntitySet Name="RightByRole" EntityType="Self.RightByRole" Schema="General" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="General" store:Type="Tables" />
           <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="General" store:Type="Tables" />
           <EntitySet Name="AcademicCollaboration" EntityType="Self.AcademicCollaboration" Schema="IA_AcademicCollaboration" store:Type="Tables" />
@@ -3577,12 +3590,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
     [AccountRight].[account_id] AS [account_id], 
     [AccountRight].[right_id] AS [right_id]
     FROM [General].[AccountRight] AS [AccountRight]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="RightByRole" EntityType="Self.RightByRole" store:Type="Tables" store:Schema="General">
-            <DefiningQuery>SELECT 
-    [RightByRole].[role_id] AS [role_id], 
-    [RightByRole].[right_id] AS [right_id]
-    FROM [General].[RightByRole] AS [RightByRole]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CollaborationStatusHistory" EntityType="Self.CollaborationStatusHistory" store:Type="Tables" store:Schema="IA_AcademicCollaboration">
             <DefiningQuery>SELECT 
@@ -4142,6 +4149,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="File" EntitySet="File" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
+          <AssociationSet Name="FK__Profile__current__297722B6" Association="Self.FK__Profile__current__297722B6">
+            <End Role="AcademicDegree" EntitySet="AcademicDegree" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
           <AssociationSet Name="FK__Profile__people___3335971A" Association="Self.FK__Profile__people___3335971A">
             <End Role="People" EntitySet="People" />
             <End Role="Profile" EntitySet="Profile" />
@@ -4355,7 +4366,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="RightByRole" EntitySet="RightByRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ScienceAndInternationalAffairsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -4390,6 +4402,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="google_id" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="picture" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="Boolean" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__creat__2704CA5F" FromRole="Account" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Account__role_id__2704CA5F" FromRole="Account" ToRole="Role" />
           <NavigationProperty Name="Articles" Relationship="Self.FK__Article__account__5E54FF49" FromRole="Account" ToRole="Article" />
@@ -4517,8 +4530,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="module_id" Type="Int32" />
           <Property Name="group_id" Type="Int32" />
           <NavigationProperty Name="Module" Relationship="Self.FK__Right__module_id__2EA5EC27" FromRole="Right" ToRole="Module" />
+          <NavigationProperty Name="RightByRoles" Relationship="Self.FK_RightByRole_Right" FromRole="Right" ToRole="RightByRole" />
           <NavigationProperty Name="Accounts" Relationship="Self.AccountRight" FromRole="Right" ToRole="Account" />
-          <NavigationProperty Name="Roles" Relationship="Self.RightByRole" FromRole="Right" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="RightByRole">
+          <Key>
+            <PropertyRef Name="right_by_role_id" />
+          </Key>
+          <Property Name="right_by_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="right_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Right" Relationship="Self.FK_RightByRole_Right" FromRole="RightByRole" ToRole="Right" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RightByRole_Role" FromRole="RightByRole" ToRole="Role" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -4528,7 +4551,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="role_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="url" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__role_id__2704CA5F" FromRole="Role" ToRole="Account" />
-          <NavigationProperty Name="Rights" Relationship="Self.RightByRole" FromRole="Role" ToRole="Right" />
+          <NavigationProperty Name="RightByRoles" Relationship="Self.FK_RightByRole_Role" FromRole="Role" ToRole="RightByRole" />
         </EntityType>
         <EntityType Name="Specialization">
           <Key>
@@ -4569,7 +4592,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </Key>
           <Property Name="collab_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="collab_status_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="status_type" Type="Int32" />
+          <Property Name="status_type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK__Collabora__colla__0169315C" FromRole="AcademicCollaborationStatus" ToRole="CollaborationStatusHistory" />
         </EntityType>
         <EntityType Name="AcademicCollaborationType">
@@ -5378,6 +5401,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="type_id" Type="Int32" />
           <NavigationProperty Name="AcademicDegreeLanguages" Relationship="Self.FK__AcademicD__acade__24B26D99" FromRole="AcademicDegree" ToRole="AcademicDegreeLanguage" />
           <NavigationProperty Name="AcademicDegreeType" Relationship="Self.FK__AcademicD__type___1A69E950" FromRole="AcademicDegree" ToRole="AcademicDegreeType" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__current__297722B6" FromRole="AcademicDegree" ToRole="Profile" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="AcademicDegree" ToRole="ProfileAcademicDegree" />
         </EntityType>
         <EntityType Name="AcademicDegreeType">
@@ -5423,8 +5447,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="cv" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="research_area" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="avatar_id" Type="Int32" />
+          <Property Name="current_academic_degree_id" Type="Int32" />
           <NavigationProperty Name="File" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="Profile" ToRole="File" />
           <NavigationProperty Name="Person" Relationship="Self.FK__Profile__people___3335971A" FromRole="Profile" ToRole="People" />
+          <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="Profile" ToRole="ProfileAcademicDegree" />
         </EntityType>
         <EntityType Name="AuthorInvention">
@@ -6265,6 +6291,30 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="people_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RightByRole_Right">
+          <End Role="Right" Type="Self.Right" Multiplicity="1" />
+          <End Role="RightByRole" Type="Self.RightByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Right">
+              <PropertyRef Name="right_id" />
+            </Principal>
+            <Dependent Role="RightByRole">
+              <PropertyRef Name="right_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RightByRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="RightByRole" Type="Self.RightByRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="RightByRole">
+              <PropertyRef Name="role_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7448,6 +7498,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Profile__current__297722B6">
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicDegree">
+              <PropertyRef Name="academic_degree_id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="current_academic_degree_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
           <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
@@ -7832,10 +7894,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <End Role="Right" Type="Self.Right" Multiplicity="*" />
         </Association>
-        <Association Name="RightByRole">
-          <End Role="Right" Type="Self.Right" Multiplicity="*" />
-          <End Role="Role" Type="Self.Role" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="ScienceAndInternationalAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentBases" EntityType="Self.CommentBase" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -7848,6 +7906,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="Offices" EntityType="Self.Office" />
           <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="Rights" EntityType="Self.Right" />
+          <EntitySet Name="RightByRoles" EntityType="Self.RightByRole" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Specializations" EntityType="Self.Specialization" />
           <EntitySet Name="AcademicCollaborations" EntityType="Self.AcademicCollaboration" />
@@ -8107,6 +8166,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="FK__Profile__people___3335971A" Association="Self.FK__Profile__people___3335971A">
             <End Role="People" EntitySet="People" />
             <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RightByRole_Right" Association="Self.FK_RightByRole_Right">
+            <End Role="Right" EntitySet="Rights" />
+            <End Role="RightByRole" EntitySet="RightByRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RightByRole_Role" Association="Self.FK_RightByRole_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RightByRole" EntitySet="RightByRoles" />
           </AssociationSet>
           <AssociationSet Name="FK__MOUPartne__speci__5A846E65" Association="Self.FK__MOUPartne__speci__5A846E65">
             <End Role="Specialization" EntitySet="Specializations" />
@@ -8500,6 +8567,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="AcademicDegreeType" EntitySet="AcademicDegreeTypes" />
             <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
           </AssociationSet>
+          <AssociationSet Name="FK__Profile__current__297722B6" Association="Self.FK__Profile__current__297722B6">
+            <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
           <AssociationSet Name="FK__ProfileAc__acade__26CFC035" Association="Self.FK__ProfileAc__acade__26CFC035">
             <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
             <End Role="ProfileAcademicDegree" EntitySet="ProfileAcademicDegrees" />
@@ -8648,10 +8719,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Right" EntitySet="Rights" />
           </AssociationSet>
-          <AssociationSet Name="RightByRole" Association="Self.RightByRole">
-            <End Role="Right" EntitySet="Rights" />
-            <End Role="Role" EntitySet="Roles" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -8689,6 +8756,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="google_id" ColumnName="google_id" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8773,6 +8841,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="right_name" ColumnName="right_name" />
                 <ScalarProperty Name="module_id" ColumnName="module_id" />
                 <ScalarProperty Name="group_id" ColumnName="group_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RightByRoles">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.RightByRole">
+              <MappingFragment StoreEntitySet="RightByRole">
+                <ScalarProperty Name="right_by_role_id" ColumnName="right_by_role_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="right_id" ColumnName="right_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9519,6 +9596,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="cv" ColumnName="cv" />
                 <ScalarProperty Name="research_area" ColumnName="research_area" />
                 <ScalarProperty Name="avatar_id" ColumnName="avatar_id" />
+                <ScalarProperty Name="current_academic_degree_id" ColumnName="current_academic_degree_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9914,14 +9992,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </EndProperty>
             <EndProperty Name="Right">
               <ScalarProperty Name="right_id" ColumnName="right_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="RightByRole" TypeName="ScienceAndInternationalAffairsModel.RightByRole" StoreEntitySet="RightByRole">
-            <EndProperty Name="Right">
-              <ScalarProperty Name="right_id" ColumnName="right_id" />
-            </EndProperty>
-            <EndProperty Name="Role">
-              <ScalarProperty Name="role_id" ColumnName="role_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
