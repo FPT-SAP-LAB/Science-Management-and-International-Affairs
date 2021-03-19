@@ -35,21 +35,10 @@ namespace ENTITIES
         public int people_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
-        public string bank_number { get; set; }
-        public string tax_code { get; set; }
-        public string bank_branch { get; set; }
-        public string identification_number { get; set; }
-        public Nullable<int> evidence { get; set; }
-        public int office_id { get; set; }
-        public string mssv_msnv { get; set; }
-        public bool is_verify { get; set; }
-        public Nullable<int> account_id { get; set; }
+        public string phone_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentBase> CommentBases { get; set; }
-        public virtual Account Account { get; set; }
-        public virtual File File { get; set; }
-        public virtual Office Office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

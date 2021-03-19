@@ -12,14 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class AuthorPaper
+    public partial class RightByRole
     {
-        public int people_id { get; set; }
-        public int paper_id { get; set; }
-        public string current_mssv_msnv { get; set; }
-        public int money_reward { get; set; }
+        public int right_by_role_id { get; set; }
+        public int role_id { get; set; }
+        public int right_id { get; set; }
     
-        public virtual Person Person { get; set; }
-        public virtual Paper Paper { get; set; }
+        public virtual Right Right { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

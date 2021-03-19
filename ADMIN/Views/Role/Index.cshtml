@@ -4,16 +4,399 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
+<style>
+    .custom-checkbox {
+        width: 21px !important;
+        height: 21px !important;
+    }
+
+    .checkbox {
+        font-size: 14px !important;
+        white-space: nowrap;
+        text-overflow: ellipsis
+    }
+
+    .checkbox-list {
+        min-height: 100px !important;
+        max-height: 275px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+    }
+</style>
+
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#rightModal">Thêm chức danh</a>
+            </div>
+        </div>
+        <table id="datatable_role" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Chức danh</th>
+                    <th class="text-center">Base url</th>
+                    <th class="text-center">Quyền hạn</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
 
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm chức danh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Tên chức danh</label>
+                        <input class="form-control" type="text" placeholder="Tên chức danh" autocomplete="off" required id="add_role_name" />
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Base url</label>
+                        <input class="form-control" type="text" placeholder="Tên chức danh" autocomplete="off" required id="add_url" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa chức danh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Tên chức danh</label>
+                        <input class="form-control" type="text" placeholder="Tên chức danh" autocomplete="off" required id="edit_role_name" />
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Base url</label>
+                        <input class="form-control" type="text" placeholder="Tên chức danh" autocomplete="off" required id="edit_url" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rightModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Quyền hạn theo chức danh</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder mb-2">Bộ phận hợp tác quốc tế</label>
+                        <div class="checkbox-list">
+                            @{
+                                foreach (var r in ViewBag.HTright)
+                                {
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="checkbox-ht-@r.right_id" />
+                                        <span class="custom-checkbox"></span>
+                                        @r.right_name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder mb-2">Bộ phận quản lí khoa học</label>
+                        <div class="checkbox-list">
+                            @{
+                                foreach (var r in ViewBag.QLright)
+                                {
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="checkbox-ql-@r.right_id" />
+                                        <span class="custom-checkbox"></span>
+                                        @r.right_name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_right">Xác nhận</button>
+            </div>
         </div>
     </div>
 </div>
 
 @section scripts{
     <script>
+        let stt = 1;
+        let temp_id;
 
+        function getRightByRole(id) {
+            temp_id = id;
+            $.ajax({
+                url: "@Url.Action("getRightByRole", "Role")",
+                data: JSON.stringify({role_id : id}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    data.forEach(function (x) {
+                        if (x.module_id == 1) {
+                            $("#checkbox-ht-" + x.right_id).attr("checked", true);
+                        } else {
+                            $("#checkbox-ql-" + x.right_id).attr("checked", true);
+                        }
+                    });
+                    $('#rightModal').modal('show');
+                },
+                error: function (data) {
+                }
+            });
+        }
+
+        function editRole(id) {
+            temp_id = id;
+            let object = {
+                role_id: id
+            }
+            $.ajax({
+                url: "@Url.Action("getRole", "Role")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        document.getElementById('edit_role_name') = data.role_name;
+                        document.getElementById('edit_url') = data.url;
+                        $('editModal').modal('show');
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        }
+        function deleteRole(id) {
+            Swal.fire({
+                title: "Bạn có muốn xóa chức danh này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                let object = {
+                    role_id: id
+                }
+                if (result.value) {
+                    $.ajax({
+                        url: "@Url.Action("delete", "Role")",
+                        data: JSON.stringify(object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatable.ajax.reload();
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            });
+        }
+        $('#btn_right').click(function () {
+            arrAccept = [];
+            $('#rightModal').find('input:checkbox')
+                .each(function () {
+                    if ($('#' + this.id).is(":checked")) {
+                        arrAccept.push(this.id.split('-')[2]);
+                    }
+                });
+            var object = {
+                arrAccept: arrAccept,
+                role_id: temp_id
+            }
+            $.ajax({
+                url: "@Url.Action("UpdateRight", "Role")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        $('#rightModal').find('input:checkbox')
+                            .each(function () {
+                                $("#"+this.id).attr("checked", false);
+                            });
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+        $('#btn_add').click(function () {
+            let role_name = document.getElementById('add_role_name').value;
+            let url = document.getElementById('add_url').value;
+            if (role_name == '' || url == '') {
+                toastr.warning("Tên chức danh không thể để trống");
+                return false;
+            }
+            let object = {
+                role_name: role_name,
+                url : url
+            }
+            $.ajax({
+                url: "@Url.Action("add", "Role")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+        function clearModal(id) {
+            $(id).find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+        }
+        $('#btn_edit').click(function () {
+            let role_name = document.getElementById('edit_role_name').value;
+            let url = document.getElementById('edit_url').value;
+            if (role_name == '' || url == '') {
+                toastr.warning("Tên chức danh không thể để trống.");
+                return false;
+            }
+            let object = {
+                role_id : temp_id,
+                role_name: role_name,
+                url : url
+            }
+            $.ajax({
+                url: "@Url.Action("edit", "Role")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#editModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+        });
+        var datatable = $("#datatable_role").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: "Tìm kiếm"
+            },
+            "lengthChange": false,
+                ajax: {
+                        url: "@Url.Action("getDatatable", "Role")",
+                        type: "POST",
+                        datatype: "json",
+                        data: {},
+                        cache: "false"
+                },
+                columns: [
+                    {
+                        render: function () {
+                            return stt++;
+                        }
+                    },
+                    {
+                        data: "role_name"
+                    },
+                    {
+                        data: "url"
+                    },
+                    {
+                        data: "role_id",
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm btn-light-primary px-6" onclick="getRightByRole(' + data + ')">Quyền hạn</a>'
+                        }
+                    },
+                    {
+                        data : "role_id",
+                        orderable: false,
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editRole('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteRole('+data+')">Xóa</a>'
+                        }
+                    },
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                    {
+                        className: "text-nowrap",
+                        targets: [-1,-2]
+                    },
+                ]
+        });
+        $(document).ready(function () {
+
+        });
     </script>
 } 

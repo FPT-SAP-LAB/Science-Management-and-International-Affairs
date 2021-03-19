@@ -20,19 +20,19 @@
                             <div class="row">
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PaperName")</label>
-                                    <input class="form-control form-control-lg" type="text" />
+                                    <input class="form-control form-control-lg" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input class="form-control form-control-lg custom-pickdate" type="text" />
+                                    <input class="form-control form-control-lg custom-pickdate" type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
-                                    <input class="form-control form-control-lg" type="text" />
+                                    <input class="form-control form-control-lg" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Link scholar</label>
-                                    <input class="form-control form-control-lg" type="text" />
+                                    <input class="form-control form-control-lg" type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -80,19 +80,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("JournalName")</label>
-                            <input class="form-control form-control-lg" type="text" />
+                            <input class="form-control form-control-lg" type="text" id="paper_journal" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Vol")</label>
-                            <input class="form-control form-control-lg" type="text" />
+                            <input class="form-control form-control-lg" type="text" id="paper_vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Page")</label>
-                            <input class="form-control form-control-lg" type="text" />
+                            <input class="form-control form-control-lg" type="text" id="paper_page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("PublishName")</label>
-                            <input class="form-control form-control-lg" type="text" />
+                            <input class="form-control form-control-lg" type="text" id="paper_publish_name" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
@@ -150,46 +150,114 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row justify-content-center">
+                <button class="btn btn-light-success px-6 font-weight-bold" id="submitPaper">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
-    <div class="card-footer">
-        <div class="row justify-content-center">
-            <button class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+    <datalist id="ncv_list">
+        <option>1234</option>
+        <option>abcd</option>
+        <option>12bư</option>
+        <option>323q</option>
+    </datalist>
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderAction("AddAuthor", "PartialView");
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<datalist id="ncv_list">
-    <option>1234</option>
-    <option>abcd</option>
-    <option>12bư</option>
-    <option>323q</option>
-</datalist>
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                @{
-                    Html.RenderAction("AddAuthor", "PartialView");
-                }
-            </div>
-        </div>
-    </div>
-</div>
-
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
-    <script src="~/Scripts/PartialViewScript.js"></script>
     <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
+        var files_data = [];
+        var people = [];
+        $("#submitPaper").click(function () {
+            console.log(people);
+            let fd = new FormData();
+            var Paper = {
+                name: $("#paper_name").val(),
+                publish_date: $("#paper_publish_date").val(),
+                link_doi: $("#paper_full").val(),
+                link_scholar: $("#paper_scholar").val(),
+                paper_type_id: $("#paper_type").val(),
+                journal_name: $("#paper_journal").val(),
+                vol: $("#paper_vol").val(),
+                page: $("#paper_page").val(),
+                company: $("#paper_publish_name").val()
+            };
+            var RequestPaper = {
+                specialization_id: $("#chuyennganh").val(),
+                type: $("#loaithuong").val(),
+                reward_type: $("#kieuthuong").val()
+            }
+            $.ajax({
+                url: "@Url.Action("AddPaper", "Paper")",
+                type: "POST",
+                data: JSON.stringify(Paper),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+            $.ajax({
+                url: "@Url.Action("AddRequest", "Paper")",
+                type: "POST",
+                data: JSON.stringify(RequestPaper),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+            $.ajax({
+                url: "@Url.Action("AddAuthor", "Paper")",
+                type: "POST",
+                data: JSON.stringify(people),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+        $("#img_link").click(function () {
+            window.location.href = "google.comhttps://www.google.com.vn/?hl=vi";
+        });
         $(document).ready(function () {
             $("#add_author_reward").prop('disabled', true);
+            //$("#uppy-FileInput-input").prop('disabled', true);
+            $("#upCM").hide();
         });
         $('#chuyennganh').select2({
             allowClear: true
@@ -239,147 +307,6 @@
             $(this).closest(".onetieuchi").remove();
         });
     </script>
-    <script>
-        //$(document).ready(function () {
-        //    if (numberOfAuthors > 0) {
-        //        $(".tacgia").show()
-        //    }
-        //});
-        //////////////////////////////////////////////////////////////////
-        class AuthorInfoView {
-            constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax
-                , add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
-                this.add_author_msnv = add_author_msnv;
-                this.add_author_email = add_author_email;
-                this.add_author_workplace = add_author_workplace;
-                this.add_author_name = add_author_name;
-                this.add_author_title = add_author_title;
-                this.add_author_contractType = add_author_contractType;
-                this.add_author_cmnd = add_author_cmnd;
-                this.add_author_tax = add_author_tax;
-                this.add_author_bank = add_author_bank;
-                this.add_author_accno = add_author_accno;
-                this.add_author_reward = add_author_reward;
-                this.add_author_note = add_author_note;
-                this.add_author_info_id = id
-            }
-            getHTML() {
-                return `
-                 <div class='col-lg-6' id='`+ this.add_author_info_id + `'>
-                                <!--begin::Card-->
-                                <div class='card card-custom gutter-b'>
-                                    <div class='card-header'>
-                                        <div class='card-title'>
-                                            <h3 class='card-label'>`+ this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
-                                        </div>
-                                        <div class='card-toolbar'>
-                                            <a data-id='`+ this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger'>
-                                                <i class='far fa-edit'></i>
-                                            </a>
-                                            <a data-id='`+ this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger'>
-                                                <i class='la la-trash'></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class='card-body author-info-card'>
-                                        <div class='row'>
-                                            <div class='col-lg-6 col-sm-12'>
-                                                <div class='mb-7'>
-                                                    <div class='d-flex justify-content-between align-items-center'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Khu Vực:</span>
-                                                        <span class='text-muted font-weight-bold'>`+ this.add_author_workplace + `</span>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-center'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Cơ sở:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_workplace + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_title + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_contractType + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_tax + `</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class='col-lg-6 col-sm-12'>
-                                                <div class='mb-7'>
-                                                    <div class='d-flex justify-content-between align-items-center'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Email:</span>
-                                                        <span class='text-muted font-weight-bold'>`+ this.add_author_email + `</span>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_cmnd + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ảnh CMND:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>C://Users/hieuvm/../cmt.jpg</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ngân hàng: </span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_bank + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Số tài khoản: </span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_accno + `</a>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Tiền thưởng: </span>
-                                                        <a href='#' class='text-muted text-hover-primary'>`+ this.add_author_reward + `</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--end::Card-->
-                            </div>
-                            `
-            }
-        }
-        //////////////////////////////////////////////////////////////////
-        $("#add_author_save").click(function () {
-            ckfe = $("#ckfe").val()
-            add_author_workplace = $("#ckfe").val()
-            add_author_msnv = $("#add_author_msnv").val()
-            add_author_name = $("#add_author_name").val()
-            add_author_title = $("#add_author_title option:selected").text()
-            add_author_contractType = $("#add_author_contractType option:selected").text()
-            add_author_cmnd = $("#add_author_cmnd").val()
-            add_author_tax = $("#add_author_tax").val()
-            add_author_bank = $("#add_author_bank").val()
-            add_author_accno = $("#add_author_accno").val()
-            add_author_reward = $("#add_author_reward").val()
-            add_author_note = $("#add_author_note").val()
-            add_author_email = 'tuankq@hsđsd.com'
-            id = new Date().getTime()
-            au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
-                add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-                add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id)
-            $("#authors-info-container").append(au.getHTML());
-        });
-        $("#authors-info-container").on('click', '.del-author', function () {
-            let id = $(this).data("id")
-            Swal.fire({
-                title: "Xoá tác giả này?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Xác nhận",
-                cancelButtonText: "Huỷ",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $("#" + id).remove()
-                } else if (result.dismiss === "cancel") {
-                }
-            });
-        });
-    </script>
+    <script src="~/Scripts/PartialViewScript.js"></script>
 }
 

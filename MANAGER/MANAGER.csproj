@@ -2193,7 +2193,6 @@
     <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
-    <Content Include="Views\Shared\_Layout_InternationalCollaboration.cshtml" />
     <Content Include="Views\Scholarship\List.cshtml" />
     <Content Include="Views\Convention\Index.cshtml" />
     <Content Include="Views\CheckIn\List.cshtml" />
@@ -2293,8 +2292,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
-    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
   </ItemGroup>
