@@ -190,7 +190,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
                     Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
                         .ToDictionary(x => x.title_id, x => x);
-                    Dictionary<string, int> CodeIDPairs = db.People.Where(x => codes.Contains(x.mssv_msnv))
+                    Dictionary<string, int> CodeIDPairs = db.Profiles.Where(x => codes.Contains(x.mssv_msnv))
                         .ToDictionary(x => x.mssv_msnv, x => x.people_id);
                     for (int i = 0; i < participants.Count; i++)
                     {

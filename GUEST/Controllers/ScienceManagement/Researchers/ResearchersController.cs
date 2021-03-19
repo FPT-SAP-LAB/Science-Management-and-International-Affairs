@@ -39,7 +39,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             });
             var list = (from p in db.Profiles
                         join rp in db.People on p.people_id equals rp.people_id
-                        join o in db.Offices on rp.office_id equals o.office_id
+                        join o in db.Offices on p.office_id equals o.office_id
                         select new Researchers_ListView
                         {
                             name = rp.name,
