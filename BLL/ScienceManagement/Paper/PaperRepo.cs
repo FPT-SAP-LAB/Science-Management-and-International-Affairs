@@ -64,7 +64,7 @@ namespace BLL.ScienceManagement.Paper
                                 where p.name = @name and p.publish_date = @date";
                 ENTITIES.Paper p = db.Database.SqlQuery<ENTITIES.Paper>(sql, new SqlParameter("name", item.name), new SqlParameter("date", item.publish_date)).FirstOrDefault();
                 return p;
-            } 
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -111,10 +111,10 @@ namespace BLL.ScienceManagement.Paper
             string listmail = "";
             foreach (var item in list)
             {
-                if(!listMail.Contains(item.email))
+                if (!listMail.Contains(item.email))
                 {
                     int peopleid = addPeople(item.name, item.email);
-                    if(item.office_abbreviation != "Khác")
+                    if (item.office_abbreviation != "Khác")
                     {
                         item.people_id = peopleid;
                         addProfile(item);

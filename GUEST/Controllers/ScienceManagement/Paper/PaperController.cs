@@ -45,7 +45,7 @@ namespace GUEST.Controllers
         public JsonResult AddPaper(Paper paper)
         {
             Paper p = pr.addPaper(paper);
-            if(p != null) return Json(new { id = p.paper_id, mess = "ss"}, JsonRequestBehavior.AllowGet);
+            if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
         }
 
