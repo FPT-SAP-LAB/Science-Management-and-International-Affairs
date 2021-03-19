@@ -60,48 +60,48 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             list.Add(new Researchers_ListView { name = "Phan Lạc Dương", avatar_id = 0, avatar_img = "https://2.pik.vn/2021b64863ac-8173-43d1-a2e1-367548689138.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FPTU Cần Thơ" });
             list.Add(new Researchers_ListView { name = "Đoàn Thị Thuý Nguyên", avatar_id = 0, avatar_img = "https://2.pik.vn/2021a5e55746-085b-4e95-b1ba-29f8cc1ee953.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
             list.Add(new Researchers_ListView { name = "Nguyễn Văn Sơn", avatar_id = 0, avatar_img = "https://2.pik.vn/202171fbc1d7-2f00-4b65-ba44-e3d6565eb655.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
-            //var list = query.ToList<Researchers_ListView>();
+            var list = query.ToList<Researchers_ListView>();
 
-            ViewBag.list = list;
-            ////////////////////////////////////////////
-            return View();
-        }
-        public ActionResult ViewInfo()
-        {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Nghiên cứu viên", "/Researchers"),
-                new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
-            };
-            ViewBag.researcher_avt = "https://2.pik.vn/20217382d096-d98d-473d-acb6-9dc98a16f45b.jpg";
-            ViewBag.researcher_name = "PGS. TS Phạm Hùng Quý";
-            ViewBag.researcher_email = "quyph@fe.edu.vn";
-            ViewBag.researcher_majors = "Giảng viên –  Nghiên cứu viên Toán học";
-            ViewBag.researcher_workplace = "FPTU Hà Nội";
-            ViewBag.pagesTree = pagesTree;
-            return View();
-        }
-        public ActionResult EditInfo()
-        {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
-                new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
-            };
-            ViewBag.pagesTree = pagesTree;
-            return View();
-        }
-        public class Researchers_ListView
-        {
-            public string name { get; set; }
-            public int? avatar_id { get; set; }
+           ViewBag.list = list;
+           ////////////////////////////////////////////
+           return View();
+       }
+       public ActionResult ViewInfo()
+       {
+           var pagesTree = new List<PageTree>
+           {
+               new PageTree("Nghiên cứu viên", "/Researchers"),
+               new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
+           };
+           ViewBag.researcher_avt = "https://2.pik.vn/20217382d096-d98d-473d-acb6-9dc98a16f45b.jpg";
+           ViewBag.researcher_name = "PGS. TS Phạm Hùng Quý";
+           ViewBag.researcher_email = "quyph@fe.edu.vn";
+           ViewBag.researcher_majors = "Giảng viên –  Nghiên cứu viên Toán học";
+           ViewBag.researcher_workplace = "FPTU Hà Nội";
+           ViewBag.pagesTree = pagesTree;
+           return View();
+       }
+       public ActionResult EditInfo()
+       {
+           var pagesTree = new List<PageTree>
+           {
+               new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
+               new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
+           };
+           ViewBag.pagesTree = pagesTree;
+           return View();
+       }
+       public class Researchers_ListView
+       {
+           public string name { get; set; }
+           public int? avatar_id { get; set; }
 
-            public string avatar_img { get; set; }
+           public string avatar_img { get; set; }
 
-            public string email { get; set; }
-            public string google_scholar { get; set; }
-            public string website { get; set; }
-            public string office_name { get; set; }
-        }
-    }
+           public string email { get; set; }
+           public string google_scholar { get; set; }
+           public string website { get; set; }
+           public string office_name { get; set; }
+       }
+   }
 }

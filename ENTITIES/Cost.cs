@@ -21,6 +21,7 @@ namespace ENTITIES
         public int total { get; set; }
         public bool editable { get; set; }
         public int request_id { get; set; }
+        public bool is_accepted { get; set; }
     
         public virtual RequestConference RequestConference { get; set; }
     }
