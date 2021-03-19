@@ -36,7 +36,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfo> getAuthorPaper(string id)
         {
             List<AuthorInfo> list = new List<AuthorInfo>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -44,8 +44,9 @@ namespace BLL.ScienceManagement.Paper
 	                            join [Localization].TitleLanguage tl on t.title_id = tl.title_id
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].Office o on po.office_id = o.office_id
-	                            join [General].[File] f on po.evidence = f.file_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
             list = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).ToList();
             return list;

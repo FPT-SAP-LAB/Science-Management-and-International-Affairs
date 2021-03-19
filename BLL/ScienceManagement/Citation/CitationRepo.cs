@@ -29,11 +29,12 @@ namespace BLL.ScienceManagement.Citation
         public AuthorInfo getAuthor(string id)
         {
             AuthorInfo item = new AuthorInfo();
-            string sql = @"select po.*, o.office_abbreviation, a.area_id, ct.contract_id, t.title_id
+            string sql = @"select po.*, o.office_abbreviation, a.area_id, ct.contract_id, t.title_id, rc.total_reward
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [General].People po on rc.people_id = po.people_id
-	                            join [General].Office o on po.office_id = o.office_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
 	                            join [General].Area a on o.area_id = a.area_id
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id

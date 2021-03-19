@@ -43,8 +43,9 @@ namespace BLL.ScienceManagement.Invention
 	                            join [Localization].TitleLanguage tl on t.title_id = tl.title_id
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].Office o on po.office_id = o.office_id
-	                            join [General].[File] f on po.evidence = f.file_id
+	                            join [General].Profile pro on pro.people_id = po.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].[File] f on pro.identification_file_id = f.file_id
                             where i.invention_id = @id";
             list = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).ToList();
             return list;

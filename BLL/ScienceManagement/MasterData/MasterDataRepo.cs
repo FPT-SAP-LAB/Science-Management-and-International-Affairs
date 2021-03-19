@@ -66,18 +66,13 @@ namespace BLL.ScienceManagement.MasterData
         public List<AddAuthor> getListPeopleFE()
         {
             List<AddAuthor> list = new List<AddAuthor>();
-            string sql = @"select po.mssv_msnv, po.name, po.people_id
-                            from [General].People po join [General].Office ofi on po.office_id = ofi.office_id
-	                            join (select po.people_id, STRING_AGG(tl.name, ',') AS 'titles'
-			                            from [General].People po join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-				                            join [SM_MasterData].Title t on t.title_id = pt.title_id
-				                            join [Localization].TitleLanguage tl on t.title_id = tl.title_id
-				                            join [Localization].Language l on tl.language_id = l.language_id
-			                            where l.language_id = 1
-			                            group by po.people_id) as a on po.people_id = a.people_id
+            string sql = @"select pro.mssv_msnv, po.name, po.people_id
+                            from [General].People po 
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].[File] f on po.evidence = f.file_id";
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].[File] f on pro.identification_file_id = f.file_id
+	                            join [General].Office ofi on pro.office_id = ofi.office_id";
             list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;
         }
@@ -88,7 +83,8 @@ namespace BLL.ScienceManagement.MasterData
             string sql = @"select po.*, pc.contract_id, pt.title_id, o.office_abbreviation
                             from [General].People po join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-	                            join [General].Office o on po.office_id = o.office_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
                             where po.mssv_msnv = @ms";
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
