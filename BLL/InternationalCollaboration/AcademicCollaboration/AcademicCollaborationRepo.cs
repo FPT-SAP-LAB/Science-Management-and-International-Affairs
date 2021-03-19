@@ -14,11 +14,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
 
-        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collaboration_type_id)
+        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collab_type_id)
         {
             var sql = @"select
                         collab.collab_id, pp.[name] 'people_name', pp.email, offi.office_name, pn.partner_name, c.country_name,
-                        FORMAT(collab.plan_study_start_date, 'dd/MM/yyyy') as 'plan_study_start_date' , FORMAT(collab.plan_study_end_date, 'dd/MM/yyyy') as 'plan_study_end_date',
+                        collab.plan_study_start_date, collab.plan_study_end_date, 
                         acs.collab_status_id, acs.collab_status_id, acs.collab_status_name,
                         collab.is_supported, collab.note
                         from IA_AcademicCollaboration.AcademicCollaboration collab
@@ -41,7 +41,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                         join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
                         where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/";
             List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                new SqlParameter("@direction", direction), new SqlParameter("@collab_type_id", collaboration_type_id)).ToList();
+                                                new SqlParameter("direction", direction), new SqlParameter("collab_type_id", collab_type_id)).ToList();
             int recordsTotal = db.Database.SqlQuery<int>("select count(*) from IA_AcademicCollaboration.AcademicCollaboration").FirstOrDefault();
             return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
         }

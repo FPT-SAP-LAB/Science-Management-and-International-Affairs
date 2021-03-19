@@ -29,10 +29,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult getListAcademicCollaboration(int direction, int collab_status_type)
+        public ActionResult getListAcademicCollaboration(int direction, int collab_type_id)
         {
             BaseDatatable baseDatatable = new BaseDatatable(Request);
-            BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_status_type);
+            BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id);
             return Json(new
             {
                 success = true,

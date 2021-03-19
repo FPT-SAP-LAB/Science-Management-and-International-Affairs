@@ -946,7 +946,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </Key>
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="paper_id" Type="int" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="current_mssv_msnv" Type="nvarchar" MaxLength="100" />
           <Property Name="money_reward" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Invention">
@@ -1027,8 +1027,33 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="type" Type="nvarchar" MaxLength="150" />
           <Property Name="reward_type" Type="nvarchar" MaxLength="150" />
           <Property Name="status_id" Type="int" Nullable="false" />
-          <Property Name="total_reward" Type="int" Nullable="false" />
+          <Property Name="total_reward" Type="int" />
           <Property Name="paper_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scimagojr">
+          <Key>
+            <PropertyRef Name="Sourceid" />
+          </Key>
+          <Property Name="Rank" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Sourceid" Type="float" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Issn" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SJR" Type="float" />
+          <Property Name="SJR_Best_Quartile" Type="nvarchar" MaxLength="50" />
+          <Property Name="H_index" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Total_Docs_2019" Type="int" Nullable="false" />
+          <Property Name="Total_Docs_3years" Type="int" Nullable="false" />
+          <Property Name="Total_Refs" Type="int" Nullable="false" />
+          <Property Name="Total_Cites_3years" Type="int" Nullable="false" />
+          <Property Name="Citable_Docs_3years" Type="float" Nullable="false" />
+          <Property Name="Cites_Doc_2years" Type="float" Nullable="false" />
+          <Property Name="Ref_Doc" Type="float" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Region" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Publisher" Type="nvarchar(max)" />
+          <Property Name="Coverage" Type="nvarchar(max)" />
+          <Property Name="Categories" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivity">
           <Key>
@@ -3470,37 +3495,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -3608,6 +3602,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="PaperWithCriteria" EntityType="Self.PaperWithCriteria" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="RequestInvention" EntityType="Self.RequestInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="RequestPaper" EntityType="Self.RequestPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
+          <EntitySet Name="Scimagojr" EntityType="Self.Scimagojr" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AcademicActivity" EntityType="Self.AcademicActivity" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityLanguage" EntityType="Self.AcademicActivityLanguage" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityPhase" EntityType="Self.AcademicActivityPhase" Schema="SMIA_AcademicActivity" store:Type="Tables" />
@@ -5473,7 +5468,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__current__297722B6" FromRole="AcademicDegree" ToRole="Profile" />
           <NavigationProperty Name="AcademicDegreeLanguages" Relationship="Self.FK__AcademicD__acade__24B26D99" FromRole="AcademicDegree" ToRole="AcademicDegreeLanguage" />
           <NavigationProperty Name="AcademicDegreeType" Relationship="Self.FK__AcademicD__type___1A69E950" FromRole="AcademicDegree" ToRole="AcademicDegreeType" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__current__297722B6" FromRole="AcademicDegree" ToRole="Profile" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="AcademicDegree" ToRole="ProfileAcademicDegree" />
         </EntityType>
         <EntityType Name="AcademicDegreeType">
@@ -5524,7 +5518,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </Key>
           <Property Name="people_id" Type="Int32" Nullable="false" />
           <Property Name="paper_id" Type="Int32" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="current_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="money_reward" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="Self.FK__AuthorPap__peopl__4183B671" FromRole="AuthorPaper" ToRole="People" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__AuthorPap__paper__3335971A" FromRole="AuthorPaper" ToRole="Paper" />
@@ -5629,12 +5623,37 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="reward_type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
-          <Property Name="total_reward" Type="Int32" Nullable="false" />
+          <Property Name="total_reward" Type="Int32" />
           <Property Name="paper_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Specialization" Relationship="Self.FK__RequestPa__speci__408F9238" FromRole="RequestPaper" ToRole="Specialization" />
           <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestPa__reque__3F9B6DFF" FromRole="RequestPaper" ToRole="BaseRequest" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__RequestPa__paper__3EA749C6" FromRole="RequestPaper" ToRole="Paper" />
           <NavigationProperty Name="PaperStatu" Relationship="Self.FK__RequestPa__statu__4183B671" FromRole="RequestPaper" ToRole="PaperStatus" />
+        </EntityType>
+        <EntityType Name="Scimagojr">
+          <Key>
+            <PropertyRef Name="Sourceid" />
+          </Key>
+          <Property Name="Rank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sourceid" Type="Double" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Issn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SJR" Type="Double" />
+          <Property Name="SJR_Best_Quartile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="H_index" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Total_Docs_2019" Type="Int32" Nullable="false" />
+          <Property Name="Total_Docs_3years" Type="Int32" Nullable="false" />
+          <Property Name="Total_Refs" Type="Int32" Nullable="false" />
+          <Property Name="Total_Cites_3years" Type="Int32" Nullable="false" />
+          <Property Name="Citable_Docs_3years" Type="Double" Nullable="false" />
+          <Property Name="Cites_Doc_2years" Type="Double" Nullable="false" />
+          <Property Name="Ref_Doc" Type="Double" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Region" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Coverage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Categories" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivity">
           <Key>
@@ -7569,18 +7588,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profile__current__297722B6">
-          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicDegree">
-              <PropertyRef Name="academic_degree_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="current_academic_degree_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
           <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
@@ -8051,6 +8058,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="PaperWithCriterias" EntityType="Self.PaperWithCriteria" />
           <EntitySet Name="RequestInventions" EntityType="Self.RequestInvention" />
           <EntitySet Name="RequestPapers" EntityType="Self.RequestPaper" />
+          <EntitySet Name="Scimagojrs" EntityType="Self.Scimagojr" />
           <EntitySet Name="AcademicActivities" EntityType="Self.AcademicActivity" />
           <EntitySet Name="AcademicActivityLanguages" EntityType="Self.AcademicActivityLanguage" />
           <EntitySet Name="AcademicActivityPhases" EntityType="Self.AcademicActivityPhase" />
@@ -8638,10 +8646,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="AcademicDegreeType" EntitySet="AcademicDegreeTypes" />
             <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profile__current__297722B6" Association="Self.FK__Profile__current__297722B6">
-            <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
           <AssociationSet Name="FK__ProfileAc__acade__26CFC035" Association="Self.FK__ProfileAc__acade__26CFC035">
             <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
             <End Role="ProfileAcademicDegree" EntitySet="ProfileAcademicDegrees" />
@@ -8786,48 +8790,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Right" EntitySet="Rights" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9829,6 +9792,32 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Scimagojrs">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Scimagojr">
+              <MappingFragment StoreEntitySet="Scimagojr">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Sourceid" ColumnName="Sourceid" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Issn" ColumnName="Issn" />
+                <ScalarProperty Name="SJR" ColumnName="SJR" />
+                <ScalarProperty Name="SJR_Best_Quartile" ColumnName="SJR_Best_Quartile" />
+                <ScalarProperty Name="H_index" ColumnName="H_index" />
+                <ScalarProperty Name="Total_Docs_2019" ColumnName="Total_Docs_2019" />
+                <ScalarProperty Name="Total_Docs_3years" ColumnName="Total_Docs_3years" />
+                <ScalarProperty Name="Total_Refs" ColumnName="Total_Refs" />
+                <ScalarProperty Name="Total_Cites_3years" ColumnName="Total_Cites_3years" />
+                <ScalarProperty Name="Citable_Docs_3years" ColumnName="Citable_Docs_3years" />
+                <ScalarProperty Name="Cites_Doc_2years" ColumnName="Cites_Doc_2years" />
+                <ScalarProperty Name="Ref_Doc" ColumnName="Ref_Doc" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Coverage" ColumnName="Coverage" />
+                <ScalarProperty Name="Categories" ColumnName="Categories" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AcademicActivities">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.AcademicActivity">
               <MappingFragment StoreEntitySet="AcademicActivity">
@@ -10103,30 +10092,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <ScalarProperty Name="right_id" ColumnName="right_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
