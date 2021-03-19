@@ -264,7 +264,6 @@ $("#add_author_save").click(function () {
         tax_code: add_author_tax,
         bank_branch: add_author_bank,
         identification_number: add_author_cmnd,
-        office_id: ckfe,
         mssv_msnv: add_author_msnv,
         office_id: $("#ckfe option:selected").attr("name"),
         contract_id: $("#add_author_contractType").val(),

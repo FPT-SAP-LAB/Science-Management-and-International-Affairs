@@ -89,14 +89,18 @@ namespace GUEST.Controllers
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
-            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
-            ViewBag.listAuthor = listAuthor;
-            ViewBag.numberAuthor = listAuthor.Count();
-
             List<DetailComment> listCmt = cr.getComment(request_id);
             ViewBag.cmt = listCmt;
+            ViewBag.id = id;
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult listAuthor(string id)
+        {
+            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
 
         //public ActionResult Pending()

@@ -80,12 +80,12 @@ namespace BLL.ScienceManagement.MasterData
         public AddAuthor getAuthor(string ms)
         {
             AddAuthor item = new AddAuthor();
-            string sql = @"select po.*, pc.contract_id, pt.title_id, o.office_abbreviation
+            string sql = @"select po.*, pc.contract_id, pt.title_id, o.office_abbreviation, pro.mssv_msnv, pro.bank_branch, pro.bank_number, pro.tax_code, pro.identification_number
                             from [General].People po join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on pro.office_id = o.office_id
-                            where po.mssv_msnv = @ms";
+                            where pro.mssv_msnv = @ms";
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
         }

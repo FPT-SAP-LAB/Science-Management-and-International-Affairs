@@ -36,7 +36,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfo> getAuthorPaper(string id)
         {
             List<AuthorInfo> list = new List<AuthorInfo>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id, pc.contract_id, t.title_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id

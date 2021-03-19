@@ -12,5 +12,10 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public int contract_id { get; set; }
         public int title_id { get; set; }
         public string office_abbreviation { get; set; }
+        public string mssv_msnv { get; set; }
+        public string bank_branch { get; set; }
+        public Int64 bank_number { get; set; }
+        public Int64 tax_code { get; set; }
+        public string identification_number { get; set; }
     }
 }
