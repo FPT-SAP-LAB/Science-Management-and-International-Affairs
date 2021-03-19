@@ -4,6 +4,7 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,24 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
+        public void AddPaper(Paper dataPaper)
+        {
+            return;
+        }
+
+        [HttpPost]
+        public void AddRequest(RequestPaper item)
+        {
+            return;
+        }
+
+        [HttpPost]
+        public void AddAuthor(List<AddAuthor> item)
+        {
+            return;
+        }
+
+        [HttpPost]
         public ActionResult Edit(string id, string editable)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bài báo";
@@ -70,14 +89,18 @@ namespace GUEST.Controllers
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
-            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
-            ViewBag.listAuthor = listAuthor;
-            ViewBag.numberAuthor = listAuthor.Count();
-
             List<DetailComment> listCmt = cr.getComment(request_id);
             ViewBag.cmt = listCmt;
+            ViewBag.id = id;
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult listAuthor(string id)
+        {
+            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
 
         //public ActionResult Pending()

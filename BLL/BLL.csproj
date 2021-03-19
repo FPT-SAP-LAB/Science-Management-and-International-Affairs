@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RightRepo.cs" />
+    <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\AccountRepo.cs" />
     <Compile Include="Authen\Login.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />

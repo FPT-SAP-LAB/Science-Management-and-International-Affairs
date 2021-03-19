@@ -48,15 +48,19 @@ namespace GUEST.Controllers
             int request_id = item.request_id;
             List<DetailComment> listCmt = cr.getComment(request_id);
             ViewBag.cmt = listCmt;
+            ViewBag.id = id;
 
             List<Country> listCountry = ir.getCountry();
             ViewBag.listCountry = listCountry;
 
-            List<AuthorInfo> listAuthor = ir.getAuthor(id);
-            ViewBag.listAuthor = listAuthor;
-            ViewBag.numberAuthor = listAuthor.Count();
-
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult listAuthor(string id)
+        {
+            List<AuthorInfo> listAuthor = ir.getAuthor(id);
+            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
     }
 }
