@@ -45,6 +45,5 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             int recordsTotal = db.Database.SqlQuery<int>("select count(*) from IA_AcademicCollaboration.AcademicCollaboration").FirstOrDefault();
             return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
         }
-
     }
 }

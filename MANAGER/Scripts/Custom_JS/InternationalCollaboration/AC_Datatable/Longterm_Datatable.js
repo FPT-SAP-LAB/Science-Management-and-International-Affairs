@@ -53,7 +53,7 @@ $('#collab_going_table').DataTable({
         {
             data: 'plan_study_start_date',
             name: 'plan_study_start_date',
-            render: function (data, type, row) {
+            render: function (data, type) {
                 if (type === "sort" || type === "") {
                     return data;
                 }
@@ -63,7 +63,7 @@ $('#collab_going_table').DataTable({
         {
             data: 'plan_study_end_date',
             name: 'plan_study_end_date',
-            render: function (data, type, row) {
+            render: function (data, type) {
                 if (type === "sort" || type === "") {
                     return data;
                 }
