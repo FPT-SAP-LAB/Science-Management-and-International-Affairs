@@ -18,7 +18,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Longterm_List()
         {
             //list for searching
-            
+
             //country
             //year 
             //office
@@ -33,7 +33,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             BaseDatatable baseDatatable = new BaseDatatable(Request);
             BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_status_type);
-            return Json(new {
+            return Json(new
+            {
                 success = true,
                 data = baseServerSideData.Data,
                 draw = Request["draw"],
