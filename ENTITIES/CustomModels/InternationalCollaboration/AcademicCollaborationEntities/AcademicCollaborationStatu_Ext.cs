@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
+namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities
 {
     public class AcademicCollaborationStatu_Ext : AcademicCollaborationStatu
     {
