@@ -18,6 +18,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             if (request == null)
                 return null;
             var a = request.RequestConference;
+            if (a == null)
+                return null;
             ConferenceDetail Conference = (from b in db.Conferences
                                            join c in db.Countries on b.country_id equals c.country_id
                                            join d in db.Files on a.invitation_file_id equals d.file_id
@@ -66,7 +68,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 Participants[i].RowNumber = 1 + i;
             }
-            return JsonConvert.SerializeObject(new { Conference, Participants });
+            List<Cost> Costs = request.RequestConference.Costs.ToList();
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs });
         }
     }
 }
