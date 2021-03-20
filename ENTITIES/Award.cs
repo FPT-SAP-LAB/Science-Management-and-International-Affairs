@@ -20,6 +20,6 @@ namespace ENTITIES
         public string rank { get; set; }
         public int people_id { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

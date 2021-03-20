@@ -1,71 +1,243 @@
-﻿@model IEnumerable<ENTITIES.AcademicActivityType>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_InternationalCollaboration.cshtml";
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card-body">
-    <h2>Index</h2>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table table-bordered table-checkable" id="academic_activity_type_table">
-        <thead>
-            <tr>
-                <th>
-                    Loại hoạt động học thuật
-                </th>
-                <th>
-                    Hành động
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div>
+                            <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        </div>
+                        <table class="table table-bordered" id="academic_activity_type_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Loại hoạt động học thuật
+                                    </th>
+                                    <th>
+                                        Hành động
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section scripts {
+<!--ADD-->
+<div class="modal fade in" id="academic_activity_type_add_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">THÊM LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <input id="add_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="academic_activity_type_model_add_type_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='academic_activity_type_model_add_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EDIT-->
+<div class="modal fade in" id="academic_activity_type_edit_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA LOẠI HOẠT ĐỘNG HỌC THUẬT</h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <input id="edit_modal_academic_activity_type_name" class="form-control" type="text" placeholder="Loại hoạt động" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='academic_activity_type_model_edit_type_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='academic_activity_type_model_edit_type_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
     <script>
-        $(document).ready(function () {
-            $("#academic_activity_type_table").DataTable({
-                oLanguage: {
-                    oPaginate: {
-                        sPrevious: "Trang trước",
-                        sNext: "Trang sau"
-                    },
-                    sEmptyTable: "Không có dữ liệu",
-                    sInfo: "",
-                    sSearch: ""
+        var dataTable = $("#academic_activity_type_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
                 },
-                ajax: {
-                    url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
-                    datatype: "json",
-                    cache: "false"
-                },
-                "searching": false,
-                "lengthChange": false,
-                columns: [
-                    {
-                        data: "activity_type_name"
-                    },
-                    {
-                        data: "activity_type_id",
-                        render: function (data) {
-                            return `<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="#" style="margin-right: 10px;">Sửa</a>
-                                        <a onclick="#" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>`
-                        }
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "activity_type_name", name: "activity_type_name" },
+                {
+                    data: "activity_type_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="loadDataToEditModal('+data+')" href="#academic_activity_type_edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteAcademicActivityType('+data+')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
-                ],
-                columnDefs: [
-                    {
-                        className: "text-center",
-                        targets: '_all',
-                    },
-                ]
+                }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+    </script>
+
+    <!--ADD-->
+    <script>
+        $("#academic_activity_type_model_add_type_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("addAcademicActivityType", "AcademicActivityType")",
+                type: "POST",
+                data: {
+                    academic_activity_type_name: $("#add_modal_academic_activity_type_name").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#add_modal_academic_activity_type_name").val("");
+                        //close modal
+                        $("#academic_activity_type_model_add_type_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
             });
         });
     </script>
 
+    <!--EDIT-->
+    <script>
+        var academic_activity_type_id_temp;
+        //loading data to modal
+        function loadDataToEditModal(academic_activity_type_id) {
+            academic_activity_type_id_temp = academic_activity_type_id;
+            $.ajax({
+                url: "@Url.Action("getAcademicActivityType", "AcademicActivityType")",
+                type: "POST",
+                data: {
+                    academic_activity_type_id: academic_activity_type_id
+                },
+                cache: true,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#edit_modal_academic_activity_type_name").val(data.obj.activity_type_name);
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        }
+
+        //confirm edit
+        $("#academic_activity_type_model_edit_type_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("editAcademicActivtyType", "AcademicActivityType")",
+                type: "POST",
+                data: {
+                    academic_activity_type_id: academic_activity_type_id_temp,
+                    academic_activity_type_name: $("#edit_modal_academic_activity_type_name").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#edit_modal_academic_activity_type_name").val("");
+                        //close modal
+                        $("#academic_activity_type_model_edit_type_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        });
+    </script>
+
+    <!--DELETE-->
+    <script>
+        function deleteAcademicActivityType(academic_activity_type_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa loại hoạt động học thuật này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Action("deleteAcademicActivityType", "AcademicActivityType")",
+                        type: "POST",
+                        data: {
+                            academic_activity_type_id: academic_activity_type_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == true) {
+                                toastr.success(data.content);
+                            } else {
+                                toastr.error(data.content);
+                            }
+                            dataTable.ajax.reload();
+                        },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+                    });
+                }
+            });
+        }
+    </script>
 }

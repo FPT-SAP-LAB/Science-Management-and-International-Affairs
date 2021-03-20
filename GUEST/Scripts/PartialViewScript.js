@@ -1,12 +1,11 @@
-﻿$("#ckfe").change(function () {
+﻿$("#ckfe").change(function() {
     var val = $("#ckfe").val();
     if (val == 0) {
-        $(".editfe").each(function () {
+        $(".editfe").each(function() {
             $(this).prop("disabled", true);
         });
-    }
-    else {
-        $(".editfe").each(function () {
+    } else {
+        $(".editfe").each(function() {
             $(this).prop("disabled", false);
         });
     }
@@ -14,11 +13,17 @@
 $('#ckfe').select2({
     allowClear: true
 });
-$('#area').select2({
+$('#add_author_workplace').select2({
+    allowClear: true
+});
+$('#add_author_title').select2({
+    allowClear: true
+});
+$('#add_author_contractType').select2({
     allowClear: true
 });
 
-$(function () {
+$(function() {
     $(".tacgia").hide()
 })
 donvife = {
@@ -28,49 +33,316 @@ donvife = {
     4: "Khác"
 }
 
-$("#add_author_save").click(function () {
+"use strict";
+var uppy2;
+// Class definition
+var KTUppy = function() {
+    const Tus = Uppy.Tus;
+    //const ProgressBar = Uppy.ProgressBar;
+    const StatusBar = Uppy.StatusBar;
+    const FileInput = Uppy.FileInput;
+    const Informer = Uppy.Informer;
+
+    // to get uppy companions working, please refer to the official documentation here: https://uppy.io/docs/companion/
+    //const Dashboard = Uppy.Dashboard;
+    //const Dropbox = Uppy.Dropbox;
+    //const GoogleDrive = Uppy.GoogleDrive;
+    //const Instagram = Uppy.Instagram;
+    //const Webcam = Uppy.Webcam;
+
+    // Private functions
+
+    var initUppy5 = function() {
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        var elemId = 'kt_uppy_5';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        uppy2 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 2,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+            }
+        });
+
+        uppy2.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy2.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy2.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy2.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy2.on('upload', function( /*data*/ ) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy2.on('file-added', function(file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+            filename.push(file.name);
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function() {
+            var itemId = $(this).attr('data-id');
+            uppy2.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+    }
+
+
+    return {
+        // public functions
+        init: function() {
+            initUppy5();
+            setTimeout(function() {
+
+            }, 2000);
+        }
+    };
+}();
+
+KTUtil.ready(function() {
+    KTUppy.init();
+});
+
+var filename = [];
+
+class AuthorInfoView {
+    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
+        this.add_author_msnv = add_author_msnv;
+        this.add_author_email = add_author_email;
+        this.add_author_workplace = add_author_workplace;
+        this.add_author_name = add_author_name;
+        this.add_author_title = add_author_title;
+        this.add_author_contractType = add_author_contractType;
+        this.add_author_cmnd = add_author_cmnd;
+        this.add_author_tax = add_author_tax;
+        this.add_author_bank = add_author_bank;
+        this.add_author_accno = add_author_accno;
+        this.add_author_reward = add_author_reward;
+        this.add_author_note = add_author_note;
+        this.add_author_info_id = id
+    }
+    getHTML() {
+        return `
+                 <div class='col-lg-6' id='` + this.add_author_info_id + `'>
+                                <!--begin::Card-->
+                                <div class='card card-custom gutter-b'>
+                                    <div class='card-header'>
+                                        <div class='card-title'>
+                                            <h3 class='card-label'>` + this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
+                                        </div>
+                                        <div class='card-toolbar'>
+                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger edit'>
+                                                <i class='far fa-edit'></i>
+                                            </a>
+                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger edit'>
+                                                <i class='la la-trash'></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class='card-body author-info-card'>
+                                        <div class='row'>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Khu Vực:</span>
+                                                        <span class='text-muted font-weight-bold'>` + this.add_author_workplace + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_title + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_contractType + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_tax + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Email:</span>
+                                                        <span class='text-muted font-weight-bold'>` + this.add_author_email + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_cmnd + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ngân hàng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_bank + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Số tài khoản: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_accno + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Tiền thưởng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_reward + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card-->
+                            </div>
+                            `
+    }
+}
+//////////////////////////////////////////////////////////////////
+$("#add_author_save").click(function() {
     ckfe = $("#ckfe").val()
-    add_author_workplace = $("#add_author_workplace").val()
+    add_author_workplace = $("#ckfe").val()
     add_author_msnv = $("#add_author_msnv").val()
     add_author_name = $("#add_author_name").val()
-    add_author_title = $("#add_author_title").val()
-    add_author_contractType = $("#add_author_contractType").val()
+    add_author_title = $("#add_author_title option:selected").text()
+    add_author_contractType = $("#add_author_contractType option:selected").text()
     add_author_cmnd = $("#add_author_cmnd").val()
     add_author_tax = $("#add_author_tax").val()
     add_author_bank = $("#add_author_bank").val()
     add_author_accno = $("#add_author_accno").val()
     add_author_reward = $("#add_author_reward").val()
     add_author_note = $("#add_author_note").val()
-    row_id = new Date().getTime()
-    $("#tacgia_body").append("\
-                <tr id='"+ row_id + "'>"
-        + "<td>" + donvife[ckfe] + "</td>"
-        + "<td>" + add_author_msnv + "</td>"
-        + "<td>" + add_author_name + "</td>"
-        + "<td>" + add_author_title + "</td>"
-        + "<td>" + add_author_contractType + "</td>"
-        + "<td>" + add_author_cmnd + "</td>"
-        + "<td>" + "" + "</td>"
-        + "<td>" + add_author_tax + "</td>"
-        + "<td>" + add_author_bank + "</td>"
-        + "<td>" + add_author_accno + "</td>"
-        + "<td>" + add_author_reward + "</td>"
-        + "<td>" + "<a onclick='' class='btn btn-sm btn-clean btn-icon editbtn edit' title='Edit'> <i class='far fa-edit'></i> </a> <span style='cursor:pointer' class='delete-author edit' data-id='" + row_id + "'> <a class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a> </span>" + "</td>"
-        + "</tr>\
-                ")
-    $(".tacgia").show()
-    numberOfAuthors++
-})
-$("#tacgia_body").on('click', '.delete-author', function () {
-    $("#" + $(this).data("id")).remove()
-    numberOfAuthors--
-    if (numberOfAuthors == 0) {
-        $(".tacgia").hide()
+    add_author_email = $("#add_author_mail").val()
+    id = new Date().getTime()
+    au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
+        add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
+        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id)
+    $("#authors-info-container").append(au.getHTML());
+    var AddAuthor = {
+        name: add_author_name,
+        email: add_author_email,
+        bank_number: add_author_accno,
+        tax_code: add_author_tax,
+        bank_branch: add_author_bank,
+        identification_number: add_author_cmnd,
+        mssv_msnv: add_author_msnv,
+        office_id: $("#ckfe option:selected").attr("name"),
+        contract_id: $("#add_author_contractType").val(),
+        title_id: $("#add_author_title").val(),
+        people_id: $("#add_author_msnv").attr("name"),
+        temp_id: id,
+        office_abbreviation: $("#ckfe option:selected").val(),
+    }
+    people.push(AddAuthor);
+    var inputs = $(".inputAuthor");
+    for (var i = 0; i < inputs.length; i++) {
+        $(inputs[i]).val("");
     }
 });
+$("#add_author_save_edit").click(function () {
+    people[temp_index_edit].office_abbreviation = $("#ckfe_edit").val();
+    people[temp_index_edit].office_id = $("#ckfe_edit option:selected").attr("name");
+    people[temp_index_edit].mssv_msnv = $("#add_author_msnv_edit").val();
+    people[temp_index_edit].name = $("#add_author_name_edit").val();
+    people[temp_index_edit].title_id = $("#add_author_title_edit").val();
+    people[temp_index_edit].contract_id = $("#add_author_contractType_edit").val();
+    people[temp_index_edit].identification_number = $("#add_author_cmnd_edit").val();
+    people[temp_index_edit].tax_code = $("#add_author_tax_edit").val();
+    people[temp_index_edit].bank_branch = $("#add_author_bank_edit").val();
+    people[temp_index_edit].bank_number = $("#add_author_accno_edit").val();
+    people[temp_index_edit].email = $("#add_author_mail_edit").val();
 
-$(document).ready(function () {
-    if (numberOfAuthors > 0) {
-        $(".tacgia").show()
+    $("#" + people[temp_index_edit].temp_id).remove();
+
+    au = new AuthorInfoView(people[temp_index_edit].office_abbreviation, people[temp_index_edit].mssv_msnv, people[temp_index_edit].name,
+        $("#add_author_title_edit option:selected").text(), $("#add_author_contractType_edit option:selected").text(),
+        people[temp_index_edit].identification_number, people[temp_index_edit].tax_code,
+        people[temp_index_edit].bank_branch, people[temp_index_edit].bank_number,
+        '', '', people[temp_index_edit].email, people[temp_index_edit].temp_id);
+    $("#authors-info-container").append(au.getHTML());
+});
+$("#authors-info-container").on('click', '.edit-author', function() {
+    let id = $(this).data("id");
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].temp_id == id) {
+            $("#ckfe_edit").val(people[i].office_abbreviation);
+            $("#ckfe_edit").trigger('change');
+            $("#add_author_msnv_edit").val(people[i].mssv_msnv);
+            $("#add_author_msnv_edit").trigger('change');
+            $("#add_author_name_edit").val(people[i].name);
+            $("#add_author_title_edit").val(people[i].title_id);
+            $("#add_author_title_edit").trigger('change');
+            $("#add_author_contractType_edit").val(people[i].contract_id);
+            $("#add_author_contractType_edit").trigger('change');
+            $("#add_author_cmnd_edit").val(people[i].identification_number);
+            $("#add_author_tax_edit").val(people[i].tax_code);
+            $("#add_author_bank_edit").val(people[i].bank_branch);
+            $("#add_author_accno_edit").val(people[i].bank_number);
+            $("#add_author_mail_edit").val(people[i].email);
+            $("#add_author_reward_edit").prop('disabled', true);
+            $("#edit_author_btn").click();
+            temp_index_edit = i;
+            break;
+        }
     }
+});
+$("#authors-info-container").on('click', '.del-author', function() {
+    let id = $(this).data("id")
+    Swal.fire({
+        title: "Xoá tác giả này?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        reverseButtons: true
+    }).then(function(result) {
+        if (result.value) {
+            $("#" + id).remove();
+            for (var i = 0; i < people.length; i++) {
+                if (people[i].temp_id == id) {
+                    people.splice(i, 1);
+                }
+            }
+        }
+        //else if (result.dismiss === "cancel") {
+        //}
+    });
 });

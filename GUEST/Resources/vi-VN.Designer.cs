@@ -268,7 +268,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DD/MM/YYYY.
+        ///   Looks up a localized string similar to dd/MM/yyyy.
         /// </summary>
         public static string DateFormat {
             get {
@@ -768,6 +768,15 @@ namespace GUEST.Resources {
         public static string RewardType {
             get {
                 return ResourceManager.GetString("RewardType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lưu.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

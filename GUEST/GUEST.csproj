@@ -148,6 +148,7 @@
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
@@ -2290,6 +2291,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\demo_partner_detail_guest.jpg" />
+    <Content Include="Content\Picture1.jpg" />
+    <Content Include="Content\Picture2.jpg" />
+    <Content Include="Content\Picture3.jpg" />
+    <Content Include="Content\Picture4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2344,6 +2349,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CostTableConferenceRequest.js" />
+    <Content Include="Scripts\Custome_JS\InternationalCollaboration\Load_Detail_AC.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2392,6 +2398,19 @@
     <Content Include="Views\Researchers\EditInfo.cshtml" />
     <Content Include="Views\AcademicActivity\Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\Long_Term.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_1.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_2.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Short_Term.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Tab_1.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Going_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Tab_3.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Program_Detail.cshtml" />
+    <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
+    <Content Include="Views\PartialView\EditAuthor.cshtml" />
+    <Content Include="Views\CommentRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

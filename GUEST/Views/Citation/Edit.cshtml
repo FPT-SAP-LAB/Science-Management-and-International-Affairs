@@ -9,25 +9,10 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RequestInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("MSNV")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="1234"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("AuthorName")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="Đoàn Văn Thắng"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("WorkUnit")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="FU-HL"  />
-                        </div>
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("Area")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="Hà Nội"  />
-                        </div>
-                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    @{
+                        Html.RenderAction("AddAuthor", "PartialView");
+                    }
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">
@@ -40,22 +25,25 @@
                                     </tr>
                                 </thead>
                                 <tbody id="trichdan_body">
-                                    <tr>
-                                        <td><input class="form-control edit" type="text" value="Google scholar"  /></td>
-                                        <td><input class="form-control edit" type="number" value="10"  /></td>
-                                        <td><input class="form-control edit" type="text" value="https://scholar.google.com/citations?view_op=list_works&hl=en&user=qbbO_4UAAAAJ"  /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-control edit" type="text" /></td>
-                                        <td><input class="form-control edit" type="number" min="0" /></td>
-                                        <td><input class="form-control edit" type="text" /></td>
-                                    </tr>
+                                    @{
+                                        foreach (var item in ViewBag.citation)
+                                        {
+                                            <tr>
+                                                <td><input class="form-control edit" type="text" value="@item.source" /></td>
+                                                <td><input class="form-control edit" type="number" value="@item.count" /></td>
+                                                <td><input class="form-control edit" type="text" value="@item.link" /></td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
-                            <div class="col-xl-12" style="text-align: end">
-                                <button class="btn btn-light-danger px-6 font-weight-bold deleterow edit">@rm.GetString("DelRow")</button>
-                                <button class="btn btn-light-primary px-6 font-weight-bold addrow edit">@rm.GetString("AddRow")</button>
-                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label>@rm.GetString("TotalReward")</label>
+                            <input class="form-control form-control-lg edit" readonly type="text" value="" ; />
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -84,11 +72,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01/01/21-10:00AM</td>
-                                        <td>Ngô Tùng Sơn</td>
-                                        <td>Sao lâu có phản hồi thế em</td>
-                                    </tr>
+                                    @{
+                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
+                                        {
+                                            <tr>
+                                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.Content</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -99,11 +92,28 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
+
+            $('.citationE').attr('style', 'display:none !important');
+
+            $("#ckfe").val("@ViewBag.author.office_abbreviation");
+            $("#ckfe").trigger('change');
+            $("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
+            $("#add_author_mail").val("@ViewBag.author.email");
+            $("#add_author_name").val("@ViewBag.author.name");
+            $("#add_author_title").val("@ViewBag.author.title_id");
+            $("#add_author_title").trigger('change');
+            $("#add_author_contractType").val("@ViewBag.author.contract_id");
+            $("#add_author_contractType").trigger('change');
+            $("#add_author_cmnd").val("@ViewBag.author.identification_number");
+            $("#add_author_tax").val("@ViewBag.author.tax_code");
+            $("#add_author_bank").val("@ViewBag.author.bank_branch");
+            $("#add_author_accno").val("@ViewBag.author.bank_number");
         });
 
         $(".addrow").click(function () {

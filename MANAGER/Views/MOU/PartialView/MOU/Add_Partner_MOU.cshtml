@@ -1,0 +1,116 @@
+﻿<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 1500">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder" id="add_partner_mou_title">THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Tên đối tác</label>
+                        <label style="color:blue" class="float-right">
+                            <a href="MOU/List#" onclick="checkPartnerAdd()">Kiểm tra</a>
+                        </label>
+                        @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+                            </div>*@
+                        <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <input list="partnerListAdd" class="form-control select-search" id="partner_name_add" name="param" style="width:100% !important" onchange="preventAdd()"/> 
+                            <datalist id="partnerListAdd">
+                                @if (ViewBag.listPartners != null)
+                                {
+                                    foreach (var item in ViewBag.listPartners)
+                                    {
+                                        <option value="@item.partner_name">@item.partner_name</option>
+                                    }
+                                }
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Quốc gia</label>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="nation_add" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="website_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="address_add" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="represent_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Email</label>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="email_add" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="phone_add" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Ngày ký kết</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_add" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_add" data-target="#kt_datetimepicker_sign_date_add" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_add" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important">
+                                @if (ViewBag.listSpe != null)
+                                {
+                                    foreach (var item in ViewBag.listSpe)
+                                    {
+                                        <option value="@item.specialization_id">@item.specialization_name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important">
+                                @if (ViewBag.listScopes != null)
+                                {
+                                    foreach (var item in ViewBag.listScopes)
+                                    {
+                                        <option value="@item.scope_id">@item.scope_abbreviation</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" onclick="addToTemp()" disabled>Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>

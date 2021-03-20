@@ -1,0 +1,298 @@
+﻿
+@{
+    ViewBag.Title = "Quản lí quyền hạn";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <a href="#" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm quyền hạn</a>
+            </div>
+        </div>
+        <table id="datatable_right" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Quyền hạn</th>
+                    <th class="text-center">Bộ phận</th>
+                    <th class="text-center">Nhóm màn</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm quyền hạn</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-8 col-md-8 col-xl-8 col-lg-8">
+                        <label class="col-form-label font-weight-bolder">Tên quyền hạn</label>
+                        <input class="form-control" type="text" placeholder="Tên quyền hạn" autocomplete="off" required id="add_right_name" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Loại</label>
+                        <select class="form-control" required id="add_module">
+                            @foreach (var item in ViewBag.Module)
+                            {
+                                <option value="@item.module_id">@item.module_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Nhóm màn</label>
+                        <input class="form-control" type="number" required autocomplete="off" placeholder="Nhóm màn" id="add_group" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa quyền hạn</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-8 col-md-8 col-xl-8 col-lg-8">
+                        <label class="col-form-label font-weight-bolder">Tên quyền hạn</label>
+                        <input class="form-control" type="text" placeholder="Tên quyền hạn" autocomplete="off" required id="edit_right_name" />
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label font-weight-bolder">Loại</label>
+                        <select class="form-control" required id="edit_module">
+                            @foreach (var item in ViewBag.Module)
+                            {
+                                <option value="@item.module_id">@item.module_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Nhóm màn</label>
+                        <input class="form-control" type="number" required autocomplete="off" placeholder="Nhóm màn" id="edit_group" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        let stt = 1;
+        let temp_id;
+        function editRight(id) {
+            temp_id = id;
+            let object = {
+                right_id: id
+            }
+            $.ajax({
+                url: "@Url.Action("getRight", "Right")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        document.getElementById('edit_right_name').value = data.right_name;
+                        document.getElementById('edit_module').value = data.module_id;
+                        document.getElementById('edit_group').value = data.group_id;
+                        $('#editModal').modal('show');
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        }
+        function deleteRight(id) {
+            Swal.fire({
+                title: "Bạn có muốn xóa quyền hạn này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                let object = {
+                    right_id: id
+                }
+                if (result.value) {
+                    $.ajax({
+                        url: "@Url.Action("delete", "Right")",
+                        data: JSON.stringify(object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatable.ajax.reload();
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            });
+        }
+        $('#btn_add').click(function () {
+            let right_name = document.getElementById('add_right_name').value;
+            let module_name = document.getElementById('add_module').value;
+            let group = document.getElementById('add_group').value;
+            if (right_name == '' || module_name == '' || group == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin.");
+                return false;
+            }
+            let object = {
+                right_name: right_name,
+                module_name: module_name,
+                group_name: group
+            }
+            $.ajax({
+                url: "@Url.Action("add", "Right")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+        function clearModal(id) {
+            $(id).find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+        }
+        $('#btn_edit').click(function () {
+            let right_name = document.getElementById('edit_right_name').value;
+            let module_name = document.getElementById('edit_module').value;
+            let group_id = document.getElementById('edit_group').value;
+            if (right_name == '' || module_name == '' || group_id == '') {
+                toastr.warning("Bạn chưa điền hết các thông tin.");
+                return false;
+            } else {
+                let object = {
+                    right_id: temp_id,
+                    right_name: right_name,
+                    module_name: module_name,
+                    group_id: group_id
+                }
+                $.ajax({
+                    url: "@Url.Action("edit", "Right")",
+                    data: JSON.stringify(object),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        if (data != '') {
+                            toastr.success(data);
+                            clearModal('#editModal');
+                            stt = 1;
+                            datatable.ajax.reload();
+                        } else {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                        }
+                    },
+                    error: function (data) {
+                        alert(data)
+                    }
+                });
+            }
+        });
+        var datatable = $("#datatable_right").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: "Tìm kiếm"
+            },
+            serverSide: true,
+            "lengthChange": false,
+            ajax: {
+                url: "@Url.Action("getDatatable", "Right")",
+                type: "POST",
+                datatype: "json",
+                data: {},
+                cache: "false"
+            },
+            columns: [
+                {
+                    name: "right_id",
+                    render: function () {
+                        return stt++;
+                    }
+                },
+                {
+                    data: "right_name",
+                    name: "right_name"
+                },
+                {
+                    data: "group_id",
+                    name: "group_id"
+                },
+                {
+                    data: "module_name",
+                    name: "module_name"
+                },
+                {
+                    data: "right_id",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return `<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editRight(`+ data + `)">Sửa</a>
+                            <a href ="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick = "deleteRight(`+ data + `)" > Xóa</a >`
+                    }
+                },
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+            ]
+        });
+        $(document).ready(function () {
+
+        });
+    </script>
+} 

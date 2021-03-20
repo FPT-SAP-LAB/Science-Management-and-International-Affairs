@@ -20,6 +20,7 @@ namespace ENTITIES
             this.Conferences = new HashSet<Conference>();
             this.Inventions = new HashSet<Invention>();
             this.Partners = new HashSet<Partner>();
+            this.Profiles = new HashSet<Profile>();
             this.Scholarships = new HashSet<Scholarship>();
         }
     
@@ -35,6 +36,8 @@ namespace ENTITIES
         public virtual ICollection<Invention> Inventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partner> Partners { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scholarship> Scholarships { get; set; }
     }

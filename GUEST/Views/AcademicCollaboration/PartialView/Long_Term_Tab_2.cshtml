@@ -1,0 +1,83 @@
+﻿
+<div class="row mb-4">
+    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+        <div class="row align-items-center">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4 pl-lg-0">
+                <input class="form-control" type="text" placeholder="Tên đối tác" autocomplete="off" required id="search_partner_tab_2" />
+            </div>            
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                    <select class="form-control text-center" id="search_nation_tab_2" name="param" style="width:100% !important">
+                        <option label="Label"></option>
+                        <option value="1">UK</option>
+                        <option value="2">US</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                    <select class="form-control text-center" id="search_year_tab_2" name="param" style="width:100% !important">
+                        <option label="Label"></option>
+                        <option value="1">2021</option>
+                        <option value="2">2020</option>
+                    </select>
+                </div>
+            </div>            
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered table-hover" id="colab_program_going_table">
+    <thead>
+        <tr>
+            <th rowspan="2">STT</th>
+            <th colspan="2">Đối tác</th>
+            <th rowspan="2" style="">Chương trình</th>
+            <th rowspan="2">Thời hạn đăng ký</th>
+            <th rowspan="2">Ngày đăng</th>
+        </tr>
+        <tr>
+            <th>Tên</th>
+            <th style="border-right-width: 1px !important">Quốc gia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>
+                Đại học công nghê Petronas
+            </td>
+            <td>Malaysia</td>
+            <td>
+                <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
+                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
+                </a>
+            </td>
+            <td>
+                01/01/2020 – 31/01/202
+            </td>
+            <td>
+                21/01/2021 12:01:34
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>
+                Đại học Bách Khoa
+            </td>
+            <td>Việt Nam</td>
+            <td>
+                <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
+                Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST</a>
+            </td>
+            <td>
+                01/01/2020 – 31/01/202
+            </td>
+            <td>
+                21/01/2021 12:01:34
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.Invention;
+using BLL.ScienceManagement.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
@@ -17,6 +18,7 @@ namespace GUEST.Controllers
     {
         InventionRepo ir = new InventionRepo();
         CommentRepo cr = new CommentRepo();
+        MasterDataRepo md = new MasterDataRepo();
 
         public ActionResult AddRequest()
         {
@@ -44,17 +46,21 @@ namespace GUEST.Controllers
             ViewBag.item = item;
 
             int request_id = item.request_id;
-            List<DetailComment> listCmt = cr.getComment(request_id);
+            List<DetailComment> listCmt = cr.GetComment(request_id);
             ViewBag.cmt = listCmt;
+            ViewBag.id = id;
 
             List<Country> listCountry = ir.getCountry();
             ViewBag.listCountry = listCountry;
 
-            List<AuthorInfo> listAuthor = ir.getAuthor(id);
-            ViewBag.listAuthor = listAuthor;
-            ViewBag.numberAuthor = listAuthor.Count();
-
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult listAuthor(string id)
+        {
+            List<AuthorInfo> listAuthor = ir.getAuthor(id);
+            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
     }
 }

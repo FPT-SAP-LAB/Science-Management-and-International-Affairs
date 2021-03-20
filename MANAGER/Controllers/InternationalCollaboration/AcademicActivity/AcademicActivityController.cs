@@ -21,13 +21,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatable(int year)
         {
             List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
-            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult getBaseAA(int id)
         {
             AcademicActivityRepo.baseAA data = repo.GetbaseAA(id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         [HttpPost]
         public JsonResult delete_AcademicActivity(int id)
@@ -37,17 +37,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 return Json("Đã xóa thành công", JsonRequestBehavior.AllowGet);
             }
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            int res = repo.AddAA(obj);
-            if (res != 0)
+            bool res = repo.AddAA(obj);
+            if (res)
             {
                 return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
             }
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to)
@@ -57,16 +57,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);
             }
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
-        public JsonResult cloneAA(AcademicActivityRepo.extendBaseAA obj)
+        public JsonResult clone(AcademicActivityRepo.cloneBase obj)
         {
-            bool res = repo.cloneAA(obj);
+            bool res = repo.clone(obj);
             if (res)
             {
                 return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);
             }
-            else return Json(String.Empty, JsonRequestBehavior.AllowGet);
+            else return Json(String.Empty);
         }
     }
 }
