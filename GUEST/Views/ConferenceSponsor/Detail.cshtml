@@ -7,6 +7,7 @@
     ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
     List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
 }
 
 <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConferenceDetail">
@@ -165,8 +166,72 @@
         </div>
         <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
             <div class="card-body table-responsive">
+                <table class="col-12 table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nội dung</th>
+                            <th scope="col">Tổ chức tài trợ</th>
+                            <th scope="col">Chi phí</th>
+                            <th scope="col">Tổng cộng</th>
+                            @*<th>Chấp thuận</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*<tr>
+                    <td>Tiền khách sạn</td>
+                    <td>FPTU</td>
+                    <td>500,000 * 3 * 4</td>
+                    <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
+                    <td>
+                        <label class="checkbox checkbox-disabled">
+                            <input type="checkbox" disabled="disabled" checked="checked" name="Checkboxes1" />
+                            <span></span>
+                        </label>
+                    </td>
+                </tr>*@
+                        @foreach (var item in Costs)
+                        {
+                            <tr>
+                                <td class="align-middle">@item.content</td>
+                                <td class="align-middle">@item.sponsoring_organization</td>
+                                @if (item.editable)
+                                {
+                                    <td class="align-middle">
+                                        <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
+                                    </td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="align-middle">@item.detail</td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        <tr>
+                            <th scope="row">Tổng cộng</th>
+                            <td></td>
+                            <td></td>
+                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Hoàn ứng</th>
+                            <td></td>
+                            <td></td>
+                            <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                @if (Costs.Any(x => x.editable))
+                {
+                    <button type="button" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
+                }
                 @{
-                    Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
+                    //Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
                 }
             </div>
         </div>
