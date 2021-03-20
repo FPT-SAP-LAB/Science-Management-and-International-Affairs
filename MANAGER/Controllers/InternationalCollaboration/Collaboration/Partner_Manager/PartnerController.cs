@@ -51,7 +51,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.getHistory(id);
-                
+
                 return Json(new
                 {
                     list = partnerHistoryList.Data,

@@ -117,7 +117,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 string partner_name = db.Partners.Where(x => x.partner_id == id).Select(x => x.partner_name).FirstOrDefault();
                 return new PartnerHistoryList<PartnerHistory>(list, partner_name);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
