@@ -51,7 +51,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             catch (Exception e)
             {
                 throw e;
-            } 
+            }
         }
 
         public List<Country> countries()
@@ -64,7 +64,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 List<Country> countries = db.Database.SqlQuery<Country>(sql).ToList();
                 return countries;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -79,7 +79,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 return yearSearching;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -94,7 +95,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                     where is_deleted = 0";
                 List<Partner> partners = db.Database.SqlQuery<Partner>(sql).ToList();
                 return partners;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -108,7 +110,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                     select * from General.Office";
                 List<Office> offices = db.Database.SqlQuery<Office>(sql).ToList();
                 return offices;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
