@@ -39,7 +39,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             });
             var list = (from p in db.Profiles
                         join rp in db.People on p.people_id equals rp.people_id
-                        join o in db.Offices on rp.office_id equals o.office_id
+                        join o in db.Offices on p.office_id equals o.office_id
                         select new Researchers_ListView
                         {
                             name = rp.name,
@@ -60,7 +60,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             list.Add(new Researchers_ListView { name = "Phan Lạc Dương", avatar_id = 0, avatar_img = "https://2.pik.vn/2021b64863ac-8173-43d1-a2e1-367548689138.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FPTU Cần Thơ" });
             list.Add(new Researchers_ListView { name = "Đoàn Thị Thuý Nguyên", avatar_id = 0, avatar_img = "https://2.pik.vn/2021a5e55746-085b-4e95-b1ba-29f8cc1ee953.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
             list.Add(new Researchers_ListView { name = "Nguyễn Văn Sơn", avatar_id = 0, avatar_img = "https://2.pik.vn/202171fbc1d7-2f00-4b65-ba44-e3d6565eb655.jpg", email = "anhbn@fe.edu.vn", google_scholar = "#", website = "#", office_name = "FUHN" });
-            //var list = query.ToList<Researchers_ListView>();
 
             ViewBag.list = list;
             ////////////////////////////////////////////
@@ -69,10 +68,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         public ActionResult ViewInfo()
         {
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Nghiên cứu viên", "/Researchers"),
-                new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
-            };
+           {
+               new PageTree("Nghiên cứu viên", "/Researchers"),
+               new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
+           };
             ViewBag.researcher_avt = "https://2.pik.vn/20217382d096-d98d-473d-acb6-9dc98a16f45b.jpg";
             ViewBag.researcher_name = "PGS. TS Phạm Hùng Quý";
             ViewBag.researcher_email = "quyph@fe.edu.vn";
@@ -84,10 +83,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         public ActionResult EditInfo()
         {
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
-                new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
-            };
+           {
+               new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
+               new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
+           };
             ViewBag.pagesTree = pagesTree;
             return View();
         }

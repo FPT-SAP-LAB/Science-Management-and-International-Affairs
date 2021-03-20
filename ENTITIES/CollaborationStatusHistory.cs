@@ -14,6 +14,7 @@ namespace ENTITIES
     
     public partial class CollaborationStatusHistory
     {
+        public int collab_status_history_id { get; set; }
         public int collab_id { get; set; }
         public int collab_status_id { get; set; }
         public System.DateTime change_date { get; set; }

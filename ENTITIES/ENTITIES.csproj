@@ -218,8 +218,9 @@
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
-    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationStatu_Ext.cs" />
-    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaboration\StatusType.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />
@@ -261,6 +262,8 @@
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceParticipant.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
@@ -475,6 +478,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ScholarshipStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Scimagojr.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Specialization.cs">

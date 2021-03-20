@@ -1,4 +1,4 @@
-﻿using ENTITIES;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -55,16 +55,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public List<Info> GetAllProfileBy(string id)
         {
             List<Info> infos = db.Database.SqlQuery<Info>(@"
-                SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
-                FROM   General.People INNER JOIN
-                             SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
-                             SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
-                             General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
-                             Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
-                WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
-                ORDER BY MS
-                OFFSET 0 ROWS
-                FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
+               SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
+               FROM   General.People INNER JOIN
+                            SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
+                            SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
+                            General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
+                            Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
+               WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
+               ORDER BY MS
+               OFFSET 0 ROWS
+               FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
             if (infos.Count == 0)
             {
                 Info info = new Info()
@@ -190,7 +190,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
                     Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
                         .ToDictionary(x => x.title_id, x => x);
-                    Dictionary<string, int> CodeIDPairs = db.People.Where(x => codes.Contains(x.mssv_msnv))
+                    Dictionary<string, int> CodeIDPairs = db.Profiles.Where(x => codes.Contains(x.mssv_msnv))
                         .ToDictionary(x => x.mssv_msnv, x => x.people_id);
                     for (int i = 0; i < participants.Count; i++)
                     {

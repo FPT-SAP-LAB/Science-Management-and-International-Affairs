@@ -1,6 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration;
+using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
