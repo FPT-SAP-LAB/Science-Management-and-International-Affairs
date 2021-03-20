@@ -15,7 +15,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
 
-        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collab_type_id)
+        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collab_type_id, ObjectSearching_AcademicCollaboration obj_searching)
         {
             try
             {
@@ -42,9 +42,53 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
 		                        on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh 
                         on csh.collab_id = collab.collab_id
                         join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
-                        where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/";
+                        where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
+                        and c.country_name like @country_name
+                        and pn.partner_name like @partner_name
+                        and offi.office_name like @office_name
+                        or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)";
+
+                //filter checking
+                SqlParameter country_name_param, year_param, partner_name_param, office_name_param;
+                
+                ///country_name
+                if (obj_searching.country_name != null)
+                {
+                    country_name_param = new SqlParameter("country_name" ,"%"+obj_searching.country_name+"%");
+                } else
+                {
+                    country_name_param = new SqlParameter("country_name", "%%");
+                }
+
+                ///partner_name
+                if (obj_searching.partner_name != null)
+                {
+                    partner_name_param = new SqlParameter("partner_name","%"+obj_searching.partner_name+"%");
+                } else
+                {
+                    partner_name_param = new SqlParameter("partner_name", "%%");
+                }
+
+                ///office_name
+                if (obj_searching.office_name != null)
+                {
+                    office_name_param = new SqlParameter("office_name", "%"+obj_searching.office_name+"%");
+                } else
+                {
+                    office_name_param = new SqlParameter("office_name", "%%");
+                }
+
+                ///year
+                year_param = new SqlParameter("year", obj_searching.year);
+
                 List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                    new SqlParameter("direction", direction), new SqlParameter("collab_type_id", collab_type_id)).ToList();
+                                                    new SqlParameter("direction", direction),
+                                                    new SqlParameter("collab_type_id", collab_type_id),
+                                                    country_name_param,
+                                                    partner_name_param,
+                                                    office_name_param,
+                                                    year_param).ToList();
+
                 int recordsTotal = db.Database.SqlQuery<int>("select count(*) from IA_AcademicCollaboration.AcademicCollaboration").FirstOrDefault();
                 return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
             }

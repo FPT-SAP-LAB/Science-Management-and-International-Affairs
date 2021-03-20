@@ -12,14 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperWithCriteria
+    public partial class AccountRight
     {
-        public int criteria_id { get; set; }
-        public int paper_id { get; set; }
-        public string link { get; set; }
-        public Nullable<bool> check { get; set; }
+        public int account_id { get; set; }
+        public int right_id { get; set; }
+        public int account_right_id { get; set; }
     
-        public virtual Paper Paper { get; set; }
-        public virtual PaperCriteria PaperCriteria { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual Right Right { get; set; }
     }
 }

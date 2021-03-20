@@ -120,6 +120,9 @@
     <Compile Include="Account.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AccountRight.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ActivityExpenseCategory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -136,6 +139,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="AnswerType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalProcess.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Area.cs">
@@ -220,6 +226,7 @@
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />

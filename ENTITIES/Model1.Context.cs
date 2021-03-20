@@ -28,6 +28,7 @@ namespace ENTITIES
         public virtual DbSet<CommentBase> CommentBases { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AccountRight> AccountRights { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<File> Files { get; set; }
@@ -90,6 +91,7 @@ namespace ENTITIES
         public virtual DbSet<TitleLanguage> TitleLanguages { get; set; }
         public virtual DbSet<Citation> Citations { get; set; }
         public virtual DbSet<RequestCitation> RequestCitations { get; set; }
+        public virtual DbSet<ApprovalProcess> ApprovalProcesses { get; set; }
         public virtual DbSet<Conference> Conferences { get; set; }
         public virtual DbSet<ConferenceParticipant> ConferenceParticipants { get; set; }
         public virtual DbSet<ConferenceStatu> ConferenceStatus { get; set; }

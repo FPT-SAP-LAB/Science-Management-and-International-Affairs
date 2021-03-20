@@ -12,14 +12,16 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperWithCriteria
+    public partial class ApprovalProcess
     {
-        public int criteria_id { get; set; }
-        public int paper_id { get; set; }
-        public string link { get; set; }
-        public Nullable<bool> check { get; set; }
+        public int account_id { get; set; }
+        public int request_id { get; set; }
+        public int position_id { get; set; }
+        public string comment { get; set; }
+        public System.DateTime created_date { get; set; }
     
-        public virtual Paper Paper { get; set; }
-        public virtual PaperCriteria PaperCriteria { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual Position Position { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }
