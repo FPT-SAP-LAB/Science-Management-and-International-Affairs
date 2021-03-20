@@ -160,6 +160,7 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\CollaborationStatusController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\DirectionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\InternalUnitController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
@@ -2287,6 +2288,7 @@
     <Content Include="Views\MOU\PartialView\MOUPartner\List_History_MOU.cshtml" />
     <Content Include="Views\MOU\PartialView\MOUPartner\Add_Partner_MOU.cshtml" />
     <Content Include="Views\MOU\PartialView\MOUPartner\Edit_Partner_MOU.cshtml" />
+    <Content Include="Views\Report_IC\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
