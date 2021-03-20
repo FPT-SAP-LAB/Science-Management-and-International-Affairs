@@ -19,7 +19,7 @@ namespace BLL.ScienceManagement.Paper
             string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_id = @id";
-            item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
         }
 
@@ -166,7 +166,8 @@ namespace BLL.ScienceManagement.Paper
                     {
                         people_id = item.people_id,
                         paper_id = Int32.Parse(paper_id),
-                        current_mssv_msnv = item.mssv_msnv
+                        current_mssv_msnv = item.mssv_msnv,
+                        money_reward = item.money_reward
                     };
                     db.AuthorPapers.Add(ap);
                 }
@@ -256,6 +257,91 @@ namespace BLL.ScienceManagement.Paper
                 }
                 db.SaveChanges();
                 return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updatePaper(string paper_id, ENTITIES.Paper paper)
+        {
+            try
+            {
+                int id = Int32.Parse(paper_id);
+                ENTITIES.Paper p = db.Papers.Where(x => x.paper_id == id).FirstOrDefault();
+                p.name = paper.name;
+                p.publish_date = paper.publish_date;
+                p.link_doi = paper.link_doi;
+                p.link_scholar = paper.link_scholar;
+                p.journal_name = paper.journal_name;
+                p.page = paper.page;
+                p.vol = paper.vol;
+                p.company = paper.company;
+                p.index = paper.index;
+                p.paper_type_id = paper.paper_type_id;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateRequest(RequestPaper item)
+        {
+            try
+            {
+                RequestPaper rp = (from a in db.RequestPapers
+                                   join b in db.BaseRequests on a.request_id equals b.request_id
+                                   where a.paper_id == item.paper_id
+                                   orderby b.created_date descending
+                                   select a).FirstOrDefault();
+                rp.specialization_id = item.specialization_id;
+                rp.type = item.type;
+                rp.reward_type = item.reward_type;
+                rp.status_id = 4;
+
+                if(item.type == "Trongnuoc")
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM [SM_ScientificProduct].RequestPaper where paper_id = @id", new SqlParameter("id", item.paper_id));
+                }
+
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].PaperWithCriteria where paper_id = @id", new SqlParameter("id", paper_id));
+                string mess = addCriteria(criteria, paper_id);
+                return mess;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateAuthor(List<AddAuthor> people, string paper_id)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("delete from[SM_ScientificProduct].AuthorPaper where paper_id = @id", new SqlParameter("id", paper_id));
+                string mess = addAuthor(people, paper_id);
+                return mess;
             }
             catch (Exception e)
             {

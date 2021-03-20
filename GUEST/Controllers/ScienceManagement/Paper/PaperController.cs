@@ -107,6 +107,33 @@ namespace GUEST.Controllers
 
             return View();
         }
+        [HttpPost]
+        public JsonResult editPaper(string paper_id, Paper paper)
+        {
+            string mess = pr.updatePaper(paper_id, paper);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editRequest(RequestPaper item)
+        {
+            string mess = pr.updateRequest(item);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            string mess = pr.updateCriteria(criteria, paper_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editAuthor(List<AddAuthor> people, string paper_id)
+        {
+            string mess = pr.updateAuthor(people, paper_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult listAuthor(string id)
@@ -114,16 +141,5 @@ namespace GUEST.Controllers
             List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
             return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
-
-        //public ActionResult Pending()
-        //{
-        //    ViewBag.title = "Bài báo đang xử lý";
-        //    var pagesTree = new List<PageTree>
-        //    {
-        //        new PageTree("Bài báo đang xử lý","/Paper/Pending"),
-        //    };
-        //    ViewBag.pagesTree = pagesTree;
-        //    return View();
-        //}
     }
 }
