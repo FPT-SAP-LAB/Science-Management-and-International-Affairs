@@ -94,7 +94,7 @@ namespace BLL.ScienceManagement.Paper
             try
             {
                 r.request_id = request_id;
-                r.status_id = 4;
+                r.status_id = 3;
                 db.RequestPapers.Add(r);
                 db.SaveChanges();
                 return "ss";
@@ -105,26 +105,59 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string addAuthor(List<AddAuthor> list)
+        public string addAuthor(List<AddAuthor> list, string paper_id)
         {
-            List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
-            string listmail = "";
-            foreach (var item in list)
+            try
             {
-                if (!listMail.Contains(item.email))
+                List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
+                string listmail = "";
+                foreach (var item in list)
                 {
-                    int peopleid = addPeople(item.name, item.email);
-                    if (item.office_abbreviation != "Khác")
+                    if (!listMail.Contains(item.email))
                     {
-                        item.people_id = peopleid;
-                        addProfile(item);
+                        int peopleid = addPeople(item.name, item.email);
+                        if (item.office_abbreviation != "Khác")
+                        {
+                            item.people_id = peopleid;
+                            addProfile(item);
+                        }
                     }
+                    listmail += "," + item.email;
                 }
-                listmail += "," + item.email;
+                listmail = listmail.Substring(1);
+                string[] mail = listmail.Split(',');
+                String strAppend = "";
+                List<SqlParameter> listParam = new List<SqlParameter>();
+                for (int i = 0; i < mail.Length; i++)
+                {
+                    SqlParameter param = new SqlParameter("@idParam" + i, mail[i]);
+                    listParam.Add(param);
+                    string paramName = "@idParam" + i;
+                    strAppend += paramName + ",";
+                }
+                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
+                string sql = @"select po.people_id, pro.mssv_msnv
+                            from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
+                            where po.email in (" + strAppend + ")";
+                List<AuthorInfo> listAuthor = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).ToList();
+                foreach (var item in listAuthor)
+                {
+                    AuthorPaper ap = new AuthorPaper
+                    {
+                        people_id = item.people_id,
+                        paper_id = Int32.Parse(paper_id),
+                        current_mssv_msnv = item.mssv_msnv
+                    };
+                    db.AuthorPapers.Add(ap);
+                }
+                db.SaveChanges();
+                return "ss";
             }
-            listmail = listmail.Substring(1);
-            string sql = @"";
-            return "";
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
         }
 
         public int addPeople(string name, string mail)
@@ -157,6 +190,58 @@ namespace BLL.ScienceManagement.Paper
             };
             db.Profiles.Add(pro);
             db.SaveChanges();
+        }
+
+        public string addCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            try
+            {
+                string temp = "";
+                foreach (var item in criteria)
+                {
+                    temp += "," + item.name;
+                }
+                temp = temp.Substring(1);
+                string[] listCriName = temp.Split(',');
+                String strAppend = "";
+                List<SqlParameter> listParam = new List<SqlParameter>();
+                for (int i = 0; i < listCriName.Length; i++)
+                {
+                    SqlParameter param = new SqlParameter("@idParam" + i, listCriName[i]);
+                    listParam.Add(param);
+                    string paramName = "@idParam" + i;
+                    strAppend += paramName + ",";
+                }
+                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
+                string sql = @"select pc.*
+                                from [SM_ScientificProduct].PaperCriteria pc
+                                where pc.name in (" + strAppend + ")";
+                List<CustomCriteria> list = db.Database.SqlQuery<CustomCriteria>(sql, listParam.ToArray()).ToList();
+                foreach (var item in list)
+                {
+                    foreach (var cri in criteria)
+                    {
+                        if(cri.name == item.name)
+                        {
+                            item.link = cri.link;
+                        }
+                    }
+                    PaperWithCriteria pwc = new PaperWithCriteria
+                    {
+                        paper_id = Int32.Parse(paper_id),
+                        criteria_id = item.criteria_id,
+                        link = item.link
+                    };
+                    db.PaperWithCriterias.Add(pwc);
+                }
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
         }
     }
 }

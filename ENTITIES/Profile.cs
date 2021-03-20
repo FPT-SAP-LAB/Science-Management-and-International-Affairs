@@ -29,7 +29,7 @@ namespace ENTITIES
         public string cv { get; set; }
         public Nullable<int> avatar_id { get; set; }
         public Nullable<int> current_academic_degree_id { get; set; }
-        public int country_id { get; set; }
+        public Nullable<int> country_id { get; set; }
         public Nullable<long> bank_number { get; set; }
         public string bank_branch { get; set; }
         public Nullable<long> tax_code { get; set; }

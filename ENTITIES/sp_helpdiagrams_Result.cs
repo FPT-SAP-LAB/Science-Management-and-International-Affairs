@@ -10,16 +10,13 @@
 namespace ENTITIES
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class AuthorInvention
+    public partial class sp_helpdiagrams_Result
     {
-        public int people_id { get; set; }
-        public int invention_id { get; set; }
-        public string current_mssv_msnv { get; set; }
-        public Nullable<int> money_reward { get; set; }
-    
-        public virtual Person Person { get; set; }
-        public virtual Invention Invention { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

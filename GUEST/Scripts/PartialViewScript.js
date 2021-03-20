@@ -271,20 +271,10 @@ $("#add_author_save").click(function() {
         temp_id: id
     }
     people.push(AddAuthor);
-
-    //filename = [];
-    //$("div").remove(".uppy-list-item");
-
-    //var files = uppy2.getFiles();
-    //var temp_array = [];
-    //for (var i = 0; i < files.length; i++) {
-    //    var temp = files[i].data;
-    //    temp_array.push(temp);
-    //    uppy2.removeFile(files[i].id);
-    //}
-    //files_data.push(temp_array)
-
-    //console.log(files_data);
+    var inputs = $(".inputAuthor");
+    for (var i = 0; i < inputs.length; i++) {
+        $(inputs[i]).val("");
+    }
 });
 $("#authors-info-container").on('click', '.del-author', function() {
     let id = $(this).data("id")

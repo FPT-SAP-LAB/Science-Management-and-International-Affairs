@@ -206,6 +206,7 @@
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script>
+        var ck = "@ViewBag.ckEdit";
         var people = [];
         $('#chuyennganh').select2({
             allowClear: true
@@ -223,8 +224,10 @@
             allowClear: true
         });
         $(document).ready(function () {
-            var ck = "@ViewBag.ckEdit";
-            if (ck != "4") $(".edit").prop("disabled", true);
+            if (ck != "4") {
+                $(".edit").prop("disabled", true);
+                $("#add_author_btn").prop("disabled", true);
+            }
             else $(".edit").prop("disabled", false);
 
             var paper_type = "@ViewBag.Paper.paper_type_id";

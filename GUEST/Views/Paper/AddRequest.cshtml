@@ -100,8 +100,8 @@
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("CriteriaType")</label>
                             <select id="loaithuong" class="form-control form-control-lg">
-                                <option selected value="1">@rm.GetString("International")</option>
-                                <option value="2">@rm.GetString("Domestic")</option>
+                                <option selected value="Quocte">@rm.GetString("International")</option>
+                                <option value="Trongnuoc">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongqt">
@@ -183,12 +183,17 @@
         </div>
     </div>
 </div>
+<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
         var paper_id;
         var people = [];
+        var criteria = [];
         function addRequest() {
             var RequestPaper = {
                 specialization_id: $("#chuyennganh").val(),
@@ -212,24 +217,46 @@
                 }
             });
         }
+
         function addAuthor() {
             $.ajax({
                 url: "@Url.Action("AddAuthor", "Paper")",
                 type: "POST",
-                data: JSON.stringify(people),
+                data: JSON.stringify({ 'people': people, 'paper_id': paper_id}),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-
+                    addCriteria();
                 },
                 error: function () {
                     //alert("fail");
                 }
             });
         }
+
+        function addCriteria() {
+            $.ajax({
+                url: "@Url.Action("AddCriteria", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'criteria': criteria, 'paper_id': paper_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#nameEdit").val(paper_id);
+                        $("#ckEdit").val(3);
+                        $("#PaperForm").submit();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
         var files_data = [];
-        var criteria = [];
         $("#submitPaper").click(function () {
             let fd = new FormData();
             var Paper = {
@@ -255,7 +282,7 @@
             $.ajax({
                 url: "@Url.Action("AddPaper", "Paper")",
                 type: "POST",
-                data: JSON.stringify(Paper),
+                data: JSON.stringify({ 'paper':Paper }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
@@ -265,20 +292,6 @@
                         addRequest();
                     }
                     else alert('loi');
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
-            $.ajax({
-                url: "@Url.Action("AddCriteria", "Paper")",
-                type: "POST",
-                data: JSON.stringify(criteria),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-
                 },
                 error: function () {
                     //alert("fail");

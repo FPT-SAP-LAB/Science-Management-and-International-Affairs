@@ -18,5 +18,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public Int64 tax_code { get; set; }
         public string identification_number { get; set; }
         public int office_id { get; set; }
+
+        public int paper_id { get; set; }
     }
 }
