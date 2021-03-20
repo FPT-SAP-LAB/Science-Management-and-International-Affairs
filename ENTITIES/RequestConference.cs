@@ -17,6 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RequestConference()
         {
+            this.ApprovalProcesses = new HashSet<ApprovalProcess>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.Costs = new HashSet<Cost>();
         }
@@ -33,6 +34,8 @@ namespace ENTITIES
         public System.DateTime attendance_end { get; set; }
     
         public virtual File File { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ApprovalProcess> ApprovalProcesses { get; set; }
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }

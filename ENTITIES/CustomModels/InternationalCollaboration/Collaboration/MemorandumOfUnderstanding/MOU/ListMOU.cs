@@ -9,6 +9,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     public class ListMOU
     {
         public ListMOU() { }
+        public int RowNumber { get; set; }
         public string mou_code { get; set; }
         public int mou_partner_id { get; set; }
         public int mou_id { get; set; }
@@ -16,7 +17,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public string website { get; set; }
         public string country_name { get; set; }
         public string contact_point_name { get; set; }
-        public string contact_phone_email { get; set; }
+        public string contact_point_email { get; set; }
         public string contact_point_phone { get; set; }
         public string evidence { get; set; }
         public DateTime mou_start_date { get; set; }

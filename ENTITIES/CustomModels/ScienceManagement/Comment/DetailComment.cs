@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Comment
 {
-    public class DetailComment : CommentBase
+    public class DetailComment
     {
-        public string email { get; set; }
+        public string Email { get; set; }
+        public DateTime Date { get; set; }
+        public string Content { get; set; }
     }
 }

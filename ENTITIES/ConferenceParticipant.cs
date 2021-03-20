@@ -21,7 +21,7 @@ namespace ENTITIES
         public string current_mssv_msnv { get; set; }
     
         public virtual Office Office { get; set; }
-        public virtual Person Person { get; set; }
+        public virtual Profile Profile { get; set; }
         public virtual RequestConference RequestConference { get; set; }
         public virtual Title Title { get; set; }
     }

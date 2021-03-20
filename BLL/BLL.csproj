@@ -78,13 +78,16 @@
     <Compile Include="Authen\LoginRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaboration\AcademicCollaborationRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProcedureRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
-    <Compile Include="InternationalCollaboration\Collaboration\Partner\PartnerRepo.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\PartnerRepo\PartnerRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityExpenseTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicCollaborationStatusRepo.cs" />

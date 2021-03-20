@@ -148,6 +148,7 @@
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
@@ -2408,6 +2409,8 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\Program_Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
+    <Content Include="Views\PartialView\EditAuthor.cshtml" />
+    <Content Include="Views\CommentRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

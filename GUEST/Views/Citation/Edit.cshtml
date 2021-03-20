@@ -73,12 +73,12 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        foreach (var item in ViewBag.cmt)
+                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
                                         {
                                             <tr>
-                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.email</td>
-                                                <td>@item.content</td>
+                                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.Content</td>
                                             </tr>
                                         }
                                     }
@@ -103,9 +103,8 @@
 
             $("#ckfe").val("@ViewBag.author.office_abbreviation");
             $("#ckfe").trigger('change');
-            $("#add_author_workplace").val("@ViewBag.author.area_id");
-            $("#add_author_workplace").trigger('change');
             $("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
+            $("#add_author_mail").val("@ViewBag.author.email");
             $("#add_author_name").val("@ViewBag.author.name");
             $("#add_author_title").val("@ViewBag.author.title_id");
             $("#add_author_title").trigger('change');

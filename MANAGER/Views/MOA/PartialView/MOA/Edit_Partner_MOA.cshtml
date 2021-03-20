@@ -1,0 +1,92 @@
+﻿<div class="modal fade in" id="edit_partner_moa" aria-hidden="true" style="z-index: 8888">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder" id="edit_partner_moa_title">SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Tên đối tác</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#" onclick="checkPartnerEditMOA()">Kiểm tra</a></label>
+                        @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
+                            </div>*@
+                        <input hidden readonly type="text" class="form-control" id="partner_id_moa_edit" placeholder="" name="" value="" />
+                        <input hidden readonly type="text" class="form-control" id="idx_moa_edit" placeholder="" name="idx_edit" value="no" />
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select-search" id="moa_partner_name_edit" name="param" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Quốc gia</label>
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="moa_partner_nation_edit" disabled />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Website</label>
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="moa_partner_website_edit" disabled />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Địa chỉ đối tác</label>
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="moa_partner_address_edit" disabled />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Đại diện</label>
+                        <input class="form-control " type="text" placeholder="Đại diện" autocomplete="off" id="moa_partner_represent_edit" disabled />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Email</label>
+                        <input class="form-control " type="text" placeholder="Email" autocomplete="off" id="moa_partner_email_edit" disabled />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label class="font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control " type="text" placeholder="Số điện thoại" autocomplete="off" id="moa_partner_phone_edit" disabled />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Ngày ký kết</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_sign_date_edit" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="moa_sign_date_partner_edit" data-target="#kt_datetimepicker_moa_sign_date_edit" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_sign_date_edit" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Lĩnh vực</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <input class="form-control " type="text" id="moa_partner_specialization_edit" disabled value="" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control select2" id="moa_partner_scope_edit" name="param" multiple="multiple" style="width:100% !important">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                <button id="edit_moa_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="editTempMOA()" disabled>Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>

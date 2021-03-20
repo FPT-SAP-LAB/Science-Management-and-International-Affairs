@@ -354,6 +354,9 @@
   <data name="RewardType" xml:space="preserve">
     <value>Loại khen thưởng</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Tìm kiếm</value>
   </data>

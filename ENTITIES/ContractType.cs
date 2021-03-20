@@ -17,13 +17,13 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ContractType()
         {
-            this.People = new HashSet<Person>();
+            this.Profiles = new HashSet<Profile>();
         }
     
         public int contract_id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }
