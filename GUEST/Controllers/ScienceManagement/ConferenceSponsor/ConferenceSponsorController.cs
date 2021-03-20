@@ -31,8 +31,9 @@ namespace GUEST.Controllers
         }
         public JsonResult List()
         {
+            int account_id = 6;
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageGuest(datatable, 6, LanguageResource.GetCurrentLanguageID());
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageGuest(datatable, account_id, LanguageResource.GetCurrentLanguageID());
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -67,7 +68,8 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
             };
-            string output = DetailRepos.GetDetailPageGuest(id, 6, LanguageResource.GetCurrentLanguageID());
+            int account_id = 6;
+            string output = DetailRepos.GetDetailPageGuest(id, account_id, LanguageResource.GetCurrentLanguageID());
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
             return View();

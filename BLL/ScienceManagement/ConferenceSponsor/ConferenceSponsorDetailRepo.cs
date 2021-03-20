@@ -14,6 +14,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetDetailPageGuest(int request_id, int account_id, int language_id)
         {
+            db.Configuration.LazyLoadingEnabled = false;
             ConferenceDetail Conference = (from r in db.BaseRequests
                                            join a in db.RequestConferences on r.request_id equals a.request_id
                                            join b in db.Conferences on a.conference_id equals b.conference_id
@@ -65,19 +66,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 Participants[i].RowNumber = 1 + i;
             }
-            var Costs = (from a in db.RequestConferences
-                         join x in db.Costs on a.request_id equals x.request_id
-                         where a.request_id == request_id
-                         select new
-                         {
-                             x.content,
-                             x.cost_id,
-                             x.detail,
-                             x.editable,
-                             x.sponsoring_organization,
-                             x.total
-                         }).ToList();
-            return JsonConvert.SerializeObject(new { Conference, Participants, Costs });
+            var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
+            var ApprovalProcesses = (from a in db.ApprovalProcesses
+                                     join b in db.Accounts on a.account_id equals b.account_id
+                                     join c in db.PositionLanguages on a.position_id equals c.position_id
+                                     where a.request_id == request_id && c.language_id == language_id
+                                     select new ConferenceApprovalProcess
+                                     {
+                                         CreatedDate = a.created_date,
+                                         PositionName = c.name,
+                                         FullName = b.full_name,
+                                         Comment = a.comment
+                                     }).ToList();
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses });
         }
     }
 }
