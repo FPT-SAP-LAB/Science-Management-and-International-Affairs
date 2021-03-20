@@ -255,6 +255,10 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistory.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistoryList.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerList.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceDetail.cs" />
