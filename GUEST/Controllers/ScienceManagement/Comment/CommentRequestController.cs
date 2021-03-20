@@ -22,7 +22,6 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         public ActionResult Add(string content)
         {
             int account_id = 1;
-
         }
     }
 }
