@@ -1,4 +1,4 @@
-﻿<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 8888">
+﻿<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 1500">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center row">
@@ -17,7 +17,8 @@
                             </div>*@
                         <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="partner_name_add" name="param" list="officeList" style="width:100% !important">
+                            <input list="partnerListAdd" class="form-control select-search" id="partner_name_add" name="param" style="width:100% !important" onchange="preventAdd()"/> 
+                            <datalist id="partnerListAdd">
                                 @if (ViewBag.listPartners != null)
                                 {
                                     foreach (var item in ViewBag.listPartners)
@@ -25,7 +26,7 @@
                                         <option value="@item.partner_name">@item.partner_name</option>
                                     }
                                 }
-                            </select>
+                            </datalist>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -108,7 +109,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
-                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="addToTemp()" disabled>Thêm</button>
+                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" onclick="addToTemp()" disabled>Thêm</button>
             </div>
         </div>
     </div>
