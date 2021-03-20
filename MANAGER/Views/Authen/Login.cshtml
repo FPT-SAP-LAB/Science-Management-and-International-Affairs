@@ -159,8 +159,11 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Authen/SigninGoogleAsync');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                console.log('Signed in as: ' + xhr.responseText);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = this.responseURL;
+                    console.log(this);
+                }
             };
             xhr.send('idtoken=' + id_token);
         }
