@@ -1,5 +1,5 @@
 ﻿
-//table long-term - going
+//table_1: long-term - going
 let rowNum = 0;
 $('#collab_going_table').DataTable({
     oLanguage: {

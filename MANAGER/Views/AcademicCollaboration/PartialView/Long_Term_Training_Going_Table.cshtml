@@ -4,36 +4,44 @@
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_nation_tab_1_table_1" name="param" style="width:100% !important">
-                        <option label="Label"></option>
-                        <option value="1">Việt Nam</option>
-                        <option value="2">USA</option>
+                        <option selected disabled>Quốc gia</option>
+                        @foreach (var country in ViewBag.countries)
+                        {
+                            <option value="@country.country_id">@country.country_name</option>
+                        }
                     </select>
                 </div>
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_year_tab_1_table_1" name="param" style="width:100% !important">
-                        <option label="Label"></option>
-                        <option value="1">2021</option>
-                        <option value="2">2020</option>
+                        <option selected disabled>Năm</option>
+                        @for (var year = ViewBag.yearSearching.year_from; year <= ViewBag.yearSearching.year_to; year++ )
+                        {
+                            <option value="@year">@year</option>
+                        }
                     </select>
                 </div>
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_training_facility_tab_1_table_1" name="param" style="width:100% !important">
-                        <option label="Label"></option>
-                        <option value="1">UDP</option>
-                        <option value="2">KyouDai</option>
+                        <option selected disabled>Đơn vị đào tạo</option>
+                        @foreach (var partner in ViewBag.partners)
+                        {
+                            <option value="@partner.partner_id">@partner.partner_name</option>
+                        }
                     </select>
                 </div>
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 mb-4">
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_working_facility_tab_1_table_1" name="param" style="width:100% !important">
-                        <option label="Label"></option>
-                        <option value="1">FPT-HN</option>
-                        <option value="2">FPT-DN</option>
+                        <option selected disabled>Đơn vị công tác</option>
+                        @foreach (var office in ViewBag.offices)
+                        {
+                            <option value="@office.office_id">@office.office_name</option>
+                        }
                     </select>
                 </div>
             </div>
