@@ -221,7 +221,7 @@ namespace BLL.ScienceManagement.Paper
                 {
                     foreach (var cri in criteria)
                     {
-                        if(cri.name == item.name)
+                        if (cri.name == item.name)
                         {
                             item.link = cri.link;
                         }

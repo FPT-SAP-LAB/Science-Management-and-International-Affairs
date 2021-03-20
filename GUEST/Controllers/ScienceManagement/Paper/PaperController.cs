@@ -54,7 +54,7 @@ namespace GUEST.Controllers
         {
             BaseRequest b = pr.addBaseRequest("10");
             string mess = pr.addRequestPaper(b.request_id, item);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet); 
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
