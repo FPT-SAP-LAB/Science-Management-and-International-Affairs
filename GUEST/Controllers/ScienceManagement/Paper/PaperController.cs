@@ -101,8 +101,9 @@ namespace GUEST.Controllers
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
-            List<DetailComment> listCmt = cr.GetComment(request_id);
-            ViewBag.cmt = listCmt;
+            //List<DetailComment> listCmt = cr.GetComment(request_id);
+            //ViewBag.cmt = listCmt;
+            ViewBag.request_id = request_id;
             ViewBag.id = id;
 
             return View();
