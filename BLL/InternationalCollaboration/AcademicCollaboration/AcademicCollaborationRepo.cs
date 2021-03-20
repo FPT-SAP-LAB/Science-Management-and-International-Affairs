@@ -50,12 +50,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
 
                 //filter checking
                 SqlParameter country_name_param, year_param, partner_name_param, office_name_param;
-                
+
                 ///country_name
                 if (obj_searching.country_name != null)
                 {
-                    country_name_param = new SqlParameter("country_name" ,"%"+obj_searching.country_name+"%");
-                } else
+                    country_name_param = new SqlParameter("country_name", "%" + obj_searching.country_name + "%");
+                }
+                else
                 {
                     country_name_param = new SqlParameter("country_name", "%%");
                 }
@@ -63,8 +64,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 ///partner_name
                 if (obj_searching.partner_name != null)
                 {
-                    partner_name_param = new SqlParameter("partner_name","%"+obj_searching.partner_name+"%");
-                } else
+                    partner_name_param = new SqlParameter("partner_name", "%" + obj_searching.partner_name + "%");
+                }
+                else
                 {
                     partner_name_param = new SqlParameter("partner_name", "%%");
                 }
@@ -72,8 +74,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 ///office_name
                 if (obj_searching.office_name != null)
                 {
-                    office_name_param = new SqlParameter("office_name", "%"+obj_searching.office_name+"%");
-                } else
+                    office_name_param = new SqlParameter("office_name", "%" + obj_searching.office_name + "%");
+                }
+                else
                 {
                     office_name_param = new SqlParameter("office_name", "%%");
                 }
