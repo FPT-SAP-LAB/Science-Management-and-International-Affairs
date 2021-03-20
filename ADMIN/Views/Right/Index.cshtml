@@ -153,6 +153,7 @@
                         success: function (data) {
                             if (data != '') {
                                 toastr.success(data);
+                                stt = 1;
                                 datatable.ajax.reload();
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
@@ -268,12 +269,12 @@
                     name: "right_name"
                 },
                 {
-                    data: "group_id",
-                    name: "group_id"
-                },
-                {
                     data: "module_name",
                     name: "module_name"
+                },
+                {
+                    data: "group_id",
+                    name: "group_id"
                 },
                 {
                     data: "right_id",
