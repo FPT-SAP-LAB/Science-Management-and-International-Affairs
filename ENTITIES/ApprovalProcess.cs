@@ -12,14 +12,16 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class CommentBase
+    public partial class ApprovalProcess
     {
-        public int comment_id { get; set; }
         public int account_id { get; set; }
-        public System.DateTime date { get; set; }
-        public string content { get; set; }
+        public int request_id { get; set; }
+        public int position_id { get; set; }
+        public string comment { get; set; }
+        public System.DateTime created_date { get; set; }
     
         public virtual Account Account { get; set; }
-        public virtual BaseRequest BaseRequest { get; set; }
+        public virtual Position Position { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }

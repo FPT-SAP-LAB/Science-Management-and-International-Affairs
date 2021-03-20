@@ -1,0 +1,49 @@
+﻿<div class="row">
+    <div class="col-10">
+        <input class="form-control" type="text" value="" id="content" />
+    </div>
+    <div class="col-2">
+        <button type="button" onclick="AddComment()" class="btn btn-block btn-success">Gửi</button>
+    </div>
+</div>
+<br />
+<table id="comment-table" class="col-12 table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" width="15%">Thời gian</th>
+            <th scope="col" width="15%">Người gửi</th>
+            <th scope="col">Tin nhắn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.Comments)
+        {
+            <tr>
+                <td>@item.Date.ToString("HH:mm dd/MM/yyyy")</td>
+                <td>@item.Email</td>
+                <td>@item.Content</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function AddComment() {
+        $.ajax({
+            url: "/CommentRequest/Add",
+            method: "post",
+            data: {
+                request_id: @ViewBag.request_id,
+                content: $("#content").val()
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    console.log($("#comment-table").parent());
+                    $("#comment-table").parent().load("/CommentRequest/Index?request_id=@ViewBag.request_id");
+                }
+                else
+                    toastr.error(data.content);
+            }
+        });
+    }
+</script>
