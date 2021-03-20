@@ -151,7 +151,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
-    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner_Manager\PartnerController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityExpenseTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicCollaborationStatusController.cs" />
@@ -2288,12 +2288,25 @@
     <Content Include="Views\MOU\PartialView\MOUPartner\List_History_MOU.cshtml" />
     <Content Include="Views\MOU\PartialView\MOUPartner\Add_Partner_MOU.cshtml" />
     <Content Include="Views\MOU\PartialView\MOUPartner\Edit_Partner_MOU.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOA\List_MOA_Table.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOA\Add_Partner_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOA\Edit_Partner_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOA\Add_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOABasicInfo\List_Ex_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOABasicInfo\Add_Ex_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOABasicInfo\Edit_Ex_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOAPartner\Add_Partner_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOAPartner\Edit_Partner_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOAPartner\List_Partner_MOA.cshtml" />
+    <Content Include="Views\MOA\PartialView\MOAPartner\List_History_MOA.cshtml" />
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
+    <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
+    <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
   </ItemGroup>

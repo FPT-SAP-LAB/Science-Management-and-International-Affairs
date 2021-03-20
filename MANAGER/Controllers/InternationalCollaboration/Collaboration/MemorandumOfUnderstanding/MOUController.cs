@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
@@ -37,20 +38,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return View(new HttpStatusCodeResult(400));
             }
         }
-
         public ActionResult ViewMOU(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
-                List<ListMOU> listMOU = mou.listAllMOU(partner_name, contact_point_name, mou_code);
-                return Json(new { success = true, data = listMOU }, JsonRequestBehavior.AllowGet);
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<ListMOU> listMOU = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
+                return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return new HttpStatusCodeResult(400);
             }
         }
-
         public ActionResult List_Deleted()
         {
             try
@@ -87,7 +87,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-
         public ActionResult Add_Mou(MOUAdd input)
         {
             try
@@ -148,6 +147,30 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 return View(new HttpStatusCodeResult(400));
+            }
+        }
+        public ActionResult CheckDuplicatedPartnerInfo(string partner_name, string mou_start_date_string)
+        {
+            try
+            {
+                string old_mou_code = mou.partnerInfoIsDuplicated(partner_name, mou_start_date_string);
+                return Json(old_mou_code);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckDuplicatedMOUCode(string mou_code)
+        {
+            try
+            {
+                bool isDup = mou.getMOUCodeCheck(mou_code);
+                return Json(isDup);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
             }
         }
     }

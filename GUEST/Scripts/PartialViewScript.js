@@ -174,10 +174,10 @@ class AuthorInfoView {
                                             <h3 class='card-label'>` + this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
                                         </div>
                                         <div class='card-toolbar'>
-                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger edit'>
                                                 <i class='far fa-edit'></i>
                                             </a>
-                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger edit'>
                                                 <i class='la la-trash'></i>
                                             </a>
                                         </div>
@@ -268,12 +268,60 @@ $("#add_author_save").click(function() {
         contract_id: $("#add_author_contractType").val(),
         title_id: $("#add_author_title").val(),
         people_id: $("#add_author_msnv").attr("name"),
-        temp_id: id
+        temp_id: id,
+        office_abbreviation: $("#ckfe option:selected").val(),
     }
     people.push(AddAuthor);
     var inputs = $(".inputAuthor");
     for (var i = 0; i < inputs.length; i++) {
         $(inputs[i]).val("");
+    }
+});
+$("#add_author_save_edit").click(function () {
+    people[temp_index_edit].office_abbreviation = $("#ckfe_edit").val();
+    people[temp_index_edit].office_id = $("#ckfe_edit option:selected").attr("name");
+    people[temp_index_edit].mssv_msnv = $("#add_author_msnv_edit").val();
+    people[temp_index_edit].name = $("#add_author_name_edit").val();
+    people[temp_index_edit].title_id = $("#add_author_title_edit").val();
+    people[temp_index_edit].contract_id = $("#add_author_contractType_edit").val();
+    people[temp_index_edit].identification_number = $("#add_author_cmnd_edit").val();
+    people[temp_index_edit].tax_code = $("#add_author_tax_edit").val();
+    people[temp_index_edit].bank_branch = $("#add_author_bank_edit").val();
+    people[temp_index_edit].bank_number = $("#add_author_accno_edit").val();
+    people[temp_index_edit].email = $("#add_author_mail_edit").val();
+
+    $("#" + people[temp_index_edit].temp_id).remove();
+
+    au = new AuthorInfoView(people[temp_index_edit].office_abbreviation, people[temp_index_edit].mssv_msnv, people[temp_index_edit].name,
+        $("#add_author_title_edit option:selected").text(), $("#add_author_contractType_edit option:selected").text(),
+        people[temp_index_edit].identification_number, people[temp_index_edit].tax_code,
+        people[temp_index_edit].bank_branch, people[temp_index_edit].bank_number,
+        '', '', people[temp_index_edit].email, people[temp_index_edit].temp_id);
+    $("#authors-info-container").append(au.getHTML());
+});
+$("#authors-info-container").on('click', '.edit-author', function() {
+    let id = $(this).data("id");
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].temp_id == id) {
+            $("#ckfe_edit").val(people[i].office_abbreviation);
+            $("#ckfe_edit").trigger('change');
+            $("#add_author_msnv_edit").val(people[i].mssv_msnv);
+            $("#add_author_msnv_edit").trigger('change');
+            $("#add_author_name_edit").val(people[i].name);
+            $("#add_author_title_edit").val(people[i].title_id);
+            $("#add_author_title_edit").trigger('change');
+            $("#add_author_contractType_edit").val(people[i].contract_id);
+            $("#add_author_contractType_edit").trigger('change');
+            $("#add_author_cmnd_edit").val(people[i].identification_number);
+            $("#add_author_tax_edit").val(people[i].tax_code);
+            $("#add_author_bank_edit").val(people[i].bank_branch);
+            $("#add_author_accno_edit").val(people[i].bank_number);
+            $("#add_author_mail_edit").val(people[i].email);
+            $("#add_author_reward_edit").prop('disabled', true);
+            $("#edit_author_btn").click();
+            temp_index_edit = i;
+            break;
+        }
     }
 });
 $("#authors-info-container").on('click', '.del-author', function() {

@@ -10,10 +10,15 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class AccountRight
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int account_id { get; set; }
+        public int right_id { get; set; }
+        public int account_right_id { get; set; }
+    
+        public virtual Account Account { get; set; }
+        public virtual Right Right { get; set; }
     }
 }
