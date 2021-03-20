@@ -179,46 +179,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*<tr>
-                    <td>Tiền khách sạn</td>
-                    <td>FPTU</td>
-                    <td>500,000 * 3 * 4</td>
-                    <td><span class="label label-lg label-light-danger label-inline targetCost">6,000,000 đ</span></td>
-                    <td>
-                        <label class="checkbox checkbox-disabled">
-                            <input type="checkbox" disabled="disabled" checked="checked" name="Checkboxes1" />
-                            <span></span>
-                        </label>
-                    </td>
-                </tr>*@
                         @foreach (var item in Costs)
                         {
-                        <tr>
-                            <td class="align-middle">@item.content</td>
-                            <td class="align-middle">@item.sponsoring_organization</td>
-                            @if (item.editable)
-                            {
-                                <td class="align-middle">
-                                    <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
-                                </td>
+                            <tr>
+                                <td class="align-middle">@item.content</td>
+                                <td class="align-middle">@item.sponsoring_organization</td>
+                                @if (item.editable)
+                                {
+                                    <td class="align-middle">
+                                        <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
+                                    </td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="align-middle">@item.detail</td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                    </td>
+                                }
                                 <td>
-                                    <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                    <label class="checkbox checkbox-disabled">
+                                        <input type="checkbox" disabled="disabled" checked="@item.is_accepted" name="Checkboxes1" />
+                                        <span></span>
+                                    </label>
                                 </td>
-                            }
-                            else
-                            {
-                                <td class="align-middle">@item.detail</td>
-                                <td>
-                                    <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
-                                </td>
-                            }
-                            <td>
-                                <label class="checkbox checkbox-disabled">
-                                    <input type="checkbox" disabled="disabled" checked="@item.is_accepted" name="Checkboxes1" />
-                                    <span></span>
-                                </label>
-                            </td>
-                        </tr>
+                            </tr>
                         }
                         <tr>
                             <th scope="row">Tổng cộng</th>
@@ -310,33 +298,7 @@
         </div>
         <div id="ConversationInformationChild1" class="collapse show" data-parent="#ConversationInformation">
             <div class="card-body">
-                <form>
-                    <div class="row">
-                        <div class="col-10">
-                            <input class="form-control" type="text" value="" id="example-text-input" />
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="btn btn-block btn-success">Gửi</button>
-                        </div>
-                    </div>
-                </form>
-                <br />
-                <table class="col-12 table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col" width="15%">Thời gian</th>
-                            <th scope="col" width="15%">Người gửi</th>
-                            <th scope="col">Tin nhắn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>01/01/21-10:00AM</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td>Sao lâu có phản hồi thế em</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ConferenceDetail.RequestID }); }
             </div>
         </div>
     </div>
