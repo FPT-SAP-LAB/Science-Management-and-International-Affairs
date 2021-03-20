@@ -1,0 +1,35 @@
+﻿@*modal mou_partner_history*@
+<div class="modal fade in" id="moa_partner_history" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center row">
+                <h4 class="modal-title font-weight-bolder">LỊCH SỬ THỎA THUẬN HỢP TÁC</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <input class="form-control text-center" type="text" placeholder="Tên đối tác" autocomplete="off" disabled id="partner_name_history" />
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <input class="form-control text-center" type="text" placeholder="Mã hiệu" autocomplete="off" disabled id="moa_id_history" />
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <table id="history-table" class="table table-bordered table-hover table-checkable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">STT</th>
+                                <th class="text-center">Hoạt động</th>
+                                <th class="text-center">Người thao tác</th>
+                                <th class="text-center">Thời gian thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body_moa_history">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
