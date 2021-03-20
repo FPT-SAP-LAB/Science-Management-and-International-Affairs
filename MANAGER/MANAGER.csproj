@@ -151,7 +151,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
-    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner_Manager\PartnerController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityExpenseTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicCollaborationStatusController.cs" />
