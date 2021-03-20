@@ -1,0 +1,28 @@
+﻿<form>
+    <div class="row">
+        <div class="col-10">
+            <input class="form-control" type="text" value="" id="example-text-input" />
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-block btn-success">Gửi</button>
+        </div>
+    </div>
+</form>
+<br />
+<table class="col-12 table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" width="15%">Thời gian</th>
+            <th scope="col" width="15%">Người gửi</th>
+            <th scope="col">Tin nhắn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.Comments)
+        {
+            <td>@item.Date.ToString("HH:mm dd/MM/yyyy")</td>
+            <td>@item.Email</td>
+            <td>@item.Content</td>
+        }
+    </tbody>
+</table>

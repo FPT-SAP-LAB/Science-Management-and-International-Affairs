@@ -17,7 +17,6 @@
         <EntityType Name="CommentRequest">
           <Key>
             <PropertyRef Name="comment_id" />
-            <PropertyRef Name="request_id" />
           </Key>
           <Property Name="comment_id" Type="int" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
@@ -1885,9 +1884,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CommentRe__comme__253C7D7E">
+        <Association Name="FK__CommentRe__comme__44B528D7">
           <End Role="CommentBase" Type="Self.CommentBase" Multiplicity="1" />
-          <End Role="CommentRequest" Type="Self.CommentRequest" Multiplicity="*" />
+          <End Role="CommentRequest" Type="Self.CommentRequest" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="CommentBase">
               <PropertyRef Name="comment_id" />
@@ -1897,7 +1896,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CommentRe__reque__09FE775D">
+        <Association Name="FK__CommentRe__reque__45A94D10">
           <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="1" />
           <End Role="CommentRequest" Type="Self.CommentRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3914,11 +3913,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Account" EntitySet="Account" />
             <End Role="CommentBase" EntitySet="CommentBase" />
           </AssociationSet>
-          <AssociationSet Name="FK__CommentRe__comme__253C7D7E" Association="Self.FK__CommentRe__comme__253C7D7E">
+          <AssociationSet Name="FK__CommentRe__comme__44B528D7" Association="Self.FK__CommentRe__comme__44B528D7">
             <End Role="CommentBase" EntitySet="CommentBase" />
             <End Role="CommentRequest" EntitySet="CommentRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__CommentRe__reque__09FE775D" Association="Self.FK__CommentRe__reque__09FE775D">
+          <AssociationSet Name="FK__CommentRe__reque__45A94D10" Association="Self.FK__CommentRe__reque__45A94D10">
             <End Role="BaseRequest" EntitySet="BaseRequest" />
             <End Role="CommentRequest" EntitySet="CommentRequest" />
           </AssociationSet>
@@ -4477,7 +4476,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Account" Relationship="Self.FK__CommentBa__accou__2077C861" FromRole="CommentBase" ToRole="Account" />
-          <NavigationProperty Name="BaseRequests" Relationship="Self.CommentRequest" FromRole="CommentBase" ToRole="BaseRequest" />
+          <NavigationProperty Name="BaseRequest" Relationship="Self.CommentRequest" FromRole="CommentBase" ToRole="BaseRequest" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -8044,7 +8043,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </Association>
         <Association Name="CommentRequest">
           <End Role="CommentBase" Type="Self.CommentBase" Multiplicity="*" />
-          <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="*" />
+          <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="0..1" />
         </Association>
         <Association Name="ArticleTag">
           <End Role="Article" Type="Self.Article" Multiplicity="*" />

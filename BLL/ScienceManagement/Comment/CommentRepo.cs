@@ -12,15 +12,17 @@ namespace BLL.ScienceManagement.Comment
     public class CommentRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<DetailComment> getComment(int id)
+        public List<DetailComment> GetComment(int request_id)
         {
-            List<DetailComment> list = new List<DetailComment>();
-            string sql = @"select cb.*, po.email
-                            from [Comment].CommentBase cb join [Comment].CommentRequest cr on cb.comment_id = cr.comment_id
-	                            join [SM_Request].BaseRequest br on cr.request_id = br.request_id
-	                            join [General].People po on cb.people_id = po.people_id
-                            where cr.request_id = @id";
-            list = db.Database.SqlQuery<DetailComment>(sql, new SqlParameter("id", id)).ToList();
+            List<DetailComment> list = (from a in db.CommentBases
+                                        join b in db.Accounts on a.account_id equals b.account_id
+                                        where a.BaseRequest.request_id == request_id
+                                        select new DetailComment
+                                        {
+                                            Content = a.content,
+                                            Date = a.date,
+                                            Email = b.email
+                                        }).ToList();
             return list;
         }
     }
