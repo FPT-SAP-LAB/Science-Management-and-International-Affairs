@@ -14,11 +14,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetDetailPageGuest(int request_id, int account_id, int language_id)
         {
-            BaseRequest request = db.BaseRequests.Where(x => x.account_id == account_id && x.request_id == request_id).FirstOrDefault();
-            if (request == null)
-                return null;
-            var a = request.RequestConference;
-            ConferenceDetail Conference = (from b in db.Conferences
+            ConferenceDetail Conference = (from r in db.BaseRequests
+                                           join a in db.RequestConferences on r.request_id equals a.request_id
+                                           join b in db.Conferences on a.conference_id equals b.conference_id
                                            join c in db.Countries on b.country_id equals c.country_id
                                            join d in db.Files on a.invitation_file_id equals d.file_id
                                            join e in db.Papers on a.paper_id equals e.paper_id
@@ -27,7 +25,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                            join h in db.ConferenceStatusLanguages on g.status_id equals h.status_id
                                            join i in db.Formalities on b.formality_id equals i.formality_id
                                            join j in db.FormalityLanguages on i.formality_id equals j.formality_id
-                                           where a.request_id == request.request_id && h.language_id == language_id && j.language_id == language_id && b.conference_id == a.conference_id
+                                           where h.language_id == language_id && j.language_id == language_id && r.account_id == account_id && r.request_id == request_id
                                            select new ConferenceDetail
                                            {
                                                ConferenceName = b.conference_name,
@@ -35,7 +33,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                KeynoteSpeaker = b.keynote_speaker,
                                                QsUniversity = b.qs_university,
                                                Co_organizedUnit = b.co_organized_unit,
-                                               CreatedDate = request.created_date.Value,
+                                               CreatedDate = r.created_date.Value,
                                                TimeEnd = b.time_end,
                                                TimeStart = b.time_start,
                                                AttendanceEnd = a.attendance_end,
@@ -48,13 +46,14 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                RequestID = a.request_id,
                                                CountryName = c.country_name,
                                                StatusName = h.name,
-                                               FormalityName = j.name
+                                               FormalityName = j.name,
+                                               Reimbursement = a.reimbursement
                                            }).FirstOrDefault();
             List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
                                                               join c in db.TitleLanguages on b.title_id equals c.title_id
                                                               join d in db.People on b.people_id equals d.people_id
                                                               join e in db.Offices on b.office_id equals e.office_id
-                                                              where a.request_id == b.request_id
+                                                              where b.request_id == request_id
                                                               select new ConferenceParticipantExtend
                                                               {
                                                                   ID = b.current_mssv_msnv,
@@ -66,7 +65,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 Participants[i].RowNumber = 1 + i;
             }
-            return JsonConvert.SerializeObject(new { Conference, Participants });
+            var Costs = (from a in db.RequestConferences
+                         join x in db.Costs on a.request_id equals x.request_id
+                         where a.request_id == request_id
+                         select new
+                         {
+                             x.content,
+                             x.cost_id,
+                             x.detail,
+                             x.editable,
+                             x.sponsoring_organization,
+                             x.total
+                         }).ToList();
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs });
         }
     }
 }
