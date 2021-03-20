@@ -90,6 +90,7 @@ namespace ENTITIES
         public virtual DbSet<TitleLanguage> TitleLanguages { get; set; }
         public virtual DbSet<Citation> Citations { get; set; }
         public virtual DbSet<RequestCitation> RequestCitations { get; set; }
+        public virtual DbSet<ApprovalProcess> ApprovalProcesses { get; set; }
         public virtual DbSet<Conference> Conferences { get; set; }
         public virtual DbSet<ConferenceParticipant> ConferenceParticipants { get; set; }
         public virtual DbSet<ConferenceStatu> ConferenceStatus { get; set; }
