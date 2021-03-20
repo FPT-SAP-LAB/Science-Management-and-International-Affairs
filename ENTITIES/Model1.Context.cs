@@ -28,6 +28,7 @@ namespace ENTITIES
         public virtual DbSet<CommentBase> CommentBases { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AccountRight> AccountRights { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<File> Files { get; set; }
