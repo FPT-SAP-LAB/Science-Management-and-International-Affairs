@@ -19,6 +19,6 @@ namespace ENTITIES
         public string title { get; set; }
         public string content { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

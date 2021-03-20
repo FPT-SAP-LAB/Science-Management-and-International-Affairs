@@ -18,7 +18,7 @@ namespace ENTITIES
         public ResearchArea()
         {
             this.ResearchAreaLanguages = new HashSet<ResearchAreaLanguage>();
-            this.People = new HashSet<Person>();
+            this.Profiles = new HashSet<Profile>();
         }
     
         public int research_area_id { get; set; }
@@ -26,6 +26,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchAreaLanguage> ResearchAreaLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }
