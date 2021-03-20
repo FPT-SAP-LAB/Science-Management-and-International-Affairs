@@ -21,11 +21,11 @@ namespace ENTITIES
         }
     
         public int comment_id { get; set; }
-        public Nullable<int> people_id { get; set; }
+        public int account_id { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public string content { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaseRequest> BaseRequests { get; set; }
     }
