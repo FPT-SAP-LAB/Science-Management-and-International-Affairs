@@ -81,11 +81,11 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <label class="col-form-label font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
+                        <label class="col-form-label font-weight-bolder">Loại</label>
                         <select class="form-control" required id="add_category">
                             @foreach (var item in ViewBag.AAType)
                             {
@@ -149,11 +149,11 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <label class="col-form-label font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
+                        <label class="col-form-label font-weight-bolder">Loại</label>
                         <select class="form-control" required id="edit_category">
                             @foreach (var item in ViewBag.AAType)
                             {
@@ -217,11 +217,11 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <label class="col-form-label font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="clone_title" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="font-weight-bolder">Loại</label>
+                        <label class="col-form-label font-weight-bolder">Loại</label>
                         <select class="form-control" required id="clone_category">
                             @foreach (var item in ViewBag.AAType)
                             {
@@ -369,7 +369,7 @@
             $('#cloneModal').modal('show');
         }
         function goDetail(id) {
-            window.location.href = '/DetailOfAcademicActivity/Index?id' + id;
+            window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
         }
         $('#btn_add').click(function () {
             let activity_name = document.getElementById('add_title').value;
@@ -490,7 +490,7 @@
                 content: getSelectedCheckboxValues('clone-content')
             }
             $.ajax({
-                url: '/AcademicActivity/cloneAA',
+                url: '/AcademicActivity/clone',
                 data: JSON.stringify(object),
                 type: "POST",
                 contentType: "application/json;charset=utf-8",

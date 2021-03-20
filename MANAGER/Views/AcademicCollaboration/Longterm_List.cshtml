@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "Danh sách đào tạo sau đại học";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -38,7 +37,7 @@
 </style>
 <div class="row mb-5">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <a class="" id="edit_content_long_term">Chỉnh sửa nội dung miêu tả</a>
+        <a href="javascript:;" class="" id="edit_content_long_term">Chỉnh sửa nội dung miêu tả</a>
     </div>
 </div>
 <div class="card card-custom mb-1 collapse-title" id="collapse-title">
@@ -68,7 +67,7 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a class="nav-link" id="edit_content_going">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="javascript:;" class="nav-link" id="edit_content_going">Chỉnh sửa nội dung miêu tả</a>
                             </li>
                         </ul>
                     </div>
@@ -76,7 +75,7 @@
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_table_1" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_1">
                             <div class="row mb-4">
                                 <h4 style="font-weight: bold;">
-                                    DANH SÁCH CÁN BỘ ĐÀO TẠO SAU ĐẠI HỌC
+                                    CÁN BỘ GIẢNG VIÊN
                                 </h4>
                             </div>
                             @{
@@ -127,7 +126,7 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a class="nav-link" id="edit_content_coming">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="javascript:;" class="nav-link" id="edit_content_coming">Chỉnh sửa nội dung miêu tả</a>
                             </li>
                         </ul>
                     </div>
@@ -135,7 +134,7 @@
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_table_2" role="tabpanel" aria-labelledby="kt_tab_pane_1_table_2">
                             <div class="row mb-4">
                                 <h4 style="font-weight: bold;">
-                                    DANH SÁCH CÁN BỘ ĐÀO TẠO SAU ĐẠI HỌC
+                                    CÁN BỘ GIẢNG VIÊN
                                 </h4>
                             </div>
                             @{
@@ -195,16 +194,13 @@
 }
 
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-
-
     @*//datatable*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_Datatable.js"></script>
 
     @*datepicker and range*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
 
+    @*modal trigger*@
     <script>
 
         $('#edit_content_long_term').click(function () {

@@ -4,6 +4,7 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,36 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
+        public JsonResult AddPaper(Paper paper)
+        {
+            Paper p = pr.addPaper(paper);
+            if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
+            else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddRequest(RequestPaper item)
+        {
+            BaseRequest b = pr.addBaseRequest("10");
+            string mess = pr.addRequestPaper(b.request_id, item);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddAuthor(List<AddAuthor> people, string paper_id)
+        {
+            string mess = pr.addAuthor(people, paper_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            string mess = pr.addCriteria(criteria, paper_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public ActionResult Edit(string id, string editable)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bài báo";
@@ -70,14 +101,18 @@ namespace GUEST.Controllers
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
-            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
-            ViewBag.listAuthor = listAuthor;
-            ViewBag.numberAuthor = listAuthor.Count();
-
             List<DetailComment> listCmt = cr.getComment(request_id);
             ViewBag.cmt = listCmt;
+            ViewBag.id = id;
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult listAuthor(string id)
+        {
+            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
 
         //public ActionResult Pending()

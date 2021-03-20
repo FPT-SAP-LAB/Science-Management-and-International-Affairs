@@ -218,6 +218,9 @@
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />
@@ -252,11 +255,17 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceParticipant.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
@@ -461,6 +470,9 @@
     <Compile Include="Right.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RightByRole.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -470,10 +482,19 @@
     <Compile Include="ScholarshipStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Scimagojr.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Specialization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecializationLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

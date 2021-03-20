@@ -19,7 +19,7 @@ namespace ENTITIES
         {
             this.TitleLanguages = new HashSet<TitleLanguage>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
-            this.People = new HashSet<Person>();
+            this.Profiles = new HashSet<Profile>();
         }
     
         public int title_id { get; set; }
@@ -29,6 +29,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }

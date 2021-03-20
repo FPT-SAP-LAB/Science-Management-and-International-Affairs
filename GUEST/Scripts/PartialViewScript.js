@@ -1,12 +1,11 @@
-﻿$("#ckfe").change(function () {
+﻿$("#ckfe").change(function() {
     var val = $("#ckfe").val();
     if (val == 0) {
-        $(".editfe").each(function () {
+        $(".editfe").each(function() {
             $(this).prop("disabled", true);
         });
-    }
-    else {
-        $(".editfe").each(function () {
+    } else {
+        $(".editfe").each(function() {
             $(this).prop("disabled", false);
         });
     }
@@ -24,7 +23,7 @@ $('#add_author_contractType').select2({
     allowClear: true
 });
 
-$(function () {
+$(function() {
     $(".tacgia").hide()
 })
 donvife = {
@@ -35,9 +34,9 @@ donvife = {
 }
 
 "use strict";
-
+var uppy2;
 // Class definition
-var KTUppy = function () {
+var KTUppy = function() {
     const Tus = Uppy.Tus;
     //const ProgressBar = Uppy.ProgressBar;
     const StatusBar = Uppy.StatusBar;
@@ -53,7 +52,7 @@ var KTUppy = function () {
 
     // Private functions
 
-    var initUppy5 = function () {
+    var initUppy5 = function() {
         // Uppy variables
         // For more info refer: https://uppy.io/
         var elemId = 'kt_uppy_5';
@@ -62,23 +61,31 @@ var KTUppy = function () {
         var $uploadedList = $(id + ' .uppy-list');
         var timeout;
 
-        var uppyMin = Uppy.Core({
+        uppy2 = Uppy.Core({
             debug: true,
-            autoProceed: true,
+            autoProceed: false,
             showProgressDetails: true,
             restrictions: {
-                maxFileSize: 1000000, // 1mb
-                maxNumberOfFiles: 5,
-                minNumberOfFiles: 1
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 2,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
             }
         });
 
-        uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-        uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+        uppy2.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy2.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
 
         // demo file upload server
-        uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-        uppyMin.use(StatusBar, {
+        uppy2.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy2.use(StatusBar, {
             target: id + ' .uppy-status',
             hideUploadButton: true,
             hideAfterFinish: false
@@ -89,40 +96,36 @@ var KTUppy = function () {
 
         var $fileLabel = $(id + ' .uppy-input-label');
 
-        uppyMin.on('upload', function (data) {
-            a=data
+        uppy2.on('upload', function( /*data*/ ) {
             $fileLabel.text("Uploading...");
             $statusBar.addClass('uppy-status-ongoing');
             $statusBar.removeClass('uppy-status-hidden');
             clearTimeout(timeout);
         });
 
-        uppyMin.on('complete', function (file) {
-            $.each(file.successful, function (index, value) {
-                var sizeLabel = "bytes";
-                var filesize = value.size;
+        uppy2.on('file-added', function(file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
                 if (filesize > 1024) {
                     filesize = filesize / 1024;
-                    sizeLabel = "kb";
-
-                    if (filesize > 1024) {
-                        filesize = filesize / 1024;
-                        sizeLabel = "MB";
-                    }
+                    sizeLabel = "MB";
                 }
-                var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                $uploadedList.append(uploadListHtml);
-            });
-
-            $fileLabel.text("Add more files");
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
 
             $statusBar.addClass('uppy-status-hidden');
             $statusBar.removeClass('uppy-status-ongoing');
+            filename.push(file.name);
         });
 
-        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function() {
             var itemId = $(this).attr('data-id');
-            uppyMin.removeFile(itemId);
+            uppy2.removeFile(itemId);
             $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
         });
     }
@@ -130,15 +133,168 @@ var KTUppy = function () {
 
     return {
         // public functions
-        init: function () {
+        init: function() {
             initUppy5();
-            setTimeout(function () {
+            setTimeout(function() {
 
             }, 2000);
         }
     };
 }();
 
-KTUtil.ready(function () {
+KTUtil.ready(function() {
     KTUppy.init();
+});
+
+var filename = [];
+
+class AuthorInfoView {
+    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
+        this.add_author_msnv = add_author_msnv;
+        this.add_author_email = add_author_email;
+        this.add_author_workplace = add_author_workplace;
+        this.add_author_name = add_author_name;
+        this.add_author_title = add_author_title;
+        this.add_author_contractType = add_author_contractType;
+        this.add_author_cmnd = add_author_cmnd;
+        this.add_author_tax = add_author_tax;
+        this.add_author_bank = add_author_bank;
+        this.add_author_accno = add_author_accno;
+        this.add_author_reward = add_author_reward;
+        this.add_author_note = add_author_note;
+        this.add_author_info_id = id
+    }
+    getHTML() {
+        return `
+                 <div class='col-lg-6' id='` + this.add_author_info_id + `'>
+                                <!--begin::Card-->
+                                <div class='card card-custom gutter-b'>
+                                    <div class='card-header'>
+                                        <div class='card-title'>
+                                            <h3 class='card-label'>` + this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
+                                        </div>
+                                        <div class='card-toolbar'>
+                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                                <i class='far fa-edit'></i>
+                                            </a>
+                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                                <i class='la la-trash'></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class='card-body author-info-card'>
+                                        <div class='row'>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Khu Vực:</span>
+                                                        <span class='text-muted font-weight-bold'>` + this.add_author_workplace + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_title + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_contractType + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_tax + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='col-lg-6 col-sm-12'>
+                                                <div class='mb-7'>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Email:</span>
+                                                        <span class='text-muted font-weight-bold'>` + this.add_author_email + `</span>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_cmnd + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Ngân hàng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_bank + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Số tài khoản: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_accno + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Tiền thưởng: </span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_reward + `</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card-->
+                            </div>
+                            `
+    }
+}
+//////////////////////////////////////////////////////////////////
+$("#add_author_save").click(function() {
+    ckfe = $("#ckfe").val()
+    add_author_workplace = $("#ckfe").val()
+    add_author_msnv = $("#add_author_msnv").val()
+    add_author_name = $("#add_author_name").val()
+    add_author_title = $("#add_author_title option:selected").text()
+    add_author_contractType = $("#add_author_contractType option:selected").text()
+    add_author_cmnd = $("#add_author_cmnd").val()
+    add_author_tax = $("#add_author_tax").val()
+    add_author_bank = $("#add_author_bank").val()
+    add_author_accno = $("#add_author_accno").val()
+    add_author_reward = $("#add_author_reward").val()
+    add_author_note = $("#add_author_note").val()
+    add_author_email = $("#add_author_mail").val()
+    id = new Date().getTime()
+    au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
+        add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
+        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id)
+    $("#authors-info-container").append(au.getHTML());
+    var AddAuthor = {
+        name: add_author_name,
+        email: add_author_email,
+        bank_number: add_author_accno,
+        tax_code: add_author_tax,
+        bank_branch: add_author_bank,
+        identification_number: add_author_cmnd,
+        mssv_msnv: add_author_msnv,
+        office_id: $("#ckfe option:selected").attr("name"),
+        contract_id: $("#add_author_contractType").val(),
+        title_id: $("#add_author_title").val(),
+        people_id: $("#add_author_msnv").attr("name"),
+        temp_id: id
+    }
+    people.push(AddAuthor);
+    var inputs = $(".inputAuthor");
+    for (var i = 0; i < inputs.length; i++) {
+        $(inputs[i]).val("");
+    }
+});
+$("#authors-info-container").on('click', '.del-author', function() {
+    let id = $(this).data("id")
+    Swal.fire({
+        title: "Xoá tác giả này?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        reverseButtons: true
+    }).then(function(result) {
+        if (result.value) {
+            $("#" + id).remove();
+            for (var i = 0; i < people.length; i++) {
+                if (people[i].temp_id == id) {
+                    people.splice(i, 1);
+                }
+            }
+        }
+        //else if (result.dismiss === "cancel") {
+        //}
+    });
 });

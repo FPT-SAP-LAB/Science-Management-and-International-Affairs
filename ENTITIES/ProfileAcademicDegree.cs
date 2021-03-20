@@ -20,7 +20,7 @@ namespace ENTITIES
         public int end_year { get; set; }
         public string study_place { get; set; }
     
-        public virtual AcademicDegree AcademicDegree { get; set; }
         public virtual Profile Profile { get; set; }
+        public virtual AcademicDegree AcademicDegree { get; set; }
     }
 }

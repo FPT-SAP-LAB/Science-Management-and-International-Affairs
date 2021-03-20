@@ -1,6 +1,7 @@
 ﻿
-//table 1
-$('#colab_going_table').DataTable({
+//table long-term - going
+let rowNum = 1;
+$('#collab_going_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -9,26 +10,112 @@ $('#colab_going_table').DataTable({
         sEmptyTable: "Không có dữ liệu",
         sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
     },
+    ajax: {
+        url: "/AcademicCollaboration/getListAcademicCollaboration",
+        type: "POST",
+        datatype: "json",
+        data: {
+            direction: 1, /*going*/
+            collab_type_id: 2 /*long-term*/
+        },
+        cache: "false"
+    },
     searching: false,
     lengthChange: false,
+    serverSide: true,
+    columns: [
+        {
+            name: 'collab_id',
+            render: () => {
+                return rowNum++;
+            }
+        },
+        {
+            data: 'people_name',
+            name: 'people_name'
+        },
+        {
+            data: 'email',
+            name: 'email'
+        },
+        {
+            data: 'office_name',
+            name: 'office_name'
+        },
+        {
+            data: 'partner_name',
+            name: 'partner_name'
+        },
+        {
+            data: 'country_name',
+            name: 'country_name'
+        },
+        {
+            data: 'plan_study_start_date',
+            name: 'plan_study_start_date',
+            render: function (data, type) {
+                if (type === "sort" || type === "") {
+                    return data;
+                }
+                return moment(data).format("L");
+            }
+        },
+        {
+            data: 'plan_study_end_date',
+            name: 'plan_study_end_date',
+            render: function (data, type) {
+                if (type === "sort" || type === "") {
+                    return data;
+                }
+                return moment(data).format("L");
+            }
+        },
+        {
+            data: 'collab_status_id',
+            name: 'collab_status_id',
+        },
+        {
+            data: 'is_supported', //bool true || false
+            name: 'is_supported',
+            render: function (data) {
+                if (data == true) return `<input type="checkbox" disabled checked/>`
+                return `<input type="checkbox" disabled/>`
+            }
+        },
+        {
+            data: 'note',
+            name: 'note'
+        }
+    ],
     columnDefs: [
         {
+            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+            className: 'text-nowrap text-center'
+        },
+        {
+            targets: 3,
+            width: '150px',
+            className: 'text-center'
+        },
+        {
             targets: 8,
-            width: '75px',
-            className: 'text-center',
             render: function (data) {
                 var status = {
                     1: {
-                        'title': 'Không hoàn thành',
-                        'class': 'label-secondary'
+                        'title': 'Đề xuất',
+                        'class': 'label-inline'
                     },
                     2: {
-                        'title': 'Đã hoàn thành',
-                        'class': 'label-success'
+                        'title': 'Đang thực hiện',
+                        'class': 'label-warning'
                     },
                     3: {
-                        'title': 'Đang thực hiện',
+                        'title': 'Không hoàn thành',
                         'class': 'label-danger'
+                    },
+                    4: {
+                        'title': 'Đã hoàn thành',
+                        'class': 'label-secondary'
                     }
                 };
                 if (typeof status[data] === 'undefined') {
@@ -55,9 +142,7 @@ $('#colab_going_table').DataTable({
         {
             targets: -1,
             title: 'Hành động',
-            className: 'text-center text-nowrap',
             orderable: false,
-            width: '125px',
             render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
@@ -66,12 +151,14 @@ $('#colab_going_table').DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().removeClass();
-        //$('.colab-table thead th').removeAttr('style');
 
     },
-})
+});
+
+
+
 //table 2
-$('#colab_coming_table').DataTable({
+$('#collab_coming_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -84,22 +171,33 @@ $('#colab_coming_table').DataTable({
     lengthChange: false,
     columnDefs: [
         {
+            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+            className: 'text-nowrap text-center'
+        },
+        {
+            targets: 3,
+            width: '150px',
+            className: 'text-center'
+        },
+        {
             targets: 8,
-            width: '75px',
-            className: 'text-center',
             render: function (data) {
                 var status = {
                     1: {
-                        'title': 'Không hoàn thành',
-                        'class': 'label-secondary'
+                        'title': 'Đề xuất',
+                        'class': 'label-inline'
                     },
                     2: {
-                        'title': 'Đã hoàn thành',
-                        'class': 'label-success'
+                        'title': 'Đang thực hiện',
+                        'class': 'label-warning'
                     },
                     3: {
-                        'title': 'Đang thực hiện',
+                        'title': 'Không hoàn thành',
                         'class': 'label-danger'
+                    },
+                    4: {
+                        'title': 'Đã hoàn thành',
+                        'class': 'label-secondary'
                     }
                 };
                 if (typeof status[data] === 'undefined') {
@@ -126,9 +224,7 @@ $('#colab_coming_table').DataTable({
         {
             targets: -1,
             title: 'Hành động',
-            className: 'text-center text-nowrap',
             orderable: false,
-            width: '125px',
             render: function () {
                 return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
             }
@@ -137,14 +233,14 @@ $('#colab_coming_table').DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().removeClass();
-        //$('.colab-table thead th').removeAttr('style');
+        //$('.collab-table thead th').removeAttr('style');
 
 
     },
 })
 
 //table 3
-$("#colab_program_going_table").DataTable({
+$("#collab_program_going_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -175,7 +271,7 @@ $("#colab_program_going_table").DataTable({
 });
 
 //table 4
-$("#colab_program_coming_table").DataTable({
+$("#collab_program_coming_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",

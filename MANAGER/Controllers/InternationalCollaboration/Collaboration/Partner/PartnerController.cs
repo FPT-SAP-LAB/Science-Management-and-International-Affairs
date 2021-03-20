@@ -39,6 +39,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner
             return View();
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage)
+        {
+            List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
+            for (int i = 0; i < numberOfImage; i++)
+            {
+                string label = "image_" + i;
+                files.Add(Request.Files[label]);
+            }
+            ViewBag.pageTitle = "THÊM ĐỐI TÁC";
+            return View();
+        }
+
         public ActionResult pass_content(string content, string website, string address, string imgInp)
         {
             try

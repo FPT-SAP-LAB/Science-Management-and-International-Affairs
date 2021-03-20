@@ -1,0 +1,264 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div>
+                            <a href="#add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        </div>
+                        <table class="table table-bordered" id="collaboration_scope_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Phạm vi hợp tác
+                                    </th>
+                                    <th>
+                                        Viết tắt
+                                    </th>
+                                    <th>
+                                        Hành động
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ADD-->
+<div class="modal fade in" id="add_modal" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">THÊM PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_scope_name" type="text" class="form-control" placeholder="Phạm vi hợp tác" />
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_scope_abbreviation" type="text" class="form-control" placeholder="Viết tắt" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add_modal_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='add_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EDIT-->
+<div class="modal fade in" id="edit_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                    <input id="edit_modal_scope_name" class="form-control" type="text" placeholder="Phạm vi hợp tác" />
+                </div>
+                <div col-xl-6 col-lg-6 col-md-6 col-sm-6>
+                    <input id="edit_modal_scope_abbreviation" class="form-control" type="text" placeholder="Viết tắt" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='edit_modal_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='edit_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var dataTable = $("#collaboration_scope_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("listCollaborationScope", "CollaborationScope")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "scope_name", name: "scope_name" },
+                { data: "scope_abbreviation", name: "scope_abbreviation" },
+                {
+                    data: "scope_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="loadDataToEditModal('+ data +')" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteCollaborationScope('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+    </script>
+
+    <!--ADD-->
+    <script>
+        $("#add_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("addCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_name: $("#add_modal_scope_name").val(),
+                    scope_abbreviation: $("#add_modal_scope_abbreviation").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#add_modal_scope_name").val("");
+                        $("#add_modal_scope_abbreviation").val("");
+                        //close modal
+                        $("#add_modal_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function () {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        });
+    </script>
+
+    <!--EDIT-->
+    <script>
+        var scope_id_temp;
+        //loading data to modal
+        function loadDataToEditModal(scope_id) {
+            scope_id_temp = scope_id;
+            $.ajax({
+                url: "@Url.Action("getCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_id: scope_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#edit_modal_scope_name").val(data.obj.scope_name);
+                        $("#edit_modal_scope_abbreviation").val(data.obj.scope_abbreviation);
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        }
+
+        //confirm edit
+        $("#edit_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("editCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_id: scope_id_temp,
+                    scope_name: $("#edit_modal_scope_name").val(),
+                    scope_abbreviation: $("#edit_modal_scope_abbreviation").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#edit_modal_scope_name").val("");
+                        $("#edit_modal_scope_abbreviation").val("");
+                        //close modal
+                        $("#edit_modal_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    dataTable.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    dataTable.ajax.reload();
+                }
+            });
+        });
+    </script>
+
+    <!--DELETE-->
+    <script>
+        function deleteCollaborationScope(scope_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa loại kinh phí này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Action("deleteCollaborationScope", "CollaborationScope")",
+                        type: "POST",
+                        data: {
+                            scope_id: scope_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == true) {
+                                toastr.success(data.content);
+                            } else {
+                                toastr.error(data.content);
+                            }
+                            dataTable.ajax.reload();
+                        },
+                        error: function (data) {
+                            toastr.error(data.content);
+                            dataTable.ajax.reload();
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+}
+
+
