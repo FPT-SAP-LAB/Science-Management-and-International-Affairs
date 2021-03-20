@@ -305,7 +305,7 @@ namespace BLL.ScienceManagement.Paper
                 rp.reward_type = item.reward_type;
                 rp.status_id = 4;
 
-                if(item.type == "Trongnuoc")
+                if (item.type == "Trongnuoc")
                 {
                     db.Database.ExecuteSqlCommand("DELETE FROM [SM_ScientificProduct].RequestPaper where paper_id = @id", new SqlParameter("id", item.paper_id));
                 }
