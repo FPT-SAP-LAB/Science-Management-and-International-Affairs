@@ -39,25 +39,33 @@
                                                 <option selected value=""></option>
                                                 @foreach (var i in ViewBag.countries)
                                                 {
-                                                    <option value="@i.country_id">@i.country_name</option>
+                                                    <option value="@i.country_name">@i.country_name</option>
                                                 }
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input value="" type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
+                                                <option selected value=""></option>
+                                                @foreach (var i in ViewBag.specializations)
+                                                {
+                                                    <option value="@i.specialization_name">@i.specialization_name</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                             <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
                                                 <option label="Label"></option>
-                                                <option value="0">Chưa có</option>
-                                                <option value="1">Đã có</option>
+                                                <option value="1">Chưa có</option>
+                                                <option value="2">Đã có</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                                        <a class="btn btn-light-primary px-6 font-weight-bold" id="search_btn">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -140,11 +148,20 @@
             placeholder: 'Quốc gia',
             allowClear: true,
         })
+
         $('#search_coop_agreement').select2({
             placeholder: 'Thỏa thuận hợp tác',
             allowClear: true,
 
         })
+
+        $('#search_specialization').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+
+        })
+
+
     </script>
     <script>
          function load_history(id) {
@@ -192,9 +209,9 @@
         }
     </script>
     <script>
-
+       
         //datatable
-        $("#partner_table").DataTable({
+        var datatable = $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -216,7 +233,7 @@
                         "partner_name": function () { return $('#search_partner_name').val() },
                         "nation": function () { return $('#search_nation').val() },
                         "specialization": function () { return $('#search_specialization').val() },
-                        "coop_agreement": function () { return $('#search_coop_agreement').val() },
+                        "is_collab": function () { return $('#search_coop_agreement').val() },
                     }
                 },
                 cache: "false"
@@ -297,7 +314,9 @@
             ]
         });
 
-
+        $('#search_btn').click(function () {
+            datatable.ajax.reload();
+        }) 
         //overflow
         $(document).ready(function () {
             $('#partner_table').parent().css('overflow-x', 'auto');
@@ -338,9 +357,6 @@
                 }
             })
         };
-    </script>
-    <script>
-
     </script>
 
 }

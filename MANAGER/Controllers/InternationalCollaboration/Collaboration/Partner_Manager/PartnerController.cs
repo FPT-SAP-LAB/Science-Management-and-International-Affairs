@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
                 return Json(new
                 {
                     success = true,
