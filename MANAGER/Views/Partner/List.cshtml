@@ -48,19 +48,15 @@
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                             <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
                                                 <option selected value=""></option>
-                                                @foreach (var i in ViewBag.specializations)
                                                 {
                                                     <option value="@i.specialization_name">@i.specialization_name</option>
                                                 }
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
                                                 <option label="Label"></option>
-                                                <option value="1">Chưa có</option>
-                                                <option value="2">Đã có</option>
+                                                <option value="0">Chưa có</option>
+                                                <option value="1">Đã có</option>
                                             </select>
                                         </div>
                                     </div>
@@ -357,6 +353,9 @@
                 }
             })
         };
+    </script>
+    <script>
+
     </script>
 
 }

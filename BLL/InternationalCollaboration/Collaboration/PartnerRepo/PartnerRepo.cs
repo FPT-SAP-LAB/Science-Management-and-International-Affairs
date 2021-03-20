@@ -24,10 +24,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
 		                        t4.specialization_name,
 		                        t5.country_name,
-		                        case when t2.partner_id is null 
-		                        then 1 else 2 end as 'is_collab'
-                                from IA_Collaboration.Partner t1 
-                                left join IA_Collaboration.MOUPartner t2 on
                                 t2.partner_id = t1.partner_id left join IA_Collaboration.MOU t6
 		                        on t6.mou_id = t2.mou_id 
                                 left join IA_Collaboration.MOUPartnerSpecialization t3 on
