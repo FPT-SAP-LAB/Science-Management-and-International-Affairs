@@ -58,7 +58,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-
                 var sql = @"-----1.1. Danh sách Country
                         select * from General.Country";
                 List<Country> countries = db.Database.SqlQuery<Country>(sql).ToList();
@@ -116,6 +115,5 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 throw e;
             }
         }
-
     }
 }
