@@ -180,7 +180,8 @@ namespace BLL.Admin
                 string sql = @"select r.role_id, r.role_name from General.[Role] r";
                 List<baseRole> data = db.Database.SqlQuery<baseRole>(sql).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<baseRole>();
             }
