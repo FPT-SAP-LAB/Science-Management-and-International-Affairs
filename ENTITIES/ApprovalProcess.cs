@@ -12,21 +12,16 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class CommentBase
+    public partial class ApprovalProcess
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CommentBase()
-        {
-            this.BaseRequests = new HashSet<BaseRequest>();
-        }
-    
-        public int comment_id { get; set; }
         public int account_id { get; set; }
-        public System.DateTime date { get; set; }
-        public string content { get; set; }
+        public int request_id { get; set; }
+        public int position_id { get; set; }
+        public string comment { get; set; }
+        public System.DateTime created_date { get; set; }
     
         public virtual Account Account { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
+        public virtual Position Position { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }

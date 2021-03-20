@@ -94,7 +94,7 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        foreach (var item in ViewBag.cmt)
+                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
                                         {
                                             <tr>
                                                 <td>@item.date.ToString("dd/MM/yyyy")</td>
