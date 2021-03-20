@@ -21,7 +21,7 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
         public ActionResult Logout()
         {
             Session.Abandon();
-            return Redirect("/");
+            return RedirectToAction("Login");
         }
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)

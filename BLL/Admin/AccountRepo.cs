@@ -122,12 +122,9 @@ namespace BLL.Admin
             {
                 try
                 {
-                    string sql = @"delete from General.[AccountRight] where account_id = @account_id";
-                    db.Database.ExecuteSqlCommand(sql, new SqlParameter("account_id", account_id));
+                    List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == account_id).ToList();
+                    db.AccountRights.RemoveRange(rv);
                     db.SaveChanges();
-                    //List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == account_id).ToList();
-                    //db.AccountRights.RemoveRange(rv);
-                    //db.SaveChanges();
                     Account a = db.Accounts.Find(account_id);
                     db.Accounts.Remove(a);
                     db.SaveChanges();
@@ -147,22 +144,22 @@ namespace BLL.Admin
             {
                 try
                 {
-                    string sql = @"delete from General.[AccountRight] where account_id = @account_id";
-                    db.Database.ExecuteSqlCommand(sql, new SqlParameter("account_id", account_id));
+                    List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == account_id).ToList();
+                    db.AccountRights.RemoveRange(rv);
                     db.SaveChanges();
                     Account a = db.Accounts.Find(account_id);
-                    List<baseRight> rightRole = getRightByRole(a.account_id);
+                    List<baseRight> rightRole = getRightByRole(a.role_id);
                     List<int> Accepts = new List<int>(arrAccept);
                     Accepts.RemoveAll(x => rightRole.Any(y => y.right_id == x));
-                    //foreach (int x in arrAccept)
-                    //{
-                    //    db.AccountRights.Add(new AccountRight
-                    //    {
-                    //        right_id = x,
-                    //        account_id = account_id
-                    //    });
-                    //}
-                    //db.SaveChanges();
+                    foreach (int x in Accepts)
+                    {
+                        db.AccountRights.Add(new AccountRight
+                        {
+                            right_id = x,
+                            account_id = account_id
+                        });
+                    }
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
