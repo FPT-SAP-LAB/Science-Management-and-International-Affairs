@@ -18,6 +18,7 @@ namespace ENTITIES
         public Position()
         {
             this.PositionLanguages = new HashSet<PositionLanguage>();
+            this.ApprovalProcesses = new HashSet<ApprovalProcess>();
             this.Profiles = new HashSet<Profile>();
         }
     
@@ -25,6 +26,8 @@ namespace ENTITIES
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PositionLanguage> PositionLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ApprovalProcess> ApprovalProcesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
     }

@@ -138,6 +138,9 @@
     <Compile Include="AnswerType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApprovalProcess.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Area.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -258,6 +261,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceParticipant.cs" />
@@ -489,12 +493,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecializationLanguage.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

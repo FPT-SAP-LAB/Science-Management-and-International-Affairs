@@ -40,7 +40,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (expense_type_name == "")
                     {
-                        return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Tên loại kinh phí không được để trống.");
+                        return new AlertModal<ActivityExpenseType>(null, false, "Tên loại kinh phí không được để trống.");
                     }
                     else
                     {
