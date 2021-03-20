@@ -202,7 +202,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             db.People.Add(Persons[i]);
                             db.SaveChanges();
 
-                            Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
+                            //Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
                             item.people_id = Persons[i].people_id;
                         }
                     }

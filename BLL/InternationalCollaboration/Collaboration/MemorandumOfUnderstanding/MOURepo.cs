@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using OfficeOpenXml;
 using System;
@@ -17,25 +18,34 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
     public class MOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOU> listAllMOU(string partner_name, string contact_point_name, string mou_code)
+        public BaseServerSideData<ListMOU> listAllMOU(BaseDatatable baseDatatable, string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
+                if (baseDatatable.SortColumnName is null || baseDatatable.SortColumnName == "")
+                {
+                    baseDatatable.SortColumnName = "mou_partner_id";
+                }
+                if (baseDatatable.SortDirection is null)
+                {
+                    baseDatatable.SortDirection = "desc";
+                }
                 string sql_mouList =
-                    @"select tb2.mou_partner_id,
-                        tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,tb3.website,tb2.contact_point_name
-                        ,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
-                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb5.scope_abbreviation
-                        ,tb7.specialization_name, tb9.mou_status_id,tb1.mou_id
+                    @"select tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, 
+                        tb4.scope_abbreviation,
+                        STRING_AGG(tb7.specialization_name, ',') 'specialization_name', tb9.mou_status_id,tb1.mou_id
                         from IA_Collaboration.MOU tb1 inner join IA_Collaboration.MOUPartner tb2
-                        on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.Partner tb3 
+                        on tb1.mou_id = tb2.mou_id inner join IA_Collaboration.[Partner] tb3 
                         on tb2.partner_id = tb3.partner_id inner join
-                        (select t1.mou_id,t2.partner_id,t2.scope_id
+                        (select t1.mou_id,t2.partner_id, STRING_AGG(tb5.scope_abbreviation, ',') 'scope_abbreviation'
                         from IA_Collaboration.MOUPartnerScope t1 inner join
-                        IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id) tb4
-                        on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
+                        IA_Collaboration.PartnerScope t2 on t1.partner_scope_id = t2.partner_scope_id
                         inner join IA_Collaboration.CollaborationScope tb5 on
-                        tb5.scope_id  = tb4.scope_id
+                        tb5.scope_id  = t2.scope_id
+                        group by t1.mou_id,t2.partner_id) tb4
+                        on tb4.mou_id = tb2.mou_id and tb3.partner_id = tb4.partner_id
                         inner join IA_Collaboration.MOUPartnerSpecialization tb6
                         on tb6.mou_partner_id = tb2.mou_partner_id 
                         inner join General.Specialization tb7
@@ -53,17 +63,37 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
-                        where tb1.is_deleted = 0
-                        and partner_name like @partner_name
-                        and contact_point_name like @contact_point_name
-                        and mou_code like @mou_code
-                        order by mou_code desc";
+                        where tb1.is_deleted = 0";
+                if (partner_name != "")
+                {
+                    sql_mouList += "and tb3.partner_name like @partner_name ";
+                }
+                if (contact_point_name != "")
+                {
+                    sql_mouList += "and tb2.contact_point_name like @contact_point_name ";
+                }
+                if (mou_code != "")
+                {
+                    sql_mouList += "and tb1.mou_code like @mou_code ";
+                }
+                string sql_BonusQuery = @"
+                        GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
+                        tb4.scope_abbreviation
+                        order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
+                        "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
+                sql_mouList += sql_BonusQuery;
+                string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
+                        IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
+                        where t2.is_deleted = 0";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
-                handlingMOUListData(mouList);
-                return mouList;
+                int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal).First();
+                handlingMOUListData(mouList, baseDatatable.Start);
+                return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
             catch (Exception ex)
             {
@@ -112,7 +142,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
-                handlingMOUListData(mouList);
+                handlingMOUListData(mouList, 0);
                 return mouList;
             }
             catch (Exception ex)
@@ -166,12 +196,25 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         //new partner
                         if (item.partner_id == 0)
                         {
+                            Country c = db.Countries.Where(x => x.country_name == item.nation_add).First();
+                            Country added = new Country();
+                            if (c == null)
+                            {
+                                added = db.Countries.Add(new Country
+                                {
+                                    country_name = item.nation_add
+                                });
+                            }
+                            else
+                            {
+                                added.country_id = c.country_id;
+                            }
                             db.Partners.Add(new ENTITIES.Partner
                             {
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = 13
+                                country_id = added.country_id
                             });
                             //checkpoint 2
                             db.SaveChanges();
@@ -250,7 +293,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
             string filename = "MOU.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<ListMOU> listMOU = listAllMOU("", "", "");
+            BaseServerSideData<ListMOU> listMOU = listAllMOU(null, "", "", "");
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -258,22 +301,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 3;
-                for (int i = 0; i < listMOU.Count; i++)
+                for (int i = 0; i < listMOU.Data.Count; i++)
                 {
                     excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
-                    excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
-                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
-                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
-                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
-                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_phone_email;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_phone;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).mou_start_date;
-                    excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_end_date;
-                    excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).scope_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).mou_status_name;
+                    excelWorksheet.Cells[i + startRow, 2].Value = listMOU.Data.ElementAt(i).mou_code;
+                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.Data.ElementAt(i).partner_name;
+                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.Data.ElementAt(i).country_name;
+                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.Data.ElementAt(i).website;
+                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.Data.ElementAt(i).specialization_name;
+                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.Data.ElementAt(i).contact_point_name;
+                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.Data.ElementAt(i).contact_point_email;
+                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.Data.ElementAt(i).contact_point_phone;
+                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.Data.ElementAt(i).mou_start_date;
+                    excelWorksheet.Cells[i + startRow, 10].Value = listMOU.Data.ElementAt(i).mou_end_date;
+                    excelWorksheet.Cells[i + startRow, 11].Value = listMOU.Data.ElementAt(i).office_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.Data.ElementAt(i).scope_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.Data.ElementAt(i).mou_status_name;
                 }
                 string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
@@ -393,41 +436,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private void handlingMOUListData(List<ListMOU> mouList)
+        private void handlingMOUListData(List<ListMOU> mouList, int start)
         {
             //handling spe and scope data.
             //handling calender display
-            ListMOU previousItem = null;
             foreach (ListMOU item in mouList.ToList())
             {
-                if (previousItem == null) //first record
-                {
-                    previousItem = item;
-                    previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
-                    previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
-                }
-                else
-                {
-                    if (item.mou_partner_id.Equals(previousItem.mou_partner_id))
-                    {
-                        if (!previousItem.specialization_name.Contains(item.specialization_name))
-                        {
-                            previousItem.specialization_name = previousItem.specialization_name + "," + item.specialization_name;
-                        }
-                        if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
-                        {
-                            previousItem.scope_abbreviation = previousItem.scope_abbreviation + "," + item.scope_abbreviation;
-                        }
-                        //then remove current object
-                        mouList.Remove(item);
-                    }
-                    else
-                    {
-                        previousItem = item;
-                        previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
-                        previousItem.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
-                    }
-                }
+                item.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
+                item.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
+                item.RowNumber = ++start;
             }
         }
         public int getDuration()
@@ -530,6 +547,39 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     transaction.Rollback();
                     throw ex;
                 }
+            }
+        }
+        public string partnerInfoIsDuplicated(string partner_name, string mou_start_date_string)
+        {
+            try
+            {
+                ENTITIES.Partner pCheck = db.Partners.Where(x => x.partner_name == partner_name).FirstOrDefault();
+                if (pCheck is null)
+                {
+                    return "";
+                }
+                else
+                {
+                    DateTime mou_start_date = DateTime.ParseExact(mou_start_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    MOUPartner mpCheck = db.MOUPartners.Where(x => x.partner_id == pCheck.partner_id && x.mou_start_date == mou_start_date).FirstOrDefault();
+                    return mpCheck is null ? "" : db.MOUs.Find(mpCheck.mou_id).mou_code;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool getMOUCodeCheck(string mou_code)
+        {
+            try
+            {
+                MOU obj = db.MOUs.Where(x => x.mou_code == mou_code).FirstOrDefault();
+                return obj == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

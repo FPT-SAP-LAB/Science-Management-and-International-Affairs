@@ -75,7 +75,7 @@ namespace User.Controllers
             List<ENTITIES.Citation> listCitation = cr.getCitation(id);
             ViewBag.citation = listCitation;
 
-            List<DetailComment> listCmt = crr.getComment(Int32.Parse(id));
+            List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
             ViewBag.cmt = listCmt;
 
             return View();

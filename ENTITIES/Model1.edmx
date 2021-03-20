@@ -8104,6 +8104,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
           <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
         </Association>
+        <Association Name="AreaCare">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="ScienceAndInternationalAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentBases" EntityType="Self.CommentBase" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -8947,6 +8951,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="PeopleTitle" Association="Self.PeopleTitle">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Title" EntitySet="Titles" />
+          </AssociationSet>
+          <AssociationSet Name="AreaCare" Association="Self.AreaCare">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="ResearchArea" EntitySet="ResearchAreas" />
           </AssociationSet>
           <AssociationSet Name="AreaCare" Association="Self.AreaCare">
             <End Role="Profile" EntitySet="Profiles" />
@@ -10257,6 +10265,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </EndProperty>
             <EndProperty Name="Title">
               <ScalarProperty Name="title_id" ColumnName="title_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">
+            <EndProperty Name="Profile">
+              <ScalarProperty Name="people_id" ColumnName="people_id" />
+            </EndProperty>
+            <EndProperty Name="ResearchArea">
+              <ScalarProperty Name="research_area_id" ColumnName="research_area_id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">

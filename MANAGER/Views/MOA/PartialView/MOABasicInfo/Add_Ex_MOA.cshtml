@@ -1,0 +1,169 @@
+﻿@*modal add_additional_moa*@
+<div class="modal fade" id="add_additional_moa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">BỔ SUNG BIÊN BẢN THỎA THUẬN</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Mã hiệu</label>&nbsp;
+                        <label style="font-style: italic;"></label>
+                        <input class="form-control" type="text" placeholder="Mã hiệu MOA_BS/số thứ tự" autocomplete="off" required id="moa_id_addition" value="@ViewBag.newExMOACode" />
+                    </div>
+                    <div class="col-md-6">
+                        <label style="color:red">*</label>
+                        <label class="font-weight-bolder">Bản mềm</label>&nbsp;
+                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <div class="uppy row" id="moa_addition_upload">
+                            <div class="uppy-wrapper col-4"></div>
+                            <div class="uppy-list col-7"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Ngày kí kết</label>&nbsp;
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_addition_sign_time" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày kí kết" id="moa_addition_sign_time" readonly autocomplete="off" data-target="#kt_datetimepicker_moa_addition_sign_time" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_addition_sign_time" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="font-weight-bolder">Ngày hết hạn</label>&nbsp;
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_moa_addition_end_time" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Ngày hết hạn" id="moa_addition_end_time" readonly autocomplete="off" data-target="#kt_datetimepicker_moa_addition_end_time" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_moa_addition_end_time" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <h5 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h5>
+                    </div>
+                </div>
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <a class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-toggle="modal" href="#add-partner-scope">Thêm</a>
+                    </div>
+                </div>
+                <table id="ex_moa_table_add" class="table table-bordered table-hover table-checkable" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Đối tác</th>
+                            <th>Phạm vi hợp tác</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*<tr>
+                                <td class="text-center">1</td>
+                                <td class="text-center">Bunkyou University</td>
+                                <td class="text-center">JC </td>
+                                <td class="text-center" nowrap="nowrap">
+                                    <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                    <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td class="text-center">FPT Software</td>
+                                <td class="text-center">ME </td>
+                                <td class="text-center" nowrap="nowrap">
+                                    <a onclick="" href="#add-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>
+                                    <a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                </td>
+                            </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="finishExMOAAdd()" class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-dismiss="modal">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal add-partner-scope*@
+<div class="modal fade in" id="add-partner-scope" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title">BỔ SUNG VỀ PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
+                        <select class="form-control" required id="partner_name_ex_moa_add">
+                            @foreach (var item in ViewBag.partnerList)
+                            {
+                                <option value="@item.partner_id">@item.partner_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-9">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Phạm vi hợp tác</label>&nbsp;
+                        <select class="form-control select2" required id="coop_scope_ex_moa_add" multiple="multiple" style="width:100% !important">
+                            @foreach (var item in ViewBag.scopeList)
+                            {
+                                <option value="@item.scope_id">@item.scope_abbreviation</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="addExMOATemp()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal edit-partner-scope*@
+<div class="modal fade in" id="edit-partner-scope" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title">ĐIỀU CHỈNH VỀ PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <input hidden readonly type="text" class="form-control" id="idx_ex_moa_edit" placeholder="" name="idx_edit" value="no" />
+                        <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
+                        <select class="form-control" required id="partner_name_ex_moa_edit">
+                        </select>
+                    </div>
+                    <div class="col-md-9">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Phạm vi hợp tác</label>&nbsp;
+                        <select class="form-control select2" required id="coop_scope_ex_moa_edit" multiple="multiple" style="width:100% !important">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="editExMOATemp()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
