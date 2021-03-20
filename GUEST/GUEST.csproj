@@ -2409,6 +2409,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\Program_Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
+    <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
