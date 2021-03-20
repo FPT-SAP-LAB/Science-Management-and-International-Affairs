@@ -17,14 +17,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         // GET: AcademicCollaboration
         public ActionResult Longterm_List()
         {
-            //list for searching
-
-            //country
-            //year 
-            //office
-            //partner
-
             ViewBag.title = "DANH SÁCH ĐÀO TẠO SAU ĐẠI HỌC";
+            //list for searching
+            //country
+            ViewBag.countries = academicCollaborationRepo.countries();
+            //year 
+            ViewBag.yearSearching = academicCollaborationRepo.yearSearching();
+            //office
+            ViewBag.offices = academicCollaborationRepo.offices();
+            //partner
+            ViewBag.partners = academicCollaborationRepo.partners();
             return View();
         }
 
