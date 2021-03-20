@@ -122,8 +122,27 @@ namespace BLL.ScienceManagement.Paper
                             addProfile(item);
                         }
                     }
+                    else
+                    {
+                        Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
+                        p.name = item.name;
+                        p.phone_number = item.phone_number;
+                        if (item.office_abbreviation != "Khác")
+                        {
+                            Profile pro = (from a in db.Profiles join b in db.People on a.people_id equals b.people_id
+                                          where b.email == item.email
+                                          select a).FirstOrDefault();
+                            pro.bank_branch = item.bank_branch;
+                            pro.bank_number = item.bank_number;
+                            pro.tax_code = item.tax_code;
+                            pro.identification_number = item.identification_number;
+                            pro.office_id = item.office_id;
+                            pro.mssv_msnv = item.mssv_msnv;
+                        }
+                    }
                     listmail += "," + item.email;
                 }
+                db.SaveChanges();
                 listmail = listmail.Substring(1);
                 string[] mail = listmail.Split(',');
                 String strAppend = "";

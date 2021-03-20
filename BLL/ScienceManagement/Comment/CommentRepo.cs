@@ -18,7 +18,8 @@ namespace BLL.ScienceManagement.Comment
             string sql = @"select cb.*, po.email
                             from [Comment].CommentBase cb join [Comment].CommentRequest cr on cb.comment_id = cr.comment_id
 	                            join [SM_Request].BaseRequest br on cr.request_id = br.request_id
-	                            join [General].People po on cb.people_id = po.people_id
+	                            join [General].Profile pro on cb.account_id = pro.account_id
+	                            join [General].People po on pro.people_id = po.people_id
                             where cr.request_id = @id";
             list = db.Database.SqlQuery<DetailComment>(sql, new SqlParameter("id", id)).ToList();
             return list;
