@@ -129,9 +129,10 @@ namespace BLL.ScienceManagement.Paper
                         p.phone_number = item.phone_number;
                         if (item.office_abbreviation != "Khác")
                         {
-                            Profile pro = (from a in db.Profiles join b in db.People on a.people_id equals b.people_id
-                                          where b.email == item.email
-                                          select a).FirstOrDefault();
+                            Profile pro = (from a in db.Profiles
+                                           join b in db.People on a.people_id equals b.people_id
+                                           where b.email == item.email
+                                           select a).FirstOrDefault();
                             pro.bank_branch = item.bank_branch;
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
