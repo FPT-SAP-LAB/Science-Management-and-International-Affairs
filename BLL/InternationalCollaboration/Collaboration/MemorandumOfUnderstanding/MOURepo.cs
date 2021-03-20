@@ -67,7 +67,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 if (partner_name != "")
                 {
                     sql_mouList += "and tb3.partner_name like @partner_name ";
-                } 
+                }
                 if (contact_point_name != "")
                 {
                     sql_mouList += "and tb2.contact_point_name like @contact_point_name ";
@@ -81,8 +81,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
                         tb4.scope_abbreviation
-                        order by " + baseDatatable.SortColumnName  + " " + baseDatatable.SortDirection + " "+ 
-                        "OFFSET "+ baseDatatable.Start + " ROWS FETCH NEXT "+ baseDatatable.Length  + " ROWS ONLY";
+                        order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
+                        "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 sql_mouList += sql_BonusQuery;
                 string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
                         IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
@@ -92,7 +92,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
                 int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal).First();
-                handlingMOUListData(mouList,baseDatatable.Start);
+                handlingMOUListData(mouList, baseDatatable.Start);
                 return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
-                handlingMOUListData(mouList,0);
+                handlingMOUListData(mouList, 0);
                 return mouList;
             }
             catch (Exception ex)
@@ -204,7 +204,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 {
                                     country_name = item.nation_add
                                 });
-                            } else
+                            }
+                            else
                             {
                                 added.country_id = c.country_id;
                             }
@@ -292,7 +293,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
             string filename = "MOU.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            BaseServerSideData<ListMOU> listMOU = listAllMOU(null,"", "", "");
+            BaseServerSideData<ListMOU> listMOU = listAllMOU(null, "", "", "");
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -435,7 +436,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private void handlingMOUListData(List<ListMOU> mouList,int start)
+        private void handlingMOUListData(List<ListMOU> mouList, int start)
         {
             //handling spe and scope data.
             //handling calender display
@@ -548,7 +549,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public string partnerInfoIsDuplicated(string partner_name,string mou_start_date_string)
+        public string partnerInfoIsDuplicated(string partner_name, string mou_start_date_string)
         {
             try
             {
@@ -556,7 +557,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 if (pCheck is null)
                 {
                     return "";
-                } else
+                }
+                else
                 {
                     DateTime mou_start_date = DateTime.ParseExact(mou_start_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOUPartner mpCheck = db.MOUPartners.Where(x => x.partner_id == pCheck.partner_id && x.mou_start_date == mou_start_date).FirstOrDefault();
@@ -573,7 +575,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 MOU obj = db.MOUs.Where(x => x.mou_code == mou_code).FirstOrDefault();
-                return obj == null ? false : true; 
+                return obj == null ? false : true;
             }
             catch (Exception ex)
             {

@@ -43,7 +43,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData <ListMOU> listMOU = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
+                BaseServerSideData<ListMOU> listMOU = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
                 return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
