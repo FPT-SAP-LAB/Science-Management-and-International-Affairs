@@ -31,10 +31,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult getListAcademicCollaboration(int direction, int collab_type_id)
+        public ActionResult getListAcademicCollaboration(int direction, int collab_type_id, ObjectSearching_AcademicCollaboration obj_searching)
         {
             BaseDatatable baseDatatable = new BaseDatatable(Request);
-            BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id);
+            BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id, obj_searching);
             return Json(new
             {
                 success = true,
@@ -42,7 +42,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 draw = Request["draw"],
                 recordsTotal = baseServerSideData.RecordsTotal,
                 recordsFiltered = baseServerSideData.RecordsTotal
-            });
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Delete_Longterm(string id)
