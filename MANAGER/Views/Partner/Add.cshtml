@@ -98,7 +98,13 @@
             var demos = function () {
                 $('.summernote').summernote({
                     height: 400,
-                    tabsize: 2
+                    tabsize: 2,
+                    //callbacks: {
+                    //    onImageUpload: function (files) {
+                    //        console.log(files)
+                    //        $('.summernote').summernote('insertImage', files, "");
+                    //    }
+                    //}
                 });
             }
 
@@ -122,7 +128,17 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#avata').attr('src', e.target.result);
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        var URL = canvas.toDataURL('image/jpeg');
+                        $('#avata').attr('src', URL);
+                    };
                 }
 
                 reader.readAsDataURL(input.files[0]);
@@ -132,6 +148,60 @@
         $("#imgInp").change(function () {
             readURL(this);
         });
+
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+
+        $('#submit').click(function () {
+            var form_data = new FormData();
+
+            var src = $('#avata').attr('src');
+
+            var list_image = $('.note-editor').find('img')
+
+            var content = $('.summernote').summernote('code') + "";
+
+            for (i = 0; i < list_image.length; i++) {
+                var temp = list_image[i];
+                var temp_src = $(temp).attr('src') + "";
+                content = content.replace(temp_src, 'image_' + i)
+                form_data.append('image_' + i, dataURItoBlob(temp_src))
+            }
+            form_data.append("numberOfImage", list_image.length)
+            console.log(content)
+
+
+            form_data.append('image', dataURItoBlob(src))
+            form_data.append('content', content)
+            for (var p of form_data) {
+                let name = p[0];
+                let value = p[1];
+
+                console.log(name, value)
+            }
+            $.ajax({
+                url: "/Partner/Add",
+                method: "post",
+                complete: function (data) {
+
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                },
+                dataType: "json",
+                data: form_data,
+                processData: false,
+                contentType: false
+            });
+        })
     </script>
 
 
