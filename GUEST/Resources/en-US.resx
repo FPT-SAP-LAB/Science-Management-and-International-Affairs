@@ -354,6 +354,9 @@
   <data name="RewardType" xml:space="preserve">
     <value>Reward type</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>

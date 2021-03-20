@@ -298,10 +298,13 @@
                             office_id: response.author[i].office_id,
                             contract_id: response.author[i].contract_id,
                             title_id: response.author[i].title_id,
-                            people_id: response.author[i].people_id
+                            people_id: response.author[i].people_id,
+                            temp_id: id,
+                            office_abbreviation: response.author[i].office_abbreviation,
                         }
                         people.push(AddAuthor);
                     }
+                    $(".edit").prop("disabled", true);
                 },
                 error: function () {
                     //alert("fail");
