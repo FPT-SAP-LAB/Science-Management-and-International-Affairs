@@ -22,11 +22,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Profile = (from a in db.Profiles
                            join b in db.Accounts on a.account_id equals b.account_id
                            join c in db.Offices on a.office_id equals c.office_id
+                           join d in db.People on a.people_id equals d.people_id
                            where b.account_id == account_id
                            select new ProfileResearcher
                            {
                                ID = a.mssv_msnv,
-                               FullName = b.full_name,
+                               FullName = d.name,
                                Email = b.email,
                                OfficeID = c.office_id,
                                TitleID = a.Titles.FirstOrDefault().title_id
@@ -64,19 +65,23 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }).ToList();
             return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile });
         }
-        public List<Info> GetAllProfileBy(string id)
+        public List<Info> GetAllProfileBy(string id, int language_id)
         {
-            List<Info> infos = db.Database.SqlQuery<Info>(@"
-               SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
-               FROM   General.People INNER JOIN
-                            SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
-                            SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
-                            General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
-                            Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
-               WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
-               ORDER BY MS
-               OFFSET 0 ROWS
-               FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
+            var infos = (from a in db.Profiles
+                           join b in db.People on a.people_id equals b.people_id
+                           join c in db.Offices on a.office_id equals c.office_id
+                           join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
+                           where a.mssv_msnv.Contains(id) && d.language_id == language_id
+                           select new Info
+                           {
+                               Email = b.email,
+                               MS = a.mssv_msnv,
+                               Name = b.name,
+                               OfficeID = c.office_id,
+                               OfficeName = c.office_name,
+                               TitleID = a.Titles.FirstOrDefault().title_id,
+                               TitleString = d.name,
+                           }).Take(10).ToList();
             if (infos.Count == 0)
             {
                 Info info = new Info()

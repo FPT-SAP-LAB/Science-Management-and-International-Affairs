@@ -85,7 +85,7 @@ namespace GUEST.Controllers
         }
         public JsonResult GetInformationPeopleWithID(string id)
         {
-            var infos = AppRepos.GetAllProfileBy(id);
+            var infos = AppRepos.GetAllProfileBy(id, LanguageResource.GetCurrentLanguageID());
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetConferenceWithName(string name)
