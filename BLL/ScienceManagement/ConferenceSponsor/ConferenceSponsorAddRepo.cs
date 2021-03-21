@@ -68,20 +68,20 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public List<Info> GetAllProfileBy(string id, int language_id)
         {
             var infos = (from a in db.Profiles
-                           join b in db.People on a.people_id equals b.people_id
-                           join c in db.Offices on a.office_id equals c.office_id
-                           join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
-                           where a.mssv_msnv.Contains(id) && d.language_id == language_id
-                           select new Info
-                           {
-                               Email = b.email,
-                               MS = a.mssv_msnv,
-                               Name = b.name,
-                               OfficeID = c.office_id,
-                               OfficeName = c.office_name,
-                               TitleID = a.Titles.FirstOrDefault().title_id,
-                               TitleString = d.name,
-                           }).Take(10).ToList();
+                         join b in db.People on a.people_id equals b.people_id
+                         join c in db.Offices on a.office_id equals c.office_id
+                         join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
+                         where a.mssv_msnv.Contains(id) && d.language_id == language_id
+                         select new Info
+                         {
+                             Email = b.email,
+                             MS = a.mssv_msnv,
+                             Name = b.name,
+                             OfficeID = c.office_id,
+                             OfficeName = c.office_name,
+                             TitleID = a.Titles.FirstOrDefault().title_id,
+                             TitleString = d.name,
+                         }).Take(10).ToList();
             if (infos.Count == 0)
             {
                 Info info = new Info()
