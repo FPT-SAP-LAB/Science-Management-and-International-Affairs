@@ -12,7 +12,7 @@ namespace BLL.Authen
     public class LoginRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public User getAccount(ENTITIES.CustomModels.Authen.Gmail user,List<int> roleAccept)
+        public User getAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
             try
             {

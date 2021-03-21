@@ -21,9 +21,9 @@ namespace GUEST.Controllers.AuthenticationAuthorization
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            List<int> roleAccept = new List<int>() { 5,6 };
+            List<int> roleAccept = new List<int>() { 5, 6 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
-            if(u == null)
+            if (u == null)
             {
                 return Json("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
             }

@@ -26,7 +26,7 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
         {
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
             List<int> roleAccept = new List<int>() { 2, 3, 7 };
-            LoginRepo.User u = repo.getAccount(user,roleAccept);
+            LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
                 return Json(String.Empty);
