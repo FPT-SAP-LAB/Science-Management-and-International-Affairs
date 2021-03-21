@@ -170,6 +170,25 @@ namespace ENTITIES.CustomModels
             createRequest.SupportsAllDrives = true;
             createRequest.Execute();
         }
+        public static AlertModal<string> DeleteFile(string FileID)
+        {
+            try
+            {
+                DeleteRequest request = new DeleteRequest(driveService, FileID)
+                {
+                    SupportsAllDrives = true
+                };
+                request.Execute();
+                return new AlertModal<string>(true, "Xóa thành công");
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("File not found"))
+                    return new AlertModal<string>(false, "File không tồn tại");
+                else
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
+        }
         //public static bool ChangeParentDrive(string ParentID)
         //{
         //    SMDrive = ParentID;
