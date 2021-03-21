@@ -161,8 +161,15 @@
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    window.location.href = this.responseURL;
                     console.log(this);
+                    if (this.response == '""') {
+                        toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                        });
+                    } else {
+                        window.location.href = this.responseURL;
+                    }
                 }
             };
             xhr.send('idtoken=' + id_token);
