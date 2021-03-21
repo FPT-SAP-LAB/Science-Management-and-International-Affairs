@@ -1016,123 +1016,114 @@
                             <div class="dropdown">
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
-                                    <div id="login_btn" class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
-                                        Login
-                                    </div>
-                                    <div class="g-signin2" id="google_auth_login" hidden data-onsuccess="onSignIn" data-theme="dark"></div>
                                     <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
-                                    @*<div class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
-                                            <span class="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                                            <span class="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">sonnt5</span>
-                                            <span class="symbol symbol-35">
-                                                <span class="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">S</span>
-                                            </span>
-                                        </div>*@
+                                    @{ BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["USer"]; }
+                                    @{
+                                        if (user != null)
+                                        {
+                                            <div id="login-success-1" class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
+                                                <span class="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                                                <span class="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">@user.account.full_name</span>
+                                                <span class="symbol symbol-35">
+                                                    <span class="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">S</span>
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="login_btn" class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
+                                                Login
+                                            </div>
+                                            <div class="g-signin2" id="google_auth_login" hidden data-onsuccess="onSignIn" data-theme="dark"></div>
+                                        }
+                                    }
                                     <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
-
                                 </div>
                                 <!--end::Toggle-->
                                 <!--begin::Dropdown-->
-                                <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg p-0">
+                                <div id="login-success-2" class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg p-0">
 
                                     <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
-                                    <!--begin::Header-->
-                                    <!--<div class="d-flex align-items-center p-8 rounded-top">-->
-                                    <!--begin::Symbol-->
-                                    <!--<div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
-                                        <img src="~/Content/assets/media/users/300_21.jpg" alt="" />
-                                    </div>-->
-                                    <!--end::Symbol-->
-                                    <!--begin::Text-->
-                                    <!--<div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">Sean Stone</div>
-                                    <span class="label label-light-success label-lg font-weight-bold label-inline">
-                                        3
-                                        messages
-                                    </span>-->
-                                    <!--end::Text-->
-                                    <!--</div>
-                                    <div class="separator separator-solid"></div>-->
-                                    <!--end::Header-->
-                                    <!--begin::Nav-->
-                                    <!--<div class="navi navi-spacer-x-0 pt-5">-->
-                                    <!--begin::Item-->
-                                    <!--<a href="custom/apps/user/profile-1/personal-information.html" class="navi-item px-8">
-                                        <div class="navi-link">
-                                            <div class="navi-icon mr-2">
-                                                <i class="flaticon2-calendar-3 text-success"></i>
-                                            </div>
-                                            <div class="navi-text">
-                                                <div class="font-weight-bold">
-                                                    My Profile
+                                    @{
+                                        if (@user != null)
+                                        {
+                                            <div class="d-flex align-items-center p-8 rounded-top">
+                                                <div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
+                                                    <img src="@user.account.picture" alt="" />
                                                 </div>
-                                                <div class="text-muted">
-                                                    Account settings and more
-                                                    <span class="label label-light-danger label-inline font-weight-bold">update</span>
+                                                <div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">@user.account.full_name</div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="separator separator-solid"></div>
+                                    <div class="navi navi-spacer-x-0 pt-5">
+                                        <a href="custom/apps/user/profile-1/personal-information.html" class="navi-item px-8">
+                                            <div class="navi-link">
+                                                <div class="navi-icon mr-2">
+                                                    <i class="flaticon2-calendar-3 text-success"></i>
+                                                </div>
+                                                <div class="navi-text">
+                                                    <div class="font-weight-bold">
+                                                        My Profile
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        Account settings and more
+                                                        <span class="label label-light-danger label-inline font-weight-bold">update</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </a>
+                                        @*<a href="custom/apps/user/profile-3.html" class="navi-item px-8">
+                                            <div class="navi-link">
+                                                <div class="navi-icon mr-2">
+                                                    <i class="flaticon2-mail text-warning"></i>
+                                                </div>
+                                                <div class="navi-text">
+                                                    <div class="font-weight-bold">
+                                                        My Messages
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        Inbox and tasks
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="custom/apps/user/profile-2.html" class="navi-item px-8">
+                                            <div class="navi-link">
+                                                <div class="navi-icon mr-2">
+                                                    <i class="flaticon2-rocket-1 text-danger"></i>
+                                                </div>
+                                                <div class="navi-text">
+                                                    <div class="font-weight-bold">
+                                                        My Activities
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        Logs and notifications
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="custom/apps/userprofile-1/overview.html" class="navi-item px-8">
+                                            <div class="navi-link">
+                                                <div class="navi-icon mr-2">
+                                                    <i class="flaticon2-hourglass text-primary"></i>
+                                                </div>
+                                                <div class="navi-text">
+                                                    <div class="font-weight-bold">
+                                                        My Tasks
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        latest tasks and projects
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>*@
+                                        <div class="navi-separator mt-3"></div>
+                                        <div class="navi-footer  px-8 py-5">
+                                            <a href="javascript:;" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
+                                            @*<a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean font-weight-bold">Upgrade Plan</a>*@
                                         </div>
-                                    </a>-->
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <!--<a href="custom/apps/user/profile-3.html" class="navi-item px-8">
-                                        <div class="navi-link">
-                                            <div class="navi-icon mr-2">
-                                                <i class="flaticon2-mail text-warning"></i>
-                                            </div>
-                                            <div class="navi-text">
-                                                <div class="font-weight-bold">
-                                                    My Messages
-                                                </div>
-                                                <div class="text-muted">
-                                                    Inbox and tasks
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>-->
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <!--<a href="custom/apps/user/profile-2.html" class="navi-item px-8">
-                                        <div class="navi-link">
-                                            <div class="navi-icon mr-2">
-                                                <i class="flaticon2-rocket-1 text-danger"></i>
-                                            </div>
-                                            <div class="navi-text">
-                                                <div class="font-weight-bold">
-                                                    My Activities
-                                                </div>
-                                                <div class="text-muted">
-                                                    Logs and notifications
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>-->
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <!--<a href="custom/apps/userprofile-1/overview.html" class="navi-item px-8">
-                                        <div class="navi-link">
-                                            <div class="navi-icon mr-2">
-                                                <i class="flaticon2-hourglass text-primary"></i>
-                                            </div>
-                                            <div class="navi-text">
-                                                <div class="font-weight-bold">
-                                                    My Tasks
-                                                </div>
-                                                <div class="text-muted">
-                                                    latest tasks and projects
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>-->
-                                    <!--end::Item-->
-                                    <!--begin::Footer-->
-                                    <!--<div class="navi-separator mt-3"></div>
-                                    <div class="navi-footer  px-8 py-5">
-                                        <a href="custom/user/login-v2.html" target="_blank" class="btn btn-light-primary font-weight-bold">Sign Out</a>
-                                        <a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean font-weight-bold">Upgrade Plan</a>
-                                    </div>-->
-                                    <!--end::Footer-->
-                                    <!--</div>-->
-                                    <!--end::Nav-->
+                                    </div>
                                     <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
 
                                 </div>
@@ -1365,16 +1356,61 @@
         <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
     @RenderSection("scripts")
 
-<script>
-    $(".change-language").click(function () {
-        document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
-        document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
-        location.reload();
-    })
-    $("#login_btn").click(function () {
-        $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
-    })
-</script>
+    <script>
+        $(".change-language").click(function () {
+            document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
+            document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
+            location.reload();
+        });
+        function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Authen/SigninGoogleAsync');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this);
+                    if (this.response != '""') {
+                        toastr.warning(this.response);
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                        });
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            };
+            xhr.send('idtoken=' + id_token);
+        }
+        function gp_signOut() {
+            $.ajax({
+                url: '/Authen/Logout',
+                data: {},
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        window.location.href = '/Home/Index';
+                    });
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+        }
+        $("#login_btn").click(function () {
+            $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
+        });
+        function onLoad() {
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
+            });
+        }
+        $(document).ready(function () {
+            onLoad();
+        });
+    </script>
     <script src="~/Content/assets/js/sci/sci-bundle.js"></script>
 </body>
 <!--end::Body-->
