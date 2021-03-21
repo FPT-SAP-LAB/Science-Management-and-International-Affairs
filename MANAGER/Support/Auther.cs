@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ADMIN.Support
+namespace MANAGER.Support
 {
     public class Auther : ActionFilterAttribute, IAuthorizationFilter
     {

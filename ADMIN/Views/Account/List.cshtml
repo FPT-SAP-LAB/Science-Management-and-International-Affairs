@@ -4,16 +4,448 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
+<style>
+    .custom-checkbox {
+        width: 21px !important;
+        height: 21px !important;
+    }
+
+    .checkbox {
+        font-size: 14px !important;
+        white-space: nowrap;
+        text-overflow: ellipsis
+    }
+
+    .checkbox-list {
+        min-height: 100px !important;
+        max-height: 275px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+    }
+</style>
+
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <div class="row">
-            aaaa
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm tài khoản</a>
+            </div>
+        </div>
+        <table id="datatable_account" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Họ và tên</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Chức danh</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Quyền hạn</th>
+                    <th class="text-center">Hoạt động</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm tài khoản</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                        <label class="col-form-label font-weight-bolder">Email</label>
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_email" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Chức danh</label>
+                        <select class="form-control" required id="add_role">
+                            @foreach (var item in ViewBag.Role)
+                            {
+                                <option value="@item.role_id">@item.role_name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa tài khoản</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                        <label class="col-form-label font-weight-bolder">Email</label>
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_email" />
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Chức danh</label>
+                        <select class="form-control" required id="edit_role">
+                            @foreach (var item in ViewBag.Role)
+                            {
+                                <option value="@item.role_id">@item.role_name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rightModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Quyền hạn theo tài khoản</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder mb-2">Bộ phận hợp tác quốc tế</label>
+                        <div class="checkbox-list">
+                            @{
+                                foreach (var r in ViewBag.HTright)
+                                {
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="checkbox-@r.right_id" />
+                                        <span class="custom-checkbox"></span>
+                                        @r.right_name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder mb-2">Bộ phận quản lí khoa học</label>
+                        <div class="checkbox-list">
+                            @{
+                                foreach (var r in ViewBag.QLright)
+                                {
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="checkbox-@r.right_id" />
+                                        <span class="custom-checkbox"></span>
+                                        @r.right_name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_right">Xác nhận</button>
+            </div>
         </div>
     </div>
 </div>
 
 @section scripts{
     <script>
+        let stt = 1;
+        let temp_id;
+        let arrAccept = [];
 
+        function getRightByAccount(id) {
+            temp_id = id;
+            $('#rightModal').find('input:checkbox')
+                .each(function () {
+                    $('#' + this.id).prop("checked", false);
+                });
+            $.ajax({
+                url: "@Url.Action("getRightByAccount", "Account")",
+                data: JSON.stringify({account_id : id}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    data.forEach(function (x) {
+                        $("#checkbox-" + x.right_id).prop("checked", true);
+                    });
+                    $('#rightModal').modal('show');
+                },
+                error: function (data) {
+                }
+            });
+        }
+        function ValidateEmail(val){
+            var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(val);
+        }
+        function editAccount(id) {
+            temp_id = id;
+            let object = {
+                account_id: id
+            }
+            $.ajax({
+                url: "@Url.Action("getAccount", "Account")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    document.getElementById('edit_email').value = data.email;
+                    document.getElementById('edit_role').value = data.role_id;
+                    $('#editModal').modal('show');
+                },
+                error: function (data) {
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                }
+            });
+        }
+        function deleteAccount(id) {
+            Swal.fire({
+                title: "Bạn có muốn xóa tài khoản này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                let object = {
+                    account_id: id
+                }
+                if (result.value) {
+                    $.ajax({
+                        url: "@Url.Action("delete", "Account")",
+                        data: JSON.stringify(object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                stt = 1;
+                                datatable.ajax.reload();
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            });
+        }
+
+        function getRightFE() {
+            arrAccept.splice(0, arrAccept.length);
+            return new Promise((resolve, reject) => {
+                $('#rightModal').find('input:checkbox')
+                    .each(function () {
+                        if ($('#' + this.id).is(":checked")) {
+                            arrAccept.push(this.id.split('-')[1]);
+                        }
+                    });
+                resolve();
+            });
+        }
+
+        $('#btn_right').click(async function () {
+            await getRightFE();
+            var object = {
+                arrAccept: arrAccept,
+                account_id: temp_id
+            }
+            $.ajax({
+                url: "@Url.Action("UpdateRight", "Account")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        $('#rightModal').find('input:checkbox')
+                            .each(function () {
+                                $("#" + this.id).prop("checked", false);
+                            });
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+        $('#btn_add').click(function () {
+            let email = document.getElementById('add_email').value;
+            let role = document.getElementById('add_role').value;
+            if (email == '' || role == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                return false;
+            }
+            if (!ValidateEmail(email)) {
+                toastr.warning("Địa chỉ email không hợp lệ.");
+                return false;
+            }
+            let object = {
+                email: email,
+                role_id: role
+            }
+            $.ajax({
+                url: "@Url.Action("add", "Account")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        });
+        function clearModal(id) {
+            $(id).find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+        }
+        $('#btn_edit').click(function () {
+            let email = document.getElementById('edit_email').value;
+            let role = document.getElementById('edit_role').value;
+            if (email == '' || role == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                return false;
+            }
+            if (!ValidateEmail(email)) {
+                toastr.warning("Địa chỉ email không hợp lệ.");
+                return false;
+            }
+            let object = {
+                account_id : temp_id,
+                email: email,
+                role_id: role
+            }
+            $.ajax({
+                url: "@Url.Action("edit", "Account")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#editModal');
+                        stt = 1;
+                        datatable.ajax.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+        });
+        var datatable = $("#datatable_account").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "",
+                sSearch: "Tìm kiếm"
+            },
+            "lengthChange": false,
+                ajax: {
+                        url: "@Url.Action("getDatatable", "Account")",
+                        type: "POST",
+                        datatype: "json",
+                        data: {},
+                        cache: "false"
+                },
+                columns: [
+                    {
+                        render: function () {
+                            return stt++;
+                        }
+                    },
+                    {
+                        data: "full_name"
+                    },
+                    {
+                        data: "email"
+                    },
+                    {
+                        data: "role_name",
+                    },
+                    {
+                        data: "login",
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                'Chưa kích hoạt': {
+                                    'class': 'label-secondary'
+                                },
+                                'Đã kích hoạt': {
+                                    'class': 'label-primary'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + data + '</span>';
+                        }
+                    },
+                    {
+                        data: "account_id",
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm btn-light-primary px-6" onclick="getRightByAccount(' + data + ')">Quyền hạn</a>'
+                        }
+                    },
+                    {
+                        data: "account_id",
+                        orderable: false,
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editAccount('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteAccount('+data+')">Xóa</a>'
+                        }
+                    },
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                    {
+                        className: "text-nowrap",
+                        targets: [-1,-2,-3]
+                    },
+                ]
+        });
+        $(document).ready(function () {
+
+        });
     </script>
-}
+} 

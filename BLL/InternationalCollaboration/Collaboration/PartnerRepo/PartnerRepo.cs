@@ -13,7 +13,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
     public class PartnerRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<PartnerList> getListAll(BaseDatatable baseDatatable)
+        public BaseServerSideData<PartnerList> getListAll(BaseDatatable baseDatatable, SearchPartner searchPartner)
         {
             try
             {
@@ -22,12 +22,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                     a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
                                 STRING_AGG(a.specialization_name, ',') 'specialization_name', a.country_name from 
                                 (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
-		                        t4.specialization_name, 
-		                        t5.country_name, 
-		                        case when t2.partner_id is null 
-		                        then 1 else 2 end as 'is_collab'
-                                from IA_Collaboration.Partner t1 
-                                left join IA_Collaboration.MOUPartner t2 on
+		                        t4.specialization_name,
+		                        t5.country_name,
                                 t2.partner_id = t1.partner_id left join IA_Collaboration.MOU t6
 		                        on t6.mou_id = t2.mou_id 
                                 left join IA_Collaboration.MOUPartnerSpecialization t3 on
@@ -37,17 +33,30 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 		                        left join General.Country t5 on 
 		                        t1.country_id = t5.country_id
                                 where t1.is_deleted = 0 ) as a
+								where isnull(a.partner_name, '') like {0} and
+								isnull(a.specialization_name, '') like {1} and
+								isnull(a.country_name, '') like {2} and
+								isnull(a.is_collab , '') like {3}
 		                        group by a.partner_name, a.partner_id, 
 		                        a.is_deleted, a.website, a.address, a.partner_id,
-		                                a.country_name, a.is_collab";
+		                        a.country_name, a.is_collab ";
 
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging).ToList();
-                int totalRecord = db.Partners.Where(x => x.is_deleted == false).Count();
+                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging,
+                      searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
+                    "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
+                    "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
+                     searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").ToList();
+
+                int totalRecord = db.Database.SqlQuery<PartnerList>(sql,
+                      searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
+                    "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
+                    "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
+                     searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").Count();
                 return new BaseServerSideData<PartnerList>(listPartner, totalRecord);
             }
             catch (Exception e)

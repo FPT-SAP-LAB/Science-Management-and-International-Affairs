@@ -11,22 +11,27 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
     {
-        // GET: Authen
-        private static Login authen = new Login();
+        private static LoginRepo repo = new LoginRepo();
         public ActionResult Login()
         {
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login");
         }
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            string url = authen.getAccount(user);
-            if (String.IsNullOrEmpty(url))
+            LoginRepo.User u = repo.getAccount(user);
+            Session["User"] = u;
+            if (String.IsNullOrEmpty(u.url))
             {
                 return RedirectToAction("Login");
             }
-            return Redirect(url);
+            return Redirect(u.url);
         }
         public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
         {

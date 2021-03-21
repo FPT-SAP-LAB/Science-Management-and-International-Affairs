@@ -7,13 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
     public class PartnerController : Controller
     {
         private static PartnerRepo partnerRePo = new PartnerRepo();
-        // GET: Partner
+        [Auther(RightID = "8")]
         public ActionResult List()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
@@ -29,7 +30,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
                 return Json(new
                 {
                     success = true,

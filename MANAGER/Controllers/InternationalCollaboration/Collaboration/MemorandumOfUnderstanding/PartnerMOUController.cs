@@ -2,6 +2,7 @@
 
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUPartner;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
 {
     public class PartnerMOUController : Controller
     {
-        // GET: PartnerMOU
         private static PartnerMOURepo mou = new PartnerMOURepo();
+        [Auther(RightID = "6")]
         public ActionResult Index()
         {
             return View();

@@ -189,6 +189,9 @@
   <data name="DateFormat" xml:space="preserve">
     <value>MM/dd/yyyy</value>
   </data>
+  <data name="DateRangePickerFormat" xml:space="preserve">
+    <value>MM/DD/yyyy</value>
+  </data>
   <data name="Dec" xml:space="preserve">
     <value>December</value>
   </data>
