@@ -61,11 +61,11 @@ namespace ENTITIES.CustomModels
         //|  |_____Học bổng, ...vv
         //|
         //|_____anhnb
-        public static string UploadResearcherFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string ShareWithEmail)
+        public static Google.Apis.Drive.v3.Data.File UploadResearcherFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string ShareWithEmail)
         {
             return UploadResearcherFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, ShareWithEmail)[0];
         }
-        public static List<string> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string ShareWithEmail)
+        public static List<Google.Apis.Drive.v3.Data.File> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string ShareWithEmail)
         {
             string SubFolderName;
             switch (TypeFolder)
@@ -91,18 +91,18 @@ namespace ENTITIES.CustomModels
 
             var folder = FindFirstFolder(FolderName, SubFolder.Id) ?? CreateFolder(FolderName, SubFolder.Id);
 
-            List<string> Links = new List<string>();
+            List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
 
             foreach (HttpPostedFileBase item in InputFiles)
             {
                 var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
 
-                ShareFile(ShareWithEmail, file.Id);
+                UploadedFiles.Add(file);
 
-                Links.Add(file.WebViewLink);
+                ShareFile(ShareWithEmail, file.Id);
             }
 
-            return Links;
+            return UploadedFiles;
         }
         public static Google.Apis.Drive.v3.Data.File CreateFolder(string FolderName, string ParentID)
         {
@@ -169,6 +169,25 @@ namespace ENTITIES.CustomModels
             PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, FileID);
             createRequest.SupportsAllDrives = true;
             createRequest.Execute();
+        }
+        public static AlertModal<string> DeleteFile(string FileID)
+        {
+            try
+            {
+                DeleteRequest request = new DeleteRequest(driveService, FileID)
+                {
+                    SupportsAllDrives = true
+                };
+                request.Execute();
+                return new AlertModal<string>(true, "Xóa thành công");
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("File not found"))
+                    return new AlertModal<string>(false, "File không tồn tại");
+                else
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
         }
         //public static bool ChangeParentDrive(string ParentID)
         //{
