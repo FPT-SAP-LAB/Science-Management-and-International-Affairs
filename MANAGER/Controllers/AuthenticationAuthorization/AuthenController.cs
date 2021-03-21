@@ -11,13 +11,11 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
     {
-        // GET: Authen
         private static LoginRepo repo = new LoginRepo();
         public ActionResult Login()
         {
             return View();
         }
-        [HttpPost]
         public ActionResult Logout()
         {
             Session.Abandon();

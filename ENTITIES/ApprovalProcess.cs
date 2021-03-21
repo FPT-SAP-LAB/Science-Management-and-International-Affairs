@@ -16,7 +16,7 @@ namespace ENTITIES
     {
         public int account_id { get; set; }
         public int request_id { get; set; }
-        public int position_id { get; set; }
+        public Nullable<int> position_id { get; set; }
         public string comment { get; set; }
         public System.DateTime created_date { get; set; }
     

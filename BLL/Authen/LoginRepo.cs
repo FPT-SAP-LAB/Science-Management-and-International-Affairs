@@ -35,7 +35,8 @@ namespace BLL.Authen
                 {
                     url = r.url,
                     rights = getPermission(a),
-                    account = a
+                    account = a,
+                    role_name = r.role_name
                 };
                 return u;
             }
@@ -84,6 +85,7 @@ namespace BLL.Authen
             public List<int> rights { get; set; }
             public string url { get; set; }
             public Account account { get; set; }
+            public string role_name { get; set; }
         }
         public class baseRight
         {

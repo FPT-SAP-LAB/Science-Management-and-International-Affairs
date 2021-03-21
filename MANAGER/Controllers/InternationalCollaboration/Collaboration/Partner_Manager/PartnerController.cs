@@ -7,13 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
     public class PartnerController : Controller
     {
         private static PartnerRepo partnerRePo = new PartnerRepo();
-        // GET: Partner
+        [Auther(RightID = "8")]
         public ActionResult List()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
@@ -51,7 +52,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.getHistory(id);
-                
+
                 return Json(new
                 {
                     list = partnerHistoryList.Data,
