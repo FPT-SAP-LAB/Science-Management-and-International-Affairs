@@ -124,6 +124,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
+            List<string> FileIDs = new List<string>();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -162,14 +163,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     File Finvite = new File()
                     {
                         link = UploadFiles[1].WebViewLink,
-                        name = invite.FileName
+                        name = invite.FileName,
+                        file_drive_id = UploadFiles[1].Id
                     };
+                    FileIDs.Add(UploadFiles[1].Id);
 
                     File Fpaper = new File()
                     {
                         link = UploadFiles[0].WebViewLink,
-                        name = paper.FileName
+                        name = paper.FileName,
+                        file_drive_id = UploadFiles[0].Id
                     };
+                    FileIDs.Add(UploadFiles[1].Id);
+
                     db.Files.Add(Fpaper);
                     db.Files.Add(Finvite);
                     db.SaveChanges();
@@ -262,8 +268,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
-                    //log.Error(ex);
+                    foreach (var item in FileIDs)
+                    {
+                        GlobalUploadDrive.DeleteFile(item);
+                    }
                     return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
                 }
             }
