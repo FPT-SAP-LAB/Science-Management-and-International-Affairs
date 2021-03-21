@@ -1,5 +1,6 @@
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,14 +16,25 @@ namespace BLL.ScienceManagement.ConferenceSponsor
     public class ConferenceSponsorAddRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public string GetAddPageJson(string language_name)
+        public string GetAddPageJson(int account_id, int language_id)
         {
             var Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
+            var Profile = (from a in db.Profiles
+                           join b in db.Accounts on a.account_id equals b.account_id
+                           join c in db.Offices on a.office_id equals c.office_id
+                           where b.account_id == account_id
+                           select new ProfileResearcher
+                           {
+                               ID = a.mssv_msnv,
+                               FullName = b.full_name,
+                               Email = b.email,
+                               OfficeID = c.office_id,
+                               TitleID = a.Titles.FirstOrDefault().title_id
+                           }).FirstOrDefault();
             var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
                                                join b in db.Criteria on a.policy_id equals b.policy_id
                                                join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
-                                               join d in db.Languages on c.language_id equals d.language_id
-                                               where a.expired_date == null && d.language_name.Equals(language_name)
+                                               where a.expired_date == null && c.language_id == language_id
                                                select c.name).ToList();
             var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
                 .Select(x => new Country
@@ -30,7 +42,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     country_id = x.country_id,
                     country_name = x.country_name
                 }).ToList();
-            var FormalityLanguages = db.FormalityLanguages.Where(x => x.Language.language_name.Equals(language_name))
+            var FormalityLanguages = db.FormalityLanguages.Where(x => x.language_id == language_id)
                 .Select(x => new { x.formality_id, x.name }).ToList()
                 .Select(x => new FormalityLanguage
                 {
@@ -43,14 +55,14 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     office_id = x.office_id,
                     office_name = x.office_name
                 }).ToList();
-            var TitleLanguages = db.TitleLanguages.Where(x => x.Language.language_name.Equals(language_name))
+            var TitleLanguages = db.TitleLanguages.Where(x => x.language_id == language_id)
                 .Select(x => new { x.title_id, x.name }).ToList()
                 .Select(x => new TitleLanguage
                 {
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link });
+            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile });
         }
         public List<Info> GetAllProfileBy(string id)
         {
@@ -105,13 +117,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
-        public string AddRequestConference(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
+        public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
-                    Account account = db.Accounts.Find(1);  // Sẽ chỉnh sau khi xong tạo account
+                    Account account = db.Accounts.Find(account_id);  // Sẽ chỉnh sau khi xong tạo account
                     DataTable dt = new DataTable();
                     JObject @object = JObject.Parse(input);
 
@@ -212,7 +224,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     trans.Commit();
                     return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.request_id });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     trans.Rollback();
                     //log.Error(ex);
