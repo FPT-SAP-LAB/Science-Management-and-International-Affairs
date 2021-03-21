@@ -147,7 +147,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<string> Links = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang42@yahoo.com.vn");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang42@yahoo.com.vn");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -161,13 +161,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     File Finvite = new File()
                     {
-                        link = Links[1],
+                        link = UploadFiles[1].WebViewLink,
                         name = invite.FileName
                     };
 
                     File Fpaper = new File()
                     {
-                        link = Links[0],
+                        link = UploadFiles[0].WebViewLink,
                         name = paper.FileName
                     };
                     db.Files.Add(Fpaper);
