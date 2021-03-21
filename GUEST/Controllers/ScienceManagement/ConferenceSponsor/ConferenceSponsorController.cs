@@ -20,7 +20,7 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        readonly int account_id = 6;
+        readonly int account_id = 3;
         // GET: ConferenceSponsor
         public ActionResult Index()
         {

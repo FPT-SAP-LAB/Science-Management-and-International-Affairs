@@ -128,13 +128,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 try
                 {
+                    DateTime create_date = DateTime.Now;
                     Account account = db.Accounts.Find(account_id);  // Sẽ chỉnh sau khi xong tạo account
                     DataTable dt = new DataTable();
                     JObject @object = JObject.Parse(input);
 
-                    JToken conf = @object["Conference"];
-
-                    Conference conference = conf.ToObject<Conference>();
+                    Conference conference = @object["Conference"].ToObject<Conference>();
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     if (temp != null)
                     {
@@ -148,30 +147,39 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<string> Links = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<string> Links = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang42@yahoo.com.vn");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
                     BaseRequest @base = new BaseRequest()
                     {
                         account_id = account.account_id,
-                        created_date = DateTime.Now,
+                        created_date = create_date,
                         finished_date = null
                     };
                     db.BaseRequests.Add(@base);
+
+                    File Finvite = new File()
+                    {
+                        link = Links[1],
+                        name = invite.FileName
+                    };
 
                     File Fpaper = new File()
                     {
                         link = Links[0],
                         name = paper.FileName
                     };
-                    File Finvite = new File()
-                    {
-                        link = Links[1],
-                        name = invite.FileName
-                    };
                     db.Files.Add(Fpaper);
                     db.Files.Add(Finvite);
+                    db.SaveChanges();
+
+                    ENTITIES.Paper Paper = new ENTITIES.Paper()
+                    {
+                        name = @object["paper_name"].ToString(),
+                        file_id = Fpaper.file_id
+                    };
+                    db.Papers.Add(Paper);
                     db.SaveChanges();
 
                     RequestConference support = new RequestConference()
@@ -185,7 +193,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         attendance_start = DateTime.Parse(@object["attendance_start"].ToString()),
                         attendance_end = DateTime.Parse(@object["attendance_end"].ToString()),
                         invitation_file_id = Finvite.file_id,
-                        paper_id = Fpaper.file_id,
+                        paper_id = Paper.paper_id,
                     };
                     db.RequestConferences.Add(support);
                     db.SaveChanges();
@@ -220,11 +228,34 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             db.People.Add(Persons[i]);
                             db.SaveChanges();
 
-                            //Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
+                            Profile profile = new Profile()
+                            {
+                                mssv_msnv = item.current_mssv_msnv,
+                                office_id = item.office_id,
+                                people_id = Persons[i].people_id,
+                            };
+                            profile.Titles.Add(IDTitlePairs[item.title_id]);
+                            db.Profiles.Add(profile);
+                            db.SaveChanges();
                             item.people_id = Persons[i].people_id;
                         }
                     }
                     db.ConferenceParticipants.AddRange(participants);
+                    db.SaveChanges();
+
+                    int? position_id = null;
+                    Position position = db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault().Positions.FirstOrDefault();
+                    if (position != null)
+                        position_id = position.position_id;
+
+                    db.ApprovalProcesses.Add(new ApprovalProcess
+                    {
+                        account_id = account_id,
+                        created_date = create_date,
+                        position_id = position_id,
+                        request_id = support.request_id
+                    });
+
                     db.SaveChanges();
                     trans.Commit();
                     return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.request_id });
@@ -233,7 +264,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 {
                     trans.Rollback();
                     //log.Error(ex);
-                    return JsonConvert.SerializeObject(new { success = false, });
+                    return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
                 }
             }
         }

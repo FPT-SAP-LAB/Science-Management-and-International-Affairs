@@ -97,9 +97,9 @@ namespace ENTITIES.CustomModels
             {
                 var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
 
-                ShareFile(ShareWithEmail, file.Id);
-
                 Links.Add(file.WebViewLink);
+
+                ShareFile(ShareWithEmail, file.Id);
             }
 
             return Links;

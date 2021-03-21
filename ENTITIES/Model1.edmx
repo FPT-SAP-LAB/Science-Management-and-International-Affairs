@@ -692,7 +692,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
-          <Property Name="position_id" Type="int" Nullable="false" />
+          <Property Name="position_id" Type="int" />
           <Property Name="comment" Type="nvarchar" MaxLength="50" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -983,7 +983,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <PropertyRef Name="paper_id" />
           </Key>
           <Property Name="paper_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="publish_date" Type="date" />
           <Property Name="link_doi" Type="nvarchar(max)" />
           <Property Name="link_scholar" Type="nvarchar(max)" />
@@ -992,7 +992,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="vol" Type="nvarchar" MaxLength="150" />
           <Property Name="company" Type="nvarchar" MaxLength="150" />
           <Property Name="index" Type="nvarchar" MaxLength="150" />
-          <Property Name="paper_type_id" Type="int" Nullable="false" />
+          <Property Name="paper_type_id" Type="int" />
           <Property Name="file_id" Type="int" />
         </EntityType>
         <EntityType Name="PaperCriteria">
@@ -1571,7 +1571,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ApprovalP__posit__2EC5E7B8">
-          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
           <End Role="ApprovalProcess" Type="Self.ApprovalProcess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Position">
@@ -2545,7 +2545,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Paper__paper_typ__38EE7070">
-          <End Role="PaperType" Type="Self.PaperType" Multiplicity="1" />
+          <End Role="PaperType" Type="Self.PaperType" Multiplicity="0..1" />
           <End Role="Paper" Type="Self.Paper" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaperType">
@@ -5332,7 +5332,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </Key>
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="request_id" Type="Int32" Nullable="false" />
-          <Property Name="position_id" Type="Int32" Nullable="false" />
+          <Property Name="position_id" Type="Int32" />
           <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK__ApprovalP__accou__2CDD9F46" FromRole="ApprovalProcess" ToRole="Account" />
@@ -5640,7 +5640,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <PropertyRef Name="paper_id" />
           </Key>
           <Property Name="paper_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="publish_date" Type="DateTime" Precision="0" />
           <Property Name="link_doi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="link_scholar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -5649,7 +5649,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="vol" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="company" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="index" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="paper_type_id" Type="Int32" Nullable="false" />
+          <Property Name="paper_type_id" Type="Int32" />
           <Property Name="file_id" Type="Int32" />
           <NavigationProperty Name="File" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="Paper" ToRole="File" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__RequestCo__paper__1881A0DE" FromRole="Paper" ToRole="RequestConference" />
@@ -7509,7 +7509,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ApprovalP__posit__2EC5E7B8">
-          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
           <End Role="ApprovalProcess" Type="Self.ApprovalProcess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Position">
@@ -7677,7 +7677,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Paper__paper_typ__38EE7070">
-          <End Role="PaperType" Type="Self.PaperType" Multiplicity="1" />
+          <End Role="PaperType" Type="Self.PaperType" Multiplicity="0..1" />
           <End Role="Paper" Type="Self.Paper" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaperType">
