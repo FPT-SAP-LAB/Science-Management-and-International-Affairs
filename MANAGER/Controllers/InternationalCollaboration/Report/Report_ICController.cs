@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MANAGER.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
 {
     public class Report_ICController : Controller
     {
-        // GET: Report_IC
+        [Auther(RightID = "1")]
         public ActionResult Dashboard()
         {
             return View();

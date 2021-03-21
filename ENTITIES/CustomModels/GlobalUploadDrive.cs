@@ -14,8 +14,14 @@ namespace ENTITIES.CustomModels
 {
     public static class GlobalUploadDrive
     {
+        //Field: Dữ liệu trả về, nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
+        //Q: query search, xem thêm tại đây https://developers.google.com/drive/api/v3/ref-search-terms
+        //SupportsAllDrives: hỗ trợ thêm trên cả drive của người dùng, shared drive
+        //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
+
         public static UserCredential credential;
-        public static string ParentDrive;
+        public static string SMDrive;
+        public static string IADrive;
         public static DriveService driveService;
         public static void InIt()
         {
@@ -24,8 +30,6 @@ namespace ENTITIES.CustomModels
                 new FileStream(filePath + "/credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string[] Scopes = { DriveService.Scope.Drive };
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
@@ -39,7 +43,8 @@ namespace ENTITIES.CustomModels
             using (StreamReader r = new StreamReader(filePath + "/DriveConfig.json"))
             {
                 string json = r.ReadToEnd();
-                ParentDrive = JObject.Parse(json).Value<string>("ParentDriveID");
+                SMDrive = JObject.Parse(json).Value<string>("SMDriveID");
+                IADrive = JObject.Parse(json).Value<string>("IADriveID");
             }
         }
 
@@ -56,11 +61,11 @@ namespace ENTITIES.CustomModels
         //|  |_____Học bổng, ...vv
         //|
         //|_____anhnb
-        public static string UploadFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string ShareWithEmail = null)
+        public static string UploadResearcherFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string ShareWithEmail)
         {
-            return UploadFile(InputFile.FileName, FolderName, InputFile.InputStream, InputFile.ContentType, TypeFolder, ShareWithEmail);
+            return UploadResearcherFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, ShareWithEmail)[0];
         }
-        public static string UploadFile(string FileName, string FolderName, Stream InputStream, string ContentType, int TypeFolder, string ShareWithEmail = null)
+        public static List<string> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string ShareWithEmail)
         {
             string SubFolderName;
             switch (TypeFolder)
@@ -80,49 +85,27 @@ namespace ENTITIES.CustomModels
 
             string ResearcherFolderName = ShareWithEmail.Split('@')[0];
 
-            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, ParentDrive) ?? CreateFolder(ResearcherFolderName, ParentDrive);
+            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, SMDrive) ?? CreateFolder(ResearcherFolderName, SMDrive);
 
             var SubFolder = FindFirstFolder(SubFolderName, ResearcherFolder.Id) ?? CreateFolder(SubFolderName, ResearcherFolder.Id);
 
             var folder = FindFirstFolder(FolderName, SubFolder.Id) ?? CreateFolder(FolderName, SubFolder.Id);
 
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            List<string> Links = new List<string>();
+
+            foreach (HttpPostedFileBase item in InputFiles)
             {
-                Name = FileName,
-                Parents = new List<string>
-                {
-                    folder.Id
-                }
-            };
+                var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
 
-            FilesResource.CreateMediaUpload request = driveService.Files.Create(fileMetadata, InputStream, ContentType);
-            // Cấu hình thông tin lấy về là ID
-            request.Fields = "id,webViewLink";
-            request.SupportsAllDrives = true;
-            request.Upload();
+                ShareFile(ShareWithEmail, file.Id);
 
-            // Trả về thông tin file đã được upload lên Google Drive
-            var file = request.ResponseBody;
-
-            if (ShareWithEmail != null)
-            {
-                Permission userPermission = new Permission
-                {
-                    Type = "user",
-                    Role = "reader",
-                    EmailAddress = ShareWithEmail
-                };
-
-                PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, file.Id);
-                createRequest.SupportsAllDrives = true;
-                createRequest.Execute();
+                Links.Add(file.WebViewLink);
             }
 
-            return file.WebViewLink;
+            return Links;
         }
-        public static Google.Apis.Drive.v3.Data.File CreateFolder(string FolderName, string ParentID = null)
+        public static Google.Apis.Drive.v3.Data.File CreateFolder(string FolderName, string ParentID)
         {
-            ParentID = ParentID ?? ParentDrive;
             var folderMetadata = new Google.Apis.Drive.v3.Data.File
             {
                 Name = FolderName,
@@ -134,20 +117,19 @@ namespace ENTITIES.CustomModels
             };
 
             CreateRequest CreateFolderRequest = driveService.Files.Create(folderMetadata);
-            CreateFolderRequest.Fields = "id";
+            CreateFolderRequest.Fields = "id,webViewLink";
             CreateFolderRequest.SupportsAllDrives = true;
 
             var folder = CreateFolderRequest.Execute();
             return folder;
         }
-        public static Google.Apis.Drive.v3.Data.File FindFirstFolder(string FolderName, string ParentID = null)
+        public static Google.Apis.Drive.v3.Data.File FindFirstFolder(string FolderName, string ParentID)
         {
-            ParentID = ParentID ?? ParentDrive;
             ListRequest listRequest = new ListRequest(driveService)
             {
                 Q = "name = '" + FolderName + "' and mimeType = 'application/vnd.google-apps.folder' and '" + ParentID + "' in parents and trashed = false",
                 Spaces = "drive",
-                Fields = "files(id)",
+                Fields = "files(id,webViewLink)",
                 SupportsAllDrives = true,
                 IncludeItemsFromAllDrives = true,
             };
@@ -157,10 +139,41 @@ namespace ENTITIES.CustomModels
             else
                 return result.Files[0];
         }
-        public static bool ChangeParentDrive(string ParentID)
+        public static Google.Apis.Drive.v3.Data.File UploadFile(string FileName, Stream InputStream, string ContentType, string ParentID)
         {
-            ParentDrive = ParentID;
-            return true;
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = FileName,
+                Parents = new List<string>
+                {
+                    ParentID
+                }
+            };
+
+            CreateMediaUpload request = driveService.Files.Create(fileMetadata, InputStream, ContentType);
+            request.Fields = "id,webViewLink";
+            request.SupportsAllDrives = true;
+            request.Upload();
+
+            return request.ResponseBody;
         }
+        public static void ShareFile(string Email, string FileID)
+        {
+            Permission userPermission = new Permission
+            {
+                Type = "user",
+                Role = "reader",
+                EmailAddress = Email
+            };
+
+            PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, FileID);
+            createRequest.SupportsAllDrives = true;
+            createRequest.Execute();
+        }
+        //public static bool ChangeParentDrive(string ParentID)
+        //{
+        //    SMDrive = ParentID;
+        //    return true;
+        //}
     }
 }

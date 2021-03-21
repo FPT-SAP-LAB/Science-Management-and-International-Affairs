@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MANAGER.Models;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
     public class DetailOfAcademicActivityController : Controller
     {
+        [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
             ViewBag.pageTitle = "Thông tin hoạt động học thuật";
