@@ -46,11 +46,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging, 
-                      searchPartner.partner_name == null? "%%": "%" + searchPartner.partner_name + "%", 
-                    "%" + searchPartner.specialization == null? "%%" : "%" + searchPartner.specialization + "%", 
-                    "%" + searchPartner.nation == null? "%%" : "%" + searchPartner.nation + "%", 
-                     searchPartner.is_collab == 0? "%%" : "%" + searchPartner.is_collab + "%").ToList();
+                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging,
+                      searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
+                    "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
+                    "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
+                     searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").ToList();
 
                 int totalRecord = db.Database.SqlQuery<PartnerList>(sql,
                       searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
@@ -126,7 +126,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 string partner_name = db.Partners.Where(x => x.partner_id == id).Select(x => x.partner_name).FirstOrDefault();
                 return new PartnerHistoryList<PartnerHistory>(list, partner_name);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }

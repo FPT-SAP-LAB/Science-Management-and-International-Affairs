@@ -7,6 +7,7 @@ using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -42,8 +43,9 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddPaper(Paper paper)
+        public JsonResult AddPaper(DetailPaper paper)
         {
+            paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Paper p = pr.addPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
@@ -101,8 +103,9 @@ namespace GUEST.Controllers
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
-            List<DetailComment> listCmt = cr.GetComment(request_id);
-            ViewBag.cmt = listCmt;
+            //List<DetailComment> listCmt = cr.GetComment(request_id);
+            //ViewBag.cmt = listCmt;
+            ViewBag.request_id = request_id;
             ViewBag.id = id;
 
             return View();
@@ -138,7 +141,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult listAuthor(string id)
         {
-            List<AuthorInfo> listAuthor = pr.getAuthorPaper(id);
+            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
             return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
     }
