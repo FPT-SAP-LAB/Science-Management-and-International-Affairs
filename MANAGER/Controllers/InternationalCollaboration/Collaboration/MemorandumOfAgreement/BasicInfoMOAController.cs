@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOABasicInfo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     {
         // GET: BasicInfoMOA
         private static BasicInfoMOARepo moa = new BasicInfoMOARepo();
+        [Auther(RightID = "7")]
         public ActionResult Index()
         {
             return View();

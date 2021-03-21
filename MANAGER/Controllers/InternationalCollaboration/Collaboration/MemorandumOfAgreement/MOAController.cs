@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         private static MOARepo moa = new MOARepo();
         private static BasicInfoMOARepo moa_detail = new BasicInfoMOARepo();
         private static PartnerMOARepo moa_partner = new PartnerMOARepo();
+        [Auther(RightID = "6")]
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
