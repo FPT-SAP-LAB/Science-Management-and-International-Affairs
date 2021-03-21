@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using MANAGER.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityController : Controller
     {
         private static AcademicActivityRepo repo = new AcademicActivityRepo();
+        [Auther(RightID = "2")]
         public ActionResult List()
         {
             ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
