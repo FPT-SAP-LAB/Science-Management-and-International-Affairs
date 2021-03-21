@@ -129,8 +129,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         db.SaveChanges();
                     }
 
-                    string PaperLink = GlobalUploadDrive.UploadFile(paper, conference.conference_name, 1, "doanvanthang4271@gmail.com");
-                    string InviteLink = GlobalUploadDrive.UploadFile(invite, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
+
+                    List<string> Links = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -144,12 +145,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     File Fpaper = new File()
                     {
-                        link = PaperLink,
+                        link = Links[0],
                         name = paper.FileName
                     };
                     File Finvite = new File()
                     {
-                        link = InviteLink,
+                        link = Links[1],
                         name = invite.FileName
                     };
                     db.Files.Add(Fpaper);
@@ -211,7 +212,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     trans.Commit();
                     return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.request_id });
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     trans.Rollback();
                     //log.Error(ex);
