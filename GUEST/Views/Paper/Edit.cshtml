@@ -138,42 +138,9 @@
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <form>
-                                <div class="row">
-                                    <div class="col-10">
-                                        <input class="form-control" type="text" value="" id="example-text-input" />
-                                    </div>
-                                    <div class="col-2">
-                                        <button type="submit" class="btn btn-block btn-success">@rm.GetString("SendM")</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <br />
-                            <table class="col-12 table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" width="15%">@rm.GetString("Time")</th>
-                                        <th scope="col" width="15%">@rm.GetString("Sender")</th>
-                                        <th scope="col">@rm.GetString("Content")</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
-                                        {
-                                            <tr>
-                                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.Email</td>
-                                                <td>@item.Content</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @{
+                        Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
+                    }
                 </div>
             </div>
         </div>

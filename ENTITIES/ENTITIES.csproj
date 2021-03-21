@@ -281,6 +281,7 @@
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfoWithNull.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />

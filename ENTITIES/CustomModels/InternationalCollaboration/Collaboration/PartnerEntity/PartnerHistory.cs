@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity
 {
-    public class PartnerHistory: Partner
+    public class PartnerHistory : Partner
     {
         public string code { get; set; }
         public string activity { get; set; }
