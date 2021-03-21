@@ -33,7 +33,7 @@ namespace ENTITIES
         public string vol { get; set; }
         public string company { get; set; }
         public string index { get; set; }
-        public int paper_type_id { get; set; }
+        public Nullable<int> paper_type_id { get; set; }
         public Nullable<int> file_id { get; set; }
     
         public virtual File File { get; set; }
