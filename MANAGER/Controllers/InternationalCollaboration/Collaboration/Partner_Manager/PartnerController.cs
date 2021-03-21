@@ -1,22 +1,72 @@
-﻿using System;
+﻿using ENTITIES;
+using ENTITIES.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 
-namespace MANAGER.Controllers.InternationalCollaboration.Partner
+namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
     public class PartnerController : Controller
     {
+        private static PartnerRepo partnerRePo = new PartnerRepo();
         // GET: Partner
         public ActionResult List()
         {
-            ViewBag.pageTitle = "DANH SÁCH ĐỐI TÁC";
+            ViewBag.title = "DANH SÁCH ĐỐI TÁC";
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            ViewBag.countries = db.Countries.ToList();
+            ViewBag.specializations = db.Specializations.ToList();
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult List(SearchPartner searchPartner)
+        {
+            try
+            {
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, error = e.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Load_History(int id)
+        {
+            try
+            {
+                PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.getHistory(id);
+
+                return Json(new
+                {
+                    list = partnerHistoryList.Data,
+                    name = partnerHistoryList.Partner_name,
+                    JsonRequestBehavior.AllowGet
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new { data = e.Message });
+            }
         }
         public ActionResult List_Deleted()
         {
-            ViewBag.pageTitle = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
+            ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
             return View();
         }
 

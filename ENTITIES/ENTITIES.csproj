@@ -120,6 +120,9 @@
     <Compile Include="Account.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AccountRight.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ActivityExpenseCategory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -223,6 +226,7 @@
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
@@ -258,6 +262,10 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistory.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistoryList.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerList.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
@@ -273,6 +281,7 @@
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfoWithNull.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />
@@ -528,7 +537,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

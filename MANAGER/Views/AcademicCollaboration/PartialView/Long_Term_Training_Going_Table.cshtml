@@ -7,7 +7,7 @@
                         <option value=""></option>
                         @foreach (var country in ViewBag.countries)
                         {
-                            <option value="@country.country_id">@country.country_name</option>
+                            <option value="@country.country_name">@country.country_name</option>
                         }
                     </select>
                 </div>
@@ -29,7 +29,7 @@
                         <option value=""></option>
                         @foreach (var partner in ViewBag.partners)
                         {
-                            <option value="@partner.partner_id">@partner.partner_name</option>
+                            <option value="@partner.partner_name">@partner.partner_name</option>
                         }
                     </select>
                 </div>
@@ -40,13 +40,13 @@
                         <option value=""></option>
                         @foreach (var office in ViewBag.offices)
                         {
-                            <option value="@office.office_id">@office.office_name</option>
+                            <option value="@office.office_name">@office.office_name</option>
                         }
                     </select>
                 </div>
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mb-4">
-                <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                <a id="collab_going_search" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
             </div>
         </div>
     </div>

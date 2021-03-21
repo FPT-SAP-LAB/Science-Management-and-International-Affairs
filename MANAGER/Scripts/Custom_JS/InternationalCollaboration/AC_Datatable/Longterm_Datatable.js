@@ -1,7 +1,6 @@
 ﻿
 //table long-term - going
-let rowNum = 1;
-$('#collab_going_table').DataTable({
+var collab_going_table = $('#collab_going_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -16,7 +15,13 @@ $('#collab_going_table').DataTable({
         datatype: "json",
         data: {
             direction: 1, /*going*/
-            collab_type_id: 2 /*long-term*/
+            collab_type_id: 2 /*long-term*/,
+            obj_searching: {
+                country_name: () => { return $("#search_nation_tab_1_table_1").val() },
+                year: () => { return $("#search_year_tab_1_table_1").val() },
+                partner_name: () => { return $("#search_training_facility_tab_1_table_1").val() },
+                office_name: () => { return $("#search_working_facility_tab_1_table_1").val() }
+            }
         },
         cache: "false"
     },
@@ -26,8 +31,8 @@ $('#collab_going_table').DataTable({
     columns: [
         {
             name: 'collab_id',
-            render: () => {
-                return rowNum++;
+            render: function (data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
         {
@@ -151,10 +156,13 @@ $('#collab_going_table').DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().removeClass();
-
-    },
+    }
 });
 
+//Search
+$("#collab_going_search").click(function () {
+    collab_going_table.ajax.reload();
+});
 
 
 //table 2
