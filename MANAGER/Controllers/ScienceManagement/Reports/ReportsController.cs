@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MANAGER.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
 {
     public class ReportsController : Controller
     {
-        // GET: Reports
+        [Auther(RightID = "24")]
         public ActionResult PapersReportsByWorkplace()
         {
             return View();

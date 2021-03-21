@@ -277,10 +277,12 @@
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\ListCriteriaOfOnePaper.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfoWithNull.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\DataSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProdcut_Inven.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\ListProduct_ConferencePaper.cs" />

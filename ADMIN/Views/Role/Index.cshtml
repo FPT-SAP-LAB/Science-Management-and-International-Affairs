@@ -28,7 +28,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#rightModal">Thêm chức danh</a>
+                <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm chức danh</a>
             </div>
         </div>
         <table id="datatable_role" class="table table-bordered table-checkable">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Base url</label>
-                        <input class="form-control" type="text" placeholder="Tên chức danh" autocomplete="off" required id="edit_url" />
+                        <input class="form-control" type="text" placeholder="Base url" autocomplete="off" required id="edit_url" />
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                                 foreach (var r in ViewBag.HTright)
                                 {
                                     <label class="checkbox">
-                                        <input type="checkbox" id="checkbox-ht-@r.right_id" />
+                                        <input type="checkbox" id="checkbox-@r.right_id" />
                                         <span class="custom-checkbox"></span>
                                         @r.right_name
                                     </label>
@@ -138,7 +138,7 @@
                                 foreach (var r in ViewBag.QLright)
                                 {
                                     <label class="checkbox">
-                                        <input type="checkbox" id="checkbox-ql-@r.right_id" />
+                                        <input type="checkbox" id="checkbox-@r.right_id" />
                                         <span class="custom-checkbox"></span>
                                         @r.right_name
                                     </label>
@@ -160,9 +160,14 @@
     <script>
         let stt = 1;
         let temp_id;
+        let arrAccept = [];
 
         function getRightByRole(id) {
             temp_id = id;
+            $('#rightModal').find('input:checkbox')
+                .each(function () {
+                    $('#' + this.id).prop("checked", false);
+                });
             $.ajax({
                 url: "@Url.Action("getRightByRole", "Role")",
                 data: JSON.stringify({role_id : id}),
@@ -170,11 +175,7 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     data.forEach(function (x) {
-                        if (x.module_id == 1) {
-                            $("#checkbox-ht-" + x.right_id).attr("checked", true);
-                        } else {
-                            $("#checkbox-ql-" + x.right_id).attr("checked", true);
-                        }
+                        $("#checkbox-" + x.right_id).prop("checked", true);
                     });
                     $('#rightModal').modal('show');
                 },
@@ -194,16 +195,12 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
-                        document.getElementById('edit_role_name') = data.role_name;
-                        document.getElementById('edit_url') = data.url;
-                        $('editModal').modal('show');
-                    } else {
-                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
-                    }
+                    document.getElementById('edit_role_name').value = data.role_name;
+                    document.getElementById('edit_url').value = data.url;
+                    $('#editModal').modal('show');
                 },
                 error: function (data) {
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                 }
             });
         }
@@ -229,9 +226,10 @@
                         success: function (data) {
                             if (data != '') {
                                 toastr.success(data);
+                                stt = 1;
                                 datatable.ajax.reload();
                             } else {
-                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                                toastr.error("Tồn tại tài khoản với chức danh bạn muốn xóa. Vui lòng thay đổi các tài khoản này sang chức danh khác trước khi thao tác.");
                             }
                         },
                         error: function (data) {
@@ -240,14 +238,20 @@
                 }
             });
         }
-        $('#btn_right').click(function () {
-            arrAccept = [];
-            $('#rightModal').find('input:checkbox')
-                .each(function () {
-                    if ($('#' + this.id).is(":checked")) {
-                        arrAccept.push(this.id.split('-')[2]);
-                    }
-                });
+        function getRightFE() {
+            arrAccept.splice(0, arrAccept.length);
+            return new Promise((resolve, reject) => {
+                $('#rightModal').find('input:checkbox')
+                    .each(function () {
+                        if ($('#' + this.id).is(":checked")) {
+                            arrAccept.push(this.id.split('-')[1]);
+                        }
+                    });
+                resolve();
+            });
+        }
+        $('#btn_right').click(async function () {
+            await getRightFE();
             var object = {
                 arrAccept: arrAccept,
                 role_id: temp_id
@@ -262,7 +266,7 @@
                         toastr.success(data);
                         $('#rightModal').find('input:checkbox')
                             .each(function () {
-                                $("#"+this.id).attr("checked", false);
+                                $("#" + this.id).prop("checked", false);
                             });
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
@@ -276,7 +280,7 @@
             let role_name = document.getElementById('add_role_name').value;
             let url = document.getElementById('add_url').value;
             if (role_name == '' || url == '') {
-                toastr.warning("Tên chức danh không thể để trống");
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 return false;
             }
             let object = {
@@ -312,7 +316,7 @@
             let role_name = document.getElementById('edit_role_name').value;
             let url = document.getElementById('edit_url').value;
             if (role_name == '' || url == '') {
-                toastr.warning("Tên chức danh không thể để trống.");
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 return false;
             }
             let object = {
