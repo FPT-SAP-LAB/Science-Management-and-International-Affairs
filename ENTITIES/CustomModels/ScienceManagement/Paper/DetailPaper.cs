@@ -13,5 +13,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public Nullable<int> total_reward { get; set; }
         public int specialization_id { get; set; }
         public int request_id { get; set; }
+        public string date_string { get; set; }
     }
 }

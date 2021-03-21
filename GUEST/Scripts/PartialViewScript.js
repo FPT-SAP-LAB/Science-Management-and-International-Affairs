@@ -150,19 +150,31 @@ var filename = [];
 
 class AuthorInfoView {
     constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
-        this.add_author_msnv = add_author_msnv;
+        if (add_author_msnv != null) this.add_author_msnv = add_author_msnv;
+        else this.add_author_msnv = "";
         this.add_author_email = add_author_email;
-        this.add_author_workplace = add_author_workplace;
+        if (add_author_workplace != null) this.add_author_workplace = add_author_workplace;
+        else this.add_author_workplace = "Khác";
         this.add_author_name = add_author_name;
-        this.add_author_title = add_author_title;
-        this.add_author_contractType = add_author_contractType;
-        this.add_author_cmnd = add_author_cmnd;
-        this.add_author_tax = add_author_tax;
-        this.add_author_bank = add_author_bank;
-        this.add_author_accno = add_author_accno;
-        this.add_author_reward = add_author_reward;
-        this.add_author_note = add_author_note;
-        this.add_author_info_id = id
+        if (add_author_title != null) this.add_author_title = add_author_title;
+        else this.add_author_title = "";
+        if (add_author_contractType != null) this.add_author_contractType = add_author_contractType;
+        else this.add_author_contractType = "";
+        if (add_author_cmnd != null) this.add_author_cmnd = add_author_cmnd;
+        else this.add_author_cmnd = "";
+        if (add_author_tax != null) this.add_author_tax = add_author_tax;
+        else this.add_author_tax = "";
+        if (add_author_bank != null) this.add_author_bank = add_author_bank;
+        else this.add_author_bank = "";
+        if (add_author_accno != null) this.add_author_accno = add_author_accno;
+        else this.add_author_accno = "";
+        if (add_author_reward != null) this.add_author_reward = add_author_reward;
+        else this.add_author_reward = "";
+        if (add_author_note != null) this.add_author_note = add_author_note;
+        else this.add_author_note = "";
+        this.add_author_info_id = id;
+        if (add_author_msnv != null) this.title = this.add_author_msnv + ` - ` + this.add_author_name;
+        else this.title = this.add_author_name;
     }
     getHTML() {
         return `
@@ -171,7 +183,7 @@ class AuthorInfoView {
                                 <div class='card card-custom gutter-b'>
                                     <div class='card-header'>
                                         <div class='card-title'>
-                                            <h3 class='card-label'>` + this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
+                                            <h3 class='card-label'>` + this.title + `</h3>
                                         </div>
                                         <div class='card-toolbar'>
                                             <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger edit'>
