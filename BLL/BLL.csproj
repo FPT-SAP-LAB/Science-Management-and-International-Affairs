@@ -72,10 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AccountRepo.cs" />
     <Compile Include="Admin\RightRepo.cs" />
     <Compile Include="Admin\RoleRepo.cs" />
-    <Compile Include="Authen\AccountRepo.cs" />
-    <Compile Include="Authen\Login.cs" />
+    <Compile Include="Authen\LoginRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaboration\AcademicCollaborationRepo.cs" />

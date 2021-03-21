@@ -9,7 +9,6 @@ namespace BLL.Admin
 {
     public class RightRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public BaseServerSideData<infoRight> getRights(BaseDatatable baseDatatable)
         {
             try
@@ -53,7 +52,6 @@ namespace BLL.Admin
             {
                 using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
                 {
-                    db.Configuration.LazyLoadingEnabled = false;
                     db.Configuration.LazyLoadingEnabled = false;
                     Right data = db.Rights.Find(right_id);
                     return data;

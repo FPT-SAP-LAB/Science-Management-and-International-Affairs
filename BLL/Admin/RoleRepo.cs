@@ -27,7 +27,7 @@ namespace BLL.Admin
         {
             try
             {
-                string sql = @"select rt.right_id,rt.right_name,rt.module_id from General.RightByRole rr inner join General.[Role] r on rr.role_id = r.role_id
+                string sql = @"select rt.right_id,rt.right_name from General.RightByRole rr inner join General.[Role] r on rr.role_id = r.role_id
                                 inner join General.[Right] rt on rr.right_id = rt.right_id where r.role_id = @role_id";
                 List<baseRight> data = db.Database.SqlQuery<baseRight>(sql, new SqlParameter("role_id", role_id)).ToList();
                 return data;
@@ -49,16 +49,17 @@ namespace BLL.Admin
                 return new List<Right>();
             }
         }
-        public Role GetBaseRole(int role_id)
+        public infoRole GetBaseRole(int role_id)
         {
             try
             {
-                Role data = db.Roles.Find(role_id);
+                infoRole data = db.Database.SqlQuery<infoRole>("select r.role_name,r.url from General.[Role] r where r.role_id = @role_id",
+                                                new SqlParameter("role_id", role_id)).FirstOrDefault();
                 return data;
             }
             catch (Exception e)
             {
-                return new Role();
+                return new infoRole();
             }
         }
         public bool add(baseRole obj)
@@ -78,7 +79,7 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool edit(Role obj)
+        public bool edit(infoRole obj)
         {
             try
             {
@@ -96,37 +97,61 @@ namespace BLL.Admin
         }
         public bool delete(int role_id)
         {
-            try
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
-                Role r = db.Roles.Find(role_id);
-                db.Roles.Remove(r);
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
+                try
+                {
+                    List<RightByRole> rv = db.RightByRoles.Where(x => x.role_id == role_id).ToList();
+                    db.RightByRoles.RemoveRange(rv);
+                    db.SaveChanges();
+                    Role r = db.Roles.Find(role_id);
+                    db.Roles.Remove(r);
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
-        //public bool UpdateRight(int[] arrAccept,int role_id)
-        //{
-        //    try
-        //    {
-        //        foreach(int x in arrAccept)
-        //        {
-
-        //        }
-        //        return true;
-        //    }catch(Exception e)
-        //    {
-        //        return false;
-        //    }
-        //}
+        public bool UpdateRight(int[] arrAccept, int role_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    string sql = @"delete from General.[RightByRole] where role_id = @role_id";
+                    db.Database.ExecuteSqlCommand(sql, new SqlParameter("role_id", role_id));
+                    db.SaveChanges();
+                    if (arrAccept != null)
+                    {
+                        foreach (int x in arrAccept)
+                        {
+                            db.RightByRoles.Add(new RightByRole
+                            {
+                                right_id = x,
+                                role_id = role_id
+                            });
+                        }
+                        db.SaveChanges();
+                    }
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
         public class baseRight
         {
             public int right_id { get; set; }
             public string right_name { get; set; }
-            public int module_id { get; set; }
         }
         public class baseRole
         {
