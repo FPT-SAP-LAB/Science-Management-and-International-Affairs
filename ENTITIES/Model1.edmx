@@ -752,10 +752,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         <EntityType Name="EligibilityCriteria">
           <Key>
             <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="conference_support_id" />
+            <PropertyRef Name="request_id" />
           </Key>
           <Property Name="criteria_id" Type="int" Nullable="false" />
-          <Property Name="conference_support_id" Type="int" Nullable="false" />
+          <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="is_accepted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Formality">
@@ -778,6 +778,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="attendance_start" Type="datetime" Nullable="false" />
           <Property Name="attendance_end" Type="datetime" Nullable="false" />
+          <Property Name="specialization_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConferencePolicy">
           <Key>
@@ -2123,7 +2124,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Eligibili__crite__1C5231C2">
+        <Association Name="FK__Eligibili__crite__6BCEF5F8">
           <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
           <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2132,6 +2133,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="EligibilityCriteria">
               <PropertyRef Name="criteria_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Eligibili__reque__6CC31A31">
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="1" />
+          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestConference">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="EligibilityCriteria">
+              <PropertyRef Name="request_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3030,6 +3043,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="RequestConference">
               <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestCo__speci__68F2894D">
+          <End Role="Specialization" Type="Self.Specialization" Multiplicity="1" />
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialization">
+              <PropertyRef Name="specialization_id" />
+            </Principal>
+            <Dependent Role="RequestConference">
+              <PropertyRef Name="specialization_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3987,8 +4012,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="File" EntitySet="File" />
             <End Role="Decision" EntitySet="Decision" />
           </AssociationSet>
-          <AssociationSet Name="FK__Eligibili__crite__1C5231C2" Association="Self.FK__Eligibili__crite__1C5231C2">
+          <AssociationSet Name="FK__Eligibili__crite__6BCEF5F8" Association="Self.FK__Eligibili__crite__6BCEF5F8">
             <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="EligibilityCriteria" EntitySet="EligibilityCriteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Eligibili__reque__6CC31A31" Association="Self.FK__Eligibili__reque__6CC31A31">
+            <End Role="RequestConference" EntitySet="RequestConference" />
             <End Role="EligibilityCriteria" EntitySet="EligibilityCriteria" />
           </AssociationSet>
           <AssociationSet Name="FK__Form__phase_id__2DB1C7EE" Association="Self.FK__Form__phase_id__2DB1C7EE">
@@ -4285,6 +4314,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </AssociationSet>
           <AssociationSet Name="FK__RequestCo__reque__1975C517" Association="Self.FK__RequestCo__reque__1975C517">
             <End Role="BaseRequest" EntitySet="BaseRequest" />
+            <End Role="RequestConference" EntitySet="RequestConference" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestCo__speci__68F2894D" Association="Self.FK__RequestCo__speci__68F2894D">
+            <End Role="Specialization" EntitySet="Specialization" />
             <End Role="RequestConference" EntitySet="RequestConference" />
           </AssociationSet>
           <AssociationSet Name="FK__RequestDe__decis__1881A0DE" Association="Self.FK__RequestDe__decis__1881A0DE">
@@ -4683,6 +4716,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="specialization_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="specialization_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MOUPartnerSpecializations" Relationship="Self.FK__MOUPartne__speci__5A846E65" FromRole="Specialization" ToRole="MOUPartnerSpecialization" />
+          <NavigationProperty Name="RequestConferences" Relationship="Self.FK__RequestCo__speci__68F2894D" FromRole="Specialization" ToRole="RequestConference" />
           <NavigationProperty Name="RequestPapers" Relationship="Self.FK__RequestPa__speci__408F9238" FromRole="Specialization" ToRole="RequestPaper" />
           <NavigationProperty Name="ResearchCollaborations" Relationship="Self.FK__ResearchC__speci__3BFFE745" FromRole="Specialization" ToRole="ResearchCollaboration" />
           <NavigationProperty Name="Scholarships" Relationship="Self.FK__Scholarsh__speci__6CA31EA0" FromRole="Specialization" ToRole="Scholarship" />
@@ -5404,17 +5438,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="policy_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ConferenceCriteriaLanguages" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="Criteria" ToRole="ConferenceCriteriaLanguage" />
           <NavigationProperty Name="RequestConferencePolicy" Relationship="Self.FK__Criteria__reward__1A69E950" FromRole="Criteria" ToRole="RequestConferencePolicy" />
-          <NavigationProperty Name="EligibilityCriterias" Relationship="Self.FK__Eligibili__crite__1C5231C2" FromRole="Criteria" ToRole="EligibilityCriteria" />
+          <NavigationProperty Name="EligibilityCriterias" Relationship="Self.FK__Eligibili__crite__6BCEF5F8" FromRole="Criteria" ToRole="EligibilityCriteria" />
         </EntityType>
         <EntityType Name="EligibilityCriteria">
           <Key>
             <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="conference_support_id" />
+            <PropertyRef Name="request_id" />
           </Key>
           <Property Name="criteria_id" Type="Int32" Nullable="false" />
-          <Property Name="conference_support_id" Type="Int32" Nullable="false" />
+          <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="is_accepted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Criterion" Relationship="Self.FK__Eligibili__crite__1C5231C2" FromRole="EligibilityCriteria" ToRole="Criteria" />
+          <NavigationProperty Name="Criterion" Relationship="Self.FK__Eligibili__crite__6BCEF5F8" FromRole="EligibilityCriteria" ToRole="Criteria" />
+          <NavigationProperty Name="RequestConference" Relationship="Self.FK__Eligibili__reque__6CC31A31" FromRole="EligibilityCriteria" ToRole="RequestConference" />
         </EntityType>
         <EntityType Name="Formality">
           <Key>
@@ -5438,12 +5473,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="attendance_start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="attendance_end" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="specialization_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="File" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="RequestConference" ToRole="File" />
+          <NavigationProperty Name="Specialization" Relationship="Self.FK__RequestCo__speci__68F2894D" FromRole="RequestConference" ToRole="Specialization" />
           <NavigationProperty Name="ApprovalProcesses" Relationship="Self.FK__ApprovalP__reque__2DD1C37F" FromRole="RequestConference" ToRole="ApprovalProcess" />
           <NavigationProperty Name="Conference" Relationship="Self.FK__Conferenc__confe__5E54FF49" FromRole="RequestConference" ToRole="Conference" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__reque__0CDAE408" FromRole="RequestConference" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="ConferenceStatu" Relationship="Self.FK__Conferenc__statu__1881A0DE" FromRole="RequestConference" ToRole="ConferenceStatus" />
           <NavigationProperty Name="Costs" Relationship="Self.FK__Cost__request_id__0BE6BFCF" FromRole="RequestConference" ToRole="Cost" />
+          <NavigationProperty Name="EligibilityCriterias" Relationship="Self.FK__Eligibili__reque__6CC31A31" FromRole="RequestConference" ToRole="EligibilityCriteria" />
           <NavigationProperty Name="RequestConferencePolicy" Relationship="Self.FK__Conferenc__rewar__178D7CA5" FromRole="RequestConference" ToRole="RequestConferencePolicy" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__RequestCo__paper__1881A0DE" FromRole="RequestConference" ToRole="Paper" />
           <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestCo__reque__1975C517" FromRole="RequestConference" ToRole="BaseRequest" />
@@ -6546,6 +6584,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RequestCo__speci__68F2894D">
+          <End Role="Specialization" Type="Self.Specialization" Multiplicity="1" />
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialization">
+              <PropertyRef Name="specialization_id" />
+            </Principal>
+            <Dependent Role="RequestConference">
+              <PropertyRef Name="specialization_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__RequestPa__speci__408F9238">
           <End Role="Specialization" Type="Self.Specialization" Multiplicity="0..1" />
           <End Role="RequestPaper" Type="Self.RequestPaper" Multiplicity="*" />
@@ -7630,7 +7680,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Eligibili__crite__1C5231C2">
+        <Association Name="FK__Eligibili__crite__6BCEF5F8">
           <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
           <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
           <ReferentialConstraint>
@@ -7639,6 +7689,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="EligibilityCriteria">
               <PropertyRef Name="criteria_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Eligibili__reque__6CC31A31">
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="1" />
+          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestConference">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="EligibilityCriteria">
+              <PropertyRef Name="request_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8418,6 +8480,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Specialization" EntitySet="Specializations" />
             <End Role="MOUPartnerSpecialization" EntitySet="MOUPartnerSpecializations" />
           </AssociationSet>
+          <AssociationSet Name="FK__RequestCo__speci__68F2894D" Association="Self.FK__RequestCo__speci__68F2894D">
+            <End Role="Specialization" EntitySet="Specializations" />
+            <End Role="RequestConference" EntitySet="RequestConferences" />
+          </AssociationSet>
           <AssociationSet Name="FK__RequestPa__speci__408F9238" Association="Self.FK__RequestPa__speci__408F9238">
             <End Role="Specialization" EntitySet="Specializations" />
             <End Role="RequestPaper" EntitySet="RequestPapers" />
@@ -8778,8 +8844,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicies" />
             <End Role="Criteria" EntitySet="Criteria" />
           </AssociationSet>
-          <AssociationSet Name="FK__Eligibili__crite__1C5231C2" Association="Self.FK__Eligibili__crite__1C5231C2">
+          <AssociationSet Name="FK__Eligibili__crite__6BCEF5F8" Association="Self.FK__Eligibili__crite__6BCEF5F8">
             <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="EligibilityCriteria" EntitySet="EligibilityCriterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Eligibili__reque__6CC31A31" Association="Self.FK__Eligibili__reque__6CC31A31">
+            <End Role="RequestConference" EntitySet="RequestConferences" />
             <End Role="EligibilityCriteria" EntitySet="EligibilityCriterias" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__rewar__178D7CA5" Association="Self.FK__Conferenc__rewar__178D7CA5">
@@ -9721,7 +9791,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.EligibilityCriteria">
               <MappingFragment StoreEntitySet="EligibilityCriteria">
                 <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
-                <ScalarProperty Name="conference_support_id" ColumnName="conference_support_id" />
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="is_accepted" ColumnName="is_accepted" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -9746,6 +9816,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="attendance_start" ColumnName="attendance_start" />
                 <ScalarProperty Name="attendance_end" ColumnName="attendance_end" />
+                <ScalarProperty Name="specialization_id" ColumnName="specialization_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
