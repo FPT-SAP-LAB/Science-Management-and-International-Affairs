@@ -274,7 +274,7 @@
                                     <span class="svg-icon menu-icon">
                                         <i class="fas fa-clipboard-list icon-lg"></i>
                                     </span>
-                                    <span class="menu-text">ĐỀ NGHỊ HỖ TRỢ HỘI NGHỊ</span></i>
+                                    <span class="menu-text"><i>ĐỀ NGHỊ HỖ TRỢ HỘI NGHỊ</i></span>
                                 </a>
                             </li>
                             <!---------------------------------------------------------------------------------->
@@ -481,7 +481,8 @@
                                 </div>
                             </li>
                             <!---------------------------------------------------------------------------------->
-                            <!--end::Menu Nav-->
+                        </ul>
+                        <!--end::Menu Nav-->
                     </div>
                     <!--end::Menu Container-->
                 </div>
@@ -506,14 +507,14 @@
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
                         @{
-                            BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                            //BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                         }
                         <div class="topbar">
                             <div class="topbar-item">
                                 <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                      id="kt_quick_user_toggle">
                                     <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                        <span class="symbol-label font-size-h5 font-weight-bold" style="background-image:url(@user.account.picture)"></span>
+                                        <span class="symbol-label font-size-h5 font-weight-bold" style="background-image:url()"></span>
                                     </span>
                                 </div>
                             </div>
@@ -600,12 +601,12 @@
             <!--begin::Header-->
             <div class="d-flex align-items-center mt-5">
                 <div class="symbol symbol-100 mr-5">
-                    <div class="symbol-label" style="background-image:url(@user.account.picture)"></div>
+                    <div class="symbol-label" style="background-image:url()"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">@user.account.full_name</a>
-                    <div class="text-muted mt-1">@user.role_name</div>
+                    <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"></a>
+                    <div class="text-muted mt-1"></div>
                     <div class="navi mt-2">
                         <a href="#" class="navi-item">
                             <span class="navi-link p-0 pb-2">
@@ -625,7 +626,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                 </span>
-                                <span class="navi-text text-muted text-hover-primary">@user.account.email</span>
+                                <span class="navi-text text-muted text-hover-primary"></span>
                             </span>
                         </a>
                         <a href="javascript:;" onclick="gp_signOut()" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>

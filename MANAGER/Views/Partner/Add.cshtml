@@ -99,12 +99,6 @@
                 $('.summernote').summernote({
                     height: 400,
                     tabsize: 2,
-                    //callbacks: {
-                    //    onImageUpload: function (files) {
-                    //        console.log(files)
-                    //        $('.summernote').summernote('insertImage', files, "");
-                    //    }
-                    //}
                 });
             }
 
@@ -120,8 +114,6 @@
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();
         });
-
-
 
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -140,7 +132,6 @@
                         $('#avata').attr('src', URL);
                     };
                 }
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -165,6 +156,11 @@
 
             var src = $('#avata').attr('src');
 
+            var partner_name = $('#partner_name').val()
+            var country_id = $('#partner_nation').val()
+            var website = $('#partner_website').val()
+            var address = $('#partner_address').val()
+
             var list_image = $('.note-editor').find('img')
 
             var content = $('.summernote').summernote('code') + "";
@@ -175,12 +171,18 @@
                 content = content.replace(temp_src, 'image_' + i)
                 form_data.append('image_' + i, dataURItoBlob(temp_src))
             }
+
             form_data.append("numberOfImage", list_image.length)
             console.log(content)
 
+            form_data.append('partner_name', partner_name)
+            form_data.append('country_id', country_id)
+            form_data.append('website', website)
+            form_data.append('address', address)
 
             form_data.append('image', dataURItoBlob(src))
             form_data.append('content', content)
+
             for (var p of form_data) {
                 let name = p[0];
                 let value = p[1];

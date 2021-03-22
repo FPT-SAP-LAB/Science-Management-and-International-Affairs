@@ -14,7 +14,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
     public class PartnerController : Controller
     {
         private static PartnerRepo partnerRePo = new PartnerRepo();
-        [Auther(RightID = "8")]
+        //[Auther(RightID = "8")]
         public ActionResult List()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
@@ -26,6 +26,37 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         [HttpPost]
         public ActionResult List(SearchPartner searchPartner)
+        {
+            try
+            {
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, error = e.Message });
+            }
+        }
+
+        public ActionResult List_Deleted()
+        {
+            ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            ViewBag.countries = db.Countries.ToList();
+            ViewBag.specializations = db.Specializations.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult List_Deleted(SearchPartner searchPartner)
         {
             try
             {
@@ -65,22 +96,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 return Json(new { data = e.Message });
             }
         }
-        public ActionResult List_Deleted()
-        {
-            ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
-            return View();
-        }
 
-        public ActionResult Delete(string id)
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
             try
             {
-                string result = id;
-                return Json("", JsonRequestBehavior.AllowGet);
+                AlertModal<string> alertModal = partnerRePo.deletePartner(id);
+                return Json(new { alertModal.success }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                throw e;
             }
         }
 
@@ -91,16 +118,33 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage)
+        public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage,
+            string partner_name, int country_id, string website, string address)
         {
-            List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
-            for (int i = 0; i < numberOfImage; i++)
+            try
             {
-                string label = "image_" + i;
-                files.Add(Request.Files[label]);
+                PartnerArticle partner_article = new PartnerArticle();
+                partner_article.partner_name = partner_name;
+                partner_article.country_id = country_id;
+                partner_article.website = website;
+                partner_article.address = address;
+
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                files_request.Add(image);
+                partnerRePo.addPartner(files_request, content, partner_article, numberOfImage);
+
+                ViewBag.pageTitle = "THÊM ĐỐI TÁC";
+                return View();
             }
-            ViewBag.pageTitle = "THÊM ĐỐI TÁC";
-            return View();
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public ActionResult pass_content(string content, string website, string address, string imgInp)
