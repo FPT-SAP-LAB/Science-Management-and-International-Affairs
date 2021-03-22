@@ -137,13 +137,24 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.editExtraMOU(input, int.Parse(id));
+                mou.editExtraMOU(input);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult getFullScope()
+        {
+            try
+            {
+                List<CollaborationScope> listScopes = mou.GetFullScopesExMOU();
+                return Json(listScopes);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
             }
         }
     }

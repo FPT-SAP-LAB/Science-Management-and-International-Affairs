@@ -1,4 +1,4 @@
-﻿<div class="modal fade in" id="add_partner_mou" aria-hidden="true" style="z-index: 8888">
+﻿<div class="modal fade in" id="add_partner_mou" aria-hidden="true" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center row">
@@ -85,7 +85,7 @@
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <label style="color:blue" class="float-right"><a href="MOU/Detail#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="mou_partner_scope_add" name="param" multiple="multiple" style="width:100% !important">
+                            <select class="form-control select2" multiple="multiple" id="mou_partner_scope_add" style="width:100% !important">
                                 @foreach (var item in ViewBag.listScopesMOUPartner)
                                 {
                                     <option value="@item.scope_id">@item.scope_abbreviation</option>
