@@ -69,12 +69,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
             var ApprovalProcesses = (from a in db.ApprovalProcesses
                                      join b in db.Accounts on a.account_id equals b.account_id
-                                     join c in db.PositionLanguages on a.position_id equals c.position_id
-                                     where a.request_id == request_id && c.language_id == language_id
+                                     join c in db.PositionLanguages.Where(x => x.language_id == language_id) on a.position_id equals c.position_id into Processes
+                                     from d in Processes.DefaultIfEmpty()
+                                     where a.request_id == request_id
                                      select new ConferenceApprovalProcess
                                      {
                                          CreatedDate = a.created_date,
-                                         PositionName = c.name,
+                                         PositionName = d == null ? "Sinh viên" : d.name,
                                          FullName = b.full_name,
                                          Comment = a.comment
                                      }).ToList();

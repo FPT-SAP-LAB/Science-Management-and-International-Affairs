@@ -12,12 +12,17 @@ namespace BLL.Authen
     public class LoginRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public User getAccount(ENTITIES.CustomModels.Authen.Gmail user)
+        public User getAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
             try
             {
                 Account a = db.Accounts.Where(x => x.email.Equals(user.email)).FirstOrDefault();
                 if (a == null)
+                {
+                    return null;
+                }
+                Role r = db.Roles.Find(a.role_id);
+                if (!roleAccept.Contains(r.role_id))
                 {
                     return null;
                 }
@@ -30,12 +35,12 @@ namespace BLL.Authen
                     db.Entry(a).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                Role r = db.Roles.Find(a.role_id);
                 User u = new User
                 {
                     url = r.url,
                     rights = getPermission(a),
-                    account = a
+                    account = a,
+                    role_name = r.role_name
                 };
                 return u;
             }
@@ -84,6 +89,7 @@ namespace BLL.Authen
             public List<int> rights { get; set; }
             public string url { get; set; }
             public Account account { get; set; }
+            public string role_name { get; set; }
         }
         public class baseRight
         {

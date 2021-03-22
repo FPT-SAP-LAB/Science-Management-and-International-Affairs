@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
     {
         private static CollaborationScopeRepo collaborationStatusRepo = new CollaborationScopeRepo();
 
-        // GET: CollaborationScope
+        [Auther(RightID = "9")]
         public ActionResult List()
         {
             ViewBag.title = "QUẢN LÝ PHẠM VI HỢP TÁC";

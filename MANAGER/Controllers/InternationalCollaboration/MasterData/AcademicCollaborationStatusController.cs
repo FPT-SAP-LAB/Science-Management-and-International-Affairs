@@ -2,6 +2,7 @@
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
     {
         private static AcademicCollaborationStatusRepo academicCollaborationStatusRepo = new AcademicCollaborationStatusRepo();
 
-        // GET: AcademicCollaborationStatus
         public ActionResult List()
         {
             List<StatusType> statusTypes = new List<StatusType>

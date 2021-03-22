@@ -3,6 +3,7 @@ using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         readonly BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
         readonly PartnerMOURepo mou_partner = new PartnerMOURepo();
         readonly MOARepo moa = new MOARepo();
+        [Auther(RightID = "5")]
         public ActionResult List()
         {
             try

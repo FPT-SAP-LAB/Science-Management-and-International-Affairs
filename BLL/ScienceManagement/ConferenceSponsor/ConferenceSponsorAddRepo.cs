@@ -1,5 +1,6 @@
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,14 +16,26 @@ namespace BLL.ScienceManagement.ConferenceSponsor
     public class ConferenceSponsorAddRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public string GetAddPageJson(string language_name)
+        public string GetAddPageJson(int account_id, int language_id)
         {
             var Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
+            var Profile = (from a in db.Profiles
+                           join b in db.Accounts on a.account_id equals b.account_id
+                           join c in db.Offices on a.office_id equals c.office_id
+                           join d in db.People on a.people_id equals d.people_id
+                           where b.account_id == account_id
+                           select new ProfileResearcher
+                           {
+                               ID = a.mssv_msnv,
+                               FullName = d.name,
+                               Email = b.email,
+                               OfficeID = c.office_id,
+                               TitleID = a.Titles.FirstOrDefault().title_id
+                           }).FirstOrDefault();
             var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
                                                join b in db.Criteria on a.policy_id equals b.policy_id
                                                join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
-                                               join d in db.Languages on c.language_id equals d.language_id
-                                               where a.expired_date == null && d.language_name.Equals(language_name)
+                                               where a.expired_date == null && c.language_id == language_id
                                                select c.name).ToList();
             var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
                 .Select(x => new Country
@@ -30,7 +43,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     country_id = x.country_id,
                     country_name = x.country_name
                 }).ToList();
-            var FormalityLanguages = db.FormalityLanguages.Where(x => x.Language.language_name.Equals(language_name))
+            var FormalityLanguages = db.FormalityLanguages.Where(x => x.language_id == language_id)
                 .Select(x => new { x.formality_id, x.name }).ToList()
                 .Select(x => new FormalityLanguage
                 {
@@ -43,28 +56,32 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     office_id = x.office_id,
                     office_name = x.office_name
                 }).ToList();
-            var TitleLanguages = db.TitleLanguages.Where(x => x.Language.language_name.Equals(language_name))
+            var TitleLanguages = db.TitleLanguages.Where(x => x.language_id == language_id)
                 .Select(x => new { x.title_id, x.name }).ToList()
                 .Select(x => new TitleLanguage
                 {
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link });
+            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile });
         }
-        public List<Info> GetAllProfileBy(string id)
+        public List<Info> GetAllProfileBy(string id, int language_id)
         {
-            List<Info> infos = db.Database.SqlQuery<Info>(@"
-               SELECT General.People.mssv_msnv AS MS, General.People.name, General.People.email, General.Office.office_name AS OfficeName, General.Office.office_id AS OfficeID, SM_Researcher.PeopleTitle.title_id AS TitleID, Localization.TitleLanguage.name AS TitleString
-               FROM   General.People INNER JOIN
-                            SM_Researcher.PeopleTitle ON General.People.people_id = SM_Researcher.PeopleTitle.people_id INNER JOIN
-                            SM_MasterData.Title ON SM_Researcher.PeopleTitle.title_id = SM_MasterData.Title.title_id INNER JOIN
-                            General.Office ON General.People.office_id = General.Office.office_id AND General.People.office_id = General.Office.office_id INNER JOIN
-                            Localization.TitleLanguage ON SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id AND SM_MasterData.Title.title_id = Localization.TitleLanguage.title_id
-               WHERE General.People.mssv_msnv like @MS AND General.People.is_verify = 1
-               ORDER BY MS
-               OFFSET 0 ROWS
-               FETCH NEXT 10 ROWS only", new SqlParameter("MS", id + "%")).ToList();
+            var infos = (from a in db.Profiles
+                         join b in db.People on a.people_id equals b.people_id
+                         join c in db.Offices on a.office_id equals c.office_id
+                         join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
+                         where a.mssv_msnv.Contains(id) && d.language_id == language_id
+                         select new Info
+                         {
+                             Email = b.email,
+                             MS = a.mssv_msnv,
+                             Name = b.name,
+                             OfficeID = c.office_id,
+                             OfficeName = c.office_name,
+                             TitleID = a.Titles.FirstOrDefault().title_id,
+                             TitleString = d.name,
+                         }).Take(10).ToList();
             if (infos.Count == 0)
             {
                 Info info = new Info()
@@ -105,19 +122,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return Conferences;
         }
-        public string AddRequestConference(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
+        public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
+            List<string> FileIDs = new List<string>();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
-                    Account account = db.Accounts.Find(1);  // Sẽ chỉnh sau khi xong tạo account
+                    DateTime create_date = DateTime.Now;
+                    Account account = db.Accounts.Find(account_id);  // Sẽ chỉnh sau khi xong tạo account
                     DataTable dt = new DataTable();
                     JObject @object = JObject.Parse(input);
 
-                    JToken conf = @object["Conference"];
-
-                    Conference conference = conf.ToObject<Conference>();
+                    Conference conference = @object["Conference"].ToObject<Conference>();
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     if (temp != null)
                     {
@@ -131,30 +148,44 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<string> Links = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang42@yahoo.com.vn");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
                     BaseRequest @base = new BaseRequest()
                     {
                         account_id = account.account_id,
-                        created_date = DateTime.Now,
+                        created_date = create_date,
                         finished_date = null
                     };
                     db.BaseRequests.Add(@base);
 
-                    File Fpaper = new File()
-                    {
-                        link = Links[0],
-                        name = paper.FileName
-                    };
                     File Finvite = new File()
                     {
-                        link = Links[1],
-                        name = invite.FileName
+                        link = UploadFiles[1].WebViewLink,
+                        name = invite.FileName,
+                        file_drive_id = UploadFiles[1].Id
                     };
+                    FileIDs.Add(UploadFiles[1].Id);
+
+                    File Fpaper = new File()
+                    {
+                        link = UploadFiles[0].WebViewLink,
+                        name = paper.FileName,
+                        file_drive_id = UploadFiles[0].Id
+                    };
+                    FileIDs.Add(UploadFiles[1].Id);
+
                     db.Files.Add(Fpaper);
                     db.Files.Add(Finvite);
+                    db.SaveChanges();
+
+                    ENTITIES.Paper Paper = new ENTITIES.Paper()
+                    {
+                        name = @object["paper_name"].ToString(),
+                        file_id = Fpaper.file_id
+                    };
+                    db.Papers.Add(Paper);
                     db.SaveChanges();
 
                     RequestConference support = new RequestConference()
@@ -168,7 +199,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         attendance_start = DateTime.Parse(@object["attendance_start"].ToString()),
                         attendance_end = DateTime.Parse(@object["attendance_end"].ToString()),
                         invitation_file_id = Finvite.file_id,
-                        paper_id = Fpaper.file_id,
+                        paper_id = Paper.paper_id,
                     };
                     db.RequestConferences.Add(support);
                     db.SaveChanges();
@@ -203,20 +234,47 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             db.People.Add(Persons[i]);
                             db.SaveChanges();
 
-                            //Persons[i].Titles.Add(IDTitlePairs[item.title_id]);
+                            Profile profile = new Profile()
+                            {
+                                mssv_msnv = item.current_mssv_msnv,
+                                office_id = item.office_id,
+                                people_id = Persons[i].people_id,
+                            };
+                            profile.Titles.Add(IDTitlePairs[item.title_id]);
+                            db.Profiles.Add(profile);
+                            db.SaveChanges();
                             item.people_id = Persons[i].people_id;
                         }
                     }
                     db.ConferenceParticipants.AddRange(participants);
                     db.SaveChanges();
+
+                    int? position_id = null;
+                    Position position = db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault().Positions.FirstOrDefault();
+                    if (position != null)
+                        position_id = position.position_id;
+
+                    db.ApprovalProcesses.Add(new ApprovalProcess
+                    {
+                        account_id = account_id,
+                        created_date = create_date,
+                        position_id = position_id,
+                        request_id = support.request_id
+                    });
+
+                    db.SaveChanges();
                     trans.Commit();
                     return JsonConvert.SerializeObject(new { success = true, message = "OK", id = support.request_id });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
-                    //log.Error(ex);
-                    return JsonConvert.SerializeObject(new { success = false, });
+                    foreach (var item in FileIDs)
+                    {
+                        GlobalUploadDrive.DeleteFile(item);
+                    }
+                    return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
                 }
             }
         }

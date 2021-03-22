@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using MANAGER.Support;
 using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
@@ -14,7 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
     {
         private static AcademicActivityTypeRepo academicActivityTypeRepo = new AcademicActivityTypeRepo();
 
-        // GET: AcademicActivityType
+        [Auther(RightID = "4")]
         public ActionResult List()
         {
             ViewBag.title = "QUẢN LÝ LOẠI HOẠT ĐỘNG HỌC THUẬT";
