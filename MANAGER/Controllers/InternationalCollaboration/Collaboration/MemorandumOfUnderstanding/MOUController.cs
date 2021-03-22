@@ -10,7 +10,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOURepo;
 using OfficeOpenXml;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
