@@ -4,9 +4,11 @@ using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEnti
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 {
@@ -24,6 +26,10 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
 		                        t4.specialization_name,
 		                        t5.country_name,
+                                case when t2.partner_id is null     
+		                        then 1 else 2 end as 'is_collab'
+                                from IA_Collaboration.Partner t1 
+                                left join IA_Collaboration.MOUPartner t2 on
                                 t2.partner_id = t1.partner_id left join IA_Collaboration.MOU t6
 		                        on t6.mou_id = t2.mou_id 
                                 left join IA_Collaboration.MOUPartnerSpecialization t3 on
@@ -32,11 +38,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 t4.specialization_id = t3.specialization_id 
 		                        left join General.Country t5 on 
 		                        t1.country_id = t5.country_id
-                                where t1.is_deleted = 0 ) as a
-								where isnull(a.partner_name, '') like {0} and
-								isnull(a.specialization_name, '') like {1} and
-								isnull(a.country_name, '') like {2} and
-								isnull(a.is_collab , '') like {3}
+                                where t1.is_deleted = {0} ) as a
+								where isnull(a.partner_name, '') like {1} and
+								isnull(a.specialization_name, '') like {2} and
+								isnull(a.country_name, '') like {3} and
+								isnull(a.is_collab , '') like {4}
 		                        group by a.partner_name, a.partner_id, 
 		                        a.is_deleted, a.website, a.address, a.partner_id,
 		                        a.country_name, a.is_collab ";
@@ -46,13 +52,13 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging,
+                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging, searchPartner.is_deleted,
                       searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
                     "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
                     "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
                      searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").ToList();
 
-                int totalRecord = db.Database.SqlQuery<PartnerList>(sql,
+                int totalRecord = db.Database.SqlQuery<PartnerList>(sql, searchPartner.is_deleted,
                       searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
                     "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
                     "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
@@ -65,13 +71,56 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public void addPartner()
+        public void addPartner(List<HttpPostedFileBase> files_request, string content, PartnerArticle partner_article, int number_of_image)
         {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    List<string> image_drive_id = new List<string>(); 
+                    List<string> image_drive_data_link = new List<string>(); 
+                    List<Google.Apis.Drive.v3.Data.File> files_upload =
+                        GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
+                    for(int i = 0; i < number_of_image; i++)
+                    {
+                        image_drive_id.Add(files_upload[i].Id);
+                        image_drive_data_link.Add(files_upload[i].WebViewLink);
+                    }
+
+                    for(int i = 0; i < number_of_image; i++)
+                    {
+                        content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" +  image_drive_id[i]);
+                    }
+
+                    ArticleVersion articleVersion = new ArticleVersion();
+                    articleVersion.article_content = content;
+
+                    Partner partner = new Partner();
+                    partner.avatar = files_upload.LastOrDefault().WebViewLink;
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
+            }
             return;
         }
-        public void deletePartner()
+
+        public AlertModal<string> deletePartner(int id)
         {
-            return;
+            try
+            {
+                Partner partner = new Partner();
+                partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
+                partner.is_deleted = true;
+                db.SaveChanges();
+                return new AlertModal<string>(true);
+            }
+            catch (Exception)
+            {
+                return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
         }
         public void editPartner()
         {
@@ -131,6 +180,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 throw e;
             }
         }
+
         public void getPreView()
         {
             return;
