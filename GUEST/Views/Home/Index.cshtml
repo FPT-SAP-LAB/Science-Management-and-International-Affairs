@@ -549,7 +549,7 @@
 
 
             function change_banner() {
-                console.log(banner_index)
+                //console.log(banner_index)
                 $('#banner').fadeTo('slow', 0.95, function () {
                     $("#banner").css('background-image', 'url(' + imgs[banner_index] + ')');
                     if (banner_index != 2) {
@@ -561,7 +561,7 @@
                 //if (banner_index == 3) {
                 //    banner_index = 0
                 //}
-                console.log(banner_index)
+                //console.log(banner_index)
             }
 
             var mybanners = setInterval(change_banner, 5000);

@@ -20,6 +20,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<infoRole>();
             }
         }
@@ -34,6 +35,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseRight>();
             }
         }
@@ -46,6 +48,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Right>();
             }
         }
@@ -59,6 +62,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new infoRole();
             }
         }
@@ -76,6 +80,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -92,6 +97,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -112,6 +118,7 @@ namespace BLL.Admin
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -143,6 +150,7 @@ namespace BLL.Admin
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }

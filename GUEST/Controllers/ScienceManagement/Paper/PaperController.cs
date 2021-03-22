@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.Comment;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
@@ -54,7 +55,14 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult AddRequest(RequestPaper item)
         {
-            BaseRequest b = pr.addBaseRequest("10");
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            BaseRequest b = pr.addBaseRequest(acc.account_id);
             string mess = pr.addRequestPaper(b.request_id, item);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }

@@ -1,38 +1,34 @@
-﻿using System;
+﻿using BLL.Authen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ENTITIES;
-using BLL.Authen;
 using Google.Apis.Auth;
 
-namespace MANAGER.Controllers.AuthenticationAuthorization
+namespace GUEST.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
     {
         private static LoginRepo repo = new LoginRepo();
-        public ActionResult Login()
-        {
-            return View();
-        }
+        [HttpPost]
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Login");
+            return Json("success");
         }
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            List<int> roleAccept = new List<int>() { 2, 3, 7 };
+            List<int> roleAccept = new List<int>() { 5, 6 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
-                return Json(String.Empty);
+                return Json("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
             }
             Session["User"] = u;
-            return Redirect(u.url);
+            return Json(String.Empty);
         }
         public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
         {

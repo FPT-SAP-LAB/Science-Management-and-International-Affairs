@@ -1,4 +1,6 @@
-﻿using BLL.ScienceManagement.Comment;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Comment;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using System;
@@ -22,7 +24,14 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {
-            int account_id = 6;
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            int account_id = acc.account_id;
             return Json(CommentRepo.AddComment(request_id, account_id, content));
         }
     }

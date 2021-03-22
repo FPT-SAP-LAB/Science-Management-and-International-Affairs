@@ -15,7 +15,6 @@ namespace GUEST.Controllers
     {
         public ActionResult Index()
         {
-            //GlobalUploadDrive.FindFirstFolder("SonNT69");
             var pagesTree = new List<PageTree>
             {
                 new PageTree("Bảng tin","/"),

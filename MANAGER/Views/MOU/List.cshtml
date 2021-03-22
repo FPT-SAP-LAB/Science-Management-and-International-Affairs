@@ -688,7 +688,8 @@
                 } else {
                     toastr.error('Đối tác này đã được thêm');
                 }
-            }
+        }
+
             function ContentAddedIsDuplicated(start_date_string,partner_name) {
                 var obj =
                 {
@@ -704,8 +705,7 @@
                     cache: false,
                     success: function (data) {
                         if (data != "") {
-                            toastr.error("Thông tin ký kết đối tác " + partner_name + " đã có trong biên bản " + data + ".");
-                            //Swal.fire("Cảnh báo!", "Thông tin ký kết đối tác " + partner_name + " đã có trong biên bản " + data + ".", "warning");
+                            toastr.error("Thông tin ký kết đối tác " + partner_name + " đã có trong biên bản " + data.mou_code + " được tạo bởi "+ data.full_name+".");
                         } else {
                             CheckTempAdded(partner_name);
                         }
@@ -871,6 +871,7 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
+                        alert(data);
                         if (data != "") {
                             toastr.error("Thông tin ký kết đối tác " + partner_name + " đã có trong biên bản " + data + ".");
                         } else {
@@ -1027,7 +1028,8 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-
+                window.location = 'MOU/' + 'Download?fileGuid=' + data.data.FileGuid
+                    + '&filename=' + data.data.FileName;
             },
             error: function () {
             }

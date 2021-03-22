@@ -27,6 +27,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new BaseServerSideData<infoRight>(new List<infoRight>(), 0);
             }
         }

@@ -55,11 +55,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-3 col-md-3 col-xl-3 pt-8 pb-8">
-                <a href="javascripts:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
-            </div>
-            <div class="col-sm-1 col-md-1 col-xl-1 pt-8 pb-8">
-                <a href="javascripts:;" class="btn btn-light-danger btn-sm font-weight-bold" onclick="postActivity()">Đăng</a>
+            <div class="col-sm-4 col-md-4 col-xl-4 pt-8 pb-8">
+                <a href="javascripts:;" id="update_activity" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
+                <a href="javascripts:;" id="post_activity" class="btn btn-light-danger btn-sm font-weight-bold" onclick="postActivity()">Đăng</a>
             </div>
         </div>
         <div class="tab-content">
@@ -67,23 +65,25 @@
                 <div class="form-group row">
                     <div class="col-md-8 col-xl-8 col-lg-8">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input type="text" class="form-control" placeholder="Tiêu đề" required autocomplete="off" id="detail_name" value="RESFES 2021" />
+                        <input type="text" class="form-control" placeholder="Tiêu đề" required autocomplete="off" id="detail_name" />
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <label class="font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="add_category">
-                            <option value="KH">Khóa học</option>
-                            <option value="SE">Seminar</option>
-                            <option selected value="CO">Hội nghị, hội thảo</option>
-                            <option value="TN">HĐTN FPT Edu</option>
+                        <select class="form-control" id="detail_category">
+                            @{
+                                foreach(var i in ViewBag.types)
+                                {
+                                    <option value="@i.activity_type_id">@i.activity_type_name</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="col-md-4 col-xl-4 col-lg-4">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_detail_from" autocomplete="off" id="detail_from" value="06/01/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_detail_from" autocomplete="off" id="detail_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_detail_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -98,7 +98,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_detail_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_detail_to" autocomplete="off" id="detail_to" value="26/01/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_detail_to" autocomplete="off" id="detail_to" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_detail_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -112,26 +112,27 @@
                     </div>
                     <div class="col-md-8 col-xl-8 col-lg-8">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="detail_location" value="Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội" />
+                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="detail_location" />
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="language-content">
-                            <option selected value="TV">Tiếng Việt</option>
-                            <option value="EN">Tiếng Anh</option>
-                            <option value="JP">Tiếng Nhật</option>
-                            <option value="CN">Tiếng Trung</option>
+                        <select class="form-control" id="detail_language_content">
+                            <option selected value="1">Tiếng Việt</option>
+                            <option value="2">Tiếng Anh</option>
                         </select>
                     </div>
-                    <div class="col-md-12 col-xl-12">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
                         <div id="editor-main-content" class="summernote"></div>
                     </div>
                     <div id="subcontent-control" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
-                        <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent('#subcontent-control')">Thêm</button>
+                        <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent(0)">Thêm</button>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
+                        <button type="button" class="btn btn-primary btn-sm px-6 float-right" id="btn_detail">Lưu</button>
                     </div>
                 </div>
             </div>
@@ -1362,6 +1363,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="activity_id" value="@ViewBag.activity_id" />
 @section scripts{
     <script>
         var KTSummernoteDemo = function () {
@@ -1442,34 +1444,49 @@
             }
         }
 
-        let arrIndexDonvi = []
-        let arrDonVi = []
+        let arrIndexDonvi = [];
+        let arrDonVi = [];
         let numberOfIndexDonvi = 0;
 
-        let arrIndexDonviEdit = []
-        let arrDonViEdit = []
+        let arrIndexDonviEdit = [];
+        let arrDonViEdit = [];
         let numberOfIndexDonviEdit = 0;
 
-        let arrIndexContent = []
-        let arrContent = []
-        let numberOfIndexContent = 0;
+        let arrIndexContent = [];
+        let arrContent = [];
 
-        function bonusRowContent(id) {
-            arrIndexContent.push(numberOfIndexContent);
-            $(id).append(
-                "<div id=\"row-ckeditor-" + numberOfIndexContent + "\" class=\"row\">" +
-                "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
-                "<input type=\"text\" class=\"form-control\" id=\"content-" + numberOfIndexContent + "\" />" +
-                "</div>" +
-                "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
-                "<div id=\"editor-subcontent-" + numberOfIndexContent + "\" class=\"summernote\"></div>" +
-                "</div>" +
-                "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
-                "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + numberOfIndexContent + ")\">Xóa</button>" +
-                "</div>" +
-                "</div>");
+        function bonusRowContent(index) {
+            if (index == 0) {
+                ind = Math.max.apply(Math, arrIndexContent) + 1;
+                arrIndexContent.push(ind);
+                $('#subcontent-control').append(
+                    "<div id=\"row-ckeditor-" + ind + "\" class=\"row\">" +
+                    "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
+                    "<input type=\"text\" class=\"form-control\" id=\"content-" + ind + "\" />" +
+                    "</div>" +
+                    "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
+                    "<div id=\"editor-subcontent-" + ind + "\" class=\"summernote\"></div>" +
+                    "</div>" +
+                    "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
+                    "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + ind + ")\">Xóa</button>" +
+                    "</div>" +
+                    "</div>");
+            } else {
+                arrIndexContent.push(index);
+                $('#subcontent-control').append(
+                    "<div id=\"row-ckeditor-" + index + "\" class=\"row\">" +
+                    "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
+                    "<input type=\"text\" class=\"form-control\" id=\"content-" + index + "\" />" +
+                    "</div>" +
+                    "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
+                    "<div id=\"editor-subcontent-" + index + "\" class=\"summernote\"></div>" +
+                    "</div>" +
+                    "<div class=\"col-sm-1 col-md-1 col-xl-1 col-lg-1 mt-5\">" +
+                    "<button type=\"button\" class=\"btn btn-light-primary btn-sm px-6\" onclick=\"removeRowContent(" + index + ")\">Xóa</button>" +
+                    "</div>" +
+                    "</div>");
+            }
             KTSummernoteDemo.init();
-            numberOfIndexContent = numberOfIndexContent + 1;
         }
 
         function removeRowContent(id) {
@@ -2097,94 +2114,130 @@
             placeholder: 'Đơn vị tiền tệ',
             allowClear: true
         });
-        var KTUppy = function () {
-            const Tus = Uppy.Tus;
-            const ProgressBar = Uppy.ProgressBar;
-            const StatusBar = Uppy.StatusBar;
-            const FileInput = Uppy.FileInput;
-            const Informer = Uppy.Informer;
+        //var KTUppy = function () {
+        //    const Tus = Uppy.Tus;
+        //    const ProgressBar = Uppy.ProgressBar;
+        //    const StatusBar = Uppy.StatusBar;
+        //    const FileInput = Uppy.FileInput;
+        //    const Informer = Uppy.Informer;
 
-            const Dashboard = Uppy.Dashboard;
-            const Dropbox = Uppy.Dropbox;
-            const GoogleDrive = Uppy.GoogleDrive;
-            const Instagram = Uppy.Instagram;
-            const Webcam = Uppy.Webcam;
+        //    const Dashboard = Uppy.Dashboard;
+        //    const Dropbox = Uppy.Dropbox;
+        //    const GoogleDrive = Uppy.GoogleDrive;
+        //    const Instagram = Uppy.Instagram;
+        //    const Webcam = Uppy.Webcam;
 
-            var initUppy5 = function (id) {
-                var elemId = id;
-                var id = '#' + elemId;
-                var $statusBar = $(id + ' .uppy-status');
-                var $uploadedList = $(id + ' .uppy-list');
-                var timeout;
-                var uppyMin = Uppy.Core({
-                    debug: true,
-                    autoProceed: false,
-                    showProgressDetails: true,
-                    restrictions: {
-                        maxFileSize: 1000000, // 1mb
-                        maxNumberOfFiles: 5,
-                        minNumberOfFiles: 1
-                    }
-                });
-                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
-                // demo file upload server
-                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-                uppyMin.use(StatusBar, {
-                    target: id + ' .uppy-status',
-                    hideUploadButton: true,
-                    hideAfterFinish: false
-                });
-                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
-                var $fileLabel = $(id + ' .uppy-input-label');
-                uppyMin.on('upload', function (data) {
-                    $fileLabel.text("Uploading...");
-                    $statusBar.addClass('uppy-status-ongoing');
-                    $statusBar.removeClass('uppy-status-hidden');
-                    clearTimeout(timeout);
-                });
-                uppyMin.on('complete', function (file) {
-                    $.each(file.successful, function (index, value) {
-                        var sizeLabel = "bytes";
-                        var filesize = value.size;
-                        if (filesize > 1024) {
-                            filesize = filesize / 1024;
-                            sizeLabel = "kb";
-                            if (filesize > 1024) {
-                                filesize = filesize / 1024;
-                                sizeLabel = "MB";
-                            }
-                        }
-                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                        $uploadedList.append(uploadListHtml);
-                    });
-                    $fileLabel.text("Add more files");
-                    $statusBar.addClass('uppy-status-hidden');
-                    $statusBar.removeClass('uppy-status-ongoing');
-                });
-                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-                    var itemId = $(this).attr('data-id');
-                    uppyMin.removeFile(itemId);
-                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-                });
+        //    var initUppy5 = function (id) {
+        //        var elemId = id;
+        //        var id = '#' + elemId;
+        //        var $statusBar = $(id + ' .uppy-status');
+        //        var $uploadedList = $(id + ' .uppy-list');
+        //        var timeout;
+        //        var uppyMin = Uppy.Core({
+        //            debug: true,
+        //            autoProceed: false,
+        //            showProgressDetails: true,
+        //            restrictions: {
+        //                maxFileSize: 1000000, // 1mb
+        //                maxNumberOfFiles: 5,
+        //                minNumberOfFiles: 1
+        //            }
+        //        });
+        //        uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+        //        uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+        //        // demo file upload server
+        //        uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+        //        uppyMin.use(StatusBar, {
+        //            target: id + ' .uppy-status',
+        //            hideUploadButton: true,
+        //            hideAfterFinish: false
+        //        });
+        //        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        //        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+        //        var $fileLabel = $(id + ' .uppy-input-label');
+        //        uppyMin.on('upload', function (data) {
+        //            $fileLabel.text("Uploading...");
+        //            $statusBar.addClass('uppy-status-ongoing');
+        //            $statusBar.removeClass('uppy-status-hidden');
+        //            clearTimeout(timeout);
+        //        });
+        //        uppyMin.on('complete', function (file) {
+        //            $.each(file.successful, function (index, value) {
+        //                var sizeLabel = "bytes";
+        //                var filesize = value.size;
+        //                if (filesize > 1024) {
+        //                    filesize = filesize / 1024;
+        //                    sizeLabel = "kb";
+        //                    if (filesize > 1024) {
+        //                        filesize = filesize / 1024;
+        //                        sizeLabel = "MB";
+        //                    }
+        //                }
+        //                var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+        //                $uploadedList.append(uploadListHtml);
+        //            });
+        //            $fileLabel.text("Add more files");
+        //            $statusBar.addClass('uppy-status-hidden');
+        //            $statusBar.removeClass('uppy-status-ongoing');
+        //        });
+        //        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+        //            var itemId = $(this).attr('data-id');
+        //            uppyMin.removeFile(itemId);
+        //            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        //        });
+        //    }
+        //    return {
+        //        // public functions
+        //        init: function () {
+        //            initUppy5('edit_banmem_DongToChuc');
+        //            initUppy5('add_banmem_DongToChuc');
+        //            initUppy5('add_banmem_kpDuTru');
+        //            initUppy5('edit_banmem_kpDuTru');
+        //            initUppy5('add_banmem_kpDieuChinh');
+        //            initUppy5('edit_banmem_kpDieuChinh');
+        //            setTimeout(function () {
+        //            }, 2000);
+        //        }
+        //    };
+        //}();
+        //KTUtil.ready(function () {
+        //    KTUppy.init();
+        //});
+        function initDetail() {
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                activity_id: document.getElementById('activity_id').value
             }
-            return {
-                // public functions
-                init: function () {
-                    initUppy5('edit_banmem_DongToChuc');
-                    initUppy5('add_banmem_DongToChuc');
-                    initUppy5('add_banmem_kpDuTru');
-                    initUppy5('edit_banmem_kpDuTru');
-                    initUppy5('add_banmem_kpDieuChinh');
-                    initUppy5('edit_banmem_kpDieuChinh');
-                    setTimeout(function () {
-                    }, 2000);
+            $.ajax({
+                url: "@Url.Action("getDetail", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.baseDetail.article_status_id == 1) {
+                        $('#update_activity').attr('hidden', true);
+                    } else {
+                        $('#post_activity').attr('hidden', true);
+                    }
+                    document.getElementById('detail_name').value = data.baseDetail.activity_name;
+                    document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
+                    document.getElementById('detail_location').value = data.baseDetail.location;
+                    document.getElementById('detail_from').value = data.baseDetail.from;
+                    document.getElementById('detail_to').value = data.baseDetail.to;
+                    document.getElementById('editor-main-content').innerHTML = data.baseDetail.article_content;
+                    data.subContent.forEach(function (x) {
+                        bonusRowContent(x.article_id);
+                        document.getElementById('editor-subcontent-' + x.article_id).innerHTML = x.article_content;
+                        document.getElementById('content-' + x.article_id).innerHTML = x.version_title;
+                    });
+                },
+                error: function (data) {
+                    console.log(data);
                 }
-            };
-        }();
-        KTUtil.ready(function () {
-            KTUppy.init();
+            });
+        }
+        $('#btn_detail').click(function () {
+
         });
         $(document).ready(function () {
             $('#add_control_title').hide();
@@ -2193,6 +2246,7 @@
             KTBootstrapDatetimepicker.init();
         });
         jQuery(document).ready(function () {
+            initDetail();
             KTSummernoteDemo.init();
         });
     </script>

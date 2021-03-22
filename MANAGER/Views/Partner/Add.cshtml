@@ -20,7 +20,7 @@
                     <div class="tabbable-line">
                         <div class="tab-content" id="myTabContent">
                             <div class="row my-5">
-                                <div class="col-lg-3 col-md-3 col-sm-3 text-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
                                     <label class="font-weight-bolder">Ảnh đại diện</label>
                                     <div id="image ">
                                         <form id="form1" runat="server">
@@ -44,7 +44,15 @@
                                             <label style="color:red">*</label>
                                             <label style="font-style: italic;">
                                             </label>
-                                            <input class="form-control" type="text" placeholder="Quốc gia" autocomplete="off" required id="partner_nation" />
+                                            <select id="partner_nation" class="form-control form-control-lg" required style="width: 100% !important">
+                                                <option label="Label"></option>
+                                                @{
+                                                    foreach (var i in ViewBag.countries)
+                                                    {
+                                                        <option value="@i.country_id">@i.country_name</option>
+                                                    }
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center mb-5">
@@ -90,7 +98,10 @@
 
     <script>
 
-
+        $('#partner_nation').select2({
+            placeholder: 'Quốc gia',
+            allowClear: true,
+        })
 
 
         var KTSummernoteDemo = function () {
@@ -99,12 +110,6 @@
                 $('.summernote').summernote({
                     height: 400,
                     tabsize: 2,
-                    //callbacks: {
-                    //    onImageUpload: function (files) {
-                    //        console.log(files)
-                    //        $('.summernote').summernote('insertImage', files, "");
-                    //    }
-                    //}
                 });
             }
 
@@ -120,8 +125,6 @@
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();
         });
-
-
 
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -140,7 +143,6 @@
                         $('#avata').attr('src', URL);
                     };
                 }
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -160,27 +162,55 @@
             return file;
         }
 
+        $('#return_btn').click(function () {
+        })
+
         $('#submit').click(function () {
             var form_data = new FormData();
 
-            var src = $('#avata').attr('src');
+            var partner_name = $('#partner_name').val()
+            var country_id = $('#partner_nation').val()
 
-            var list_image = $('.note-editor').find('img')
+            var website = $('#partner_website').val()
+            var address = $('#partner_address').val()
 
+
+            if (partner_name == "") {
+                toastr.warning("Vui lòng nhập tên đối tác")
+                return;
+            }
+            if (country_id == "") {
+                toastr.warning("Vui lòng chọn quốc gia")
+                return;
+            }
             var content = $('.summernote').summernote('code') + "";
 
-            for (i = 0; i < list_image.length; i++) {
-                var temp = list_image[i];
-                var temp_src = $(temp).attr('src') + "";
-                content = content.replace(temp_src, 'image_' + i)
-                form_data.append('image_' + i, dataURItoBlob(temp_src))
+            var list_image = $('.note-editor').find('img')
+            if (list_image.length != 0) {
+                for (i = 0; i < list_image.length; i++) {
+                    var temp = list_image[i];
+                    var temp_src = $(temp).attr('src') + "";
+                    content = content.replace(temp_src, 'image_' + i)
+                    form_data.append('image_' + i, dataURItoBlob(temp_src))
+                }
             }
             form_data.append("numberOfImage", list_image.length)
+
+            var src = $('#avata').attr('src');
+            var template = '/Content/assets/media/custom-image/Placeholder.jpg';
+            if (src != template) {
+                form_data.append('image', dataURItoBlob(src))
+            }
+
+
             console.log(content)
 
-
-            form_data.append('image', dataURItoBlob(src))
+            form_data.append('partner_name', partner_name)
+            form_data.append('country_id', country_id)
+            form_data.append('website', website)
+            form_data.append('address', address)
             form_data.append('content', content)
+
             for (var p of form_data) {
                 let name = p[0];
                 let value = p[1];
@@ -199,10 +229,39 @@
                 dataType: "json",
                 data: form_data,
                 processData: false,
-                contentType: false
+                contentType: false,
+                success: function (data) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": 0,
+                        "extendedTimeOut": 0,
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut",
+                    };
+
+                    if (data) {
+                        toastr.options.onHidden = function () {
+                        window.location.href = '@Url.Action("List", "Partner")';
+                    }
+                        toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
+
+                    } else {
+                        toastr.error('Có lỗi xảy ra khi thêm');
+                    }
+                },
+                error: function () {
+                    toastr.error('Có lỗi xảy ra khi thêm');
+                }
             });
         })
     </script>
-
-
 }
