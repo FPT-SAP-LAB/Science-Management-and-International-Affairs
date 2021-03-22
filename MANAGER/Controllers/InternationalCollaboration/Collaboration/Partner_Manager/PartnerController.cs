@@ -103,7 +103,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 AlertModal<string> alertModal = partnerRePo.deletePartner(id);
-                return Json(new { alertModal.success }, JsonRequestBehavior.AllowGet) ;
+                return Json(new { alertModal.success }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

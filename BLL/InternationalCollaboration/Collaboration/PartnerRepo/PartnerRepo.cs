@@ -104,10 +104,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     throw e;
                 }
             }
-
             return;
         }
-
 
         public AlertModal<string> deletePartner(int id)
         {

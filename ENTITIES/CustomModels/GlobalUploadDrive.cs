@@ -190,7 +190,6 @@ namespace ENTITIES.CustomModels
             }
         }
 
-
         //Thư mục gốc
         //|_____Partner (sub folder name)
         //|  |_____Partner A (folder name)
@@ -247,7 +246,6 @@ namespace ENTITIES.CustomModels
                 createRequest.SupportsAllDrives = true;
                 createRequest.Execute();
             }
-
             return UploadedFiles;
         }
 
