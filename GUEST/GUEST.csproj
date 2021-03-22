@@ -2352,6 +2352,7 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CostTableConferenceRequest.js" />
     <Content Include="Scripts\Custome_JS\InternationalCollaboration\Load_Detail_AC.js" />
+    <Content Include="Scripts\datetime-moment.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -2363,6 +2364,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ListAllPaper.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\PartialViewScript.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

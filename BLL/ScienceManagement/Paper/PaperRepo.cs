@@ -74,7 +74,8 @@ namespace BLL.ScienceManagement.Paper
                 db.SaveChanges();
                 string sql = @"select p.*
                                 from [SM_ScientificProduct].Paper p
-                                where p.name = @name and p.publish_date = @date";
+                                where p.name = @name and p.publish_date = @date
+                                order by p.paper_id desc";
                 ENTITIES.Paper p = db.Database.SqlQuery<ENTITIES.Paper>(sql, new SqlParameter("name", item.name), new SqlParameter("date", item.publish_date)).FirstOrDefault();
                 return p;
             }
@@ -85,11 +86,11 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public BaseRequest addBaseRequest(string account_id)
+        public BaseRequest addBaseRequest(int account_id)
         {
             BaseRequest b = new BaseRequest
             {
-                account_id = 10,
+                account_id = account_id,
                 created_date = DateTime.Today
             };
             db.BaseRequests.Add(b);
@@ -97,7 +98,7 @@ namespace BLL.ScienceManagement.Paper
             string sql = @"select b.*
                             from [SM_Request].BaseRequest b 
                             where b.account_id = @id
-                            order by b.created_date desc";
+                            order by b.request_id desc";
             BaseRequest ba = db.Database.SqlQuery<BaseRequest>(sql, new SqlParameter("id", account_id)).FirstOrDefault();
             return ba;
         }
