@@ -186,5 +186,41 @@ namespace BLL.ScienceManagement.Citation
                 return "ff";
             }
         }
+
+        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id)
+        {
+            try
+            {
+                string sql = "";
+                List<SqlParameter> listParam = new List<SqlParameter>();
+                int id = Int32.Parse(request_id);
+                BaseRequest br = db.BaseRequests.Where(x => x.request_id == id).FirstOrDefault();
+                for (int i = 0; i < citation.Count; i++)
+                {
+                    sql += "delete from [SM_Citation].RequestHasCitation where citation_id = @citation" + i + " and request_id = @request \n";
+                    SqlParameter param = new SqlParameter("@citation" + i, citation[i].citation_id);
+                    listParam.Add(param);
+                }
+                SqlParameter param2 = new SqlParameter("@request", br.request_id);
+                listParam.Add(param2);
+                db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
+                foreach (var item in citation)
+                {
+                    db.Citations.Remove(db.Citations.Single(s => s.citation_id == item.citation_id));
+                }
+                db.SaveChanges();
+                addCitaion(newcitation);
+                addRequestHasCitation(newcitation, br);
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
+                rc.status_id = 3;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
     }
 }

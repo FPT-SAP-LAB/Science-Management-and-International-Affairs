@@ -95,7 +95,7 @@ namespace User.Controllers
         }
 
         [HttpPost]
-        public void addCitation(List<Citation> citation, List<AddAuthor> people)
+        public JsonResult addCitation(List<Citation> citation, List<AddAuthor> people)
         {
             LoginRepo.User u = new LoginRepo.User();
             Account acc = new Account();
@@ -112,7 +112,17 @@ namespace User.Controllers
 
             cr.addCitaion(citation);
 
-            cr.addRequestHasCitation(citation, b);
+            string mess = cr.addRequestHasCitation(citation, b);
+            return Json(new { mess = mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+        {
+            cr.addAuthor(people);
+            List<Citation> oldcitation = cr.getCitation(request_id);
+            string mess = cr.editCitation(oldcitation, citation, request_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }
