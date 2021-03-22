@@ -1,6 +1,6 @@
 ﻿$("#ckfe").change(function() {
     var val = $("#ckfe").val();
-    if (val == 0) {
+    if (val == "Khác") {
         $(".editfe").each(function() {
             $(this).prop("disabled", true);
         });
@@ -14,13 +14,16 @@ $('#ckfe').select2({
     allowClear: true
 });
 $('#add_author_workplace').select2({
-    allowClear: true
+    allowClear: true,
+    placeholder: "Điền mã số"
 });
 $('#add_author_title').select2({
-    allowClear: true
+    allowClear: true,
+    placeholder: "Chọn chức danh"
 });
 $('#add_author_contractType').select2({
-    allowClear: true
+    allowClear: true,
+    placeholder: "Chọn loại hợp đồng"
 });
 
 $(function() {
