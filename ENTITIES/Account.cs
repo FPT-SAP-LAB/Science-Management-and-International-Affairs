@@ -19,6 +19,7 @@ namespace ENTITIES
         {
             this.CommentBases = new HashSet<CommentBase>();
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
+            this.AccountRights = new HashSet<AccountRight>();
             this.ApprovalProcesses = new HashSet<ApprovalProcess>();
             this.Articles = new HashSet<Article>();
             this.BaseRequests = new HashSet<BaseRequest>();
@@ -28,7 +29,6 @@ namespace ENTITIES
             this.Notifications = new HashSet<Notification>();
             this.Procedures = new HashSet<Procedure>();
             this.Profiles = new HashSet<Profile>();
-            this.Rights = new HashSet<Right>();
         }
     
         public int account_id { get; set; }
@@ -44,6 +44,8 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AccountRight> AccountRights { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApprovalProcess> ApprovalProcesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -62,7 +64,5 @@ namespace ENTITIES
         public virtual ICollection<Procedure> Procedures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Right> Rights { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUBasicInfo;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
 {
     public class BasicInfoMOUController : Controller
     {
-        // GET: BasicInfoMOU
         private static BasicInfoMOURepo mou = new BasicInfoMOURepo();
-
+        [Auther(RightID = "6")]
         public ActionResult Index()
         {
             return View();

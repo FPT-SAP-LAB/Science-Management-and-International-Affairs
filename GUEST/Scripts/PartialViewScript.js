@@ -150,19 +150,31 @@ var filename = [];
 
 class AuthorInfoView {
     constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
-        this.add_author_msnv = add_author_msnv;
+        if (add_author_msnv != null) this.add_author_msnv = add_author_msnv;
+        else this.add_author_msnv = "";
         this.add_author_email = add_author_email;
-        this.add_author_workplace = add_author_workplace;
+        if (add_author_workplace != null) this.add_author_workplace = add_author_workplace;
+        else this.add_author_workplace = "Khác";
         this.add_author_name = add_author_name;
-        this.add_author_title = add_author_title;
-        this.add_author_contractType = add_author_contractType;
-        this.add_author_cmnd = add_author_cmnd;
-        this.add_author_tax = add_author_tax;
-        this.add_author_bank = add_author_bank;
-        this.add_author_accno = add_author_accno;
-        this.add_author_reward = add_author_reward;
-        this.add_author_note = add_author_note;
-        this.add_author_info_id = id
+        if (add_author_title != null) this.add_author_title = add_author_title;
+        else this.add_author_title = "";
+        if (add_author_contractType != null) this.add_author_contractType = add_author_contractType;
+        else this.add_author_contractType = "";
+        if (add_author_cmnd != null) this.add_author_cmnd = add_author_cmnd;
+        else this.add_author_cmnd = "";
+        if (add_author_tax != null) this.add_author_tax = add_author_tax;
+        else this.add_author_tax = "";
+        if (add_author_bank != null) this.add_author_bank = add_author_bank;
+        else this.add_author_bank = "";
+        if (add_author_accno != null) this.add_author_accno = add_author_accno;
+        else this.add_author_accno = "";
+        if (add_author_reward != null) this.add_author_reward = add_author_reward;
+        else this.add_author_reward = "";
+        if (add_author_note != null) this.add_author_note = add_author_note;
+        else this.add_author_note = "";
+        this.add_author_info_id = id;
+        if (add_author_msnv != null) this.title = this.add_author_msnv + ` - ` + this.add_author_name;
+        else this.title = this.add_author_name;
     }
     getHTML() {
         return `
@@ -171,13 +183,13 @@ class AuthorInfoView {
                                 <div class='card card-custom gutter-b'>
                                     <div class='card-header'>
                                         <div class='card-title'>
-                                            <h3 class='card-label'>` + this.add_author_msnv + ` - ` + this.add_author_name + `</h3>
+                                            <h3 class='card-label'>` + this.title + `</h3>
                                         </div>
                                         <div class='card-toolbar'>
-                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                            <a data-id='` + this.add_author_info_id + `' class='edit-author btn btn-icon btn-sm btn-hover-light-danger edit'>
                                                 <i class='far fa-edit'></i>
                                             </a>
-                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger'>
+                                            <a data-id='` + this.add_author_info_id + `' class='del-author btn btn-icon btn-sm btn-hover-light-danger edit'>
                                                 <i class='la la-trash'></i>
                                             </a>
                                         </div>
@@ -268,12 +280,60 @@ $("#add_author_save").click(function() {
         contract_id: $("#add_author_contractType").val(),
         title_id: $("#add_author_title").val(),
         people_id: $("#add_author_msnv").attr("name"),
-        temp_id: id
+        temp_id: id,
+        office_abbreviation: $("#ckfe option:selected").val(),
     }
     people.push(AddAuthor);
     var inputs = $(".inputAuthor");
     for (var i = 0; i < inputs.length; i++) {
         $(inputs[i]).val("");
+    }
+});
+$("#add_author_save_edit").click(function () {
+    people[temp_index_edit].office_abbreviation = $("#ckfe_edit").val();
+    people[temp_index_edit].office_id = $("#ckfe_edit option:selected").attr("name");
+    people[temp_index_edit].mssv_msnv = $("#add_author_msnv_edit").val();
+    people[temp_index_edit].name = $("#add_author_name_edit").val();
+    people[temp_index_edit].title_id = $("#add_author_title_edit").val();
+    people[temp_index_edit].contract_id = $("#add_author_contractType_edit").val();
+    people[temp_index_edit].identification_number = $("#add_author_cmnd_edit").val();
+    people[temp_index_edit].tax_code = $("#add_author_tax_edit").val();
+    people[temp_index_edit].bank_branch = $("#add_author_bank_edit").val();
+    people[temp_index_edit].bank_number = $("#add_author_accno_edit").val();
+    people[temp_index_edit].email = $("#add_author_mail_edit").val();
+
+    $("#" + people[temp_index_edit].temp_id).remove();
+
+    au = new AuthorInfoView(people[temp_index_edit].office_abbreviation, people[temp_index_edit].mssv_msnv, people[temp_index_edit].name,
+        $("#add_author_title_edit option:selected").text(), $("#add_author_contractType_edit option:selected").text(),
+        people[temp_index_edit].identification_number, people[temp_index_edit].tax_code,
+        people[temp_index_edit].bank_branch, people[temp_index_edit].bank_number,
+        '', '', people[temp_index_edit].email, people[temp_index_edit].temp_id);
+    $("#authors-info-container").append(au.getHTML());
+});
+$("#authors-info-container").on('click', '.edit-author', function() {
+    let id = $(this).data("id");
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].temp_id == id) {
+            $("#ckfe_edit").val(people[i].office_abbreviation);
+            $("#ckfe_edit").trigger('change');
+            $("#add_author_msnv_edit").val(people[i].mssv_msnv);
+            $("#add_author_msnv_edit").trigger('change');
+            $("#add_author_name_edit").val(people[i].name);
+            $("#add_author_title_edit").val(people[i].title_id);
+            $("#add_author_title_edit").trigger('change');
+            $("#add_author_contractType_edit").val(people[i].contract_id);
+            $("#add_author_contractType_edit").trigger('change');
+            $("#add_author_cmnd_edit").val(people[i].identification_number);
+            $("#add_author_tax_edit").val(people[i].tax_code);
+            $("#add_author_bank_edit").val(people[i].bank_branch);
+            $("#add_author_accno_edit").val(people[i].bank_number);
+            $("#add_author_mail_edit").val(people[i].email);
+            $("#add_author_reward_edit").prop('disabled', true);
+            $("#edit_author_btn").click();
+            temp_index_edit = i;
+            break;
+        }
     }
 });
 $("#authors-info-container").on('click', '.del-author', function() {

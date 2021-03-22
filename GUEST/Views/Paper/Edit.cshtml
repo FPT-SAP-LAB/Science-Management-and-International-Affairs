@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PaperName")</label>
-                            <input class="form-control form-control-lg edit edit" type="text" value="@ViewBag.Paper.name" />
+                            <input id="paper_name" class="form-control form-control-lg edit edit" type="text" value="@ViewBag.Paper.name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishDate")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.Paper.publish_date.ToString("MM/yyyy")" />
+                            <input id="paper_publish_date" class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.Paper.publish_date.ToString("MM/yyyy")" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("LinkFull")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_doi" />
+                            <input id="paper_full" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_doi" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Link scholar</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_scholar" />
+                            <input id="paper_scholar" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_scholar" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Loại ấn phẩm</label>
@@ -52,19 +52,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("JournalName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.journal_name" />
+                            <input id="paper_journal" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.journal_name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Vol")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.vol" />
+                            <input id="paper_vol" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Page")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.page" />
+                            <input id="paper_page" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
+                            <input id="paper_publish_name" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
@@ -72,8 +72,8 @@
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("CriteriaType")</label>
                             <select id="loaithuong" class="form-control form-control-lg edit">
-                                <option value="1">@rm.GetString("International")</option>
-                                <option value="2">@rm.GetString("Domestic")</option>
+                                <option value="Quocte">@rm.GetString("International")</option>
+                                <option value="Trongnuoc">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongqt">
@@ -83,7 +83,7 @@
                                 @{
                                     foreach (var item in ViewBag.listCriteria)
                                     {
-                                        <option class="optiontieuchi" value="@item.name">@item.name</option>
+                                        <option class="optiontieuchi" value="@item.name" name="@item.criteria_id">@item.name</option>
                                     }
                                 }
                             </select>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" />
+                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" id="paper_index" />
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
@@ -102,21 +102,21 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
-                            <input class="form-control form-control-lg edit" readonly type="text" value="@ViewBag.Paper.total_reward" ; />
+                            <input class="form-control form-control-lg edit" readonly type="text" value="@ViewBag.Paper.total_reward" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("RewardType")</label>
                             <select id="kieuthuong" class="form-control form-control-lg edit">
-                                <option value="1">@rm.GetString("According")</option>
-                                <option value="2">@rm.GetString("Repre")</option>
+                                <option value="Quydinh">@rm.GetString("According")</option>
+                                <option value="Canhan">@rm.GetString("Repre")</option>
                             </select>
                         </div>
                         @{
                             foreach (var item in ViewBag.listCriteriaOne)
                             {
                                 <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
-                                    <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchivalue' name='tieuchiname' type='text' /></span>
-                                    <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit' type='text' value="@item.link" /></span>
+                                    <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
+                                    <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
                                     <span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>
                                 </div>
                             }
@@ -135,45 +135,12 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <button class="btn btn-light-success px-6 font-weight-bold edit">@rm.GetString("Send")</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <form>
-                                <div class="row">
-                                    <div class="col-10">
-                                        <input class="form-control" type="text" value="" id="example-text-input" />
-                                    </div>
-                                    <div class="col-2">
-                                        <button type="submit" class="btn btn-block btn-success">@rm.GetString("SendM")</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <br />
-                            <table class="col-12 table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" width="15%">@rm.GetString("Time")</th>
-                                        <th scope="col" width="15%">@rm.GetString("Sender")</th>
-                                        <th scope="col">@rm.GetString("Content")</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
-                                        {
-                                            <tr>
-                                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.Email</td>
-                                                <td>@item.Content</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @{
+                        Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
+                    }
                 </div>
             </div>
         </div>
@@ -203,11 +170,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thông tin tác giả</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderAction("EditAuthor", "PartialView");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script>
+        var paper_id = "@ViewBag.id";
         var ck = "@ViewBag.ckEdit";
         var people = [];
+        var criteria = [];
         $('#chuyennganh').select2({
             allowClear: true
         });
@@ -223,6 +210,115 @@
         $('#paper_type').select2({
             allowClear: true
         });
+
+        function editRequest() {
+            var RequestPaper = {
+                specialization_id: $("#chuyennganh").val(),
+                type: $("#loaithuong").val(),
+                reward_type: $("#kieuthuong").val(),
+                paper_id: paper_id
+            }
+            $.ajax({
+                url: "@Url.Action("editRequest", "Paper")",
+                type: "POST",
+                data: JSON.stringify(RequestPaper),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    editCriteria();
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function editCriteria() {
+            var inputs = $(".tieuchiname");
+            var inputs2 = $(".tieuchilink");
+            for (var i = 0; i < inputs.length; i++) {
+                var PaperWithCriteria = {
+                    link: $(inputs2[i]).val(),
+                    name: $(inputs[i]).val()
+                }
+                criteria.push(PaperWithCriteria);
+            }
+            console.log(criteria);
+            $.ajax({
+                url: "@Url.Action("editCriteria", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'criteria': criteria, 'paper_id': paper_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        //alert(response.mess);
+                        editAuthor();
+                        //$("#nameEdit").val(paper_id);
+                        //$("#ckEdit").val(3);
+                        //$("#PaperForm").submit();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function editAuthor() {
+            $.ajax({
+                url: "@Url.Action("editAuthor", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'people': people, 'paper_id': paper_id}),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        location.reload();
+                    }
+                    //addCriteria();
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        $("#edit_submit").click(function () {
+            var Paper = {
+                name: $("#paper_name").val(),
+                publish_date: $("#paper_publish_date").val(),
+                link_doi: $("#paper_full").val(),
+                link_scholar: $("#paper_scholar").val(),
+                paper_type_id: $("#paper_type").val(),
+                journal_name: $("#paper_journal").val(),
+                vol: $("#paper_vol").val(),
+                page: $("#paper_page").val(),
+                company: $("#paper_publish_name").val(),
+                index: $("#paper_index").val()
+            };
+            $.ajax({
+                url: "@Url.Action("editPaper", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'paper': Paper, 'paper_id': paper_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        editRequest();
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $(document).ready(function () {
             if (ck != "4") {
                 $(".edit").prop("disabled", true);
@@ -236,20 +332,20 @@
 
             var paper_TNQT = "@ViewBag.Paper.type";
             if (paper_TNQT == "Quocte") {
-                $("#loaithuong").val(1);
+                $("#loaithuong").val("Quocte");
                 $(".thuongqt").show();
                 $(".thuongtn").hide();
             }
             else {
-                $("#loaithuong").val(2);
+                $("#loaithuong").val("Trongnuoc");
                 $(".thuongqt").hide();
                 $(".thuongtn").show();
             }
             $("#loaithuong").trigger('change');
 
             var kieuthuong = "@ViewBag.Paper.reward_type";
-            if (kieuthuong == "Quydinh") $("#kieuthuong").val(1);
-            if (kieuthuong == "Canhan") $("#kieuthuong").val(2);
+            if (kieuthuong == "Quydinh") $("#kieuthuong").val("Quydinh");
+            if (kieuthuong == "Canhan") $("#kieuthuong").val("Canhan");
             $("#kieuthuong").trigger('change');
 
             var spec = "@ViewBag.Paper.specialization_id";
@@ -262,11 +358,10 @@
                 option.prop('disabled', true);
             });
 
-            var id = "@ViewBag.id";
             $.ajax({
                 url: "@Url.Action("listAuthor", "Paper")",
                 type: "POST",
-                data: { 'id': id},
+                data: { 'id': paper_id},
                 cache: false,
                 success: function (response) {
                     for (var i = 0; i < response.author.length; i++) {
@@ -298,10 +393,13 @@
                             office_id: response.author[i].office_id,
                             contract_id: response.author[i].contract_id,
                             title_id: response.author[i].title_id,
-                            people_id: response.author[i].people_id
+                            people_id: response.author[i].people_id,
+                            temp_id: id,
+                            office_abbreviation: response.author[i].office_abbreviation,
                         }
                         people.push(AddAuthor);
                     }
+                    if (ck != "4") $(".edit").prop("disabled", true);
                 },
                 error: function () {
                     //alert("fail");
@@ -311,7 +409,7 @@
         $("#loaithuong").change(function () {
             var temp = $(this).val();
             //console.log(temp);
-            if (temp == 1) {
+            if (temp == "Quocte") {
                 $(".thuongqt").show();
                 $(".thuongtn").hide();
             } else {
@@ -326,8 +424,8 @@
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
             $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
-                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg edit' name='tieuchiname' type='text' /></span>" +
-                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit' type='text' /></span>" +
+                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
             var option = $("#tieuchi option[value='" + temp + "']");

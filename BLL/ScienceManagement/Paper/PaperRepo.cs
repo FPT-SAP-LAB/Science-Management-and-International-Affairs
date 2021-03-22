@@ -19,7 +19,7 @@ namespace BLL.ScienceManagement.Paper
             string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_id = @id";
-            item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
         }
 
@@ -34,30 +34,43 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public List<AuthorInfo> getAuthorPaper(string id)
+        public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
-            List<AuthorInfo> list = new List<AuthorInfo>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id, pc.contract_id, t.title_id
+            List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
-	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-	                            join [SM_MasterData].Title t on pt.title_id = t.title_id
-	                            join [Localization].TitleLanguage tl on t.title_id = tl.title_id
-	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
-	                            join [General].[File] f on pro.identification_file_id = f.file_id
+	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
+	                            left join [SM_MasterData].Title t on pt.title_id = t.title_id
+	                            left join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+	                            left join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
+	                            left join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
+	                            left join [General].Profile pro on po.people_id = pro.people_id
+	                            left join [General].Office o on pro.office_id = o.office_id
+	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
-            list = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).ToList();
+            list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
 
-        public ENTITIES.Paper addPaper(ENTITIES.Paper item)
+        public ENTITIES.Paper addPaper(DetailPaper item)
         {
             try
             {
-                db.Papers.Add(item);
+                ENTITIES.Paper paper = new ENTITIES.Paper
+                {
+                    name = item.name,
+                    publish_date = item.publish_date,
+                    link_doi = item.link_doi,
+                    link_scholar = item.link_scholar,
+                    journal_name = item.journal_name,
+                    page = item.page,
+                    vol = item.vol,
+                    company = item.company,
+                    index = item.index,
+                    paper_type_id = item.paper_type_id
+                };
+                db.Papers.Add(paper);
                 db.SaveChanges();
                 string sql = @"select p.*
                                 from [SM_ScientificProduct].Paper p
@@ -99,9 +112,10 @@ namespace BLL.ScienceManagement.Paper
                 db.SaveChanges();
                 return "ss";
             }
-            catch
+            catch (Exception e)
             {
-                return "ff";
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
 
@@ -122,8 +136,28 @@ namespace BLL.ScienceManagement.Paper
                             addProfile(item);
                         }
                     }
+                    else
+                    {
+                        Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
+                        p.name = item.name;
+                        p.phone_number = item.phone_number;
+                        if (item.office_abbreviation != "Khác")
+                        {
+                            Profile pro = (from a in db.Profiles
+                                           join b in db.People on a.people_id equals b.people_id
+                                           where b.email == item.email
+                                           select a).FirstOrDefault();
+                            pro.bank_branch = item.bank_branch;
+                            pro.bank_number = item.bank_number;
+                            pro.tax_code = item.tax_code;
+                            pro.identification_number = item.identification_number;
+                            pro.office_id = item.office_id;
+                            pro.mssv_msnv = item.mssv_msnv;
+                        }
+                    }
                     listmail += "," + item.email;
                 }
+                db.SaveChanges();
                 listmail = listmail.Substring(1);
                 string[] mail = listmail.Split(',');
                 String strAppend = "";
@@ -146,7 +180,8 @@ namespace BLL.ScienceManagement.Paper
                     {
                         people_id = item.people_id,
                         paper_id = Int32.Parse(paper_id),
-                        current_mssv_msnv = item.mssv_msnv
+                        current_mssv_msnv = item.mssv_msnv,
+                        money_reward = item.money_reward
                     };
                     db.AuthorPapers.Add(ap);
                 }
@@ -236,6 +271,91 @@ namespace BLL.ScienceManagement.Paper
                 }
                 db.SaveChanges();
                 return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updatePaper(string paper_id, ENTITIES.Paper paper)
+        {
+            try
+            {
+                int id = Int32.Parse(paper_id);
+                ENTITIES.Paper p = db.Papers.Where(x => x.paper_id == id).FirstOrDefault();
+                p.name = paper.name;
+                p.publish_date = paper.publish_date;
+                p.link_doi = paper.link_doi;
+                p.link_scholar = paper.link_scholar;
+                p.journal_name = paper.journal_name;
+                p.page = paper.page;
+                p.vol = paper.vol;
+                p.company = paper.company;
+                p.index = paper.index;
+                p.paper_type_id = paper.paper_type_id;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateRequest(RequestPaper item)
+        {
+            try
+            {
+                RequestPaper rp = (from a in db.RequestPapers
+                                   join b in db.BaseRequests on a.request_id equals b.request_id
+                                   where a.paper_id == item.paper_id
+                                   orderby b.created_date descending
+                                   select a).FirstOrDefault();
+                rp.specialization_id = item.specialization_id;
+                rp.type = item.type;
+                rp.reward_type = item.reward_type;
+                rp.status_id = 4;
+
+                if (item.type == "Trongnuoc")
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM [SM_ScientificProduct].RequestPaper where paper_id = @id", new SqlParameter("id", item.paper_id));
+                }
+
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].PaperWithCriteria where paper_id = @id", new SqlParameter("id", paper_id));
+                string mess = addCriteria(criteria, paper_id);
+                return mess;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateAuthor(List<AddAuthor> people, string paper_id)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("delete from[SM_ScientificProduct].AuthorPaper where paper_id = @id", new SqlParameter("id", paper_id));
+                string mess = addAuthor(people, paper_id);
+                return mess;
             }
             catch (Exception e)
             {

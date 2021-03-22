@@ -3,6 +3,7 @@
     ViewBag.Title = "Thêm đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ENTITIES.CustomModels.ScienceManagement.Researcher.ProfileResearcher Profile = ViewBag.data.Profile;
 }
 <style>
     .table-responsive > .table-bordered {
@@ -37,7 +38,7 @@
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="website" placeholder="Website hội nghị" value="">
+                                            <input type="text" class="form-control" id="website" placeholder="Website hội nghị">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -47,7 +48,7 @@
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC " value="">
+                                            <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC ">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -70,7 +71,7 @@
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Đơn vị tổ chức (Top QS) <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức" value="">
+                                            <input type="text" class="form-control" id="qs_university" placeholder="Đơn vị tổ chức">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -78,7 +79,7 @@
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Đơn vị đồng tổ chức:</label>
-                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị tổ chức" value="">
+                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị tổ chức">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -99,6 +100,25 @@
                                             <input type="text" class="form-control" readonly="" id="kt_daterangepicker_2">
                                         </div>
                                         <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Tên bài báo <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Hình thức <span style='color:red'>*</span>:</label>
+                                            <select id="formality" class="form-control">
+                                                @foreach (var item in ViewBag.data.FormalityLanguages)
+                                                {
+                                                    <option value="@item.formality_id">@item.name</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -124,23 +144,6 @@
                                         <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
                                         <!--end::Input-->
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <!--begin::Select-->
-                                        <div class="form-group fv-plugins-icon-container">
-                                            <label>Hình thức <span style='color:red'>*</span>:</label>
-                                            <select id="formality" class="form-control">
-                                                @foreach (var item in ViewBag.data.FormalityLanguages)
-                                                {
-                                                    <option value="@item.formality_id">@item.name</option>
-                                                }
-                                            </select>
-
-                                        </div>
-                                        <!--end::Select-->
-                                    </div>
-
                                 </div>
                             </div>
                             <div class="col-md-4" style="">
@@ -184,20 +187,20 @@
                                         <tr role="row" class="odd">
                                             <td>
                                                 <select class="form-control select2 selectPeople" name="param">
-                                                    <option label="Label">ABC123</option>
+                                                    <option label="Label">@Profile.ID</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="Ngô Tùng Sơn">
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Profile.FullName">
                                             </td>
                                             <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="sonnt69@fpt.edu.vn">
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Profile.Email">
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
                                                     @foreach (ENTITIES.Office item in ViewBag.data.Offices)
                                                     {
-                                                        <option value="@item.office_id">@item.office_name</option>
+                                                        <option @(item.office_id == Profile.OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
                                                     }
                                                 </select>
                                             </td>
@@ -205,7 +208,7 @@
                                                 <select class="form-control selectTitle">
                                                     @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
                                                     {
-                                                        <option value="@item.title_id">@item.name</option>
+                                                        <option @(item.title_id == Profile.TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
                                                     }
                                                 </select>
                                             </td>
@@ -220,10 +223,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="">
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên">
                                             </td>
                                             <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="">
+                                                <input type="email" class="form-control inputEmail" placeholder="Email">
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
@@ -298,11 +301,11 @@
                                     <tbody id="tableCost">
                                         <tr role="row" class="odd" id="baseCost">
                                             <td>
-                                                <input type="text" class="form-control" placeholder="Nội dung " value="">
+                                                <input type="text" class="form-control" placeholder="Nội dung ">
                                             </td>
                                             <td>FPTU</td>
                                             <td>
-                                                <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí" value="">
+                                                <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí">
                                             </td>
                                             <td>
                                                 <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -346,7 +349,7 @@
         </div>
         <div class="card-footer">
             <div class="row justify-content-center">
-                <button onclick="submitData()" class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+                <button id="SendRequestButton" onclick="submitData()" class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
@@ -362,6 +365,7 @@
         var endDate = new Date();
         var conferenceID = 0;
         var uppy1, uppy2;
+        var save_loader = new LoaderBtn($("#SendRequestButton"))
 
         $(document).ready(function () {
             $(document).find(".selectOffice, .selectTitle, #country").select2({
@@ -653,7 +657,7 @@
                 startDate: startDate,
                 endDate: endDate,
                 locale: {
-                    format: '@rm.GetString("DateFormat")',
+                    format: '@rm.GetString("DateRangePickerFormat")',
                 }
             });
         }
@@ -698,6 +702,14 @@
 
         function submitData() {
             let fd = new FormData();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file bài báo");
+                return false;
+            }
+            if (uppy2.getFiles()[0] == undefined) {
+                toastr.error("Thiếu thư xác nhận");
+                return false;
+            }
             fd.append('paper', uppy1.getFiles()[0].data)
             fd.append('invite', uppy2.getFiles()[0].data)
 
@@ -725,7 +737,8 @@
                 attendance_end: attendance_end,
                 ConferenceParticipant: [],
                 Cost: [],
-                Persons: []
+                Persons: [],
+                paper_name: $("#paper_name").val()
             }
             $("#tableParticipant tr").each((idx, ele) => {
                 let ms = $(ele).find(".selectPeople").select2('data')[0].id;
@@ -760,7 +773,7 @@
             })
 
             fd.append("input", JSON.stringify(this.data));
-
+            save_loader.startLoading();
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -771,9 +784,11 @@
                     else {
                         toastr.error(data.responseJSON.message);
                     }
+                    save_loader.stopLoading();
                 },
                 error: function () {
                     toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
                 },
                 dataType: "json",
                 data: fd,

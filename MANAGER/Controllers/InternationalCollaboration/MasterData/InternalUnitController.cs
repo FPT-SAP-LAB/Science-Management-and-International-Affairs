@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
     {
         private static InternalUnitRepo collaborationStatusRepo = new InternalUnitRepo();
 
-        // GET: InternalUnit
+        [Auther(RightID = "13")]
         public ActionResult List()
         {
             ViewBag.title = "QUẢN LÝ ĐƠN VỊ NỘI BỘ";

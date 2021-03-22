@@ -11,19 +11,20 @@ namespace ADMIN.Support
         public string RightID { get; set; }
         public void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (string.IsNullOrEmpty(Convert.ToString(filterContext.HttpContext.Session["UserID"])))
+            BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)filterContext.HttpContext.Session["User"];
+            if (u == null)
             {
                 var Url = new UrlHelper(filterContext.RequestContext);
-                var url = Url.Action("Index", "Login");
+                var url = Url.Action("Login", "Authen");
                 filterContext.Result = new RedirectResult(url);
             }
             else
             {
-                List<string> RightIDs = (List<string>)filterContext.HttpContext.Session["RightIDs"];
+                List<int> RightIDs = u.rights;
                 bool Check = false;
                 foreach (var r in RightID.Split(','))
                 {
-                    if (RightIDs.Contains(r))
+                    if (RightIDs.Contains(int.Parse(r)))
                     {
                         Check = true;
                         break;
@@ -31,8 +32,8 @@ namespace ADMIN.Support
                 }
                 if (!Check)
                 {
-                    string url = (string)filterContext.HttpContext.Session["url"];
-                    filterContext.Result = new RedirectResult("/" + url);
+                    string url = u.url;
+                    filterContext.Result = new RedirectResult(url);
                 }
             }
         }

@@ -155,7 +155,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\BasicInfoMOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOUController.cs" />
-    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner_Manager\PartnerController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityExpenseTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicActivityTypeController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\AcademicCollaborationStatusController.cs" />
@@ -165,7 +165,6 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\DirectionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\InternalUnitController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -185,6 +184,7 @@
     </Compile>
     <Compile Include="Models\JsonError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\Auther.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\pages\error\error-3.css" />
@@ -2163,12 +2163,6 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\addMOU.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\Custom_wizard.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\date-picker.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\listMOU.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\Toast.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\MOU\upload.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\Partner\Preview.js" />
     <Content Include="Scripts\inputFilter.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\uppy.js" />

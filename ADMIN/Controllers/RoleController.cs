@@ -46,7 +46,7 @@ namespace ADMIN.Controllers
             else return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult edit(Role obj)
+        public JsonResult edit(RoleRepo.infoRole obj)
         {
             bool res = repo.edit(obj);
             if (res)
@@ -58,7 +58,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult getRole(int role_id)
         {
-            Role data = repo.GetBaseRole(role_id);
+            RoleRepo.infoRole data = repo.GetBaseRole(role_id);
             return Json(data);
         }
         [HttpPost]
@@ -70,8 +70,9 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult UpdateRight(int[] arrAccept, int role_id)
         {
-            //bool res = repo.UpdateRight(arrAccept,role_id);
-            return Json(String.Empty);
+            bool res = repo.UpdateRight(arrAccept, role_id);
+            if (res) return Json("Chỉnh sửa thành công");
+            else return Json(String.Empty);
         }
     }
 }

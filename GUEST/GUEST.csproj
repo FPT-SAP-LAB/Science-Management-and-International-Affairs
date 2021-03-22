@@ -144,6 +144,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicCollaboration\AcademicCollaborationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\Partner\PartnerController.cs" />
@@ -173,6 +174,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>vi-VN.resx</DependentUpon>
     </Compile>
+    <Compile Include="Support\Auther.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\pages\error\error-3.css" />
@@ -2409,6 +2411,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\Program_Detail.cshtml" />
     <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
+    <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2417,6 +2420,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
+    <Folder Include="Views\Authen\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />

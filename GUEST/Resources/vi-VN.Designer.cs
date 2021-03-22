@@ -277,6 +277,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DD/MM/yyyy.
+        /// </summary>
+        public static string DateRangePickerFormat {
+            get {
+                return ResourceManager.GetString("DateRangePickerFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 12.
         /// </summary>
         public static string Dec {
@@ -768,6 +777,15 @@ namespace GUEST.Resources {
         public static string RewardType {
             get {
                 return ResourceManager.GetString("RewardType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lưu.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

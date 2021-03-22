@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOAPartner;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
     {
         // GET: PartnerMOA
         private static PartnerMOARepo moa = new PartnerMOARepo();
+        [Auther(RightID = "7")]
         public ActionResult Index()
         {
             return View();

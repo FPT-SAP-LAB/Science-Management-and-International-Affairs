@@ -189,6 +189,9 @@
   <data name="DateFormat" xml:space="preserve">
     <value>dd/MM/yyyy</value>
   </data>
+  <data name="DateRangePickerFormat" xml:space="preserve">
+    <value>DD/MM/yyyy</value>
+  </data>
   <data name="Dec" xml:space="preserve">
     <value>Tháng 12</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="RewardType" xml:space="preserve">
     <value>Loại khen thưởng</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Tìm kiếm</value>
