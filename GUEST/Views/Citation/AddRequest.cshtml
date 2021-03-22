@@ -27,9 +27,9 @@
                                 </thead>
                                 <tbody id="trichdan_body">
                                     <tr>
-                                        <td><input class="form-control" type="text" /></td>
-                                        <td><input class="form-control" type="number" min="0" /></td>
-                                        <td><input class="form-control" type="text" /></td>
+                                        <td><input class="form-control trichdan_source" type="text" /></td>
+                                        <td><input class="form-control trichdan_count" type="number" min="0" /></td>
+                                        <td><input class="form-control trichdan_link" type="text" /></td>
                                         <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
                                     </tr>
                                 </tbody>
@@ -46,12 +46,19 @@
     </div>
     <div class="card-footer">
         <div class="row justify-content-center">
-            <button class="btn btn-light-success px-6 font-weight-bold">@rm.GetString("Send")</button>
+            <button class="btn btn-light-success px-6 font-weight-bold" id="btn-submit">@rm.GetString("Send")</button>
         </div>
     </div>
 </div>
+<form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
 @section scripts{
+    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
+        var people = [];
+        var citation = [];
         $(document).ready(function () {
             $('.citationE').attr('style', 'display:none !important');
         });
@@ -67,6 +74,74 @@
             var rowCount = $('#trichdan_body tr').length;
             if (rowCount > 1) $("#trichdan_body tr:last").remove();
             else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
+        });
+
+        function addAuthor() {
+            ckfe = $("#ckfe").val()
+            add_author_workplace = $("#ckfe").val()
+            add_author_msnv = $("#add_author_msnv").val()
+            add_author_name = $("#add_author_name").val()
+            add_author_title = $("#add_author_title option:selected").text()
+            add_author_contractType = $("#add_author_contractType option:selected").text()
+            add_author_cmnd = $("#add_author_cmnd").val()
+            add_author_tax = $("#add_author_tax").val()
+            add_author_bank = $("#add_author_bank").val()
+            add_author_accno = $("#add_author_accno").val()
+            add_author_reward = $("#add_author_reward").val()
+            add_author_note = $("#add_author_note").val()
+            add_author_email = $("#add_author_mail").val()
+            id = new Date().getTime()
+            var AddAuthor = {
+                name: add_author_name,
+                email: add_author_email,
+                bank_number: add_author_accno,
+                tax_code: add_author_tax,
+                bank_branch: add_author_bank,
+                identification_number: add_author_cmnd,
+                mssv_msnv: add_author_msnv,
+                office_id: $("#ckfe option:selected").attr("name"),
+                contract_id: $("#add_author_contractType").val(),
+                title_id: $("#add_author_title").val(),
+                people_id: $("#add_author_msnv").attr("name"),
+                temp_id: id,
+                office_abbreviation: $("#ckfe option:selected").val(),
+            }
+            people.push(AddAuthor);
+        }
+
+        $("#btn-submit").click(function () {
+            addAuthor();
+            var inputSource = $(".trichdan_source");
+            var inputCount = $(".trichdan_count");
+            var inputLink = $(".trichdan_link");
+            for (var i = 0; i < inputSource.length; i++) {
+                var oneCitation = {
+                    source: $(inputSource[i]).val(),
+                    count: $(inputCount[i]).val(),
+                    link: $(inputLink[i]).val()
+                };
+                citation.push(oneCitation);
+            }
+
+            $.ajax({
+                url: "@Url.Action("addCitation", "Citation")",
+                type: "POST",
+                data: JSON.stringify({ 'citation': citation, 'people': people }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#nameEdit").val(response.id);
+                        $("#ckEdit").val("3");
+                        $("#CitationForm").submit();
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
         });
     </script>
 }
