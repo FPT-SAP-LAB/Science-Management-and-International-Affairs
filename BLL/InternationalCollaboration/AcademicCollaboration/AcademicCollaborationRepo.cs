@@ -230,7 +230,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 {
                     return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lỗi", "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
                 }
-
             }
             catch (Exception e)
             {

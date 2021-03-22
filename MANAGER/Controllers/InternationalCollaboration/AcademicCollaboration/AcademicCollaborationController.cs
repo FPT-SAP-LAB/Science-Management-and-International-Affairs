@@ -114,9 +114,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpPost]
         public ActionResult addPerson(Person person)
         {
-
-
-
             return Json(new { });
         }
 
