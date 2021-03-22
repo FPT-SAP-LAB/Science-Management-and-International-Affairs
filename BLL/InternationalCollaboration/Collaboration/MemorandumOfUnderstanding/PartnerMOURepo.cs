@@ -20,30 +20,33 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 string sql_mouPartnerList =
-                    @"select tb1.mou_partner_id,tb9.mou_code,tb2.partner_name,tb4.specialization_name
-                        ,tb2.website, tb1.contact_point_name, tb1.contact_point_phone
-                        ,tb1.contact_point_email, tb1.mou_start_date, tb7.scope_abbreviation, tb1.mou_id
-                        from IA_Collaboration.MOUPartner tb1 inner join IA_Collaboration.Partner tb2
-                        on tb1.partner_id = tb2.partner_id 
-                        inner join IA_Collaboration.MOUPartnerSpecialization tb3 on
-                        tb1.mou_partner_id = tb3.mou_partner_id 
-                        inner join General.Specialization tb4 on 
-                        tb3.specialization_id = tb4.specialization_id
-                        inner join IA_Collaboration.PartnerScope tb5 on 
-                        tb5.partner_id = tb1.partner_id
-                        inner join IA_Collaboration.MOUPartnerScope tb6 on 
-                        tb6.partner_scope_id = tb5.partner_scope_id
-                        inner join IA_Collaboration.CollaborationScope tb7 on 
-                        tb7.scope_id = tb5.scope_id
-                        inner join General.Country tb8 on 
-                        tb8.country_id = tb2.country_id
-						inner join IA_Collaboration.MOU tb9 on
-						tb9.mou_id = tb1.mou_id
-                        where tb1.mou_id = @mou_id
-                        and tb8.country_name like '%%'
-                        and tb2.partner_name like '%%'
-                        and tb4.specialization_name like '%%'
-                        order by tb1.mou_partner_id";
+                    @"select t2.mou_partner_id, t1.mou_code, t3.partner_name, t6.specialization_name,
+                        t3.website, t2.contact_point_name, t2.contact_point_phone, t2.contact_point_email,
+                        t2.mou_start_date, t8.scope_abbreviation,t1.mou_id
+                        from IA_Collaboration.MOU t1 left join 
+                        IA_Collaboration.MOUPartner t2 
+                        on t1.mou_id = t2.mou_id
+                        left join IA_Collaboration.Partner t3
+                        on t3.partner_id = t2.partner_id
+                        left join General.Country t4 
+                        on t4.country_id = t3.country_id
+                        left join IA_Collaboration.MOUPartnerSpecialization t5
+                        on t5.mou_partner_id = t2.mou_partner_id
+                        left join General.Specialization t6 
+                        on t6.specialization_id = t5.specialization_id
+                        left join (
+                        select partner_id,scope_id from IA_Collaboration.MOUPartnerScope a
+                        inner join IA_Collaboration.PartnerScope b
+                        on a.partner_scope_id = b.partner_scope_id
+                        where mou_bonus_id is null and mou_id = @mou_id) t7 
+                        on t7.partner_id = t3.partner_id
+                        left join IA_Collaboration.CollaborationScope t8
+                        on t8.scope_id = t7.scope_id
+                        where t1.mou_id = @mou_id
+                        and t4.country_name like @nation_name
+                        and t3.partner_name like @partner_name
+                        and t6.specialization_name like @specialization_name
+                        order by t2.mou_partner_id";
                 List<ListMOUPartner> mouList = db.Database.SqlQuery<ListMOUPartner>(sql_mouPartnerList,
                     new SqlParameter("mou_id", mou_id),
                     new SqlParameter("nation_name", '%' + nation_name + '%'),
@@ -87,6 +90,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     else
                     {
                         previousItem = item;
+                        previousItem.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
                     }
                 }
             }
@@ -308,7 +312,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     int partner_id_item = db.MOUPartners.Find(mou_partner_id).partner_id;
 
                     //get all scopes of partner in MOU.
-                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id from IA_Collaboration.PartnerScope t1 inner join 
+                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id,reference_count from IA_Collaboration.PartnerScope t1 inner join 
                         IA_Collaboration.MOUPartnerScope t2 on
                         t1.partner_scope_id = t2.partner_scope_id
                         where mou_id = @mou_id and partner_id = @partner_id";
@@ -404,12 +408,18 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<CollaborationScope> getPartnerMOUScope()
+        public List<CollaborationScope> getPartnerMOUScope(int mou_id)
         {
             try
             {
-                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope";
-                List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
+                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope
+                    where scope_id not in (
+                    select distinct t2.scope_id from IA_Collaboration.MOUPartnerScope t1 left join
+                    IA_Collaboration.PartnerScope t2 on 
+                    t1.partner_scope_id = t2.partner_scope_id
+                    where mou_id = @mou_id and mou_bonus_id is not null)";
+                List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList,
+                    new SqlParameter("mou_id", mou_id)).ToList();
                 return scopeList;
             }
             catch (Exception ex)

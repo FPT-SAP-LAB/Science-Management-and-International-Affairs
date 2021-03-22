@@ -1,45 +1,54 @@
 ﻿
 @{
-    ViewBag.Title = "List_Deleted";
+    ViewBag.Title = "Danh sách đối tác đã xóa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .modal {
+        overflow-y: auto;
+    }
 
+    .show-status-history {
+        cursor: pointer;
+    }
+</style>
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
         <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div class="row mb-2">
+                        <div class="row my-2">
                             <div class="col-lg-9 col-xl-9 col-md-9 col-sm-9">
                                 <div class="row align-items-center">
                                     <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                        <input type="text" class="form-control" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                            <select class="form-control text-center" id="search_nation" name="param" style="width:200px !important">
                                                 <option label="Label"></option>
-                                                <option value="1">Việt Nam</option>
-                                                <option value="2">USA</option>
+                                                @foreach (var i in ViewBag.countries)
+                                                {
+                                                    <option value="@i.country_name">@i.country_name</option>
+                                                }
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_specialization" name="param" style="width:180px !important">
+                                                <option label="Label"></option>
+                                                @foreach (var i in ViewBag.specializations)
+                                                {
+                                                    <option value="@i.specialization_name">@i.specialization_name</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
-                                    @*<div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:100% !important">
-                                                    <option label="Label"></option>
-                                                    <option value="1">Chưa có</option>
-                                                    <option value="2">Đã có</option>
-                                                </select>
-                                            </div>
-                                        </div>*@
-                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                                    <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mb-4">
+                                        <a id="search_btn" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +90,7 @@
                             </div>
                         </div>
                         <table class="table table-bordered table-hover table-checkable"
-                               id="partner-table">
+                               id="partner_table">
                             <thead>
                                 <tr>
                                     <th class="text-center">S<br />T<br />T</th>
@@ -95,26 +104,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">Bunkyou University</td>
-                                    <td class="text-center">Japan</td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center">IT</td>
-                                    <td class="text-center" nowrap="nowrap">1</td>
-                                    <td class="text-center">3337 Minamiogishima, Koshigaya, Saitama 343-8511, Japan</td>
-                                    <td class="text-center" nowrap="nowrap"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td class="text-center">Bunkyou University</td>
-                                    <td class="text-center">Japan</td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center">IT</td>
-                                    <td class="text-center" nowrap="nowrap">2</td>
-                                    <td class="text-center">3337 Minamiogishima, Koshigaya, Saitama 343-8511, Japan</td>
-                                    <td class="text-center" nowrap="nowrap"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -139,9 +128,12 @@
             placeholder: 'Quốc gia',
             allowClear: true,
         })
+        $('#search_specialization').select2({
+            placeholder: 'Lĩnh vực',
+            allowClear: true,
+        })
 
-        //datatable
-        $("#partner-table").DataTable({
+     var datatable = $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -149,22 +141,81 @@
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-
             },
+            serverSide: true,
             searching: false,
             lengthChange: false,
+            ajax: {
+                url: "@Url.Action("List_Deleted", "Partner")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "searchPartner": {
+                        "partner_name": function () { return $('#search_partner_name').val() },
+                        "nation": function () { return $('#search_nation').val() },
+                        "specialization": function () { return $('#search_specialization').val() },
+                        "is_collab": function () { return $('#search_coop_agreement').val() },
+                        "is_deleted": 1,
+                    }
+                },
+                cache: "false"
+            },
+            initComplete: function () {
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('padding', '0');
+            },
+            columns: [
+                {
+                    name: "partner_id",
+                    data: "no"
+                },
+                { data: "partner_name", name: "partner_name"},
+                { data: "country_name", name: "country_name" },
+                {
+                    data: "website",
+                    name: "website",
+                    orderable: false,
+                    render: function (data) {
+                        if (data == null) {
+                            return "";
+                        } else {
+                            return '<a href="' + data + '"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
+                        }
+                    }
+                },
+                {
+                    data: "specialization_name",
+                    name: "specialization_name",
+                    render: function (data) {
+                        if (data == null) {
+                            return "";
+                        } else {
+                            data = data.replaceAll(',', '<br />')
+                            return data;
+                        }
+                    }
+                },
+                { data: "is_collab", name: "is_collab" },
+                { data: "address", name: "address" },
+                {
+                    title: 'Hành động',
+                    data: "partner_id",
+                    orderable: false,
+                    width: '125px',
+                    render: function (data) {
+                        return '<a onclick="load_history(' + data + ')" class="show-status-history"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> ';
+                    }
+                },
+            ],
             columnDefs: [
                 {
-                    targets: 3,
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
-                    }
+                    targets: '_all',
+                    className: 'text-center text-nowrap'
                 },
                 {
                     targets: 5,
                     orderable: false,
-                    render: function (data, type, full, meta) {
+                    render: function (data) {
                         var status = {
                             1: {
                                 'title': 'Chưa có',
@@ -181,22 +232,57 @@
                         return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                 },
-                {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    width: '125px',
-                    render: function (data, type, full, meta) {
-                        return '<a onclick="" class="show-status-history" href="#partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
-                    }
-                }
-            ],
-            initComplete: function () {
-                $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-
-            },
+            ]
         });
+
+        $('#search_btn').click(function () {
+            datatable.ajax.reload();
+        })
+    </script>
+    <script>
+         function load_history(id) {
+            $.ajax({
+                url: '@Url.Action("Load_History", "Partner")',
+                type: 'POST',
+                datatype: "json",
+                data: { 'id': id },
+                success: function (data) {
+                    $('#partner_name_history').val(data.name);
+                    var temp = '';
+                    if (data.list.length == 0) {
+                        temp = `<tr>
+                                <td class="text-center" colspan="6">Chưa có dữ liệu lịch sử</td>
+                                </tr>`
+                        $('#body_history').html(temp);
+                    } else {
+                        for (i = 1; i <= data.list.length; i++) {
+                            temp += `<tr>
+                                    <td class="text-center">`+ i + `</td>
+                                    <td class="text-center">`+ data.list[i - 1].code + `</td>
+                                    <td class="text-center">`+ data.list[i - 1].activity + `</td>
+                                    <td class="text-center text-nowrap">`+ data.list[i - 1].full_name + `</td>
+                                    <td class="text-center">`+ convertJsonDate(data.list[i - 1].activity_date_start) + `</td>
+                                    <td class="text-center">`+ convertJsonDate(data.list[i - 1].activity_date_end) + `</td>
+                                </tr>`
+                        }
+                        $('#body_history').html(temp);
+                    }
+                    $('#partner_history').modal('show');
+
+                },
+                error: function () {
+                }
+            })
+        }
+
+        function convertJsonDate(dateString) {
+            dateString = dateString.substr(6);
+            var currentTime = new Date(parseInt(dateString));
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            var date = day + "/" + month + "/" + year;
+            return date;
+        }
     </script>
 }
