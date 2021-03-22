@@ -250,7 +250,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == partnerScopeItem.partner_id && x.scope_id == scopeItem).FirstOrDefault();
                             if (ps is null)
                             {
-                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope 
+                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
                                 {
                                     partner_id = partnerScopeItem.partner_id,
                                     scope_id = scopeItem,
@@ -336,7 +336,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     mou_id = mb.mou_id,
                                     mou_bonus_id = input.mou_bonus_id
                                 });
-                            } 
+                            }
                             else
                             {
                                 psCheck.reference_count += 1;
