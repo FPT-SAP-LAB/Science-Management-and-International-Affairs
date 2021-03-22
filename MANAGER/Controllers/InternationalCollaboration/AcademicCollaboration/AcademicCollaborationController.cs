@@ -82,7 +82,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.people(person_name);
             return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpGet]
         public ActionResult getCollabScopes()
         {
@@ -114,7 +114,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpPost]
         public ActionResult addPerson(Person person)
         {
-            
+
 
 
             return Json(new { });
