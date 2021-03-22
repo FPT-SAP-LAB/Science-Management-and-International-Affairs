@@ -42,7 +42,7 @@
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <!--begin::Logo-->
         <a href="#">
-            <img alt="Logo" width="30%" src="~/Content/assets/media/logos/logo-letter-9.png" />
+            <img id="LogoMobile" alt="Logo" src="~/Content/assets/media/logos/logo-letter-9.png" />
         </a>
         <!--end::Logo-->
         <!--begin::Toolbar-->
@@ -88,7 +88,7 @@
                 <div class="brand flex-column-auto" id="kt_brand">
                     <!--begin::Logo-->
                     <a href="#!" class="brand-logo">
-                        <img alt="Logo" width="60%" src="~/Content/assets/media/logos/logo-letter-9.png" />
+                        <img id="Logo" alt="Logo" src="~/Content/assets/media/logos/logo-letter-9.png" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Toggle-->
@@ -264,23 +264,15 @@
                                 </div>
                             </li>
                             <!---------------------------------------------------------------------------------->
-                            @*<li class="menu-section ">
-                                    <h4 class="menu-text">HỘI NGHỊ</h4>
-                                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                                </li>*@
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="menu-item " aria-haspopup="true">
                                 <a href="/ConferenceSponsor" class="menu-link">
                                     <span class="svg-icon menu-icon">
                                         <i class="fas fa-clipboard-list icon-lg"></i>
                                     </span>
-                                    <span class="menu-text"><i>ĐỀ NGHỊ HỖ TRỢ HỘI NGHỊ</i></span>
+                                    <span class="menu-text">ĐỀ NGHỊ HỖ TRỢ HỘI NGHỊ</span>
                                 </a>
                             </li>
                             <!---------------------------------------------------------------------------------->
-                            @*<li class="menu-section ">
-                                    <h4 class="menu-text">NGHIÊN CỨU VIÊN</h4>
-                                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                                </li>*@
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
@@ -313,16 +305,16 @@
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
                                 @*<div class="menu-submenu ">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                            <li class="menu-item " aria-haspopup="true">
-                                                <a href="#" class="menu-link ">
-                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                    <span class="menu-text">.......................</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>*@
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    <li class="menu-item " aria-haspopup="true">
+                        <a href="#" class="menu-link ">
+                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                            <span class="menu-text">.......................</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
