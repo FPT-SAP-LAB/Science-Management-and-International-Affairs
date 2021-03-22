@@ -237,13 +237,16 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public AlertModal<List<CollaborationScope>> collaborationScopes()
+        public AlertModal<List<CollaborationScope>> collaborationScopes(string collab_abbreviation_name)
         {
             try
             {
                 var sql = @"-----1.8. Phạm vi hợp tác
-                    select * from IA_Collaboration.CollaborationScope";
-                List<CollaborationScope> collaborationScopes = db.Database.SqlQuery<CollaborationScope>(sql).ToList();
+                    select * from IA_Collaboration.CollaborationScope
+                    where scope_abbreviation like @collab_abbreviation_name
+                    or scope_name like @collab_abbreviation_name";
+                List<CollaborationScope> collaborationScopes = db.Database.SqlQuery<CollaborationScope>(sql,
+                    new SqlParameter("collab_abbreviation_name", collab_abbreviation_name == null ? "%%" : "%" + collab_abbreviation_name + "%")).ToList();
                 return new AlertModal<List<CollaborationScope>>(collaborationScopes, true, null, null);
             }
             catch (Exception e)
@@ -259,7 +262,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                 var sql = @"----3.Chuyển đổi trạng thái - Danh sách trạng thái
                     select collab_status_id, collab_status_name, status_type
                     from IA_AcademicCollaboration.AcademicCollaborationStatus 
-                    where status_type = 3 /*both long & short-term*/ or status_type = @status_type_specific /*long-term*/";
+                    where status_type = 3 /*both long & short-term*/ or status_type = @status_type_specific /*1:short;2:long;3:both*/";
                 List<AcademicCollaborationStatu> academicCollaborationStatus = db.Database.SqlQuery<AcademicCollaborationStatu>(sql,
                     new SqlParameter("status_type_specific", status_type_specific)).ToList();
                 return new AlertModal<List<AcademicCollaborationStatu>>(academicCollaborationStatus, true, null, null);
