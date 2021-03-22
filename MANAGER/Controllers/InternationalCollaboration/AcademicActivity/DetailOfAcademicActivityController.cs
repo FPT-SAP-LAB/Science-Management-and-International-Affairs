@@ -21,7 +21,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return View();
         }
         [HttpPost]
-        public JsonResult getDetail(int language_id,int activity_id)
+        public JsonResult getDetail(int language_id, int activity_id)
         {
             SumDetail data = new SumDetail
             {
