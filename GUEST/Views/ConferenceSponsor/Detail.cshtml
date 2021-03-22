@@ -73,8 +73,8 @@
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="mb-7">
                             <div class="d-flex justify-content-lg-start align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
-                                <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))</span>
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))</a>
                             </div>
                             <div class="d-flex justify-content-lg-start align-items-cente my-1">
                                 <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tham dự:</span>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="d-flex justify-content-lg-start align-items-cente my-1">
                                 <span class="text-dark-75 font-weight-bolder mr-2">Chuyên ngành:</span>
-                                <a href="#" class="text-muted text-hover-primary">Toán</a>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.SpecializationName</a>
                             </div>
                         </div>
                     </div>
