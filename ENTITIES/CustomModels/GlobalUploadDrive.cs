@@ -248,6 +248,5 @@ namespace ENTITIES.CustomModels
             }
             return UploadedFiles;
         }
-
     }
 }
