@@ -50,6 +50,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement
                                            }).FirstOrDefault();
+            string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
+            List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
+                                                  join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
+                                                  where b.language_id == language_id
+                                                  select new ConferenceCriteria
+                                                  {
+                                                      CriteriaID = a.criteria_id,
+                                                      CriteriaName = b.name,
+                                                      IsAccepted = a.is_accepted
+                                                  }).ToList();
             List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
                                                               join c in db.TitleLanguages on b.title_id equals c.title_id
                                                               join d in db.People on b.people_id equals d.people_id
@@ -79,7 +89,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          FullName = b.full_name,
                                          Comment = a.comment
                                      }).ToList();
-            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses });
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias });
         }
     }
 }
