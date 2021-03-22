@@ -71,7 +71,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public AlertModal<string> addPartner(List<HttpPostedFileBase> files_request, string content, 
+        public AlertModal<string> addPartner(List<HttpPostedFileBase> files_request, string content,
             PartnerArticle partner_article, int number_of_image, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
