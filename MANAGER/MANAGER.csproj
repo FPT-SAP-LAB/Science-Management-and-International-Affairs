@@ -199,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CurrentAccount.cs" />
     <Compile Include="Models\JsonError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\Auther.cs" />

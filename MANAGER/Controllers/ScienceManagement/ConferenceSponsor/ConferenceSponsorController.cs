@@ -1,6 +1,9 @@
-﻿using BLL.ScienceManagement.ConferenceSponsor;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.ConferenceSponsor;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
+using MANAGER.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +16,7 @@ namespace MANAGER.Controllers
     public class ConferenceSponsorController : Controller
     {
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
+        readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
         public ActionResult Index()
         {
             return View();
@@ -30,13 +34,9 @@ namespace MANAGER.Controllers
         }
         public ActionResult Detail(int id)
         {
-            ViewBag.id = id;
-            //switch (id)
-            //{
-            //    case 
-            //    default:
-            //        break;
-            //}
+            int account_id = CurrentAccount.AccountID(Session);
+            string output = DetailRepos.GetDetailPageGuest(id, account_id, 1);
+            ViewBag.output = output;
             return View();
         }
         [ChildActionOnly]
