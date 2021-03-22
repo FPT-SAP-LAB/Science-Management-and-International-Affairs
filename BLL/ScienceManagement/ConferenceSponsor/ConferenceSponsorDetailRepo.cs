@@ -26,7 +26,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                            join h in db.ConferenceStatusLanguages on g.status_id equals h.status_id
                                            join i in db.Formalities on b.formality_id equals i.formality_id
                                            join j in db.FormalityLanguages on i.formality_id equals j.formality_id
-                                           where h.language_id == language_id && j.language_id == language_id && r.account_id == account_id && r.request_id == request_id
+                                           join k in db.SpecializationLanguages on a.specialization_id equals k.specialization_id
+                                           where h.language_id == language_id && j.language_id == language_id && k.language_id == language_id
+                                           && r.account_id == account_id && r.request_id == request_id
                                            select new ConferenceDetail
                                            {
                                                ConferenceName = b.conference_name,
@@ -48,12 +50,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                CountryName = c.country_name,
                                                StatusName = h.name,
                                                FormalityName = j.name,
-                                               Reimbursement = a.reimbursement
+                                               Reimbursement = a.reimbursement,
+                                               SpecializationName = k.name
                                            }).FirstOrDefault();
             string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
             List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
                                                   join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
-                                                  where b.language_id == language_id
+                                                  where b.language_id == language_id && a.request_id == request_id
                                                   select new ConferenceCriteria
                                                   {
                                                       CriteriaID = a.criteria_id,
