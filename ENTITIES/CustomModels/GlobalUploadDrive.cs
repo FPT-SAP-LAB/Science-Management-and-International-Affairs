@@ -189,10 +189,67 @@ namespace ENTITIES.CustomModels
                     return new AlertModal<string>(false, "Có lỗi xảy ra");
             }
         }
-        //public static bool ChangeParentDrive(string ParentID)
-        //{
-        //    SMDrive = ParentID;
-        //    return true;
-        //}
+
+
+        //Thư mục gốc
+        //|_____Partner (sub folder name)
+        //|  |_____Partner A (folder name)
+        //|  |  |_____image 1
+        //|  |  |_____image 2
+        //|  |
+        //|  |_____Partner B
+        //|     |_____image 1
+        //|     |_____image 2
+        //|  
+        //|_____MOU
+        public static Google.Apis.Drive.v3.Data.File UploadIAFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder)
+        {
+            return UploadIAFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder)[0];
+        }
+
+        public static List<Google.Apis.Drive.v3.Data.File> UploadIAFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder)
+        {
+            string SubFolderName;
+            switch (TypeFolder)
+            {
+                case 1:
+                    SubFolderName = "Partner";
+                    break;
+                case 2:
+                    SubFolderName = "MOU";
+                    break;
+                case 3:
+                    SubFolderName = "MOA";
+                    break;
+                default:
+                    throw new ArgumentException("Loại folder không tồn tại");
+            }
+
+            var IAFolder = FindFirstFolder(SubFolderName, IADrive) ?? CreateFolder(SubFolderName, IADrive);
+
+            var folder = FindFirstFolder(FolderName, IAFolder.Id) ?? CreateFolder(FolderName, IAFolder.Id);
+
+            List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
+
+            foreach (HttpPostedFileBase item in InputFiles)
+            {
+                var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+
+                UploadedFiles.Add(file);
+
+                Permission userPermission = new Permission
+                {
+                    Type = "anyone",
+                    Role = "reader"
+                };
+
+                PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, file.Id);
+                createRequest.SupportsAllDrives = true;
+                createRequest.Execute();
+            }
+
+            return UploadedFiles;
+        }
+
     }
 }
