@@ -2,6 +2,7 @@
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -15,7 +16,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
 
-        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collab_type_id, ObjectSearching_AcademicCollaboration obj_searching)
+        public BaseServerSideData<AcademicCollaboration_Ext> academicCollaborations(int direction, int collab_type_id, ObjectSearching_AcademicCollaboration obj_searching, BaseDatatable baseDatatable)
         {
             try
             {
@@ -43,9 +44,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                         on csh.collab_id = collab.collab_id
                         join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
                         where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
-                        and c.country_name like @country_name
-                        and pn.partner_name like @partner_name
-                        and offi.office_name like @office_name
+                        and ISNULL(c.country_name, '') like @country_name
+                        and ISNULL(pn.partner_name, '') like @partner_name
+                        and ISNULL(offi.office_name, '') like @office_name
                         or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)";
 
                 //filter checking
@@ -101,14 +102,16 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public List<Country> countries()
+        public AlertModal<List<Country>> countries(string country_name)
         {
             try
             {
                 var sql = @"-----1.1. Danh sách Country
-                        select * from General.Country";
-                List<Country> countries = db.Database.SqlQuery<Country>(sql).ToList();
-                return countries;
+                        select * from General.Country
+                        where country_name like @country_name";
+                List<Country> countries = db.Database.SqlQuery<Country>(sql,
+                    new SqlParameter("country_name", country_name == null ? "%%" : "%" + country_name + "%")).ToList();
+                return new AlertModal<List<Country>>(countries, true, null, null);
             }
             catch (Exception e)
             {
@@ -116,7 +119,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public YearSearching yearSearching()
+        public AlertModal<YearSearching> yearSearching()
         {
             try
             {
@@ -124,7 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
                     select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to' 
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
-                return yearSearching;
+                return new AlertModal<YearSearching>(yearSearching, true, null, null);
             }
             catch (Exception e)
             {
@@ -132,15 +135,17 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public List<Partner> partners()
+        public AlertModal<List<AcademicCollaborationPartner_Ext>> partners(string partner_name)
         {
             try
             {
                 var sql = @"-----1.3. Đơn vị đào tạo - chiều đi/chiều đến -> partner/office
-                    select * from IA_Collaboration.[Partner]
-                    where is_deleted = 0";
-                List<Partner> partners = db.Database.SqlQuery<Partner>(sql).ToList();
-                return partners;
+                    select par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    inner join General.Country cou on cou.country_id = par.country_id
+                    where partner_name like @partner_name and is_deleted = 0";
+                List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
+                    new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
+                return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true, null, null);
             }
             catch (Exception e)
             {
@@ -148,14 +153,116 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public List<Office> offices()
+        public AlertModal<AcademicCollaborationPartner_Ext> partner(int partner_id, string partner_name)
+        {
+            try
+            {
+                var sql = @"------1.3.1. Check đơn vị đào tạo
+                    select par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    inner join General.Country cou on cou.country_id = par.country_id
+                    where partner_name = @partner_name and is_deleted = 0
+                    or par.partner_id = @partner_id";
+                AcademicCollaborationPartner_Ext partner = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
+                    new SqlParameter("partner_name", partner_name),
+                    new SqlParameter("partner_id", partner_id)).FirstOrDefault();
+                return new AlertModal<AcademicCollaborationPartner_Ext>(partner, true, null, null);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<List<Office>> offices(string office_name)
         {
             try
             {
                 var sql = @"-----1.4. Đơn vị công tác - chiều đi/chiều đến -> office/partner
-                    select * from General.Office";
-                List<Office> offices = db.Database.SqlQuery<Office>(sql).ToList();
-                return offices;
+                    select * from General.Office
+                    where office_name like @office_name";
+                List<Office> offices = db.Database.SqlQuery<Office>(sql,
+                    new SqlParameter("office_name", office_name == null ? "%%" : "%" + office_name + "%")).ToList();
+                return new AlertModal<List<Office>>(offices, true, null, null);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<List<AcademicCollaborationPerson_Ext>> people(string person_name)
+        {
+            try
+            {
+                var sql = @"-----1.7. Danh sách cán bộ
+                    select peo.people_id, name, email, phone_number, pro.mssv_msnv 
+                    from General.People peo
+                    inner join General.Profile pro on peo.people_id = pro.people_id
+                    where name like @person_name";
+                List<AcademicCollaborationPerson_Ext> people = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
+                    new SqlParameter("person_name", person_name == null ? "%%" : "%" + person_name + "%")).ToList();
+                return new AlertModal<List<AcademicCollaborationPerson_Ext>>(people, true, null, null);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<AcademicCollaborationPerson_Ext> person(int people_id, string people_name)
+        {
+            try
+            {
+                var sql = @"-----1.7.1. Check person
+                    select peo.*, pro.office_id, offi.office_name, pro.mssv_msnv  
+                    from General.People peo
+                    inner join General.Profile pro on peo.people_id = pro.people_id
+                    inner join General.Office offi on offi.office_id = pro.office_id
+                    where peo.name = @people_name or peo.people_id = @people_id";
+                AcademicCollaborationPerson_Ext person = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
+                    new SqlParameter("people_name", people_name),
+                    new SqlParameter("people_id", people_id)).FirstOrDefault();
+                if (person != null)
+                {
+                    return new AlertModal<AcademicCollaborationPerson_Ext>(person, true, null, null);
+                }
+                else
+                {
+                    return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lỗi", "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+                }
+            }
+            catch (Exception e)
+            {
+                return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lỗi", "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+            }
+        }
+
+        public AlertModal<List<CollaborationScope>> collaborationScopes()
+        {
+            try
+            {
+                var sql = @"-----1.8. Phạm vi hợp tác
+                    select * from IA_Collaboration.CollaborationScope";
+                List<CollaborationScope> collaborationScopes = db.Database.SqlQuery<CollaborationScope>(sql).ToList();
+                return new AlertModal<List<CollaborationScope>>(collaborationScopes, true, null, null);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<List<AcademicCollaborationStatu>> academicCollaborationStatus(int status_type_specific)
+        {
+            try
+            {
+                var sql = @"----3.Chuyển đổi trạng thái - Danh sách trạng thái
+                    select collab_status_id, collab_status_name, status_type
+                    from IA_AcademicCollaboration.AcademicCollaborationStatus 
+                    where status_type = 3 /*both long & short-term*/ or status_type = @status_type_specific /*long-term*/";
+                List<AcademicCollaborationStatu> academicCollaborationStatus = db.Database.SqlQuery<AcademicCollaborationStatu>(sql,
+                    new SqlParameter("status_type_specific", status_type_specific)).ToList();
+                return new AlertModal<List<AcademicCollaborationStatu>>(academicCollaborationStatus, true, null, null);
             }
             catch (Exception e)
             {
