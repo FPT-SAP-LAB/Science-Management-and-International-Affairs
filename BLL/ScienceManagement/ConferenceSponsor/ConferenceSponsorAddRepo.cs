@@ -37,6 +37,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
                                                where a.expired_date == null && c.language_id == language_id
                                                select c.name).ToList();
+            var SpecializationLanguages = db.SpecializationLanguages.Where(x => x.language_id == language_id).ToList()
+                .Select(x => new SpecializationLanguage
+                {
+                    name = x.name,
+                    specialization_id = x.specialization_id
+                }).ToList();
             var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
                 .Select(x => new Country
                 {
@@ -63,7 +69,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile });
+            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile, SpecializationLanguages });
         }
         public List<Info> GetAllProfileBy(string id, int language_id)
         {
@@ -200,6 +206,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         attendance_end = DateTime.Parse(@object["attendance_end"].ToString()),
                         invitation_file_id = Finvite.file_id,
                         paper_id = Paper.paper_id,
+                        specialization_id = int.Parse(@object["specialization_id"].ToString())
                     };
                     db.RequestConferences.Add(support);
                     db.SaveChanges();

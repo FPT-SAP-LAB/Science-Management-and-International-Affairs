@@ -15,9 +15,10 @@ namespace ENTITIES
     public partial class EligibilityCriteria
     {
         public int criteria_id { get; set; }
-        public int conference_support_id { get; set; }
+        public int request_id { get; set; }
         public bool is_accepted { get; set; }
     
         public virtual Criterion Criterion { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }

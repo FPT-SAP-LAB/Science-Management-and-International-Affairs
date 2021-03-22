@@ -102,6 +102,7 @@ namespace GUEST.Controllers
             public List<TitleLanguage> TitleLanguages { get; set; }
             public string Link { get; set; }
             public ProfileResearcher Profile { get; set; }
+            public List<SpecializationLanguage> SpecializationLanguages { get; set; }
         }
     }
 }
