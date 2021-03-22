@@ -77,19 +77,19 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 try
                 {
-                    List<string> image_drive_id = new List<string>(); 
-                    List<string> image_drive_data_link = new List<string>(); 
+                    List<string> image_drive_id = new List<string>();
+                    List<string> image_drive_data_link = new List<string>();
                     List<Google.Apis.Drive.v3.Data.File> files_upload =
                         GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
-                    for(int i = 0; i < number_of_image; i++)
+                    for (int i = 0; i < number_of_image; i++)
                     {
                         image_drive_id.Add(files_upload[i].Id);
                         image_drive_data_link.Add(files_upload[i].WebViewLink);
                     }
 
-                    for(int i = 0; i < number_of_image; i++)
+                    for (int i = 0; i < number_of_image; i++)
                     {
-                        content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" +  image_drive_id[i]);
+                        content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
                     }
 
                     ArticleVersion articleVersion = new ArticleVersion();
