@@ -37,7 +37,7 @@ donvife = {
     4: "Khác"
 }
 
-var filename = [];
+//var filename = [];
 
 class AuthorInfoView {
     constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
