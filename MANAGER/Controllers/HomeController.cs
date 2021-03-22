@@ -10,7 +10,7 @@ namespace MANAGER.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Redirect("/Authen/Login");
         }
 
         public ActionResult About()

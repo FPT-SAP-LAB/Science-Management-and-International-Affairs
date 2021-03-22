@@ -118,7 +118,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage, 
+        public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage,
             string partner_name, int country_id, string website, string address)
         {
             try
@@ -141,7 +141,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 ViewBag.pageTitle = "THÊM ĐỐI TÁC";
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
