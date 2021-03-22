@@ -505,12 +505,15 @@
                         </div>
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
+                        @{
+                            BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                        }
                         <div class="topbar">
                             <div class="topbar-item">
                                 <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                      id="kt_quick_user_toggle">
                                     <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                        <span class="symbol-label font-size-h5 font-weight-bold">S</span>
+                                        <span class="symbol-label font-size-h5 font-weight-bold" style="background-image:url(@user.account.picture)"></span>
                                     </span>
                                 </div>
                             </div>
@@ -597,9 +600,6 @@
             <!--begin::Header-->
             <div class="d-flex align-items-center mt-5">
                 <div class="symbol symbol-100 mr-5">
-                    @{
-                        BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                    }
                     <div class="symbol-label" style="background-image:url(@user.account.picture)"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>

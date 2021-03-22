@@ -29,6 +29,7 @@ namespace ENTITIES
         public int file_id { get; set; }
         public string name { get; set; }
         public string link { get; set; }
+        public string file_drive_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestConference> RequestConferences { get; set; }
