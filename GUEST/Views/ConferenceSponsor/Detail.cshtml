@@ -42,7 +42,7 @@
                             <span class="text-dark-75 font-weight-bolder mr-2">Tên bài báo:</span>
                             <span class="label-lg label-inline font-weight-bold">@ConferenceDetail.PaperName</span>
                         </div>
-                        <hr/>
+                        <hr />
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="d-flex justify-content-lg-start align-items-center">
@@ -133,10 +133,6 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))</a>
                             </div>
-                            @*<div class="d-flex justify-content-lg-start align-items-cente my-1">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">Chính sách xét hỗ trợ tham dự hội nghị:</span>
-                                    <a href="@output["Link"]" class="text-muted text-hover-primary">Xem thêm</a>
-                                </div>*@
                             <div class="d-flex justify-content-between align-items-cente my-1">
                                 <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
                                 <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
@@ -167,7 +163,7 @@
                                         @foreach (ConferenceCriteria item in Criterias)
                                         {
                                             <label class="checkbox checkbox-disabled">
-                                                <input type="checkbox" disabled="disabled" @(item.IsAccepted ? "checked" : "")  name="Checkboxes1" />
+                                                <input type="checkbox" disabled="disabled" @(item.IsAccepted ? "checked" : "") name="Checkboxes1" />
                                                 <span></span>
                                                 @item.CriteriaName
                                             </label>
@@ -180,210 +176,210 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
-    <br />
-    <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="Participants">
-        <div class="card">
-            <div class="card-header" id="ParticipantsHeading">
-                <div class="card-title" data-toggle="collapse" data-target="#ParticipantsChild1">
-                    <div class="card-label">Danh sách tham dự</div>
-                    <span class="svg-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
-                            </g>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div id="ParticipantsChild1" class="collapse show" data-parent="#Participants">
-                <div class="card-body table-responsive">
-                    <table class="col-12 table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">STT</th>
-                                <th scope="col">MSNV/MSSV</th>
-                                <th scope="col">Họ và tên</th>
-                                <th scope="col">Cơ sở công tác</th>
-                                <th scope="col">Chức danh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Participants)
-                            {
-                                <tr>
-                                    <th scope="row">@item.RowNumber</th>
-                                    <td>@item.ID</td>
-                                    <td>@item.FullName</td>
-                                    <td>@item.OfficeName</td>
-                                    <td>@item.TitleName</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+</div>
+<br />
+<div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="Participants">
+    <div class="card">
+        <div class="card-header" id="ParticipantsHeading">
+            <div class="card-title" data-toggle="collapse" data-target="#ParticipantsChild1">
+                <div class="card-label">Danh sách tham dự</div>
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                        </g>
+                    </svg>
+                </span>
             </div>
         </div>
-    </div>
-    <br />
-    <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ExpectedCost">
-        <div class="card">
-            <div class="card-header" id="ExpectedCostHeading">
-                <div class="card-title" data-toggle="collapse" data-target="#ExpectedCostChild1">
-                    <div class="card-label">Chi phí dự kiến</div>
-                    <span class="svg-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
-                            </g>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
-                <div class="card-body table-responsive">
-                    <table class="col-12 table table-bordered">
-                        <thead>
+        <div id="ParticipantsChild1" class="collapse show" data-parent="#Participants">
+            <div class="card-body table-responsive">
+                <table class="col-12 table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">MSNV/MSSV</th>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Cơ sở công tác</th>
+                            <th scope="col">Chức danh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Participants)
+                        {
                             <tr>
-                                <th scope="col">Nội dung</th>
-                                <th scope="col">Tổ chức tài trợ</th>
-                                <th scope="col">Chi phí</th>
-                                <th scope="col">Tổng cộng</th>
-                                <th>Chấp thuận</th>
+                                <th scope="row">@item.RowNumber</th>
+                                <td>@item.ID</td>
+                                <td>@item.FullName</td>
+                                <td>@item.OfficeName</td>
+                                <td>@item.TitleName</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Costs)
-                            {
-                                <tr>
-                                    <td class="align-middle">@item.content</td>
-                                    <td class="align-middle">@item.sponsoring_organization</td>
-                                    @if (item.editable)
-                                    {
-                                        <td class="align-middle">
-                                            <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
-                                        </td>
-                                        <td>
-                                            <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="align-middle">@item.detail</td>
-                                        <td>
-                                            <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
-                                        </td>
-                                    }
-                                    <td>
-                                        <label class="checkbox checkbox-disabled">
-                                            <input type="checkbox" disabled="disabled" checked="@item.is_accepted" name="Checkboxes1" />
-                                            <span></span>
-                                        </label>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ExpectedCost">
+    <div class="card">
+        <div class="card-header" id="ExpectedCostHeading">
+            <div class="card-title" data-toggle="collapse" data-target="#ExpectedCostChild1">
+                <div class="card-label">Chi phí dự kiến</div>
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                        </g>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
+            <div class="card-body table-responsive">
+                <table class="col-12 table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nội dung</th>
+                            <th scope="col">Tổ chức tài trợ</th>
+                            <th scope="col">Chi phí</th>
+                            <th scope="col">Tổng cộng</th>
+                            <th>Chấp thuận</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Costs)
+                        {
+                            <tr>
+                                <td class="align-middle">@item.content</td>
+                                <td class="align-middle">@item.sponsoring_organization</td>
+                                @if (item.editable)
+                                {
+                                    <td class="align-middle">
+                                        <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
                                     </td>
-                                </tr>
-                            }
-                            <tr>
-                                <th scope="row">Tổng cộng</th>
-                                <td></td>
-                                <td></td>
-                                <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
-                                <td></td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="align-middle">@item.detail</td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                    </td>
+                                }
+                                <td>
+                                    <label class="checkbox checkbox-disabled">
+                                        <input type="checkbox" disabled="disabled" checked="@item.is_accepted" name="Checkboxes1" />
+                                        <span></span>
+                                    </label>
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">Hoàn ứng</th>
-                                <td></td>
-                                <td></td>
-                                <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    @if (Costs.Any(x => x.editable))
-                    {
-                        <button type="button" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
-                    }
-                    @{
-                        //Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
-                    }
-                </div>
+                        }
+                        <tr>
+                            <th scope="row">Tổng cộng</th>
+                            <td></td>
+                            <td></td>
+                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Hoàn ứng</th>
+                            <td></td>
+                            <td></td>
+                            <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                @if (Costs.Any(x => x.editable))
+                {
+                    <button type="button" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
+                }
+                @{
+                    //Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
+                }
             </div>
         </div>
     </div>
-    <br />
-    <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ApprovalProcess">
-        <div class="card">
-            <div class="card-header" id="ApprovalProcessHeading">
-                <div class="card-title" data-toggle="collapse" data-target="#ApprovalProcessChild1">
-                    <div class="card-label">Quy trình phê duyệt</div>
-                    <span class="svg-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
-                            </g>
-                        </svg>
-                    </span>
-                </div>
+</div>
+<br />
+<div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ApprovalProcess">
+    <div class="card">
+        <div class="card-header" id="ApprovalProcessHeading">
+            <div class="card-title" data-toggle="collapse" data-target="#ApprovalProcessChild1">
+                <div class="card-label">Quy trình phê duyệt</div>
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                        </g>
+                    </svg>
+                </span>
             </div>
-            <div id="ApprovalProcessChild1" class="collapse show" data-parent="#ApprovalProcess">
-                <div class="card-body table-responsive">
-                    <table class="col-12 table table-bordered">
-                        <thead>
+        </div>
+        <div id="ApprovalProcessChild1" class="collapse show" data-parent="#ApprovalProcess">
+            <div class="card-body table-responsive">
+                <table class="col-12 table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Thời gian</th>
+                            <th scope="col">Quyền</th>
+                            <th scope="col">Người duyệt</th>
+                            <th scope="col">Bình luận</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ApprovalProcesses)
+                        {
                             <tr>
-                                <th scope="col">Thời gian</th>
-                                <th scope="col">Quyền</th>
-                                <th scope="col">Người duyệt</th>
-                                <th scope="col">Bình luận</th>
+                                <td>@item.CreatedDate</td>
+                                <td>@item.PositionName</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Comment</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in ApprovalProcesses)
-                            {
-                                <tr>
-                                    <td>@item.CreatedDate</td>
-                                    <td>@item.PositionName</td>
-                                    <td>@item.FullName</td>
-                                    <td>@item.Comment</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <br />
-    <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConversationInformation">
-        <div class="card">
-            <div class="card-header" id="ConversationInformationHeading">
-                <div class="card-title" data-toggle="collapse" data-target="#ConversationInformationChild1">
-                    <div class="card-label">Thông tin hội thoại</div>
-                    <span class="svg-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
-                            </g>
-                        </svg>
-                    </span>
-                </div>
+</div>
+<br />
+<div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConversationInformation">
+    <div class="card">
+        <div class="card-header" id="ConversationInformationHeading">
+            <div class="card-title" data-toggle="collapse" data-target="#ConversationInformationChild1">
+                <div class="card-label">Thông tin hội thoại</div>
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                        </g>
+                    </svg>
+                </span>
             </div>
-            <div id="ConversationInformationChild1" class="collapse show" data-parent="#ConversationInformation">
-                <div class="card-body">
-                    @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ConferenceDetail.RequestID }); }
-                </div>
+        </div>
+        <div id="ConversationInformationChild1" class="collapse show" data-parent="#ConversationInformation">
+            <div class="card-body">
+                @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ConferenceDetail.RequestID }); }
             </div>
         </div>
     </div>
-    @section scripts{
-        <script>
+</div>
+@section scripts{
+    <script>
         var ID = "@ViewBag.id"
-        </script>
-    }
+    </script>
+}
