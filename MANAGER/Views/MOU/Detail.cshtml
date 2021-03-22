@@ -142,22 +142,24 @@
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                                @*<select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
                                                     <option value="1">Việt Nam</option>
                                                     <option value="2">USA</option>
-                                                </select>
+                                                </select>*@
+                                                <input type="text" class="form-control text-center" placeholder="Quốc gia" id="search_nation" />
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
+                                                @*<select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
                                                     <option value="1">IT</option>
                                                     <option value="2">BA</option>
-                                                </select>
+                                                </select>*@
+                                                <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
-                                            <a href="MOU/Detail#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                            <a href="MOU/Detail#" onclick="searchMOUPartner()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -262,26 +264,26 @@
         function confirm_delete(id) {
         //function confirm_delete(id, action, controller) {
             var link = '@Url.Action("action", "controller")'
-            link = link.replace("action", "Delete_MOU");
-            link = link.replace("controller", "MOU");
+            link = link.replace("action", "deleteExMOU");
+            link = link.replace("controller", "BasicInfoMOU");
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Cảnh báo",
+                text: "Dữ liệu trên sẽ không thể khôi phục sau khi xóa",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
                     $.ajax({
                         url: link,
-                        data: { mou_id : id },
+                        data: { mou_bonus_id : id },
                         success: function (data) {
                             if (data = "") {
-                                Swal.fire("Good job!", "You clicked the button!", "error");
+                                Swal.fire("Lỗi", "Đã có lỗi xảy ra!", "error");
                             } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                                Swal.fire("Thành công", "Đã xóa thành công", "success")
                             }
                         },
                         error: function (data) {
@@ -302,220 +304,10 @@
             $('.header-modify').css('padding', '13px');
         });
 
-        //table tab 1
-        //$("#collaboration_update_table").DataTable({
-        //    oLanguage: {
-        //        oPaginate: {
-        //            sPrevious: "Trang trước",
-        //            sNext: "Trang sau"
-        //        },
-        //        sEmptyTable: "Không có dữ liệu",
-        //        sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-        //    },
-        //    searching: false,
-        //    lengthChange: false,
-        //    columnDefs: [
-        //        {
-        //            targets: 5,
-        //            width: '75px',
-        //            render: function (data, type, full, meta) {
-        //                return ''
-        //                    + '<a href="#add_status" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
-        //            },
-        //        },
-        //        {
-        //            targets: -1,
-        //            title: '',
-        //            orderable: false,
-        //            width: '125px',
-        //            render: function (data, type, full, meta) {
-        //                return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
-        //            }
-        //        }
-        //    ]
-        //});
-
-        //table tab 2
-        //$("#partner_table").DataTable({
-        //    oLanguage: {
-        //        oPaginate: {
-        //            sPrevious: "Trang trước",
-        //            sNext: "Trang sau"
-        //        },
-        //        sEmptyTable: "Không có dữ liệu cxzzxc",
-        //        sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-
-        //    },
-        //    searching: false,
-        //    lengthChange: false,
-        //    initComplete: function () {
-        //        $('#partner_table').parent().css('overflow-x', 'auto');
-        //        $('#partner_table').parent().removeClass();
-        //    },
-        //    columnDefs: [
-        //        {
-        //            targets: 4,
-        //            orderable: false,
-        //            width: '75px',
-        //            render: function (data, type, full, meta) {
-        //                return '<a href="#"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
-        //            },
-        //        },
-        //        {
-        //            targets: -1,
-        //            title: 'Hành động',
-        //            orderable: false,
-        //            width: '125px',
-        //            render: function (data, type, full, meta) {
-        //                return '<a onclick="show_status_history(12)" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
-        //                    + '<a onclick="show_data_partner_detail(13)" href="#add_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary update_partner_mou px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
-        //            }
-        //        },
-        //        {
-        //            targets: [-1, 0, 2, 3, 4, 9],
-        //            className: 'text-center',
-        //        },
-        //        {
-        //            targets: [-1, ],
-        //            className: 'text-nowrap',
-        //        }
-
-        //    ]
-        //})
-
-
-
-        //table tab 3
-        //$("#moa_table").DataTable({
-        //    oLanguage: {
-        //        oPaginate: {
-        //            sPrevious: "Trang trước",
-        //            sNext: "Trang sau"
-        //        },
-        //        sEmptyTable: "Không có dữ liệu",
-        //        sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-
-        //    },
-        //    searching: false,
-        //    lengthChange: false,
-        //    columnDefs: [
-        //        {
-        //            targets: 3,
-        //            orderable: false,
-        //            render: function (data, type, full, meta) {
-        //                return '<a href="#" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
-        //            }
-        //        },
-        //        {
-        //            targets: 8,
-        //            width: '75px',
-        //            render: function (data, type, full, meta) {
-        //                var status = {
-        //                    1: {
-        //                        'title': 'Active',
-        //                        'class': 'label-light-danger'
-        //                    },
-        //                    2: {
-        //                        'title': 'Inactive',
-        //                        'class': 'label-light-success'
-        //                    }
-        //                };
-        //                if (typeof status[data] === 'undefined') {
-        //                    return data;
-        //                }
-        //                return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
-        //            },
-        //        },
-        //        {
-        //            targets: -1,
-        //            title: 'Hành động',
-        //            orderable: false,
-        //            width: '125px',
-        //            render: function (data, type, full, meta) {
-        //                return '<a onclick="" href="#" data-toggle="modal" class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>';
-        //            }
-        //        }
-        //    ]
-        //});
-
-        //modal tab 2
-        @*function show_status_history(id){
-            $.ajax({
-                url: '@Url.Action("Get_MOU_History", "PartnerMOU")',
-                data: { 'id': id },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        var temp = '';
-                        var partner_name_temp = 'Bunkyou University';
-                        var mou_id_temp = '2021/01';
-                        for (i = 0; i < 3; i++) {
-                            temp += '<tr><td  class="text-center">' + i + 1 + '</td><td class="text-center">Ký kết biên bản ghi nhớ</td><td class="text-center">Lê Phương Anh</td><td class="text-center">18/03/2020 13:01:23</td></tr>';
-                        }
-                        $('#body_mou_history').html(temp);
-                        $('#partner_name').val(partner_name_temp);
-                        $('#mou_id').val(mou_id_temp);
-                    }
-                },
-            });
-        };*@
-
-        //modal tab 2
-        $('#add_partner_mou_btn').click(function () {
-            $('#add_partner_mou_title').text('THÊM ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
-        })
-
-        //modal tab 3
-        $('#add_partner_moa_btn').click(function () {
-            $('#add_partner_mou_title').text('THÊM ĐỐI TÁC TRONG BIÊN BẢN THỎA THUẬN');
-        })
-
-        //modal tab 2
-        function show_data_partner_detail(id) {
-            $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN GHI NHỚ');
-            $.ajax({
-                url: '@Url.Action("Get_Data_Partner_Detail", "PartnerMOU")',
-                data: { 'id': id },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        //toastr.success("Lmao");
-                    }
-                },
-            });
-        };
-
-        //modal tab 3
-        function show_data_partner_detail_moa_screen(id) {
-            $('#add_partner_mou_title').text('SỬA ĐỐI TÁC TRONG BIÊN BẢN THỎA THUẬN');
-            $.ajax({
-                url: '@Url.Action("Get_Data_Partner_Detail", "MOU")',
-                data: { 'id': id },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        //toastr.success("Lmao");
-                    }
-                },
-            });
-        };
-
     </script>
     @*dropdown list*@
     <script>
         //jquery for dropdown
-        $('#search_nation').select2({
-            placeholder: 'Quốc gia',
-            allowClear: true,
-        })
-
-        $('#search_specialization').select2({
-            placeholder: 'Lĩnh vực',
-            allowClear: true,
-        })
         $('#coop_scope_ex_mou_add').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
@@ -711,6 +503,7 @@
         }
 
     </script>
+
     @*upload file*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
@@ -828,7 +621,7 @@
     </script>
 
     @*mou_basic_info*@
-    <script>
+<script>
         var listStatus = [
             {
                 status_id: 1,
@@ -840,15 +633,21 @@
                 status_name: 'Active'
             }
         ];
+
         var listScopes = [];
+        var listFullScopes = [];
+        var listFullCountries = [];
+        var listFull
         var listPartner = [];
         var listTempExMOUPartnerScope = [];
         var listTempExMOUPartnerScopeEdit = [];
+        var mou_ex;
 
         $(document).ready(function () {
             getListOffice();
             loadListExMOU();
             pushDataToList();
+            getFullScopes();
         });
 
         function getListOffice(){
@@ -860,6 +659,21 @@
                 success: function (data) {
                     var listOffice = data;
                     loadBasicInfo(listOffice);
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function getFullScopes(){
+            $.ajax({
+                url: "@Url.Action("getFullScope", "BasicInfoMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    listFullScopes = data;
                 },
                 error: function () {
                     //alert("fail");
@@ -895,7 +709,7 @@
         }
 
         function loadListExMOU() {
-            var mou_ex = $(".ex_mou").DataTable({
+            mou_ex = $(".ex_mou").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -998,37 +812,55 @@
         }
 
         function addExMOUTemp() {
-            var partner_id = $('#partner_name_ex_mou_add').val();
-            var scopes = $('#coop_scope_ex_mou_add').val();
-
-            var scopes_name = '';
-            for (i = 0; i < scopes.length; i++) {
-                var objScope = listScopes.find(x => x.scope_id == scopes[i]);
-                scopes_name += objScope.scope_abbreviation + ',';
+            if ($('#coop_scope_ex_mou_add').val().length == 0) {
+                toastr.error('Phạm vi hợp tác chưa được chọn');
+                return;
             }
+            var partner_id_ex_add = $('#partner_name_ex_mou_add').val();
+            var partner_name_ex_add = listPartner.find(x => x.partner_id == partner_id_ex_add).partner_name;
 
-            var objPartner = listPartner.find(x => x.partner_id == partner_id);
-            var partner_name = objPartner.partner_name;
+            var objCheck = listTempExMOUPartnerScope.find(x => x.partner_name == partner_name_ex_add);
 
-            if (scopes_name.endsWith(",")) {
-                scopes_name = scopes_name.slice(0, -1);
+            if (objCheck == null)
+            {
+                var partner_id = $('#partner_name_ex_mou_add').val();
+                var scopes = $('#coop_scope_ex_mou_add').val();
+
+                var scopes_name = '';
+                for (i = 0; i < scopes.length; i++) {
+                    var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                    scopes_name += objScope.scope_abbreviation + ',';
+                }
+
+                var objPartner = listPartner.find(x => x.partner_id == partner_id);
+                var partner_name = objPartner.partner_name;
+
+                if (scopes_name.endsWith(",")) {
+                    scopes_name = scopes_name.slice(0, -1);
+                }
+
+                var temp = {
+                    partner_id: partner_id,
+                    partner_name: partner_name,
+                    scopes_id: scopes,
+                    scopes_name: scopes_name,
+                }
+                $('#add-partner-scope').modal('hide');
+                listTempExMOUPartnerScope.push(temp);
+                clearInputAddExMOUPartner();
+                initAndRefreshTableExMOUAdd();
+            } else {
+                toastr.error('Đối tác này đã được thêm');
             }
-
-            var temp = {
-                partner_id: partner_id,
-                partner_name: partner_name,
-                scopes_id: scopes,
-                scopes_name: scopes_name,
-            }
-
-            listTempExMOUPartnerScope.push(temp);
-            clearInputAddExMOUPartner();
-            initAndRefreshTableExMOUAdd();
         }
 
         function clearInputAddExMOUPartner() {
-            document.getElementById("coop_scope_ex_mou_add").value = "";
-            document.getElementById("partner_name_ex_mou_add").value = "";
+            //$('#coop_scope_ex_mou_add').empty();
+            //var HTMLScopedata = '';
+            //for (j = 0; j < listScopes.length; j++) {
+            //    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+            //}
+            //$('#coop_scope_ex_mou_add').append(HTMLScopedata);
         }
 
         function initAndRefreshTableExMOUAdd() {
@@ -1084,11 +916,15 @@
         };
 
         function editExMOUTemp() {
-            var index = $("#idx_ex_mou_edit_for_edit").val();
-
+            if ($('#coop_scope_ex_mou_edit').val().length == 0) {
+                toastr.error('Phạm vi hợp tác chưa được chọn');
+                return;
+            }
+            var index = $("#idx_ex_mou_edit").val();
             var partner_id = $('#partner_name_ex_mou_edit').val();
             var scopes = $('#coop_scope_ex_mou_edit').val();
 
+            //create value for scopes and partner edited
             var scopes_name = '';
             for (i = 0; i < scopes.length; i++) {
                 var objScope = listScopes.find(x => x.scope_id == scopes[i]);
@@ -1096,10 +932,20 @@
             }
 
             var objPartner = listPartner.find(x => x.partner_id == partner_id);
-            var partner_name = objPartner.partner_name;
 
+            var partner_name = objPartner.partner_name;
             if (scopes_name.endsWith(",")) {
                 scopes_name = scopes_name.slice(0, -1);
+            }
+
+            //check existed partner_name at diff position.
+            for (j = 0; j < listTempExMOUPartnerScope.length; j++) {
+                if (j != index) {
+                    if (listTempExMOUPartnerScope[j].partner_name == partner_name) {
+                        toastr.error('Đối tác này đã được thêm');
+                        return;
+                    }
+                }
             }
 
             listTempExMOUPartnerScope[index].partner_id = partner_id;
@@ -1107,16 +953,18 @@
             listTempExMOUPartnerScope[index].scopes_id = scopes;
             listTempExMOUPartnerScope[index].scopes_name = scopes_name;
             initAndRefreshTableExMOUAdd();
+            $('#edit-partner-scope').modal('hide');
+
         }
 
         function confirm_delete_ex_mou_temp(index) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Cảnh báo",
+                text: "Dữ liệu sẽ bị xóa !",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Hủy bỏ",
                 reverseButtons: true
             }).then(function (result) {
                 if (result.isConfirmed) {
@@ -1167,57 +1015,142 @@
             $('#status').append(HTMLStatusData);
         }
 
-        function saveBasicInfo() {
-            var BasicInfo = {
-                mou_code: $('#mou_code').val(),
-                mou_end_date_string: $('#end_date_mou').val(),
-                office_id: $('#office').val(),
-                reason: $('#reason').val(),
-                mou_note: $('#mou_note').val(),
-                mou_status_id: $('#status').val()
-            };
-            $.ajax({
-                url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
-                type: "POST",
-                data: JSON.stringify(BasicInfo),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (data) {
-
-                },
-                error: function () {
-                    //alert("fail");
+        function compareDate(current, max) {
+            var currentToken = current.split("/");
+            var maxToken = max.split("/");
+            if (parseInt(currentToken[2]) == parseInt(maxToken[2])) {    //year
+                if (parseInt(currentToken[1]) == parseInt(maxToken[1])) {   //month
+                    return parseInt(currentToken[0]) <= parseInt(maxToken[0]) ? false : true;   //date.
+                } else {
+                    return parseInt(currentToken[1]) < parseInt(maxToken[1]) ? false : true;
                 }
-            });
+            } else {
+                return parseInt(currentToken[2]) < parseInt(maxToken[2]) ? false : true;
+            }
+        }
+
+        function MOUCodeIsInvalid(mou_code) {
+            var token = mou_code.split("/");
+            if (token.length == 2 && /^\d+$/.test(token[0]) && /^\d+$/.test(token[1])) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function ExMOUCodeIsInvalid(mou_code) {
+            //ex : 2021/1_BS/2.
+            var bigToken = mou_code.split("_");
+            if (bigToken.length != 2) {
+                return true;
+            } else {
+                var old_mou_code = bigToken[0].split("/");
+                if (old_mou_code.length == 2 && /^\d+$/.test(old_mou_code[0]) && /^\d+$/.test(old_mou_code[1])) {
+                    var ex_code = bigToken[1].split("/");
+                    if (ex_code.length == 2 && ex_code[0] == 'BS' && /^\d+$/.test(ex_code[1])) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        function saveBasicInfo() {
+            if ($('#mou_code').val().trim() == "") {
+                toastr.error('Số hiệu không được bỏ trống');
+                return;
+            }
+            else if ($('#end_date_mou').val().trim() == "") {
+                toastr.error('Ngày hết hạn chưa được chọn');
+                return;
+            }
+            else if (compareDate($('#sign_date_mou').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
+                toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+                return;
+            }
+            else if (MOUCodeIsInvalid($('#mou_code').val().trim())) {
+                toastr.error('Số hiệu không hợp lệ');
+                return;
+            } else {
+                var BasicInfo = {
+                    mou_code: $('#mou_code').val(),
+                    mou_end_date_string: $('#end_date_mou').val(),
+                    office_id: $('#office').val(),
+                    reason: $('#reason').val(),
+                    mou_note: $('#mou_note').val(),
+                    mou_status_id: $('#status').val()
+                };
+                $.ajax({
+                    url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
+                    type: "POST",
+                    data: JSON.stringify(BasicInfo),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (data) {
+                        Swal.fire("Thành công!", "Thông tin được cập nhật thành công.", "success")
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            }
         }
 
         function finishExMOUAdd() {
-            var ExBasicInfo = {
+            if ($('#ex_mou_id_add').val().trim() == "") {
+                toastr.error('Số hiệu không được bỏ trống');
+                return;
+            }
+            else if ($('#mou_addition_end_time').val().trim() == "") {
+                toastr.error('Ngày hết hạn chưa được chọn');
+                return;
+            }
+            else if (compareDate($('#mou_addition_sign_time').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+                return;
+            }
+            else if (ExMOUCodeIsInvalid($('#ex_mou_id_add').val().trim())) {
+                toastr.error('Số hiệu không hợp lệ');
+                return;
+            }
+            else if (listTempExMOUPartnerScope.length == 0) {
+                toastr.error('Chưa có đối tác nào được thêm');
+                return;
+            }
+            else {
+                var ExBasicInfo = {
                 ex_mou_code: $('#ex_mou_id_add').val() ,
                 ex_mou_sign_date: $('#mou_addition_sign_time').val(),
                 ex_mou_end_date: $('#mou_addition_end_time').val()
-            };
+                };
 
-            var ExMOUAdd = {
-                ExBasicInfo: ExBasicInfo,
-                PartnerScopeInfo: listTempExMOUPartnerScope,
-            };
+                var ExMOUAdd = {
+                    ExBasicInfo: ExBasicInfo,
+                    PartnerScopeInfo: listTempExMOUPartnerScope,
+                };
 
-            $.ajax({
-                url: "@Url.Action("Add_Ex_Mou", "BasicInfoMOU")",
-                type: "POST",
-                data: JSON.stringify(ExMOUAdd),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (data) {
-                    listTempExMOUPartnerScope = [];
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
+                $.ajax({
+                    url: "@Url.Action("Add_Ex_Mou", "BasicInfoMOU")",
+                    type: "POST",
+                    data: JSON.stringify(ExMOUAdd),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (data) {
+                        listTempExMOUPartnerScope = [];
+                        $('#add_additional_mou').modal('hide');
+                        Swal.fire("Thành công!", "Đã bổ sung biên bản ghi nhớ thành công.", "success");
+                        mou_ex.ajax.reload();
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            }
         }
 
         function editExMOU(mou_bonus_id) {
@@ -1226,6 +1159,7 @@
                 data: { mou_bonus_id: mou_bonus_id },
                 success: function (data) {
                     $('#ex_mou_id_edit').val(data.ExBasicInfo.ex_mou_code);
+                    $('#mou_bonus_id').val(mou_bonus_id);
                     $('#mou_addition_sign_time_edit').val(data.ExBasicInfo.ex_mou_sign_date);
                     $('#mou_addition_end_time_edit').val(data.ExBasicInfo.ex_mou_end_date);
                     addToPartnerScopeListEdit(data);
@@ -1243,7 +1177,7 @@
                 var scopes = data.PartnerScopeInfo[i].scopes_id;
                 var scopes_name = '';
                 for (i = 0; i < scopes.length; i++) {
-                    var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                    var objScope = listFullScopes.find(x => x.scope_id == scopes[i]);
                     if (objScope != null) {
                         scopes_name += objScope.scope_abbreviation + ',';
                     }
@@ -1292,7 +1226,7 @@
             $('#ex_mou_table_edit').append(HTMLdata);
         }
 
-        function loadEditExMOUTempForEdit(index) {
+        function loadEditExMOUTempForEdit(index){
             $("#idx_ex_mou_edit_for_edit").val(index);
             var HTMLPartnerdata = "";
             var HTMLScopedata = "";
@@ -1306,25 +1240,24 @@
                 }
             }
             for (j = 0; j < listScopes.length; j++) {
-                if (listTempExMOUPartnerScopeEdit[index].scopes_id.includes(listScopes[j].scope_id)) {
+                if ((listTempExMOUPartnerScopeEdit[index].scopes_id+'').includes(listScopes[j].scope_id)) {
                     HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation + '</option>'
                 } else {
                     HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
                 }
             }
-
             $('#partner_name_ex_mou_edit_for_edit').append(HTMLPartnerdata);
             $('#coop_scope_ex_mou_edit_for_edit').append(HTMLScopedata);
         }
 
         function confirm_delete_ex_mou_temp_edit(index) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Cảnh báo?",
+                text: "Dữ liệu sẽ bị xóa!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
                 reverseButtons: true
             }).then(function (result) {
                 if (result.isConfirmed) {
@@ -1337,13 +1270,17 @@
 
         function editExMOUTempForEdit() {
             var index = $("#idx_ex_mou_edit_for_edit").val();
-
             var partner_id = $('#partner_name_ex_mou_edit_for_edit').val();
             var scopes = $('#coop_scope_ex_mou_edit_for_edit').val();
-
             var scopes_name = '';
+
+            if (scopes.length == 0) {
+                toastr.error('Phạm vi hợp tác chưa được chọn');
+                return;
+            }
+
             for (i = 0; i < scopes.length; i++) {
-                var objScope = listScopes.find(x => x.scope_id == scopes[i]);
+                var objScope = listFullScopes.find(x => x.scope_id == scopes[i]);
                 scopes_name += objScope.scope_abbreviation + ',';
             }
 
@@ -1352,6 +1289,16 @@
 
             if (scopes_name.endsWith(",")) {
                 scopes_name = scopes_name.slice(0, -1);
+            }
+
+            //check existed partner_name at diff position.
+            for (j = 0; j < listTempExMOUPartnerScopeEdit.length; j++) {
+                if (j != index) {
+                    if (listTempExMOUPartnerScopeEdit[j].partner_name == partner_name) {
+                        toastr.error('Đối tác này đã được thêm');
+                        return;
+                    }
+                }
             }
 
             listTempExMOUPartnerScopeEdit[index].partner_id = partner_id;
@@ -1359,11 +1306,16 @@
             listTempExMOUPartnerScopeEdit[index].scopes_id = scopes;
             listTempExMOUPartnerScopeEdit[index].scopes_name = scopes_name;
             initAndRefreshTableExMOUEdit();
+            $('#edit-partner-scope-edit').modal('hide');
         }
 
         function addExMOUTempForEdit() {
             var partner_id = $('#partner_name_ex_mou_add_for_edit').val();
             var scopes = $('#coop_scope_ex_mou_add_for_edit').val();
+            if (scopes.length == 0) {
+                toastr.error('Phạm vi hợp tác chưa được chọn');
+                return;
+            }
 
             var scopes_name = '';
             for (i = 0; i < scopes.length; i++) {
@@ -1378,58 +1330,94 @@
                 scopes_name = scopes_name.slice(0, -1);
             }
 
-            var temp = {
-                partner_id: partner_id,
-                partner_name: partner_name,
-                scopes_id: scopes,
-                scopes_name: scopes_name,
+            //add to temp if pass all conditions.
+            var objCheck = listTempExMOUPartnerScopeEdit.find(x => x.partner_name == partner_name);
+            if (objCheck == null) {
+                var temp = {
+                    partner_id: partner_id,
+                    partner_name: partner_name,
+                    scopes_id: scopes,
+                    scopes_name: scopes_name,
+                }
+                listTempExMOUPartnerScopeEdit.push(temp);
+                clearInputAddExMOUPartner();
+                $('#add-partner-scope-edit').modal('hide');
+                initAndRefreshTableExMOUEdit();
             }
-
-            listTempExMOUPartnerScopeEdit.push(temp);
-            //clearInputAddExMOUPartner();
-            initAndRefreshTableExMOUEdit();
+            else {
+                toastr.error('Đối tác này đã được thêm');
+            }
         }
 
         function finishExMOUEdit() {
-            var ExBasicInfo = {
-                ex_mou_code: $('#ex_mou_id_edit').val() ,
-                ex_mou_sign_date: $('#mou_addition_sign_time_edit').val(),
-                ex_mou_end_date: $('#mou_addition_end_time_edit').val()
-            };
+            if ($('#ex_mou_id_edit').val().trim() == "") {
+                toastr.error('Số hiệu không được bỏ trống');
+                return;
+            }
+            else if ($('#mou_addition_end_time_edit').val().trim() == "") {
+                toastr.error('Ngày hết hạn chưa được chọn');
+                return;
+            }
+            else if (compareDate($('#mou_addition_sign_time_edit').val(), $('#mou_addition_end_time_edit').val())) { //compare = true <=> sign_date > end_date
+                toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+                return;
+            }
+            else if (ExMOUCodeIsInvalid($('#ex_mou_id_edit').val().trim())) {
+                toastr.error('Số hiệu không hợp lệ');
+                return;
+            }
+            else if (listTempExMOUPartnerScopeEdit.length == 0) {
+                toastr.error('Chưa có đối tác nào được thêm');
+                return;
+            } else {
+                var ExBasicInfo = {
+                    ex_mou_code: $('#ex_mou_id_edit').val() ,
+                    ex_mou_sign_date: $('#mou_addition_sign_time_edit').val(),
+                    ex_mou_end_date: $('#mou_addition_end_time_edit').val()
+                };
 
-            var ExMOUAdd = {
-                ExBasicInfo: ExBasicInfo,
-                PartnerScopeInfo: listTempExMOUPartnerScopeEdit,
-            };
+                var ExMOUAdd = {
+                    ExBasicInfo: ExBasicInfo,
+                    PartnerScopeInfo: listTempExMOUPartnerScopeEdit,
+                    mou_bonus_id: $('#mou_bonus_id').val()
+                };
 
-            $.ajax({
-                url: "@Url.Action("Edit_Ex_Mou", "BasicInfoMOU")",
-                type: "POST",
-                data: JSON.stringify(ExMOUAdd),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (data) {
-                    listTempExMOUPartnerScopeEdit = [];
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
+                $.ajax({
+                    url: "@Url.Action("Edit_Ex_Mou", "BasicInfoMOU")",
+                    type: "POST",
+                    data: JSON.stringify(ExMOUAdd),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (data) {
+                        listTempExMOUPartnerScopeEdit = [];
+                        $('#edit_additional_mou').modal('hide');
+                        Swal.fire("Thành công!", "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success");
+                        mou_ex.ajax.reload();
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            }
         }
-    </script>
+
 
     @*mou_partner*@
-    <script>
         var listSpeMOUPartner = [];
         var listScopeMOUPartner = [];
         var listPartnerMOUPartner = [];
+        var mou_partner_table;
 
     $(document).ready(function () {
         loadListPartnerMOU();
         addToList();
         loadMOAList();
     });
+
+    function searchMOUPartner() {
+        mou_partner_table.ajax.reload();
+    }
 
     function addToList() {
         $("#mou_partner_specialization_add option").each(function () {
@@ -1438,12 +1426,12 @@
                 spe_name: $(this).text()
             });
         });
-        $("#mou_partner_scope_add option").each(function () {
-            listScopeMOUPartner.push({
-                scope_id: $(this).val(),
-                scope_name: $(this).text()
-            });
-        });
+        //$("#mou_partner_scope_add option").each(function () {
+        //    listScopeMOUPartner.push({
+        //        scope_id: $(this).val(),
+        //        scope_name: $(this).text()
+        //    });
+        //});
         $("#mou_partner_name_add option").each(function () {
             listPartnerMOUPartner.push({
                 partner_name: $(this).val()
@@ -1453,7 +1441,7 @@
 
     function loadListPartnerMOU() {
         var rowIdx = 1;
-        var mou_partner_table = $("#partner_table").DataTable({
+        mou_partner_table = $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1520,7 +1508,7 @@
                     render: function (data, type, full, meta, row) {
                         return '<a onclick="show_status_history(' + data.mou_partner_id + ',\'' + data.mou_code +'\',\'' + data.partner_name + '\')" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
                         + '<a href="#edit_partner_mou" onclick=goDetailMOUPartner(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;" data-toggle="modal">Sửa</a>' +
-                            '<a onclick="confirm_delete_partner_mou(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                            '<a onclick="confirm_delete_partner_mou(' + data.mou_partner_id + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
             ],
@@ -1730,23 +1718,23 @@
     function confirm_delete_partner_mou(id) {
             var link = '@Url.Action("deletePartnerMOU", "PartnerMOU")'
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Cảnh báo",
+                text: "Dữ liệu bị xóa sẽ không thể khôi phục",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Hủy",
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
                     $.ajax({
                         url: link,
-                        data: { mou_id : id },
+                        data: { mou_bonus_id : id },
                         success: function (data) {
                             if (data = "") {
-                                Swal.fire("Good job!", "You clicked the button!", "error");
+                                Swal.fire("Lỗi", "Đã có lỗi xảy ra", "error");
                             } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                                Swal.fire("Thành công", "Bạn đã xóa thành công", "success")
                             }
                         },
                         error: function (data) {
@@ -1756,48 +1744,49 @@
                 }
             })
     };
-
-    function show_status_history(mou_partner_id, mou_id, partner_name) {
+    var history_table;
+    function show_status_history(mou_partner_id, mou_id, partner_name){
         var rowIdx = 1;
         $('#mou_id_history').val(mou_id);
         $('#partner_name_history').val(partner_name);
-        var history_table = $("#history-table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
+        if ($.fn.DataTable.isDataTable('#history-table')) {
+            history_table.destroy();
+        }
+        history_table = $("#history-table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
                 },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-            },
-            searching: false,
-            lengthChange: false,
-            ajax: {
-                    url: "@Url.Action("Get_MOU_History", "PartnerMOU")",
-                    type: "POST",
-                    data: { mou_partner_id: mou_partner_id },
-                    datatype: "json",
-                    cache: "false"
-                },
-            columns: [
-                {
-                    render: function () {
-                        return rowIdx++;
-                    }
-                },
-                { data: "content" },
-                { data: "full_name" },
-                { data: "add_time_string" }
-                ],
-            initComplete: function () {
-                $('#history-table').parent().css('overflow-x', 'auto');
-            }
+                searching: false,
+                lengthChange: false,
+                ajax: {
+                        url: "@Url.Action("Get_MOU_History", "PartnerMOU")",
+                        type: "POST",
+                        data: { mou_partner_id: mou_partner_id },
+                        datatype: "json",
+                        cache: "false"
+                    },
+                columns: [
+                    {
+                        render: function () {
+                            return rowIdx++;
+                        }
+                    },
+                    { data: "content" },
+                    { data: "full_name" },
+                    { data: "add_time_string" }
+                    ],
+                initComplete: function () {
+                    $('#history-table').parent().css('overflow-x', 'auto');
+                }
         });
     }
-    </script>
 
     @*moa*@
-    <script>
     var moa_table;
     var listTempPartnerMOAAdd = [];
     var listScopesMOA = [];
@@ -2316,5 +2305,5 @@
                 }
             })
     }
-    </script>
+</script>
 }

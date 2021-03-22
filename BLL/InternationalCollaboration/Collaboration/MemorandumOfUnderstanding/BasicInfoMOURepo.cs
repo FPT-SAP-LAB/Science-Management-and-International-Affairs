@@ -41,7 +41,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         (select mou_id,partner_id, scope_id
                         from IA_Collaboration.MOUPartnerScope t1a left join 
                         IA_Collaboration.PartnerScope t2a 
-                        on t2a.partner_scope_id = t1a.partner_scope_id) tb1a
+                        on t2a.partner_scope_id = t1a.partner_scope_id
+                        where mou_bonus_id is null ) tb1a
                         left join IA_Collaboration.CollaborationScope tb1b on
                         tb1a.scope_id = tb1b.scope_id
                         where mou_id = @mou_id) t1
@@ -86,7 +87,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         inner join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
                         inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
-                        where t1.mou_id = @mou_id";
+                        where t1.mou_id = @mou_id
+                        order by mou_bonus_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
                     new SqlParameter("mou_id", mou_id)).ToList();
                 handlingExMOUListData(mouExList);
@@ -110,7 +112,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 else
                 {
-                    if (item.mou_id.Equals(previousItem.mou_id))
+                    if (item.mou_bonus_id.Equals(previousItem.mou_bonus_id))
                     {
                         if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
                         {
@@ -122,6 +124,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     else
                     {
                         previousItem = item;
+                        previousItem.mou_bonus_decision_date_string = item.mou_bonus_decision_date.ToString("dd'/'MM'/'yyyy");
+                        previousItem.mou_bonus_end_date_string = item.mou_bonus_end_date.ToString("dd'/'MM'/'yyyy");
                     }
                 }
             }
@@ -193,6 +197,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         private ExMOUAdd handlingExMOUDetailData(List<ExtraMOU> mouExList)
         {
             ExMOUAdd newObj = new ExMOUAdd();
+            newObj.ExBasicInfo = new ExBasicInfo();
+            newObj.PartnerScopeInfo = new List<PartnerScopeInfo>();
             //Partner
             foreach (ExtraMOU item in mouExList.ToList())
             {
@@ -203,6 +209,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 if (p == null)
                 {
                     PartnerScopeInfo obj = new PartnerScopeInfo();
+                    obj.scopes_id = new List<int>();
                     obj.partner_id = item.partner_id;
                     obj.scopes_id.Add(item.scope_id);
                     newObj.PartnerScopeInfo.Add(obj);
@@ -223,26 +230,50 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //add MOUBonus
-                    MOUBonu mb = new MOUBonu();
-                    mb.mou_bonus_code = input.ExBasicInfo.ex_mou_code;
-                    mb.mou_bonus_decision_date = sign_date;
-                    mb.mou_bonus_end_date = end_date;
-                    mb.mou_id = mou_id;
-                    mb.evidence = "";
-                    db.MOUBonus.Add(mb);
+
+                    MOUBonu mb = db.MOUBonus.Add(new MOUBonu
+                    {
+                        mou_bonus_code = input.ExBasicInfo.ex_mou_code,
+                        mou_bonus_decision_date = sign_date,
+                        mou_bonus_end_date = end_date,
+                        mou_id = mou_id,
+                        evidence = ""
+                    });
                     //checkpoint 1
                     db.SaveChanges();
-                    MOUBonu addObj = db.MOUBonus.Where(x => x.mou_bonus_code.Equals(mb.mou_bonus_code)).First();
-
                     foreach (PartnerScopeInfo partnerScopeItem in input.PartnerScopeInfo.ToList())
                     {
                         foreach (int scopeItem in partnerScopeItem.scopes_id.ToList())
                         {
-                            db.MOUPartnerScopes.Add(new MOUPartnerScope
+                            //PartnerScope
+                            //MOUPartnerScope
+                            PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == partnerScopeItem.partner_id && x.scope_id == scopeItem).FirstOrDefault();
+                            if (ps is null)
                             {
-                                mou_id = mou_id,
-                                mou_bonus_id = addObj.mou_bonus_id
-                            });
+                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope 
+                                {
+                                    partner_id = partnerScopeItem.partner_id,
+                                    scope_id = scopeItem,
+                                    reference_count = 1
+                                });
+                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                {
+                                    mou_id = mou_id,
+                                    mou_bonus_id = mb.mou_bonus_id,
+                                    partner_scope_id = psAdded.partner_scope_id
+                                });
+                            }
+                            else
+                            {
+                                ps.reference_count += 1;
+                                db.Entry(ps).State = EntityState.Modified;
+                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                {
+                                    mou_id = mou_id,
+                                    mou_bonus_id = mb.mou_bonus_id,
+                                    partner_scope_id = ps.partner_scope_id
+                                });
+                            }
                         }
                     }
                     //checkpoint 2
@@ -256,39 +287,68 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void editExtraMOU(ExMOUAdd input, int mou_id)
+        public void editExtraMOU(ExMOUAdd input)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     //edit MOUBonus
-                    //MOUBonu mb = db.MOUBonus.Find(mou_bonus_id);
-                    //mb.mou_bonus_code = input.mou_bonus_code;
-                    //mb.mou_bonus_decision_date = input.mou_bonus_decision_date;
-                    //mb.mou_bonus_end_date = input.mou_bonus_end_date;
-                    //mb.mou_id = input.mou_id;
-                    //mb.evidence = input.evidence;
-                    //db.Entry(mb).State = EntityState.Modified;
+                    MOUBonu mb = db.MOUBonus.Find(input.mou_bonus_id);
+                    mb.mou_bonus_code = input.ExBasicInfo.ex_mou_code;
+                    mb.mou_bonus_decision_date = sign_date;
+                    mb.mou_bonus_end_date = end_date;
+                    db.Entry(mb).State = EntityState.Modified;
 
-                    //finding old exScope of exMOU.
-                    //List<MOUPartnerScope> exList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == mou_bonus_id).ToList();
-                    //exList.Clear();
-                    //db.Entry(exList).State = EntityState.Modified;
+                    List<MOUPartnerScope> mouPSList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == input.mou_bonus_id).ToList();
+                    foreach (MOUPartnerScope mouPSItem in mouPSList.ToList())
+                    {
+                        //decrese ref_count of old PartnerScope records.
+                        PartnerScope oldPS = db.PartnerScopes.Find(mouPSItem.partner_scope_id);
+                        oldPS.reference_count -= 1;
+                        db.Entry(oldPS).State = EntityState.Modified;
+                    }
+                    //del records of MOUPartnerScope.
+                    db.MOUPartnerScopes.RemoveRange(mouPSList);
+                    db.SaveChanges();
 
-                    //add new record of MOuPartnerScope
-                    //foreach (CustomPartner cp in input.ListPartnerExMOU.ToList())
-                    //{
-                    //    foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
-                    //    {
-                    //        MOUPartnerScope m = new MOUPartnerScope();
-                    //        m.mou_id = input.mou_id;
-                    //        m.partner_id = cp.partner_id;
-                    //        m.scope_id = cs.scope_id;
-                    //        m.mou_bonus_id = mou_bonus_id;
-                    //        db.MOUPartnerScopes.Add(m);
-                    //    }
-                    //}
+                    //Check partnerScope existed and handle it.
+                    //add data to MOUPartnerScope.
+                    foreach (PartnerScopeInfo psi in input.PartnerScopeInfo.ToList())
+                    {
+                        foreach (int scope in psi.scopes_id.ToList())
+                        {
+                            PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
+                            if (psCheck is null)
+                            {
+                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                {
+                                    partner_id = psi.partner_id,
+                                    scope_id = scope,
+                                    reference_count = 1
+                                });
+                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                {
+                                    partner_scope_id = psAdded.partner_scope_id,
+                                    mou_id = mb.mou_id,
+                                    mou_bonus_id = input.mou_bonus_id
+                                });
+                            } 
+                            else
+                            {
+                                psCheck.reference_count += 1;
+                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                {
+                                    partner_scope_id = psCheck.partner_scope_id,
+                                    mou_id = mb.mou_id,
+                                    mou_bonus_id = input.mou_bonus_id
+                                });
+                            }
+                        }
+                    }
                     //checkpoint 2
                     db.SaveChanges();
                     transaction.Commit();
@@ -308,8 +368,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     //finding old exScope of exMOU.
                     List<MOUPartnerScope> exList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == mou_bonus_id).ToList();
-                    exList.Clear();
-                    db.Entry(exList).State = EntityState.Modified;
+                    db.MOUPartnerScopes.RemoveRange(exList);
+                    db.SaveChanges();
 
                     //add new record of MOuPartnerScope
                     MOUBonu m = db.MOUBonus.Find(mou_bonus_id);
@@ -392,9 +452,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     select distinct t2.scope_id from IA_Collaboration.MOUPartnerScope t1 left join
                     IA_Collaboration.PartnerScope t2 on 
                     t1.partner_scope_id = t2.partner_scope_id
-                    where mou_id = @mou_id)";
+                    where mou_id = @mou_id and mou_bonus_id is null)";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList,
                     new SqlParameter("mou_id", mou_id)).ToList();
+                return scopeList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<CollaborationScope> GetFullScopesExMOU()
+        {
+            try
+            {
+                string sql_scopeList = @"select * from IA_Collaboration.CollaborationScope";
+                List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList).ToList();
                 return scopeList;
             }
             catch (Exception ex)

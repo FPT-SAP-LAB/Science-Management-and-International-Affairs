@@ -5,10 +5,13 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using static BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOURepo;
+using OfficeOpenXml;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -115,12 +118,33 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou.ExportMOUExcel();
-                return Json("", JsonRequestBehavior.AllowGet);
+                ExcelPackage excelPackage = mou.ExportMOUExcel();
+                string downloadFile = "MOUDownload.xlsx";
+                string handle = Guid.NewGuid().ToString();
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    excelPackage.SaveAs(memoryStream);
+                    memoryStream.Position = 0;
+                    TempData[handle] = memoryStream.ToArray();
+                }
+                return Json(new { success = true, data = new { FileGuid = handle, FileName = downloadFile } }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return new HttpStatusCodeResult(400);
+            }
+        }
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                return new EmptyResult();
             }
         }
         public ActionResult Detail()
@@ -136,7 +160,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
 
                 //MOU Partner
                 ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
-                ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope();
+                ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
                 ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
 
                 //MOA
@@ -153,8 +177,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string old_mou_code = mou.partnerInfoIsDuplicated(partner_name, mou_start_date_string);
-                return Json(old_mou_code);
+                DuplicatePartnerInfo obj = mou.partnerInfoIsDuplicated(partner_name, mou_start_date_string);
+                return obj == null ? Json("") : Json(obj);
             }
             catch (Exception ex)
             {
