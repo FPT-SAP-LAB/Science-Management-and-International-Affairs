@@ -75,6 +75,7 @@
           <Property Name="file_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="link" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="file_drive_id" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="InternalUnit">
           <Key>
@@ -4546,6 +4547,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="file_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="file_drive_id" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="File" ToRole="RequestConference" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
@@ -9027,6 +9029,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="file_drive_id" ColumnName="file_drive_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
