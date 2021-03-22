@@ -145,7 +145,8 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string addCitaion(List<ENTITIES.Citation> citation) { 
+        public string addCitaion(List<ENTITIES.Citation> citation)
+        {
             try
             {
                 foreach (var item in citation)

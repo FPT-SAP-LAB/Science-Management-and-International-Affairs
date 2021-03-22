@@ -59,7 +59,7 @@ namespace GUEST.Controllers
             Account acc = new Account();
             if (Session["User"] != null)
             {
-                u = (LoginRepo.User) Session["User"];
+                u = (LoginRepo.User)Session["User"];
                 acc = u.account;
             }
             BaseRequest b = pr.addBaseRequest(acc.account_id);
