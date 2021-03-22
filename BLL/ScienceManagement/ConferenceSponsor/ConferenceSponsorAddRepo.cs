@@ -154,7 +154,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang42@yahoo.com.vn");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -268,6 +268,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         position_id = position_id,
                         request_id = support.request_id
                     });
+
+                    foreach (var item in policy.Criteria)
+                    {
+                        db.EligibilityCriterias.Add(new EligibilityCriteria
+                        {
+                            criteria_id = item.criteria_id,
+                            is_accepted = false,
+                            request_id = @base.request_id
+                        });
+                    }
 
                     db.SaveChanges();
                     trans.Commit();

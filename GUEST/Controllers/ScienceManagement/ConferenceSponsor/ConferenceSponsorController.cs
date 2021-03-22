@@ -20,7 +20,7 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        readonly int account_id = 3;
+        readonly int account_id = 7;
         // GET: ConferenceSponsor
         public ActionResult Index()
         {
@@ -34,7 +34,7 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageGuest(datatable, account_id, LanguageResource.GetCurrentLanguageID());
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, account_id, LanguageResource.GetCurrentLanguageID());
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -69,7 +69,9 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
             };
-            string output = DetailRepos.GetDetailPageGuest(id, account_id, LanguageResource.GetCurrentLanguageID());
+            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), account_id);
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
             return View();

@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using Newtonsoft.Json;
 using System;
@@ -12,7 +13,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
     public class ConferenceSponsorDetailRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public string GetDetailPageGuest(int request_id, int account_id, int language_id)
+        public string GetDetailPageGuest(int request_id, int language_id, int account_id = 0)
         {
             db.Configuration.LazyLoadingEnabled = false;
             ConferenceDetail Conference = (from r in db.BaseRequests
@@ -28,7 +29,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                            join j in db.FormalityLanguages on i.formality_id equals j.formality_id
                                            join k in db.SpecializationLanguages on a.specialization_id equals k.specialization_id
                                            where h.language_id == language_id && j.language_id == language_id && k.language_id == language_id
-                                           && r.account_id == account_id && r.request_id == request_id
+                                           && (r.account_id == account_id || account_id == 0) && r.request_id == request_id
                                            select new ConferenceDetail
                                            {
                                                ConferenceName = b.conference_name,
@@ -49,10 +50,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                RequestID = a.request_id,
                                                CountryName = c.country_name,
                                                StatusName = h.name,
+                                               StatusID = h.status_id,
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
                                                SpecializationName = k.name
                                            }).FirstOrDefault();
+            if (Conference == null)
+                return null;
             string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
             List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
                                                   join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
@@ -93,6 +97,18 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          Comment = a.comment
                                      }).ToList();
             return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias });
+        }
+        public AlertModal<string> UpdateCriterias(string criterias, int request_id)
+        {
+            var values = JsonConvert.DeserializeObject<Dictionary<int, string>>(criterias);
+            int status_id = db.RequestConferences.Find(request_id).status_id;
+            if (status_id != 1)
+                return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
+            else
+            {
+                List<EligibilityCriteria> list = db.EligibilityCriterias.Where(x => x.request_id == request_id).ToList();
+                return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
+            }
         }
     }
 }
