@@ -71,7 +71,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public void addPartner(List<HttpPostedFileBase> files_request, string content, PartnerArticle partner_article, int number_of_image)
+        public AlertModal<string> addPartner(List<HttpPostedFileBase> files_request, string content,
+            PartnerArticle partner_article, int number_of_image, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -79,32 +80,59 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 {
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
-                    List<Google.Apis.Drive.v3.Data.File> files_upload =
-                        GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
-                    for (int i = 0; i < number_of_image; i++)
+                    List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+                    if (files_request.Count != 0)
                     {
-                        image_drive_id.Add(files_upload[i].Id);
-                        image_drive_data_link.Add(files_upload[i].WebViewLink);
+                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
+                        for (int i = 0; i < number_of_image; i++)
+                        {
+                            image_drive_id.Add(files_upload[i].Id);
+                            image_drive_data_link.Add(files_upload[i].WebViewLink);
+                        }
+                        for (int i = 0; i < number_of_image; i++)
+                        {
+                            content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                        }
                     }
 
-                    for (int i = 0; i < number_of_image; i++)
-                    {
-                        content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
-                    }
+                    Article article = new Article();
+                    article.need_approved = false;
+                    article.article_status_id = 2;
+                    article.account_id = account_id;
+                    db.Articles.Add(article);
+                    db.SaveChanges();
 
                     ArticleVersion articleVersion = new ArticleVersion();
                     articleVersion.article_content = content;
+                    articleVersion.publish_time = DateTime.Today;
+                    articleVersion.version_title = partner_article.partner_name + "-" + DateTime.Today;
+                    articleVersion.article_id = article.article_id;
+                    articleVersion.language_id = 1;
+                    db.ArticleVersions.Add(articleVersion);
 
                     Partner partner = new Partner();
-                    partner.avatar = files_upload.LastOrDefault().WebViewLink;
+                    partner.partner_name = partner_article.partner_name;
+                    partner.website = partner_article.website;
+                    partner.address = partner_article.address;
+                    partner.is_deleted = false;
+                    partner.country_id = partner_article.country_id;
+                    partner.article_id = article.article_id;
+                    if (files_upload.Count != 0)
+                    {
+                        partner.avatar = files_upload.LastOrDefault().WebViewLink;
+                    }
+                    db.Partners.Add(partner);
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true);
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     trans.Rollback();
-                    throw e;
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
                 }
             }
-            return;
         }
 
         public AlertModal<string> deletePartner(int id)

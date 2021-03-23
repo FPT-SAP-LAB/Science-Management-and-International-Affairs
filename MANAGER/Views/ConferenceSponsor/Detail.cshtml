@@ -1,8 +1,22 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Conference
+@using Newtonsoft.Json.Linq
 @{
     ViewBag.Title = "Chi tiết đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
+    ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
+    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
+    List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
+    List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
 }
+<style>
+    .chinhsach-container {
+        box-shadow: none !important;
+        border: 1px solid #e5e5e5e5 !important;
+    }
+</style>
 <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConferenceDetail">
     <div class="card">
         <div class="card-header" id="ConferenceDetailHeading">
@@ -20,55 +34,149 @@
             </div>
         </div>
         <div id="ConferenceDetailChild1" class="collapse show" data-parent="#ConferenceDetail">
-            <div class="card-body row">
-                <div class="col-3">
-                    <p>Tên hội nghị: <span class="field-value ">ICCI 2021</span></p>
-                    <p>Tên diễn giả QS: <span class="field-value ">Todd Howard</span></p>
-                    <p>Quốc gia: <span class="field-value ">Japan</span></p>
-                    <p>Bài báo: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a></p>
-                    <p>
-                        Tên bài báo: <span class="field-value ">Lorem ipsum dolor sit amet</span>
-                    </p>
-                </div>
-                <div class="col-3">
-                    <p>Website hội nghị: <span class="field-value ">ACC.com</span></p>
-                    <p>Thuộc trường đại học: <span class="field-value ">Todai</span></p>
-                    <p>Thời gian: <span class="field-value ">02/02/2021 – 05/02/2021</span></p>
-                    <p>Hình thức: <span class="field-value ">Online quốc tế</span></p>
-                    <p>
-                        Trạng thái:
-                        <span class="label label-lg label-inline label-light-primary font-weight-bold">
-                            đã hoàn ứng
-                        </span>
-                    </p>
-                </div>
-                <div class="col-3">
-                    <p><b>Chính sách xét hỗ trợ tham dự hội nghị: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Xem thêm</a></b></p>
-                    <form>
-                        <div class="checkbox-list">
-                            <label class="checkbox">
-                                <input type="checkbox" disabled="disabled" checked="checked" name="Checkboxes1">
-                                <span></span>
-                                QS1000
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" disabled="disabled" checked="checked" name="Checkboxes1">
-                                <span></span>
-                                Đơn vị chủ quản là FE
-                            </label>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Tên bài báo:</span>
+                            <span class="label-lg label-inline font-weight-bold">@ConferenceDetail.PaperName</span>
                         </div>
-                    </form>
+                        <hr />
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Tên hội nghị:</span>
+                            <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.ConferenceName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Website hội nghị:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Website</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.KeynoteSpeaker</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Quốc gia:</span>
+                            <span class="text-muted font-weight-bold">@ConferenceDetail.CountryName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị tổ chức (Top QS):</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.QsUniversity</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Co_organizedUnit</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="mb-7">
+                            <div class="d-flex justify-content-lg-start align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.TimeStart.ToString("dd/MM/yyyy") – @ConferenceDetail.TimeEnd.ToString("dd/MM/yyyy")</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tham dự:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.AttendanceStart.ToString("dd/MM/yyyy") – @ConferenceDetail.AttendanceEnd.ToString("dd/MM/yyyy")</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">File bài báo:</span>
+                                <a href="@ConferenceDetail.PaperLink" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thư mời hội nghị:</span>
+                                <a href="@ConferenceDetail.InvitationLink" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Hình thức:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FormalityName</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Chuyên ngành:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.SpecializationName</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-3">
-                    <p>Quyết định: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a></p>
-                    <p>Số quyết định: <span class="field-value">QĐ-0635</span></p>
-                    <p>Ngày tạo: <span class="field-value">30/01/2021</span></p>
-                    <p>Thư mời hội nghị: <a href="#">Xem</a></p>
-                </div>
-                <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                    <div class="dropdown dropdown-inline mr-2">
-                        <a class="btn btn-success" href="#">Xét duyệt</a>
-                        <a class="btn btn-danger" href="#">Yêu cầu chỉnh sửa</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="RequestDetail">
+    <div class="card">
+        <div class="card-header" id="RequestHeading">
+            <div class="card-title" data-toggle="collapse" data-target="#RequestChild1">
+                <div class="card-label">Thông tin đề nghị</div>
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                        </g>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div id="RequestChild1" class="collapse show" data-parent="#RequestDetail">
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="mb-7">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Trạng thái:</span>
+                                <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.StatusName</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString("dd/MM/yyyy")</a>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
+                                <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                <span class="text-muted font-weight-bold">123456</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                <a href="#" class="text-muted text-hover-primary">1234567</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="card card-custom chinhsach-container">
+                            <div class="card-header ribbon ribbon-top ribbon-ver">
+                                <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                    <i class="fa fa-star text-white"></i>
+                                </div>
+                                <h3 class="card-title">
+                                    <a href="@output["Link"]" class="btn btn-light-primary mr-2" target="_blank">Chính sách hiện tại</a>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div id="criterias" class="checkbox-list">
+                                        @foreach (ConferenceCriteria item in Criterias)
+                                        {
+                                            <label class="checkbox @((ConferenceDetail.StatusID != 1 || item.IsAccepted ) ? "checkbox-disabled" : "")">
+                                                <input data-id="@item.CriteriaID" type="checkbox" @((ConferenceDetail.StatusID != 1 || item.IsAccepted ) ? "disabled" : "") @(item.IsAccepted ? "checked" : "") name="Checkboxes1" />
+                                                <span></span>
+                                                @item.CriteriaName
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                        <div class="dropdown dropdown-inline mr-2">
+                            <button class="btn btn-success" onclick="SubmitCriteria()">Xét duyệt</button>
+                            <a class="btn btn-danger" href="#">Yêu cầu chỉnh sửa</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -274,5 +382,26 @@
 @section scripts {
     <script>
         var ConferenceDetail = document.getElementById("ConferenceDetail").parentElement.removeAttribute("class");
+
+        function SubmitCriteria() {
+            var criterias = {}
+            for (var i = 0; i < $("#criterias").find("input").length; i++) {
+                if ($("#criterias").find("input")[i].checked)
+                    criterias[$("#criterias").find("input")[i].dataset.id] = $("#criterias").find("input")[i].checked;
+            }
+            var newForm = jQuery('<form>', {
+                'action': '/ConferenceSponsor/UpdateCriterias',
+                'method': 'post'
+            }).append(jQuery('<input>', {
+                'name': 'criterias',
+                'value': JSON.stringify(criterias),
+                'type': 'hidden'
+            })).append(jQuery('<input>', {
+                'name': 'request_id',
+                'value': "@(ConferenceDetail.RequestID)",
+                'type': 'hidden'
+            }));
+            newForm.submit();
+        }
     </script>
 } 
