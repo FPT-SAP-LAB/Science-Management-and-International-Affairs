@@ -12,7 +12,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     { 
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         
-
         public List<baseAA> getBaseAA(int count, List<int> type)
         {
             try
