@@ -10,6 +10,7 @@
                         <label style="color:red">*</label><label class="font-weight-bolder">Mã hiệu</label>&nbsp;
                         <label style="font-style: italic;"></label>
                         <input class="form-control" type="text" placeholder="Mã hiệu MOU_BS/số thứ tự" autocomplete="off" required id="ex_mou_id_edit" />
+                        <input hidden id="mou_bonus_id" value="" />
                     </div>
                     <div class="col-md-6">
                         <label class="font-weight-bolder">Bản mềm</label>&nbsp;
@@ -74,7 +75,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="finishExMOUEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+                <button type="button" onclick="finishExMOUEdit()" class="btn btn-sm btn-light-primary px-6">Sửa</button>
             </div>
         </div>
     </div>
@@ -110,7 +111,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="addExMOUTempForEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+                <button type="button" onclick="addExMOUTempForEdit()" class="btn btn-sm btn-light-primary px-6">Bổ sung</button>
             </div>
         </div>
     </div>
@@ -120,7 +121,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title">ĐIỀU CHỈNH VỀ PHẠM VI HỢP TÁC 2</h3>
+                <h3 class="modal-title">ĐIỀU CHỈNH VỀ PHẠM VI HỢP TÁC</h3>
             </div>
             <div class="modal-body">
                 <div class="row justify-content-center">
@@ -139,7 +140,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="editExMOUTempForEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Sửa</button>
+                <button type="button" onclick="editExMOUTempForEdit()" class="btn btn-sm btn-light-primary px-6" add-partner-scope-edit>Sửa</button>
             </div>
         </div>
     </div>

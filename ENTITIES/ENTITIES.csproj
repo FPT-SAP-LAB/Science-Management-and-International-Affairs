@@ -40,6 +40,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=5.6.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.6.0\lib\net45\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.50.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.50.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
@@ -224,6 +228,8 @@
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPartner_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPerson_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
@@ -258,10 +264,12 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\BasicInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomOffice.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\CustomPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\DuplicatePartnerInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\ListMOU.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\MOUAdd.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\NotificationInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOU\PartnerInfo.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerArticle.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistory.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistoryList.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerList.cs" />
@@ -270,6 +278,7 @@
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceCriteria.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceParticipant.cs" />
@@ -456,6 +465,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="RequestConferencePolicy.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestDecision.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="RequestInvention.cs">

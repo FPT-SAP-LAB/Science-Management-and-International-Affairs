@@ -31,12 +31,12 @@
                             <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
                                 <div class="row align-items-center">
                                     <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
-                                        <input value="" type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
+                                        <input type="text" class="form-control" placeholder="Tên đối tác" id="search_partner_name" />
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                                <option selected value=""></option>
+                                            <select class="form-control text-center" id="search_nation" name="param" style="width:200px !important">
+                                                <option label="Label"></option>
                                                 @foreach (var i in ViewBag.countries)
                                                 {
                                                     <option value="@i.country_name">@i.country_name</option>
@@ -46,22 +46,26 @@
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
                                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                            <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
-                                                <option selected value=""></option>
+                                            <select class="form-control text-center" id="search_specialization" name="param" style="width:180px !important">
+                                                <option label="Label"></option>
+                                                @foreach (var i in ViewBag.specializations)
                                                 {
                                                     <option value="@i.specialization_name">@i.specialization_name</option>
                                                 }
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_coop_agreement" name="param" style="width:110px !important">
                                                 <option label="Label"></option>
-                                                <option value="0">Chưa có</option>
-                                                <option value="1">Đã có</option>
+                                                <option value="1">Chưa có</option>
+                                                <option value="2">Đã có</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mb-4">
-                                        <a class="btn btn-light-primary px-6 font-weight-bold" id="search_btn">Tìm kiếm</a>
+                                        <a id="search_btn" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +105,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-2">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <div class="row align-items-center justify-content-end">
                                     <a href="/Partner/List_Deleted" class="px-7">Đối tác đã xóa</a>
@@ -146,7 +152,7 @@
         })
 
         $('#search_coop_agreement').select2({
-            placeholder: 'Thỏa thuận hợp tác',
+            placeholder: 'Thỏa thuận',
             allowClear: true,
 
         })
@@ -156,7 +162,6 @@
             allowClear: true,
 
         })
-
 
     </script>
     <script>
@@ -205,7 +210,7 @@
         }
     </script>
     <script>
-       
+
         //datatable
         var datatable = $("#partner_table").DataTable({
             oLanguage: {
@@ -230,6 +235,7 @@
                         "nation": function () { return $('#search_nation').val() },
                         "specialization": function () { return $('#search_specialization').val() },
                         "is_collab": function () { return $('#search_coop_agreement').val() },
+                        "is_deleted": 0,
                     }
                 },
                 cache: "false"
@@ -278,7 +284,7 @@
                     width: '125px',
                     render: function (data) {
                         return '<a onclick="load_history('+ data +')" class="show-status-history"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> ' +
-                            '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="/Partner/Detail" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete(12)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                            '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" href="/Partner/Detail" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
             ],
@@ -312,7 +318,7 @@
 
         $('#search_btn').click(function () {
             datatable.ajax.reload();
-        }) 
+        })
         //overflow
         $(document).ready(function () {
             $('#partner_table').parent().css('overflow-x', 'auto');
@@ -322,42 +328,36 @@
         });
 
         function confirm_delete(id) {
-        //function confirm_delete(id, action, controller) {
-            var link = '@Url.Action("action", "controller")'
-            link = link.replace("action", "Delete_MOU");
-            link = link.replace("controller", "MOU");
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Xác nhận xóa",
+                text: "Có muốn xóa bản ghi này",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
                 reverseButtons: true
             }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: link,
-                        data: { mou_id : id },
-                        success: function (data) {
-                            if (data = "") {
-                                Swal.fire("Good job!", "You clicked the button!", "error");
-                            } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
-                            }
-                        },
-                        error: function (data) {
-                            Swal.fire("Good job!", "You clicked the button!", "error");
-                        },
-                    })
-                }
-            })
+                    if (result.value) {
+                        $.ajax({
+                            url: '@Url.Action("Delete","Partner")',
+                            type: "POST",
+                            data: { 'id': id },
+                            success: function (data) {
+                                if (data.success) {
+                                    datatable.ajax.reload();
+                                    Swal.fire("Thành công", "Xóa thành công", "success");
+                                } else {
+                                    Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                                }
+                            },
+                            error: function (data) {
+                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                            },
+                        })
+                    }
+                })
         };
     </script>
-    <script>
-
-    </script>
-
 }
 
 

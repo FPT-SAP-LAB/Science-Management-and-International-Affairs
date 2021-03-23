@@ -55,19 +55,19 @@ namespace BLL.InternationalCollaboration.MasterData
                             };
                             db.ActivityExpenseTypes.Add(academicActivityExpenseType);
                             db.SaveChanges();
-                            return new AlertModal<ActivityExpenseType>(null, true, "Thành công", "Thêm loại kinh phí thành công.");
+                            return new AlertModal<ActivityExpenseType>(null, true, "Thêm loại kinh phí thành công.");
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<ActivityExpenseType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<ActivityExpenseType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -85,13 +85,13 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     else
                     {
-                        return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Không xác định được loại kinh phí tương ứng. Vui lòng kiểm tra lại.");
+                        return new AlertModal<ActivityExpenseType>(null, false, "Không xác định được loại kinh phí tương ứng. Vui lòng kiểm tra lại.");
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<ActivityExpenseType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (expense_type_name == "")
                     {
-                        return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Tên loại kinh phí không được để trống.");
+                        return new AlertModal<ActivityExpenseType>(null, false, "Tên loại kinh phí không được để trống.");
                     }
                     else
                     {
@@ -119,24 +119,24 @@ namespace BLL.InternationalCollaboration.MasterData
                             {
                                 activityExpenseType_edit.expense_type_name = expense_type_name;
                                 db.SaveChanges();
-                                return new AlertModal<ActivityExpenseType>(null, true, "Thành công", "Chỉnh sửa loại kinh phí thành công");
+                                return new AlertModal<ActivityExpenseType>(null, true, "Chỉnh sửa loại kinh phí thành công");
                             }
                             else
                             {
-                                return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                                return new AlertModal<ActivityExpenseType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
                             }
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<ActivityExpenseType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<ActivityExpenseType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -151,17 +151,17 @@ namespace BLL.InternationalCollaboration.MasterData
                     {
                         db.ActivityExpenseTypes.Remove(db.ActivityExpenseTypes.Find(expense_type_id));
                         db.SaveChanges();
-                        return new AlertModal<ActivityExpenseType>(null, true, "Thành công", "Xóa loại kinh phí thành công");
+                        return new AlertModal<ActivityExpenseType>(null, true, "Xóa loại kinh phí thành công");
                     }
                     catch (Exception e)
                     {
-                        return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
+                        return new AlertModal<ActivityExpenseType>(null, false, "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<ActivityExpenseType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<ActivityExpenseType>(null, false, "Có lỗi xảy ra.");
             }
         }
     }

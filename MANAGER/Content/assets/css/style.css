@@ -20,3 +20,9 @@ thead * {
     box-shadow: none !important;
     border: 0.5px solid #e2e2e2 !important;
 }
+#Logo {
+    width: 60%;
+}
+#LogoMobile {
+    width: 30%;
+}

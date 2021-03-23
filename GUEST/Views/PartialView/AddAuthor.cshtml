@@ -16,11 +16,11 @@
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">Email</label>
-        <input class="form-control editfe edit inputAuthor" id="add_author_mail" type="text" />
+        <input class="form-control edit inputAuthor" id="add_author_mail" type="text" />
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("MSNV")</label>
-        <select class="form-control edit select-custom" id="add_author_msnv" name="param" style="width: 100% !important">
+        <select class="form-control edit select-custom input_fe" id="add_author_msnv" name="param" style="width: 100% !important">
             <option disabled selected></option>
             @{
                 foreach (var item in ViewBag.people)
@@ -37,7 +37,8 @@
     </div>
     <div class="col-xl-6 form-group">
         <label>@rm.GetString("Title")</label>
-        <select class="form-control editfe select-custom edit" id="add_author_title" name="param" style="width: 100% !important">
+        <select class="form-control select-custom edit input_fe" id="add_author_title" name="param" style="width: 100% !important">
+            <option disabled selected></option>
             @{
                 foreach (var item in ViewBag.title)
                 {
@@ -48,7 +49,8 @@
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("ContractType")</label>
-        <select class="form-control editfe select-custom edit" id="add_author_contractType" name="param" style="width: 100% !important">
+        <select class="form-control select-custom edit input_fe" id="add_author_contractType" name="param" style="width: 100% !important">
+            <option disabled selected></option>
             @{
                 foreach (var item in ViewBag.contract)
                 {
@@ -59,12 +61,12 @@
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("CMND")</label>
-        <input class="form-control editfe edit inputAuthor " id="add_author_cmnd" type="text" />
+        <input class="form-control edit inputAuthor input_fe" id="add_author_cmnd" type="text" />
     </div>
-    <div class="col-xl-6 form-group" id="upCM">
-        <label class="required-field">@rm.GetString("CMND") File</label>
+    <!--<div class="col-xl-6 form-group" id="upCM">
+        <label class="required-field">@rm.GetString("CMND") File</label>-->
         @*<button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>*@
-        <div class="col-lg-6">
+        <!--<div class="col-lg-6">
             <div class="uppy" id="kt_uppy_5">
                 <div class="uppy-wrapper"></div>
                 <div class="uppy-list"></div>
@@ -72,23 +74,23 @@
                 <div class="uppy-informer uppy-informer-min"></div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("Tax")</label>
-        <input class="form-control editfe edit inputAuthor" id="add_author_tax" type="text" />
+        <input class="form-control edit inputAuthor input_fe" id="add_author_tax" type="text" />
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("Bank")</label>
-        <input class="form-control editfe  edit inputAuthor" id="add_author_bank" type="text" />
+        <input class="form-control edit inputAuthor input_fe" id="add_author_bank" type="text" />
     </div>
     <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("AccNo")</label>
-        <input class="form-control editfe edit inputAuthor" id="add_author_accno" type="text" />
+        <input class="form-control edit inputAuthor input_fe" id="add_author_accno" type="text" />
     </div>
-    <div class="col-xl-6 form-group citationE">
-        <label class="required-field">@rm.GetString("Reward")</label>
-        <input class="form-control editfe edit inputAuthor" id="add_author_reward" type="text" />
-    </div>
+    @*<div class="col-xl-6 form-group citationE">
+            <label class="required-field">@rm.GetString("Reward")</label>
+            <input class="form-control editfe edit inputAuthor" id="add_author_reward" type="text" />
+        </div>*@
     @*<div class="col-xl-6 form-group">
             <label  class="required-field">@rm.GetString("Note")</label>
             <input class="form-control editfe "  id="add_author_note" type="text" />
@@ -103,6 +105,7 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
+        //$(".edit").prop("disabled", true);
         $('#add_author_msnv').select2({
             allowClear: true,
             tags: true,

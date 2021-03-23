@@ -8,7 +8,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
 {
     public class PartnerScopeInfo
     {
-        public List<int> scopes_id = new List<int>();
+        public List<int> scopes_id { get; set; }
         public int partner_id { get; set; }
     }
 }

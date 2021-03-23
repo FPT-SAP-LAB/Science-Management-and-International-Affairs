@@ -110,6 +110,7 @@ namespace ENTITIES
         public virtual DbSet<NotifyType> NotifyTypes { get; set; }
         public virtual DbSet<BaseRequest> BaseRequests { get; set; }
         public virtual DbSet<Decision> Decisions { get; set; }
+        public virtual DbSet<RequestDecision> RequestDecisions { get; set; }
         public virtual DbSet<AcademicDegree> AcademicDegrees { get; set; }
         public virtual DbSet<AcademicDegreeType> AcademicDegreeTypes { get; set; }
         public virtual DbSet<Award> Awards { get; set; }

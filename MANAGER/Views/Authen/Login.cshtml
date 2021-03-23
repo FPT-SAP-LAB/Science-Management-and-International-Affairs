@@ -153,21 +153,25 @@
     <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
+    <script src="~/Content/assets/js/bundle.js"></script>
     <script>
+        var login_btn;
         function onSignIn(googleUser) {
+            login_btn.startLoading();
             var id_token = googleUser.getAuthResponse().id_token;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Authen/SigninGoogleAsync');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this);
                     if (this.response == '""') {
                         toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
+                            login_btn.stopLoading();
                         });
                     } else {
+                        login_btn.stopLoading();
                         window.location.href = this.responseURL;
                     }
                 }
@@ -176,7 +180,10 @@
         }
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
-        })
+        });
+        $(document).ready(function () {
+            login_btn = new LoaderBtn($("#login_btn"));
+        });
     </script>
 </body>
 

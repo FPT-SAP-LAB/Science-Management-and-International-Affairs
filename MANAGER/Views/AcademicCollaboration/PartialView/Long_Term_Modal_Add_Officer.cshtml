@@ -6,6 +6,7 @@
                 <h4 class="modal-title">BỔ SUNG CÁN BỘ</h4>
             </div>
             <div class="modal-body">
+                <!--------------------------THÔNG TIN CÁ NHÂN------------------------->
                 <div class="row">
                     <h5 class="font-weight-bolder">THÔNG TIN CÁ NHÂN</h5>
                 </div>
@@ -13,32 +14,29 @@
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Họ và tên</label>
                         <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
+                        @*<label style="color:blue" class="float-right">
+                            <a href="javascipt:;" id="check_person">Kiểm tra</a>
+                        </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_name" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Ngô Tùng Sơn</option>
-                                <option value="2">Trần Quý Ban</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_officer_email" />
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="add_officer_email" />
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
+                        <label class="font-weight-bolder">Đơn vị công tác</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_facility" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">FPTU-HN</option>
-                                <option value="2">FPTU-ĐN</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <!--------------------------ĐƠN VỊ ĐÀO TẠO------------------------->
                 <div class="row mt-4">
                     <h5 class="font-weight-bolder">ĐƠN VỊ ĐÀO TẠO</h5>
                 </div>
@@ -46,32 +44,33 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                         <label class="font-weight-bolder">Tên đơn vị đào tạo</label>
                         <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
+                        @*<label style="color:blue" class="float-right">
                             <a href="#" onclick="">Kiểm tra</a>
-                        </label>
+                        </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_traning" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">UTP</option>
-                                <option value="2">KyouDai</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_officer_nation" />
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control text-center" id="add_officer_nation" name="param" style="width:100% !important">
+                                <option selected value=""></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_coop_scope" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">SE</option>
-                                <option value="2">FE</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <!--------------------------CHI TIẾT------------------------->
                 <div class="row mt-4">
                     <h5 class="font-weight-bolder">CHI TIẾT</h5>
                 </div>
@@ -81,10 +80,7 @@
                         <label style="color:red">*</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_status" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Đang thực hiện</option>
-                                <option value="2">Đã hoàn thành</option>
-                                <option value="3">Chưa hoàn thành</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>

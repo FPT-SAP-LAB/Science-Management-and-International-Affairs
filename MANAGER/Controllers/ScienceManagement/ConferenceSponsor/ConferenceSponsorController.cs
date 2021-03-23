@@ -1,6 +1,10 @@
-﻿using BLL.ScienceManagement.ConferenceSponsor;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.ConferenceSponsor;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
+using MANAGER.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +17,7 @@ namespace MANAGER.Controllers
     public class ConferenceSponsorController : Controller
     {
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
+        readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
         public ActionResult Index()
         {
             return View();
@@ -20,7 +25,7 @@ namespace MANAGER.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageManager(datatable);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable);
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -30,14 +35,15 @@ namespace MANAGER.Controllers
         }
         public ActionResult Detail(int id)
         {
-            ViewBag.id = id;
-            //switch (id)
-            //{
-            //    case 
-            //    default:
-            //        break;
-            //}
+            string output = DetailRepos.GetDetailPageGuest(id, 1);
+            ViewBag.output = output;
             return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateCriterias(string criterias, int request_id)
+        {
+            DetailRepos.UpdateCriterias(criterias, request_id);
+            return Redirect("/ConferenceSponsor");
         }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)

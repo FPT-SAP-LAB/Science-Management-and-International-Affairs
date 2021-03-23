@@ -20,6 +20,7 @@ namespace ENTITIES
             this.ApprovalProcesses = new HashSet<ApprovalProcess>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.Costs = new HashSet<Cost>();
+            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
         }
     
         public int conference_id { get; set; }
@@ -32,8 +33,10 @@ namespace ENTITIES
         public int request_id { get; set; }
         public System.DateTime attendance_start { get; set; }
         public System.DateTime attendance_end { get; set; }
+        public int specialization_id { get; set; }
     
         public virtual File File { get; set; }
+        public virtual Specialization Specialization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApprovalProcess> ApprovalProcesses { get; set; }
         public virtual Conference Conference { get; set; }
@@ -42,6 +45,8 @@ namespace ENTITIES
         public virtual ConferenceStatu ConferenceStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cost> Costs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
         public virtual RequestConferencePolicy RequestConferencePolicy { get; set; }
         public virtual Paper Paper { get; set; }
         public virtual BaseRequest BaseRequest { get; set; }

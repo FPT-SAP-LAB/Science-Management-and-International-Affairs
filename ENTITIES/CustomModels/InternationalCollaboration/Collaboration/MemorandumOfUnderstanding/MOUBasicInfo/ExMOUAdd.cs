@@ -9,7 +9,8 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     public class ExMOUAdd
     {
         public ExMOUAdd() { }
-        public ExBasicInfo ExBasicInfo = new ExBasicInfo();
-        public List<PartnerScopeInfo> PartnerScopeInfo = new List<PartnerScopeInfo>();
+        public int mou_bonus_id { get; set; }
+        public ExBasicInfo ExBasicInfo { get; set; }
+        public List<PartnerScopeInfo> PartnerScopeInfo { get; set; }
     }
 }

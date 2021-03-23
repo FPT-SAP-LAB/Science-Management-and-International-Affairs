@@ -12,7 +12,7 @@ namespace BLL.ScienceManagement.ScientificProduct
     public class ListProductOnePersonRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListProduct_OnePerson> getList(DataSearch item, string id)
+        public List<ListProduct_OnePerson> getList(DataSearch item, int id)
         {
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             string sql = @"select p.name, br.created_date,rp.status_id, p.paper_id
@@ -27,7 +27,7 @@ namespace BLL.ScienceManagement.ScientificProduct
             return list;
         }
 
-        public List<ListProduct_OnePerson> getListInven(DataSearch item, string id)
+        public List<ListProduct_OnePerson> getListInven(DataSearch item, int id)
         {
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
             string sql = @"select i.name, br.created_date, ri.status_id, i.invention_id as 'paper_id'

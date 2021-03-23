@@ -1,10 +1,7 @@
 ﻿using BLL.ScienceManagement.Comment;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
-using System;
+using GUEST.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GUEST.Controllers.ScienceManagement.Comment
@@ -22,8 +19,7 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {
-            int account_id = 6;
-            return Json(CommentRepo.AddComment(request_id, account_id, content));
+            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content));
         }
     }
 }
