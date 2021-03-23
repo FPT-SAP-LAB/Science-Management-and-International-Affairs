@@ -466,6 +466,9 @@
     <Compile Include="RequestConferencePolicy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RequestDecision.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="RequestInvention.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
