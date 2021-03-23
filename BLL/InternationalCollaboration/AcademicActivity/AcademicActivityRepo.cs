@@ -168,7 +168,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 try
                 {
                     List<ActivityInfo> ai = db.ActivityInfoes.Where(x => x.activity_id == id).ToList();
-                    foreach(ActivityInfo i in ai)
+                    foreach (ActivityInfo i in ai)
                     {
                         Article a = db.Articles.Find(i.article_id);
                         db.Articles.Remove(a);

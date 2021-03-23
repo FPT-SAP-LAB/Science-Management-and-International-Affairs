@@ -53,13 +53,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [HttpPost]
-        public JsonResult changeStatusAA(int activity_id,int status)
+        public JsonResult changeStatusAA(int activity_id, int status)
         {
             repo = new DetailOfAcademicActivityRepo();
-            bool res = repo.changeStatusAA(activity_id,status);
+            bool res = repo.changeStatusAA(activity_id, status);
             if (res)
             {
-                return Json(status == 2 ? "Đăng bài thành công":"Thu hồi thành công");
+                return Json(status == 2 ? "Đăng bài thành công" : "Thu hồi thành công");
             }
             else
             {
