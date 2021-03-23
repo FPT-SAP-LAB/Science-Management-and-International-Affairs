@@ -140,7 +140,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     });
                     //checkpoint 1
                     db.SaveChanges();
-                    
+
                     foreach (MOAPartnerInfo item in input.MOAPartnerInfo.ToList())
                     {
                         Partner p = db.Partners.Where(x => x.partner_name == item.partnername_add).First();

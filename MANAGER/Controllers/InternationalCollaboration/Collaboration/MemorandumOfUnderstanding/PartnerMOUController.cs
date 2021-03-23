@@ -79,7 +79,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 string id = Session["mou_detail_id"].ToString();
-                mou.editMOUPartner(input, int.Parse(id),input.mou_partner_id);
+                mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
