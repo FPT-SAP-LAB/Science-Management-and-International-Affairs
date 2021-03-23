@@ -65,13 +65,17 @@ namespace GUEST.Controllers
             ViewBag.listCountry = listCountry;
             ViewBag.request_id = request_id;
 
+            List<InventionType> listType = ir.getType();
+            ViewBag.type = listType;
+            ViewBag.invenID = item.invention_id;
+
             return View();
         }
 
         [HttpPost]
         public JsonResult listAuthor(string id)
         {
-            List<AuthorInfo> listAuthor = ir.getAuthor(id);
+            List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id);
             return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
 
@@ -110,6 +114,22 @@ namespace GUEST.Controllers
             if (mess == "ss") mess = ir.addInvenRequest(b, i, kieuthuong);
 
             return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editInven(List<AddAuthor> people, Invention inven, string type, string kieuthuong, string request)
+        {
+            InventionType ip = ir.addInvenType(type);
+            inven.type_id = ip.invention_type_id;
+
+            string mess = ir.editInven(inven);
+            if (mess == "ss") mess = ir.editRequest(request, kieuthuong);
+            if (mess == "ss")
+            {
+                mess = ir.updateAuthor(inven.invention_id, people);
+            }
+
+            return Json(new { mess = mess, id = inven.invention_id }, JsonRequestBehavior.AllowGet);
         }
     }
 }
