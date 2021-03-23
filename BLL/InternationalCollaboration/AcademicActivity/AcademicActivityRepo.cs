@@ -41,7 +41,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<ListAA>();
             }
         }
-        public bool AddAA(baseAA obj)
+        public bool AddAA(baseAA obj, int language_id, Authen.LoginRepo.User u)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -56,13 +56,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     db.AcademicActivityLanguages.Add(new ENTITIES.AcademicActivityLanguage
                     {
-                        language_id = 1,
+                        language_id = language_id,
                         activity_id = aa.activity_id,
                         location = obj.location
                     });
                     ENTITIES.Article ar = db.Articles.Add(new ENTITIES.Article
                     {
-                        account_id = 1,
+                        account_id = u.account.account_id,
                         article_status_id = 1,
                         need_approved = false
                     });
@@ -78,7 +78,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         article_id = ar.article_id,
                         publish_time = DateTime.Now,
                         version_title = obj.activity_name,
-                        language_id = 1,
+                        language_id = language_id,
                         article_content = ""
                     });
                     db.SaveChanges();
@@ -131,7 +131,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
-        public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to)
+        public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -143,12 +143,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     aa.activity_type_id = activity_type_id;
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
-                    AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == 1).FirstOrDefault();
+                    AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
                     al.location = location;
                     db.Entry(al).State = EntityState.Modified;
                     db.SaveChanges();
                     ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
-                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == 1).FirstOrDefault();
+                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
                     av.version_title = activity_name;
                     db.SaveChanges();
                     transaction.Commit();

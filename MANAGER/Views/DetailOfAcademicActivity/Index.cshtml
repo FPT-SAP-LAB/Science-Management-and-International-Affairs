@@ -71,7 +71,7 @@
                         <label class="font-weight-bolder">Loại</label>
                         <select class="form-control" id="detail_category">
                             @{
-                                foreach(var i in ViewBag.types)
+                                foreach (var i in ViewBag.types)
                                 {
                                     <option value="@i.activity_type_id">@i.activity_type_name</option>
                                 }
@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="detail_language_content">
+                        <select class="form-control" id="detail_language_content" onchange="reInit()">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
@@ -1454,15 +1454,22 @@
 
         let arrIndexContent = [];
         let arrContent = [];
-
+        let numberOfIndexContent = 0;
         function bonusRowContent(index) {
             if (index == 0) {
-                ind = Math.max.apply(Math, arrIndexContent) + 1;
-                arrIndexContent.push(ind);
+                var ind = 0;
+                if (arrIndexContent.length == 0) {
+                    ind = numberOfIndexContent;
+                    arrIndexContent.push(ind);
+                    numberOfIndexContent = numberOfIndexContent + 1;
+                } else {
+                    ind = Math.max.apply(Math, arrIndexContent) + 1;
+                    arrIndexContent.push(ind);
+                }
                 $('#subcontent-control').append(
                     "<div id=\"row-ckeditor-" + ind + "\" class=\"row\">" +
                     "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
-                    "<input type=\"text\" class=\"form-control\" id=\"content-" + ind + "\" />" +
+                    "<input type=\"text\" class=\"form-control\" id=\"content-" + ind + "\" autocomplete=\"off\" />" +
                     "</div>" +
                     "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
                     "<div id=\"editor-subcontent-" + ind + "\" class=\"summernote\"></div>" +
@@ -1476,7 +1483,7 @@
                 $('#subcontent-control').append(
                     "<div id=\"row-ckeditor-" + index + "\" class=\"row\">" +
                     "<div class=\"col-sm-2 col-md-2 col-xl-2 col-lg-2 mt-5\">" +
-                    "<input type=\"text\" class=\"form-control\" id=\"content-" + index + "\" />" +
+                    "<input type=\"text\" class=\"form-control\" id=\"content-" + index + "\" autocomplete=\"off\" />" +
                     "</div>" +
                     "<div class=\"col-sm-9 col-md-9 col-xl-9 col-lg-9 mt-5\">" +
                     "<div id=\"editor-subcontent-" + index + "\" class=\"summernote\"></div>" +
@@ -2204,6 +2211,11 @@
         //    KTUppy.init();
         //});
         function initDetail() {
+            arrIndexContent.forEach(function (x) {
+                $('#row-ckeditor-' + x).remove();
+            });
+            arrIndexContent = [];
+            numberOfIndexContent = 0;
             var object = {
                 language_id: document.getElementById('detail_language_content').value,
                 activity_id: document.getElementById('activity_id').value
@@ -2222,13 +2234,15 @@
                     document.getElementById('detail_name').value = data.baseDetail.activity_name;
                     document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                     document.getElementById('detail_location').value = data.baseDetail.location;
-                    document.getElementById('detail_from').value = data.baseDetail.from;
-                    document.getElementById('detail_to').value = data.baseDetail.to;
-                    document.getElementById('editor-main-content').innerHTML = data.baseDetail.article_content;
+                    if (document.getElementById('detail_name').value != '') {
+                        document.getElementById('detail_from').value = data.baseDetail.from;
+                        document.getElementById('detail_to').value = data.baseDetail.to;
+                    }
+                    $('#editor-main-content').summernote('code', data.baseDetail.article_content);
                     data.subContent.forEach(function (x) {
                         bonusRowContent(x.article_id);
-                        document.getElementById('editor-subcontent-' + x.article_id).innerHTML = x.article_content;
-                        document.getElementById('content-' + x.article_id).innerHTML = x.version_title;
+                        $('#editor-subcontent-' + x.article_id).summernote('code', x.article_content);
+                        document.getElementById('content-' + x.article_id).value = x.version_title;
                     });
                 },
                 error: function (data) {
@@ -2237,8 +2251,68 @@
             });
         }
         $('#btn_detail').click(function () {
-
+            var listSub = [];
+            var language_id = document.getElementById('detail_language_content').value;
+            var item = {
+                activity_id: document.getElementById('activity_id').value,
+                activity_name: document.getElementById('detail_name').value,
+                activity_type_id: document.getElementById('detail_category').value,
+                location: document.getElementById('detail_location').value,
+                from: document.getElementById('detail_from').value,
+                to: document.getElementById('detail_to').value,
+                language_id: language_id,
+                article_content: $('#editor-main-content').summernote('code'),
+                article_status_id: 1,
+            };
+            if (item.activity_name == '' || item.location == '' || item.article_content == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                return false;
+            }
+            let check = false;
+            arrIndexContent.forEach(function (x) {
+                var obj = {
+                    article_id: x,
+                    version_title: document.getElementById('content-' + x).value,
+                    article_content: $('#editor-subcontent-' + x).summernote('code'),
+                    language_id: language_id
+                }
+                if (obj.version_title == '' || obj.article_content == '') {
+                    check = true;
+                }
+                listSub.push(obj);
+            });
+            if (check) {
+                toastr.warning("Nội dung đề mục không thể để trống.");
+                return false;
+            }
+            if (item.from > item.to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
+            var object = {
+                infoDetail: item,
+                subContent: listSub
+            };
+            $.ajax({
+                url: "@Url.Action("updateDetail", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                    } else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
         });
+        function reInit() {
+            initDetail();
+        }
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();

@@ -11,10 +11,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
     public class DetailOfAcademicActivityController : Controller
     {
-        private static DetailOfAcademicActivityRepo repo = new DetailOfAcademicActivityRepo();
+        DetailOfAcademicActivityRepo repo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
+            repo = new DetailOfAcademicActivityRepo();
             ViewBag.Title = "Thông tin hoạt động học thuật";
             ViewBag.activity_id = id;
             ViewBag.types = repo.getType();
@@ -23,12 +24,33 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public JsonResult getDetail(int language_id, int activity_id)
         {
-            SumDetail data = new SumDetail
+            repo = new DetailOfAcademicActivityRepo();
+            DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
             {
                 baseDetail = repo.getDetail(language_id, activity_id),
                 subContent = repo.getSubContents(language_id, activity_id)
             };
             return Json(data);
+        }
+        [HttpPost]
+        public JsonResult updateDetail(DetailOfAcademicActivityRepo.InfoSumDetail obj)
+        {
+            try
+            {
+                repo = new DetailOfAcademicActivityRepo();
+                BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
+                bool res = repo.updateDetail(obj, u);
+                if (res)
+                {
+                    return Json("Cập nhật thành công");
+                }
+                else
+                    return Json(String.Empty);
+            }
+            catch (Exception e)
+            {
+                return Json(String.Empty);
+            }
         }
         public JsonResult add_Phase(int id, string name, string from, string to)
         {
@@ -166,11 +188,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             public string name { get; set; }
             public int quantity { get; set; }
-        }
-        public class SumDetail
-        {
-            public DetailOfAcademicActivityRepo.baseDetail baseDetail { get; set; }
-            public List<DetailOfAcademicActivityRepo.subContent> subContent { get; set; }
         }
     }
 }
