@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Tên bài báo <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo">
@@ -116,6 +116,17 @@
                                                 @foreach (var item in ViewBag.data.FormalityLanguages)
                                                 {
                                                     <option value="@item.formality_id">@item.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Chuyên ngành <span style='color:red'>*</span>:</label>
+                                            <select id="specialization" class="form-control">
+                                                @foreach (var item in ViewBag.data.SpecializationLanguages)
+                                                {
+                                                    <option value="@item.specialization_id">@item.name</option>
                                                 }
                                             </select>
                                         </div>
@@ -368,7 +379,7 @@
         var save_loader = new LoaderBtn($("#SendRequestButton"))
 
         $(document).ready(function () {
-            $(document).find(".selectOffice, .selectTitle, #country").select2({
+            $(document).find(".selectOffice, .selectTitle, #country, #specialization").select2({
                 width: '100%',
             });
 
@@ -735,6 +746,7 @@
                 },
                 attendance_start: attendance_start,
                 attendance_end: attendance_end,
+                specialization_id: $("#specialization").val(),
                 ConferenceParticipant: [],
                 Cost: [],
                 Persons: [],
