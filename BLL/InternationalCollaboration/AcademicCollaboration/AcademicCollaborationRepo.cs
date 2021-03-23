@@ -20,7 +20,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                using (db = new ScienceAndInternationalAffairsEntities()) {
+                using (db = new ScienceAndInternationalAffairsEntities())
+                {
                     var sql = @"select
                         collab.collab_id, pp.[name] 'people_name', pp.email, offi.office_name, pn.partner_name, c.country_name,
                         collab.plan_study_start_date, collab.plan_study_end_date, 
