@@ -208,6 +208,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 language_id = language_id
             });
         }
+        public bool changeStatusAA(int activity_id,int status)
+        {
+            try
+            {
+                List<ActivityInfo> ai = db.ActivityInfoes.Where(x => x.activity_id == activity_id).ToList();
+                foreach(ActivityInfo i in ai)
+                {
+                    Article a = db.Articles.Find(i.article_id);
+                    a.article_status_id = status;
+                    db.Entry(a).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
         public class baseDetail
         {
             public string activity_name { get; set; }

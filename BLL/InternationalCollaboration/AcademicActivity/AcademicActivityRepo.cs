@@ -167,7 +167,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
-                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
+                    List<ActivityInfo> ai = db.ActivityInfoes.Where(x => x.activity_id == id).ToList();
+                    foreach(ActivityInfo i in ai)
+                    {
+                        Article a = db.Articles.Find(i.article_id);
+                        db.Articles.Remove(a);
+                    }
+                    db.SaveChanges();
+                    ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
+                    db.AcademicActivities.Remove(aa);
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
