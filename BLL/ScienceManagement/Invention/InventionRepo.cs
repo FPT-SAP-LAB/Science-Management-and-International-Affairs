@@ -90,7 +90,8 @@ namespace BLL.ScienceManagement.Invention
                     db.InventionTypes.Add(ip);
                     db.SaveChanges();
                     return ip;
-                }else
+                }
+                else
                 {
                     db.SaveChanges();
                     return ck;
