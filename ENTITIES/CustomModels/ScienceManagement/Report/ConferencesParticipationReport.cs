@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Report
 {
-   public class ConferencesParticipationReport
+    public class ConferencesParticipationReport
     {
         public DateTime valid_date { get; set; }
         public string decision_number { get; set; }

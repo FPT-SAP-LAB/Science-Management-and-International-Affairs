@@ -214,7 +214,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
                     foreach (var item in costs)
                     {
-                        int total = int.Parse(dt.Compute(item.detail, "").ToString());
+                        int total = int.Parse(dt.Compute(item.detail.Replace(",", ""), "").ToString());
                         item.editable = false;
                         item.sponsoring_organization = "FPTU";
                         item.total = total;
