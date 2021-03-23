@@ -45,7 +45,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         public ActionResult ListOfIncomePaid()
         {
             return View();
-        }  
+        }
         public ActionResult TotalBonusByYear()
         {
             return View();
