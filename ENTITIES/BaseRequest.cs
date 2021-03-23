@@ -17,8 +17,8 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BaseRequest()
         {
+            this.RequestDecisions = new HashSet<RequestDecision>();
             this.CommentBases = new HashSet<CommentBase>();
-            this.Decisions = new HashSet<Decision>();
         }
     
         public int request_id { get; set; }
@@ -29,11 +29,11 @@ namespace ENTITIES
         public virtual Account Account { get; set; }
         public virtual RequestCitation RequestCitation { get; set; }
         public virtual RequestConference RequestConference { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestDecision> RequestDecisions { get; set; }
         public virtual RequestInvention RequestInvention { get; set; }
         public virtual RequestPaper RequestPaper { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentBase> CommentBases { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Decision> Decisions { get; set; }
     }
 }

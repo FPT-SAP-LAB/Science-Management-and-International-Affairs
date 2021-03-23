@@ -17,7 +17,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Decision()
         {
-            this.BaseRequests = new HashSet<BaseRequest>();
+            this.RequestDecisions = new HashSet<RequestDecision>();
         }
     
         public int decision_id { get; set; }
@@ -27,6 +27,6 @@ namespace ENTITIES
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BaseRequest> BaseRequests { get; set; }
+        public virtual ICollection<RequestDecision> RequestDecisions { get; set; }
     }
 }
