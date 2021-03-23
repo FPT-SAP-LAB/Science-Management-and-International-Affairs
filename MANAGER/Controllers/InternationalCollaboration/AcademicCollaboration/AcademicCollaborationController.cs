@@ -20,15 +20,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Longterm_List()
         {
             ViewBag.title = "DANH SÁCH ĐÀO TẠO SAU ĐẠI HỌC";
-            ////list for searching
-            ////country
-            //ViewBag.countries = academicCollaborationRepo.countries();
-            ////year 
-            //ViewBag.yearSearching = academicCollaborationRepo.yearSearching();
-            ////office
-            //ViewBag.offices = academicCollaborationRepo.offices();
-            ////partner
-            //ViewBag.partners = academicCollaborationRepo.partners();
             return View();
         }
 

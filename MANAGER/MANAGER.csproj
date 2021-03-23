@@ -194,6 +194,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2325,6 +2326,7 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Views\ConferencesParticipationReport\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

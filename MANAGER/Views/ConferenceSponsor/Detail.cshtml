@@ -162,7 +162,7 @@
                                         @foreach (ConferenceCriteria item in Criterias)
                                         {
                                             <label class="checkbox @((ConferenceDetail.StatusID != 1 || item.IsAccepted ) ? "checkbox-disabled" : "")">
-                                                <input data-id="@item.CriteriaID" type="checkbox" @((ConferenceDetail.StatusID != 1 || item.IsAccepted ) ? "disabled" : "") @(item.IsAccepted ? "checked" : "") name="Checkboxes1" />
+                                                <input data-id="@item.CriteriaID" type="checkbox" @((ConferenceDetail.StatusID != 1 || item.IsAccepted) ? "disabled" : "") @(item.IsAccepted ? "checked" : "") name="Checkboxes1" />
                                                 <span></span>
                                                 @item.CriteriaName
                                             </label>
@@ -172,12 +172,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                        <div class="dropdown dropdown-inline mr-2">
-                            <button class="btn btn-success" onclick="SubmitCriteria()">Xét duyệt</button>
-                            <a class="btn btn-danger" href="#">Yêu cầu chỉnh sửa</a>
+                    @if (ConferenceDetail.StatusID == 1)
+                    {
+                        <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success" onclick="SubmitCriteria()">Xét duyệt</button>
+                                <button class="btn btn-danger" onclick="createAndSubmitForm('/ConferenceSponsor/RequestEdit', '')">Yêu cầu chỉnh sửa</button>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -208,45 +211,21 @@
                             <th scope="col">STT</th>
                             <th scope="col">MSNV/MSSV</th>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Cơ sở</th>
+                            <th scope="col">Cơ sở công tác</th>
                             <th scope="col">Chức danh</th>
-                            <th scope="col">Export</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>ABC123</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>Giảng viên</td>
-                            <td>
-                                <a href="#">Hỗ trợ kinh phí</a><br />
-                                <a href="#">Cử cán bộ đi công tác</a><br />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>HE130214</td>
-                            <td>Đoàn Văn Thắng</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>Sinh viên</td>
-                            <td>
-                                <a href="#">Hỗ trợ kinh phí</a><br />
-                                <a href="#">Cử cán bộ đi công tác</a><br />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>HE130020</td>
-                            <td>Trần Thị Thúy Nguyên</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>Sinh viên</td>
-                            <td>
-                                <a href="#">Hỗ trợ kinh phí</a><br />
-                                <a href="#">Cử cán bộ đi công tác</a><br />
-                            </td>
-                        </tr>
+                        @foreach (var item in Participants)
+                        {
+                            <tr>
+                                <th scope="row">@item.RowNumber</th>
+                                <td>@item.ID</td>
+                                <td>@item.FullName</td>
+                                <td>@item.OfficeName</td>
+                                <td>@item.TitleName</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -271,10 +250,61 @@
             </div>
         </div>
         <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
-            <div class="card-body table-responsive row">
-                @{
-                    Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
-                }
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <table class="col-12 table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nội dung</th>
+                                <th scope="col">Tổ chức tài trợ</th>
+                                <th scope="col">Chi phí</th>
+                                <th scope="col">Tổng cộng</th>
+                                <th>Chấp thuận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Costs)
+                            {
+                            <tr>
+                                <td class="align-middle">@item.content</td>
+                                <td class="align-middle">@item.sponsoring_organization</td>
+                                <td class="align-middle">@item.detail</td>
+                                <td>
+                                    <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                </td>
+                                <td>
+                                    <label class="checkbox @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "checkbox-disabled")">
+                                        <input data-id="@item.cost_id" type="checkbox" @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "disabled") @(item.is_accepted ? "checked" : "") />
+                                        <span></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            }
+                            <tr>
+                                <th scope="row">Tổng cộng</th>
+                                <td></td>
+                                <td></td>
+                                <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hoàn ứng</th>
+                                <td></td>
+                                <td></td>
+                                <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    @if (ConferenceDetail.StatusID == 2)
+                    {
+                        <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success" onclick="SubmitCost()">Xét duyệt</button>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -384,24 +414,41 @@
         var ConferenceDetail = document.getElementById("ConferenceDetail").parentElement.removeAttribute("class");
 
         function SubmitCriteria() {
-            var criterias = {}
+            var criterias = []
             for (var i = 0; i < $("#criterias").find("input").length; i++) {
                 if ($("#criterias").find("input")[i].checked)
-                    criterias[$("#criterias").find("input")[i].dataset.id] = $("#criterias").find("input")[i].checked;
+                    criterias.push($("#criterias").find("input")[i].dataset.id);
             }
+            createAndSubmitForm("/ConferenceSponsor/UpdateCriterias", JSON.stringify(criterias))
+        }
+
+        function SubmitCost() {
+            var costs = []
+            for (var i = 0; i < $("#ExpectedCostChild1 input[type='checkbox']").length; i++) {
+                if ($("#ExpectedCostChild1 input[type='checkbox']")[i].checked)
+                    costs.push($("#ExpectedCostChild1 input[type='checkbox']")[i].dataset.id);
+            }
+            createAndSubmitForm("/ConferenceSponsor/UpdateCosts", JSON.stringify(costs))
+        }
+
+        function createAndSubmitForm(url, data) {
             var newForm = jQuery('<form>', {
-                'action': '/ConferenceSponsor/UpdateCriterias',
+                'action': url,
                 'method': 'post'
             }).append(jQuery('<input>', {
-                'name': 'criterias',
-                'value': JSON.stringify(criterias),
+                'name': 'data',
+                'value': data,
                 'type': 'hidden'
             })).append(jQuery('<input>', {
                 'name': 'request_id',
                 'value': "@(ConferenceDetail.RequestID)",
                 'type': 'hidden'
             }));
-            newForm.submit();
+            newForm.appendTo("body").submit();
+        }
+
+        function RequestEdit() {
+            createAndSubmitForm("/ConferenceSponsor/RequestEdit", "");
         }
     </script>
 } 

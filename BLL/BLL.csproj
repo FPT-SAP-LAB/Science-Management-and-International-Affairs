@@ -135,6 +135,7 @@
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
+    <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
   </ItemGroup>

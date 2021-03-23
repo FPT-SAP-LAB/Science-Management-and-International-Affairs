@@ -856,11 +856,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="RequestDecision">
           <Key>
-            <PropertyRef Name="decision_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="request_decision_id" />
           </Key>
           <Property Name="decision_id" Type="int" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
+          <Property Name="request_decision_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicDegree">
           <Key>
@@ -5570,10 +5570,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="Account" Relationship="Self.FK__BaseReque__accou__178D7CA5" FromRole="BaseRequest" ToRole="Account" />
           <NavigationProperty Name="RequestCitation" Relationship="Self.FK__RequestCi__reque__038683F8" FromRole="BaseRequest" ToRole="RequestCitation" />
           <NavigationProperty Name="RequestConference" Relationship="Self.FK__RequestCo__reque__1975C517" FromRole="BaseRequest" ToRole="RequestConference" />
+          <NavigationProperty Name="RequestDecisions" Relationship="Self.FK__RequestDe__reque__1975C517" FromRole="BaseRequest" ToRole="RequestDecision" />
           <NavigationProperty Name="RequestInvention" Relationship="Self.FK__RequestIn__reque__3CBF0154" FromRole="BaseRequest" ToRole="RequestInvention" />
           <NavigationProperty Name="RequestPaper" Relationship="Self.FK__RequestPa__reque__3F9B6DFF" FromRole="BaseRequest" ToRole="RequestPaper" />
           <NavigationProperty Name="CommentBases" Relationship="Self.CommentRequest" FromRole="BaseRequest" ToRole="CommentBase" />
-          <NavigationProperty Name="Decisions" Relationship="Self.RequestDecision" FromRole="BaseRequest" ToRole="Decision" />
         </EntityType>
         <EntityType Name="Decision">
           <Key>
@@ -5584,7 +5584,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="file_id" Type="Int32" Nullable="false" />
           <Property Name="decision_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="File" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="Decision" ToRole="File" />
-          <NavigationProperty Name="BaseRequests" Relationship="Self.RequestDecision" FromRole="Decision" ToRole="BaseRequest" />
+          <NavigationProperty Name="RequestDecisions" Relationship="Self.FK__RequestDe__decis__1881A0DE" FromRole="Decision" ToRole="RequestDecision" />
+        </EntityType>
+        <EntityType Name="RequestDecision">
+          <Key>
+            <PropertyRef Name="request_decision_id" />
+          </Key>
+          <Property Name="decision_id" Type="Int32" Nullable="false" />
+          <Property Name="request_id" Type="Int32" Nullable="false" />
+          <Property Name="request_decision_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestDe__reque__1975C517" FromRole="RequestDecision" ToRole="BaseRequest" />
+          <NavigationProperty Name="Decision" Relationship="Self.FK__RequestDe__decis__1881A0DE" FromRole="RequestDecision" ToRole="Decision" />
         </EntityType>
         <EntityType Name="AcademicDegree">
           <Key>
@@ -7764,6 +7774,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RequestDe__reque__1975C517">
+          <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="1" />
+          <End Role="RequestDecision" Type="Self.RequestDecision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseRequest">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="RequestDecision">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__RequestIn__reque__3CBF0154">
           <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="1" />
           <End Role="RequestInvention" Type="Self.RequestInvention" Multiplicity="0..1" />
@@ -7785,6 +7807,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Principal>
             <Dependent Role="RequestPaper">
               <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestDe__decis__1881A0DE">
+          <End Role="Decision" Type="Self.Decision" Multiplicity="1" />
+          <End Role="RequestDecision" Type="Self.RequestDecision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decision">
+              <PropertyRef Name="decision_id" />
+            </Principal>
+            <Dependent Role="RequestDecision">
+              <PropertyRef Name="decision_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8148,10 +8182,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <End Role="Citation" Type="Self.Citation" Multiplicity="*" />
           <End Role="RequestCitation" Type="Self.RequestCitation" Multiplicity="*" />
         </Association>
-        <Association Name="RequestDecision">
-          <End Role="Decision" Type="Self.Decision" Multiplicity="*" />
-          <End Role="BaseRequest" Type="Self.BaseRequest" Multiplicity="*" />
-        </Association>
         <Association Name="PeopleContract">
           <End Role="ContractType" Type="Self.ContractType" Multiplicity="*" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -8254,6 +8284,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="NotifyTypes" EntityType="Self.NotifyType" />
           <EntitySet Name="BaseRequests" EntityType="Self.BaseRequest" />
           <EntitySet Name="Decisions" EntityType="Self.Decision" />
+          <EntitySet Name="RequestDecisions" EntityType="Self.RequestDecision" />
           <EntitySet Name="AcademicDegrees" EntityType="Self.AcademicDegree" />
           <EntitySet Name="AcademicDegreeTypes" EntityType="Self.AcademicDegreeType" />
           <EntitySet Name="Awards" EntityType="Self.Award" />
@@ -8872,6 +8903,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="NotifyType" EntitySet="NotifyTypes" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
+          <AssociationSet Name="FK__RequestDe__reque__1975C517" Association="Self.FK__RequestDe__reque__1975C517">
+            <End Role="BaseRequest" EntitySet="BaseRequests" />
+            <End Role="RequestDecision" EntitySet="RequestDecisions" />
+          </AssociationSet>
           <AssociationSet Name="FK__RequestIn__reque__3CBF0154" Association="Self.FK__RequestIn__reque__3CBF0154">
             <End Role="BaseRequest" EntitySet="BaseRequests" />
             <End Role="RequestInvention" EntitySet="RequestInventions" />
@@ -8879,6 +8914,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="FK__RequestPa__reque__3F9B6DFF" Association="Self.FK__RequestPa__reque__3F9B6DFF">
             <End Role="BaseRequest" EntitySet="BaseRequests" />
             <End Role="RequestPaper" EntitySet="RequestPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestDe__decis__1881A0DE" Association="Self.FK__RequestDe__decis__1881A0DE">
+            <End Role="Decision" EntitySet="Decisions" />
+            <End Role="RequestDecision" EntitySet="RequestDecisions" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicD__type___1A69E950" Association="Self.FK__AcademicD__type___1A69E950">
             <End Role="AcademicDegreeType" EntitySet="AcademicDegreeTypes" />
@@ -9003,10 +9042,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="RequestHasCitation" Association="Self.RequestHasCitation">
             <End Role="Citation" EntitySet="Citations" />
             <End Role="RequestCitation" EntitySet="RequestCitations" />
-          </AssociationSet>
-          <AssociationSet Name="RequestDecision" Association="Self.RequestDecision">
-            <End Role="Decision" EntitySet="Decisions" />
-            <End Role="BaseRequest" EntitySet="BaseRequests" />
           </AssociationSet>
           <AssociationSet Name="PeopleContract" Association="Self.PeopleContract">
             <End Role="ContractType" EntitySet="ContractTypes" />
@@ -9904,6 +9939,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RequestDecisions">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.RequestDecision">
+              <MappingFragment StoreEntitySet="RequestDecision">
+                <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="request_decision_id" ColumnName="request_decision_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AcademicDegrees">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.AcademicDegree">
               <MappingFragment StoreEntitySet="AcademicDegree">
@@ -10298,14 +10342,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <ScalarProperty Name="citation_id" ColumnName="citation_id" />
             </EndProperty>
             <EndProperty Name="RequestCitation">
-              <ScalarProperty Name="request_id" ColumnName="request_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="RequestDecision" TypeName="ScienceAndInternationalAffairsModel.RequestDecision" StoreEntitySet="RequestDecision">
-            <EndProperty Name="Decision">
-              <ScalarProperty Name="decision_id" ColumnName="decision_id" />
-            </EndProperty>
-            <EndProperty Name="BaseRequest">
               <ScalarProperty Name="request_id" ColumnName="request_id" />
             </EndProperty>
           </AssociationSetMapping>
