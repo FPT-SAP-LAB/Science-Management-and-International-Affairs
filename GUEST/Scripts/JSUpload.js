@@ -48,7 +48,7 @@
 
         var $fileLabel = $(id + ' .uppy-input-label');
 
-        uppy1.on('upload', function (data) {
+        uppy1.on('upload', function () {
             $fileLabel.text("Uploading...");
             $statusBar.addClass('uppy-status-ongoing');
             $statusBar.removeClass('uppy-status-hidden');
