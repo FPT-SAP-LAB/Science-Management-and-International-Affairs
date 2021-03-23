@@ -1,4 +1,6 @@
-﻿using BLL.ScienceManagement.ScientificProduct;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.ScientificProduct;
+using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
@@ -46,13 +48,20 @@ namespace GUEST.Controllers.ScientificProducts
         public JsonResult SearchOnePerson(DataSearch item)
         {
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
             if (item.monthS == "paper")
             {
-                list = lpo.getList(item, "10");
+                list = lpo.getList(item, acc.account_id);
             }
             else
             {
-                list = lpo.getListInven(item, "10");
+                list = lpo.getListInven(item, acc.account_id);
             }
             for (int i = 0; i < list.Count; i++)
             {
@@ -70,13 +79,20 @@ namespace GUEST.Controllers.ScientificProducts
             };
             ViewBag.pagesTree = pagesTree;
             List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
             if (type == "paper")
             {
-                list = lpo.getList(new DataSearch(), "10");
+                list = lpo.getList(new DataSearch(), acc.account_id);
             }
             else
             {
-                list = lpo.getListInven(new DataSearch(), "10");
+                list = lpo.getListInven(new DataSearch(), acc.account_id);
             }
             for (int i = 0; i < list.Count; i++)
             {

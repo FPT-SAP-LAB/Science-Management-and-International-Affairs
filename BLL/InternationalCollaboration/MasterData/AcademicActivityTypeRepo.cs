@@ -43,7 +43,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (academic_activity_type_name == "")
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Tên loại hoạt động học thuật không được để trống.");
+                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động học thuật không được để trống.");
                     }
                     else
                     {
@@ -58,19 +58,20 @@ namespace BLL.InternationalCollaboration.MasterData
                             };
                             db.AcademicActivityTypes.Add(academicActivityType);
                             db.SaveChanges();
-                            return new AlertModal<AcademicActivityType>(null, true, "Thành công", "Thêm loại hoạt động học thuật thành công.");
+                            return new AlertModal<AcademicActivityType>(null, true, "Thêm loại hoạt động học thuật thành công.");
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                Console.WriteLine(e.ToString());
+                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -88,13 +89,14 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     else
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                        return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                Console.WriteLine(e.ToString());
+                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -108,7 +110,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (academic_activity_type_name == "")
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Tên loại hoạt động học thuật không được để trống.");
+                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động học thuật không được để trống.");
                     }
                     else
                     {
@@ -122,24 +124,25 @@ namespace BLL.InternationalCollaboration.MasterData
                             {
                                 academicActivityType_edit.activity_type_name = academic_activity_type_name;
                                 db.SaveChanges();
-                                return new AlertModal<AcademicActivityType>(null, true, "Thành công", "Chỉnh sửa loại hoạt động học thuật thành công");
+                                return new AlertModal<AcademicActivityType>(null, true, "Chỉnh sửa loại hoạt động học thuật thành công");
                             }
                             else
                             {
-                                return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                                return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
                             }
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                Console.WriteLine(e.ToString());
+                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -155,18 +158,19 @@ namespace BLL.InternationalCollaboration.MasterData
                     {
                         db.AcademicActivityTypes.Remove(academicActivityType);
                         db.SaveChanges();
-                        return new AlertModal<AcademicActivityType>(null, true, "Thành công", "Xóa loại hoạt động học thuật thành công");
+                        return new AlertModal<AcademicActivityType>(null, true, "Xóa loại hoạt động học thuật thành công");
                     }
                     catch (Exception e)
                     {
                         db.Dispose();
-                        return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Loại hoạt động học thuật đang có dữ liệu tại các màn hình khác.");
+                        return new AlertModal<AcademicActivityType>(null, false, "Loại hoạt động học thuật đang có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<AcademicActivityType>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                Console.WriteLine(e.ToString());
+                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
             }
         }
     }

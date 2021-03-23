@@ -29,7 +29,7 @@
                                     <tr>
                                         <td>@item.source</td>
                                         <td>@item.count</td>
-                                        <td>@item.date_request.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.created_date.ToString("dd/MM/yyyy")</td>
                                         <td>@item.status_id</td>
                                         <td>@item.note</td>
                                     </tr>
@@ -48,21 +48,24 @@
     <input name="editable" id="ckEdit" />
 </form>
 @section scripts{
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/datetime-moment.js"></script>
     <script>
         $('#pending_table').on('click', ".mybtn", function () {
             var selectedIndex = $(this).attr('id');
             $("#nameEdit").val(selectedIndex.split('_')[1]);
             $("#ckEdit").val(selectedIndex.split('_')[0]);
-            $("#CitationForm").submit();;
+            $("#CitationForm").submit();
         });
 
         $(document).ready(function () {
+            $.fn.dataTable.moment('D/MM/YYYY');
             $("#pending_table").DataTable({
                 responsive: true,
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-                          <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 

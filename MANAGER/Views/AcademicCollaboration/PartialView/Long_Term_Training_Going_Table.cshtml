@@ -5,10 +5,6 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_nation_tab_1_table_1" name="param" style="width:100% !important">
                         <option value=""></option>
-                        @foreach (var country in ViewBag.countries)
-                        {
-                            <option value="@country.country_name">@country.country_name</option>
-                        }
                     </select>
                 </div>
             </div>
@@ -16,10 +12,6 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_year_tab_1_table_1" name="param" style="width:100% !important">
                         <option value=""></option>
-                        @for (var year = ViewBag.yearSearching.year_from; year <= ViewBag.yearSearching.year_to; year++ )
-                        {
-                            <option value="@year">@year</option>
-                        }
                     </select>
                 </div>
             </div>
@@ -27,10 +19,6 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_training_facility_tab_1_table_1" name="param" style="width:100% !important">
                         <option value=""></option>
-                        @foreach (var partner in ViewBag.partners)
-                        {
-                            <option value="@partner.partner_name">@partner.partner_name</option>
-                        }
                     </select>
                 </div>
             </div>
@@ -38,10 +26,6 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_working_facility_tab_1_table_1" name="param" style="width:100% !important">
                         <option value=""></option>
-                        @foreach (var office in ViewBag.offices)
-                        {
-                            <option value="@office.office_name">@office.office_name</option>
-                        }
                     </select>
                 </div>
             </div>
@@ -53,7 +37,7 @@
     <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
         <div class="row align-items-center justify-content-end">
             <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                <a href="#add_officer" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                <a id="add_officer_button" href="#add_officer" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
             </div>
             <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
                 <div class="dropdown dropdown-inline ml-2">

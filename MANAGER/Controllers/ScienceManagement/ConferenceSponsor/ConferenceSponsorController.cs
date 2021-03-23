@@ -1,6 +1,10 @@
-﻿using BLL.ScienceManagement.ConferenceSponsor;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.ConferenceSponsor;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
+using MANAGER.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,15 +16,17 @@ namespace MANAGER.Controllers
 {
     public class ConferenceSponsorController : Controller
     {
-        readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
+        ConferenceSponsorIndexRepo IndexRepos;
+        ConferenceSponsorDetailRepo DetailRepos;
         public ActionResult Index()
         {
             return View();
         }
         public JsonResult List()
         {
+            IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPageManager(datatable);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable);
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -30,14 +36,30 @@ namespace MANAGER.Controllers
         }
         public ActionResult Detail(int id)
         {
-            ViewBag.id = id;
-            //switch (id)
-            //{
-            //    case 
-            //    default:
-            //        break;
-            //}
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            ViewBag.output = DetailRepos.GetDetailPageGuest(id, 1);
             return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateCriterias(string data, int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            DetailRepos.UpdateCriterias(data, request_id);
+            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
+        }
+        [HttpPost]
+        public ActionResult RequestEdit(int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            DetailRepos.RequestEdit(request_id);
+            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
+        }
+        [HttpPost]
+        public ActionResult UpdateCosts(string data, int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            DetailRepos.UpdateCosts(data, request_id);
+            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)

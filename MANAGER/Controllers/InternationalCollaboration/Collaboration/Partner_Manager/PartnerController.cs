@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using MANAGER.Support;
+using BLL.Authen;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
@@ -113,7 +114,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         public ActionResult Add()
         {
-            ViewBag.pageTitle = "THÊM ĐỐI TÁC";
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            ViewBag.title = "THÊM ĐỐI TÁC";
+            ViewBag.countries = db.Countries.ToList();
             return View();
         }
 
@@ -123,11 +126,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             try
             {
+                ViewBag.title = "THÊM ĐỐI TÁC";
                 PartnerArticle partner_article = new PartnerArticle();
                 partner_article.partner_name = partner_name;
                 partner_article.country_id = country_id;
                 partner_article.website = website;
                 partner_article.address = address;
+
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
 
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
                 for (int i = 0; i < numberOfImage; i++)
@@ -135,15 +147,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                files_request.Add(image);
-                partnerRePo.addPartner(files_request, content, partner_article, numberOfImage);
-
-                ViewBag.pageTitle = "THÊM ĐỐI TÁC";
-                return View();
+                if (image != null)
+                {
+                    files_request.Add(image);
+                }
+                AlertModal<string> alertModal = partnerRePo.addPartner(files_request, content, partner_article, numberOfImage, acc.account_id);
+                return Json(new { alertModal.success });
             }
             catch (Exception e)
             {
-                throw e;
+                return Json(new { e });
             }
         }
 

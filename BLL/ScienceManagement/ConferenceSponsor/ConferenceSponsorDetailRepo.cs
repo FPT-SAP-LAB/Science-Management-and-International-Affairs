@@ -1,8 +1,10 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
     public class ConferenceSponsorDetailRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public string GetDetailPageGuest(int request_id, int account_id, int language_id)
+        public string GetDetailPageGuest(int request_id, int language_id, int account_id = 0)
         {
             db.Configuration.LazyLoadingEnabled = false;
             ConferenceDetail Conference = (from r in db.BaseRequests
@@ -26,7 +28,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                            join h in db.ConferenceStatusLanguages on g.status_id equals h.status_id
                                            join i in db.Formalities on b.formality_id equals i.formality_id
                                            join j in db.FormalityLanguages on i.formality_id equals j.formality_id
-                                           where h.language_id == language_id && j.language_id == language_id && r.account_id == account_id && r.request_id == request_id
+                                           join k in db.SpecializationLanguages on a.specialization_id equals k.specialization_id
+                                           where h.language_id == language_id && j.language_id == language_id && k.language_id == language_id
+                                           && (r.account_id == account_id || account_id == 0) && r.request_id == request_id
                                            select new ConferenceDetail
                                            {
                                                ConferenceName = b.conference_name,
@@ -47,13 +51,17 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                RequestID = a.request_id,
                                                CountryName = c.country_name,
                                                StatusName = h.name,
+                                               StatusID = h.status_id,
                                                FormalityName = j.name,
-                                               Reimbursement = a.reimbursement
+                                               Reimbursement = a.reimbursement,
+                                               SpecializationName = k.name
                                            }).FirstOrDefault();
+            if (Conference == null)
+                return null;
             string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
             List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
                                                   join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
-                                                  where b.language_id == language_id
+                                                  where b.language_id == language_id && a.request_id == request_id
                                                   select new ConferenceCriteria
                                                   {
                                                       CriteriaID = a.criteria_id,
@@ -90,6 +98,82 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          Comment = a.comment
                                      }).ToList();
             return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias });
+        }
+        public AlertModal<string> UpdateCriterias(string criterias, int request_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var CriteriaIDs = JsonConvert.DeserializeObject<List<int>>(criterias);
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id != 1)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
+                    var ListCri = Request.EligibilityCriterias;
+                    foreach (var item in ListCri)
+                        if (CriteriaIDs.Contains(item.criteria_id)) item.is_accepted = true;
+                    db.SaveChanges();
+                    if (ListCri.All(x => x.is_accepted))
+                        Request.status_id = 2;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true, "Cập nhật thành công");
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+        public AlertModal<string> UpdateCosts(string costs, int request_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var CostIDs = JsonConvert.DeserializeObject<List<int>>(costs);
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id != 2)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+                    var ListCosts = Request.Costs;
+                    foreach (var item in ListCosts)
+                    {
+                        if (CostIDs.Contains(item.cost_id))
+                        {
+                            item.is_accepted = true;
+                            item.editable = false;
+                        }
+                        else item.editable = true;
+                    }
+                    db.SaveChanges();
+                    if (ListCosts.All(x => x.is_accepted))
+                        Request.status_id = 3;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true, "Cập nhật thành công");
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+        public AlertModal<string> RequestEdit(int request_id)
+        {
+            var Request = db.RequestConferences.Find(request_id);
+            if (Request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (Request.status_id != 2)
+                return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+            Request.editable = true;
+            db.SaveChanges();
+            return new AlertModal<string>(true, "Cập nhật thành công");
         }
     }
 }

@@ -12,7 +12,12 @@
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
 }
-
+<style>
+    .chinhsach-container {
+        box-shadow: none !important;
+        border: 1px solid #e5e5e5e5 !important;
+    }
+</style>
 <div class="accordion accordion-solid accordion-panel accordion-svg-toggle" id="ConferenceDetail">
     <div class="card">
         <div class="card-header" id="ConferenceDetailHeading">
@@ -31,61 +36,69 @@
         </div>
         <div id="ConferenceDetailChild1" class="collapse show" data-parent="#ConferenceDetail">
             <div class="card-body">
-                <table class="col-12 table">
-                    <tr>
-                        <td colspan="2">
-                            Tên bài báo: @ConferenceDetail.PaperName
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Tên hội nghị: @ConferenceDetail.ConferenceName
-                        </td>
-                        <td>
-                            Website hội nghị: @ConferenceDetail.Website
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Diễn giả/ Thành viên BTC: @ConferenceDetail.KeynoteSpeaker
-                        </td>
-                        <td>
-                            Quốc gia: @ConferenceDetail.CountryName
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Đơn vị tổ chức (Top QS): @ConferenceDetail.QsUniversity
-                        </td>
-                        <td>
-                            Đơn vị đồng tổ chức: @ConferenceDetail.Co_organizedUnit
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Thời gian diễn ra: @ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))
-                        </td>
-                        <td>
-                            Thời gian tham dự: @ConferenceDetail.AttendanceStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.AttendanceEnd.ToString(rm.GetString("DateFormat"))
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            File bài báo: <a href="@ConferenceDetail.PaperLink">Google Drive</a>
-                        </td>
-                        <td>
-                            Thư mời hội nghị: <a href="@ConferenceDetail.InvitationLink">Google Drive</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Hình thức: @ConferenceDetail.FormalityName
-                        </td>
-                        <td>
-                            Chuyên ngành: Toán
-                        </td>
-                    </tr>
-                </table>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Tên bài báo:</span>
+                            <span class="label-lg label-inline font-weight-bold">@ConferenceDetail.PaperName</span>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Tên hội nghị:</span>
+                            <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.ConferenceName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Website hội nghị:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Website</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.KeynoteSpeaker</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Quốc gia:</span>
+                            <span class="text-muted font-weight-bold">@ConferenceDetail.CountryName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị tổ chức (Top QS):</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.QsUniversity</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
+                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Co_organizedUnit</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="mb-7">
+                            <div class="d-flex justify-content-lg-start align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tham dự:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.AttendanceStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.AttendanceEnd.ToString(rm.GetString("DateFormat"))</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">File bài báo:</span>
+                                <a href="@ConferenceDetail.PaperLink" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thư mời hội nghị:</span>
+                                <a href="@ConferenceDetail.InvitationLink" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Hình thức:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FormalityName</a>
+                            </div>
+                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Chuyên ngành:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.SpecializationName</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -110,34 +123,55 @@
         <div id="RequestChild1" class="collapse show" data-parent="#RequestDetail">
             <div class="card-body table-responsive">
                 <div class="row">
-                    <div class="col-4">
-                        <p>
-                            Trạng thái:
-                            <span class="label label-lg label-inline label-light-primary font-weight-bold">
-                                @ConferenceDetail.StatusName
-                            </span>
-                        </p>
-                        <p>Ngày tạo đề nghị: @ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))</p>
-                    </div>
-                    <div class="col-4">
-                        <p><b>Chính sách xét hỗ trợ tham dự hội nghị: <a href="@output["Link"]">Xem thêm</a></b></p>
-                        <form>
-                            <div class="checkbox-list">
-                                @foreach (ConferenceCriteria item in Criterias)
-                                {
-                                    <label class="checkbox">
-                                        <input disabled type="checkbox" @(item.IsAccepted ? "checked" : "") name="Checkboxes1">
-                                        <span></span>
-                                        @item.CriteriaName
-                                    </label>
-                                }
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="mb-7">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Trạng thái:</span>
+                                <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.StatusName</span>
                             </div>
-                        </form>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
+                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))</a>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
+                                <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                <span class="text-muted font-weight-bold">123456</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                <a href="#" class="text-muted text-hover-primary">1234567</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <p>Quyết định: <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing">Google Drive</a></p>
-                        <p>Số quyết định: <span class="field-value">QĐ-0635</span></p>
-                        <p>Ngày ban hành: 23/11/2021</p>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="card card-custom chinhsach-container">
+                            <div class="card-header ribbon ribbon-top ribbon-ver">
+                                <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                    <i class="fa fa-star text-white"></i>
+                                </div>
+                                <h3 class="card-title">
+                                    <a href="@output["Link"]" class="btn btn-light-primary mr-2" target="_blank">Chính sách hiện tại</a>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="checkbox-list">
+                                        @foreach (ConferenceCriteria item in Criterias)
+                                        {
+                                            <label class="checkbox checkbox-disabled">
+                                                <input type="checkbox" disabled="disabled" @(item.IsAccepted ? "checked" : "") name="Checkboxes1" />
+                                                <span></span>
+                                                @item.CriteriaName
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

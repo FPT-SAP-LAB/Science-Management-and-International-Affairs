@@ -10,7 +10,7 @@ namespace ENTITIES.CustomModels.ScienceManagement
     {
         public string source { get; set; }
         public int count { get; set; }
-        public DateTime date_request { get; set; }
+        public DateTime created_date { get; set; }
         public int status_id { get; set; }
         public int request_id { get; set; }
         public string note { get; set; }

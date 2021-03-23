@@ -1,10 +1,13 @@
-﻿using BLL.ScienceManagement.Citation;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.MasterData;
+using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +22,7 @@ namespace User.Controllers
         CitationRepo cr = new CitationRepo();
         MasterDataRepo md = new MasterDataRepo();
         CommentRepo crr = new CommentRepo();
+        PaperRepo pr = new PaperRepo();
         // GET: Citation
         public ActionResult List()
         {
@@ -50,7 +54,14 @@ namespace User.Controllers
                 new PageTree("Số trích dẫn đang xử lý","/Citation/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
-            List<ListOnePerson_Citation> list = cr.GetList("10");
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            List<ListOnePerson_Citation> list = cr.GetList(acc.account_id);
             ViewBag.list = list;
             for (int i = 0; i < list.Count; i++)
             {
@@ -78,7 +89,40 @@ namespace User.Controllers
             List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
             ViewBag.cmt = listCmt;
 
+            ViewBag.request_id = id;
+
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult addCitation(List<Citation> citation, List<AddAuthor> people)
+        {
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            BaseRequest b = pr.addBaseRequest(acc.account_id);
+
+            AuthorInfo author = cr.addAuthor(people);
+
+            cr.addCitationRequest(b, author);
+
+            cr.addCitaion(citation);
+
+            string mess = cr.addRequestHasCitation(citation, b);
+            return Json(new { mess = mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+        {
+            cr.addAuthor(people);
+            List<Citation> oldcitation = cr.getCitation(request_id);
+            string mess = cr.editCitation(oldcitation, citation, request_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }
