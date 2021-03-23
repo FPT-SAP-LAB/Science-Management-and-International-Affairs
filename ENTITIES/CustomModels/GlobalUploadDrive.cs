@@ -157,6 +157,20 @@ namespace ENTITIES.CustomModels
 
             return request.ResponseBody;
         }
+        public static Google.Apis.Drive.v3.Data.File UpdateFile(Stream InputStream, string ContentType, string FileID)
+        {
+            GetRequest RequestGet = driveService.Files.Get(FileID);
+            RequestGet.Fields = "id,webViewLink";
+            RequestGet.SupportsAllDrives = true;
+            Google.Apis.Drive.v3.Data.File file = RequestGet.Execute();
+
+            UpdateMediaUpload RequestPut = driveService.Files.Update(file, FileID, InputStream, ContentType);
+            RequestPut.Fields = "id,webViewLink";
+            RequestPut.SupportsAllDrives = true;
+            RequestPut.Upload();
+
+            return RequestPut.ResponseBody;
+        }
         public static void ShareFile(string Email, string FileID)
         {
             Permission userPermission = new Permission
