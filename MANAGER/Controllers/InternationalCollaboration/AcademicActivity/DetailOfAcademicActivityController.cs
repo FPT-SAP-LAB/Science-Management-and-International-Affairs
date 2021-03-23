@@ -46,7 +46,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 }
                 else
                     return Json(String.Empty);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return Json(String.Empty);
             }

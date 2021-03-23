@@ -88,7 +88,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 WHERE al.language_id = @language_id  AND [aa].activity_id = @activity_id and ai.main_article = 0";
                 List<subContent> data = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language_id", language_id),
                                                                               new SqlParameter("activity_id", activity_id)).ToList();
-                if(data.Count == 0)
+                if (data.Count == 0)
                 {
                     List<ActivityInfo> listAI = db.ActivityInfoes.Where(x => x.activity_id == activity_id && x.main_article == false).ToList();
                     foreach (ActivityInfo ai in listAI)
@@ -166,7 +166,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     updateSubContent(x, language_id);
                 }
                 old_id.Remove(x.article_id);
-                foreach(int i in old_id)
+                foreach (int i in old_id)
                 {
                     ArticleVersion av = db.ArticleVersions.Where(z => z.article_id == i && z.language_id == language_id).FirstOrDefault();
                     db.ArticleVersions.Remove(av);

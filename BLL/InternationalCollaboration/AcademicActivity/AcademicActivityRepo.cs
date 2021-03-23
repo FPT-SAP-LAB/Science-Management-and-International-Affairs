@@ -41,7 +41,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<ListAA>();
             }
         }
-        public bool AddAA(baseAA obj,int language_id,Authen.LoginRepo.User u)
+        public bool AddAA(baseAA obj, int language_id, Authen.LoginRepo.User u)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -131,7 +131,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
-        public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to,int language_id)
+        public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
