@@ -189,6 +189,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             public string name { get; set; }
             public int quantity { get; set; }
         }
-
     }
 }
