@@ -55,9 +55,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-4 col-md-4 col-xl-4 pt-8 pb-8">
-                <a href="javascripts:;" id="update_activity" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="updateActivity()">Cập nhật</a>
-                <a href="javascripts:;" id="post_activity" class="btn btn-light-danger btn-sm font-weight-bold" onclick="postActivity()">Đăng</a>
+            <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                <a href="javascript:;" id="remove_activity" class="btn btn-light-danger font-weight-bold float-right" hidden onclick="changeStatusActivity(1)">Thu hồi</a>
+                <a href="javascript:;" id="post_activity" class="btn btn-light-primary font-weight-bold float-right" hidden onclick="changeStatusActivity(2)">Đăng bài</a>
             </div>
         </div>
         <div class="tab-content">
@@ -1391,10 +1391,31 @@
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
         let id_delete_KP = 0;
-        function postActivity() {
-            return;
-        }
-        function updateActivity() {
+        function changeStatusActivity(id) {
+            var object = {
+                activity_id: document.getElementById('activity_id').value,
+                status : id,
+            }
+            $.ajax({
+                url: "@Url.Action("changeStatusAA", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        if (id == 1) {
+                            $('#remove_activity').attr('hidden', true);
+                            $('#post_activity').attr('hidden', false);
+                        } else {
+                            $('#remove_activity').attr('hidden', false);
+                            $('#post_activity').attr('hidden', true);
+                        }
+                    } else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+            });
             return;
         }
         function setUpForm() {
@@ -2226,10 +2247,10 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.baseDetail.article_status_id == 1) {
-                        $('#update_activity').attr('hidden', true);
+                    if (data.baseDetail.article_status_id == 2) {
+                        $('#remove_activity').attr('hidden', false);
                     } else {
-                        $('#post_activity').attr('hidden', true);
+                        $('#post_activity').attr('hidden', false);
                     }
                     document.getElementById('detail_name').value = data.baseDetail.activity_name;
                     document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
