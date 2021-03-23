@@ -13,19 +13,26 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("InvenName")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.name" />
+                            <input class="form-control form-control-lg edit" id="inven_name" type="text" value="@ViewBag.item.name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentNumber")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.no" />
+                            <input class="form-control form-control-lg edit" id="patent_number" type="text" value="@ViewBag.item.no" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentType")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.item.type_name" />
+                            <select class="form-control form-control-lg select-custom" id="search_type" name="param">
+                                @{
+                                    foreach (var item in ViewBag.type)
+                                    {
+                                        <option value="@item.invention_type_id">@item.name</option>
+                                    }
+                                }
+                            </select>
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentDate")</label>
-                            <input class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" />
+                            <input class="form-control form-control-lg edit custom-pickdate" id="patent_date" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Country")</label>
@@ -40,7 +47,7 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("FileCM")</label>
-                            <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control edit">Upload</button>
+                            <a href="@ViewBag.item.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
@@ -68,44 +75,13 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <button class="btn btn-light-success px-6 font-weight-bold edit">@rm.GetString("Send")</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold edit" id="btn_submit">@rm.GetString("Send")</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <form>
-                                <div class="row">
-                                    <div class="col-10">
-                                        <input class="form-control" type="text" value="" id="example-text-input" />
-                                    </div>
-                                    <div class="col-2">
-                                        <button type="submit" class="btn btn-block btn-success">@rm.GetString("SendM")</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <br />
-                            <table class="col-12 table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" width="15%">@rm.GetString("Time")</th>
-                                        <th scope="col" width="15%">@rm.GetString("Sender")</th>
-                                        <th scope="col">@rm.GetString("Content")</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (ENTITIES.CustomModels.ScienceManagement.Comment.DetailComment item in ViewBag.cmt)
-                                        {
-                                            <tr>
-                                                <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.Email</td>
-                                                <td>@item.Content</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                    <div>
+                        @{
+                            Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
+                        }
                     </div>
                 </div>
             </div>
@@ -129,18 +105,80 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thông tin tác giả</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderAction("EditAuthor", "PartialView");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
-    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         var people = [];
+        var requestid = "@ViewBag.request_id";
+        var invenID = "@ViewBag.invenID";
         $('#search_country').select2({
             allowClear: true
         });
-
         $('#kieuthuong').select2({
             allowClear: true
         });
+        $('#search_type').select2({
+            allowClear: true,
+            tags: true
+        });
+        function edit() {
+
+        }
+
+        $("#btn_submit").click(function () {
+            var invention = {
+                name: $("#inven_name").val(),
+                no: $("#patent_number").val(),
+                date: $("#patent_date").val(),
+                country_id: $("#search_country").val(),
+                invention_id: invenID
+            };
+            var type = $("#search_type").val();
+            var kieuthuong = $("#kieuthuong").val();
+            $.ajax({
+                url: "@Url.Action("editInven", "Invention")",
+                type: "POST",
+                data: JSON.stringify({
+                    'inven': invention,
+                    'people': people,
+                    'type': type,
+                    'kieuthuong': kieuthuong,
+                    'request': requestid
+                }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#nameEdit2").val(response.id);
+                        $("#ckEdit2").val(3);
+                        $("#InvenForm").submit();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $(document).ready(function () {
             var ck = "@ViewBag.ckEdit";
             if (ck != "4") $(".edit").prop("disabled", true);
@@ -155,11 +193,14 @@
             $("#search_country").val(country);
             $("#search_country").trigger('change');
 
-            var id = "@ViewBag.id";
+            var typeid = "@ViewBag.item.type_id";
+            $("#search_type").val(typeid);
+            $("#search_type").trigger('change');
+
             $.ajax({
-                url: "@Url.Action("listAuthor", "Paper")",
+                url: "@Url.Action("listAuthor", "Invention")",
                 type: "POST",
-                data: { 'id': id},
+                data: { 'id': invenID},
                 cache: false,
                 success: function (response) {
                     for (var i = 0; i < response.author.length; i++) {
@@ -191,7 +232,9 @@
                             office_id: response.author[i].office_id,
                             contract_id: response.author[i].contract_id,
                             title_id: response.author[i].title_id,
-                            people_id: response.author[i].people_id
+                            people_id: response.author[i].people_id,
+                            temp_id: id,
+                            office_abbreviation: response.author[i].office_abbreviation
                         }
                         people.push(AddAuthor);
                     }
@@ -202,5 +245,6 @@
             });
         });
     </script>
+    <script src="~/Scripts/PartialViewScript.js"></script>
 }
 

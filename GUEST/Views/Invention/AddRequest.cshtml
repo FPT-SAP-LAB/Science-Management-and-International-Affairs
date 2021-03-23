@@ -13,32 +13,48 @@
                     <div class="col-lg-8 col-sm-12">
                         <div class="row">
                             <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("InvenName")</label>
+                                <label>@rm.GetString("InvenName")<span style='color:red'>*</span></label>
                                 <input class="form-control form-control-lg" type="text" id="inven_name" />
                             </div>
                             <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("PatentNumber")</label>
+                                <label>@rm.GetString("PatentNumber")<span style='color:red'>*</span></label>
                                 <input class="form-control form-control-lg" type="text" id="patent_number" />
                             </div>
                             <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("PatentType")</label>
-                                <input class="form-control form-control-lg" type="text" />
-                            </div>
-                            <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("PatentDate")</label>
-                                <input class="form-control form-control-lg custom-pickdate" type="text" id="patent_date"/>
-                            </div>
-                            <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("Country")</label>
-                                <select class="form-control form-control-lg select-custom" id="search_country" name="param">
-                                    <option>Việt Nam</option>
-                                    <option>Mỹ</option>
-                                    <option>Nga</option>
+                                <label>@rm.GetString("PatentType")<span style='color:red'>*</span></label>
+                                <select class="form-control form-control-lg select-custom" id="search_type" name="param">
+                                    @{
+                                        foreach (var item in ViewBag.type)
+                                        {
+                                            <option value="@item.invention_type_id">@item.name</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                             <div class="col-xl-6 form-group">
-                                <label>@rm.GetString("FileCM")</label>
-                                <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control form-control-lg">Upload</button>
+                                <label>@rm.GetString("PatentDate")<span style='color:red'>*</span></label>
+                                <input class="form-control form-control-lg custom-pickdate" type="text" id="patent_date" />
+                            </div>
+                            <div class="col-xl-6 form-group">
+                                <label>@rm.GetString("Country")<span style='color:red'>*</span></label>
+                                <select class="form-control form-control-lg select-custom" id="search_country" name="param">
+                                    @{
+                                        foreach (var item in ViewBag.country)
+                                        {
+                                            <option value="@item.country_id">@item.country_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-xl-6 form-group">
+                                <label>@rm.GetString("FileCM")<span style='color:red'>*</span></label>
+                                <div class="uppy" id="kt_uppy_1">
+                                    <div class="uppy-wrapper"></div>
+                                    <div class="uppy-list"></div>
+                                    <div class="uppy-status"></div>
+                                    <div class="uppy-informer uppy-informer-min"></div>
+                                </div>
+                                <span class="form-text text-muted">Max file size is 15MB and max number of files is 1.</span>
                             </div>
                         </div>
                     </div>
@@ -64,6 +80,20 @@
                         </div>
                     </div>
                 </div>
+                <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
+                <div class="row">
+                    <div class="col-xl-6 form-group">
+                        <label class="required-field">@rm.GetString("TotalReward")</label>
+                        <input class="form-control form-control-lg" readonly type="text" />
+                    </div>
+                    <div class="col-xl-6 form-group">
+                        <label class="required-field">@rm.GetString("RewardType")</label>
+                        <select id="kieuthuong" class="form-control form-control-lg">
+                            <option value="Quydinh">@rm.GetString("According")</option>
+                            <option value="Canhan">@rm.GetString("Repre")</option>
+                        </select>
+                    </div>
+                </div>
                 <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                 <div class="row" id="authors-info-container">
                 </div>
@@ -72,47 +102,127 @@
                     <div class="col-xl-12" style="text-align: left">
                         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_btn" data-toggle="modal" data-target="#addModal">@rm.GetString("AddAu")</button>
                     </div>
-
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row justify-content-center">
+                    <button class="btn btn-light-success px-6 font-weight-bold" id="btn-submit">@rm.GetString("Send")</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            Html.RenderAction("AddAuthor", "PartialView");
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-footer">
-        <div class="row justify-content-center">
-            <button class="btn btn-light-success px-6 font-weight-bold" id="btn-submit">@rm.GetString("Send")</button>
-        </div>
-    </div>
 </div>
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                @{
-                    Html.RenderAction("AddAuthor", "PartialView");
-                }
-            </div>
-        </div>
-    </div>
-</div>
+<form style="visibility: hidden" method="post" action="/Invention/Edit" id="InvenForm">
+    <input name="id" id="nameEdit2" />
+    <input name="editable" id="ckEdit2" />
+</form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Scripts/PartialViewScript.js"></script>
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js"></script>
     <script>
+        var uppy1;
+        var formData;
+        var people = [];
+        var fileid;
         $("#btemp").click(function () {
             //alert($("#temp").text());
         });
         $('#search_country').select2({
             allowClear: true
         });
-        $("#btn-submit").click(function () {
+        $('#search_type').select2({
+            allowClear: true,
+            tags: true
+        });
+        $('#kieuthuong').select2({
+            allowClear: true
+        });
 
+        function addInven() {
+            var invention = {
+                name: $("#inven_name").val(),
+                no: $("#patent_number").val(),
+                date: $("#patent_date").val(),
+                country_id: $("#search_country").val(),
+                file_id: fileid
+            };
+            var type = $("#search_type").val();
+            var kieuthuong = $("#kieuthuong").val();
+            $.ajax({
+                url: "@Url.Action("addInven", "Invention")",
+                type: "POST",
+                data: JSON.stringify({
+                    'inven': invention,
+                    'people': people,
+                    'type': type,
+                    'kieuthuong': kieuthuong
+                }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#nameEdit2").val(response.id);
+                        $("#ckEdit2").val(3);
+                        $("#InvenForm").submit();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        };
+
+        $("#btn-submit").click(function () {
+            var name = $("#inven_name").val();
+            formData = new FormData();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file bài báo");
+                return false;
+            }
+
+            formData.append('file', uppy1.getFiles()[0].data);
+            formData.append('name', name);
+
+            $.ajax({
+                url: "/Invention/addFile",
+                method: "post",
+                complete: function (data) {
+                    var mess = data.responseJSON.mess;
+                    if (mess == "ss") {
+                        fileid = data.responseJSON.id;
+                        addInven();
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false
+            });
         });
     </script>
+    <script src="~/Scripts/JSUpload.js"></script>
 }
 

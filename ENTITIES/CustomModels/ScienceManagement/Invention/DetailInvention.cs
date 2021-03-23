@@ -12,5 +12,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Invention
         public string reward_type { get; set; }
         public string total_reward { get; set; }
         public int request_id { get; set; }
+        public string link_file { get; set; }
     }
 }

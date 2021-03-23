@@ -240,6 +240,7 @@ $("#authors-info-container").on('click', '.del-author', function() {
         if (result.value) {
             $("#" + id).remove();
             for (var i = 0; i < people.length; i++) {
+                //console.log(i);
                 if (people[i].temp_id == id) {
                     people.splice(i, 1);
                 }
