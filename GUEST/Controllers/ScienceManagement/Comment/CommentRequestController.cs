@@ -1,12 +1,7 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.Comment;
-using ENTITIES;
-using ENTITIES.CustomModels;
+﻿using BLL.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
-using System;
+using GUEST.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GUEST.Controllers.ScienceManagement.Comment
@@ -24,15 +19,7 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            int account_id = acc.account_id;
-            return Json(CommentRepo.AddComment(request_id, account_id, content));
+            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content));
         }
     }
 }

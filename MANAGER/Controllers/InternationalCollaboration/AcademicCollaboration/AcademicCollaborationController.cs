@@ -86,7 +86,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpGet]
         public ActionResult getCollabScopes(string collab_abbreviation_name)
         {
-
             AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.collaborationScopes(collab_abbreviation_name);
             return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
         }
