@@ -9,7 +9,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
 {
     public class ReportsController : Controller
     {
-        [Auther(RightID = "24")]
+        //[Auther(RightID = "24")]
         public ActionResult PapersReportsByWorkplace()
         {
             return View();
@@ -45,7 +45,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         public ActionResult ListOfIncomePaid()
         {
             return View();
-        }
+        }  
         public ActionResult TotalBonusByYear()
         {
             return View();
