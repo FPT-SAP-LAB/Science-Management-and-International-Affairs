@@ -108,6 +108,21 @@
             tags: true,
             placeholder: "Điền mã số"
         });
+        $('#ckfe_edit').select2({
+            allowClear: true
+        });
+        $('#add_author_workplace_edit').select2({
+            allowClear: true,
+            placeholder: "Điền mã số"
+        });
+        $('#add_author_title_edit').select2({
+            allowClear: true,
+            placeholder: "Chọn chức danh"
+        });
+        $('#add_author_contractType_edit').select2({
+            allowClear: true,
+            placeholder: "Chọn loại hợp đồng"
+        });
         $("#add_author_msnv_edit").on("select2:select", function (e) {
             var AddAuthor = {
             mssv_msnv: $("#add_author_msnv_edit").val()
