@@ -15,7 +15,6 @@ namespace GUEST.Controllers
     {
         public ActionResult Index()
         {
-            GlobalUploadDrive.UpdateFile("1XLVjm1eu_M_7d76PcpQfvl20Pk-T0ljG");
             var pagesTree = new List<PageTree>
             {
                 new PageTree("Bảng tin","/"),
