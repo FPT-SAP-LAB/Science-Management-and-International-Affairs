@@ -109,7 +109,7 @@ namespace GUEST.Controllers
             string mess = ir.addAuthor(people, i.invention_id);
             if (mess == "ss") mess = ir.addInvenRequest(b, i, kieuthuong);
 
-            return Json(new { mess = mess, id = i.invention_id },JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
         }
     }
 }
