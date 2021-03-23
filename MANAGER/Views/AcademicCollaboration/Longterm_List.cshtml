@@ -202,7 +202,6 @@
 
     @*modal trigger*@
     <script>
-
         $('#edit_content_long_term').click(function () {
             $('#describe_content').find("textarea").val('').end()
             $('#describe_content').modal('show');
@@ -217,13 +216,12 @@
             $('#describe_content').find("textarea").val('').end()
             $('#describe_content').modal('show');
         })
-
     </script>
 
+    <!------------------------------------------------------TABLE 1: LONG-TERM GOING--------------------------------------------------------->
     <script>
-
         $(document).ready(function () {
-            //select2 table 1
+            /*1.SEARCH*/
             $('#search_nation_tab_1_table_1').select2({
                 placeholder: 'Quốc gia',
                 allowClear: true,
@@ -255,12 +253,12 @@
 
             function formatCountryInfo(country) {
                 return country.country_name;
-            }
+            };
 
             $('#search_year_tab_1_table_1').select2({
                 placeholder: 'Năm đi học',
                 allowClear: true
-            })
+            });
 
             //get data to year search
             $.ajax({
@@ -349,8 +347,9 @@
                 return office.office_name;
             }
 
-            /////////////////////////////////TABLE 1 - ADD MODAL///////////////////////////////
-            //THÔNG TIN CÁ NHÂN
+            /*2.ADD MODAL*/
+            //2.1.SHOW BUTTON
+            ///2.1.1.THÔNG TIN CÁ NHÂN
             $('#add_officer_name').select2({
                 placeholder: 'Họ và tên',
                 allowClear: true,
@@ -471,7 +470,7 @@
                 templateResult: formatOfficeInfo
             });
 
-            //ĐƠN VỊ ĐÀO TẠO
+            ///2.1.2.ĐƠN VỊ ĐÀO TẠO
             $('#add_officer_traning').select2({
                 placeholder: 'Đơn vị đào tạo',
                 allowClear: true,
@@ -496,7 +495,7 @@
                         return {
                             results: data.obj
                         };
-                    }
+                    };
                 },
                 templateResult: formatPartnerInfo
             }).on("select2:select", function (e) { //after select partner
@@ -513,7 +512,7 @@
                         return partner.partner_name;
                     }
                 }
-            }
+            };
 
             function checkPartner() {
                 //process person_name
@@ -620,9 +619,9 @@
 
             function formatCollabScope(scope) {
                 return scope.scope_abbreviation + " - " + scope.scope_name;
-            }
+            };
 
-            //CHI TIẾT
+            ///2.1.3.CHI TIẾT
             $('#add_officer_status').select2({
                 placeholder: 'Trạng thái',
                 allowClear: true,
@@ -655,10 +654,44 @@
 
             function formatAcadCollabStatus(acs) {
                 return acs.collab_status_name;
-            }
+            };
+
+            //2.2. SAVE BUTTON
+            ///2.2.1.Check empty
+
+            //2.3.CLOSE BUTTON
+            $('#add_officer').on('hidden.bs.modal', function () {
+                //enable input and select
+                $('#add_officer_email').prop('disabled', false);
+                $("#add_officer_facility").prop('disabled', false);
+                $('#add_officer_nation').prop('disabled', false);
+                $('#add_officer_coop_scope').prop('disabled', false);
+
+                //clear data
+                ///THÔNG TIN CÁ NHÂN
+                $('#add_officer_name').val(null).trigger('change');
+                $('#add_officer_email').val('');
+                $('#add_officer_facility').val(null).trigger('change');
+                ///ĐƠN VỊ ĐÀO TẠO
+                $('#add_officer_traning').val(null).trigger('change');
+                $('#add_officer_nation').val(null).trigger('change');
+                $('#add_officer_coop_scope').val(null).trigger('change');
+                ///CHI TIẾT
+                $('#add_officer_status').val(null).trigger('change');
+                $('#add_officer_start_plan_date').val('');
+                $('#add_officer_end_plan_date').val('');
+                //?Bản mềm
+                $('#add_officer_start_date').val('');
+                $('#add_officer_end_date').val('');
+                $('#add_officer_support').prop('checked', false);
+            });
+
+            /*3.EDIT MODAL*/
+
         });
     </script>
 
+    <!------------------------------------------------------TABLE 2: LONG-TERM COMING--------------------------------------------------------->
     <script>
         //select2 table 2
 
@@ -714,7 +747,6 @@
             allowClear: true,
             tags: true,
         })
-
     </script>
 
     <script>
@@ -755,7 +787,7 @@
                         toastr.success("Đã xóa thành công");
                     }
 
-                },
+                }
             });
         });
 
@@ -798,7 +830,6 @@
                 },
             });
         };
-
     </script>
 
     @*text editor*@
@@ -826,11 +857,7 @@
         });
     </script>
 
-
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
-}
-
-
-
+    }
