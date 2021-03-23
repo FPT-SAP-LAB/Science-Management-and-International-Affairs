@@ -4,15 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using User.Models;
+using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
 {
-    public class AcademicActivityController : Controller
-    {
-        // GET: AcademicActivity
-        public ActionResult Index()
+    public class AcademicActivityController : Controller { 
+
+
+        private static AcademicActivityGuestRepo guestRepo = new AcademicActivityGuestRepo();
+    // GET: AcademicActivity
+    public ActionResult Index()
         {
             ViewBag.title = "Hoạt động học thuật";
+            
+            ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>());
             var pagesTree = new List<PageTree>
             {
                 new PageTree("Hoạt động học thuật","/AcademicActivity/Index"),
@@ -30,6 +35,12 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             };
             ViewBag.pagesTree = pagesTree;
             return View();
+        }
+        [HttpPost]
+        public ActionResult LoadMoreList(int count, List<int> type)
+        {
+            List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type);
+            return Json(data);
         }
     }
 }
