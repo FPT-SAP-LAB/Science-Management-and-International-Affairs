@@ -54,9 +54,9 @@
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="btn-submit">@rm.GetString("Send")</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
-                    @{
-                        Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
-                    }
+                    <div>
+                        @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id }); }
+                    </div>
                 </div>
             </div>
         </div>

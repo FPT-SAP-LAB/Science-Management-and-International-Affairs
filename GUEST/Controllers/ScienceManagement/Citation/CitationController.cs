@@ -70,6 +70,7 @@ namespace User.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Edit(string id, string editable)
         {
             ViewBag.title = "Chỉnh sửa số trích dẫn";
