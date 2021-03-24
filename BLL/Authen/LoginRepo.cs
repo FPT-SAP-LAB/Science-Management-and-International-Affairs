@@ -11,9 +11,10 @@ namespace BLL.Authen
 {
     public class LoginRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        ScienceAndInternationalAffairsEntities db;
         public User getAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
+            db = new ScienceAndInternationalAffairsEntities();
             try
             {
                 Account a = db.Accounts.Where(x => x.email.Equals(user.email)).FirstOrDefault();
@@ -26,11 +27,11 @@ namespace BLL.Authen
                 {
                     return null;
                 }
-                if ((bool)!a.login)
+                if ((bool)!a.is_login)
                 {
                     a.full_name = user.name;
                     a.google_id = user.id;
-                    a.login = true;
+                    a.is_login = true;
                     a.picture = user.imageurl;
                     db.Entry(a).State = EntityState.Modified;
                     db.SaveChanges();
@@ -46,11 +47,13 @@ namespace BLL.Authen
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return null;
             }
         }
         public List<int> getPermission(Account a)
         {
+            db = new ScienceAndInternationalAffairsEntities();
             try
             {
                 List<int> data = new List<int>();
@@ -68,11 +71,13 @@ namespace BLL.Authen
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<int>();
             }
         }
         public List<baseRight> getRightByAccount(int account_id)
         {
+            db = new ScienceAndInternationalAffairsEntities();
             try
             {
                 string sql = @"select ar.right_id from General.AccountRight ar where ar.account_id = @account_id";
@@ -81,6 +86,7 @@ namespace BLL.Authen
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseRight>();
             }
         }

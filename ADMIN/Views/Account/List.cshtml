@@ -403,7 +403,8 @@
                         data: "role_name",
                     },
                     {
-                        data: "login",
+                        data: "is_login",
+                        width: "83px",
                         render: function (data, type, full, meta) {
                             var status = {
                                 'Chưa kích hoạt': {
@@ -421,6 +422,7 @@
                     },
                     {
                         data: "account_id",
+                        width: "84px",
                         render: function (data, type, full, meta) {
                             return '<a href="javascript:;" class="btn btn-sm btn-light-primary px-6" onclick="getRightByAccount(' + data + ')">Quyền hạn</a>'
                         }
@@ -428,6 +430,7 @@
                     {
                         data: "account_id",
                         orderable: false,
+                        width: "144px",
                         render: function (data, type, full, meta) {
                             return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editAccount('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteAccount('+data+')">Xóa</a>'
                         }

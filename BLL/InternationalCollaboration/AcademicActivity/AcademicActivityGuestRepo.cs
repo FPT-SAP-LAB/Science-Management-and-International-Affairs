@@ -51,6 +51,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseAA>();
             }
         }
