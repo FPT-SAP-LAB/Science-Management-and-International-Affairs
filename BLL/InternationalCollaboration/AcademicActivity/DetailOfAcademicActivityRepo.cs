@@ -67,6 +67,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new baseDetail();
             }
         }
@@ -110,6 +111,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<subContent>();
             }
         }
@@ -122,6 +124,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<AcademicActivityType>();
             }
         }
@@ -224,6 +227,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -241,6 +245,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<basePartner>();
             }
         }
@@ -253,6 +258,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<InternalUnit>();
             }
         }
@@ -268,6 +274,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new ContactInfo();
             }
         }

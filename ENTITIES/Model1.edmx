@@ -41,7 +41,7 @@
           <Property Name="google_id" Type="nvarchar" MaxLength="150" />
           <Property Name="picture" Type="nvarchar" MaxLength="150" />
           <Property Name="role_id" Type="int" Nullable="false" />
-          <Property Name="login" Type="bit" />
+          <Property Name="is_login" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AccountRight">
           <Key>
@@ -4525,7 +4525,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="google_id" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="picture" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="role_id" Type="Int32" Nullable="false" />
-          <Property Name="login" Type="Boolean" />
+          <Property Name="is_login" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CommentBases" Relationship="Self.FK__CommentBa__accou__2077C861" FromRole="Account" ToRole="CommentBase" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__creat__2704CA5F" FromRole="Account" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Account__role_id__2704CA5F" FromRole="Account" ToRole="Role" />
@@ -9096,7 +9096,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="google_id" ColumnName="google_id" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="is_login" ColumnName="is_login" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

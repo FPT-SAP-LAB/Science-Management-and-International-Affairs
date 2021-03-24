@@ -26,6 +26,12 @@ namespace GUEST.Controllers.AuthenticationAuthorization
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
+                return Json(String.Empty);
+            }
+            if (u.account.role_id == 1)
+                u.url = "/";
+            if (u == null)
+            {
                 return Json("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
             }
             Session["User"] = u;

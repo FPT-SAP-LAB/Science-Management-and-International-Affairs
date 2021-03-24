@@ -33,7 +33,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                             interest = h.name,
                             googleScholar = b.google_scholar
                         });
-            var res=data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
             int recordsTotal = data.Count();
             return new BaseServerSideData<ResearcherList>(res, recordsTotal);
