@@ -2,8 +2,13 @@
     var content = $('.summernote').summernote('code');
     var address = $('#partner_address').val()
     var website = $('#partner_website').val()
-    var imgInp = $('#imgInp').val();
-    var temp = { content: content, website: website, address: address, imgInp: imgInp };
+    var avata = $('#avata').attr('src')
+    var temp = {
+        content: content,
+        website: website,
+        address: address,
+        avata: avata,
+    };
     $.ajax({
         url: '/Partner/pass_content',
         type: "POST",
