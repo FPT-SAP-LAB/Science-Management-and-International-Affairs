@@ -126,6 +126,9 @@ namespace BLL.ScienceManagement.Invention
                 PaperRepo pr = new PaperRepo();
                 List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
                 string listmail = "";
+                string tempSql = "";
+                List<SqlParameter> listParam1 = new List<SqlParameter>();
+                int count = 1;
                 foreach (var item in list)
                 {
                     if (!listMail.Contains(item.email))
@@ -154,11 +157,24 @@ namespace BLL.ScienceManagement.Invention
                             pro.identification_number = item.identification_number;
                             pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
+
+                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
+                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
+                            listParam1.Add(tempParam1);
+
+                            tempSql += " update [SM_Researcher].PeopleTitle set title_id = @title" + count + " where people_id = @people" + count;
+                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.contract_id);
+                            listParam1.Add(tempParam2);
+
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, item.people_id);
+                            listParam1.Add(tempParam3);
                         }
                     }
                     listmail += "," + item.email;
+                    count++;
                 }
                 db.SaveChanges();
+                db.Database.ExecuteSqlCommand(tempSql, listParam1.ToArray());
                 listmail = listmail.Substring(1);
                 string[] mail = listmail.Split(',');
                 String strAppend = "";
@@ -245,6 +261,7 @@ namespace BLL.ScienceManagement.Invention
                 int request_id = Int32.Parse(id);
                 RequestInvention ri = db.RequestInventions.Where(x => x.request_id == request_id).FirstOrDefault();
                 ri.reward_type = type;
+                ri.status_id = 3;
                 //db.Entry(ri).State = EntityState.Modified;
                 db.SaveChanges();
                 return "ss";

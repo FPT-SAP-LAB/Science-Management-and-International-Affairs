@@ -14,15 +14,15 @@
                         <div class="row">
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("InvenName")<span style='color:red'>*</span></label>
-                                <input class="form-control form-control-lg" type="text" id="inven_name" />
+                                <input class="form-control form-control-lg notnull" type="text" id="inven_name" />
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("PatentNumber")<span style='color:red'>*</span></label>
-                                <input class="form-control form-control-lg" type="text" id="patent_number" />
+                                <input class="form-control form-control-lg notnull" type="text" id="patent_number" />
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("PatentType")<span style='color:red'>*</span></label>
-                                <select class="form-control form-control-lg select-custom" id="search_type" name="param">
+                                <select class="form-control form-control-lg select-custom notnull" id="search_type" name="param">
                                     @{
                                         foreach (var item in ViewBag.type)
                                         {
@@ -33,11 +33,11 @@
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("PatentDate")<span style='color:red'>*</span></label>
-                                <input class="form-control form-control-lg custom-pickdate" type="text" id="patent_date" />
+                                <input class="form-control form-control-lg custom-pickdate notnull" type="text" id="patent_date" />
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("Country")<span style='color:red'>*</span></label>
-                                <select class="form-control form-control-lg select-custom" id="search_country" name="param">
+                                <select class="form-control form-control-lg select-custom notnull" id="search_country" name="param">
                                     @{
                                         foreach (var item in ViewBag.country)
                                         {
@@ -157,10 +157,13 @@
         });
 
         function addInven() {
+            var temp = $("#patent_date").val();
+            var arr = temp.split('/');
+            var dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
             var invention = {
                 name: $("#inven_name").val(),
                 no: $("#patent_number").val(),
-                date: $("#patent_date").val(),
+                date: dateFormat,
                 country_id: $("#search_country").val(),
                 file_id: fileid
             };
@@ -192,35 +195,50 @@
         };
 
         $("#btn-submit").click(function () {
-            var name = $("#inven_name").val();
-            formData = new FormData();
-            if (uppy1.getFiles()[0] == undefined) {
-                toastr.error("Thiếu file bài báo");
-                return false;
-            }
-
-            formData.append('file', uppy1.getFiles()[0].data);
-            formData.append('name', name);
-
-            $.ajax({
-                url: "/Invention/addFile",
-                method: "post",
-                complete: function (data) {
-                    var mess = data.responseJSON.mess;
-                    if (mess == "ss") {
-                        fileid = data.responseJSON.id;
-                        addInven();
-                    }
-                },
-                error: function () {
-                    toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
-                },
-                dataType: "json",
-                data: formData,
-                processData: false,
-                contentType: false
+            var ck = true;
+            $(".notnull").each(function () {
+                if ($(this).val() == "") {
+                    toastr.error("Cần nhập đầy đủ các trường có dấu *");
+                    ck = false;
+                    return false;
+                }
             });
+            if (people.length == 0) {
+                ck = false;
+                toastr.error("Chưa có tác giả");
+            }
+            if (ck) {
+                var name = $("#inven_name").val();
+                formData = new FormData();
+                if (uppy1.getFiles()[0] == undefined) {
+                    toastr.error("Thiếu file bài báo");
+                    return false;
+                }
+                formData.append('file', uppy1.getFiles()[0].data);
+                formData.append('name', name);
+                $.ajax({
+                    url: "/Invention/addFile",
+                    method: "post",
+                    complete: function (data) {
+                        var mess = data.responseJSON.mess;
+                        if (mess == "ss") {
+                            fileid = data.responseJSON.id;
+                            addInven();
+                        }
+                    },
+                    error: function () {
+                        toastr.error("Có lỗi xảy ra");
+                        save_loader.stopLoading();
+                    },
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+            } else {
+                ck = true;
+            }
+            
         });
     </script>
     <script src="~/Scripts/JSUpload.js"></script>
