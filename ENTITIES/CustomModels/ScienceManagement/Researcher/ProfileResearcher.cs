@@ -2,10 +2,18 @@
 {
     public class ProfileResearcher
     {
-        public string ID { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public int OfficeID { get; set; }
-        public int TitleID { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public System.DateTime? dob { get; set; }
+        public string country { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+        public string title { get; set; }
+        public string office { get; set; }
+        public string position { get; set; }
+        public string avatar { get; set; }
+        public string website { get; set; }
+        public string gscholar { get; set; }
+        public string cv { get; set; }
     }
 }
