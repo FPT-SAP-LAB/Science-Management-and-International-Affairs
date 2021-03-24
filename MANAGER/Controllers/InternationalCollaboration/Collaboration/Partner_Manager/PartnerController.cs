@@ -246,7 +246,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         [HttpPost, ValidateInput(false)]
         public ActionResult Save_Edit(HttpPostedFileBase image, string content, int numberOfImage, int partner_id,
             string partner_name, int country_id, string website, string address)
-        { 
+        {
             try
             {
                 ViewBag.title = "CHI TIẾT ĐỐI TÁC";
