@@ -10,6 +10,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
     {
         public int peopleId { get; set; }
         public String name { get; set; }
+        public int rowNum { get; set; }
         public String title { get; set; }
         public String position { get; set; }
         public String workplace { get; set; }
