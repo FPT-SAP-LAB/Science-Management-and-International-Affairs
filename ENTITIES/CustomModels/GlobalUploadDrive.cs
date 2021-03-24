@@ -270,7 +270,8 @@ namespace ENTITIES.CustomModels
                 {
                     folder //return parent files
                 };
-            } else
+            }
+            else
             {
                 return UploadedFiles;
             }

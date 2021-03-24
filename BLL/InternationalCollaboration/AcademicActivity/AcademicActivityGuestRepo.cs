@@ -9,20 +9,21 @@ using System.Threading.Tasks;
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityGuestRepo
-    { 
+    {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        
+
         public List<baseAA> getBaseAA(int count, List<int> type)
         {
             try
             {
                 StringBuilder typestr = new StringBuilder();
-                
-                if(type is null || type.Count == 0)
+
+                if (type is null || type.Count == 0)
                 {
-                    typestr.Append("(1,2,3,4)");                    
+                    typestr.Append("(1,2,3,4)");
                 }
-                else {
+                else
+                {
                     typestr.Append("(");
                     foreach (int i in type)
                     {
@@ -37,7 +38,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
-                        WHERE al.language_id = 1 AND [aa].activity_type_id IN "+ typestr.ToString() + @"
+                        WHERE al.language_id = 1 AND [aa].activity_type_id IN " + typestr.ToString() + @"
                         ORDER BY [from] DESC
                         OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                 List<baseAA> obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count)).ToList();

@@ -117,7 +117,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult uploadEvidenceFile(HttpPostedFileBase evidence, string folder_name)
         {
             Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 3, false);
-            return Json(new { evidence_link = f.WebViewLink});
+            return Json(new { evidence_link = f.WebViewLink });
         }
 
         [HttpPost]
