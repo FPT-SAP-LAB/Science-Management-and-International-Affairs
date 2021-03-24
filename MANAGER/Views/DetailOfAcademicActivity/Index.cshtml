@@ -262,24 +262,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Fsoft Hòa Lạc</td>
-                            <td>15/02/2021</td>
-                            <td>22/02/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td>100.000.000</td>
-                            <td nowrap="nowrap"></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Codelearn</td>
-                            <td>20/02/2021</td>
-                            <td>22/02/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td>20.000.000</td>
-                            <td nowrap="nowrap"></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -349,21 +331,23 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Tên đơn vị</label>
+                        <label style="color:blue" class="float-right">
+                            <a href="javascript:;" onclick="checkPartnerAdd()">Kiểm tra</a>
+                        </label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="add_donvi_DongToChuc" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Fsoft</option>
-                                <option value="2">UTP</option>
-                                <option value="3">Codelearn</option>
+                                @{
+                                    foreach (var i in ViewBag.unit)
+                                    {
+                                        <option value="@i.unit_id">@i.unit_name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
-                        <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Nguồn tài trợ (VNĐ)</label>
                         <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="add_taitro_DongToChuc" />
                     </div>
@@ -371,9 +355,12 @@
                         <label class="col-form-label font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="add_phamvihoptac_DongToChuc" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option value="1">Joint Conferences</option>
-                                <option value="2">Support event</option>
+                                @{
+                                    foreach (var i in ViewBag.unit)
+                                    {
+                                        <option value="@i.unit_id">@i.unit_name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
@@ -444,31 +431,36 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4 mb-3">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Tên đơn vị</label>
+                        <label style="color:blue" class="float-right">
+                            <a href="MOU/List#" onclick="checkPartnerAdd()">Kiểm tra</a>
+                        </label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="edit_donvi_DongToChuc" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option selected value="1">Fsoft</option>
-                                <option value="2">UTP</option>
-                                <option value="3">Codelearn</option>
+                                @{
+                                    foreach (var i in ViewBag.unit)
+                                    {
+                                        <option value="@i.unit_id">@i.unit_name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2 mb-3">
-                        <a href="javascripts:;" class="btn btn-light-primary px-6 font-weight-bold mt-8">Kiểm tra</a>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 mb-3">
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Nguồn tài trợ (VNĐ)</label>
-                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_taitro_DongToChuc" value="100000000" />
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_taitro_DongToChuc" />
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="edit_phamvihoptac_DongToChuc" style="width: 100% !important">
-                                <option label="Label"></option>
-                                <option selected value="1">Joint Conferences</option>
-                                <option value="2">Support event</option>
+                                @{
+                                    foreach (var i in ViewBag.unit)
+                                    {
+                                        <option value="@i.unit_id">@i.unit_name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
@@ -487,7 +479,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_DongToChuc" autocomplete="off" id="edit_from_DongToChuc" value="15/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_DongToChuc" autocomplete="off" id="edit_from_DongToChuc" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -502,7 +494,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_DongToChuc" autocomplete="off" id="edit_to_DongToChuc" value="22/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_DongToChuc" autocomplete="off" id="edit_to_DongToChuc" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_DongToChuc" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -514,9 +506,9 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_DongToChuc" value="Hấu Nguyễn" />
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_DongToChuc" value="default@gmail.com" />
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_DongToChuc" value="0929232929" />
+                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_DongToChuc" />
+                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_DongToChuc" />
+                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_DongToChuc" />
                     </div>
                 </div>
             </div>
@@ -1363,6 +1355,37 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="viewContactModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Đầu mối liên hệ</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Họ và tên</label>
+                        <input class="form-control" type="text" readonly id="contact_name" />
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Email</label>
+                        <input class="form-control" type="text" readonly id="contact_email" />
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Số điện thoại</label>
+                        <input class="form-control" type="text" readonly id="contact_phone" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="activity_id" value="@ViewBag.activity_id" />
 @section scripts{
     <script>
@@ -1952,6 +1975,7 @@
                 }
             ]
         });
+        let sttDTC = 1;
         $("#DongTochucDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1964,27 +1988,88 @@
             },
             "searching": false,
             "lengthChange": false,
+             ajax: {
+                 url: "@Url.Action("getDatatableDTC", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { activity_id: document.getElementById('activity_id').value },
+                 cache: "false"
+                },
+            columns: [
+                {
+                    render: function () {
+                        return sttDTC++;
+                    }
+                },
+                {
+                    data: "partner_name"
+                },
+                {
+                    data: "from"
+                },
+                {
+                    data: "to"
+                },
+                {
+                    data: "contact_point",
+                    render: function (data) {
+                        if (data != "") {
+                            var id = data.split('$')[0]
+                            var name = data.split('$')[1]
+                            return '<a href="javascript:;" onclick="viewContactPoint(' + id + ')">' + name + '</a>'
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    data: "sponsor",
+                    render: function (data) {
+                        return data.toLocaleString('en');
+                    }
+                },
+                {
+                    data: "partner_id",
+                    title : "Hành động",
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editDongToChuc(' + data +')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc('+data+')">Xóa</a>';
+                    }
+                },
+            ],
             columnDefs: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editDongToChuc(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc(1)">Xóa</a>'
-                    }
-                },
-                {
-                    targets: 4,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" onclick="getContactInfo()">' + data + '</a>'
-                    }
-                },
-                {
                     className: "text-center",
-                    targets: [0, 1, 2, 3, 4, 5, -1],
-                }
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1, -2]
+                },
             ]
         });
+        function viewContactPoint(id) {
+            var object = {
+                activity_partner_id : id
+            }
+            $.ajax({
+                url: "@Url.Action("getContent", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    document.getElementById('contact_name').value = data.contact_point_name;
+                    document.getElementById('contact_email').value = data.contact_point_email;
+                    document.getElementById('contact_phone').value = data.contact_point_phone;
+                    $('#viewContactModal').modal('show');
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
+        }
         $("#KinhPhiDatatable").DataTable({
             oLanguage: {
                 oPaginate: {

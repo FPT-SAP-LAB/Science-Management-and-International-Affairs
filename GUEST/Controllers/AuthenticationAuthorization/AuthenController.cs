@@ -10,7 +10,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
     {
-        private static LoginRepo repo = new LoginRepo();
+        LoginRepo repo;
         [HttpPost]
         public ActionResult Logout()
         {
@@ -20,6 +20,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
+            repo = new LoginRepo();
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
             List<int> roleAccept = new List<int>() { 0 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
