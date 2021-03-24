@@ -4,6 +4,7 @@ using ENTITIES.CustomModels.ScienceManagement.Conference;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,15 +101,79 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> UpdateCriterias(string criterias, int request_id)
         {
-            var values = JsonConvert.DeserializeObject<Dictionary<int, string>>(criterias);
-            int status_id = db.RequestConferences.Find(request_id).status_id;
-            if (status_id != 1)
-                return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
-            else
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                List<EligibilityCriteria> list = db.EligibilityCriterias.Where(x => x.request_id == request_id).ToList();
-                return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
+                try
+                {
+                    var CriteriaIDs = JsonConvert.DeserializeObject<List<int>>(criterias);
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id != 1)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
+                    var ListCri = Request.EligibilityCriterias;
+                    foreach (var item in ListCri)
+                        if (CriteriaIDs.Contains(item.criteria_id)) item.is_accepted = true;
+                    db.SaveChanges();
+                    if (ListCri.All(x => x.is_accepted))
+                        Request.status_id = 2;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true, "Cập nhật thành công");
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    throw;
+                }
             }
+        }
+        public AlertModal<string> UpdateCosts(string costs, int request_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var CostIDs = JsonConvert.DeserializeObject<List<int>>(costs);
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id != 2)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+                    var ListCosts = Request.Costs;
+                    foreach (var item in ListCosts)
+                    {
+                        if (CostIDs.Contains(item.cost_id))
+                        {
+                            item.is_accepted = true;
+                            item.editable = false;
+                        }
+                        else item.editable = true;
+                    }
+                    db.SaveChanges();
+                    if (ListCosts.All(x => x.is_accepted))
+                        Request.status_id = 3;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true, "Cập nhật thành công");
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+        public AlertModal<string> RequestEdit(int request_id)
+        {
+            var Request = db.RequestConferences.Find(request_id);
+            if (Request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (Request.status_id != 2)
+                return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+            Request.editable = true;
+            db.SaveChanges();
+            return new AlertModal<string>(true, "Cập nhật thành công");
         }
     }
 }

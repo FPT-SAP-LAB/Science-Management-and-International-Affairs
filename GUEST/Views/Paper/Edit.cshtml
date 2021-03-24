@@ -138,9 +138,11 @@
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
-                    @{
-                        Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
-                    }
+                    <div>
+                        @{
+                            Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -190,6 +192,7 @@
 <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
+    @*<script src="~/Scripts/PartialViewScript.js"></script>*@
     <script>
         var paper_id = "@ViewBag.id";
         var ck = "@ViewBag.ckEdit";
