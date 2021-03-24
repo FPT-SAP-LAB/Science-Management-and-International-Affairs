@@ -83,7 +83,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
                     if (files_request.Count != 0)
                     {
-                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
+                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
                         for (int i = 0; i < number_of_image; i++)
                         {
                             image_drive_id.Add(files_upload[i].Id);

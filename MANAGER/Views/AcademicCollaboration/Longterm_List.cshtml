@@ -218,10 +218,10 @@
         })
     </script>
 
-    <!------------------------------------------------------TABLE 1: LONG-TERM GOING--------------------------------------------------------->
+    @*///////////////////////////////////////////TABLE 1: LONG-TERM GOING//////////////////////////////////////////*@
     <script>
         $(document).ready(function () {
-            /*1.SEARCH*/
+            @*1.SEARCH*@
             $('#search_nation_tab_1_table_1').select2({
                 placeholder: 'Quốc gia',
                 allowClear: true,
@@ -253,7 +253,7 @@
 
             function formatCountryInfo(country) {
                 return country.country_name;
-            };
+            }
 
             $('#search_year_tab_1_table_1').select2({
                 placeholder: 'Năm đi học',
@@ -347,7 +347,26 @@
                 return office.office_name;
             }
 
-            /*2.ADD MODAL*/
+            @*MODAL INFORMATION*@
+            //// person infor
+            var person = $('#add_officer_name').val(); //*
+            var person_name = person.split('/')[0] === undefined ? '' : person.split('/')[0];
+            var person_id = person.split('/')[1] === undefined ? 0 : person.split('/')[1];
+            var available_person = false;
+
+            //// partner infor
+            var partner = $('#add_officer_traning').val(); //*
+            var partner_name = partner.split('/')[0] === undefined ? '' : partner.split('/')[0];
+            var partner_id = partner.split('/')[1] === undefined ? 0 : partner.split('/')[1];
+            var available_partner = false;
+
+            var status_id = $('#add_officer_status').val(); //*
+
+            var plan_start_date = $('#add_officer_start_plan_date').val(); //*
+            var plan_end_date = $('#add_officer_end_plan_date').val(); //*
+
+            @*2.ADD MODAL*@
+            var uppy1; //init for uppy.js
             //2.1.SHOW BUTTON
             ///2.1.1.THÔNG TIN CÁ NHÂN
             $('#add_officer_name').select2({
@@ -377,8 +396,16 @@
                     }
                 },
                 templateResult: formatPersonInfo
-            }).on("select2:select", function (e) { //after select option
+            }).on("select2:select", function () { //after select option
                 checkPerson();
+            }).on("select2:unselecting", function () {
+                //after clear tag
+                //clear email & office
+                $('#add_officer_email').val("");
+                $('#add_officer_facility').val(null).trigger('change');
+                //enable email & office
+                $('#add_officer_email').prop('disabled', false);
+                $('#add_officer_facility').prop('disabled', false);
             });
 
             function formatPersonInfo(person) {
@@ -394,10 +421,9 @@
             }
 
             function checkPerson() {
-                //process person_name
-                let person = $('#add_officer_name').val();
-                let person_name = person.split('/')[0] === undefined ? '' : person.split('/')[0];
-                let person_id = person.split('/')[1] === undefined ? 0 : person.split('/')[1]; //return 0 if add new person
+                person = $('#add_officer_name').val();
+                person_name = person.split('/')[0] === undefined ? '' : person.split('/')[0];
+                person_id = person.split('/')[1] === undefined ? 0 : person.split('/')[1];
 
                 $.ajax({
                     url: "/AcademicCollaboration/checkPerson",
@@ -414,6 +440,8 @@
                             $('#add_officer_email').val("");
                             $('#add_officer_facility').val(null).trigger('change');
                             if (data.obj != null) {
+                                //avaiable person data in DB
+                                available_person = true; //using for Add||Edit
                                 if (data.success) {
                                     //auto fill data
                                     let p = data.obj;
@@ -427,6 +455,7 @@
                                 }
                             } else {
                                 //new person case
+                                available_person = false;
                                 ///enable email and office select
                                 $('#add_officer_email').prop('disabled', false);
                                 $('#add_officer_facility').prop('disabled', false);
@@ -495,12 +524,18 @@
                         return {
                             results: data.obj
                         };
-                    };
+                    }
                 },
                 templateResult: formatPartnerInfo
-            }).on("select2:select", function (e) { //after select partner
+            }).on("select2:select", function () { //after select partner
                 //check partner
                 checkPartner();
+            }).on("select2:unselecting", function () {
+                //after clear tag
+                //clear country select
+                $('#add_officer_nation').val(null).trigger('change');
+                ///enable country
+                $('#add_officer_nation').prop('disabled', false);
             });
 
             function formatPartnerInfo(partner) {
@@ -512,13 +547,13 @@
                         return partner.partner_name;
                     }
                 }
-            };
+            }
 
             function checkPartner() {
-                //process person_name
-                let partner = $('#add_officer_traning').val();
-                let partner_name = partner.split('/')[0] === undefined ? '' : partner.split('/')[0];
-                let partner_id = partner.split('/')[1] === undefined ? 0 : partner.split('/')[1];
+                //process partner_name
+                partner = $('#add_officer_traning').val();
+                partner_name = partner.split('/')[0] === undefined ? '' : partner.split('/')[0];
+                partner_id = partner.split('/')[1] === undefined ? 0 : partner.split('/')[1];
 
                 $.ajax({
                     url: "/AcademicCollaboration/checkPartner",
@@ -534,6 +569,8 @@
                             //clear content
                             $('#add_officer_nation').val(null).trigger('change');
                             if (data.obj != null) {
+                                //available partner data in DB
+                                available_partner = true; //using for Add||Edit
                                 if (data.success) {
                                     //auto fill data
                                     let p = data.obj;
@@ -545,6 +582,7 @@
                                 }
                             } else {
                                 //new partner case
+                                available_partner = false;
                                 ///enable country
                                 $('#add_officer_nation').prop('disabled', false);
                             }
@@ -556,8 +594,7 @@
                         toastr.error("Kiểm tra đối tác có lỗi xảy ra.");
                     }
                 });
-            };
-
+            }
 
             $('#add_officer_nation').select2({
                 placeholder: 'Quốc gia',
@@ -619,7 +656,7 @@
 
             function formatCollabScope(scope) {
                 return scope.scope_abbreviation + " - " + scope.scope_name;
-            };
+            }
 
             ///2.1.3.CHI TIẾT
             $('#add_officer_status').select2({
@@ -654,10 +691,160 @@
 
             function formatAcadCollabStatus(acs) {
                 return acs.collab_status_name;
-            };
+            }
 
             //2.2. SAVE BUTTON
-            ///2.2.1.Check empty
+            $('#add_officer_save').on('click', function () {
+                //person
+                person = $('#add_officer_name').val();
+                person_name = person.split('/')[0];
+                person_id = person.split('/')[1]
+
+                var person_email = $('#add_officer_email').val();
+                var person_profile_office_id = $('#add_officer_facility').val();
+
+                //partner
+                partner = $('#add_officer_traning').val();
+                partner_name = partner.split('/')[0];
+                partner_id = partner.split('/')[1];
+
+                var partner_country_id = $('#add_officer_nation').val();
+
+                var collab_scope_id = $('#add_officer_coop_scope').val();
+
+                //detail
+                status_id = $('#add_officer_status').val();
+
+                plan_start_date = $('#add_officer_start_plan_date').val();
+                plan_end_date = $('#add_officer_end_plan_date').val();
+
+                var evidence = uppy1.getFiles()[0].data;
+
+                var actual_start_date = $('#add_officer_start_date').val();
+                var actual_end_date = $('#add_officer_end_date').val();
+
+                var support = $('#add_officer_support').prop('checked');
+                var note = $('#add_officer_note').val();
+
+                let obj_person = {
+                    available_person: available_person,
+                    person_name: person_name,
+                    person_id: person_id,
+                    person_email: person_email,
+                    person_profile_office_id: person_profile_office_id
+                }
+
+                let obj_partner = {
+                    available_partner: available_partner,
+                    partner_name: partner_name,
+                    partner_id: partner_id,
+                    partner_country_id: partner_country_id,
+                    collab_scope_id: collab_scope_id
+                }
+
+                let obj_academic_collab = {
+                    status_id: status_id,
+                    plan_start_date: plan_start_date,
+                    plan_end_date: plan_end_date,
+                    actual_start_date: actual_start_date,
+                    actual_end_date: actual_end_date,
+                    support: support,
+                    note: note
+                }
+
+                saveAcademicCollaboration();
+            });
+
+            function saveAcademicCollaboration() {
+                if (checkBeforeSave()) {
+                    saveAcademicCollaborationProcess();
+                }
+            }
+
+            function saveAcademicCollaborationProcess() {
+                saveAcademicCollaborationProcess_Step1();
+            }
+
+            function saveAcademicCollaborationProcess_Step1() {
+                let formData = new FormData();
+                formData.append("evidence", evidence);
+                formData.append("folder_name", person_name + " - " + partner_name);
+                //Step 1
+                //upload file
+                $.ajax({
+                    url: "/AcademicCollaboration/uploadEvidenceFile",
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    dataType: "json",
+                    success: function (data) {
+                        //get evidence_link after upload to Google Drive
+                        var evidence_link = data.evidence_link;
+                        obj_academic_collab.evidence_link = evidence_link;
+
+                        //continuous Step 2
+                        saveAcademicCollaborationProcess_Step2();
+                    },
+                    error: function () {
+                        toastr.error("Có lỗi xảy ra khi upload file.");
+                    }
+                });
+            }
+
+            function saveAcademicCollaborationProcess_Step2() {
+                $.ajax({
+                    url: "/AcademicCollaboration/saveAcademicCollaboration",
+                    type: "POST",
+                    data: {
+                        obj_person: obj_person,
+                        obj_partner: obj_partner,
+                        obj_academic_collab: obj_academic_collab
+                    },
+                    cache: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function () {
+                        toastr.error("Có lỗi xảy ra khi upload file.");
+                    }
+                })
+            }
+
+            function checkBeforeSave() {
+                //check empty
+                if (isEmpty(person) || isEmpty(partner) || isEmpty(status) || isEmpty(plan_start_date) || isEmpty(plan_end_date)) {
+                    toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+                    return false;
+                } else {
+                    //validate datepicker from - to
+                    if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
+                        toastr.error("`TG đi học` không được vượt quá `TG kết thúc`.")
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function isEmpty(value) {
+                return value === "" ? true : false;
+            }
+
+            function datePickerFromToValidate(from, to) {
+                if (!(from === "" || to === "")) {
+                    let date_from = Date.parse(formatDatePicker(from));
+                    let date_to = Date.parse(formatDatePicker(to));
+                    if (date_from > date_to) {
+                        return false;
+                    }
+                    return true;
+                }
+                return true;
+            }
+
+            function formatDatePicker(date) {
+                return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
+            }
 
             //2.3.CLOSE BUTTON
             $('#add_officer').on('hidden.bs.modal', function () {
@@ -680,21 +867,20 @@
                 $('#add_officer_status').val(null).trigger('change');
                 $('#add_officer_start_plan_date').val('');
                 $('#add_officer_end_plan_date').val('');
-                //?Bản mềm
+                //????????????????????????????????????????????????????????????Bản mềm?????????????????????????????????????????????????
                 $('#add_officer_start_date').val('');
                 $('#add_officer_end_date').val('');
                 $('#add_officer_support').prop('checked', false);
+                $('#add_officer_note').val('');
             });
 
-            /*3.EDIT MODAL*/
-
+            @*3.EDIT MODAL*@
         });
     </script>
 
-    <!------------------------------------------------------TABLE 2: LONG-TERM COMING--------------------------------------------------------->
+    @*///////////////////////////////////////////TABLE 2: LONG-TERM COMING/////////////////////////////////////////*@
     <script>
         //select2 table 2
-
         $('#search_nation_tab_1_table_2').select2({
             placeholder: 'Quốc gia',
             allowClear: true,
@@ -719,6 +905,7 @@
             tags: true,
         })
     </script>
+
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({
@@ -740,6 +927,7 @@
         })
 
     </script>
+
     <script>
         //table 4
         $('#search_status_tab_2_table_2').select2({
@@ -767,6 +955,10 @@
         $('#collapse_btn_tab_2').on('click', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
+
+        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        //});
         //split card
         //overflow
         $(document).ready(function () {
@@ -787,7 +979,7 @@
                         toastr.success("Đã xóa thành công");
                     }
 
-                }
+                },
             });
         });
 
@@ -830,6 +1022,7 @@
                 },
             });
         };
+
     </script>
 
     @*text editor*@
@@ -860,4 +1053,5 @@
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
-    }
+}
+
