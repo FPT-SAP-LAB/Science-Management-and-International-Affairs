@@ -472,7 +472,8 @@
                                                 <span class="menu-text">ĐƠN VỊ NỘI BỘ</span>
                                             </a>
                                         </li>
-                                        @if (user.account.role_id == 1)
+                                        @*sẽ xóa true sau khi deploy cho khách hàng*@
+                                        @if (user.account.role_id == 1 || true)
                                         {
                                             <li class="menu-item " aria-haspopup="true">
                                                 <a href="/SettingDrive" class="menu-link ">
