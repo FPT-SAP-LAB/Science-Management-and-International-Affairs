@@ -6,9 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL.Admin;
+using ADMIN.Support;
 
 namespace ADMIN.Controllers
 {
+    [Auther(RightID = "0")]
     public class RightController : Controller
     {
         private static RightRepo repo = new RightRepo();
