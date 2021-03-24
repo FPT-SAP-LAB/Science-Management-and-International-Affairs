@@ -238,7 +238,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     on p.partner_id = mps.partner_id where ap.activity_id = @activity_id";
                 List<basePartner> data = db.Database.SqlQuery<basePartner>(sql, new SqlParameter("activity_id", activity_id)).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<basePartner>();
             }
@@ -249,7 +250,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 List<InternalUnit> data = db.InternalUnits.ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<InternalUnit>();
             }
@@ -264,7 +266,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ContactInfo data = db.Database.SqlQuery<ContactInfo>(sql, new SqlParameter("activity_partner_id", activity_partner_id)).FirstOrDefault();
                 return data;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new ContactInfo();
             }
