@@ -1,31 +1,192 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    Layout = "";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<!--begin::Head-->
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<head>
+    <meta charset="utf-8" />
+    <title>
+        HỆ THỐNG QUẢN LÝ KHOA HỌC & HỢP TÁC QUỐC TẾ
+    </title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Page Custom Styles(used by this page)-->
+    <link href="~/Content/assets/css/pages/login/classic/login-5.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <!--end::Page Custom Styles-->
+    <!--begin::Global Theme Styles(used by all pages)-->
+    <link href="~/Content/assets/plugins/global/plugins.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/style.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <!--end::Global Theme Styles-->
+    <!--begin::Layout Themes(used by all pages)-->
+
+    <link href="~/Content/assets/css/themes/layout/header/base/light.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/themes/layout/header/menu/light.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/themes/layout/brand/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
+    <!--end::Layout Themes-->
+
+    <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #qlkh_login,
+        #htqt_login {
+            min-width: 20rem !important;
+        }
+    </style>
+    <!--FOR AUTHENTICATION-->
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+
+<body id="kt_body"
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <div class="d-flex flex-column flex-root">
+        <div class="login login-5 login-signin-on d-flex flex-row-fluid" id="kt_login">
+            <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid"
+                 style="background-image: url(../Content/assets/media/bg/bg-2.jpg);">
+                <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
+                    <div class="d-flex flex-center mb-15">
+                        <a href="#">
+                            <img src="https://2.pik.vn/2021572057c6-8c72-42f0-95ed-6965c02f0c13.png" class="max-h-75px"
+                                 alt="" />
+                        </a>
+                    </div>
+                    <div class="login-signin">
+                        <div class="mb-20">
+                            <h3 class="opacity-90 font-weight-normal">
+                                HỆ THỐNG QUẢN LÝ KHOA HỌC <br /><br />& HỢP TÁC
+                                QUỐC TẾ
+                            </h3>
+                        </div>
+                        <form class="form" id="kt_login_signin_form">
+                            <div class="form-group">
+                                <button id="login_btn" class="btn btn-pill btn-success opacity-90 px-15 py-3">
+                                    <i class="fab fa-google icon-lg"></i> Đăng nhập bằng Google
+                                </button>
+                            </div>
+                        </form>
+                        <div class="g-signin2" hidden id="google_auth_login" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+
+    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+    <script>
+        var KTAppSettings = {
+            "breakpoints": {
+                "sm": 576,
+                "md": 768,
+                "lg": 992,
+                "xl": 1200,
+                "xxl": 1400
+            },
+            "colors": {
+                "theme": {
+                    "base": {
+                        "white": "#ffffff",
+                        "primary": "#3699FF",
+                        "secondary": "#E5EAEE",
+                        "success": "#1BC5BD",
+                        "info": "#8950FC",
+                        "warning": "#FFA800",
+                        "danger": "#F64E60",
+                        "light": "#E4E6EF",
+                        "dark": "#181C32"
+                    },
+                    "light": {
+                        "white": "#ffffff",
+                        "primary": "#E1F0FF",
+                        "secondary": "#EBEDF3",
+                        "success": "#C9F7F5",
+                        "info": "#EEE5FF",
+                        "warning": "#FFF4DE",
+                        "danger": "#FFE2E5",
+                        "light": "#F3F6F9",
+                        "dark": "#D6D6E0"
+                    },
+                    "inverse": {
+                        "white": "#ffffff",
+                        "primary": "#ffffff",
+                        "secondary": "#3F4254",
+                        "success": "#ffffff",
+                        "info": "#ffffff",
+                        "warning": "#ffffff",
+                        "danger": "#ffffff",
+                        "light": "#464E5F",
+                        "dark": "#ffffff"
+                    }
+                },
+                "gray": {
+                    "gray-100": "#F3F6F9",
+                    "gray-200": "#EBEDF3",
+                    "gray-300": "#E4E6EF",
+                    "gray-400": "#D1D3E0",
+                    "gray-500": "#B5B5C3",
+                    "gray-600": "#7E8299",
+                    "gray-700": "#5E6278",
+                    "gray-800": "#3F4254",
+                    "gray-900": "#181C32"
+                }
+            },
+            "font-family": "Poppins"
+        };
+    </script>
+    <script src="~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6"></script>
+    <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
+    <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
+    <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
+    <script src="~/Content/assets/js/bundle.js"></script>
+    <script>
+        var login_btn;
+        function onSignIn(googleUser) {
+            $('#login_btn').attr('disabled',true);
+            login_btn.startLoading();
+            var id_token = googleUser.getAuthResponse().id_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Home/SigninGoogleAsync');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response == '""') {
+                        toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            $('#login_btn').attr('disabled', false);
+                            login_btn.stopLoading();
+                        });
+                    } else {
+                        login_btn.stopLoading();
+                        window.location.href = this.responseURL;
+                    }
+                }
+            };
+            xhr.send('idtoken=' + id_token);
+        }
+        $("#login_btn").click(function () {
+            $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
+        });
+        $(document).ready(function () {
+            login_btn = new LoaderBtn($("#login_btn"));
+        });
+    </script>
+</body>
+
+</html>

@@ -15,12 +15,18 @@
                             </div>*@
                         <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="mou_partner_name_add" name="param" list="officeList" style="width:100% !important">
-                                @foreach (var item in ViewBag.listPartnerMOUPartner)
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAddMOUPartner()" />
+                            </div>
+                            <datalist id="partnerList">
+                                @if (ViewBag.listPartnerMOUPartner != null)
                                 {
-                                    <option value="@item.partner_name">@item.partner_name</option>
+                                    foreach (var item in ViewBag.listPartnerMOUPartner)
+                                    {
+                                        <option value="@item.partner_name">@item.partner_name</option>
+                                    }
                                 }
-                            </select>
+                            </datalist>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -97,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" data-dismiss="modal" onclick="addMOUPartner()" disabled>Thêm</button>
+                <button id="add_mou_partner_button" type="button" class="btn btn-sm btn-light-primary" onclick="addMOUPartner()" disabled>Thêm</button>
             </div>
         </div>
     </div>

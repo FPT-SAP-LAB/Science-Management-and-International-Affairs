@@ -21,7 +21,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            List<int> roleAccept = new List<int>() { 5, 6 };
+            List<int> roleAccept = new List<int>() { 0 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {

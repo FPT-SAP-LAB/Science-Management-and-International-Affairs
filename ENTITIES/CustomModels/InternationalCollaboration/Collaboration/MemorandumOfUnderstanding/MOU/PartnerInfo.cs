@@ -19,5 +19,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public string phone_add { get; set; }
         public List<int> coop_scope_add { get; set; }
         public int partner_id { get; set; }
+        public int mou_partner_id { get; set; }
     }
 }

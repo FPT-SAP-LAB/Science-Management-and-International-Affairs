@@ -20,7 +20,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql_mouList =
                     @"select t1.moa_id,t1.moa_code,t3.partner_name,t1.evidence,t2.moa_start_date,
-                        t1.moa_end_date,t5.office_name,t8.scope_abbreviation,t9.mou_status_id
+                        t1.moa_end_date,t5.office_name,t8.scope_abbreviation,t9.mou_status_id,t2.moa_partner_id
                         from IA_Collaboration.MOA t1
                         left join IA_Collaboration.MOAPartner t2 
                         on t2.moa_id = t1.moa_id 
@@ -43,7 +43,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         on t9.moa_id = t1.moa_id
                         where t1.mou_id = @mou_id
                         and t3.partner_name like @partner_name
-                        and t1.moa_code like @moa_code";
+                        and t1.moa_code like @moa_code
+                        and t1.is_deleted = 0";
                 List<ListMOA> moaList = db.Database.SqlQuery<ListMOA>(sql_mouList,
                     new SqlParameter("mou_id", mou_id),
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
@@ -92,7 +93,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql = @"select t4.country_name,t3.website,t3.address,
                     t2.contact_point_name,t2.contact_point_email,t2.contact_point_phone,
-                    t6.specialization_name,t2.partner_name
+                    t6.specialization_name,t3.partner_name
                     from IA_Collaboration.MOA t1 inner join
                     IA_Collaboration.MOUPartner t2 on 
                     t1.mou_id = t2.mou_id
@@ -107,7 +108,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     where t2.mou_id = @mou_id and t3.partner_name like @partner_name";
                 CustomPartnerMOA p = db.Database.SqlQuery<CustomPartnerMOA>(sql,
                     new SqlParameter("mou_id", mou_id),
-                    new SqlParameter("partner_name", partner_name)).FirstOrDefault();
+                    new SqlParameter("partner_name", '%' + partner_name + '%')).FirstOrDefault();
                 return p;
             }
             catch (Exception ex)
@@ -142,16 +143,17 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 
                     foreach (MOAPartnerInfo item in input.MOAPartnerInfo.ToList())
                     {
+                        Partner p = db.Partners.Where(x => x.partner_name == item.partnername_add).First();
                         db.MOAPartners.Add(new MOAPartner
                         {
                             moa_id = m.moa_id,
                             moa_start_date = DateTime.ParseExact(item.sign_date_moa_add, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                            partner_id = item.partner_id
+                            partner_id = p.partner_id
                         });
                         foreach (int scopeItem in item.coop_scope_add.ToList())
                         {
-                            PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == item.partner_id && x.scope_id == scopeItem).First();
-                            ps.reference_count -= 1;
+                            PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == p.partner_id && x.scope_id == scopeItem).First();
+                            ps.reference_count += 1;
 
                             db.Entry(ps).State = EntityState.Modified;
                             db.MOAPartnerScopes.Add(new MOAPartnerScope
