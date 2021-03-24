@@ -12,7 +12,7 @@ namespace BLL.ScienceManagement.Researcher
     public class ResearchersDetailRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public ProfileResearcher GetProfile(int id)
+        public ResearcherDetail GetProfile(int id)
         {
             var data = (
                 from a in db.People
@@ -25,7 +25,7 @@ namespace BLL.ScienceManagement.Researcher
                 join h in db.PositionLanguages on g.position_id equals h.position_id
                 join w in db.Files on b.avatar_id equals w.file_id
                 where h.language_id == 1 && e.language_id == 1 && a.people_id == id
-                select new ProfileResearcher
+                select new ResearcherDetail
                 {
                     id = a.people_id,
                     name = a.name,
@@ -41,7 +41,7 @@ namespace BLL.ScienceManagement.Researcher
                     gscholar = b.google_scholar,
                     cv = b.cv
                 });
-             return (ProfileResearcher) data;
+             return (ResearcherDetail) data;
         }
     }
 }
