@@ -14,9 +14,22 @@
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
                         <input hidden readonly type="text" class="form-control" id="partner_id_edit" placeholder="" name="" value="" />
+                        <input hidden readonly type="text" class="form-control" id="mou_partner_id_edit" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select-search" id="mou_partner_name_edit" name="param" style="width:100% !important">
-                            </select>
+                            @*<select class="form-control select-search" id="mou_partner_name_edit" name="param" style="width:100% !important">
+                            </select>*@
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <input type="text" class="form-control" id="mou_partner_name_edit" list="partnerListEdit" onchange="preventEditMOUPartner()" />
+                            </div>
+                            <datalist id="partnerListEdit">
+                                @if (ViewBag.listPartnerMOUPartner != null)
+                                {
+                                    foreach (var item in ViewBag.listPartnerMOUPartner)
+                                    {
+                                        <option value="@item.partner_name">@item.partner_name</option>
+                                    }
+                                }
+                            </datalist>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
