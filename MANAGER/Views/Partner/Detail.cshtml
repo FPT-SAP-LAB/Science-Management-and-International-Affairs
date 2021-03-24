@@ -10,7 +10,6 @@
         height: 100%;
         border: 1px solid black;
     }
-
 </style>
 
 <div class="row justify-content-center" id="card-container">
@@ -70,7 +69,7 @@
                                             <label style="color:red">*</label>
                                             <label style="font-style: italic;">
                                             </label>
-                                            <textarea id="partner_specialization" disabled class="form-control" rows="1"></textarea>
+                                            <textarea id="partner_specialization" placeholder="Lĩnh vực" disabled class="form-control" rows="1"></textarea>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center mb-5">
@@ -94,8 +93,7 @@
                             <div class="row justify-content-center mb-5">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Lịch sử hoạt động</label>
-                                    <label style="font-style: italic;">
-                                    </label>
+                                    <label style="font-style: italic;"></label>
                                     <table class="table table-bordered table-hover table-checkable"
                                            id="partner_acitivity_table">
                                         <thead>
@@ -116,49 +114,49 @@
                                         </thead>
                                         <tbody>
                                             @*<tr>
-                                                <td class="text-center">1</td>
-                                                <td class="text-center">2020/01</td>
-                                                <td class="text-center">Ký kết biên bản ghi nhớ</td>
-                                                <td class="text-center">JAMES K. W. LEE</td>
-                                                <td class="text-center"></td>
-                                                <td class="text-center">61 2 9850 7111</td>
-                                                <td class="text-center">Le Thi Phuong Anh</td>
-                                                <td class="text-center">18/03/2020</td>
-                                                <td class="text-center">18/04/2022</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">2</td>
-                                                <td class="text-center"></td>
-                                                <td class="text-center">Hoạt động hợp tác học thuật</td>
-                                                <td class="text-center">Plato Hampton</td>
-                                                <td class="text-center">elementum.lorem@aliquam.com</td>
-                                                <td class="text-center">05112-402024</td>
-                                                <td class="text-center">Le Thi Phuong Anh</td>
-                                                <td class="text-center">19/04/2021</td>
-                                                <td class="text-center">20/07/2021</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">3</td>
-                                                <td class="text-center"></td>
-                                                <td class="text-center">Hoạt động hợp tác nghiên cứu</td>
-                                                <td class="text-center">Herman Mays</td>
-                                                <td class="text-center">mauris.aliquam.eu@sedleo.net</td>
-                                                <td class="text-center">62 19 673 8307</td>
-                                                <td class="text-center">Ha Thi Hai Yen</td>
-                                                <td class="text-center">19/05/2021</td>
-                                                <td class="text-center">20/08/2021</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">4</td>
-                                                <td class="text-center">2020/01_BS/01</td>
-                                                <td class="text-center">Ký kết biên bản ghi nhớ bổ sung</td>
-                                                <td class="text-center">Tyler Horne</td>
-                                                <td class="text-center">semper@sitametorci.com</td>
-                                                <td class="text-center">62 15 812 0688</td>
-                                                <td class="text-center">Le Thi Phuong Anh</td>
-                                                <td class="text-center">19/06/2021</td>
-                                                <td class="text-center">20/08/2021</td>
-                                            </tr>*@
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">2020/01</td>
+                                                    <td class="text-center">Ký kết biên bản ghi nhớ</td>
+                                                    <td class="text-center">JAMES K. W. LEE</td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">61 2 9850 7111</td>
+                                                    <td class="text-center">Le Thi Phuong Anh</td>
+                                                    <td class="text-center">18/03/2020</td>
+                                                    <td class="text-center">18/04/2022</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">2</td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">Hoạt động hợp tác học thuật</td>
+                                                    <td class="text-center">Plato Hampton</td>
+                                                    <td class="text-center">elementum.lorem@aliquam.com</td>
+                                                    <td class="text-center">05112-402024</td>
+                                                    <td class="text-center">Le Thi Phuong Anh</td>
+                                                    <td class="text-center">19/04/2021</td>
+                                                    <td class="text-center">20/07/2021</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">Hoạt động hợp tác nghiên cứu</td>
+                                                    <td class="text-center">Herman Mays</td>
+                                                    <td class="text-center">mauris.aliquam.eu@sedleo.net</td>
+                                                    <td class="text-center">62 19 673 8307</td>
+                                                    <td class="text-center">Ha Thi Hai Yen</td>
+                                                    <td class="text-center">19/05/2021</td>
+                                                    <td class="text-center">20/08/2021</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">2020/01_BS/01</td>
+                                                    <td class="text-center">Ký kết biên bản ghi nhớ bổ sung</td>
+                                                    <td class="text-center">Tyler Horne</td>
+                                                    <td class="text-center">semper@sitametorci.com</td>
+                                                    <td class="text-center">62 15 812 0688</td>
+                                                    <td class="text-center">Le Thi Phuong Anh</td>
+                                                    <td class="text-center">19/06/2021</td>
+                                                    <td class="text-center">20/08/2021</td>
+                                                </tr>*@
                                         </tbody>
                                     </table>
                                 </div>
@@ -173,9 +171,9 @@
                                 </div>
                             </div>
                             <div class="row float-right mb-5">
-                                <a class="btn btn-sm btn-secondary px-6 font-weight-bold mx-1">Quay về</a>
-                                <a class="btn btn-sm btn-light-success px-6 font-weight-bold mx-1" id="submit">Lưu</a>
-                                <a id="preview" class="btn btn-sm btn-light-primary px-6 font-weight-bold mx-1">Xem trước</a>
+                                <a class="btn btn-sm btn-secondary font-weight-bold mx-1" href="@Url.Action("List", "Partner")">Quay về</a>
+                                <a class="btn btn-sm btn-light-success font-weight-bold mx-1" id="submit">Cập nhật</a>
+                                <a class="btn btn-sm btn-light-primary font-weight-bold mx-1" id="preview">Xem trước</a>
                             </div>
                         </div>
                     </div>
@@ -187,11 +185,143 @@
 @section scripts{
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/Partner/Preview.js"></script>
     <script>
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        var URL = canvas.toDataURL('image/jpeg');
+                        $('#avata').attr('src', URL);
+                    };
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function () {
+            readURL(this);
+        });
+
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+
+        var save_loader = new LoaderBtn($(".load-btn"))
+        $('#submit').click(function () {
+            var id = @ViewBag.partnerArticle.partner_id;
+            var form_data = new FormData();
+
+            var partner_name = $('#partner_name').val()
+            var country_id = $('#partner_nation').val()
+            var website = $('#partner_website').val()
+            var address = $('#partner_address').val()
+
+            if (partner_name == "") {
+                toastr.warning("Vui lòng nhập tên đối tác")
+                return;
+            }
+            if (country_id == "") {
+                toastr.warning("Vui lòng chọn quốc gia")
+                return;
+            }
+            var content = $('.summernote').summernote('code') + "";
+
+            var list_image = $('.note-editor').find('img')
+            var count_upload = 0;
+            if (list_image.length != 0) {
+                for (i = 0; i < list_image.length; i++) {
+                    var temp = list_image[i];
+                    var temp_src = $(temp).attr('src') + "";
+                    if (temp_src.includes('data:')) {
+                        count_upload++
+                        content = content.replace(temp_src, 'image_' + i)
+                        form_data.append('image_' + i, dataURItoBlob(temp_src))
+                    }
+                }
+            }
+            form_data.append("numberOfImage", count_upload)
+
+            var src = $('#avata').attr('src');
+            var template = '/Content/assets/media/custom-image/Placeholder.jpg';
+            if (src != template && src.includes('data:image')) {
+                form_data.append('image', dataURItoBlob(src))
+            }
+
+            form_data.append('partner_id', id)
+            form_data.append('partner_name', partner_name)
+            form_data.append('country_id', country_id)
+            form_data.append('website', website)
+            form_data.append('address', address)
+            form_data.append('content', content)
+
+            save_loader.startLoading();
+            $.ajax({
+                url: "/Partner/Save_Edit",
+                method: "post",
+                dataType: "json",
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": 0,
+                        "extendedTimeOut": 0,
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut",
+                    };
+                    if (data.json.success && data.type == 1) {
+                        toastr.options.onHidden = function () {
+                            window.location.href = '@Url.Action("List", "Partner")';
+                        }
+                        toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
+                        //save_loader.stopLoading()
+                    } else if (!data.json.success && data.type == 0) {
+                        toastr.warning(data.json.content);
+                        //save_loader.stopLoading()
+                    }else {
+                        toastr.error('Có lỗi xảy ra khi thêm');
+                        //save_loader.stopLoading()
+                    }
+                },
+                error: function () {
+                    toastr.error('Có lỗi xảy ra khi thêm');
+                }
+            });
+        })
+    </script>
+    <script>
         $('#partner_nation').select2({
             placeholder: 'Quốc gia',
             allowClear: true,
         })
         $('#partner_nation').val('@ViewBag.partnerArticle.country_id').trigger('change')
+
         $('#partner_specialization').val('@Html.Raw(ViewBag.specializations_selected)')
 
         var KTSummernoteDemo = function () {
@@ -254,7 +384,7 @@
                 data: { 'id': @ViewBag.partnerArticle.partner_id },
                 cache: "false"
             },
-            order: [7, 'asc'],
+            //order: [7, 'asc'],
             pageLength: 5,
             columns: [
                 {
@@ -275,7 +405,7 @@
                         if (type === "sort" || type === "") {
                             return data;
                         }
-                        return moment(data).format("L");
+                        return moment(data).format("DD/MM/YYYY");
                     }
                 },
                 {
@@ -285,7 +415,7 @@
                         if (type === "sort" || type === "") {
                             return data;
                         }
-                        return moment(data).format("L");
+                        return moment(data).format("DD/MM/YYYY");
                     }
                 },
             ],
@@ -297,12 +427,10 @@
             ],
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-
+                //$(this).parent().css('padding', '0');
             }
         });
     </script>
 
- 
+
 }

@@ -82,9 +82,9 @@
                                 </div>
                             </div>
                             <div class="row float-right mb-5">
-                                <a class="btn btn-sm btn-secondary px-6 font-weight-bold mx-1">Quay về</a>
-                                <a class="btn btn-sm btn-light-success px-6 font-weight-bold mx-1" id="submit">Lưu</a>
-                                <a id="preview" class="btn btn-sm btn-light-primary px-6 font-weight-bold mx-1">Xem trước</a>
+                                <a class="load-btn btn btn-sm btn-secondary font-weight-bold mx-1">Quay về</a>
+                                <a class="load-btn btn btn-sm btn-light-success font-weight-bold mx-1" id="submit">Lưu</a>
+                                <a class="load-btn btn btn-sm btn-light-primary font-weight-bold mx-1" id="preview">Xem trước</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,8 @@
 </div>
 @section scripts{
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/Partner/Preview.js"></script>
-
+    <script>
+    </script>
     <script>
 
         $('#partner_nation').select2({
@@ -162,8 +163,7 @@
             return file;
         }
 
-        $('#return_btn').click(function () {
-        })
+        var save_loader = new LoaderBtn($(".load-btn"))
 
         $('#submit').click(function () {
             var form_data = new FormData();
@@ -217,6 +217,7 @@
 
                 console.log(name, value)
             }
+            save_loader.startLoading();
             $.ajax({
                 url: "/Partner/Add",
                 method: "post",
@@ -247,19 +248,23 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                     };
-
-                    if (data) {
+                    if (data.json.success && data.type == 1) {
                         toastr.options.onHidden = function () {
-                        window.location.href = '@Url.Action("List", "Partner")';
-                    }
+                            window.location.href = '@Url.Action("List", "Partner")';
+                        }
                         toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
-
-                    } else {
+                        save_loader.stopLoading()
+                    } else if (!data.json.success && data.type == 0) {
+                        toastr.warning(data.json.content);
+                        save_loader.stopLoading()
+                    }else {
                         toastr.error('Có lỗi xảy ra khi thêm');
+                        save_loader.stopLoading()
                     }
                 },
                 error: function () {
                     toastr.error('Có lỗi xảy ra khi thêm');
+                    del_loader.stopLoading()
                 }
             });
         })
