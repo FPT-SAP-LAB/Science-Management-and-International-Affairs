@@ -83,7 +83,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
                     if (files_request.Count != 0)
                     {
-                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
+                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
                         for (int i = 0; i < number_of_image; i++)
                         {
                             image_drive_id.Add(files_upload[i].Id);
@@ -119,7 +119,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     partner.article_id = article.article_id;
                     if (files_upload.Count != 0)
                     {
-                        partner.avatar = files_upload.LastOrDefault().WebViewLink;
+                        partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
                     db.Partners.Add(partner);
                     db.SaveChanges();
@@ -150,6 +150,36 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 return new AlertModal<string>(false, "Có lỗi xảy ra");
             }
         }
+
+        public PartnerArticle loadEditPartner(int id)
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    Partner partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
+                    PartnerArticle partnerArticle = new PartnerArticle();
+                    partnerArticle.partner_id = partner.partner_id;
+                    partnerArticle.partner_name = partner.partner_name;
+                    partnerArticle.country_id = partner.country_id;
+                    partnerArticle.address = partner.address;
+                    partnerArticle.website = partner.website;
+                    partnerArticle.avatar = partner.avatar;
+
+                    if (partner.article_id != null)
+                    {
+                        ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                        partnerArticle.partner_content = articleVersion.article_content;
+                    }
+                    return partnerArticle;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void editPartner()
         {
             return;
@@ -163,37 +193,39 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 FROM IA_Collaboration.PartnerScope ps 
                                 WHERE ps.partner_id = {0}
                                 )
-                                SELECT '' as 'code', N'Tổ chức hoạt động học thuật' 'activity', '' AS 'full_name', aa.activity_date_start, aa.activity_date_end
+                                SELECT '' as 'code', N'Tổ chức hoạt động học thuật' 'activity', isnull(ap.contact_point_name, '')  'contact_point_name',
+								isnull(ap.contact_point_email, '') 'contact_point_email', isnull(ap.contact_point_phone, '')  'contact_point_phone', '' AS 'full_name', aa.activity_date_start, aa.activity_date_end
                                 FROM SMIA_AcademicActivity.AcademicActivity aa INNER JOIN SMIA_AcademicActivity.ActivityPartner ap
                                 ON aa.activity_id = ap.activity_id INNER JOIN b 
                                 ON b.partner_scope_id = ap.partner_scope_id
                                 UNION ALL
-                                SELECT '' as 'code', N'Hợp tác nghiên cứu' 'activity', '', rc.project_start_date, rc.project_end_date
+                                SELECT '' as 'code', N'Hợp tác nghiên cứu' 'activity', '','','','', rc.project_start_date, rc.project_end_date
                                 FROM IA_ResearchCollaboration.ResearchCollaboration rc INNER JOIN IA_ResearchCollaboration.ResearchPartner rp
                                 ON rc.project_id = rp.project_id INNER JOIN b ON rp.partner_scope_id = b.partner_scope_id
                                 UNION ALL
-                                SELECT '' as 'code', N'Hợp tác học thuật' 'activity', '', ac.plan_study_start_date, ac.plan_study_end_date
+                                SELECT '' as 'code', N'Hợp tác học thuật' 'activity', '','', '','', ac.plan_study_start_date, ac.plan_study_end_date
                                 FROM IA_AcademicCollaboration.AcademicCollaboration ac INNER JOIN b 
                                 ON ac.partner_scope_id = b.partner_scope_id
                                 UNION ALL
-                                SELECT DISTINCT mou.mou_code, N'Ký kết biên bản ghi nhớ' 'activity', a.full_name,
+                                SELECT DISTINCT mou.mou_code, N'Ký kết biên bản ghi nhớ' 'activity', isnull(mp.contact_point_name, '')  'contact_point_name',
+								isnull(mp.contact_point_email, '') 'contact_point_email', isnull(mp.contact_point_phone, '')  'contact_point_phone', a.full_name,
                                 mp.mou_start_date, mou.mou_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOU mou ON mou.mou_id = mp.mou_id INNER JOIN General.[Account] a
                                 ON mou.account_id = a.account_id
                                 UNION ALL
-                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity', a.full_name, mp.moa_start_date, moa.moa_end_date
+                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity','','','', a.full_name, mp.moa_start_date, moa.moa_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOA moa ON moa.moa_id = mp.moa_id 
                                 INNER JOIN General.Account a ON a.account_id = moa.account_id
                                 UNION ALL
-                                SELECT DISTINCT mb.mou_bonus_code, N'Ký kết biên bản ghi nhớ bổ sung' 'activity', '', mb.mou_bonus_decision_date, mb.mou_bonus_end_date
+                                SELECT DISTINCT mb.mou_bonus_code, N'Ký kết biên bản ghi nhớ bổ sung' 'activity','','','', '', mb.mou_bonus_decision_date, mb.mou_bonus_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOUBonus mb ON mp.mou_id = mb.mou_id 
                                 LEFT JOIN IA_Collaboration.MOuPartnerScope mps ON mps.mou_bonus_id = mb.mou_bonus_id
                                 WHERE (mb.mou_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
                                 UNION ALL
-                                SELECT DISTINCT mb.moa_bonus_code, N'Ký kết biên bản thỏa thuận bổ sung' 'activity', '', MB.moa_bonus_decision_date, mb.moa_bonus_end_date
+                                SELECT DISTINCT mb.moa_bonus_code, N'Ký kết biên bản thỏa thuận bổ sung' 'activity','','','', '', MB.moa_bonus_decision_date, mb.moa_bonus_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOABonus mb ON mp.moa_id = mb.moa_id 
                                 LEFT JOIN IA_Collaboration.MOAPartnerScope mps ON mps.moa_bonus_id = mb.moa_bonus_id
@@ -202,6 +234,25 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 List<PartnerHistory> list = db.Database.SqlQuery<PartnerHistory>(query, id).ToList();
                 string partner_name = db.Partners.Where(x => x.partner_id == id).Select(x => x.partner_name).FirstOrDefault();
                 return new PartnerHistoryList<PartnerHistory>(list, partner_name);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string getPartnerDetailSpec(int id)
+        {
+            try
+            {
+                string query = @"SELECT s.specialization_name
+                        FROM IA_Collaboration.MOUPartnerSpecialization mps
+                        INNER JOIN IA_Collaboration.MOUPartner mp ON mp.mou_partner_id = mps.mou_partner_id
+                        INNER JOIN General.Specialization s on s.specialization_id = mps.specialization_id
+                        WHERE mp.partner_id = {0} ";
+
+                List<string> list = db.Database.SqlQuery<string>(query, id).ToList();
+                return String.Join(", ", list.ToArray());
             }
             catch (Exception e)
             {

@@ -11,6 +11,9 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Partner
         public string code { get; set; }
         public string activity { get; set; }
         public string full_name { get; set; }
+        public string contact_point_phone { get; set; }
+        public string contact_point_email { get; set; }
+        public string contact_point_name { get; set; }
         public DateTime activity_date_start { get; set; }
         public DateTime activity_date_end { get; set; }
     }
