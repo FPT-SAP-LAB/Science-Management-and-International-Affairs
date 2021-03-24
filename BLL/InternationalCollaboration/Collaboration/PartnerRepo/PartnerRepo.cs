@@ -182,7 +182,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
         public void editPartner()
         {
-
             return;
         }
         public PartnerHistoryList<PartnerHistory> getHistory(int id)
