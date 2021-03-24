@@ -166,7 +166,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     partnerArticle.website = partner.website;
                     partnerArticle.avatar = partner.avatar;
 
-                    if(partner.article_id != null)
+                    if (partner.article_id != null)
                     {
                         ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
                         partnerArticle.partner_content = articleVersion.article_content;
@@ -255,11 +255,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 List<string> list = db.Database.SqlQuery<string>(query, id).ToList();
                 return String.Join(", ", list.ToArray());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
-            
+
         }
         public void getPreView()
         {

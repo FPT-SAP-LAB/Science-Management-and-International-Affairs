@@ -202,7 +202,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 ViewBag.specializations_selected = partnerRePo.getPartnerDetailSpec(id);
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return null;
