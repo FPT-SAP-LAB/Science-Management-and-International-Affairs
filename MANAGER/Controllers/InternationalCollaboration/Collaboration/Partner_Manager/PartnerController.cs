@@ -265,7 +265,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                     address = address
                 };
 
-
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
                 for (int i = 0; i < numberOfImage; i++)
                 {
