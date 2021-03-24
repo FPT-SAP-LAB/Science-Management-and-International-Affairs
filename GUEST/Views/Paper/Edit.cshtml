@@ -189,6 +189,10 @@
         </div>
     </div>
 </div>
+<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
 <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
@@ -280,7 +284,9 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        location.reload();
+                        $("#nameEdit").val(response.id);
+                        $("#ckEdit").val(3);
+                        $("#PaperForm").submit();
                     }
                     //addCriteria();
                 },
@@ -291,9 +297,14 @@
         }
 
         $("#edit_submit").click(function () {
+            var temp = $("#paper_publish_date").val();
+            var arr = temp.split('/');
+            var dateFormat
+            if (arr.length == 3) dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
+            else dateFormat = arr[0] + '/01/' + arr[1];
             var Paper = {
                 name: $("#paper_name").val(),
-                publish_date: $("#paper_publish_date").val(),
+                publish_date: dateFormat,
                 link_doi: $("#paper_full").val(),
                 link_scholar: $("#paper_scholar").val(),
                 paper_type_id: $("#paper_type").val(),
@@ -393,7 +404,7 @@
                             bank_branch: add_author_bank,
                             identification_number: add_author_cmnd,
                             mssv_msnv: add_author_msnv,
-                            office_id: response.author[i].office_id,
+                            office_id: response.author[i].office_id_string,
                             contract_id: response.author[i].contract_id,
                             title_id: response.author[i].title_id,
                             people_id: response.author[i].people_id,
