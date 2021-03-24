@@ -22,7 +22,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_mouPartnerList =
                     @"select t2.mou_partner_id, t1.mou_code, t3.partner_name, t6.specialization_name,
                         t3.website, t2.contact_point_name, t2.contact_point_phone, t2.contact_point_email,
-                        t2.mou_start_date, t8.scope_abbreviation,t1.mou_id
+                        t2.mou_start_date, t8.scope_abbreviation,t1.mou_id,t4.country_name
                         from IA_Collaboration.MOU t1 left join 
                         IA_Collaboration.MOUPartner t2 
                         on t1.mou_id = t2.mou_id
@@ -242,7 +242,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //get old records of PartnerScope in MOU
-                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id from IA_Collaboration.PartnerScope t1 inner join 
+                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id,reference_count from IA_Collaboration.PartnerScope t1 inner join 
                         IA_Collaboration.MOUPartnerScope t2 on
                         t1.partner_scope_id = t2.partner_scope_id
                         where mou_id = @mou_id";
@@ -274,7 +274,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 scope_id = tokenScope,
                                 reference_count = 0
                             });
-                            //checkpoint 3
+                            //checkpoint 6
                             db.SaveChanges();
                             PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
                             partner_scope_id = newObjPS.partner_scope_id;
@@ -291,7 +291,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             mou_id = mou_id
                         });
                     }
-                    //checkpoint 5
+                    //checkpoint 7
                     db.SaveChanges();
                     transaction.Commit();
                 }

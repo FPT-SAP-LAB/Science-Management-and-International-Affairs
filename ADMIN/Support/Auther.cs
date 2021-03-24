@@ -15,7 +15,7 @@ namespace ADMIN.Support
             if (u == null)
             {
                 var Url = new UrlHelper(filterContext.RequestContext);
-                var url = Url.Action("Login", "Authen");
+                var url = Url.Action("Index", "Home");
                 filterContext.Result = new RedirectResult(url);
             }
             else

@@ -188,6 +188,7 @@
     <Content Include="Content\assets\css\themes\layout\header\base\light.css" />
     <Content Include="Content\assets\css\themes\layout\header\menu\dark.css" />
     <Content Include="Content\assets\css\themes\layout\header\menu\light.css" />
+    <Content Include="Content\assets\js\bundle.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\column-rendering.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\column-visibility.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\footer-callback.js" />

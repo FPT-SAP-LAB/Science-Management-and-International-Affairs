@@ -44,17 +44,25 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
-            bool res = repo.AddAA(obj);
-            if (res)
+            try
             {
-                return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
+                BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
+                bool res = repo.AddAA(obj, 1, u);
+                if (res)
+                {
+                    return Json("Đã thêm thành công", JsonRequestBehavior.AllowGet);
+                }
+                else return Json(String.Empty);
             }
-            else return Json(String.Empty);
+            catch (Exception e)
+            {
+                return Json(String.Empty);
+            }
         }
         [HttpPost]
         public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to)
         {
-            bool res = repo.updateBaseAA(id, activity_type_id, activity_name, location, from, to);
+            bool res = repo.updateBaseAA(id, activity_type_id, activity_name, location, from, to, 1);
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);

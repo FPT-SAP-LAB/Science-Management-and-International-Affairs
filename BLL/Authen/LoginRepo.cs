@@ -22,7 +22,7 @@ namespace BLL.Authen
                     return null;
                 }
                 Role r = db.Roles.Find(a.role_id);
-                if (!roleAccept.Contains(r.role_id))
+                if (!roleAccept.Contains(r.role_id) && !roleAccept.Contains(0))
                 {
                     return null;
                 }
