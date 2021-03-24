@@ -9,17 +9,19 @@ using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using MANAGER.Support;
 using BLL.Authen;
+using Newtonsoft.Json;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
     public class PartnerController : Controller
     {
         private static PartnerRepo partnerRePo = new PartnerRepo();
+        ScienceAndInternationalAffairsEntities db;
         //[Auther(RightID = "8")]
         public ActionResult List()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            db = new ScienceAndInternationalAffairsEntities();
             ViewBag.countries = db.Countries.ToList();
             ViewBag.specializations = db.Specializations.ToList();
             return View();
@@ -50,7 +52,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         public ActionResult List_Deleted()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            db = new ScienceAndInternationalAffairsEntities();
             ViewBag.countries = db.Countries.ToList();
             ViewBag.specializations = db.Specializations.ToList();
             return View();
@@ -114,7 +116,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         public ActionResult Add()
         {
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            db = new ScienceAndInternationalAffairsEntities();
             ViewBag.title = "THÊM ĐỐI TÁC";
             ViewBag.countries = db.Countries.ToList();
             return View();
@@ -160,7 +162,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             }
         }
 
-        public ActionResult pass_content(string content, string website, string address, string imgInp)
+        public ActionResult pass_content(string content, string website, string address, string avata)
         {
             try
             {
@@ -168,7 +170,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 Session["content"] = content;
                 Session["address"] = address;
                 Session["website"] = website;
-                Session["imgInp"] = imgInp;
+                Session["avata"] = avata;
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -183,14 +185,48 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             ViewBag.content = Session["content"];
             ViewBag.address = Session["address"];
             ViewBag.website = Session["website"];
-            ViewBag.imgInp = Session["imgInp"];
+            ViewBag.avata = Session["avata"];
             return View();
         }
 
-        public ActionResult Detail()
+        [HttpPost]
+        public ActionResult Detail(int id)
         {
-            ViewBag.pageTitle = "CHI TIẾT ĐỐI TÁC";
-            return View();
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                ViewBag.title = "CHI TIẾT ĐỐI TÁC";
+                ViewBag.partnerArticle = partnerRePo.loadEditPartner(id);
+                ViewBag.countries = db.Countries.ToList();
+                ViewBag.specializations = db.Specializations.ToList();
+                ViewBag.specializations_selected = partnerRePo.getPartnerDetailSpec(id);
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Detail_History(int id)
+        {
+            try
+            {
+                PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.getHistory(id);
+
+                return Json(new
+                {
+                    data = partnerHistoryList.Data,
+                    JsonRequestBehavior.AllowGet
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new { success = false });
+            }
         }
     }
 }
