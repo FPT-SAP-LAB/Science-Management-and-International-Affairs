@@ -258,8 +258,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 throw e;
             }
-
         }
+
         public void getPreView()
         {
             return;
