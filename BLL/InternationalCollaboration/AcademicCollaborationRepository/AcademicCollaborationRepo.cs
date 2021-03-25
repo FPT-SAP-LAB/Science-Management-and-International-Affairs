@@ -400,7 +400,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         change_date = DateTime.Now,
                         evidence = obj_academic_collab.evidence_link,
                         account_id = account_id
-
                     };
                     db.CollaborationStatusHistories.Add(collab_status_hist);
                     db.SaveChanges();
