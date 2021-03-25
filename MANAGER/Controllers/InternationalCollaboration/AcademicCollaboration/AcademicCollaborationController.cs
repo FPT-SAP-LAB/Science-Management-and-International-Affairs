@@ -117,7 +117,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.people(person_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -131,7 +132,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.collaborationScopes(collab_abbreviation_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -145,7 +147,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<List<AcademicCollaborationStatu>> alertModal = academicCollaborationRepo.academicCollaborationStatus(status_type_specific);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -159,7 +162,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<AcademicCollaborationPerson_Ext> alertModal = academicCollaborationRepo.person(people_id, people_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -173,7 +177,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<AcademicCollaborationPartner_Ext> alertModal = academicCollaborationRepo.partner(partner_id, partner_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
