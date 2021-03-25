@@ -1,4 +1,5 @@
-﻿using BLL.InternationalCollaboration.AcademicCollaboration;
+﻿using BLL.Authen;
+using BLL.InternationalCollaboration.AcademicCollaborationRepository;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
@@ -116,14 +117,33 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpPost]
         public ActionResult uploadEvidenceFile(HttpPostedFileBase evidence, string folder_name)
         {
-            Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 3, false);
+            Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 4, false);
             return Json(new { evidence_link = f.WebViewLink });
         }
 
         [HttpPost]
-        public ActionResult saveAcademicCollaboration(SaveAcadCollab_Person saveAcadCollab_Person, SaveAcadCollab_Partner saveAcadCollab_Partner, SaveAcadCollab_AcademicCollaboration acadCollab_AcademicCollaboration)
+        public ActionResult saveAcademicCollaboration(int direction_id, int collab_type_id, SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
         {
-            return null;
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                } else
+                {
+                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
+                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                }
+                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id, obj_person, obj_partner, obj_academic_collab, acc.account_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            } catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         public ActionResult addPerson(Person person)
