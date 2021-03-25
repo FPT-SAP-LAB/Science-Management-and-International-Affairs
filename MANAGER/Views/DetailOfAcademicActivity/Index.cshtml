@@ -1442,7 +1442,7 @@
             return;
         }
         function setUpForm() {
-            window.open("/DetailOfAcademicActivity/RegisterForm?id=" + id_edit_giai_doan);
+            window.open("/DetailOfAcademicActivity/RegisterForm?id=" + id_edit_giai_doan + "&lid=" + document.getElementById('detail_language_content').value);
         }
         let ls_data = [];
         function filterSLby() {

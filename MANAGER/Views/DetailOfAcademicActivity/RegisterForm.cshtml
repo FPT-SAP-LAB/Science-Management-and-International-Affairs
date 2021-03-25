@@ -1,4 +1,4 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "Mẫu đăng kí theo giai đoạn cho hoạt động học thuật";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -150,7 +150,8 @@
         <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right" id="btn_save_form">Xác nhận</button>
     </div>
 </div>
-
+<input type="text" hidden value="@ViewBag.phaseID"/>
+<input type="text" hidden value="@ViewBag.language_id" />
 @section scripts{
     <script>
         arrDivControl = [0]

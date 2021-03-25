@@ -271,6 +271,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
+        public 
         public class baseDetail
         {
             public string activity_name { get; set; }
@@ -317,6 +318,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string contact_point_name { get; set; }
             public string contact_point_phone { get; set; }
             public string contact_point_email { get; set; }
+        }
+        public class baseForm
+        {
+
         }
     }
 }
