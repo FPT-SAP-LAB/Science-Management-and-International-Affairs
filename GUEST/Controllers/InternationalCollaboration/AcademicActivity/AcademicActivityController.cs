@@ -32,6 +32,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
                 new PageTree("Chi tiết","/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
+            ViewBag.detail = guestRepo.getBaseAADetail(id);
             return View();
         }
         [HttpPost]

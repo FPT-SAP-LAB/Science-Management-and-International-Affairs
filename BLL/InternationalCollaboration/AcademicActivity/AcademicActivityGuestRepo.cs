@@ -60,6 +60,28 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
 
+        public baseAA getBaseAADetail(int id)
+        {
+            try
+            {
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(adetail.activity_date_start as nvarchar) as 'from', cast(adetail.activity_date_end as nvarchar) as 'to', al.language_id
+                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
+                        on adetail.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
+                        on ai.activity_id = adetail.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
+                        on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
+                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        WHERE al.language_id = 1 AND [aa].activity_id = @id and ai.main_article = 1";
+                baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                detail.from = changeFormatDate(detail.from);
+                detail.to = changeFormatDate(detail.to);
+                return detail;
+            }
+            catch(Exception e)
+            {
+                return new baseAA();
+            }
+        }
+        
         public class baseAA
         {
             public string activity_name { get; set; }
