@@ -288,33 +288,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 try
                 {
                     //check duplicate academic collaboration: person, partner, collab_scope base on time
-                    if (obj_person.available_person && obj_partner.available_partner)
-                    {
-                        PartnerScope partnerScope = db.PartnerScopes.Where(x => x.partner_id == obj_partner.partner_id
-                                                                        && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
-                        if (partnerScope != null)
-                        {
-                            AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
-                                                                        && x.partner_scope_id == partnerScope.partner_scope_id
-                                                                        &&
-                                                                        ((x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
-                                                                        ||
-                                                                        (x.plan_study_start_date >= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
-                                                                        ||
-                                                                        (x.plan_study_start_date <= obj_academic_collab.actual_start_date && x.plan_study_end_date <= obj_academic_collab.actual_end_date))).FirstOrDefault();
-                            if (academicCollaboration != null)
-                            {
-                                AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
-                                return alertModal;
-                            }
-                        }
-                    }
+                    checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab);
 
                     Person person;
                     var person_id = 0;
                     Partner partner;
                     var partner_id = 0;
                     var partner_scope_id = 0;
+
                     //check available person
                     if (!obj_person.available_person)
                     {
@@ -442,6 +423,32 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     throw e;
                 }
             }
+        }
+
+        public AlertModal<AcademicCollaboration_Ext> checkDuplicateAcademicCollaboration(SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
+        {
+            if (obj_person.available_person && obj_partner.available_partner)
+            {
+                PartnerScope partnerScope = db.PartnerScopes.Where(x => x.partner_id == obj_partner.partner_id
+                                                                && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
+                if (partnerScope != null)
+                {
+                    AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
+                                                                && x.partner_scope_id == partnerScope.partner_scope_id
+                                                                &&
+                                                                ((x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
+                                                                ||
+                                                                (x.plan_study_start_date >= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                                ||
+                                                                (x.plan_study_start_date <= obj_academic_collab.actual_start_date && x.plan_study_end_date <= obj_academic_collab.actual_end_date))).FirstOrDefault();
+                    if (academicCollaboration != null)
+                    {
+                        AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
+                        return alertModal;
+                    }
+                }
+            }
+            return new AlertModal<AcademicCollaboration_Ext>(null, null, null, null);
         }
     }
 }
