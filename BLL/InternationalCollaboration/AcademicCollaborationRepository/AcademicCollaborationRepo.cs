@@ -92,7 +92,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                     country_name_param,
                                                     partner_name_param,
                                                     office_name_param,
-                                                    year_param).ToList();
+                                                    year_param,
+                                                    new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
+                                                    new SqlParameter("sortDirection", baseDatatable.SortDirection),
+                                                    new SqlParameter("start", baseDatatable.Start),
+                                                    new SqlParameter("length", baseDatatable.Length)).ToList();
 
                 int recordsTotal = db.Database.SqlQuery<int>("select count(*) from IA_AcademicCollaboration.AcademicCollaboration").FirstOrDefault();
                 return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
