@@ -119,7 +119,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-
                 if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
                 {
                     AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để cấp quyền.");
