@@ -26,12 +26,14 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
         {
             repo = new LoginRepo();
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            List<int> roleAccept = new List<int>() { 2, 3, 7 };
+            List<int> roleAccept = new List<int>() { 1, 2, 3, 7 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
                 return Json(String.Empty);
             }
+            if (u.account.role_id == 1)
+                u.url = "/Report_IC/Dashboard";
             Session["User"] = u;
             return Redirect(u.url);
         }

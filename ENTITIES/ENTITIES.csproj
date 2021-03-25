@@ -291,6 +291,7 @@
     <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ConferencesParticipationReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
@@ -461,6 +462,9 @@
     <Compile Include="Question.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="QuestionOption.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="RequestCitation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -554,7 +558,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

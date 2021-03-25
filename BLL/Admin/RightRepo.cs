@@ -44,6 +44,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Module>();
             }
         }
@@ -60,6 +61,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new Right();
             }
         }
