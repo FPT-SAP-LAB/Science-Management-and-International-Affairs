@@ -145,6 +145,68 @@
                                 <a href="#" class="text-muted text-hover-primary">1234567</a>
                             </div>
                         </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kt_datepicker_modal">
+                                Cập nhật quyết định
+                            </button>
+
+                            <!--begin::Modal-->
+                            <div class="modal fade" id="kt_datepicker_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Cập nhật quyết định</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <form class="form">
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">File quyết định <span style='color:red'>*</span>:</label>
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <div class="uppy" id="kt_uppy_1">
+                                                            <div class="uppy-wrapper text-center">
+                                                                <span class="form-text text-muted float-right">Max file size is 5MB and max number of files is 1.</span>
+                                                            </div>
+                                                            <div class="uppy-list"></div>
+                                                            <div class="uppy-status"></div>
+                                                            <div class="uppy-informer uppy-informer-min"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Số quyết định <span style='color:red'>*</span>:</label>
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <div class="input-group date">
+                                                            <input id="decision_number" type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Ngày ban hành <span style='color:red'>*</span>:</label>
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" readonly value="@DateTime.Today.ToString("dd/MM/yyyy")" id="kt_datepicker_3_modal" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary mr-2" data-dismiss="modal">Đóng</button>
+                                                <button type="button" onclick="SubmitPolicy()" class="btn btn-secondary">Cập nhật</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal-->
+                        </div>
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="card card-custom chinhsach-container">
@@ -265,20 +327,20 @@
                         <tbody>
                             @foreach (var item in Costs)
                             {
-                            <tr>
-                                <td class="align-middle">@item.content</td>
-                                <td class="align-middle">@item.sponsoring_organization</td>
-                                <td class="align-middle">@item.detail</td>
-                                <td>
-                                    <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
-                                </td>
-                                <td>
-                                    <label class="checkbox @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "checkbox-disabled")">
-                                        <input data-id="@item.cost_id" type="checkbox" @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "disabled") @(item.is_accepted ? "checked" : "") />
-                                        <span></span>
-                                    </label>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="align-middle">@item.content</td>
+                                    <td class="align-middle">@item.sponsoring_organization</td>
+                                    <td class="align-middle">@item.detail</td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                    </td>
+                                    <td>
+                                        <label class="checkbox @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "checkbox-disabled")">
+                                            <input data-id="@item.cost_id" type="checkbox" @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "disabled") @(item.is_accepted ? "checked" : "") />
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                </tr>
                             }
                             <tr>
                                 <th scope="row">Tổng cộng</th>
@@ -410,6 +472,150 @@
 </div>
 
 @section scripts {
+    @*cập nhật quyết định*@
+    <link href="~/Content/assets/plugins/custom/uppy/uppy.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js"></script>
+    <script>
+        var arrows;
+        if (KTUtil.isRTL()) {
+            arrows = {
+                leftArrow: '<i class="la la-angle-right"></i>',
+                rightArrow: '<i class="la la-angle-left"></i>'
+            }
+        } else {
+            arrows = {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+        }
+
+        // enable clear button for modal demo
+        $('#kt_datepicker_3_modal').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayBtn: "linked",
+            todayHighlight: true,
+            templates: arrows,
+            format: "dd/mm/yyyy"
+        });
+
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
+
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.pdf']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+
+        function SubmitPolicy() {
+            let decision_number = $("#decision_number").val().trim();
+            let valid_date = $("#kt_datepicker_3_modal").val();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Chưa có file quyết định");
+                return false;
+            }
+            if (decision_number == "") {
+                toastr.error("Chưa nhập số quyết định");
+                return false;
+            }
+            var fd = new FormData();
+            fd.append("decision_file", uppy1.getFiles()[0].data);
+            fd.append("valid_date", valid_date);
+            fd.append("decision_number", decision_number);
+
+            $.ajax({
+                url: "/ConferenceSponsor/SubmitPolicy",
+                method: "post",
+                dataType: "json",
+                complete: function (result) {
+                    if (result.responseJSON.id) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(result.responseJSON.message);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                data: fd
+            });
+        }
+    </script>
+    @*xét duyệt tiêu chí/chi phí*@
     <script>
         var ConferenceDetail = document.getElementById("ConferenceDetail").parentElement.removeAttribute("class");
 

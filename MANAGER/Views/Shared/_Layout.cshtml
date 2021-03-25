@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <!--begin::Head-->
 
@@ -305,16 +309,16 @@
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
                                 @*<div class="menu-submenu ">
-                <i class="menu-arrow"></i>
-                <ul class="menu-subnav">
-                    <li class="menu-item " aria-haspopup="true">
-                        <a href="#" class="menu-link ">
-                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                            <span class="menu-text">.......................</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>*@
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="#" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">.......................</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
@@ -468,6 +472,16 @@
                                                 <span class="menu-text">ĐƠN VỊ NỘI BỘ</span>
                                             </a>
                                         </li>
+                                        @*sẽ xóa true sau khi deploy cho khách hàng*@
+                                        @if (user != null && (user.account.role_id == 1 || true))
+                                        {
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="/SettingDrive" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">SETUP DRIVE</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </li>
@@ -498,14 +512,16 @@
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
                         @{
-
-                            BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                             if (user != null)
                             {
                                 <div class="topbar">
                                     <div class="topbar-item">
                                         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                              id="kt_quick_user_toggle">
+                                            <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                                            <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+                                                @user.account.full_name
+                                            </span>
                                             <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
                                                 <span class="symbol-label font-size-h5 font-weight-bold" style="background-image:url(@user.account.picture)"></span>
                                             </span>

@@ -68,6 +68,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -92,6 +93,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -110,23 +112,29 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     else
                     {
-                        //check duplicate data
-                        CollaborationScope collaborationScope = db.CollaborationScopes.Where(x => x.scope_name.Equals(scope_name) && x.scope_abbreviation.Equals(scope_abbreviation)).FirstOrDefault();
-                        if (collaborationScope == null)
+                        //check duplicate other data
+                        CollaborationScope collaborationScope_total = db.CollaborationScopes.Where(x => x.scope_id != scope_id && x.scope_name.Equals(scope_name) && x.scope_abbreviation.Equals(scope_abbreviation)).FirstOrDefault();
+                        if (collaborationScope_total == null)
                         {
-                            //edit
-                            CollaborationScope collaborationScope_edit = db.CollaborationScopes.Find(scope_id);
-                            if (collaborationScope_edit != null)
+                            //check with its self
+                            CollaborationScope collaborationScope = db.CollaborationScopes.Where(x => x.scope_name.Equals(scope_name) && x.scope_abbreviation.Equals(scope_abbreviation)).FirstOrDefault();
+                            if (collaborationScope == null)
                             {
-                                collaborationScope_edit.scope_name = scope_name;
-                                collaborationScope_edit.scope_abbreviation = scope_abbreviation;
-                                db.SaveChanges();
-                                return new AlertModal<CollaborationScope>(null, true, "Thành công", "Chỉnh sửa phạm vi hợp tác thành công");
+                                //edit
+                                CollaborationScope collaborationScope_edit = db.CollaborationScopes.Find(scope_id);
+                                if (collaborationScope_edit != null)
+                                {
+                                    collaborationScope_edit.scope_name = scope_name;
+                                    collaborationScope_edit.scope_abbreviation = scope_abbreviation;
+                                    db.SaveChanges();
+                                    return new AlertModal<CollaborationScope>(null, true, "Thành công", "Chỉnh sửa phạm vi hợp tác thành công");
+                                }
+                                else
+                                {
+                                    return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Không xác định được phạm vi hợp tác tương ứng. Vui lòng kiểm tra lại.");
+                                }
                             }
-                            else
-                            {
-                                return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Không xác định được phạm vi hợp tác tương ứng. Vui lòng kiểm tra lại.");
-                            }
+                            return new AlertModal<CollaborationScope>(null, true, "Thành công", "Không nhận thấy sự thay đổi.");
                         }
                         else
                         {
@@ -138,6 +146,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -158,12 +167,14 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }

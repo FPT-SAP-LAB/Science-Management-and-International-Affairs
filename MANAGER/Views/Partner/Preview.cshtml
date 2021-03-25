@@ -6,8 +6,9 @@
 
 <style>
     img {
-        width: 100% !important;
-        height: 100% !important;
+        width: auto;
+        max-width: 100%;
+        height: auto;
     }
 </style>
 
@@ -20,8 +21,16 @@
                         <div class="tab-content" id="">
                             <div id="" class="row partner-detail-title">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    @*<img src="@ViewBag.imgInp" alt="partner avata" style=" width: 100%; height: 100%;" />*@
-                                    <img id="avata" src="~/Content/assets/media/custom-image/Placeholder.jpg" />
+                                    @{
+                                        if (ViewBag.avata == null)
+                                        {
+                                            <img id="avata" src="~/Content/assets/media/custom-image/Placeholder.jpg" />
+                                        }
+                                        else
+                                        {
+                                            <img id="avata" src="@ViewBag.avata" />
+                                        }
+                                    }
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-4">
                                     <p style="margin-left:0in;">

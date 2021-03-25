@@ -15,14 +15,15 @@ namespace BLL.Admin
         {
             try
             {
-                string sql = @"select a.account_id,a.full_name,a.email,r.role_name,case when a.[login] = 0 then N'Chưa kích hoạt' 
-                                when a.[login] = 1 then N'Đã kích hoạt' end as 'login' 
+                string sql = @"select a.account_id,a.full_name,a.email,r.role_name,case when a.is_login = 0 then N'Chưa kích hoạt' 
+                                when a.is_login = 1 then N'Đã kích hoạt' end as 'is_login' 
                                 from General.Account a inner join General.[Role] r on r.role_id = a.role_id";
                 List<extendAccount> data = db.Database.SqlQuery<extendAccount>(sql).ToList();
                 return data;
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<extendAccount>();
             }
         }
@@ -40,6 +41,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseRight>();
             }
         }
@@ -54,6 +56,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseRight>();
             }
         }
@@ -66,6 +69,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Right>();
             }
         }
@@ -79,6 +83,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new baseAccount();
             }
         }
@@ -89,7 +94,7 @@ namespace BLL.Admin
                 db.Accounts.Add(new Account
                 {
                     email = obj.email,
-                    login = false,
+                    is_login = false,
                     role_id = obj.role_id
                 });
                 db.SaveChanges();
@@ -97,6 +102,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -113,6 +119,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -180,6 +187,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseRole>();
             }
         }
@@ -208,7 +216,7 @@ namespace BLL.Admin
             public string full_name { get; set; }
             public string email { get; set; }
             public string role_name { get; set; }
-            public string login { get; set; }
+            public string is_login { get; set; }
         }
     }
 }

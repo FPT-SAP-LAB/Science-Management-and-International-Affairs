@@ -156,7 +156,11 @@
     <script src="~/Content/assets/js/bundle.js"></script>
     <script>
         var login_btn;
+        $(document).ready(function () {
+            login_btn = new LoaderBtn($("#login_btn"));
+        });
         function onSignIn(googleUser) {
+            $('#login_btn').attr('disabled',true);
             login_btn.startLoading();
             var id_token = googleUser.getAuthResponse().id_token;
             var xhr = new XMLHttpRequest();
@@ -168,6 +172,7 @@
                         toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
+                            $('#login_btn').attr('disabled', false);
                             login_btn.stopLoading();
                         });
                     } else {
@@ -181,9 +186,7 @@
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
         });
-        $(document).ready(function () {
-            login_btn = new LoaderBtn($("#login_btn"));
-        });
+
     </script>
 </body>
 

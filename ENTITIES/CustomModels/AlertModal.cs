@@ -8,12 +8,12 @@ namespace ENTITIES.CustomModels
 {
     public class AlertModal<T>
     {
-        public bool success { get; set; }
+        public bool? success { get; set; }
         public string title { get; set; }
         public string content { get; set; }
         public T obj { get; set; }
 
-        public AlertModal(T obj, bool success, string title, string content)
+        public AlertModal(T obj, bool? success, string title, string content)
         {
             this.obj = obj;
             this.success = success;
@@ -26,6 +26,12 @@ namespace ENTITIES.CustomModels
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
             this.content = content;
+        }
+        public AlertModal(T obj, bool success)
+        {
+            this.obj = obj;
+            this.success = success;
+            title = success ? "Thành công" : "Lỗi";
         }
         public AlertModal(bool success, string content)
         {
