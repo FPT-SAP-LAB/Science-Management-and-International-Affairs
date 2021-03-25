@@ -130,7 +130,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 4, false);
                     return Json(new { evidence_link = f.WebViewLink });
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
