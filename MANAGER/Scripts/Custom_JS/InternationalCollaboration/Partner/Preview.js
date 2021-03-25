@@ -10,7 +10,7 @@
         avata: avata,
     };
     $.ajax({
-        url: '/Partner/pass_content',
+        url: '/Partner/Pass_Content',
         type: "POST",
         data: JSON.stringify(temp),
         contentType: "application/json;charset=utf-8",

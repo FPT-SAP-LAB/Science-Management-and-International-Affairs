@@ -149,7 +149,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RightController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\SettingDriveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2150,7 +2149,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Shared\_Layout_Admin.cshtml" />
     <Content Include="Views\Right\Index.cshtml" />

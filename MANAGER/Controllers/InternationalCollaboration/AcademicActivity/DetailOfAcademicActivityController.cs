@@ -19,6 +19,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.Title = "Thông tin hoạt động học thuật";
             ViewBag.activity_id = id;
             ViewBag.types = repo.getType();
+            ViewBag.unit = repo.getUnits();
             return View();
         }
         [HttpPost]
@@ -65,6 +66,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 return Json(String.Empty);
             }
+        }
+        [HttpPost]
+        public ActionResult getDatatableDTC(int activity_id)
+        {
+            repo = new DetailOfAcademicActivityRepo();
+            List<DetailOfAcademicActivityRepo.basePartner> data = repo.getDatatableDTC(activity_id);
+            return Json(new { success = true, data = data });
+        }
+        [HttpPost]
+        public JsonResult getContent(int activity_partner_id)
+        {
+            repo = new DetailOfAcademicActivityRepo();
+            DetailOfAcademicActivityRepo.ContactInfo data = repo.getContact(activity_partner_id);
+            return Json(data);
         }
         public JsonResult add_Phase(int id, string name, string from, string to)
         {
