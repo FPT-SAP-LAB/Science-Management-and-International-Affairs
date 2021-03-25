@@ -133,14 +133,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 {
                     u = (LoginRepo.User)Session["User"];
                     acc = u.account;
-                } else
+                }
+                else
                 {
                     AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
                     return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
                 }
                 AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id, obj_person, obj_partner, obj_academic_collab, acc.account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }

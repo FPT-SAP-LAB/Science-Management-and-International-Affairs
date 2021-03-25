@@ -403,11 +403,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         change_date = DateTime.Now,
                         evidence = obj_academic_collab.evidence_link,
                         account_id = account_id
-                        
+
                     };
                     db.CollaborationStatusHistories.Add(collab_status_hist);
                     db.SaveChanges();
-                    
+
                     trans.Commit();
                     return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
                 }
