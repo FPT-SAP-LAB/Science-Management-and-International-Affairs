@@ -63,7 +63,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
                 if (type === "sort" || type === "") {
                     return data;
                 }
-                return moment(data).format("L");
+                return moment(data).format('DD-MM-YYYY');
             }
         },
         {
@@ -73,7 +73,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
                 if (type === "sort" || type === "") {
                     return data;
                 }
-                return moment(data).format("L");
+                return moment(data).format('DD-MM-YYYY');
             }
         },
         {
@@ -150,7 +150,8 @@ var collab_going_table = $('#collab_going_table').DataTable({
             title: 'Hành động',
             orderable: false,
             render: function () {
-                return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a>
+                        <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>`
             }
         }
     ],
@@ -164,13 +165,6 @@ var collab_going_table = $('#collab_going_table').DataTable({
 $("#collab_going_search").click(function () {
     collab_going_table.ajax.reload();
 });
-
-//Add officer
-
-///Check partner
-
-///Upload file
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////TABLE 2 - PROGRAM - GOING///////////////////////////////////////////////////////////
