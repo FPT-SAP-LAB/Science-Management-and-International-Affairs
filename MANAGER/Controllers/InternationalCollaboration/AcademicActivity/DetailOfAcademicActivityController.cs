@@ -207,12 +207,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult RegisterForm(int id,int lid)
+        public ActionResult RegisterForm(int id, int lid)
         {
             repo = new DetailOfAcademicActivityRepo();
             ViewBag.phaseID = id;
             ViewBag.language_id = lid;
-            
+
             ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
             return View();
         }

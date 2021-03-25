@@ -271,7 +271,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
-        public 
+        public
         public class baseDetail
         {
             public string activity_name { get; set; }
