@@ -39,7 +39,6 @@ namespace BLL.InternationalCollaboration.MasterData
                     Specialization specialization = db.Specializations.Find(spe_id);
                     try
                     {
-
                         db.Specializations.Remove(specialization);
                         db.SaveChanges();
                         return new AlertModal<Specialization>(null, true, "Thành công", "Xóa lĩnh vực hợp tác thành công");
