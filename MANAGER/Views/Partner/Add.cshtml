@@ -248,17 +248,14 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                     };
-                    if (data.json.success && data.type == 1) {
+                    if (data.success) {
                         toastr.options.onHidden = function () {
                             window.location.href = '@Url.Action("List", "Partner")';
                         }
                         toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
                         save_loader.stopLoading()
-                    } else if (!data.json.success && data.type == 0) {
-                        toastr.warning(data.json.content);
-                        save_loader.stopLoading()
-                    }else {
-                        toastr.error('Có lỗi xảy ra khi thêm');
+                    } else {
+                        toastr.warning(data.content);
                         save_loader.stopLoading()
                     }
                 },

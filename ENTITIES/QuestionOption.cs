@@ -12,16 +12,11 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class QuestionOption
     {
         public int question_id { get; set; }
-        public int form_id { get; set; }
-        public string title { get; set; }
-        public int answer_type_id { get; set; }
-        public bool is_compulsory { get; set; }
+        public string option_title { get; set; }
     
-        public virtual QuestionOption QuestionOption { get; set; }
-        public virtual AnswerType AnswerType { get; set; }
-        public virtual Form Form { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

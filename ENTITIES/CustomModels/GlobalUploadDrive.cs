@@ -1,6 +1,7 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
+using Google.Apis.Requests;
 using Google.Apis.Services;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,7 +15,7 @@ namespace ENTITIES.CustomModels
 {
     public static class GlobalUploadDrive
     {
-        //Field: Dữ liệu trả về, nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
+        //Field: Dữ liệu trả về của loại request, Nếu là file nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
         //Q: query search, xem thêm tại đây https://developers.google.com/drive/api/v3/ref-search-terms
         //SupportsAllDrives: hỗ trợ thêm trên cả drive của người dùng, shared drive
         //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
@@ -46,6 +47,23 @@ namespace ENTITIES.CustomModels
                 SMDrive = JObject.Parse(json).Value<string>("SMDriveID");
                 IADrive = JObject.Parse(json).Value<string>("IADriveID");
             }
+        }
+        public static string CurrentAccount()
+        {
+            if (driveService == null)
+                return null;
+            AboutResource.GetRequest request = driveService.About.Get();
+            request.Fields = "user";
+            var About = request.Execute();
+            return About.User.EmailAddress;
+        }
+        public static void Logout()
+        {
+            if (driveService == null)
+                return;
+            _ = credential.RevokeTokenAsync(CancellationToken.None).Result;
+            credential = null;
+            driveService = null;
         }
 
         //Thư mục gốc

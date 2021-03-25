@@ -109,9 +109,9 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\AcademicCollaborationRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProcedureRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProgramRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />

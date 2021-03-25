@@ -159,21 +159,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 {
                     return Json(new
                     {
-                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài"),
-                        type = 0
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
                     });
                 }
                 else
                 {
-                    AlertModal<string> alertModal = partnerRePo.AddPartner(files_request, content,
+                    AlertModal<string> json = partnerRePo.AddPartner(files_request, content,
                         partner_article, numberOfImage, acc.account_id);
-                    return Json(new { json = alertModal, type = 1 });
+                    return Json(new { json.success, json.content });
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return Json(new { json = new AlertModal<string>(false, "Có lỗi xảy ra"), type = 2 });
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
             }
         }
 
