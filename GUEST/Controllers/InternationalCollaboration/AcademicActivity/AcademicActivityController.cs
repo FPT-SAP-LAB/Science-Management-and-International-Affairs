@@ -8,13 +8,14 @@ using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
 {
-    public class AcademicActivityController : Controller{ 
+    public class AcademicActivityController : Controller
+    {
         private static AcademicActivityGuestRepo guestRepo = new AcademicActivityGuestRepo();
-    // GET: AcademicActivity
-    public ActionResult Index()
+        // GET: AcademicActivity
+        public ActionResult Index()
         {
             ViewBag.title = "Hoạt động học thuật";
-            
+
             ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>());
             var pagesTree = new List<PageTree>
             {

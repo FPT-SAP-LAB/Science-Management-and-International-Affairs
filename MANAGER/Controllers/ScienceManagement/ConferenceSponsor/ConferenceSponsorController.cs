@@ -61,6 +61,13 @@ namespace MANAGER.Controllers
             DetailRepos.UpdateCosts(data, request_id);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
+        [HttpPost]
+        public JsonResult SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number);
+            return Json(result);
+        }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)
         {
