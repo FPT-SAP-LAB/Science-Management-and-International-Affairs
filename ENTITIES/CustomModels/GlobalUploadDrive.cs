@@ -1,6 +1,7 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
+using Google.Apis.Requests;
 using Google.Apis.Services;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,7 +15,7 @@ namespace ENTITIES.CustomModels
 {
     public static class GlobalUploadDrive
     {
-        //Field: Dữ liệu trả về, nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
+        //Field: Dữ liệu trả về của loại request, Nếu là file nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
         //Q: query search, xem thêm tại đây https://developers.google.com/drive/api/v3/ref-search-terms
         //SupportsAllDrives: hỗ trợ thêm trên cả drive của người dùng, shared drive
         //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
@@ -46,6 +47,23 @@ namespace ENTITIES.CustomModels
                 SMDrive = JObject.Parse(json).Value<string>("SMDriveID");
                 IADrive = JObject.Parse(json).Value<string>("IADriveID");
             }
+        }
+        public static string CurrentAccount()
+        {
+            if (driveService == null)
+                return null;
+            AboutResource.GetRequest request = driveService.About.Get();
+            request.Fields = "user";
+            var About = request.Execute();
+            return About.User.EmailAddress;
+        }
+        public static void Logout()
+        {
+            if (driveService == null)
+                return;
+            _ = credential.RevokeTokenAsync(CancellationToken.None).Result;
+            credential = null;
+            driveService = null;
         }
 
         //Thư mục gốc
@@ -112,7 +130,7 @@ namespace ENTITIES.CustomModels
                 MimeType = "application/vnd.google-apps.folder",
                 Parents = new List<string>
                 {
-                    ParentID,
+                    ParentID
                 }
             };
 
@@ -215,12 +233,12 @@ namespace ENTITIES.CustomModels
         //|     |_____image 2
         //|  
         //|_____MOU
-        public static Google.Apis.Drive.v3.Data.File UploadIAFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder)
+        public static Google.Apis.Drive.v3.Data.File UploadIAFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
         {
-            return UploadIAFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder)[0];
+            return UploadIAFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, isFolder)[0];
         }
 
-        public static List<Google.Apis.Drive.v3.Data.File> UploadIAFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder)
+        public static List<Google.Apis.Drive.v3.Data.File> UploadIAFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, bool isFolder)
         {
             string SubFolderName;
             switch (TypeFolder)
@@ -233,6 +251,9 @@ namespace ENTITIES.CustomModels
                     break;
                 case 3:
                     SubFolderName = "MOA";
+                    break;
+                case 4:
+                    SubFolderName = "Academic Collaboration";
                     break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
@@ -260,7 +281,18 @@ namespace ENTITIES.CustomModels
                 createRequest.SupportsAllDrives = true;
                 createRequest.Execute();
             }
-            return UploadedFiles;
+
+            if (isFolder)
+            {
+                return new List<Google.Apis.Drive.v3.Data.File>
+                {
+                    folder //return parent files
+                };
+            }
+            else
+            {
+                return UploadedFiles;
+            }
         }
     }
 }

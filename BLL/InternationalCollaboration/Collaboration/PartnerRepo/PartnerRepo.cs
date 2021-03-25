@@ -14,12 +14,12 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 {
     public class PartnerRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<PartnerList> getListAll(BaseDatatable baseDatatable, SearchPartner searchPartner)
+        ScienceAndInternationalAffairsEntities db;
+        public BaseServerSideData<PartnerList> GetListAll(BaseDatatable baseDatatable, SearchPartner searchPartner)
         {
             try
             {
-                db.Configuration.LazyLoadingEnabled = false;
+                db = new ScienceAndInternationalAffairsEntities();
                 string sql = @" select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
                                     a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
                                 STRING_AGG(a.specialization_name, ',') 'specialization_name', a.country_name from 
@@ -71,9 +71,10 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public AlertModal<string> addPartner(List<HttpPostedFileBase> files_request, string content,
+        public AlertModal<string> AddPartner(List<HttpPostedFileBase> files_request, string content,
             PartnerArticle partner_article, int number_of_image, int account_id)
         {
+            db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -83,7 +84,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
                     if (files_request.Count != 0)
                     {
-                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1);
+                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
                         for (int i = 0; i < number_of_image; i++)
                         {
                             image_drive_id.Add(files_upload[i].Id);
@@ -95,31 +96,37 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                         }
                     }
 
-                    Article article = new Article();
-                    article.need_approved = false;
-                    article.article_status_id = 2;
-                    article.account_id = account_id;
+                    Article article = new Article
+                    {
+                        need_approved = false,
+                        article_status_id = 2,
+                        account_id = account_id
+                    };
                     db.Articles.Add(article);
                     db.SaveChanges();
 
-                    ArticleVersion articleVersion = new ArticleVersion();
-                    articleVersion.article_content = content;
-                    articleVersion.publish_time = DateTime.Today;
-                    articleVersion.version_title = partner_article.partner_name + "-" + DateTime.Today;
-                    articleVersion.article_id = article.article_id;
-                    articleVersion.language_id = 1;
+                    ArticleVersion articleVersion = new ArticleVersion
+                    {
+                        article_content = content,
+                        publish_time = DateTime.Today,
+                        version_title = partner_article.partner_name,
+                        article_id = article.article_id,
+                        language_id = 1
+                    };
                     db.ArticleVersions.Add(articleVersion);
 
-                    Partner partner = new Partner();
-                    partner.partner_name = partner_article.partner_name;
-                    partner.website = partner_article.website;
-                    partner.address = partner_article.address;
-                    partner.is_deleted = false;
-                    partner.country_id = partner_article.country_id;
-                    partner.article_id = article.article_id;
+                    Partner partner = new Partner
+                    {
+                        partner_name = partner_article.partner_name,
+                        website = partner_article.website,
+                        address = partner_article.address,
+                        is_deleted = false,
+                        country_id = partner_article.country_id,
+                        article_id = article.article_id
+                    };
                     if (files_upload.Count != 0)
                     {
-                        partner.avatar = files_upload.LastOrDefault().WebViewLink;
+                        partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
                     db.Partners.Add(partner);
                     db.SaveChanges();
@@ -135,10 +142,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public AlertModal<string> deletePartner(int id)
+        public AlertModal<string> DeletePartner(int id)
         {
             try
             {
+                db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = new Partner();
                 partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
                 partner.is_deleted = true;
@@ -150,50 +158,131 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 return new AlertModal<string>(false, "Có lỗi xảy ra");
             }
         }
-        public void editPartner()
-        {
-            return;
-        }
-        public PartnerHistoryList<PartnerHistory> getHistory(int id)
+
+        public PartnerArticle LoadEditPartner(int id)
         {
             try
             {
+                db = new ScienceAndInternationalAffairsEntities();
+                Partner partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
+                PartnerArticle partnerArticle = new PartnerArticle
+                {
+                    partner_id = partner.partner_id,
+                    partner_name = partner.partner_name,
+                    country_id = partner.country_id,
+                    address = partner.address,
+                    website = partner.website,
+                    avatar = partner.avatar
+                };
+
+                if (partner.article_id != null)
+                {
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                    partnerArticle.partner_content = articleVersion.article_content;
+                }
+                return partnerArticle;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<string> EditPartner(List<HttpPostedFileBase> files_request, string content,
+            PartnerArticle partner_article, int number_of_image, int partner_id, int account_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db = new ScienceAndInternationalAffairsEntities();
+
+                    List<string> image_drive_id = new List<string>();
+                    List<string> image_drive_data_link = new List<string>();
+                    List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+                    if (files_request.Count != 0)
+                    {
+                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
+                        for (int i = 0; i < number_of_image; i++)
+                        {
+                            image_drive_id.Add(files_upload[i].Id);
+                            image_drive_data_link.Add(files_upload[i].WebViewLink);
+                        }
+                        for (int i = 0; i < number_of_image; i++)
+                        {
+                            content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                        }
+                    }
+
+                    Partner partner = db.Partners.Where(x => x.partner_id == partner_id).FirstOrDefault();
+                    partner.partner_name = partner_article.partner_name;
+                    partner.website = partner_article.website;
+                    partner.address = partner_article.address;
+                    partner.country_id = partner_article.country_id;
+                    if (files_upload.Count != 0)
+                    {
+                        partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
+                    }
+
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                    articleVersion.article_content = content;
+
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    trans.Rollback();
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
+                }
+            }
+        }
+
+        public PartnerHistoryList<PartnerHistory> GetHistory(int id)
+        {
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
                 string query = @"WITH b AS(
                                 SELECT ps.partner_scope_id, ps.partner_id
                                 FROM IA_Collaboration.PartnerScope ps 
                                 WHERE ps.partner_id = {0}
                                 )
-                                SELECT '' as 'code', N'Tổ chức hoạt động học thuật' 'activity', '' AS 'full_name', aa.activity_date_start, aa.activity_date_end
+                                SELECT '' as 'code', N'Tổ chức hoạt động học thuật' 'activity', isnull(ap.contact_point_name, '')  'contact_point_name',
+								isnull(ap.contact_point_email, '') 'contact_point_email', isnull(ap.contact_point_phone, '')  'contact_point_phone', '' AS 'full_name', aa.activity_date_start, aa.activity_date_end
                                 FROM SMIA_AcademicActivity.AcademicActivity aa INNER JOIN SMIA_AcademicActivity.ActivityPartner ap
                                 ON aa.activity_id = ap.activity_id INNER JOIN b 
                                 ON b.partner_scope_id = ap.partner_scope_id
                                 UNION ALL
-                                SELECT '' as 'code', N'Hợp tác nghiên cứu' 'activity', '', rc.project_start_date, rc.project_end_date
+                                SELECT '' as 'code', N'Hợp tác nghiên cứu' 'activity', '','','','', rc.project_start_date, rc.project_end_date
                                 FROM IA_ResearchCollaboration.ResearchCollaboration rc INNER JOIN IA_ResearchCollaboration.ResearchPartner rp
                                 ON rc.project_id = rp.project_id INNER JOIN b ON rp.partner_scope_id = b.partner_scope_id
                                 UNION ALL
-                                SELECT '' as 'code', N'Hợp tác học thuật' 'activity', '', ac.plan_study_start_date, ac.plan_study_end_date
+                                SELECT '' as 'code', N'Hợp tác học thuật' 'activity', '','', '','', ac.plan_study_start_date, ac.plan_study_end_date
                                 FROM IA_AcademicCollaboration.AcademicCollaboration ac INNER JOIN b 
                                 ON ac.partner_scope_id = b.partner_scope_id
                                 UNION ALL
-                                SELECT DISTINCT mou.mou_code, N'Ký kết biên bản ghi nhớ' 'activity', a.full_name,
+                                SELECT DISTINCT mou.mou_code, N'Ký kết biên bản ghi nhớ' 'activity', isnull(mp.contact_point_name, '')  'contact_point_name',
+								isnull(mp.contact_point_email, '') 'contact_point_email', isnull(mp.contact_point_phone, '')  'contact_point_phone', a.full_name,
                                 mp.mou_start_date, mou.mou_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOU mou ON mou.mou_id = mp.mou_id INNER JOIN General.[Account] a
                                 ON mou.account_id = a.account_id
                                 UNION ALL
-                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity', a.full_name, mp.moa_start_date, moa.moa_end_date
+                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity','','','', a.full_name, mp.moa_start_date, moa.moa_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOA moa ON moa.moa_id = mp.moa_id 
                                 INNER JOIN General.Account a ON a.account_id = moa.account_id
                                 UNION ALL
-                                SELECT DISTINCT mb.mou_bonus_code, N'Ký kết biên bản ghi nhớ bổ sung' 'activity', '', mb.mou_bonus_decision_date, mb.mou_bonus_end_date
+                                SELECT DISTINCT mb.mou_bonus_code, N'Ký kết biên bản ghi nhớ bổ sung' 'activity','','','', '', mb.mou_bonus_decision_date, mb.mou_bonus_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOUBonus mb ON mp.mou_id = mb.mou_id 
                                 LEFT JOIN IA_Collaboration.MOuPartnerScope mps ON mps.mou_bonus_id = mb.mou_bonus_id
                                 WHERE (mb.mou_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
                                 UNION ALL
-                                SELECT DISTINCT mb.moa_bonus_code, N'Ký kết biên bản thỏa thuận bổ sung' 'activity', '', MB.moa_bonus_decision_date, mb.moa_bonus_end_date
+                                SELECT DISTINCT mb.moa_bonus_code, N'Ký kết biên bản thỏa thuận bổ sung' 'activity','','','', '', MB.moa_bonus_decision_date, mb.moa_bonus_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOABonus mb ON mp.moa_id = mb.moa_id 
                                 LEFT JOIN IA_Collaboration.MOAPartnerScope mps ON mps.moa_bonus_id = mb.moa_bonus_id
@@ -209,11 +298,31 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public void getPreView()
+        public string GetPartnerDetailSpec(int id)
+        {
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                string query = @"SELECT s.specialization_name
+                        FROM IA_Collaboration.MOUPartnerSpecialization mps
+                        INNER JOIN IA_Collaboration.MOUPartner mp ON mp.mou_partner_id = mps.mou_partner_id
+                        INNER JOIN General.Specialization s on s.specialization_id = mps.specialization_id
+                        WHERE mp.partner_id = {0} ";
+
+                List<string> list = db.Database.SqlQuery<string>(query, id).ToList();
+                return String.Join(", ", list.ToArray());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void GetPreView()
         {
             return;
         }
-        public void exportExcel()
+        public void ExportExcel()
         {
             return;
         }

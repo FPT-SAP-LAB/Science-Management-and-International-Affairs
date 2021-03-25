@@ -149,7 +149,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RightController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\SettingDriveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,6 +187,7 @@
     <Content Include="Content\assets\css\themes\layout\header\base\light.css" />
     <Content Include="Content\assets\css\themes\layout\header\menu\dark.css" />
     <Content Include="Content\assets\css\themes\layout\header\menu\light.css" />
+    <Content Include="Content\assets\js\bundle.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\column-rendering.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\column-visibility.js" />
     <Content Include="Content\assets\js\pages\crud\datatables\advanced\footer-callback.js" />
@@ -2149,7 +2149,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Shared\_Layout_Admin.cshtml" />
     <Content Include="Views\Right\Index.cshtml" />

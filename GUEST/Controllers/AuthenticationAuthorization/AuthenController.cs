@@ -10,7 +10,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
     {
-        private static LoginRepo repo = new LoginRepo();
+        LoginRepo repo;
         [HttpPost]
         public ActionResult Logout()
         {
@@ -20,9 +20,16 @@ namespace GUEST.Controllers.AuthenticationAuthorization
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> SigninGoogleAsync(string idtoken)
         {
+            repo = new LoginRepo();
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
-            List<int> roleAccept = new List<int>() { 5, 6 };
+            List<int> roleAccept = new List<int>() { 0 };
             LoginRepo.User u = repo.getAccount(user, roleAccept);
+            if (u == null)
+            {
+                return Json(String.Empty);
+            }
+            if (u.account.role_id == 1)
+                u.url = "/";
             if (u == null)
             {
                 return Json("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");

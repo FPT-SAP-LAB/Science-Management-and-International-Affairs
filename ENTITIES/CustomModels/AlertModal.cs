@@ -27,6 +27,12 @@ namespace ENTITIES.CustomModels
             title = success ? "Thành công" : "Lỗi";
             this.content = content;
         }
+        public AlertModal(T obj, bool success)
+        {
+            this.obj = obj;
+            this.success = success;
+            title = success ? "Thành công" : "Lỗi";
+        }
         public AlertModal(bool success, string content)
         {
             this.success = success;

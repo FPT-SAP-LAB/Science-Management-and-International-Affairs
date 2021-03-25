@@ -18,7 +18,7 @@
                             <a href="javascipt:;" id="check_person">Kiểm tra</a>
                         </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="add_officer_name" name="param" required style="width:100% !important">
+                            <select class="form-control text-center" id="add_officer_name" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
@@ -63,6 +63,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:red">*</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="add_officer_coop_scope" name="param" style="width:100% !important">
                                 <option selected value=""></option>
@@ -110,7 +111,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">Bản mềm</label>
-                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <label style="font-style: italic;">(Tối đa 1MB và 1 tệp tin)</label>
                         <div class="uppy row" id="add_officer_upload">
                             <div class="uppy-wrapper col-6"></div>
                             <div class="uppy-list col-6"></div>
@@ -144,7 +145,7 @@
                         <div class="form-group">
                             <div class="checkbox-list">
                                 <label class="checkbox font-weight-bolder">
-                                    <input type="checkbox" name="" id="add_officer_support" />
+                                    <input type="checkbox" id="add_officer_support" />
                                     <span></span>
                                     Hỗ trợ qua phòng QLKH & HTQT
                                 </label>
@@ -158,8 +159,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button id="" type="button" class="btn btn-sm btn-light-primary px-6">Lưu</button>
+                <button id="add_officer_close" type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
+                <button id="add_officer_save" type="button" class="btn btn-sm btn-light-primary">Lưu</button>
             </div>
         </div>
     </div>
