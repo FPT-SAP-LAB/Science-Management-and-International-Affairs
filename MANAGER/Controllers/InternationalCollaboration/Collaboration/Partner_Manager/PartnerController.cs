@@ -9,19 +9,23 @@ using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using MANAGER.Support;
 using BLL.Authen;
+using Newtonsoft.Json;
+using BLL.ModelDAL;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
     public class PartnerController : Controller
     {
-        private static PartnerRepo partnerRePo = new PartnerRepo();
+        private static readonly PartnerRepo partnerRePo = new PartnerRepo();
+        private static readonly CountryRepo countryRepo = new CountryRepo();
+        private static readonly SpecializationRepo specializationRepo = new SpecializationRepo();
         //[Auther(RightID = "8")]
+
         public ActionResult List()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            ViewBag.countries = db.Countries.ToList();
-            ViewBag.specializations = db.Specializations.ToList();
+            ViewBag.countries = countryRepo.GetCountries();
+            ViewBag.specializations = specializationRepo.GetSpecializations();
             return View();
         }
 
@@ -31,7 +35,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
                 return Json(new
                 {
                     success = true,
@@ -50,9 +54,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         public ActionResult List_Deleted()
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            ViewBag.countries = db.Countries.ToList();
-            ViewBag.specializations = db.Specializations.ToList();
+            ViewBag.countries = countryRepo.GetCountries();
+            ViewBag.specializations = specializationRepo.GetSpecializations();
             return View();
         }
 
@@ -62,7 +65,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.getListAll(baseDatatable, searchPartner);
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
                 return Json(new
                 {
                     success = true,
@@ -83,7 +86,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             try
             {
-                PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.getHistory(id);
+                PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.GetHistory(id);
 
                 return Json(new
                 {
@@ -103,7 +106,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             try
             {
-                AlertModal<string> alertModal = partnerRePo.deletePartner(id);
+                AlertModal<string> alertModal = partnerRePo.DeletePartner(id);
                 return Json(new { alertModal.success }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -114,9 +117,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         public ActionResult Add()
         {
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             ViewBag.title = "THÊM ĐỐI TÁC";
-            ViewBag.countries = db.Countries.ToList();
+            ViewBag.countries = countryRepo.GetCountries();
             return View();
         }
 
@@ -127,11 +129,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 ViewBag.title = "THÊM ĐỐI TÁC";
-                PartnerArticle partner_article = new PartnerArticle();
-                partner_article.partner_name = partner_name;
-                partner_article.country_id = country_id;
-                partner_article.website = website;
-                partner_article.address = address;
+                PartnerArticle partner_article = new PartnerArticle
+                {
+                    partner_name = partner_name,
+                    country_id = country_id,
+                    website = website,
+                    address = address
+                };
 
                 LoginRepo.User u = new LoginRepo.User();
                 Account acc = new Account();
@@ -151,16 +155,29 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 {
                     files_request.Add(image);
                 }
-                AlertModal<string> alertModal = partnerRePo.addPartner(files_request, content, partner_article, numberOfImage, acc.account_id);
-                return Json(new { alertModal.success });
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+                else
+                {
+                    AlertModal<string> json = partnerRePo.AddPartner(files_request, content,
+                        partner_article, numberOfImage, acc.account_id);
+                    return Json(new { json.success, json.content });
+                }
             }
             catch (Exception e)
             {
-                return Json(new { e });
+                Console.WriteLine(e);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
             }
         }
 
-        public ActionResult pass_content(string content, string website, string address, string imgInp)
+        public ActionResult Pass_Content(string content, string website, string address, string avata)
         {
             try
             {
@@ -168,7 +185,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 Session["content"] = content;
                 Session["address"] = address;
                 Session["website"] = website;
-                Session["imgInp"] = imgInp;
+                Session["avata"] = avata;
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -183,14 +200,101 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             ViewBag.content = Session["content"];
             ViewBag.address = Session["address"];
             ViewBag.website = Session["website"];
-            ViewBag.imgInp = Session["imgInp"];
+            ViewBag.avata = Session["avata"];
             return View();
         }
 
-        public ActionResult Detail()
+        [HttpPost]
+        public ActionResult Detail(int id)
         {
-            ViewBag.pageTitle = "CHI TIẾT ĐỐI TÁC";
-            return View();
+            try
+            {
+                ViewBag.title = "CHI TIẾT ĐỐI TÁC";
+                ViewBag.partnerArticle = partnerRePo.LoadEditPartner(id);
+                ViewBag.countries = countryRepo.GetCountries();
+                ViewBag.specializations = specializationRepo.GetSpecializations();
+                ViewBag.specializations_selected = partnerRePo.GetPartnerDetailSpec(id);
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Detail_History(int id)
+        {
+            try
+            {
+                PartnerHistoryList<PartnerHistory> partnerHistoryList = partnerRePo.GetHistory(id);
+
+                return Json(new
+                {
+                    data = partnerHistoryList.Data,
+                    JsonRequestBehavior.AllowGet
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Save_Edit(HttpPostedFileBase image, string content, int numberOfImage, int partner_id,
+            string partner_name, int country_id, string website, string address)
+        {
+            try
+            {
+                ViewBag.title = "CHI TIẾT ĐỐI TÁC";
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+                PartnerArticle partner_article = new PartnerArticle
+                {
+                    partner_name = partner_name,
+                    country_id = country_id,
+                    website = website,
+                    address = address
+                };
+
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                if (image != null)
+                {
+                    files_request.Add(image);
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài"),
+                        type = 0
+                    });
+                }
+                else
+                {
+                    AlertModal<string> alertModal = partnerRePo.EditPartner(files_request, content,
+                        partner_article, numberOfImage, partner_id, acc.account_id);
+                    return Json(new { json = alertModal, type = 1 });
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return Json(new { json = new AlertModal<string>(false, "Có lỗi xảy ra"), type = 2 });
+            }
         }
     }
 }

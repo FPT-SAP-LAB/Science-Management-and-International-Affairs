@@ -109,9 +109,9 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\AcademicCollaborationRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProcedureRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaboration\ProgramRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />
@@ -127,6 +127,8 @@
     <Compile Include="InternationalCollaboration\MasterData\CollaborationStatusRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\DirectionRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\InternalUnitRepo.cs" />
+    <Compile Include="ModelDAL\CountryRepo.cs" />
+    <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
   </ItemGroup>
