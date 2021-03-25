@@ -1,5 +1,6 @@
 ﻿@{
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["USer"];
 }
 
 <!DOCTYPE html>
@@ -159,13 +160,18 @@
                                         </li>
                                         <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                                             <a href="#" class="menu-link">
-                                                <span class="menu-text">
-                                                    Tin
-                                                    tức
-                                                </span><span class="menu-desc"></span><i class="menu-arrow"></i>
+                                                <span class="menu-text">Tin tức</span><span class="menu-desc"></span><i class="menu-arrow"></i>
                                             </a>
-
                                         </li>
+                                        @*sẽ xóa true sau khi deploy cho khách hàng*@
+                                        @if (@user != null && (user.account.role_id == 1 || true))
+                                        {
+                                            <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="/SettingDrive" class="menu-link">
+                                                    <span class="menu-text">SETUP DRIVE</span><span class="menu-desc"></span><i class="menu-arrow"></i>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                     <!--end::Header Nav-->
                                 </div>
@@ -255,7 +261,7 @@
                                 <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
                                     <form>
                                         <!--begin::Header-->
-                                        <div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="        background-image: url(../Content/assets/media/misc/bg-1.jpg)">
+                                        <div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">
                                             <!--begin::Title-->
                                             <h4 class="d-flex flex-center rounded-top">
                                                 <span class="text-white">User Notifications</span>
@@ -1017,7 +1023,6 @@
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
                                     <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
-                                    @{ BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["USer"]; }
                                     @{
                                         if (user != null)
                                         {

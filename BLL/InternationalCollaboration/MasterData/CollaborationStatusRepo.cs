@@ -67,6 +67,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -91,6 +92,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -136,6 +138,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -162,6 +165,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
