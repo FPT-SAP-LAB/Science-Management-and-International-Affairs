@@ -28,90 +28,155 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpPost]
         public ActionResult getListAcademicCollaboration(int direction, int collab_type_id, ObjectSearching_AcademicCollaboration obj_searching)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            BaseDatatable baseDatatable = new BaseDatatable(Request);
-            BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
-            return Json(new
+            try
             {
-                success = true,
-                data = baseServerSideData.Data,
-                draw = Request["draw"],
-                recordsTotal = baseServerSideData.RecordsTotal,
-                recordsFiltered = baseServerSideData.RecordsTotal
-            }, JsonRequestBehavior.AllowGet);
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public JsonResult getCountries(string country_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<Country>> alertModal = academicCollaborationRepo.countries(country_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<Country>> alertModal = academicCollaborationRepo.countries(country_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public ActionResult getYears()
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<YearSearching> alertModal = academicCollaborationRepo.yearSearching();
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<YearSearching> alertModal = academicCollaborationRepo.yearSearching();
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public ActionResult getOffices(string office_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<Office>> alertModal = academicCollaborationRepo.offices(office_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<Office>> alertModal = academicCollaborationRepo.offices(office_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public ActionResult getPartners(string partner_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partners(partner_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partners(partner_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         //add person
         [HttpGet]
         public ActionResult getPeople(string person_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.people(person_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.people(person_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public ActionResult getCollabScopes(string collab_abbreviation_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.collaborationScopes(collab_abbreviation_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.collaborationScopes(collab_abbreviation_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpGet]
         public ActionResult getAcadCollabStatus(int status_type_specific)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<List<AcademicCollaborationStatu>> alertModal = academicCollaborationRepo.academicCollaborationStatus(status_type_specific);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<AcademicCollaborationStatu>> alertModal = academicCollaborationRepo.academicCollaborationStatus(status_type_specific);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpPost]
         public ActionResult checkPerson(int people_id, string people_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<AcademicCollaborationPerson_Ext> alertModal = academicCollaborationRepo.person(people_id, people_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaborationPerson_Ext> alertModal = academicCollaborationRepo.person(people_id, people_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpPost]
         public ActionResult checkPartner(int partner_id, string partner_name)
         {
-            academicCollaborationRepo = new AcademicCollaborationRepo();
-            AlertModal<AcademicCollaborationPartner_Ext> alertModal = academicCollaborationRepo.partner(partner_id, partner_name);
-            return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaborationPartner_Ext> alertModal = academicCollaborationRepo.partner(partner_id, partner_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpPost]
@@ -119,10 +184,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-
                 if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
                 {
-                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để cấp quyền.");
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
                     return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
                 else
@@ -162,11 +226,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             {
                 throw e;
             }
-        }
-
-        public ActionResult addPerson(Person person)
-        {
-            return Json(new { });
         }
 
         public ActionResult Delete_Longterm(string id)
