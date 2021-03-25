@@ -79,7 +79,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
-                AlertModal<Specialization> alertModal = specializationRepo.editSpecialization(spe_id,spe_name);
+                AlertModal<Specialization> alertModal = specializationRepo.editSpecialization(spe_id, spe_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)

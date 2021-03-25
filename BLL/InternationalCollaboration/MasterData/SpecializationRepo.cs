@@ -94,7 +94,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     {
                         //check duplicate data
                         Specialization specialization = db.Specializations.Where(x => x.specialization_name.Equals(spe_name)).FirstOrDefault();
-                        if (specialization == null) 
+                        if (specialization == null)
                         {
                             //add
                             specialization = new Specialization
@@ -133,7 +133,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     else
                     {
                         //check duplicate data
-                        Specialization specialization_check = db.Specializations.Where(x => x.specialization_name.Equals(spe_name) && x.specialization_id != spe_id ).FirstOrDefault();
+                        Specialization specialization_check = db.Specializations.Where(x => x.specialization_name.Equals(spe_name) && x.specialization_id != spe_id).FirstOrDefault();
                         if (specialization_check == null)
                         {
                             //edit
