@@ -473,19 +473,14 @@
                                             </a>
                                         </li>
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
-                                        @{
-                                            if (@user != null)
-                                            {
-                                                if (@user.account.role_id == 1 || true)
-                                                {
-                                                    <li class="menu-item " aria-haspopup="true">
-                                                        <a href="/SettingDrive" class="menu-link ">
-                                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                            <span class="menu-text">SETUP DRIVE</span>
-                                                        </a>
-                                                    </li>
-                                                }
-                                            }
+                                        @if (user != null && (user.account.role_id == 1 || true))
+                                        {
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="/SettingDrive" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">SETUP DRIVE</span>
+                                                </a>
+                                            </li>
                                         }
                                     </ul>
                                 </div>

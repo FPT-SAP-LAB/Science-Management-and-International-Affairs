@@ -113,50 +113,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @*<tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">2020/01</td>
-                                                    <td class="text-center">Ký kết biên bản ghi nhớ</td>
-                                                    <td class="text-center">JAMES K. W. LEE</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">61 2 9850 7111</td>
-                                                    <td class="text-center">Le Thi Phuong Anh</td>
-                                                    <td class="text-center">18/03/2020</td>
-                                                    <td class="text-center">18/04/2022</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">2</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">Hoạt động hợp tác học thuật</td>
-                                                    <td class="text-center">Plato Hampton</td>
-                                                    <td class="text-center">elementum.lorem@aliquam.com</td>
-                                                    <td class="text-center">05112-402024</td>
-                                                    <td class="text-center">Le Thi Phuong Anh</td>
-                                                    <td class="text-center">19/04/2021</td>
-                                                    <td class="text-center">20/07/2021</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">3</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">Hoạt động hợp tác nghiên cứu</td>
-                                                    <td class="text-center">Herman Mays</td>
-                                                    <td class="text-center">mauris.aliquam.eu@sedleo.net</td>
-                                                    <td class="text-center">62 19 673 8307</td>
-                                                    <td class="text-center">Ha Thi Hai Yen</td>
-                                                    <td class="text-center">19/05/2021</td>
-                                                    <td class="text-center">20/08/2021</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">4</td>
-                                                    <td class="text-center">2020/01_BS/01</td>
-                                                    <td class="text-center">Ký kết biên bản ghi nhớ bổ sung</td>
-                                                    <td class="text-center">Tyler Horne</td>
-                                                    <td class="text-center">semper@sitametorci.com</td>
-                                                    <td class="text-center">62 15 812 0688</td>
-                                                    <td class="text-center">Le Thi Phuong Anh</td>
-                                                    <td class="text-center">19/06/2021</td>
-                                                    <td class="text-center">20/08/2021</td>
-                                                </tr>*@
                                         </tbody>
                                     </table>
                                 </div>
@@ -171,9 +127,9 @@
                                 </div>
                             </div>
                             <div class="row float-right mb-5">
-                                <a class="btn btn-sm btn-secondary font-weight-bold mx-1" href="@Url.Action("List", "Partner")">Quay về</a>
-                                <a class="btn btn-sm btn-light-success font-weight-bold mx-1" id="submit">Cập nhật</a>
-                                <a class="btn btn-sm btn-light-primary font-weight-bold mx-1" id="preview">Xem trước</a>
+                                <a class="load-btn btn btn-sm btn-secondary font-weight-bold mx-1" href="@Url.Action("List", "Partner")">Quay về</a>
+                                <a class="load-btn btn btn-sm btn-light-success font-weight-bold mx-1" id="submit">Cập nhật</a>
+                                <a class="load-btn btn btn-sm btn-light-primary font-weight-bold mx-1" id="preview">Xem trước</a>
                             </div>
                         </div>
                     </div>
@@ -295,22 +251,24 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                     };
-                    if (data.json.success && data.type == 1) {
+                    if (data.success) {
+
                         toastr.options.onHidden = function () {
                             window.location.href = '@Url.Action("List", "Partner")';
                         }
+                        toastr.clear()
                         toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
-                        //save_loader.stopLoading()
-                    } else if (!data.json.success && data.type == 0) {
-                        toastr.warning(data.json.content);
-                        //save_loader.stopLoading()
-                    }else {
-                        toastr.error('Có lỗi xảy ra khi thêm');
-                        //save_loader.stopLoading()
+                        save_loader.stopLoading()
+                    } else {
+                        toastr.clear()
+                        toastr.warning(data.content);
+                        save_loader.stopLoading()
                     }
                 },
                 error: function () {
+                    toastr.clear();
                     toastr.error('Có lỗi xảy ra khi thêm');
+                    save_loader.stopLoading()
                 }
             });
         })

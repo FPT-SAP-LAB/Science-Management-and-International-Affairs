@@ -21,25 +21,36 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             try
             {
                 string sql_moaPartnerList =
-                    @"select 
-                        moap.moa_partner_id,moap.moa_id, pa.partner_id, pa.partner_name, co.country_name, spec.specialization_name, pa.website,
-                        moup.contact_point_name, moup.contact_point_phone, moup.contact_point_email,
-                        moap.moa_start_date, cs.scope_abbreviation, moa.moa_code
-                        from IA_Collaboration.MOAPartner moap
-                        inner join IA_Collaboration.MOA moa on moa.moa_id = moap.moa_id
-                        inner join IA_Collaboration.MOUPartner moup on moup.mou_id = moa.mou_id and moup.partner_id = moap.partner_id
-                        inner join IA_Collaboration.MOUPartnerSpecialization moups on moup.mou_partner_id = moups.mou_partner_id
-                        inner join General.Specialization spec on spec.specialization_id = moups.specialization_id
-                        inner join IA_Collaboration.[Partner] pa on pa.partner_id = moap.partner_id
-                        inner join General.Country co on co.country_id = pa.country_id
-                        inner join IA_Collaboration.MOAPartnerScope moaps on moaps.moa_id = moap.moa_id
-                        inner join IA_Collaboration.PartnerScope ps on ps.partner_scope_id = moaps.partner_scope_id
-                        inner join IA_Collaboration.CollaborationScope cs on cs.[scope_id] = ps.[scope_id]
-                        where moap.moa_id = @moa_id
-                        and pa.partner_name like @partner_name
-                        and co.country_name like @nation
-                        and spec.specialization_name like @specialization
-                        order by moap.moa_start_date";
+                    @"select t2.moa_partner_id,t1.moa_id,t4.partner_id,t4.partner_name,
+                        t5.country_name,t7.specialization_name,t4.website,t3.contact_point_name,
+                        t3.contact_point_phone, t3.contact_point_email, t2.moa_start_date,
+                        t9.scope_abbreviation,t1.moa_code
+                        from IA_Collaboration.MOA t1 
+                        left join IA_Collaboration.MOAPartner t2 on
+                        t2.moa_id = t1.moa_id
+                        left join IA_Collaboration.MOUPartner t3 on
+                        t3.mou_id = t1.mou_id and t2.partner_id = t3.partner_id
+                        left join IA_Collaboration.[Partner] t4 on
+                        t4.partner_id = t2.partner_id
+                        left join General.Country t5 on
+                        t5.country_id = t4.country_id 
+                        left join IA_Collaboration.MOUPartnerSpecialization t6 on
+                        t6.mou_partner_id = t3.mou_partner_id
+                        left join General.Specialization t7 on 
+                        t7.specialization_id = t6.specialization_id
+                        left join (
+                        select partner_id,scope_id from IA_Collaboration.MOAPartnerScope a
+                        inner join IA_Collaboration.PartnerScope b
+                        on a.partner_scope_id = b.partner_scope_id
+                        where moa_bonus_id is null and moa_id = @moa_id
+                        ) t8 on t8.partner_id = t2.partner_id
+                        left join IA_Collaboration.CollaborationScope t9
+                        on t9.scope_id = t8.scope_id
+                        where t1.moa_id = @moa_id
+                        and t4.partner_name like @partner_name
+                        and t5.country_name like @nation
+                        and t7.specialization_name like @specialization
+                        order by t2.moa_partner_id";
                 List<ListMOAPartner> moaList = db.Database.SqlQuery<ListMOAPartner>(sql_moaPartnerList,
                     new SqlParameter("moa_id", moa_id),
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
@@ -47,6 +58,30 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     new SqlParameter("specialization", '%' + specialization + '%')).ToList();
                 handlingPartnerListData(moaList);
                 return moaList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<CustomScopesMOA> getMOAScope(string partner_name)
+        {
+            try
+            {
+                string sql_scopeList = @"select distinct t3.scope_id,t3.scope_abbreviation
+                    from IA_Collaboration.MOUPartnerScope t1
+                    left join IA_Collaboration.PartnerScope t2
+                    on t2.partner_scope_id = t1.partner_scope_id
+                    left join IA_Collaboration.CollaborationScope t3
+                    on t3.scope_id = t2.scope_id
+                    left join IA_Collaboration.Partner t4
+                    on t4.partner_id = t2.partner_id
+                    where mou_id = 3 and mou_bonus_id is null
+                    and t4.partner_name like @partner_name";
+                List<CustomScopesMOA> scopeList = db.Database.SqlQuery<CustomScopesMOA>(sql_scopeList
+                    , new SqlParameter("partner_name", '%' + partner_name + '%')
+                    ).ToList();
+                return scopeList;
             }
             catch (Exception ex)
             {
@@ -95,17 +130,19 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 try
                 {
                     DateTime moa_start_date = DateTime.ParseExact(input.sign_date_moa_add, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    //get partner_id
+                    int partner_id = db.Partners.Where(x => x.partner_name.Equals(input.partnername_add)).First().partner_id;
                     //add MOAPartner
                     db.MOAPartners.Add(new MOAPartner
                     {
                         moa_id = moa_id,
                         moa_start_date = moa_start_date,
-                        partner_id = input.partner_id
+                        partner_id = partner_id
                     });
-
+                    db.SaveChanges();
                     foreach (int itemScope in input.coop_scope_add.ToList())
                     {
-                        PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == itemScope).FirstOrDefault();
+                        PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == partner_id && x.scope_id == itemScope).FirstOrDefault();
                         if (psCheck != null)
                         {
                             psCheck.reference_count += 1;
@@ -119,10 +156,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         {
                             PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
                             {
-                                partner_id = input.partner_id,
+                                partner_id = partner_id,
                                 scope_id = itemScope,
                                 reference_count = 1
                             });
+                            db.SaveChanges();
                             db.MOAPartnerScopes.Add(new MOAPartnerScope
                             {
                                 partner_scope_id = psAdded.partner_scope_id,
@@ -156,7 +194,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //get old records of PartnerScope in MOA
-                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id from IA_Collaboration.PartnerScope t1 inner join 
+                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id,reference_count  from IA_Collaboration.PartnerScope t1 inner join 
                         IA_Collaboration.MOAPartnerScope t2 on
                         t1.partner_scope_id = t2.partner_scope_id
                         where moa_id = @moa_id";
@@ -308,16 +346,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<ENTITIES.Partner> getPartnerMOA(int moa_id)
+        public List<ENTITIES.Partner> getPartnerMOA(int mou_id)
         {
             try
             {
                 string sql_partnerList = @"select t2.*  
-                    from IA_Collaboration.MOAPartner t1 left join 
+                    from IA_Collaboration.MOUPartner t1 left join 
                     IA_Collaboration.Partner t2 on t2.partner_id = t1.partner_id
-                    where t1.moa_id = @moa_id";
+                    where t1.mou_id = @mou_id";
                 List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
-                    new SqlParameter("moa_id", moa_id)).ToList();
+                    new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
             }
             catch (Exception ex)

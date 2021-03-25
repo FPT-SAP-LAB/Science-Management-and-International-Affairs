@@ -112,7 +112,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="MOU/Detail#" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="javascript:" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -160,7 +160,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 my-1">
-                                            <a href="MOU/Detail#" onclick="searchMOUPartner()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                            <a href="javascript:" onclick="searchMOUPartner()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                                             <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_moa_code_moa" />
                                         </div>
                                         <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 my-1">
-                                            <a href="MOU/Detail#" onclick="searchMOA()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                                            <a href="javascript:" onclick="searchMOA()" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
                                         </div>
                                     </div>
                                 </div>
@@ -856,12 +856,12 @@
         }
 
         function clearInputAddExMOUPartner() {
-            //$('#coop_scope_ex_mou_add').empty();
-            //var HTMLScopedata = '';
-            //for (j = 0; j < listScopes.length; j++) {
-            //    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
-            //}
-            //$('#coop_scope_ex_mou_add').append(HTMLScopedata);
+            $('#coop_scope_ex_mou_add').empty();
+            var HTMLScopedata = '';
+            for (j = 0; j < listScopes.length; j++) {
+                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+            }
+            $('#coop_scope_ex_mou_add').append(HTMLScopedata);
         }
 
         function initAndRefreshTableExMOUAdd() {
@@ -2187,19 +2187,31 @@
     }
 
     function editTempMOA() {
-        var index = $("#idx_moa_edit").val();
-        listTempPartnerMOAAdd[index].partnername_add = $('#moa_partner_name_edit').val();
-        listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_partner_represent_edit").value;
-        listTempPartnerMOAAdd[index].specialization_add = $("#moa_partner_specialization_edit").val();
-        listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_partner_nation_edit").value;
-        listTempPartnerMOAAdd[index].website_add = document.getElementById("moa_partner_website_edit").value;
-        listTempPartnerMOAAdd[index].address_add = document.getElementById("moa_partner_address_edit").value;
-        listTempPartnerMOAAdd[index].email_add = document.getElementById("moa_partner_email_edit").value;
-        listTempPartnerMOAAdd[index].sign_date_moa_add = document.getElementById("moa_sign_date_partner_edit").value;
-        listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_partner_phone_edit").value;
-        listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_partner_scope_edit").val();
-        listTempPartnerMOAAdd[index].list_scope = listScopesMOA;
-        initAndRefreshTableMOAAdd();
+        if ($('#moa_sign_date_partner_edit').val().trim() == '') {
+            toastr.error('Ngày ký kết chưa được chọn');
+            return;
+        }
+        else if ($('#moa_partner_scope_edit').val().length == 0) {
+            toastr.error('Phạm vi hợp tác chưa được chọn');
+            return;
+        }
+        else {
+            var index = $("#idx_moa_edit").val();
+            listTempPartnerMOAAdd[index].partnername_add = $('#moa_partner_name_edit').val();
+            listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_partner_represent_edit").value;
+            listTempPartnerMOAAdd[index].specialization_add = $("#moa_partner_specialization_edit").val();
+            listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_partner_nation_edit").value;
+            listTempPartnerMOAAdd[index].website_add = document.getElementById("moa_partner_website_edit").value;
+            listTempPartnerMOAAdd[index].address_add = document.getElementById("moa_partner_address_edit").value;
+            listTempPartnerMOAAdd[index].email_add = document.getElementById("moa_partner_email_edit").value;
+            listTempPartnerMOAAdd[index].sign_date_moa_add = document.getElementById("moa_sign_date_partner_edit").value;
+            listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_partner_phone_edit").value;
+            listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_partner_scope_edit").val();
+            listTempPartnerMOAAdd[index].list_scope = listScopesMOA;
+            initAndRefreshTableMOAAdd();
+            updateMOAStartDateAndMainScope();
+            $('#edit_partner_moa').modal('hide');
+        }
     }
 
     function preventEditMOA() {
@@ -2351,7 +2363,20 @@
     function doneStep() {
         if (listTempPartnerMOAAdd.length == 0) {
             toastr.error('Chưa có đối tác nào được thêm');
-        } else {
+        }
+        else if ($('#end_date_moa').val() == "") {
+            toastr.error('Ngày hết hạn chưa được chọn');
+        }
+        else if (listTempPartnerMOAAdd.length == 0) {
+            toastr.error('Chưa có đối tác nào được thêm');
+        }
+        else if (compareDate($('#sign_date_moa').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
+            toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+        }
+        else if (MOUCodeIsInvalid($('#moa_code').val().trim())) {
+            toastr.error('Số hiệu không hợp lệ');
+        }
+        else {
             addMOA();
         }
     }

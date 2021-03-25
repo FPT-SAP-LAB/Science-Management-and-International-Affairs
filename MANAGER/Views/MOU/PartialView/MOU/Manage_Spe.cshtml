@@ -1,0 +1,74 @@
+﻿<div class="modal fade in" id="list_spe" aria-hidden="true" style="z-index: 2500">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">DANH SÁCH TỔNG HỢP LĨNH VỰC HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-spe">Thêm</a>
+                    </div>
+                </div>
+                <table id="spe_table" class="table table-bordered table-hover table-checkable" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Tên lĩnh vực</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="add_spe" aria-hidden="true" style="z-index: 3500">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title">THÊM LĨNH VỰC HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Tên lĩnh vực</label>&nbsp;
+                        <input class="form-control" type="text" placeholder="Tên lĩnh vực" autocomplete="off" required id="spe_name_add" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" id="add_spe_modal_confirm" onclick="addSpe()" class="btn btn-sm btn-light-primary px-6">Bổ sung</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="edit_spe" aria-hidden="true" style="z-index: 3500">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title">SỬA LĨNH VỰC HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <label style="color:red">*</label><label class="font-weight-bolder">Tên lĩnh vực</label>&nbsp;
+                        <input class="form-control" type="text" placeholder="Tên lĩnh vực" autocomplete="off" required id="spe_name_edit" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+                <button type="button" id="edit_spe_modal_confirm" onclick="editSpe()" class="btn btn-sm btn-light-primary px-6">Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+

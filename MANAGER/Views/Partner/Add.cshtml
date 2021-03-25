@@ -96,8 +96,6 @@
 @section scripts{
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/Partner/Preview.js"></script>
     <script>
-    </script>
-    <script>
 
         $('#partner_nation').select2({
             placeholder: 'Quốc gia',
@@ -252,16 +250,19 @@
                         toastr.options.onHidden = function () {
                             window.location.href = '@Url.Action("List", "Partner")';
                         }
+                        toastr.clear()
                         toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
                         save_loader.stopLoading()
                     } else {
+                        toastr.clear()
                         toastr.warning(data.content);
                         save_loader.stopLoading()
                     }
                 },
                 error: function () {
+                    toastr.clear();
                     toastr.error('Có lỗi xảy ra khi thêm');
-                    del_loader.stopLoading()
+                    save_loader.stopLoading()
                 }
             });
         })
