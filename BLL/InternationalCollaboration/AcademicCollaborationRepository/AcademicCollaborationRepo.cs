@@ -48,7 +48,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         and ISNULL(pn.partner_name, '') like @partner_name
                         and ISNULL(offi.office_name, '') like @office_name
                         or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)
-                        ORDER BY @sortColumnName @sortDirection OFFSET @start ROWS FETCH NEXT @length ROWS ONLY";
+                        ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                        " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 //filter checking
                 SqlParameter country_name_param, year_param, partner_name_param, office_name_param;
 

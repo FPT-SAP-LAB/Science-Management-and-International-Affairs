@@ -4,8 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ca4a07ca8ff34b0bacd4a117837988ef" Name="Diagram1">
+      <Diagram DiagramId="6299e60cdf0349e6bf8a72e3e9898bac" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="7.5" PointY="47.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.QuestionOption" Width="1.5" PointX="13.5" PointY="62.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="3.75" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="1.5" PointY="33.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AccountRight" Width="1.5" PointX="14.75" PointY="28" IsExpanded="true" />
@@ -121,11 +122,12 @@
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Participant" Width="1.5" PointX="14.25" PointY="55" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ParticipantRole" Width="1.5" PointX="9" PointY="38" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PlanParticipant" Width="1.5" PointX="17.25" PointY="49.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Question" Width="1.5" PointX="11.25" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Response" Width="1.5" PointX="11.25" PointY="65.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Question" Width="1.5" PointX="11.25" PointY="61.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Response" Width="1.5" PointX="11.25" PointY="65.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatusLanguage" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ProfileAcademicDegree" Width="1.5" PointX="3.75" PointY="57.75" IsExpanded="true" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__CommentBa__accou__2077C861" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__QuestionO__quest__24134F1B" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AcademicA__creat__2704CA5F" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Account__role_id__2704CA5F" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__AccountRi__accou__27F8EE98" ManuallyRouted="false" />

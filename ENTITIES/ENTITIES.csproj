@@ -462,6 +462,9 @@
     <Compile Include="Question.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="QuestionOption.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="RequestCitation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
