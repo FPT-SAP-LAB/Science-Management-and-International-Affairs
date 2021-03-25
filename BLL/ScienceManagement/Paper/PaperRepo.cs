@@ -381,5 +381,33 @@ namespace BLL.ScienceManagement.Paper
                 return "ff";
             }
         }
+
+        public List<PendingPaper_Manager> listPending()
+        {
+            List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
+            string sql = @"select p.name, a.email, br.created_date, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account a on br.account_id = a.account_id
+                            where rp.status_id = 3";
+            list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
+            return list;
+        }
+
+        public string updateRewardPaper(DetailPaper paper)
+        {
+            try
+            {
+                RequestPaper p = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
+                p.total_reward = paper.total_reward;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
     }
 }
