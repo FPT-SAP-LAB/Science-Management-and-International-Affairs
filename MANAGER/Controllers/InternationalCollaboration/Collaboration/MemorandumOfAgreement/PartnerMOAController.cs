@@ -99,5 +99,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult GetMOAScopesByPartner(string partner_name)
+        {
+            try
+            {
+                List<CustomScopesMOA> scopeList = moa.getMOAScope(partner_name);
+                return Json(scopeList);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
     }
 }

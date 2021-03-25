@@ -108,6 +108,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     else
                     {
                         previousItem = item;
+                        previousItem.moa_bonus_decision_date_string = item.moa_bonus_decision_date.ToString("dd'/'MM'/'yyyy");
+                        previousItem.moa_bonus_end_date_string = item.moa_bonus_end_date.ToString("dd'/'MM'/'yyyy");
                     }
                 }
             }
@@ -124,10 +126,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    DateTime end_date = DateTime.ParseExact(newBasicInfo.moa_end_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //update basicInfo
                     MOA moa = db.MOAs.Find(moa_id);
                     moa.moa_code = newBasicInfo.moa_code;
-                    moa.moa_end_date = newBasicInfo.moa_end_date;
+                    moa.moa_end_date = end_date;
                     moa.moa_note = newBasicInfo.moa_note;
                     moa.evidence = newBasicInfo.evidence;
                     db.Entry(moa).State = EntityState.Modified;
@@ -165,7 +168,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 					select distinct scope_id from IA_Collaboration.MOAPartnerScope t1 left join
                     IA_Collaboration.PartnerScope t2 on 
                     t1.partner_scope_id = t2.partner_scope_id
-					where moa_id = @moa_id)) tb2 inner join IA_Collaboration.CollaborationScope tb3
+					where moa_id = @moa_id and moa_bonus_id is null)) tb2 inner join IA_Collaboration.CollaborationScope tb3
 					on tb3.scope_id = tb2.scope_id";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList,
                     new SqlParameter("mou_id", mou_id),
@@ -255,40 +258,69 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void editExtraMOA(ExMOAAdd input, int moa__id)
+        public void editExtraMOA(ExMOAAdd input)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    DateTime sign_date = DateTime.ParseExact(input.ExMOABasicInfo.ex_moa_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime end_date = DateTime.ParseExact(input.ExMOABasicInfo.ex_moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     //edit MOABonus
-                    //MOABonu mb = db.MOABonus.Find(moa_bonus_id);
-                    //mb.moa_bonus_code = input.moa_bonus_code;
-                    //mb.moa_bonus_decision_date = input.moa_bonus_decision_date;
-                    //mb.moa_bonus_end_date = input.moa_bonus_end_date;
-                    //mb.moa_id = input.moa_id;
-                    //mb.evidence = input.evidence;
-                    //db.Entry(mb).State = EntityState.Modified;
+                    MOABonu mb = db.MOABonus.Find(input.moa_bonus_id);
+                    mb.moa_bonus_code = input.ExMOABasicInfo.ex_moa_code;
+                    mb.moa_bonus_decision_date = sign_date;
+                    mb.moa_bonus_end_date = end_date;
+                    db.Entry(mb).State = EntityState.Modified;
 
-                    //finding old exScope of exMOA.
-                    //List<MOAPartnerScope> exList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == moa_bonus_id).ToList();
-                    //exList.Clear();
-                    //db.Entry(exList).State = EntityState.Modified;
+                    List<MOAPartnerScope> moaPSList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == input.moa_bonus_id).ToList();
+                    foreach (MOAPartnerScope moaPSItem in moaPSList.ToList())
+                    {
+                        //decrese ref_count of old PartnerScope records.
+                        PartnerScope oldPS = db.PartnerScopes.Find(moaPSItem.partner_scope_id);
+                        oldPS.reference_count -= 1;
+                        db.Entry(oldPS).State = EntityState.Modified;
+                    }
+                    //del records of MOUPartnerScope.
+                    db.MOAPartnerScopes.RemoveRange(moaPSList);
+                    db.SaveChanges();
 
-                    //add new record of MOAPartnerScope
-                    //foreach (CustomPartner cp in input.ListPartnerExMOA.ToList())
-                    //{
-                    //    foreach (CustomScope cs in cp.ListScopeExMOU.ToList())
-                    //    {
-                    //        MOAPartnerScope m = new MOUPartnerScope();
-                    //        m.mou_id = input.moa_id;
-                    //        m.partner_id = cp.partner_id;
-                    //        m.scope_id = cs.scope_id;
-                    //        m.mou_bonus_id = moa_bonus_id;
-                    //        db.MOUPartnerScopes.Add(m);
-                    //    }
-                    //}
-
+                    //Check partnerScope existed and handle it.
+                    //add data to MOUPartnerScope.
+                    foreach (PartnerScopeInfoMOA psi in input.PartnerScopeInfoMOA.ToList())
+                    {
+                        foreach (int scope in psi.scopes_id.ToList())
+                        {
+                            PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
+                            if (psCheck is null)
+                            {
+                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                {
+                                    partner_id = psi.partner_id,
+                                    scope_id = scope,
+                                    reference_count = 1
+                                });
+                                db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                {
+                                    partner_scope_id = psAdded.partner_scope_id,
+                                    moa_id = mb.moa_id,
+                                    moa_bonus_id = input.moa_bonus_id
+                                });
+                            }
+                            else
+                            {
+                                psCheck.reference_count += 1;
+                                db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                {
+                                    partner_scope_id = psCheck.partner_scope_id,
+                                    moa_id = mb.moa_id,
+                                    moa_bonus_id = input.moa_bonus_id
+                                });
+                            }
+                        }
+                    }
+                    //checkpoint 2
                     db.SaveChanges();
                     transaction.Commit();
                 }
@@ -329,22 +361,17 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
         {
             try
             {
-                string sql_countInYear = @"select count(*) from IA_Collaboration.MOA where moa_code like @year";
-                string sql_checkDup = @"select count(*) from IA_Collaboration.MOABonus where moa_bonus_code = @newCode";
                 bool isDuplicated = false;
                 string newCode = "";
-                int countInYear = db.Database.SqlQuery<int>(sql_countInYear,
-                        new SqlParameter("year", '%' + DateTime.Now.Year + '%')).First();
+                string baseMOACode = db.MOAs.Find(moa_id).moa_code;
                 int countInMOA = db.MOABonus.Where(x => x.moa_id == moa_id).Count();
 
-                //fix duplicate mou_code:
-                countInYear++;
+                //fix duplicate moa_code:
                 do
                 {
                     countInMOA++;
-                    newCode = DateTime.Now.Year + "/" + countInYear + "_BS/" + countInMOA;
-                    isDuplicated = db.Database.SqlQuery<int>(sql_checkDup,
-                        new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
+                    newCode = baseMOACode + "_BS/" + countInMOA;
+                    isDuplicated = db.MOABonus.Where(x => x.moa_bonus_code.Equals(newCode)).FirstOrDefault() is null ? false : true;
                 } while (isDuplicated);
                 return newCode;
             }

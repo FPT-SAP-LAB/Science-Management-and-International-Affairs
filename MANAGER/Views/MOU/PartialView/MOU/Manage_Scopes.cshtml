@@ -1,0 +1,83 @@
+﻿<div class="modal fade in" id="list_scopes" aria-hidden="true" style="z-index: 2500">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">DANH SÁCH TỔNG HỢP LĨNH VỰC HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row col-lg-11 mb-3 mt-3">
+                    <div class="col-lg-6">
+                        <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-spe">Thêm</a>
+                    </div>
+                </div>
+                <table id="collaboration_scope_table" class="table table-bordered table-hover table-checkable" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Phạm vi hợp tác
+                            </th>
+                            <th>
+                                Viết tắt
+                            </th>
+                            <th>
+                                Hành động
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="add_scopes" aria-hidden="true" style="z-index: 3500">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">THÊM PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_scope_name" type="text" class="form-control" placeholder="Phạm vi hợp tác" />
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_scope_abbreviation" type="text" class="form-control" placeholder="Viết tắt" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add_modal_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='add_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="edit_scopes" aria-hidden="true" style="z-index: 3500">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA PHẠM VI HỢP TÁC</h3>
+            </div>
+            <div class="modal-body">
+                <div col-xl-12 col-lg-12 col-md-12 col-sm-12>
+                    <input id="edit_modal_scope_name" class="form-control" type="text" placeholder="Phạm vi hợp tác" />
+                </div>
+                <div col-xl-6 col-lg-6 col-md-6 col-sm-6>
+                    <input id="edit_modal_scope_abbreviation" class="form-control" type="text" placeholder="Viết tắt" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='edit_modal_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='edit_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+

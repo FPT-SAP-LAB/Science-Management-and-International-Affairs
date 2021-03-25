@@ -10,7 +10,7 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
                         <label style="color:blue" class="float-right">
-                            <a href="MOU/List#" onclick="checkPartnerAdd()">Kiểm tra</a>
+                            <a href="javascript:" onclick="checkPartnerAdd()">Kiểm tra</a>
                         </label>
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
@@ -76,7 +76,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="#list_spe" data-toggle="modal">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important">
                                 @if (ViewBag.listSpe != null)
@@ -92,7 +92,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="MOU/List#">Quản lý</a></label>
+                        <label style="color:blue" class="float-right"><a href="javascript:">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important">
                                 @if (ViewBag.listScopes != null)
