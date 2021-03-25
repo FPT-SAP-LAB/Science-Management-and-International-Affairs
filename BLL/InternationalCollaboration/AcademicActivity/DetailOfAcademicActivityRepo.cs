@@ -67,6 +67,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new baseDetail();
             }
         }
@@ -110,6 +111,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<subContent>();
             }
         }
@@ -122,6 +124,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<AcademicActivityType>();
             }
         }
@@ -224,7 +227,55 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
+            }
+        }
+        public List<basePartner> getDatatableDTC(int activity_id)
+        {
+            try
+            {
+                string sql = @"SELECT p.partner_id ,p.partner_name, cast(FORMAT(ap.cooperation_date_start, 'dd/MM/yyyy') as nvarchar) as 'from',cast(FORMAT(ap.cooperation_date_end, 'dd/MM/yyyy') as nvarchar) as 'to',
+                                    CONCAT(ap.activity_partner_id,'$',ap.contact_point_name) as 'contact_point' ,ap.sponsor
+                                    FROM SMIA_AcademicActivity.ActivityPartner ap inner join IA_Collaboration.PartnerScope mps
+                                    on ap.partner_scope_id = mps.partner_scope_id inner join IA_Collaboration.[Partner] p
+                                    on p.partner_id = mps.partner_id where ap.activity_id = @activity_id";
+                List<basePartner> data = db.Database.SqlQuery<basePartner>(sql, new SqlParameter("activity_id", activity_id)).ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new List<basePartner>();
+            }
+        }
+        public List<InternalUnit> getUnits()
+        {
+            try
+            {
+                List<InternalUnit> data = db.InternalUnits.ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new List<InternalUnit>();
+            }
+        }
+        public ContactInfo getContact(int activity_partner_id)
+        {
+            try
+            {
+                string sql = @"SELECT ap.contact_point_name, ap.contact_point_phone, ap.contact_point_email
+                                    FROM SMIA_AcademicActivity.ActivityPartner ap 
+                                    WHERE ap.activity_partner_id = @activity_partner_id";
+                ContactInfo data = db.Database.SqlQuery<ContactInfo>(sql, new SqlParameter("activity_partner_id", activity_partner_id)).FirstOrDefault();
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new ContactInfo();
             }
         }
         public class baseDetail
@@ -258,6 +309,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public infoDetail infoDetail { get; set; }
             public List<subContent> subContent { get; set; }
+        }
+        public class basePartner
+        {
+            public int partner_id { get; set; }
+            public string partner_name { get; set; }
+            public string from { get; set; }
+            public string to { get; set; }
+            public string contact_point { get; set; }
+            public double sponsor { get; set; }
+        }
+        public class ContactInfo
+        {
+            public string contact_point_name { get; set; }
+            public string contact_point_phone { get; set; }
+            public string contact_point_email { get; set; }
         }
     }
 }

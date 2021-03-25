@@ -68,6 +68,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -92,6 +93,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -138,6 +140,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -158,12 +161,14 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationScope>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }

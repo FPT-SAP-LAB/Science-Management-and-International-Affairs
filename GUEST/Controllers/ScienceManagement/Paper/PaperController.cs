@@ -143,7 +143,7 @@ namespace GUEST.Controllers
         public JsonResult editAuthor(List<AddAuthor> people, string paper_id)
         {
             string mess = pr.updateAuthor(people, paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = paper_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

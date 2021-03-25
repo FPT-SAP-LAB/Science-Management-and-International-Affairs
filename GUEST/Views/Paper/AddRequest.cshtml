@@ -20,19 +20,19 @@
                             <div class="row">
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PaperName")</label>
-                                    <input class="form-control form-control-lg" type="text" id="paper_name" />
+                                    <input class="form-control form-control-lg notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input class="form-control form-control-lg custom-pickdate" type="text" id="paper_publish_date" />
+                                    <input class="form-control form-control-lg custom-pickdate notnull" type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
-                                    <input class="form-control form-control-lg" type="text" id="paper_full" />
+                                    <input class="form-control form-control-lg notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Link scholar</label>
-                                    <input class="form-control form-control-lg" type="text" id="paper_scholar" />
+                                    <input class="form-control form-control-lg notnull" type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -80,19 +80,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("JournalName")</label>
-                            <input class="form-control form-control-lg" type="text" id="paper_journal" />
+                            <input class="form-control form-control-lg notnull" type="text" id="paper_journal" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Vol")</label>
-                            <input class="form-control form-control-lg" type="text" id="paper_vol" />
+                            <input class="form-control form-control-lg notnull" type="text" id="paper_vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Page")</label>
-                            <input class="form-control form-control-lg" type="text" id="paper_page" />
+                            <input class="form-control form-control-lg notnull" type="text" id="paper_page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("PublishName")</label>
-                            <input class="form-control form-control-lg" type="text" id="paper_publish_name" />
+                            <input class="form-control form-control-lg notnull" type="text" id="paper_publish_name" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
@@ -278,44 +278,61 @@
         var files_data = [];
         $("#submitPaper").click(function () {
             //let fd = new FormData();
-            var Paper = {
-                name: $("#paper_name").val(),
-                date_string: $("#paper_publish_date").val(),
-                link_doi: $("#paper_full").val(),
-                link_scholar: $("#paper_scholar").val(),
-                paper_type_id: $("#paper_type").val(),
-                journal_name: $("#paper_journal").val(),
-                vol: $("#paper_vol").val(),
-                page: $("#paper_page").val(),
-                company: $("#paper_publish_name").val()
-            };
-            var inputs = $(".tieuchiname");
-            var inputs2 = $(".tieuchilink");
-            for (var i = 0; i < inputs.length; i++) {
-                var PaperWithCriteria = {
-                    link: $(inputs2[i]).val(),
-                    name: $(inputs[i]).val()
-                }
-                criteria.push(PaperWithCriteria);
-            }
-            $.ajax({
-                url: "@Url.Action("AddPaper", "Paper")",
-                type: "POST",
-                data: JSON.stringify({ 'paper':Paper }),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-                    if (response.mess == "ss") {
-                        paper_id = response.id;
-                        addRequest();
-                    }
-                    else alert('loi');
-                },
-                error: function () {
-                    //alert("fail");
+            var ck = true;
+            $(".notnull").each(function () {
+                if ($(this).val() == "") {
+                    toastr.error("Cần nhập đầy đủ các trường có dấu *");
+                    ck = false;
+                    return false;
                 }
             });
+            if (people.length == 0) {
+                ck = false;
+                toastr.error("Chưa có tác giả");
+            }
+            if (ck) {
+                var Paper = {
+                    name: $("#paper_name").val(),
+                    date_string: $("#paper_publish_date").val(),
+                    link_doi: $("#paper_full").val(),
+                    link_scholar: $("#paper_scholar").val(),
+                    paper_type_id: $("#paper_type").val(),
+                    journal_name: $("#paper_journal").val(),
+                    vol: $("#paper_vol").val(),
+                    page: $("#paper_page").val(),
+                    company: $("#paper_publish_name").val()
+                };
+                var inputs = $(".tieuchiname");
+                var inputs2 = $(".tieuchilink");
+                for (var i = 0; i < inputs.length; i++) {
+                    var PaperWithCriteria = {
+                        link: $(inputs2[i]).val(),
+                        name: $(inputs[i]).val()
+                    }
+                    criteria.push(PaperWithCriteria);
+                }
+                $.ajax({
+                    url: "@Url.Action("AddPaper", "Paper")",
+                    type: "POST",
+                    data: JSON.stringify({ 'paper': Paper }),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (response) {
+                        if (response.mess == "ss") {
+                            paper_id = response.id;
+                            addRequest();
+                        }
+                        else alert('loi');
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            } else {
+                ck = true;
+            }
+
         });
         $("#img_link").click(function () {
             window.location.href = "google.comhttps://www.google.com.vn/?hl=vi";
