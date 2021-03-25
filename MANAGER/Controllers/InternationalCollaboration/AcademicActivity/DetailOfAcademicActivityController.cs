@@ -18,7 +18,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             repo = new DetailOfAcademicActivityRepo();
             ViewBag.Title = "Thông tin hoạt động học thuật";
             ViewBag.activity_id = id;
-            ViewBag.types = repo.getType();
+            ViewBag.types = repo.getType(1);
             ViewBag.unit = repo.getUnits();
             return View();
         }
@@ -29,8 +29,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
             {
                 baseDetail = repo.getDetail(language_id, activity_id),
-                subContent = repo.getSubContents(language_id, activity_id)
-            };
+                subContent = repo.getSubContents(language_id, activity_id),
+                types = repo.getType(language_id)
+        };
             return Json(data);
         }
         [HttpPost]
@@ -215,6 +216,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 
             ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
             return View();
+        }
+        [HttpPost]
+        public JsonResult getFormbyPhase(int phase_id)
+        {
+            repo = new DetailOfAcademicActivityRepo();
+            DetailOfAcademicActivityRepo.baseForm data = repo.getFormbyPhase(phase_id);
+            return Json(data);
         }
         public class QuantityByUnit
         {

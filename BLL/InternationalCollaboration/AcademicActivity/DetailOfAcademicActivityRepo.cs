@@ -115,16 +115,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<subContent>();
             }
         }
-        public List<AcademicActivityType> getType()
+        public List<AcademicActivityType> getType(int language_id)
         {
             try
             {
-                List<AcademicActivityType> data = db.AcademicActivityTypes.ToList();
+                string sql = @"select al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
+                List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.ToString());
                 return new List<AcademicActivityType>();
             }
         }
@@ -278,7 +278,48 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
-        public
+        public baseForm getFormbyPhase(int phase_id)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
+                string sql = @"SELECT q.question_id, q.title, at.answer_type_id, aap.language_id,cast(q.is_compulsory as int) as is_compulsory
+                                    FROM SMIA_AcademicActivity.Form f
+                                    LEFT JOIN 
+	                                    (SELECT aap.phase_id, aapl.phase_name, aapl.language_id
+	                                    FROM SMIA_AcademicActivity.AcademicActivityPhase aap
+	                                    INNER JOIN SMIA_AcademicActivity.AcademicActivityPhaseLanguage aapl ON aap.phase_id = aapl.phase_id) as aap
+	                                    ON aap.phase_id = f.phase_id
+                                    INNER JOIN SMIA_AcademicActivity.Question q ON q.form_id = f.form_id
+                                    INNER JOIN SMIA_AcademicActivity.AnswerType at ON at.answer_type_id = q.answer_type_id
+                                    where aap.phase_id = @phase_id and language_id = 1
+                                    ORDER BY f.form_id";
+                List<Ques> ques = db.Database.SqlQuery<Ques>(sql, new SqlParameter("phase_id", phase_id)).ToList();
+                string ques_id = "";
+                List<int> type = new List<int> { 3,5 };
+                foreach(Ques q in ques)
+                {
+                    if (type.Contains(q.answer_type_id))
+                    {
+                        ques_id += q.question_id+",";
+                    }
+                }
+                ques_id = ques_id.Remove(ques_id.Length - 1);
+                sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in ("+ques_id+")";
+                List<QuesOption> quesOption = db.Database.SqlQuery<QuesOption>(sql).ToList();
+                baseForm data = new baseForm
+                {
+                    form = f,
+                    ques = ques,
+                    quesOption = quesOption
+                };
+                return data;
+            }catch(Exception e)
+            {
+                return new baseForm();
+            }
+        }
         public class baseDetail
         {
             public string activity_name { get; set; }
@@ -305,6 +346,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public baseDetail baseDetail { get; set; }
             public List<subContent> subContent { get; set; }
+            public List<AcademicActivityType> types { get; set; }
         }
         public class InfoSumDetail
         {
@@ -326,9 +368,24 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string contact_point_phone { get; set; }
             public string contact_point_email { get; set; }
         }
+        public class Ques
+        {
+            public int question_id { get; set; }
+            public string title { get; set; }
+            public int answer_type_id { get; set; }
+            public int language_id { get; set; }
+            public int is_compulsory { get; set; }
+        }
+        public class QuesOption
+        {
+            public int question_id { get; set; }
+            public string option_title { get; set; }
+        }
         public class baseForm
         {
-
+            public Form form { get; set; }
+            public List<Ques> ques { get; set; }
+            public List<QuesOption> quesOption { get; set; }
         }
     }
 }

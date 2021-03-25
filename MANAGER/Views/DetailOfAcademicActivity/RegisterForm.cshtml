@@ -1,4 +1,4 @@
-﻿ 
+﻿
 @{
     ViewBag.Title = "Mẫu đăng kí theo giai đoạn cho hoạt động học thuật";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -93,7 +93,7 @@
                     <input type="text" class="form-control input-title font-size-h1-xl" id="form_title" placeholder="Tiêu đề" />
                 </div>
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                    <input type="text" class="form-control text-xl-left" id="form_title_description" placeholder="Mô tả mẫu đăng kí" />
+                    <textarea type="text" class="form-control text-xl-left" id="form_title_description" placeholder="Mô tả mẫu đăng kí"></textarea>
                 </div>
             </div>
         </div>
@@ -102,16 +102,16 @@
         <div class="card custom-card custom-card-after">
             <div class="row">
                 <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
-                    <input type="text" class="form-control" placeholder="Câu hỏi" />
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-0" />
                 </div>
                 <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                     <div class="row align-items-end">
                         <select class="form-control" id="answer-type-0" onchange="changeAnswerType(0)">
-                            <option checked value="Stext">Câu trả lời ngắn</option>
-                            <option value="Ltext">Đoạn hội thoại</option>
-                            <option value="Mchoice">Nhiều lựa chọn</option>
-                            <option value="Cbox">Một lựa chọn</option>
-                            <option value="Date">Ngày tháng năm</option>
+                            <option checked value="1">Câu trả lời ngắn</option>
+                            <option value="2">Đoạn hội thoại</option>
+                            <option value="3">Nhiều lựa chọn</option>
+                            <option value="5">Một lựa chọn</option>
+                            <option value="6">Ngày tháng năm</option>
                         </select>
                     </div>
                 </div>
@@ -125,11 +125,6 @@
                         <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
                             <a href="javascript:;" onclick="addQues('#control-0')" class="btn">
                                 <i class="fas fa-plus-circle" style="color: #0094ffc4;"></i>
-                            </a>
-                        </div>
-                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
-                            <a href="javascript:;" onclick="Clone('#control-0')" class="btn">
-                                <i class="fas fa-clone" style="color: #0094ffc4;"></i>
                             </a>
                         </div>
                         <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
@@ -150,8 +145,8 @@
         <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right" id="btn_save_form">Xác nhận</button>
     </div>
 </div>
-<input type="text" hidden value="@ViewBag.phaseID"/>
-<input type="text" hidden value="@ViewBag.language_id" />
+<input type="text" hidden value="@ViewBag.phaseID" id="phase_id" />
+<input type="text" hidden value="@ViewBag.language_id" id="language_id" />
 @section scripts{
     <script>
         arrDivControl = [0]
@@ -162,16 +157,16 @@
                 '<div class= "card custom-card custom-card-after" > ' +
                 '<div class="row">' +
                 '<div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">' +
-                '<input type="text" class="form-control" placeholder="Câu hỏi" />' +
+                '<input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-' + indexDiv+'"/>' +
                 '</div>' +
                 '<div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">' +
                 '<div class="row align-items-end">' +
                 '<select class="form-control" id="answer-type-' + indexDiv + '" onchange="changeAnswerType(' + indexDiv + ')">' +
-                '<option checked value="Stext">Câu trả lời ngắn</option>' +
-                '<option value="Ltext">Đoạn hội thoại</option>' +
-                '<option value="Mchoice">Nhiều lựa chọn</option>' +
-                '<option value="Cbox">Một lựa chọn</option>' +
-                '<option value="Date">Ngày tháng năm</option>' +
+                '<option checked value="1">Câu trả lời ngắn</option>' +
+                '<option value="2">Đoạn hội thoại</option>' +
+                '<option value="3">Nhiều lựa chọn</option>' +
+                '<option value="5">Một lựa chọn</option>' +
+                '<option value="6">Ngày tháng năm</option>' +
                 '</select>' +
                 '</div>' +
                 '</div>' +
@@ -185,11 +180,6 @@
                 '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">' +
                 '<a href="javascript:;" onclick="addQues(\'#control-' + indexDiv + '\')" class="btn">' +
                 '<i class="fas fa-plus-circle" style="color: #0094ffc4;"></i>' +
-                '</a>' +
-                '</div>' +
-                '<div class="col-sm-offset-8 col-md-offset-8 col-xl-offset-8 col-lg-offset-8 col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">' +
-                '<a href="javascript:;" onclick="Clone(\'#control-' + indexDiv + '\')" class="btn">' +
-                '<i class="fas fa-clone" style="color: #0094ffc4;"></i>' +
                 '</a>' +
                 '</div>' +
                 '<div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">' +
@@ -221,28 +211,26 @@
 
         function Delete(id) {
             $(id).remove();
-            str = id.split('-');
+            let str = id.split('-');
             arrDivControl = arrDivControl.filter(function (e) { return e !== parseInt(str[str.length - 1]) });
-        }
-        function Clone(id) {
-            return;
+            arr
         }
 
         function changeAnswerType(id) {
             val = document.getElementById('answer-type-' + id).value;
             document.getElementById('answer-control-' + id).innerHTML = '';
             switch (val) {
-                case 'Stext':
+                case '1':
                     $('#answer-control-' + id).append('<div class="col-sm-6 col-md-6 col-xl-6 col-lg-6 pl-0">' +
                         '<input type="text" class="form-control" id="content-Stext-' + id + '" placeholder="Câu trả lời ngắn" />' +
                         '</div>');
                     break;
-                case 'Ltext':
+                case '2':
                     $('#answer-control-' + id).append('<div class="col-sm-10 col-md-10 col-xl-10 col-lg-10 pl-0">' +
                         '<textarea class= "form-control" id="content-Ltext-' + id + '" placeholder= "Đoạn hội thoại"></textarea>' +
                         '</div>');
                     break;
-                case 'Mchoice':
+                case '3':
                     arrCMD[0][id] = 1;
                     temp_option = 0
                     for (let i = 0; i < 100; i++) {
@@ -292,7 +280,7 @@
                         '</div>' +
                         '</div>');
                     break;
-                case 'Cbox':
+                case '5':
                     arrCMD[1][id] = 1;
                     temp_option = 0
                     for (let i = 0; i < 100; i++) {
@@ -342,7 +330,7 @@
                         '</div>' +
                         '</div>');
                     break;
-                case 'Date':
+                case '6':
                     $('#answer-control-' + id).append(
                         '<div class="form-group row">' +
                             '<div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">' +
@@ -363,13 +351,13 @@
 
         function RemoveCheckbox(id) {
             $(id).remove();
-            str = id.split('-');
+            let str = id.split('-');
             arrCMD[0][parseInt(str[str.length - 2])] = 0;
             arrM_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = '';
         }
 
         function AddCheckbox(id) {
-            str = id.split('-');
+            let str = id.split('-');
             index = parseInt(str[str.length - 2]);
             index_insert = 0;
             temp_option = 0
@@ -377,9 +365,9 @@
                 if (typeof arrM_content[index][i] == 'undefined') {
                     i = 999;
                 } else {
-                    if (arrM_content[index][i] == '') {
-                        index_insert = i - 1;
-                    } else index_insert = i;
+                    if (arrM_content[index][i] != '') {
+                        index_insert = i;
+                    }
                     temp_option = temp_option + 1;
                 }
             }
@@ -413,13 +401,13 @@
 
         function RemoveRadio(id) {
             $(id).remove();
-            str = id.split('-');
+            let str = id.split('-');
             arrCMD[1][parseInt(str[str.length - 2])] = 0;
             arrC_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = '';
         }
 
         function AddRadio(id) {
-            str = id.split('-');
+            let str = id.split('-');
             index = parseInt(str[str.length - 2]);
             index_insert = 0;
             temp_option = 0
@@ -427,9 +415,9 @@
                 if (typeof arrC_content[index][i] == 'undefined') {
                     i = 999;
                 } else {
-                    if (arrC_content[index][i] == '') {
-                        index_insert = i - 1;
-                    } else index_insert = i;
+                    if (arrC_content[index][i] != '') {
+                        index_insert = i;
+                    }
                     temp_option = temp_option + 1;
                 }
             }
@@ -462,12 +450,12 @@
         }
 
         function UpdateValueOfOptionCheckbox(id) {
-            str = id.split('-');
+            let str = id.split('-');
             val = document.getElementById('content-checkbox-' + str[str.length - 2] + '-' + str[str.length - 1]).value;
             arrM_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = val;
         }
         function UpdateValueOfOptionRadio(id) {
-            str = id.split('-');
+            let str = id.split('-');
             val = document.getElementById('content-radio-' + str[str.length - 2] + '-' + str[str.length - 1]).value;
             arrC_content[parseInt(str[str.length - 2])][parseInt(str[str.length - 1])] = val;
         }
@@ -515,11 +503,79 @@
                 }
             });
         });
+        function init() {
+            var object = {
+                phase_id: document.getElementById('phase_id').value
+            }
+            $.ajax({
+                url: "@Url.Action("getFormbyPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    document.getElementById('form_title_description').value = data.form.title_description;
+                    document.getElementById('form_title').value = data.form.title;
+                    data.ques.forEach(function (x) {
+                        arrMapping.push(indexDiv-1);
+                        arrReal.push(x.question_id);
+                        document.getElementById('answer-type-' + (indexDiv-1)).value = x.answer_type_id;
+                        changeAnswerType(indexDiv-1);
+                        document.getElementById('question-title-' + (indexDiv - 1)).value = x.title;
+                        if (x.is_compulsory == 1)
+                            $('#compulsory-' + (indexDiv - 1)).attr('checked', true);
+                        data.quesOption.forEach(function (y) {
+                            if (x.question_id == y.question_id) {
+                                str = y.option_title.split("$^");
+                                for (let i = 0; i < str.length; i++) {
+                                    if (x.answer_type_id == 3) {
+                                        temp_option = 0
+                                        for (let i = 0; i < 100; i++) {
+                                            if (typeof arrM_content[(indexDiv - 1)][i] == 'undefined') {
+                                                i = 999;
+                                            } else {
+                                                temp_option = temp_option + 1;
+                                            }
+                                        }
+                                        arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                        document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                        if (i < (str.length - 1)) {
+                                            AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                        }
+                                    } else if (x.answer_type_id == 5) {
+                                        temp_option = 0
+                                        for (let i = 0; i < 100; i++) {
+                                            if (typeof arrC_content[(indexDiv - 1)][i] == 'undefined') {
+                                                i = 999;
+                                            } else {
+                                                temp_option = temp_option + 1;
+                                            }
+                                        }
+                                        arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                        document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                        if (i < (str.length - 1)) {
+                                            AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                        if (x !== data.ques[data.ques.length -1])
+                            addQues('#control-' + (indexDiv-1));
+                    });
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
         $(document).ready(function () {
             $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
             arrCMD = createArrMultiDimensional(2, 100);
             arrM_content = createArrMultiDimensional(100, 200);
             arrC_content = createArrMultiDimensional(100, 200);
+            arrMapping = [];
+            arrReal = [];
+            init();
         });
     </script>
 }

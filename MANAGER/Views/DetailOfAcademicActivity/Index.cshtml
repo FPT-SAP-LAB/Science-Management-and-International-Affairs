@@ -2338,7 +2338,6 @@
                         $('#post_activity').attr('hidden', false);
                     }
                     document.getElementById('detail_name').value = data.baseDetail.activity_name;
-                    document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                     document.getElementById('detail_location').value = data.baseDetail.location;
                     if (document.getElementById('detail_name').value != '') {
                         document.getElementById('detail_from').value = data.baseDetail.from;
@@ -2350,6 +2349,11 @@
                         $('#editor-subcontent-' + x.article_id).summernote('code', x.article_content);
                         document.getElementById('content-' + x.article_id).value = x.version_title;
                     });
+                    $('#detail_category').empty();
+                    data.types.forEach(function (x) {
+                        $('#detail_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name+'</option>');
+                    });
+                    document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                 },
                 error: function (data) {
                     console.log(data);
