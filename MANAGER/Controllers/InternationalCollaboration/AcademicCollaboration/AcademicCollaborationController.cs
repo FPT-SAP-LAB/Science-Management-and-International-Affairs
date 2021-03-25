@@ -117,8 +117,23 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [HttpPost]
         public ActionResult uploadEvidenceFile(HttpPostedFileBase evidence, string folder_name)
         {
-            Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 4, false);
-            return Json(new { evidence_link = f.WebViewLink });
+            try
+            {
+                if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                {
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để cấp quyền.");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+                }
+                else
+                {
+                    Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 4, false);
+                    return Json(new { evidence_link = f.WebViewLink });
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpPost]
