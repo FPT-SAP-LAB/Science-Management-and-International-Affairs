@@ -31,7 +31,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 baseDetail = repo.getDetail(language_id, activity_id),
                 subContent = repo.getSubContents(language_id, activity_id),
                 types = repo.getType(language_id)
-        };
+            };
             return Json(data);
         }
         [HttpPost]

@@ -297,16 +297,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     ORDER BY f.form_id";
                 List<Ques> ques = db.Database.SqlQuery<Ques>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 string ques_id = "";
-                List<int> type = new List<int> { 3,5 };
-                foreach(Ques q in ques)
+                List<int> type = new List<int> { 3, 5 };
+                foreach (Ques q in ques)
                 {
                     if (type.Contains(q.answer_type_id))
                     {
-                        ques_id += q.question_id+",";
+                        ques_id += q.question_id + ",";
                     }
                 }
                 ques_id = ques_id.Remove(ques_id.Length - 1);
-                sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in ("+ques_id+")";
+                sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in (" + ques_id + ")";
                 List<QuesOption> quesOption = db.Database.SqlQuery<QuesOption>(sql).ToList();
                 baseForm data = new baseForm
                 {
@@ -315,7 +315,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     quesOption = quesOption
                 };
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new baseForm();
             }
