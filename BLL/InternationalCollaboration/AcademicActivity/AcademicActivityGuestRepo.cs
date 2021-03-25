@@ -9,21 +9,20 @@ using System.Threading.Tasks;
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityGuestRepo
-    {
+    { 
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-
+        
         public List<baseAA> getBaseAA(int count, List<int> type)
         {
             try
             {
                 StringBuilder typestr = new StringBuilder();
-
-                if (type is null || type.Count == 0)
+                
+                if(type is null || type.Count == 0)
                 {
-                    typestr.Append("(1,2,3,4)");
+                    typestr.Append("(1,2,3,4)");                    
                 }
-                else
-                {
+                else {
                     typestr.Append("(");
                     foreach (int i in type)
                     {
@@ -38,7 +37,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
-                        WHERE al.language_id = 1 AND [aa].activity_type_id IN " + typestr.ToString() + @"
+                        WHERE al.language_id = 1 AND [aa].activity_type_id IN "+ typestr.ToString() + @"
                         ORDER BY [from] DESC
                         OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                 List<baseAA> obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count)).ToList();
@@ -51,7 +50,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
                 return new List<baseAA>();
             }
         }
@@ -62,6 +60,28 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
 
+        public baseAA getBaseAADetail(int id)
+        {
+            try
+            {
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(adetail.activity_date_start as nvarchar) as 'from', cast(adetail.activity_date_end as nvarchar) as 'to', al.language_id
+                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
+                        on adetail.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
+                        on ai.activity_id = adetail.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
+                        on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
+                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        WHERE al.language_id = 1 AND [aa].activity_id = @id and ai.main_article = 1";
+                baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                detail.from = changeFormatDate(detail.from);
+                detail.to = changeFormatDate(detail.to);
+                return detail;
+            }
+            catch(Exception e)
+            {
+                return new baseAA();
+            }
+        }
+        
         public class baseAA
         {
             public string activity_name { get; set; }
