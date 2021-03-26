@@ -57,6 +57,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine(e.ToString());
                             transaction.Rollback();
                         }
                     }
@@ -363,6 +364,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 option_title = qon.option_title
                             });
                         }
+                        quess_id.Remove(q.question_id);
+                    }
+                    foreach (int i in quess_id)
+                    {
+                        QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == i).FirstOrDefault();
+                        db.QuestionOptions.Remove(qo);
+                        Question q = db.Questions.Find(i);
+                        db.Questions.Remove(q);
                     }
                     db.SaveChanges();
                     transaction.Commit();

@@ -61,6 +61,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Academic Activity.
+        /// </summary>
+        public static string AcademicActivity {
+            get {
+                return ResourceManager.GetString("AcademicActivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account number.
         /// </summary>
         public static string AccNo {
@@ -534,6 +543,15 @@ namespace GUEST.Resources {
         public static string ListMaga {
             get {
                 return ResourceManager.GetString("ListMaga", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
