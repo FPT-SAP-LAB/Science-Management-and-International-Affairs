@@ -672,7 +672,4 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-    var uppy2; //init uppy2
-$('#edit_officer').on('shown.bs.modal', function () {
-
-});
+    //var uppy2; //init uppy2
