@@ -481,11 +481,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (academicCollaboration != null)
                 {
                     return new AlertModal<AcademicCollaboration_Ext>(academicCollaboration, true, null, null);
-                } else
+                }
+                else
                 {
                     return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Có lỗi xảy ra khi lấy dữ liệu hợp tác học thuật tương ứng");
                 }
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Lấy dữ liệu về hợp tác học thuật đã có lỗi xảy ra.");
             }
