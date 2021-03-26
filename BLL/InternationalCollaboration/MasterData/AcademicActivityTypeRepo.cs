@@ -59,7 +59,6 @@ namespace BLL.InternationalCollaboration.MasterData
             {
                 throw e;
             }
-
         }
 
         public AlertModal<AcademicActivityType_Ext> addAcademicActivityType(int language_id, string activity_type_name)
@@ -234,7 +233,6 @@ namespace BLL.InternationalCollaboration.MasterData
                     {
                         try
                         {
-
                             db.Configuration.LazyLoadingEnabled = false;
                             //delete AcademicLanguageTypeLanguage
                             AcademicActivityTypeLanguage academicActivityTypeLanguage = db.AcademicActivityTypeLanguages.Find(language_id, activity_type_id);
