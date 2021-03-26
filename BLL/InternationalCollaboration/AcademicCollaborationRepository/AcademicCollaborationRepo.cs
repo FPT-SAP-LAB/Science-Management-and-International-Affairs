@@ -51,7 +51,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                         " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 //filter checking
-                SqlParameter country_name_param, year_param, partner_name_param, office_name_param;
+                SqlParameter country_name_param, year_param, partner_name_param, office_name_param, direction_param, collab_type_id_param;
 
                 ///country_name
                 if (obj_searching.country_name != null)
@@ -86,9 +86,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 ///year
                 year_param = new SqlParameter("year", obj_searching.year);
 
+                ///direction
+                direction_param = new SqlParameter("direction", direction);
+
+                ///collab_type_id
+                collab_type_id_param = new SqlParameter("collab_type_id", collab_type_id);
+
                 List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                    new SqlParameter("direction", direction),
-                                                    new SqlParameter("collab_type_id", collab_type_id),
+                                                    direction_param,
+                                                    collab_type_id_param,
                                                     country_name_param,
                                                     partner_name_param,
                                                     office_name_param,
@@ -98,10 +104,36 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                     new SqlParameter("start", baseDatatable.Start),
                                                     new SqlParameter("length", baseDatatable.Length)).ToList();
 
-                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*) from IA_AcademicCollaboration.AcademicCollaboration
-                                                                where direction_id = @direction and collab_type_id = @collab_type_id",
-                                                                new SqlParameter("direction", direction),
-                                                                new SqlParameter("collab_type_id", collab_type_id)).FirstOrDefault();
+                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)
+                                                                from IA_AcademicCollaboration.AcademicCollaboration collab
+                                                                join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
+                                                                join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
+                                                                join General.Country c on c.country_id = pn.country_id
+                                                                join General.People pp on collab.people_id = pp.people_id
+                                                                join General.[Profile] pf on pf.people_id = pp.people_id
+                                                                join General.Office offi on pf.office_id = offi.office_id
+                                                                join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
+		                                                                from
+		                                                                (select csh1.collab_id, MAX(csh1.change_date) 'change_date'
+			                                                                from IA_AcademicCollaboration.CollaborationStatusHistory csh1
+			                                                                group by csh1.collab_id) as csh1
+		                                                                join
+		                                                                (select csh2.collab_status_id, csh2.collab_id, csh2.change_date
+			                                                                from IA_AcademicCollaboration.CollaborationStatusHistory csh2) as csh2
+		                                                                on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh
+                                                                on csh.collab_id = collab.collab_id
+                                                                join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
+                                                                where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
+                                                                and ISNULL(c.country_name, '') like @country_name
+                                                                and ISNULL(pn.partner_name, '') like @partner_name
+                                                                and ISNULL(offi.office_name, '') like @office_name
+                                                                or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)",
+                                                                direction_param,
+                                                                collab_type_id_param,
+                                                                country_name_param,
+                                                                partner_name_param,
+                                                                office_name_param,
+                                                                year_param).FirstOrDefault();
                 return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
             }
             catch (Exception e)
@@ -288,134 +320,140 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 try
                 {
                     //check duplicate academic collaboration: person, partner, collab_scope base on time
-                    checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab);
-
-                    Person person;
-                    var person_id = 0;
-                    Partner partner;
-                    var partner_id = 0;
-                    var partner_scope_id = 0;
-
-                    //check available person
-                    if (!obj_person.available_person)
+                    if (checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab))
                     {
-                        //add new person
-                        //add information to People
-                        person = new Person()
+                        Person person;
+                        var person_id = 0;
+                        Partner partner;
+                        var partner_id = 0;
+                        var partner_scope_id = 0;
+
+                        //check available person
+                        if (!obj_person.available_person)
                         {
-                            name = obj_person.person_name,
-                            email = obj_person.person_email
+                            //add new person
+                            //add information to People
+                            person = new Person()
+                            {
+                                name = obj_person.person_name,
+                                email = obj_person.person_email
+                            };
+                            db.People.Add(person);
+                            db.SaveChanges();
+
+                            //check office_id with Office
+                            var office = db.Offices.Find(obj_person.person_profile_office_id);
+                            if (office == null)
+                            {
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được cơ sở tương ứng.");
+                            }
+                            else
+                            {
+                                var profile = new Profile()
+                                {
+                                    people_id = person.people_id,
+                                    office_id = obj_person.person_profile_office_id
+                                };
+                                db.Profiles.Add(profile);
+                            }
+
+                            //pass person_id value
+                            person_id = person.people_id;
+                        }
+                        else
+                        {
+                            person_id = obj_person.person_id;
+                        }
+
+                        //check available partner
+                        if (!obj_partner.available_partner)
+                        {
+                            //add new partner
+                            partner = new Partner()
+                            {
+                                partner_name = obj_partner.partner_name
+                            };
+
+                            //check country_id with Country
+                            var country = db.Countries.Find(obj_partner.partner_country_id);
+                            if (country == null)
+                            {
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được quốc gia tương ứng.");
+                            }
+                            else
+                            {
+                                partner.country_id = obj_partner.partner_country_id;
+                                db.Partners.Add(partner);
+                                db.SaveChanges();
+
+                                //pass partner_id value
+                                partner_id = partner.partner_id;
+                            }
+                        }
+                        else
+                        {
+                            partner_id = obj_partner.partner_id;
+                            //check exist partner_scope
+                            var partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
+                            if (partner_scope != null)
+                            {
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
+                            }
+                            else
+                            {
+                                //add partner_id & scope_id to PartnerScope
+                                partner_scope = new PartnerScope()
+                                {
+                                    partner_id = partner_id,
+                                    scope_id = obj_partner.collab_scope_id
+                                };
+                                db.PartnerScopes.Add(partner_scope);
+                                db.SaveChanges();
+
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
+                            }
+                        }
+
+                        //add infor to AcademicCollaboration
+                        var academic_collaboration = new AcademicCollaboration()
+                        {
+                            direction_id = direction_id,
+                            collab_type_id = collab_type_id,
+                            people_id = person_id,
+                            partner_scope_id = partner_scope_id,
+                            plan_study_start_date = obj_academic_collab.plan_start_date,
+                            plan_study_end_date = obj_academic_collab.plan_end_date,
+                            actual_study_start_date = obj_academic_collab.actual_start_date,
+                            actual_study_end_date = obj_academic_collab.actual_end_date,
+                            is_supported = obj_academic_collab.support,
+                            note = obj_academic_collab.note
                         };
-                        db.People.Add(person);
+                        db.AcademicCollaborations.Add(academic_collaboration);
                         db.SaveChanges();
 
-                        //check office_id with Office
-                        var office = db.Offices.Find(obj_person.person_profile_office_id);
-                        if (office == null)
-                        {
-                            return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được cơ sở tương ứng.");
-                        }
-                        else
-                        {
-                            var profile = new Profile()
-                            {
-                                people_id = person.people_id,
-                                office_id = obj_person.person_profile_office_id
-                            };
-                            db.Profiles.Add(profile);
-                        }
+                        //add infor to CollaborationStatusHistory
 
-                        //pass person_id value
-                        person_id = person.people_id;
-                    }
-                    else
-                    {
-                        person_id = obj_person.person_id;
-                    }
-
-                    //check available partner
-                    if (!obj_partner.available_partner)
-                    {
-                        //add new partner
-                        partner = new Partner()
+                        var collab_status_hist = new CollaborationStatusHistory()
                         {
-                            partner_name = obj_partner.partner_name
+                            collab_id = academic_collaboration.collab_id,
+                            collab_status_id = obj_academic_collab.status_id,
+                            change_date = DateTime.Now,
+                            evidence = obj_academic_collab.evidence_link,
+                            account_id = account_id
                         };
+                        db.CollaborationStatusHistories.Add(collab_status_hist);
+                        db.SaveChanges();
 
-                        //check country_id with Country
-                        var country = db.Countries.Find(obj_partner.partner_country_id);
-                        if (country == null)
-                        {
-                            return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được quốc gia tương ứng.");
-                        }
-                        else
-                        {
-                            partner.country_id = obj_partner.partner_country_id;
-                            db.Partners.Add(partner);
-                            db.SaveChanges();
-
-                            //pass partner_id value
-                            partner_id = partner.partner_id;
-                        }
+                        trans.Commit();
+                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
                     }
                     else
                     {
-                        partner_id = obj_partner.partner_id;
-                        //check exist partner_scope
-                        var partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
-                        if (partner_scope != null)
-                        {
-                            //get corresponding partner_scope_id
-                            partner_scope_id = partner_scope.partner_scope_id;
-                        }
-                        else
-                        {
-                            //add partner_id & scope_id to PartnerScope
-                            partner_scope = new PartnerScope()
-                            {
-                                partner_id = partner_id,
-                                scope_id = obj_partner.collab_scope_id
-                            };
-                            db.PartnerScopes.Add(partner_scope);
-                            db.SaveChanges();
-
-                            //get corresponding partner_scope_id
-                            partner_scope_id = partner_scope.partner_scope_id;
-                        }
+                        AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
+                        return alertModal;
                     }
-
-                    //add infor to AcademicCollaboration
-                    var academic_collaboration = new AcademicCollaboration()
-                    {
-                        direction_id = direction_id,
-                        collab_type_id = collab_type_id,
-                        people_id = person_id,
-                        partner_scope_id = partner_scope_id,
-                        plan_study_start_date = obj_academic_collab.plan_start_date,
-                        plan_study_end_date = obj_academic_collab.plan_end_date,
-                        actual_study_start_date = obj_academic_collab.actual_start_date,
-                        actual_study_end_date = obj_academic_collab.actual_end_date,
-                        is_supported = obj_academic_collab.support,
-                        note = obj_academic_collab.note
-                    };
-                    db.AcademicCollaborations.Add(academic_collaboration);
-                    db.SaveChanges();
-
-                    //add infor to CollaborationStatusHistory
-
-                    var collab_status_hist = new CollaborationStatusHistory()
-                    {
-                        collab_id = academic_collaboration.collab_id,
-                        collab_status_id = obj_academic_collab.status_id,
-                        change_date = DateTime.Now,
-                        evidence = obj_academic_collab.evidence_link,
-                        account_id = account_id
-                    };
-                    db.CollaborationStatusHistories.Add(collab_status_hist);
-                    db.SaveChanges();
-
-                    trans.Commit();
-                    return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
                 }
                 catch (Exception e)
                 {
@@ -425,7 +463,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<AcademicCollaboration_Ext> checkDuplicateAcademicCollaboration(SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
+        public bool checkDuplicateAcademicCollaboration(SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
         {
             if (obj_person.available_person && obj_partner.available_partner)
             {
@@ -443,12 +481,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 (x.plan_study_start_date <= obj_academic_collab.actual_start_date && x.plan_study_end_date <= obj_academic_collab.actual_end_date))).FirstOrDefault();
                     if (academicCollaboration != null)
                     {
-                        AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
-                        return alertModal;
+                        return false;
                     }
                 }
             }
-            return new AlertModal<AcademicCollaboration_Ext>(null, null, null, null);
+            return true;
         }
     }
 }
