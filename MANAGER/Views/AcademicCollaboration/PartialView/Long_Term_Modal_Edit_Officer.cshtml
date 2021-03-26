@@ -6,6 +6,7 @@
                 <h4 class="modal-title">CHỈNH SỬA CÁN BỘ</h4>
             </div>
             <div class="modal-body">
+                <!--------------------------THÔNG TIN CÁ NHÂN------------------------->
                 <div class="row">
                     <h5 class="font-weight-bolder">THÔNG TIN CÁ NHÂN</h5>
                 </div>
@@ -13,14 +14,12 @@
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Họ và tên</label>
                         <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
+                        @*<label style="color:blue" class="float-right">
+                                <a href="#" onclick="">Kiểm tra</a>
+                            </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="edit_officer_name" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>Ngô Tùng Sơn</option>
-                                <option value="2">Trần Quý Ban</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
@@ -32,13 +31,12 @@
                         <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="edit_officer_facility" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>FPTU-HN</option>
-                                <option value="2">FPTU-ĐN</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <!--------------------------ĐƠN VỊ ĐÀO TẠO------------------------->
                 <div class="row mt-4">
                     <h5 class="font-weight-bolder">ĐƠN VỊ ĐÀO TẠO</h5>
                 </div>
@@ -46,14 +44,12 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                         <label class="font-weight-bolder">Tên đơn vị đào tạo</label>
                         <label style="color:red">*</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="#" onclick="">Kiểm tra</a>
-                        </label>
+                        @*<label style="color:blue" class="float-right">
+                                <a href="#" onclick="">Kiểm tra</a>
+                            </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="edit_officer_traning" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>UTP</option>
-                                <option value="2">KyouDai</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
@@ -65,13 +61,12 @@
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="edit_officer_coop_scope" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>SE</option>
-                                <option value="2">FE</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <!--------------------------CHI TIẾT------------------------->
                 <div class="row mt-4">
                     <h5 class="font-weight-bolder">CHI TIẾT</h5>
                 </div>
@@ -81,10 +76,7 @@
                         <label style="color:red">*</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center" id="edit_officer_status" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>Đang thực hiện</option>
-                                <option value="2">Đã hoàn thành</option>
-                                <option value="3">Chưa hoàn thành</option>
+                                <option selected value=""></option>
                             </select>
                         </div>
                     </div>
@@ -114,7 +106,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">Bản mềm</label>
-                        <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                        <label style="font-style: italic;">(Tối đa 5MB và 1 tệp tin)</label>
                         <div class="uppy row" id="edit_officer_upload">
                             <div class="uppy-wrapper col-6"></div>
                             <div class="uppy-list col-6"></div>
@@ -163,7 +155,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-primary px-6">Lưu</button>
+                <button id="edit_officer_save" type="button" class="btn btn-sm btn-light-primary px-6">Lưu</button>
             </div>
         </div>
     </div>
