@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Email</label>
-                        <input value="sonnt69@fpt.edu.vn" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_officer_email" />
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="edit_officer_email" />
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
@@ -55,7 +55,11 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input value="Việt Nam" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_officer_nation" />
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control text-center" id="edit_officer_nation" name="param" style="width:100% !important">
+                                <option selected value=""></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
