@@ -224,7 +224,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             DetailOfAcademicActivityRepo.baseForm data = repo.getFormbyPhase(phase_id);
             return Json(data);
         }
-        [HttpPost] 
+        [HttpPost]
         public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data)
         {
             repo = new DetailOfAcademicActivityRepo();
@@ -232,7 +232,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             if (res)
             {
                 return Json("Lưu mẫu đăng ký thành công");
-            }else
+            }
+            else
                 return Json(String.Empty);
         }
         public class QuantityByUnit

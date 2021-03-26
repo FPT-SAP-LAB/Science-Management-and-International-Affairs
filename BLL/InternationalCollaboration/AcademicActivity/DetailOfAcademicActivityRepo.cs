@@ -327,7 +327,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     f.title = data.form.title;
                     f.title_description = data.form.title_description;
                     db.Entry(f).State = EntityState.Modified;
-                    foreach(Ques q in data.ques)
+                    foreach (Ques q in data.ques)
                     {
                         if (quess_id.Contains(q.question_id))
                         {
@@ -348,7 +348,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         else
                         {
-                            Question qn= db.Questions.Add(new Question
+                            Question qn = db.Questions.Add(new Question
                             {
                                 form_id = data.form.form_id,
                                 answer_type_id = q.answer_type_id,
@@ -356,7 +356,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 is_compulsory = q.is_compulsory == 1 ? true : false
                             });
                             db.SaveChanges();
-                            QuesOption qon =  data.quesOption.Find(x => x.question_id == q.question_id);
+                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
                             db.QuestionOptions.Add(new QuestionOption
                             {
                                 question_id = qn.question_id,
@@ -367,7 +367,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
