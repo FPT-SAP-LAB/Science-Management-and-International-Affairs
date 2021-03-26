@@ -87,6 +87,10 @@
 @{
     Html.RenderPartial("PartialView/MOU/Manage_Spe");
 }
+@*modal for scopes*@
+@{
+    Html.RenderPartial("PartialView/MOU/Manage_Scopes");
+}
 
 @*modal add_mou*@
 @{
@@ -1137,6 +1141,10 @@
                     className: "text-center",
                     targets: "_all"
                 },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                }
             ]
         });
     }
@@ -1162,6 +1170,8 @@
                         success: function (data) {
                             if (data.success == true) {
                                 toastr.success(data.content);
+                                //refresh spe
+                                refreshSpeList();
                             } else {
                                 toastr.error(data.content);
                             }
@@ -1186,11 +1196,13 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
-                        toastr.success(data.content);
                         //clear content
                         $("#spe_name_add").val("");
                         //close modal
                         $("#add_spe").modal('hide');
+                        toastr.success(data.content);
+                        //refresh spe
+                        refreshSpeList();
                     } else {
                         toastr.error(data.content);
                     }
@@ -1241,11 +1253,13 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
-                        toastr.success(data.content);
                         //clear content
                         $("#spe_name_edit").val("");
                         //close modal
-                        $("#edit-spe").modal('hide');
+                        $("#edit_spe").modal('hide');
+                        toastr.success(data.content);
+                        //refresh spe
+                        refreshSpeList();
                     } else {
                         toastr.error(data.content);
                     }
@@ -1274,6 +1288,7 @@
             searching: false,
             lengthChange: false,
             serverSide: true,
+            pageLength: 3,
             ajax: {
                 url: "@Url.Action("listCollaborationScope", "CollaborationScope")",
                 type: "GET",
@@ -1286,9 +1301,10 @@
                 { data: "scope_abbreviation", name: "scope_abbreviation" },
                 {
                     data: "scope_id",
+                    width: '100px',
                     orderable: false,
                     render: function (data) {
-                        return '<a onclick="loadDataToEditModal('+ data +')" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                        return '<a onclick="loadDataToEditModal(' + data +')" href="#edit_scopes" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
                             '<a onclick="deleteCollaborationScope('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 }
@@ -1297,10 +1313,46 @@
                 {
                     className: "text-center",
                     targets: "_all"
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
                 }
             ]
         });
     }
+
+    $("#add_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("addCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_name: $("#add_modal_scope_name").val(),
+                    scope_abbreviation: $("#add_modal_scope_abbreviation").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#add_modal_scope_name").val("");
+                        $("#add_modal_scope_abbreviation").val("");
+                        //close modal
+                        $("#add_modal_close").click();
+                        //refresh scope list
+                        refreshScopeList();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    scope_table.ajax.reload();
+                },
+                error: function () {
+                    toastr.error(data.content);
+                    scope_table.ajax.reload();
+                }
+            });
+        });
 
     var scope_id_temp;
     //loading data to modal
@@ -1348,6 +1400,8 @@
                         $("#edit_modal_scope_abbreviation").val("");
                         //close modal
                         $("#edit_modal_close").click();
+                        //refresh scopes list
+                        refreshScopeList();
                     } else {
                         toastr.error(data.content);
                     }
@@ -1361,10 +1415,58 @@
             });
     });
 
+    function refreshScopeList() {
+        $.ajax({
+                url: "@Url.Action("listCollaborationScopeUpdated", "CollaborationScope")",
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                $('#coop_scope_add').empty();
+                $('#coop_scope_edit').empty();
+                    var HTMLScopedata = '';
+                    listScopes = [];
+                    for (i = 0; i < data.length; i++) {
+                        var obj = { scope_id: data[i].scope_id, scope_name: data[i].scope_abbreviation }
+                        listScopes.push(obj);
+                        HTMLScopedata += '<option value = "' + data[i].scope_id + '" >' + data[i].scope_abbreviation + '</option>'
+                    }
+                    $('#coop_scope_add').append(HTMLScopedata);
+                    $('#coop_scope_edit').append(HTMLScopedata);
+                },
+                error: function () {
+                    toastr.error(data.content);
+                }
+        });
+    }
+
+    function refreshSpeList() {
+        $.ajax({
+                url: "@Url.Action("listSpecializationsUpdated", "Specialization")",
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                $('#specialization_add').empty();
+                $('#specialization_edit').empty();
+                    var HTMLSpedata = '';
+                    listSpe = [];
+                    for (i = 0; i < data.length; i++) {
+                        var obj = { spe_id: data[i].specialization_id, spe_name: data[i].specialization_name }
+                        listSpe.push(obj);
+                        HTMLSpedata += '<option value = "' + data[i].specialization_id + '" >' + data[i].specialization_name + '</option>'
+                    }
+                    $('#specialization_add').append(HTMLSpedata);
+                    $('#specialization_edit').append(HTMLSpedata);
+                },
+                error: function () {
+                    toastr.error(data.content);
+                }
+        });
+    }
+
     function deleteCollaborationScope(scope_id) {
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: "Xóa loại kinh phí này?",
+                text: "Xóa nội dung này?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Xác nhận",
@@ -1382,6 +1484,8 @@
                         success: function (data) {
                             if (data.success == true) {
                                 toastr.success(data.content);
+                                //refresh scope list
+                                refreshScopeList();
                             } else {
                                 toastr.error(data.content);
                             }
