@@ -29,6 +29,22 @@ namespace BLL.InternationalCollaboration.MasterData
                 throw e;
             }
         }
+        public List<CollaborationScope> getListCollaborationScopeUpdated()
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    List<CollaborationScope> collaborationScopes = db.CollaborationScopes.ToList();
+                    return collaborationScopes;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         public AlertModal<CollaborationScope> addCollaborationScope(string scope_name, string scope_abbreviation)
         {

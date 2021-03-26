@@ -41,7 +41,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
                 return Json(new { success = false });
             }
         }
-
+        public ActionResult listCollaborationScopeUpdated()
+        {
+            try
+            {
+                List<CollaborationScope> collaborationScopes = collaborationStatusRepo.getListCollaborationScopeUpdated();
+                return Json(collaborationScopes);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
         [HttpPost]
         public ActionResult addCollaborationScope(string scope_name, string scope_abbreviation)
         {
