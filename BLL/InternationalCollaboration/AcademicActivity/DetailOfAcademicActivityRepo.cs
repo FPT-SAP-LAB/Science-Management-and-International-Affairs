@@ -284,17 +284,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
-                string sql = @"SELECT q.question_id, q.title, at.answer_type_id, aap.language_id,cast(q.is_compulsory as int) as is_compulsory
+                string sql = @"SELECT q.question_id, q.title, at.answer_type_id,cast(q.is_compulsory as int) as is_compulsory
                                     FROM SMIA_AcademicActivity.Form f
-                                    LEFT JOIN 
-	                                    (SELECT aap.phase_id, aapl.phase_name, aapl.language_id
-	                                    FROM SMIA_AcademicActivity.AcademicActivityPhase aap
-	                                    INNER JOIN SMIA_AcademicActivity.AcademicActivityPhaseLanguage aapl ON aap.phase_id = aapl.phase_id) as aap
-	                                    ON aap.phase_id = f.phase_id
                                     INNER JOIN SMIA_AcademicActivity.Question q ON q.form_id = f.form_id
                                     INNER JOIN SMIA_AcademicActivity.AnswerType at ON at.answer_type_id = q.answer_type_id
-                                    where aap.phase_id = @phase_id and language_id = 1
-                                    ORDER BY f.form_id";
+                                    where f.phase_id = @phase_id";
                 List<Ques> ques = db.Database.SqlQuery<Ques>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 string ques_id = "";
                 List<int> type = new List<int> { 3, 5 };
@@ -319,6 +313,65 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 return new baseForm();
+            }
+        }
+        public bool updateForm(baseForm data)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    List<Question> questions = db.Questions.Where(x => x.form_id == data.form.form_id).ToList();
+                    List<int> quess_id = questions.Select(x => x.question_id).ToList();
+                    Form f = db.Forms.Find(data.form.form_id);
+                    f.title = data.form.title;
+                    f.title_description = data.form.title_description;
+                    db.Entry(f).State = EntityState.Modified;
+                    foreach(Ques q in data.ques)
+                    {
+                        if (quess_id.Contains(q.question_id))
+                        {
+                            Question qt = db.Questions.Find(q.question_id);
+                            qt.title = q.title;
+                            qt.answer_type_id = q.answer_type_id;
+                            qt.is_compulsory = q.is_compulsory == 1 ? true : false;
+                            db.Entry(qt).State = EntityState.Modified;
+                            QuestionOption rv = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
+                            db.QuestionOptions.Remove(rv);
+                            db.SaveChanges();
+                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
+                            db.QuestionOptions.Add(new QuestionOption
+                            {
+                                question_id = q.question_id,
+                                option_title = qon.option_title
+                            });
+                        }
+                        else
+                        {
+                            Question qn= db.Questions.Add(new Question
+                            {
+                                form_id = data.form.form_id,
+                                answer_type_id = q.answer_type_id,
+                                title = q.title,
+                                is_compulsory = q.is_compulsory == 1 ? true : false
+                            });
+                            db.SaveChanges();
+                            QuesOption qon =  data.quesOption.Find(x => x.question_id == q.question_id);
+                            db.QuestionOptions.Add(new QuestionOption
+                            {
+                                question_id = qn.question_id,
+                                option_title = qon.option_title
+                            });
+                        }
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }catch(Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
         public class baseDetail
@@ -374,7 +427,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int question_id { get; set; }
             public string title { get; set; }
             public int answer_type_id { get; set; }
-            public int language_id { get; set; }
             public int is_compulsory { get; set; }
         }
         public class QuesOption
