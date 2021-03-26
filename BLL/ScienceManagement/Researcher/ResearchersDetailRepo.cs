@@ -14,7 +14,7 @@ namespace BLL.ScienceManagement.Researcher
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public ResearcherDetail GetProfile(int id)
         {
-            var data = (
+            var profile = (
                 from a in db.People
                 join b in db.Profiles on a.people_id equals b.people_id
                 join c in db.Countries on b.country_id equals c.country_id
@@ -40,8 +40,30 @@ namespace BLL.ScienceManagement.Researcher
                     website = b.website,
                     gscholar = b.google_scholar,
                     cv = b.cv
-                });
-             return (ResearcherDetail) data;
+                }).FirstOrDefault();
+            var interested_fields = (from a in db.Profiles
+                                     from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
+                                     join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
+                                     where a.people_id==id
+                                     select new InterestedField {
+                                        id = h.research_area_id,
+                                        name =h.name,
+                                        selected=1
+                                     }).Union(from g in db.ResearchAreas
+                                              join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
+                                              where !((from m in db.Profiles
+                                                       from n in db.ResearchAreas
+                                                       where m.ResearchAreas.Contains(n) && m.people_id == id 
+                                                       select n.research_area_id).Contains(h.research_area_id))
+                                              select new InterestedField
+                                              {
+                                                  id=h.research_area_id,
+                                                  name = h.name,
+                                                  selected = 0
+                                              }).ToList<InterestedField>();
+
+            profile.interested_fields = interested_fields;
+            return profile;
         }
     }
 }

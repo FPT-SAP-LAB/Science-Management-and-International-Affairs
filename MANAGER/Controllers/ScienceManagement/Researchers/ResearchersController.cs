@@ -33,6 +33,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public ActionResult ViewInfo()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
             ViewBag.profile = profile;

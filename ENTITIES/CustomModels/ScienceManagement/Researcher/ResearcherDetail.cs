@@ -21,5 +21,12 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public string website { get; set; }
         public string gscholar { get; set; }
         public string cv { get; set; }
+        public List<InterestedField> interested_fields { get; set; }
+    }
+    public class InterestedField
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int selected { get; set; }
     }
 }
