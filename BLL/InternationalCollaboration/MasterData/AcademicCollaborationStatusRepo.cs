@@ -47,7 +47,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (collab_status_name == "" || status_type.ToString() == "")
                     {
-                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Trạng thái hoặc loại trạng thái không được để trống.");
+                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Trạng thái hoặc loại trạng thái không được để trống.");
                     }
                     else
                     {
@@ -63,12 +63,12 @@ namespace BLL.InternationalCollaboration.MasterData
                             };
                             db.AcademicCollaborationStatus.Add(academicCollaborationStatu);
                             db.SaveChanges();
-                            return new AlertModal<AcademicCollaborationStatu>(null, true, "Thành công", "Thêm Trạng thái hợp tác học thuật thành công.");
+                            return new AlertModal<AcademicCollaborationStatu>(null, true, "Thêm Trạng thái hợp tác học thuật thành công.");
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Tên Trạng thái hợp tác học thuật không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicCollaborationStatu>(null, false, "Tên Trạng thái hợp tác học thuật không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
@@ -76,7 +76,7 @@ namespace BLL.InternationalCollaboration.MasterData
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaborationStatu>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -94,14 +94,14 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     else
                     {
-                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Không xác định được Trạng thái hợp tác học thuật tương ứng. Vui lòng kiểm tra lại.");
+                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Không xác định được Trạng thái hợp tác học thuật tương ứng. Vui lòng kiểm tra lại.");
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaborationStatu>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -115,7 +115,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     //empty error
                     if (collab_status_name == "" || status_type.ToString() == "")
                     {
-                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Tên Trạng thái hợp tác học thuật không được để trống.");
+                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Tên Trạng thái hợp tác học thuật không được để trống.");
                     }
                     else
                     {
@@ -130,17 +130,17 @@ namespace BLL.InternationalCollaboration.MasterData
                                 academicCollaborationStatu_edit.collab_status_name = collab_status_name;
                                 academicCollaborationStatu_edit.status_type = status_type;
                                 db.SaveChanges();
-                                return new AlertModal<AcademicCollaborationStatu>(null, true, "Thành công", "Chỉnh sửa Trạng thái hợp tác học thuật thành công");
+                                return new AlertModal<AcademicCollaborationStatu>(null, true, "Chỉnh sửa Trạng thái hợp tác học thuật thành công");
                             }
                             else
                             {
-                                return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Không xác định được Trạng thái hợp tác học thuật tương ứng. Vui lòng kiểm tra lại.");
+                                return new AlertModal<AcademicCollaborationStatu>(null, false, "Không xác định được Trạng thái hợp tác học thuật tương ứng. Vui lòng kiểm tra lại.");
                             }
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Tên Trạng thái hợp tác học thuật không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicCollaborationStatu>(null, false, "Tên Trạng thái hợp tác học thuật không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
@@ -148,7 +148,7 @@ namespace BLL.InternationalCollaboration.MasterData
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaborationStatu>(null, false, "Có lỗi xảy ra.");
             }
         }
 
@@ -164,19 +164,19 @@ namespace BLL.InternationalCollaboration.MasterData
                     {
                         db.AcademicCollaborationStatus.Remove(db.AcademicCollaborationStatus.Find(collab_status_id));
                         db.SaveChanges();
-                        return new AlertModal<AcademicCollaborationStatu>(null, true, "Thành công", "Xóa Trạng thái hợp tác học thuật thành công");
+                        return new AlertModal<AcademicCollaborationStatu>(null, true, "Xóa Trạng thái hợp tác học thuật thành công");
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
-                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
+                        return new AlertModal<AcademicCollaborationStatu>(null, false, "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaborationStatu>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaborationStatu>(null, false, "Có lỗi xảy ra.");
             }
         }
     }

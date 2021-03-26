@@ -448,5 +448,26 @@ namespace BLL.ScienceManagement.Paper
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
             return list;
         }
+
+        public List<Paper_Appendix_1> getListAppendix1_2(string type)
+        {
+            string sql = @"select po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, p.name, p.company, a.sum, b.sumFE, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [General].People po on ap.people_id = po.people_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join (select p.paper_id, count(ap.people_id) as 'sum'
+			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+			                            group by p.paper_id) as a on p.paper_id = a.paper_id
+	                            join (select p.paper_id, count(ap.people_id) as 'sumFE'
+			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+				                            join [General].Profile pro on ap.people_id = pro.people_id
+			                            group by p.paper_id) as b on p.paper_id = b.paper_id
+                            where rp.status_id = 4 and rp.type = @type
+                            order by po.name";
+            List<Paper_Appendix_1> list = db.Database.SqlQuery<Paper_Appendix_1>(sql, new SqlParameter("type", type)).ToList();
+            return list;
+        }
     }
 }

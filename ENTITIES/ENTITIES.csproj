@@ -280,6 +280,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\DecisionDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceCriteria.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceDetail.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\Paper_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\PendingPaper_Manager.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaitDecisionPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ConferencesParticipationReport.cs" />
