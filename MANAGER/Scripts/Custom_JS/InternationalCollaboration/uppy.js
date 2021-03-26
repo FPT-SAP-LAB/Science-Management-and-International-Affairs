@@ -84,7 +84,7 @@
     var initUppy2 = function () {
         // Uppy variables
         // For more info refer: https://uppy.io/
-        var elemId = 'kt_uppy_2';
+        var elemId = 'edit_officer_upload';
         var id = '#' + elemId;
         var $statusBar = $(id + ' .uppy-status');
         var $uploadedList = $(id + ' .uppy-list');

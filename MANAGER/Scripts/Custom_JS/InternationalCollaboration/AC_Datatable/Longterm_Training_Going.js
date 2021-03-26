@@ -672,4 +672,43 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-    //var uppy2; //init uppy2
+//var uppy2; //init uppy2
+
+//get corresponding data
+$('#edit_officer').on('show.bs.modal', function (e) {
+    //init save button
+    //var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
+    var acad_collab_id = $(e.relatedTarget).data('id');
+    alert(acad_collab_id);
+    $.ajax({
+        url: "/AcademicCollaboration/getAcademicCollaboration",
+        type: "GET",
+        data: {
+            acad_collab_id: acad_collab_id
+        },
+        cache: false,
+        dataType: "json",
+        success: function (data) {
+            if (data != null) {
+                if (data.success) {
+                    let acadCollab = data.obj;
+                    //fill data to correspoding select, input
+                    $("#edit_officer_name").append(new Option(acadCollab.people_name, acadCollab.people_id, false, true)).trigger('change');
+                    $("#edit_officer_email").val(acadCollab.email);
+                    $("#edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
+
+                    $("#edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_id, false, true)).trigger('change');
+                    $("#edit_officer_nation").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
+                    $("#edit_officer_coop_scope").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
+
+                } else {
+                    toastr.error(data.content);
+                }
+            }
+        },
+        error: function () {
+            toastr.error("Có lỗi xảy ra.");
+        }
+    })
+
+});

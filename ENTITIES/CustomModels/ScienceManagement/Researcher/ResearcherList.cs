@@ -14,7 +14,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public String title { get; set; }
         public String position { get; set; }
         public String workplace { get; set; }
-        public String interest { get; set; }
         public String googleScholar { get; set; }
     }
 }

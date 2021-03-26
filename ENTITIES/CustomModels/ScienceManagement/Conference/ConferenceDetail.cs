@@ -27,6 +27,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string CountryName { get; set; }
         public string StatusName { get; set; }
         public int StatusID { get; set; }
+        public int FormalityID { get; set; }
         public string FormalityName { get; set; }
         public int Reimbursement { get; set; }
         public string SpecializationName { get; set; }
