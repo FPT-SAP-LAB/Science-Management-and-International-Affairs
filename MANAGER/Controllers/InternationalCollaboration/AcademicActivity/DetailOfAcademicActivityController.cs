@@ -51,6 +51,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(String.Empty);
             }
         }

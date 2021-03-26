@@ -61,12 +61,14 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         return new AlertModal<Specialization>(null, false, "Lỗi", "Thông tin lĩnh vực hợp tác có dữ liệu tại các màn hình khác.");
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<Specialization>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -90,6 +92,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<Specialization>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -130,6 +133,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<Specialization>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }
@@ -174,6 +178,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<Specialization>(null, false, "Lỗi", "Có lỗi xảy ra.");
             }
         }

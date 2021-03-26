@@ -490,6 +490,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Lấy dữ liệu về hợp tác học thuật đã có lỗi xảy ra.");
             }
         }
