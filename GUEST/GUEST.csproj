@@ -2429,6 +2429,7 @@
     <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+    <Content Include="Views\AcademicActivity\loadForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
