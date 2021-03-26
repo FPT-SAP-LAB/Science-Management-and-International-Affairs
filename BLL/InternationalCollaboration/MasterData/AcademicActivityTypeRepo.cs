@@ -47,24 +47,24 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     else
                     {
-                        //check duplicate data
-                        AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
-                        if (academicActivityType == null)
-                        {
-                            //add
-                            academicActivityType = new AcademicActivityType
-                            {
-                                activity_type_name = academic_activity_type_name
-                            };
-                            db.AcademicActivityTypes.Add(academicActivityType);
-                            db.SaveChanges();
-                            return new AlertModal<AcademicActivityType>(null, true, "Thêm loại hoạt động học thuật thành công.");
-                        }
-                        else
-                        {
-                            //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
-                        }
+                        ////check duplicate data
+                        //AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
+                        //if (academicActivityType == null)
+                        //{
+                        //    //add
+                        //    academicActivityType = new AcademicActivityType
+                        //    {
+                        //        activity_type_name = academic_activity_type_name
+                        //    };
+                        //    db.AcademicActivityTypes.Add(academicActivityType);
+                        //    db.SaveChanges();
+                        //    return new AlertModal<AcademicActivityType>(null, true, "Thêm loại hoạt động học thuật thành công.");
+                        //}
+                        //else
+                        //{
+                        //return duplicate error
+                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                        //}
                     }
                 }
             }
@@ -115,27 +115,27 @@ namespace BLL.InternationalCollaboration.MasterData
                     else
                     {
                         //check duplicate data
-                        AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
-                        if (academicActivityType == null)
-                        {
-                            //edit
-                            AcademicActivityType academicActivityType_edit = db.AcademicActivityTypes.Find(academic_activity_type_id);
-                            if (academicActivityType_edit != null)
-                            {
-                                academicActivityType_edit.activity_type_name = academic_activity_type_name;
-                                db.SaveChanges();
-                                return new AlertModal<AcademicActivityType>(null, true, "Chỉnh sửa loại hoạt động học thuật thành công");
-                            }
-                            else
-                            {
-                                return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
-                            }
-                        }
-                        else
-                        {
-                            //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
-                        }
+                        //AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
+                        //if (academicActivityType == null)
+                        //{
+                        //    //edit
+                        //    AcademicActivityType academicActivityType_edit = db.AcademicActivityTypes.Find(academic_activity_type_id);
+                        //    if (academicActivityType_edit != null)
+                        //    {
+                        //        academicActivityType_edit.activity_type_name = academic_activity_type_name;
+                        //        db.SaveChanges();
+                        //        return new AlertModal<AcademicActivityType>(null, true, "Chỉnh sửa loại hoạt động học thuật thành công");
+                        //    }
+                        //    else
+                        //    {
+                        //        return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //return duplicate error
+                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                        //}
                     }
                 }
             }

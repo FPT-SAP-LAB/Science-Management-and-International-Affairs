@@ -44,20 +44,21 @@ namespace BLL.ScienceManagement.Researcher
             var interested_fields = (from a in db.Profiles
                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
                                      join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                     where a.people_id==id
-                                     select new InterestedField {
-                                        id = h.research_area_id,
-                                        name =h.name,
-                                        selected=1
+                                     where a.people_id == id
+                                     select new InterestedField
+                                     {
+                                         id = h.research_area_id,
+                                         name = h.name,
+                                         selected = 1
                                      }).Union(from g in db.ResearchAreas
                                               join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
                                               where !((from m in db.Profiles
                                                        from n in db.ResearchAreas
-                                                       where m.ResearchAreas.Contains(n) && m.people_id == id 
+                                                       where m.ResearchAreas.Contains(n) && m.people_id == id
                                                        select n.research_area_id).Contains(h.research_area_id))
                                               select new InterestedField
                                               {
-                                                  id=h.research_area_id,
+                                                  id = h.research_area_id,
                                                   name = h.name,
                                                   selected = 0
                                               }).ToList<InterestedField>();

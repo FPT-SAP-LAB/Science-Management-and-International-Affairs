@@ -297,6 +297,7 @@
     <Compile Include="CustomModels\ScienceManagement\Paper\PendingPaper_Manager.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaitDecisionPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ConferencesParticipationReport.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\InterestedField.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
