@@ -98,7 +98,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                     new SqlParameter("start", baseDatatable.Start),
                                                     new SqlParameter("length", baseDatatable.Length)).ToList();
 
-                int recordsTotal = db.Database.SqlQuery<int>("select count(*) from IA_AcademicCollaboration.AcademicCollaboration").FirstOrDefault();
+                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*) from IA_AcademicCollaboration.AcademicCollaboration
+                                                                where direction_id = @direction and collab_type_id = @collab_type_id",
+                                                                new SqlParameter("direction", direction),
+                                                                new SqlParameter("collab_type_id", collab_type_id)).FirstOrDefault();
                 return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
             }
             catch (Exception e)
@@ -280,10 +283,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 
         public AlertModal<AcademicCollaboration_Ext> saveAcademicCollaboration(int direction_id, int collab_type_id, SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab, int account_id)
         {
-            try
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                using (DbContextTransaction trans = db.Database.BeginTransaction())
+                try
                 {
+                    //check duplicate academic collaboration: person, partner, collab_scope base on time
+                    checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab);
+
                     Person person;
                     var person_id = 0;
                     Partner partner;
@@ -411,11 +417,38 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     trans.Commit();
                     return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
                 }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
             }
-            catch (Exception e)
+        }
+
+        public AlertModal<AcademicCollaboration_Ext> checkDuplicateAcademicCollaboration(SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
+        {
+            if (obj_person.available_person && obj_partner.available_partner)
             {
-                throw e;
+                PartnerScope partnerScope = db.PartnerScopes.Where(x => x.partner_id == obj_partner.partner_id
+                                                                && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
+                if (partnerScope != null)
+                {
+                    AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
+                                                                && x.partner_scope_id == partnerScope.partner_scope_id
+                                                                &&
+                                                                ((x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
+                                                                ||
+                                                                (x.plan_study_start_date >= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                                ||
+                                                                (x.plan_study_start_date <= obj_academic_collab.actual_start_date && x.plan_study_end_date <= obj_academic_collab.actual_end_date))).FirstOrDefault();
+                    if (academicCollaboration != null)
+                    {
+                        AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
+                        return alertModal;
+                    }
+                }
             }
+            return new AlertModal<AcademicCollaboration_Ext>(null, null, null, null);
         }
     }
 }

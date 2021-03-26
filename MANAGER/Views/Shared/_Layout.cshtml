@@ -33,7 +33,7 @@
 
     <!--USED BY THIS PAGE-->
     <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 <!--end::Head-->
@@ -473,7 +473,7 @@
                                             </a>
                                         </li>
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
-                                        @if (user.account.role_id == 1 || true)
+                                        @if (user != null && (user.account.role_id == 1 || true))
                                         {
                                             <li class="menu-item " aria-haspopup="true">
                                                 <a href="/SettingDrive" class="menu-link ">
@@ -671,7 +671,6 @@
     <!--begin::Page Vendors(used by this page)-->
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/Content/assets/js/bundle.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
     <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->

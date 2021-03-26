@@ -4,6 +4,11 @@
 }
 
 <link href="~/Content/Custom_CSS/MOU/MOU.css" rel="stylesheet" />
+<style>
+    .swal2-container {
+        z-index: 5000;
+    }
+</style>
 
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
@@ -24,7 +29,7 @@
                                         <input type="text" class="form-control text-center" placeholder="Số hiệu" id="search_mou_code" />
                                     </div>
                                     <div class="col-lg-offset-3 col-md-offset-12 col-sm-offset-12 my-3">
-                                        <a href="MOU/List#" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
+                                        <a href="javascript:" onclick="searchMOU()" class="btn btn-light-primary px-6 font-weight-bold float-right">Tìm kiếm</a>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +53,7 @@
                                                         Choose an option:
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="MOU/List#" class="navi-link" onclick="exportExcel()">
+                                                        <a href="javascript:" class="navi-link" onclick="exportExcel()">
                                                             <span class="navi-icon">
                                                                 <i class="la la-file-excel-o"></i>
                                                             </span>
@@ -65,7 +70,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <div class="row align-items-center justify-content-end">
-                                    <a href="/MOU/List_Deleted" class="px-7">MOU đã xóa</a>
+                                    <a href="../MOU/List_Deleted" class="px-7">MOU đã xóa</a>
                                 </div>
                             </div>
                         </div>
@@ -78,6 +83,10 @@
         </div>
     </div>
 </div>
+@*modal for spe*@
+@{
+    Html.RenderPartial("PartialView/MOU/Manage_Spe");
+}
 
 @*modal add_mou*@
 @{
@@ -363,7 +372,7 @@
     </script>
 
     @*general*@
-    <script>
+<script>
         var listTempPartnerMOUAdd = [];
         var listScopes = [];
         var listSpe = [];
@@ -374,6 +383,8 @@
             getSpeListForAdd();
             getScopeListForAdd();
             getMOUList();
+            getSpe();
+            getScopes();
         });
 
         function backToStep() {
@@ -1046,7 +1057,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location.href = 'MOU/Detail';
+                window.location.href = './Detail';
             },
             error: function () {
 
@@ -1085,6 +1096,305 @@
                 }
             })
         };
-    </script>
+
+    //spe
+    var spe_table;
+    function getSpe() {
+        spe_table = $("#spe_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "_START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            pageLength: 3,
+            ajax: {
+                url: "@Url.Action("listSpecializations", "Specialization")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "specialization_name", name: "specialization_name" },
+                {
+                    data: "specialization_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="loadSpe('+ data +')" href="#edit_spe" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteSpe('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                    }
+                }
+            ]
+            ,
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                },
+            ]
+        });
+    }
+
+    function deleteSpe(spe_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa nội dung này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true,
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Action("deleteSpecialization", "Specialization")",
+                        type: "POST",
+                        data: {
+                            spe_id: spe_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == true) {
+                                toastr.success(data.content);
+                            } else {
+                                toastr.error(data.content);
+                            }
+                            spe_table.ajax.reload();
+                        },
+                        error: function (data) {
+                            toastr.error(data.content);
+                            spe_table.ajax.reload();
+                        }
+                    });
+                }
+            });
+    }
+
+    $("#add_spe_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("addSpecialization", "Specialization")",
+                type: "POST",
+                data: {
+                    spe_name: $("#spe_name_add").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#spe_name_add").val("");
+                        //close modal
+                        $("#add_spe").modal('hide');
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    spe_table.ajax.reload();
+                },
+                error: function () {
+                    toastr.error(data.content);
+                    spe_table.ajax.reload();
+                }
+            });
+    });
+
+    var spe_id_temp;
+
+    function loadSpe(spe_id) {
+            spe_id_temp = spe_id;
+            $.ajax({
+                url: "@Url.Action("getSpecialization", "Specialization")",
+                type: "POST",
+                data: {
+                    spe_id: spe_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#spe_name_edit").val(data.obj.specialization_name);
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    spe_table.ajax.reload();
+                }
+            });
+    }
+
+    $("#edit_spe_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("editSpecialization", "Specialization")",
+                type: "POST",
+                data: {
+                    spe_id: spe_id_temp,
+                    spe_name: $("#spe_name_edit").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#spe_name_edit").val("");
+                        //close modal
+                        $("#edit-spe").modal('hide');
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    spe_table.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    spe_table.ajax.reload();
+                }
+            });
+    });
+
+    //scopes
+    var scope_table;
+    function getScopes() {
+        scope_table = $("#collaboration_scope_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("listCollaborationScope", "CollaborationScope")",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "scope_name", name: "scope_name" },
+                { data: "scope_abbreviation", name: "scope_abbreviation" },
+                {
+                    data: "scope_id",
+                    orderable: false,
+                    render: function (data) {
+                        return '<a onclick="loadDataToEditModal('+ data +')" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>' +
+                            '<a onclick="deleteCollaborationScope('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+    }
+
+    var scope_id_temp;
+    //loading data to modal
+    function loadDataToEditModal(scope_id) {
+            scope_id_temp = scope_id;
+            $.ajax({
+                url: "@Url.Action("getCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_id: scope_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#edit_modal_scope_name").val(data.obj.scope_name);
+                        $("#edit_modal_scope_abbreviation").val(data.obj.scope_abbreviation);
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    scope_table.ajax.reload();
+                }
+            });
+        }
+
+    //confirm edit
+    $("#edit_modal_confirm").click(function () {
+            $.ajax({
+                url: "@Url.Action("editCollaborationScope", "CollaborationScope")",
+                type: "POST",
+                data: {
+                    scope_id: scope_id_temp,
+                    scope_name: $("#edit_modal_scope_name").val(),
+                    scope_abbreviation: $("#edit_modal_scope_abbreviation").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success(data.content);
+                        //clear content
+                        $("#edit_modal_scope_name").val("");
+                        $("#edit_modal_scope_abbreviation").val("");
+                        //close modal
+                        $("#edit_modal_close").click();
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    //reload datatable
+                    scope_table.ajax.reload();
+                },
+                error: function (data) {
+                    toastr.error(data.content);
+                    scope_table.ajax.reload();
+                }
+            });
+    });
+
+    function deleteCollaborationScope(scope_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa loại kinh phí này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "@Url.Action("deleteCollaborationScope", "CollaborationScope")",
+                        type: "POST",
+                        data: {
+                            scope_id: scope_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == true) {
+                                toastr.success(data.content);
+                            } else {
+                                toastr.error(data.content);
+                            }
+                            scope_table.ajax.reload();
+                        },
+                        error: function (data) {
+                            toastr.error(data.content);
+                            scope_table.ajax.reload();
+                        }
+                    });
+                }
+            });
+        }
+</script>
 }
 
