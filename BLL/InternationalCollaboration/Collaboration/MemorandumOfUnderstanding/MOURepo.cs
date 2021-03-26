@@ -369,7 +369,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                string downloadFile = "MOUDownload.xlsx";
+                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
                 excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
                 return excelPackage;

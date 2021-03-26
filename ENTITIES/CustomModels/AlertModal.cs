@@ -43,6 +43,7 @@ namespace ENTITIES.CustomModels
         {
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
+            content = "Có lỗi xảy ra";
         }
     }
 }
