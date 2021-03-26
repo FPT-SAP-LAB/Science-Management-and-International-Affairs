@@ -61,6 +61,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hoạt động học thuật.
+        /// </summary>
+        public static string AcademicActivity {
+            get {
+                return ResourceManager.GetString("AcademicActivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số tài khoản.
         /// </summary>
         public static string AccNo {
@@ -534,6 +543,15 @@ namespace GUEST.Resources {
         public static string ListMaga {
             get {
                 return ResourceManager.GetString("ListMaga", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Địa điểm.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
