@@ -672,12 +672,12 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-var uppy2; //init uppy2
+//var uppy2; //init uppy2
 
 //get corresponding data
 $('#edit_officer').on('show.bs.modal', function (e) {
     //init save button
-    var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
+    //var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
     var acad_collab_id = $(e.relatedTarget).data('id');
     alert(acad_collab_id);
     $.ajax({
@@ -702,7 +702,7 @@ $('#edit_officer').on('show.bs.modal', function (e) {
                     $("#edit_officer_coop_scope").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
 
                 } else {
-
+                    toastr.error(data.content);
                 }
             }
         },
