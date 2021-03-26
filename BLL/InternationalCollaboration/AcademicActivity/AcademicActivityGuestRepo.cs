@@ -38,9 +38,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
                         WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
-                if(search is null)
-                {
-
+                if(search is null)                {
                     sql += @" ORDER BY [from] DESC
                            OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
