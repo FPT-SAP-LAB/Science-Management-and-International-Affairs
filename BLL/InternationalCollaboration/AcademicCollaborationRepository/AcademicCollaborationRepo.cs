@@ -460,6 +460,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     trans.Rollback();
                     throw e;
                 }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
             }
         }
 

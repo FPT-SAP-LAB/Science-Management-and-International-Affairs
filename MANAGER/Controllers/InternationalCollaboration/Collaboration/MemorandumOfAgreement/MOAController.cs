@@ -17,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         private static MOARepo moa = new MOARepo();
         private static BasicInfoMOARepo moa_detail = new BasicInfoMOARepo();
         private static PartnerMOARepo moa_partner = new PartnerMOARepo();
-        [Auther(RightID = "6")]
+        //[Auther(RightID = "6")]
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
 
             ////MOA Partner
             ViewBag.listScopesMOAPartner = moa_partner.getPartnerMOAScope(int.Parse(moa_id), int.Parse(mou_id));
-            ViewBag.listPartnerMOAPartner = moa_partner.getPartnerMOA(int.Parse(moa_id));
+            ViewBag.listPartnerMOAPartner = moa_partner.getPartnerMOA(int.Parse(mou_id));
             return View();
         }
         public ActionResult ViewMOA(string partner_name, string moa_code)

@@ -33,7 +33,7 @@
 
     <!--USED BY THIS PAGE-->
     <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 <!--end::Head-->
@@ -671,7 +671,6 @@
     <!--begin::Page Vendors(used by this page)-->
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/Content/assets/js/bundle.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
     <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->
@@ -683,19 +682,24 @@
                 $(this).parent().parent().parent().parent().addClass(' menu-item-here')
             }
         });
-        function gp_signOut() {
+        async function onLoad() {
+            return new Promise((resolve, reject) => {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+                resolve();
+            });
+
+        }
+        async function gp_signOut() {
+            await onLoad();
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 window.location.href = '/Authen/Logout';
             });
         }
-        function onLoad() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init();
-            });
-        }
         $(document).ready(function () {
-            onLoad();
+            
         });
     </script>
     @RenderSection("scripts")
