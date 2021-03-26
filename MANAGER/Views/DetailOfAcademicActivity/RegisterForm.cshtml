@@ -4,96 +4,96 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    #main-control input, textarea {
-        border: 0px !important;
-        border-radius: 0px !important;
-        font-size: 15px !important;
-        margin: 3px 0px 3px 0px !important;
-        white-space: pre-wrap;
-    }
+        #main-control input, textarea {
+            border: 0px !important;
+            border-radius: 0px !important;
+            font-size: 15px !important;
+            margin: 3px 0px 3px 0px !important;
+            white-space: pre-wrap;
+        }
 
-        #main-control input:focus {
+            #main-control input:focus {
+                border-bottom: 2px solid #0094ff !important;
+            }
+
+        #main-control textarea:focus {
             border-bottom: 2px solid #0094ff !important;
         }
 
-    #main-control textarea:focus {
-        border-bottom: 2px solid #0094ff !important;
-        border-right: 2px solid #0094ff !important;
-    }
+        .card-title {
+            border-top: 8px solid #0725d0 !important;
+        }
 
-    .card-title {
-        border-top: 8px solid #0725d0 !important;
-    }
+        .custom-card {
+            border-left: 6px solid #0094ff !important;
+        }
 
-    .custom-card {
-        border-left: 6px solid #0094ff !important;
-    }
+        #main-control .input-title {
+            min-height: 20px !important;
+            font-size: 23px !important;
+            overflow: hidden !important;
+        }
 
-    #main-control .input-title {
-        height: 60px !important;
-        font-size: 19px !important;
-    }
+        .row {
+            padding: 8px 10px !important;
+        }
 
-    .row {
-        padding: 8px 10px !important;
-    }
+        .card-after {
+            margin-top: 30px !important;
+        }
 
-    .card-after {
-        margin-top: 30px !important;
-    }
+        .card-bottom {
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
 
-    .card-bottom {
-        border: 0;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
+        .custom-card-after {
+            margin-bottom: 2rem !important;
+        }
 
-    .custom-card-after {
-        margin-bottom: 2rem !important;
-    }
+        .card-bottom .row {
+            padding: unset !important;
+        }
 
-    .card-bottom .row {
-        padding: unset !important;
-    }
+        #main-control textarea {
+            overflow: hidden !important;
+            min-height: 65px !important;
+        }
 
-    #main-control textarea {
-        overflow: hidden !important;
-        min-height: 65px !important;
-    }
+        #main-control .checkbox-inline {
+            height: 47px !important;
+        }
 
-    #main-control .checkbox-inline {
-        height: 47px !important;
-    }
+        #main-control .radio-inline {
+            height: 47px !important;
+        }
 
-    #main-control .radio-inline {
-        height: 47px !important;
-    }
+        #main-control .custom-checkbox {
+            border: 1px solid #ded6d6 !important;
+        }
 
-    #main-control .custom-checkbox {
-        border: 1px solid #ded6d6 !important;
-    }
+        #main-control .custom-rv-checkbox {
+            font-size: 20px !important;
+        }
 
-    #main-control .custom-rv-checkbox {
-        font-size: 20px !important;
-    }
+        #main-control .custom-row {
+            padding-top: unset !important;
+            padding-bottom: unset !important;
+        }
 
-    #main-control .custom-row {
-        padding-top: unset !important;
-        padding-bottom: unset !important;
-    }
-
-    #main-control .custom-font-choice {
-        font-size: 14px !important;
-    }
+        #main-control .custom-font-choice {
+            font-size: 14px !important;
+        }
 </style>
 <div id="main-control">
     <div id="control-title">
         <div class="card card-title">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                    <input type="text" class="form-control input-title font-size-h1-xl" id="form_title" placeholder="Tiêu đề" />
+                    <textarea type="text" class="form-control input-title font-size-h1-xl" onkeyup="textAreaAdjust(this)" id="form_title" placeholder="Tiêu đề"></textarea>
                 </div>
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                    <textarea type="text" class="form-control text-xl-left" id="form_title_description" placeholder="Mô tả mẫu đăng kí"></textarea>
+                    <textarea type="text" class="form-control text-xl-left" id="form_title_description" onkeyup="textAreaAdjust(this)" placeholder="Mô tả mẫu đăng kí"></textarea>
                 </div>
             </div>
         </div>
@@ -151,7 +151,11 @@
     <script>
         arrDivControl = [0]
         indexDiv = 1
-
+        let form_id = 0;
+        function textAreaAdjust(element) {
+            element.style.height = "1px";
+            element.style.height = (25 + element.scrollHeight) + "px";
+        }
         function addQues(id) {
             let htmlString = '<div id="control-' + indexDiv + '">' +
                 '<div class= "card custom-card custom-card-after" > ' +
@@ -213,7 +217,6 @@
             $(id).remove();
             let str = id.split('-');
             arrDivControl = arrDivControl.filter(function (e) { return e !== parseInt(str[str.length - 1]) });
-            arr
         }
 
         function changeAnswerType(id) {
@@ -481,28 +484,6 @@
                 }
             };
         }();
-        $('#btn_save_form').click(function () {
-            Swal.fire({
-                title: "Bạn có chắc chắn muốn lưu đơn đăng kí này không ?",
-                text: "",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Xác nhận",
-                cancelButtonText: "Hủy",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã lưu thành công.",
-                        "success"
-                    )
-                    setTimeout(function () {
-                        window.close();
-                    }, 2000);
-                }
-            });
-        });
         function init() {
             var object = {
                 phase_id: document.getElementById('phase_id').value
@@ -513,6 +494,7 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
+                    form_id = data.form.form_id;
                     document.getElementById('form_title_description').value = data.form.title_description;
                     document.getElementById('form_title').value = data.form.title;
                     data.ques.forEach(function (x) {
@@ -538,6 +520,7 @@
                                         }
                                         arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
                                         document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                        $('#content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
                                         if (i < (str.length - 1)) {
                                             AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
                                         }
@@ -552,6 +535,7 @@
                                         }
                                         arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
                                         document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                        $('#content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
                                         if (i < (str.length - 1)) {
                                             AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
                                         }
@@ -568,6 +552,91 @@
                 }
             });
         }
+        $('#btn_save_form').click(function () {
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn lưu đơn đăng kí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    let arrQues = [];
+                    let arrQuesOp = [];
+                    for (let i = 0; i < arrDivControl.length; i++) {
+                        let ques_id = arrMapping.includes(arrDivControl[i]) ? arrReal[arrDivControl[i]] : arrDivControl[i];
+                        let ques_title = $('#question-title-' + arrDivControl[i]).val();
+                        let answer_type = $('#answer-type-' + arrDivControl[i]).val();
+                        let is_compulsory = $('#compulsory-' + arrDivControl[i]).is(':checked') == true ? 1 : 0;
+                        var object = {
+                            question_id: ques_id,
+                            title: ques_title,
+                            answer_type_id: answer_type,
+                            is_compulsory: is_compulsory
+                        }
+                        arrQues.push(object);
+                        if (answer_type == 3) {
+                            let quesOp_title = '';
+                            arrM_content[arrDivControl[i]].forEach(function (x) {
+                                quesOp_title += x+"$^";
+                            });
+                            quesOp_title = quesOp_title.substring(0, quesOp_title.length - 2);
+                            var object = {
+                                question_id: ques_id,
+                                option_title: quesOp_title
+                            }
+                            arrQuesOp.push(object);
+                        }
+                        if (answer_type == 5) {
+                            let quesOp_title = '';
+                            arrC_content[arrDivControl[i]].forEach(function (x) {
+                                quesOp_title += x + "$^";
+                            });
+                            quesOp_title = quesOp_title.substring(0, quesOp_title.length - 2);
+                            var object = {
+                                question_id: ques_id,
+                                option_title: quesOp_title
+                            }
+                            arrQuesOp.push(object);
+                        }
+                    }
+                    var form = {
+                        form_id: form_id,
+                        phase_id: $('#phase_id').val(),
+                        title: $('#form_title').val(),
+                        title_description : $('#form_title_description').val()
+                    };
+                    console.log(arrQues);
+                    console.log(arrQuesOp);
+                    console.log(form);
+                    var object = {
+                        form: form,
+                        ques: arrQues,
+                        quesOption: arrQuesOp
+                    };
+                    $.ajax({
+                        url: "@Url.Action("updateForm", "DetailOfAcademicActivity")",
+                        data: JSON.stringify(object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                    //setTimeout(function () {
+                    //    window.close();
+                    //}, 2000);
+                }
+            });
+        });
         $(document).ready(function () {
             $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
             arrCMD = createArrMultiDimensional(2, 100);

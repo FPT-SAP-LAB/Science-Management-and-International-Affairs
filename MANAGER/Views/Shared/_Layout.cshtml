@@ -682,19 +682,24 @@
                 $(this).parent().parent().parent().parent().addClass(' menu-item-here')
             }
         });
-        function gp_signOut() {
+        async function onLoad() {
+            return new Promise((resolve, reject) => {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+                resolve();
+            });
+
+        }
+        async function gp_signOut() {
+            await onLoad();
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 window.location.href = '/Authen/Logout';
             });
         }
-        function onLoad() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init();
-            });
-        }
         $(document).ready(function () {
-            onLoad();
+            
         });
     </script>
     @RenderSection("scripts")
