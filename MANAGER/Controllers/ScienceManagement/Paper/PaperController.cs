@@ -3,10 +3,13 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers
@@ -70,6 +73,45 @@ namespace MANAGER.Controllers
             string mess = pr.updateRewardPaper(paper);
             if (mess == "ss") mess = pr.updateAuthorReward(paper, people);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult exportExcel()
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            string path = HostingEnvironment.MapPath("/Excel_template/");
+            string filename = "Paper.xlsx";
+            FileInfo file = new FileInfo(path + filename);
+            ExcelPackage excelPackage = new ExcelPackage(file);
+            ExcelWorkbook excelWorkbook = excelPackage.Workbook;
+
+            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("Trongnuoc");
+            ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
+            int i = 2;
+            int count = 1;
+            Paper_Appendix_1 temp = new Paper_Appendix_1();
+            foreach (var item in list1)
+            {
+                if (item.author_name != temp.author_name)
+                {
+                    excelWorksheet1.Cells[i, 1].Value = count;
+                    excelWorksheet1.Cells[i, 2].Value = item.author_name;
+                    excelWorksheet1.Cells[i, 3].Value = item.mssv_msnv;
+                    excelWorksheet1.Cells[i, 4].Value = item.office_abbreviation;
+                    count++;
+                }
+                excelWorksheet1.Cells[i, 5].Value = item.name;
+                excelWorksheet1.Cells[i, 6].Value = item.company;
+                string note = item.sum + " tác giả, " + item.sumFE + " địa chỉ FPTU";
+                excelWorksheet1.Cells[i, 7].Value = note;
+                temp = item;
+                i++;
+            }
+            string Flocation = "/Excel_template/download/Paper.xlsx";
+            string savePath = HostingEnvironment.MapPath(Flocation);
+            excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Paper.xlsx")));
+
+            return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);
         }
     }
 }
