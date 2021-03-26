@@ -65,49 +65,42 @@
                         </div>
                         <!--end::Dropdown Menu-->
                     </div>
-                </div>
-            </div>
-            <div class="row align-items-center">
-
-            </div>
-        </div>
-        <div class="tab-content mt-5" id="myTabContent">
-            <div class="row">
-                <div class="col-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home">
-                                <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
-                                <span class="nav-text">Bài báo trong nước</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" aria-controls="profile">
-                                <span class="nav-icon"><i class="flaticon2-layers-1"></i></span>
-                                <span class="nav-text">Bài báo quốc tế</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <table id="tapchiin" class="table table-bordered table-checkable">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên tác giả</th>
-                            <th>MSNV/MSSV</th>
-                            <th>Đơn vị công tác</th>
-                            <th>Tên bài báo</th>
-                            <th>Tên tạp chí</th>
-                            <th>Ghi chú</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            int count = 1;
-                            foreach (var item in ViewBag.waitTN)
-                            {
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <table id="tapchiin" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên tác giả</th>
+                                    <th>MSNV/MSSV</th>
+                                    <th>Đơn vị công tác</th>
+                                    <th>Tên bài báo</th>
+                                    <th>Tên tạp chí</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int count = 1;
+                                    foreach (var item in ViewBag.waitTN)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.author_name</td>
+                                            <td>@item.mssv_msnv</td>
+                                            <td>@item.office_abbreviation</td>
+                                            <td>@item.name</td>
+                                            <td>@item.company</td>
+                                            <td>Có @item.note tác giả</td>
+                                        </tr>
+                                    }
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <table id="tapchiout" class="table table-bordered table-checkable">
+                            <thead>
                                 <tr>
                                     <td>@count</td>
                                     <td>@item.author_name</td>
@@ -117,44 +110,28 @@
                                     <td>@item.company</td>
                                     <td>Có @item.note tác giả</td>
                                 </tr>
-                            }
-                            count++;
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <table id="tapchiout" class="table table-bordered table-checkable">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên tác giả</th>
-                            <th>MSNV/MSSV</th>
-                            <th>Đơn vị công tác</th>
-                            <th>Tên bài báo</th>
-                            <th>Tên tạp chí</th>
-                            <th>Ghi chú</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            count = 1;
-                            foreach (var item in ViewBag.waitQT)
-                            {
-                                <tr>
-                                    <td>@count</td>
-                                    <td>@item.author_name</td>
-                                    <td>@item.mssv_msnv</td>
-                                    <td>@item.office_abbreviation</td>
-                                    <td>@item.name</td>
-                                    <td>@item.company</td>
-                                    <td>Có @item.note tác giả</td>
-                                </tr>
-                            }
-                            count++;
-                        }
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                @{
+                                    count = 1;
+                                    foreach (var item in ViewBag.waitQT)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.author_name</td>
+                                            <td>@item.mssv_msnv</td>
+                                            <td>@item.office_abbreviation</td>
+                                            <td>@item.name</td>
+                                            <td>@item.company</td>
+                                            <td>Có @item.note tác giả</td>
+                                        </tr>
+                                    }
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
