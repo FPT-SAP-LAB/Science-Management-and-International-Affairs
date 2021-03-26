@@ -300,6 +300,7 @@
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\InterestedField.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
