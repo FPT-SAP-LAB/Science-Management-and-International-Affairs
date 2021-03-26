@@ -42,6 +42,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -68,6 +69,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -93,6 +95,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }

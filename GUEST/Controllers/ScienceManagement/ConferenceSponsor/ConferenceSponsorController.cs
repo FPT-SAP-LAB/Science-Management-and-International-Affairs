@@ -20,7 +20,6 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        readonly int account_id = 7;
         // GET: ConferenceSponsor
         public ActionResult Index()
         {
@@ -34,7 +33,7 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, account_id, LanguageResource.GetCurrentLanguageID());
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -50,7 +49,7 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Thêm","/ConferenceSponsor/Add"),
             };
-            string output = AppRepos.GetAddPageJson(account_id, LanguageResource.GetCurrentLanguageID());
+            string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
             ViewBag.data = data;
             ViewBag.pagesTree = pagesTree;
@@ -59,7 +58,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
-            string output = AppRepos.AddRequestConference(account_id, input, invite, paper);
+            string output = AppRepos.AddRequestConference(CurrentAccount.AccountID(Session), input, invite, paper);
             return output;
         }
         public ActionResult Detail(int id)
@@ -69,7 +68,7 @@ namespace GUEST.Controllers
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
                 new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
             };
-            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), account_id);
+            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
             ViewBag.pagesTree = pagesTree;

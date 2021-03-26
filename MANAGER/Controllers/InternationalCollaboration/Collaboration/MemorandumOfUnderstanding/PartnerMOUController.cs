@@ -43,6 +43,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
@@ -71,6 +72,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
@@ -84,6 +86,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
@@ -97,6 +100,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
