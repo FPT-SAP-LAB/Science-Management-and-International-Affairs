@@ -84,6 +84,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -105,6 +106,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -123,6 +125,7 @@ namespace BLL.Admin
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }

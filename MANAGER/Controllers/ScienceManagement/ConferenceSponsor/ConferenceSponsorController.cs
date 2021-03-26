@@ -62,10 +62,10 @@ namespace MANAGER.Controllers
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
-        public JsonResult SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number)
+        public JsonResult SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number);
+            AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number, request_id, CurrentAccount.AccountID(Session));
             return Json(result);
         }
         [ChildActionOnly]

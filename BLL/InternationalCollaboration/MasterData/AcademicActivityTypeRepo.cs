@@ -162,6 +162,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         db.Dispose();
                         return new AlertModal<AcademicActivityType>(null, false, "Loại hoạt động học thuật đang có dữ liệu tại các màn hình khác.");
                     }

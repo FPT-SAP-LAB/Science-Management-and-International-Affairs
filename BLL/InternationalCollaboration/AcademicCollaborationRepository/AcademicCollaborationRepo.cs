@@ -113,7 +113,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         where country_name like @country_name";
                 List<Country> countries = db.Database.SqlQuery<Country>(sql,
                     new SqlParameter("country_name", country_name == null ? "%%" : "%" + country_name + "%")).ToList();
-                return new AlertModal<List<Country>>(countries, true, null, null);
+                return new AlertModal<List<Country>>(countries, true);
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to'
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
-                return new AlertModal<YearSearching>(yearSearching, true, null, null);
+                return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     where partner_name like @partner_name and is_deleted = 0";
                 List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
                     new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
-                return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true, null, null);
+                return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
             }
             catch (Exception e)
             {
@@ -167,7 +167,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 AcademicCollaborationPartner_Ext partner = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
                     new SqlParameter("partner_name", partner_name),
                     new SqlParameter("partner_id", partner_id)).FirstOrDefault();
-                return new AlertModal<AcademicCollaborationPartner_Ext>(partner, true, null, null);
+                return new AlertModal<AcademicCollaborationPartner_Ext>(partner, true);
             }
             catch (Exception e)
             {
@@ -184,7 +184,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     where office_name like @office_name";
                 List<Office> offices = db.Database.SqlQuery<Office>(sql,
                     new SqlParameter("office_name", office_name == null ? "%%" : "%" + office_name + "%")).ToList();
-                return new AlertModal<List<Office>>(offices, true, null, null);
+                return new AlertModal<List<Office>>(offices, true);
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     where name like @person_name";
                 List<AcademicCollaborationPerson_Ext> people = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
                     new SqlParameter("person_name", person_name == null ? "%%" : "%" + person_name + "%")).ToList();
-                return new AlertModal<List<AcademicCollaborationPerson_Ext>>(people, true, null, null);
+                return new AlertModal<List<AcademicCollaborationPerson_Ext>>(people, true);
             }
             catch (Exception e)
             {
@@ -226,16 +226,17 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     new SqlParameter("people_id", people_id)).FirstOrDefault();
                 if (person != null)
                 {
-                    return new AlertModal<AcademicCollaborationPerson_Ext>(person, true, null, null);
+                    return new AlertModal<AcademicCollaborationPerson_Ext>(person, true);
                 }
                 else
                 {
-                    return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lỗi", "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+                    return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
                 }
             }
             catch (Exception e)
             {
-                return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lỗi", "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+                Console.WriteLine(e.ToString());
+                return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
             }
         }
 
@@ -249,7 +250,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     or scope_name like @collab_abbreviation_name";
                 List<CollaborationScope> collaborationScopes = db.Database.SqlQuery<CollaborationScope>(sql,
                     new SqlParameter("collab_abbreviation_name", collab_abbreviation_name == null ? "%%" : "%" + collab_abbreviation_name + "%")).ToList();
-                return new AlertModal<List<CollaborationScope>>(collaborationScopes, true, null, null);
+                return new AlertModal<List<CollaborationScope>>(collaborationScopes, true);
             }
             catch (Exception e)
             {
@@ -267,7 +268,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     where status_type = 3 /*both long & short-term*/ or status_type = @status_type_specific /*1:short;2:long;3:both*/";
                 List<AcademicCollaborationStatu> academicCollaborationStatus = db.Database.SqlQuery<AcademicCollaborationStatu>(sql,
                     new SqlParameter("status_type_specific", status_type_specific)).ToList();
-                return new AlertModal<List<AcademicCollaborationStatu>>(academicCollaborationStatus, true, null, null);
+                return new AlertModal<List<AcademicCollaborationStatu>>(academicCollaborationStatus, true);
             }
             catch (Exception e)
             {
@@ -307,7 +308,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var office = db.Offices.Find(obj_person.person_profile_office_id);
                             if (office == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được cơ sở tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được cơ sở tương ứng.");
                             }
                             else
                             {
@@ -340,7 +341,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var country = db.Countries.Find(obj_partner.partner_country_id);
                             if (country == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Không thêm được quốc gia tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được quốc gia tương ứng.");
                             }
                             else
                             {
