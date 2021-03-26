@@ -44,7 +44,7 @@ namespace MANAGER.Controllers
         public ActionResult UpdateCriterias(string data, int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            DetailRepos.UpdateCriterias(data, request_id);
+            DetailRepos.UpdateCriterias(data, request_id, CurrentAccount.AccountID(Session));
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
@@ -58,7 +58,7 @@ namespace MANAGER.Controllers
         public ActionResult UpdateCosts(string data, int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            DetailRepos.UpdateCosts(data, request_id);
+            DetailRepos.UpdateCosts(data, request_id, CurrentAccount.AccountID(Session));
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
@@ -67,6 +67,13 @@ namespace MANAGER.Controllers
             DetailRepos = new ConferenceSponsorDetailRepo();
             AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number, request_id, CurrentAccount.AccountID(Session));
             return Json(result);
+        }
+        [HttpPost]
+        public ActionResult UpdateReimbursement(int data, int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            DetailRepos.SubmitReimbursement(data, request_id);
+            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)
