@@ -136,15 +136,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nguyễn Quốc Long</td>
-                                    <td>299923</td>
-                                    <td>FU-HL</td>
-                                    <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
-                                    <td></td>
-                                    <td>Có 1 tác giả</td>
-                                </tr>
+                                @{
+                                    int count = 1;
+                                    foreach (var item in ViewBag.waitTN)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.author_name</td>
+                                            <td>@item.mssv_msnv</td>
+                                            <td>@item.office_abbreviation</td>
+                                            <td>@item.name</td>
+                                            <td>@item.company</td>
+                                            <td>Có @item.note tác giả</td>
+                                        </tr>
+                                    }
+                                    count++;
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -162,15 +169,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>An C. Tran, Nghi</td>
-                                    <td>091881</td>
-                                    <td>FU-HCM</td>
-                                    <td>Recognition and Quantity Estimation of Pastry Images Using Pre-training Deep Convolutional Networks</td>
-                                    <td></td>
-                                    <td>Có 2 tác giả</td>
-                                </tr>
+                                @{
+                                    count = 1;
+                                    foreach (var item in ViewBag.waitQT)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.author_name</td>
+                                            <td>@item.mssv_msnv</td>
+                                            <td>@item.office_abbreviation</td>
+                                            <td>@item.name</td>
+                                            <td>@item.company</td>
+                                            <td>Có @item.note tác giả</td>
+                                        </tr>
+                                    }
+                                    count++;
+                                }
                             </tbody>
                         </table>
                     </div>

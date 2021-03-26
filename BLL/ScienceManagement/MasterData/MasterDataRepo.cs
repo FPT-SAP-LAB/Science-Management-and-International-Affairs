@@ -89,5 +89,11 @@ namespace BLL.ScienceManagement.MasterData
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
         }
+
+        public List<PaperType> getPaperType()
+        {
+            List<PaperType> list = db.PaperTypes.ToList();
+            return list;
+        }
     }
 }
