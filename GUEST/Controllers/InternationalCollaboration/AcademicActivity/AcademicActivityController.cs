@@ -42,5 +42,17 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type);
             return Json(data);
         }
+        public ActionResult loadForm(int fid)
+        {
+            ViewBag.title = "Đơn đăng kí tham dự";
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Hoạt động học thuật","/AcademicActivity"),
+                new PageTree("Đơn đăng kí tham dự","/AcademicActivity/Detail")
+            };
+            ViewBag.pagesTree = pagesTree;
+            ViewBag.fid = fid;
+            return View();
+        }
     }
 }
