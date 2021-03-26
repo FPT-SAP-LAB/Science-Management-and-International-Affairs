@@ -12,13 +12,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     { 
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         
-        public List<baseAA> getBaseAA(int count, List<int> type)
+        public List<baseAA> getBaseAA(int count, List<int> type, int language, string search)
         {
             try
             {
                 StringBuilder typestr = new StringBuilder();
-                
-                if(type is null || type.Count == 0)
+                List<baseAA> obj;
+                if (type is null || type.Count == 0)
                 {
                     typestr.Append("(1,2,3,4)");                    
                 }
@@ -37,10 +37,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
-                        WHERE al.language_id = 1 AND [aa].activity_type_id IN "+ typestr.ToString() + @"
-                        ORDER BY [from] DESC
-                        OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
-                List<baseAA> obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count)).ToList();
+                        WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
+                if(search is null)
+                {
+
+                    sql += @" ORDER BY [from] DESC
+                           OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
+                    obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
+                    new SqlParameter("language", language)).ToList();
+                } else
+                {
+                    sql += @" AND av.version_title LIKE @search
+                           ORDER BY [from] DESC
+                           OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
+                    obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
+                    new SqlParameter("language", language), new SqlParameter("search", "%"+ search + "%")).ToList();
+                }
                 foreach (baseAA a in obj)
                 {
                     a.from = changeFormatDate(a.from);
@@ -51,6 +63,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 return new List<baseAA>();
+            }
+        }
+
+        public List<activityType> getListType(int language)
+        {
+            try
+            {
+                string sql = @"SELECT atl.activity_type_id, atl.activity_type_name
+                               FROM SMIA_AcademicActivity.AcademicActivityTypeLanguage atl
+                               WHERE atl.language_id = @language";
+                List<activityType> obj = db.Database.SqlQuery<activityType>(sql, new SqlParameter("language", language)).ToList();
+                return obj;
+            }
+            catch (Exception e)
+            {
+                return new List<activityType>();
             }
         }
 
@@ -81,7 +109,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseAA();
             }
         }
-        
+        public class activityType
+        {
+            public string activity_type_name { get; set; }
+            public int activity_type_id { get; set; }
+        }
         public class baseAA
         {
             public string activity_name { get; set; }
