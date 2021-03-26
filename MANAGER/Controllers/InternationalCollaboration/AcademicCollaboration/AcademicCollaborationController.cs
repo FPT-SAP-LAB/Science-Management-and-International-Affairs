@@ -233,16 +233,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public ActionResult Delete_Longterm(string id)
+        //EDIT
+        [HttpGet]
+        public ActionResult getAcademicCollaboration(int acad_collab_id)
         {
             try
             {
-                string result = id;
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.getAcademicCollaboration(acad_collab_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            } catch (Exception e)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                throw e;
             }
         }
 
