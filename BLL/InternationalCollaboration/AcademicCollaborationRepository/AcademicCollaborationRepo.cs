@@ -53,19 +53,19 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                         " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
 
-                List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                    new SqlParameter("direction", direction),
-                                                    new SqlParameter("collab_type_id", collab_type_id),
-                                                    new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
-                                                    new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
-                                                    new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
-                                                    new SqlParameter("year", obj_searching.year),
-                                                    new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
-                                                    new SqlParameter("sortDirection", baseDatatable.SortDirection),
-                                                    new SqlParameter("start", baseDatatable.Start),
-                                                    new SqlParameter("length", baseDatatable.Length)).ToList();
+                    List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
+                                                        new SqlParameter("direction", direction),
+                                                        new SqlParameter("collab_type_id", collab_type_id),
+                                                        new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                        new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                        new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                        new SqlParameter("year", obj_searching.year),
+                                                        new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
+                                                        new SqlParameter("sortDirection", baseDatatable.SortDirection),
+                                                        new SqlParameter("start", baseDatatable.Start),
+                                                        new SqlParameter("length", baseDatatable.Length)).ToList();
 
-                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)
+                    int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)
                                                                 from IA_AcademicCollaboration.AcademicCollaboration collab
                                                                 join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
                                                                 join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
@@ -89,14 +89,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 and ISNULL(pn.partner_name, '') like @partner_name
                                                                 and ISNULL(offi.office_name, '') like @office_name
                                                                 or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)",
-                                                                new SqlParameter("direction", direction),
-                                                                new SqlParameter("collab_type_id", collab_type_id),
-                                                                new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
-                                                                new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
-                                                                new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
-                                                                new SqlParameter("year", obj_searching.year)).FirstOrDefault();
-                return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
-            }
+                                                                    new SqlParameter("direction", direction),
+                                                                    new SqlParameter("collab_type_id", collab_type_id),
+                                                                    new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                                    new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                                    new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                                    new SqlParameter("year", obj_searching.year)).FirstOrDefault();
+                    return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
+                }
             catch (Exception e)
             {
                 throw e;
