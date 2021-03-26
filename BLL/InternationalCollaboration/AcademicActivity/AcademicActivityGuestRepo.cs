@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityGuestRepo
-    { 
+    {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        
+
         public List<baseAA> getBaseAA(int count, List<int> type, int language, string search)
         {
             try
@@ -20,9 +20,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<baseAA> obj;
                 if (type is null || type.Count == 0)
                 {
-                    typestr.Append("(1,2,3,4)");                    
+                    typestr.Append("(1,2,3,4)");
                 }
-                else {
+                else
+                {
                     typestr.Append("(");
                     foreach (int i in type)
                     {
@@ -38,18 +39,20 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
                         WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
-                if(search is null)                {
+                if (search is null)
+                {
                     sql += @" ORDER BY [from] DESC
                            OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
                     new SqlParameter("language", language)).ToList();
-                } else
+                }
+                else
                 {
                     sql += @" AND av.version_title LIKE @search
                            ORDER BY [from] DESC
                            OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
-                    new SqlParameter("language", language), new SqlParameter("search", "%"+ search + "%")).ToList();
+                    new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%")).ToList();
                 }
                 foreach (baseAA a in obj)
                 {
@@ -102,7 +105,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 detail.to = changeFormatDate(detail.to);
                 return detail;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new baseAA();
             }
