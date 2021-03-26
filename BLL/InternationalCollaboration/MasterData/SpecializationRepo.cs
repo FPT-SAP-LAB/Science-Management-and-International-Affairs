@@ -29,6 +29,22 @@ namespace BLL.InternationalCollaboration.MasterData
                 throw e;
             }
         }
+        public List<Specialization> getListSpecializationUpdated()
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    List<Specialization> specializations = db.Specializations.ToList();
+                    return specializations;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public AlertModal<Specialization> deleteSpecialization(int spe_id)
         {
             try

@@ -33,6 +33,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
                 return Json(new { success = false });
             }
         }
+        public ActionResult listSpecializationsUpdated()
+        {
+            try
+            {
+                List<Specialization> specializations = specializationRepo.getListSpecializationUpdated();
+                return Json(specializations);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
         [HttpPost]
         public ActionResult deleteSpecialization(int spe_id)
         {
