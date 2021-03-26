@@ -49,6 +49,13 @@ namespace MANAGER.Controllers
         public ActionResult WaitDecision()
         {
             ViewBag.title = "Chờ quyết định khen thưởng";
+
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("Quocte");
+            ViewBag.waitQT = listWaitQT;
+
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("Trongnuoc");
+            ViewBag.waitTN = listWaitTN;
+
             return View();
         }
 
@@ -60,8 +67,9 @@ namespace MANAGER.Controllers
                 temp = temp.Replace(",", "");
                 item.money_reward = Int32.Parse(temp);
             }
-
-            return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
+            string mess = pr.updateRewardPaper(paper);
+            if (mess == "ss") mess = pr.updateAuthorReward(paper, people);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

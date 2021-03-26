@@ -265,6 +265,14 @@
             $("#spec").val("@ViewBag.paper.specialization_id");
             $("#paper_type").val("@ViewBag.paper.paper_type_id");
 
+            var x = $("#totalreward").val();
+            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+            $(".onereward_text").each(function () {
+                var x = $(this).text();
+                $(this).text(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+
             //$(".oneauthor").each(function () {
             //    var person = {
             //        people_id: this.id
@@ -279,7 +287,9 @@
             var temp = $("#totalreward").val();
             if (temp == "") {
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                check = false;
             } else {
+                check = true;
                 var ck = $("#typereward").val()
                 if (ck == "Quydinh") {
                     $(".onereward_text").each(function () {
@@ -338,6 +348,7 @@
                         success: function (response) {
                             if (response.mess == "ss") {
                                 //editRequest();
+                                alert(response.mess);
                             }
                             else alert('loi');
                         },

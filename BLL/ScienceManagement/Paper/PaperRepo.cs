@@ -400,6 +400,7 @@ namespace BLL.ScienceManagement.Paper
             {
                 RequestPaper p = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
                 p.total_reward = paper.total_reward;
+                p.status_id = 4;
                 db.SaveChanges();
                 return "ss";
             }
@@ -408,6 +409,44 @@ namespace BLL.ScienceManagement.Paper
                 Console.WriteLine(e.Message);
                 return "ff";
             }
+        }
+
+        public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people)
+        {
+            try
+            {
+                foreach (var item in people)
+                {
+                    AuthorPaper ap = db.AuthorPapers
+                                        .Where(x => x.paper_id == paper.paper_id)
+                                        .Where(x => x.people_id == item.people_id)
+                                        .FirstOrDefault();
+                    ap.money_reward = item.money_reward;
+                }
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public List<WaitDecisionPaper> getListWwaitDecision(string type)
+        {
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note'
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on o.office_id = pro.office_id
+                            where rp.status_id = 4 and rp.type = @type
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation";
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
+            return list;
         }
     }
 }
