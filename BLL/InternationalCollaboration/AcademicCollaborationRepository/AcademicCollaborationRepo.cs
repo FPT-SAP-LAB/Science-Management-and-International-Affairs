@@ -20,7 +20,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                var sql = @"select
+                using (ScienceAndInternationalAffairsEntities context = new ScienceAndInternationalAffairsEntities())
+                {
+                    var sql = @"select
                         collab.collab_id, pp.[name] 'people_name', pp.email, offi.office_name, pn.partner_name, c.country_name,
                         collab.plan_study_start_date, collab.plan_study_end_date,
                         acs.collab_status_id, acs.collab_status_id, acs.collab_status_name,
@@ -49,62 +51,21 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         and ISNULL(offi.office_name, '') like @office_name
                         or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)
                         ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
-                        " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
-                //filter checking
-                SqlParameter country_name_param, year_param, partner_name_param, office_name_param, direction_param, collab_type_id_param;
+                            " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
 
-                ///country_name
-                if (obj_searching.country_name != null)
-                {
-                    country_name_param = new SqlParameter("country_name", "%" + obj_searching.country_name + "%");
-                }
-                else
-                {
-                    country_name_param = new SqlParameter("country_name", "%%");
-                }
+                    List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
+                                                        new SqlParameter("direction", direction),
+                                                        new SqlParameter("collab_type_id", collab_type_id),
+                                                        new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                        new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                        new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                        new SqlParameter("year", obj_searching.year),
+                                                        new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
+                                                        new SqlParameter("sortDirection", baseDatatable.SortDirection),
+                                                        new SqlParameter("start", baseDatatable.Start),
+                                                        new SqlParameter("length", baseDatatable.Length)).ToList();
 
-                ///partner_name
-                if (obj_searching.partner_name != null)
-                {
-                    partner_name_param = new SqlParameter("partner_name", "%" + obj_searching.partner_name + "%");
-                }
-                else
-                {
-                    partner_name_param = new SqlParameter("partner_name", "%%");
-                }
-
-                ///office_name
-                if (obj_searching.office_name != null)
-                {
-                    office_name_param = new SqlParameter("office_name", "%" + obj_searching.office_name + "%");
-                }
-                else
-                {
-                    office_name_param = new SqlParameter("office_name", "%%");
-                }
-
-                ///year
-                year_param = new SqlParameter("year", obj_searching.year);
-
-                ///direction
-                direction_param = new SqlParameter("direction", direction);
-
-                ///collab_type_id
-                collab_type_id_param = new SqlParameter("collab_type_id", collab_type_id);
-
-                List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                    direction_param,
-                                                    collab_type_id_param,
-                                                    country_name_param,
-                                                    partner_name_param,
-                                                    office_name_param,
-                                                    year_param,
-                                                    new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
-                                                    new SqlParameter("sortDirection", baseDatatable.SortDirection),
-                                                    new SqlParameter("start", baseDatatable.Start),
-                                                    new SqlParameter("length", baseDatatable.Length)).ToList();
-
-                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)
+                    int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)
                                                                 from IA_AcademicCollaboration.AcademicCollaboration collab
                                                                 join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
                                                                 join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
@@ -128,13 +89,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 and ISNULL(pn.partner_name, '') like @partner_name
                                                                 and ISNULL(offi.office_name, '') like @office_name
                                                                 or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)",
-                                                                direction_param,
-                                                                collab_type_id_param,
-                                                                country_name_param,
-                                                                partner_name_param,
-                                                                office_name_param,
-                                                                year_param).FirstOrDefault();
-                return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
+                                                                    new SqlParameter("direction", direction),
+                                                                    new SqlParameter("collab_type_id", collab_type_id),
+                                                                    new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                                    new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                                    new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                                    new SqlParameter("year", obj_searching.year)).FirstOrDefault();
+                    return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
+                }
             }
             catch (Exception e)
             {
@@ -454,11 +416,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
                         return alertModal;
                     }
-                }
-                catch (Exception e)
-                {
-                    trans.Rollback();
-                    throw e;
                 }
                 catch (Exception e)
                 {
