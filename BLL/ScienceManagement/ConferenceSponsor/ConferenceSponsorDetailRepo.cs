@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
 {
@@ -174,6 +175,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             Request.editable = true;
             db.SaveChanges();
             return new AlertModal<string>(true, "Cập nhật thành công");
+        }
+        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number)
+        {
+            return new AlertModal<string>(true);
         }
     }
 }

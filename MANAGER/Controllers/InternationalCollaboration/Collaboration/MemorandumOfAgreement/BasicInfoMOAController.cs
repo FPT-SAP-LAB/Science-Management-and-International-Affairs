@@ -114,8 +114,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.editExtraMOA(input, int.Parse(id));
+                moa.editExtraMOA(input);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

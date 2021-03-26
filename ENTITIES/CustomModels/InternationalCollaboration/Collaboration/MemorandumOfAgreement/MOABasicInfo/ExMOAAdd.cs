@@ -9,6 +9,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     public class ExMOAAdd
     {
         public ExMOAAdd() { }
+        public int moa_bonus_id { get; set; }
         public ExMOABasicInfo ExMOABasicInfo { get; set; }
         public List<PartnerScopeInfoMOA> PartnerScopeInfoMOA { get; set; }
     }

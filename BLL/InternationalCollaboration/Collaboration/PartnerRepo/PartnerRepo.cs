@@ -84,15 +84,22 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
                     if (files_request.Count != 0)
                     {
-                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
-                        for (int i = 0; i < number_of_image; i++)
+                        if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
                         {
-                            image_drive_id.Add(files_upload[i].Id);
-                            image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
                         }
-                        for (int i = 0; i < number_of_image; i++)
+                        else
                         {
-                            content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                image_drive_id.Add(files_upload[i].Id);
+                                image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            }
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            }
                         }
                     }
 
@@ -200,17 +207,25 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+
                     if (files_request.Count != 0)
                     {
-                        files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
-                        for (int i = 0; i < number_of_image; i++)
+                        if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
                         {
-                            image_drive_id.Add(files_upload[i].Id);
-                            image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
                         }
-                        for (int i = 0; i < number_of_image; i++)
+                        else
                         {
-                            content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                image_drive_id.Add(files_upload[i].Id);
+                                image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            }
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            }
                         }
                     }
 
@@ -223,6 +238,9 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     {
                         partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
+
+                    Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                    article.account_id = account_id;
 
                     ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
                     articleVersion.article_content = content;
