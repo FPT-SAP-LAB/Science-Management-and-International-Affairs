@@ -6,8 +6,10 @@ using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -107,6 +109,64 @@ namespace MANAGER.Controllers
                 temp = item;
                 i++;
             }
+
+            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("Quocte");
+            ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
+            i = 2;
+            count = 1;
+            Paper_Appendix_1 temp2 = new Paper_Appendix_1();
+            foreach (var item in list2)
+            {
+                if (item.author_name != temp2.author_name)
+                {
+                    excelWorksheet2.Cells[i, 1].Value = count;
+                    excelWorksheet2.Cells[i, 2].Value = item.author_name;
+                    excelWorksheet2.Cells[i, 3].Value = item.mssv_msnv;
+                    excelWorksheet2.Cells[i, 4].Value = item.office_abbreviation;
+                    count++;
+                }
+                excelWorksheet2.Cells[i, 5].Value = item.name;
+                excelWorksheet2.Cells[i, 6].Value = item.company;
+                string note = item.sum + " tác giả, " + item.sumFE + " địa chỉ FPTU";
+                excelWorksheet2.Cells[i, 7].Value = note;
+                temp = item;
+                i++;
+            }
+
+            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("Trongnuoc");
+            ExcelWorksheet excelWorksheet3 = excelWorkbook.Worksheets[2];
+            i = 2;
+            count = 1;
+            foreach (var item in list3)
+            {
+                excelWorksheet3.Cells[i, 1].Value = count;
+                excelWorksheet3.Cells[i, 2].Value = item.name;
+                excelWorksheet3.Cells[i, 3].Value = item.mssv_msnv;
+                excelWorksheet3.Cells[i, 4].Value = item.office_abbreviation;
+                CultureInfo cul = new CultureInfo("vi-VN");
+                item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
+                excelWorksheet3.Cells[i, 5].Value = item.money_string;
+                i++;
+                count++;
+            }
+
+            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("Quocte");
+            ExcelWorksheet excelWorksheet4 = excelWorkbook.Worksheets[3];
+            i = 2;
+            count = 1;
+            foreach (var item in list4)
+            {
+                excelWorksheet4.Cells[i, 1].Value = count;
+                excelWorksheet4.Cells[i, 2].Value = item.name;
+                excelWorksheet4.Cells[i, 3].Value = item.mssv_msnv;
+                excelWorksheet4.Cells[i, 4].Value = item.office_abbreviation;
+                CultureInfo cul = new CultureInfo("vi-VN");
+                item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
+                excelWorksheet4.Cells[i, 5].Value = item.money_string;
+                i++;
+                count++;
+            }
+
             string Flocation = "/Excel_template/download/Paper.xlsx";
             string savePath = HostingEnvironment.MapPath(Flocation);
             excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Paper.xlsx")));
