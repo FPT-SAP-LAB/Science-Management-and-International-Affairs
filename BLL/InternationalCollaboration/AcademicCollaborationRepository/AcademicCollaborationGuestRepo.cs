@@ -12,7 +12,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
     public class AcademicCollaborationGuestRepo
     {
         private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ProgramInfo> listProgram(int count, int type, int country, string partner, int year,int language)
+        public List<ProgramInfo> listProgram(int count, int type, int country, string partner, int year, int language)
         {
             try
             {
@@ -24,15 +24,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         JOIN General.Account ac ON ac.account_id = ar.account_id
                         JOIN IA_Collaboration.[Partner] pa ON pa.partner_id = ap.partner_id
                         WHERE av.language_id = @language AND ap.collab_type_id = @type";
-                if(year != 0)
+                if (year != 0)
                 {
                     sql += @" AND YEAR(ap.program_start_date) = @year";
-                } 
-                if(country != 0)
+                }
+                if (country != 0)
                 {
                     sql += @" AND pa.country_id = @country";
                 }
-                if(!String.IsNullOrEmpty(partner))
+                if (!String.IsNullOrEmpty(partner))
                 {
                     sql += @" AND pa.partner_name LIKE @partner";
                 }
@@ -40,7 +40,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         OFFSET @count*4 ROWS FETCH NEXT 4 ROWS ONLY";
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
                     new SqlParameter("type", type), new SqlParameter("count", count), new SqlParameter("year", year),
-                    new SqlParameter("country", country), new SqlParameter("partner","%" + partner + "%")).ToList();
+                    new SqlParameter("country", country), new SqlParameter("partner", "%" + partner + "%")).ToList();
                 return obj;
             }
             catch (Exception e)
@@ -72,7 +72,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public List<ProgramInfo> listPartnerProgram(string partner, int year, int country,int language)
+        public List<ProgramInfo> listPartnerProgram(string partner, int year, int country, int language)
         {
             try
             {
@@ -85,15 +85,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 join IA_Collaboration.[Partner] pa on pa.partner_id = ap.partner_id
                 join General.Country cou on cou.country_id = pa.country_id
                 WHERE ap.direction_id = 1 AND av.language_id = @language AND ap.collab_type_id = 2";
-                if(country != 0)
+                if (country != 0)
                 {
                     sql += " AND pa.country_id = @country";
                 }
-                if(!String.IsNullOrEmpty(partner))
+                if (!String.IsNullOrEmpty(partner))
                 {
                     sql += " AND pa.partner_id LIKE @partner";
                 }
-                if(year !=0)
+                if (year != 0)
                 {
                     sql += " AND YEAR(ap.program_start_date) = @year";
                 }
@@ -118,13 +118,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 join Localization.[Language] la on la.language_id = av.language_id
                 join General.Account ac on ac.account_id = ar.account_id
                 where av.language_id = @language and ap.direction_id = 2 AND ap.collab_type_id = 2";
-                if(year!=0)
+                if (year != 0)
                 {
                     sql += " AND YEAR(ap.program_start_date) = @year";
-                    
-                } 
+
+                }
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language)).ToList();
-                return obj;             
+                return obj;
             }
             catch (Exception e)
             {
@@ -160,7 +160,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 ProgramInfo obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
                         new SqlParameter("id", id)).FirstOrDefault();
                 return obj;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new ProgramInfo();
             }
