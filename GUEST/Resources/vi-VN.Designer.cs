@@ -763,7 +763,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của đối tác.
+        ///   Looks up a localized string similar to Partner Program.
         /// </summary>
         public static string PartnerProgram {
             get {
@@ -772,20 +772,11 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ngày cấp.
+        ///   Looks up a localized string similar to Patent license date.
         /// </summary>
         public static string PatentDate {
             get {
                 return ResourceManager.GetString("PatentDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Số bằng sáng chế.
-        /// </summary>
-        public static string PatentNumber {
-            get {
-                return ResourceManager.GetString("PatentNumber", resourceCulture);
             }
         }
         

@@ -727,6 +727,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Partner name.
         ///   Looks up a localized string similar to Partner.
         /// </summary>
         public static string Partner {
