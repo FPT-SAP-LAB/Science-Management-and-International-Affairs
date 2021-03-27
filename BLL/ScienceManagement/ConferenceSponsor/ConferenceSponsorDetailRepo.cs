@@ -288,7 +288,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 try
                 {
-
                     request.reimbursement = reimbursement;
                     request.status_id = 5;
                     request.BaseRequest.finished_date = DateTime.Now;
