@@ -240,15 +240,15 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     {
                         partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
-                    if(partner.article_id != null)
+                    if (partner.article_id != null)
                     {
                         Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
                         article.account_id = account_id;
 
-                        ArticleVersion articleVersion = 
-                            db.ArticleVersions.Where(x => x.article_id == partner.article_id && 
+                        ArticleVersion articleVersion =
+                            db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
                             x.language_id == partner_article.partner_language_type).FirstOrDefault();
-                        if(articleVersion == null)
+                        if (articleVersion == null)
                         {
                             articleVersion = new ArticleVersion
                             {
@@ -259,7 +259,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 version_title = partner_article.partner_name,
                             };
                             db.ArticleVersions.Add(articleVersion);
-                        }else
+                        }
+                        else
                         {
                             articleVersion.article_content = content;
                             articleVersion.language_id = partner_article.partner_language_type;
@@ -386,10 +387,10 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 Partner partner = db.Partners.Where(x => x.partner_id == partner_id).FirstOrDefault();
                 ArticleVersion articleVersion = db.ArticleVersions.
-                    Where(x =>x.article_id == partner.article_id && x.language_id == partner_language_type).FirstOrDefault();
+                    Where(x => x.article_id == partner.article_id && x.language_id == partner_language_type).FirstOrDefault();
                 return articleVersion?.article_content;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
