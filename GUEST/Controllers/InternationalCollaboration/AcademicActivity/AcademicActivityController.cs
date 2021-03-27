@@ -8,23 +8,21 @@ using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
 {
-    public class AcademicActivityController : Controller
-    {
+    public class AcademicActivityController : Controller{ 
         private static AcademicActivityGuestRepo guestRepo = new AcademicActivityGuestRepo();
         private System.Resources.ResourceManager rm = Models.LanguageResource.GetResourceManager();
         // GET: AcademicActivity
         public ActionResult Index()
         {
-            int language;
+            int language;          
             ViewBag.title = rm.GetString("AcademicActivity");
             if (Request.Cookies["language_id"] is null)
             {
                 language = 1;
-            }
-            else
+            } else
             {
                 language = Int32.Parse(Request.Cookies["language_id"].Value);
-            }
+            }           
             ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null);
             ViewBag.listActivityType = guestRepo.getListType(language);
 

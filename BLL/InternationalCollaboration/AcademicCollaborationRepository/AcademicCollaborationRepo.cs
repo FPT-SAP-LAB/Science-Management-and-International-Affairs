@@ -488,7 +488,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 var sql = @"select
                             collab.collab_id, collab.partner_scope_id, collab.collab_type_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
                             pn.partner_id, pn.partner_name, c.country_id, c.country_name, cs.scope_id, cs.scope_name,
-                            collab.plan_study_start_date, collab.plan_study_end_date, csh.evidence, collab.actual_study_start_date, collab.actual_study_end_date,
+                            collab.plan_study_start_date, collab.plan_study_end_date, csh.file_name, csh.file_link, csh.file_drive_id, collab.actual_study_start_date, collab.actual_study_end_date,
                             acs.collab_status_id, acs.collab_status_name,
                             collab.is_supported, collab.note
                             from IA_AcademicCollaboration.AcademicCollaboration collab
@@ -499,14 +499,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             join General.People pp on collab.people_id = pp.people_id 
                             join General.[Profile] pf on pf.people_id = pp.people_id
                             join General.Office offi on pf.office_id = offi.office_id
-                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.evidence
+                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.file_name, csh2.file_link, csh2.file_drive_id
 		                            from 
 		                            (select csh1.collab_id, MAX(csh1.change_date) 'change_date' 
 			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh1
 			                            group by csh1.collab_id) as csh1
 		                            join 
-		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date, csh2.evidence
-			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh2) as csh2 
+		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date, fi.name 'file_name', fi.link 'file_link', fi.file_drive_id
+			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh2
+										left join General.[File] fi on fi.file_id = csh2.file_id) as csh2 
 		                            on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh 
                             on csh.collab_id = collab.collab_id
                             join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id

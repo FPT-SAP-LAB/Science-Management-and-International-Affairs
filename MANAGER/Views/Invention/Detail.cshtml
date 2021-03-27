@@ -11,233 +11,126 @@
         <div class="row">
             <div class="col-xl-6 form-group">
                 <label>Tên sản phẩm</label>
-                <input class="form-control form-control-lg" type="text" value="Máy in ba chiều" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.item.name" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Số bằng sáng chế</label>
-                <input class="form-control form-control-lg custom-pickdate" type="text" value="1-0015677" disabled />
+                <input class="form-control form-control-lg custom-pickdate" type="text" value="@ViewBag.item.no" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Loại SHTT</label>
-                <input class="form-control form-control-lg" type="text" value="Vietnam Patent" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.item.type_name" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Ngày cấp</label>
-                <input class="form-control form-control-lg" type="text" value="25/08/2016" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Quốc gia</label>
                 <select class="form-control" id="search_nam" name="param" disabled>
-                    <option selected>Việt Nam</option>
-                    <option>Mỹ</option>
-                    <option>Nga</option>
+                    @{
+                        foreach (var item in ViewBag.country)
+                        {
+                            <option value="@item.country_id">@item.country_name</option>
+                        }
+                    }
                 </select>
             </div>
             <div class="col-xl-6 form-group">
                 <label>File chứng minh</label>
-                <button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</button>
+                <a href="@ViewBag.item.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
             </div>
         </div>
         <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
         <div class="row" id="thuong">
             <div class="col-xl-6 col-sm-12 form-group">
                 <label>Tổng thưởng: </label>
-                <input id="totalreward" class="form-control form-control-lg" type="text" />
+                <input id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.item.total_reward"/>
             </div>
             <div class="col-xl-6 form-group">
-                
+                <label>Kiểu thưởng</label>
+                <select id="kieuthuong" class="form-control form-control-lg edit">
+                    <option value="Quydinh">Theo quy định</option>
+                    <option value="Canhan">Đại diện nhận thưởng</option>
+                </select>
             </div>
         </div>
         <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
         <div class="row" id="authors-info-container">
-            <div class="col-lg-4 col-sm-12" id="1616240588831">
-                <!--begin::Card-->
-                <div class="card card-custom gutter-b author-info-card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <h3 class="card-label">HE130156 - Tran Thi Thuy Nguyen</h3>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="mb-7">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
-                                        <span class="text-muted font-weight-bold">FPTUHN1</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Cán bộ</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
-                                        <a href="#" class="text-muted text-hover-primary">full-time</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
-                                        <span class="text-muted font-weight-bold">Lorem ipsum dolor sit amet</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Tiền thưởng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
+
+            @{
+                foreach (var item in ViewBag.author)
+                {
+                    <div class="col-lg-4 col-sm-12 oneauthor" id="@item.people_id">
+                        <!--begin::Card-->
+                        <div class="card card-custom gutter-b author-info-card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    @if (item.mssv_msnv != null)
+                                    {
+                                        <h3 id="author_name" class="card-label">@item.mssv_msnv - @item.name</h3>
+                                    }
+                                    else
+                                    {
+                                        <h3 id="author_name" class="card-label">@item.name</h3>
+                                    }
+                                </div>
+                                <div class="card-toolbar">
+                                    <a data-id="@item.people_id" class="edit-author-reward btn btn-icon btn-sm btn-hover-light-danger" data-toggle="modal" data-target="#editOneReward">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mb-7">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
+                                                <span class="text-muted font-weight-bold">@item.office_abbreviation</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.title_name</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.contract_name</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.tax_code</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
+                                                <span class="text-muted font-weight-bold">@item.email</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.identification_number</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.bank_branch</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@item.bank_number</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Tiền thưởng: </span>
+                                                <a href="#" class="text-muted text-hover-primary onereward_text" id="tacgia_reward">@item.money_reward</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            @*<div class="col-lg-6 col-sm-12 col-md-12">
-                                <div class="mb-7">
+                        </div>
+                        <!--end::Card-->
+                    </div>
+                }
 
-                                </div>
-                            </div>*@
-                        </div>
-                    </div>
-                </div>
-                <!--end::Card-->
-            </div>
-            <div class="col-lg-4 col-sm-12" id="1616240588831">
-                <!--begin::Card-->
-                <div class="card card-custom gutter-b author-info-card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <h3 class="card-label">HE130156 - Tran Thi Thuy Nguyen</h3>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="mb-7">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
-                                        <span class="text-muted font-weight-bold">FPTUHN1</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Cán bộ</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
-                                        <a href="#" class="text-muted text-hover-primary">full-time</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
-                                        <span class="text-muted font-weight-bold">Lorem ipsum dolor sit amet</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Tiền thưởng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="col-lg-6 col-sm-12 col-md-12">
-                                <div class="mb-7">
-
-                                </div>
-                            </div>*@
-                        </div>
-                    </div>
-                </div>
-                <!--end::Card-->
-            </div>
-            <div class="col-lg-4 col-sm-12" id="1616240588831">
-                <!--begin::Card-->
-                <div class="card card-custom gutter-b author-info-card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <h3 class="card-label">HE130156 - Tran Thi Thuy Nguyen</h3>
-                        </div>
-                        @*<div class="card-toolbar">
-                            <a data-id="1616240588831" class="edit-author btn btn-icon btn-sm btn-hover-light-danger">
-                                <i class="far fa-edit"></i>
-                            </a>
-                            <a data-id="1616240588831" class="del-author btn btn-icon btn-sm btn-hover-light-danger">
-                                <i class="la la-trash"></i>
-                            </a>
-                        </div>*@
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="mb-7">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
-                                        <span class="text-muted font-weight-bold">FPTUHN1</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Cán bộ</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
-                                        <a href="#" class="text-muted text-hover-primary">full-time</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
-                                        <span class="text-muted font-weight-bold">Lorem ipsum dolor sit amet</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">Tiền thưởng: </span>
-                                        <a href="#" class="text-muted text-hover-primary">Lorem ipsum dolor sit amet</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="col-lg-6 col-sm-12 col-md-12">
-                                <div class="mb-7">
-
-                                </div>
-                            </div>*@
-                        </div>
-                    </div>
-                </div>
-                <!--end::Card-->
-            </div>
+            }
         </div>
         <hr />
         <div class="row justify-content-center">
@@ -282,25 +175,131 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editOneReward" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thưởng chó tác giả</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <label>Tên tác giả</label>
+                        <input class="form-control form-control-lg" id="name_tacgia" type="text" value="" disabled />
+                    </div>
+                    <div class="col-xl-6">
+                        <label>Thưởng</label>
+                        <input class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
+                    </div>
+                    <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
+                        <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save_edit" data-dismiss="modal">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script src="~/Scripts/inputFilter.js"></script>
     <script>
+        var people = [];
+        var check = true;
+        var id_people_selected;
+        $(document).ready(function () {
+            var country_id = "@ViewBag.item.country_id";
+            $("#search_nam").val(country_id);
+            $("#kieuthuong").val("@ViewBag.item.reward_type");
+
+            var x = $("#totalreward").val();
+            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+            $(".onereward_text").each(function () {
+                var x = $(this).text();
+                $(this).text(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+
+        });
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
         $("#confirmbtn").click(function () {
             var temp = $("#totalreward").val();
             if (temp == "") {
-                toastr.error("Chưa điền thông tin tổng thưởng cho bằng sáng chế", "Lỗi");
+                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                check = false;
+            } else {
+                check = true;
+                var ck = $("#kieuthuong").val()
+                if (ck == "Quydinh") {
+                    $(".onereward_text").each(function () {
+                        var value = $(this).text();
+                        //console.log(value);
+                        if (value == "") {
+                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                            check = false;
+                            return false;
+                        } else {
+                            check = true;
+                        }
+                    });
+                }
             }
-            var ck = $("#typereward").val()
-            if (ck == 1) {
-                $(".onereward").each(function () {
-                    var value = $(this).val();
-                    if (value == "") {
-                        toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+
+            if (check) {
+                people = [];
+                var authors = $(".oneauthor");
+                var authors_reward = $(".onereward_text");
+                for (var i = 0; i < authors.length; i++) {
+                    var person = {
+                        people_id: $(authors)[i].id,
+                        money_string: $(authors_reward)[i].text
                     }
-                });
+                    people.push(person);
+                }
+
+                var sum = 0;
+                var total = $("#totalreward").val();
+                total = total.split(",").join("");
+                for (var i = 0; i < people.length; i++) {
+                    var data = people[i].money_string;
+                    var temp = data.split(",").join("");
+                    sum = parseInt(sum) + parseInt(temp);
+                }
+                console.log(sum, total);
+                if (sum > parseInt(total)) {
+                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
+                } else if (sum < parseInt(total)) {
+                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
+                } else {
+                    var inven_id = "@ViewBag.item.invention_id";
+                    var request_id = "@ViewBag.item.request_id";
+                    var inven = {
+                        invention_id: inven_id,
+                        request_id: request_id,
+                        total_reward: total
+                    };
+                    $.ajax({
+                        url: "@Url.Action("editInven", "Invention")",
+                        type: "POST",
+                        data: JSON.stringify({ 'inven': inven, 'people': people }),
+                        contentType: "application/json;charset=utf-8",
+                        datatype: "json",
+                        cache: false,
+                        success: function (response) {
+                            if (response.mess == "ss") {
+                                //editRequest();
+                                alert(response.mess);
+                            }
+                            else alert('loi');
+                        },
+                        error: function () {
+                            //alert("fail");
+                        }
+                    });
+                }
             }
         });
         $(".onereward, #totalreward").inputFilter(function (value) {
@@ -310,20 +309,24 @@
             var x = $(this).val();
             $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
-        $(".onereward").on("change", function () {
+
+        $(".onereward").change(function () {
             var x = $(this).val();
             $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            var total = $("#totalreward").val();
-            total = total.split(",").join("");
-            var sum = 0;
-            $(".onereward").each(function () {
-                var temp = $(this).val().split(",").join("");
-                sum = parseInt(sum) + parseInt(temp);
-            });
-            console.log(total, sum);
-            if (sum > parseInt(total)) {
-                toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bằng sáng chế", "Lỗi");
-            }
+        });
+
+        $(".edit-author-reward").click(function () {
+            id_people_selected = $(this).data("id");
+            var x = document.getElementById(id_people_selected).querySelector("#author_name").innerHTML;
+            var arr = x.split(' - ');
+            if (arr.length == 2) $("#name_tacgia").val(arr[1]);
+            else $("#name_tacgia").val(arr[0]);
+            //console.log(arr);
+        });
+
+        $("#add_author_save_edit").click(function () {
+            var val = $("#reward_tacgia").val();
+            var x = document.getElementById(id_people_selected).querySelector("#tacgia_reward").innerHTML = val;
         });
     </script>
 }

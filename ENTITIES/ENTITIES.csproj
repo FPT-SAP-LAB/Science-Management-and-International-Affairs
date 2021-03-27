@@ -236,6 +236,8 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramDescription.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_AcademicCollaboration.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_File.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_Partner.cs" />
@@ -292,9 +294,12 @@
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceParticipant.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\DetailInvention.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Invention\PendingInvention_Manager.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Invention\WaitDecisionInven.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\TitleWithName.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\AddPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\CustomCriteria.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\Paper_Apendix_3.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\Paper_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\PendingPaper_Manager.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaitDecisionPaper.cs" />

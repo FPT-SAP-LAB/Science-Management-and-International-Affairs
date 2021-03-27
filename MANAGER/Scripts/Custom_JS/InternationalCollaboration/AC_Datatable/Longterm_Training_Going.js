@@ -571,6 +571,7 @@ $('#add_officer_save').on('click', function () {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.content);
+                        collab_going_table.ajax.reload();
                         add_officer_save.stopLoading();
                         $("#add_officer_close").click();
                         clearContentAddModal();
@@ -724,12 +725,12 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-//var uppy2; //init uppy2
+var uppy2; //init uppy2
 
 //get corresponding data
 $('#edit_officer').on('show.bs.modal', function (e) {
     //init save button
-    //var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
+    var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
     var acad_collab_id = $(e.relatedTarget).data('id');
     alert(acad_collab_id);
     $.ajax({
@@ -759,8 +760,16 @@ $('#edit_officer').on('show.bs.modal', function (e) {
                     $("#edit_officer_start_plan_date").val(moment(acadCollab.plan_study_start_date).format("DD/MM/YYYY"));
                     $("#edit_officer_end_plan_date").val(moment(acadCollab.plan_study_start_date).format("DD/MM/YYYY"));
 
+                    $("#edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
+                    $("#edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    $("")
+                    console.log(acadCollab.file_name);
+                    console.log(acadCollab.file_link);
+                    console.log(acadCollab.file_drive_id);
+
+
+                    $("#edit_officer_support").prop("checked", acadCollab.support);
+                    $("#edit_officer_note").val(acadCollab.not);
                 } else {
                     toastr.error(data.content);
                 }
