@@ -554,9 +554,9 @@ $('#add_officer_save').on('click', function () {
             let obj_partner_stringify = JSON.stringify(obj_partner);
             let obj_academic_collab_stringify = JSON.stringify(obj_academic_collab);
 
-            formData.append("obj_person_stringify", obj_person_stringify );
-            formData.append("obj_partner_stringify", obj_partner_stringify );
-            formData.append("obj_academic_collab_stringify", obj_academic_collab_stringify );
+            formData.append("obj_person_stringify", obj_person_stringify);
+            formData.append("obj_partner_stringify", obj_partner_stringify);
+            formData.append("obj_academic_collab_stringify", obj_academic_collab_stringify);
 
             //Step 1
             //upload file
@@ -572,6 +572,8 @@ $('#add_officer_save').on('click', function () {
                     if (data.success) {
                         toastr.success(data.content);
                         add_officer_save.stopLoading();
+                        $("#add_officer_close").click();
+                        clearContentAddModal();
                     } else {
                         toastr.warning(data.content);
                         add_officer_save.stopLoading();
@@ -722,12 +724,12 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-var uppy2; //init uppy2
+//var uppy2; //init uppy2
 
 //get corresponding data
 $('#edit_officer').on('show.bs.modal', function (e) {
     //init save button
-    var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
+    //var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
     var acad_collab_id = $(e.relatedTarget).data('id');
     alert(acad_collab_id);
     $.ajax({

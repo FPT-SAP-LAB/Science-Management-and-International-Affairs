@@ -290,7 +290,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
                 throw e;
             }
-
         }
 
         public AlertModal<AcademicCollaboration_Ext> saveAcademicCollaboration(int direction_id, int collab_type_id,
