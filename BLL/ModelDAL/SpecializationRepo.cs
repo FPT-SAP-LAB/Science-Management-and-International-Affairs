@@ -10,11 +10,11 @@ namespace BLL.ModelDAL
     public class SpecializationRepo
     {
         ScienceAndInternationalAffairsEntities db;
-        public List<Specialization> GetSpecializations()
+        public List<SpecializationLanguage> GetSpecializations(int language_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
             db.Configuration.LazyLoadingEnabled = false;
-            return db.Specializations.ToList();
+            return db.SpecializationLanguages.Where(x => x.language_id == language_id).ToList();
         }
     }
 }

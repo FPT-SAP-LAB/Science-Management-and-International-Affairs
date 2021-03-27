@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Danh sách đối tác";
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("PartnerList");
+
 }
 <style>
 
@@ -43,7 +44,7 @@
                                                 <option label="Label"></option>
                                                 @foreach (var i in ViewBag.specializations)
                                                 {
-                                                    <option value="@i.specialization_name">@i.specialization_name</option>
+                                                    <option value="@i.name">@i.name</option>
                                                 }
                                             </select>
                                         </div>
@@ -57,7 +58,7 @@
                         <table id="partner_table" class="table table-bordered table-checkable">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th>@rm.GetString("Number")</th>
                                     <th>@rm.GetString("PartnerName")</th>
                                     <th>@rm.GetString("Country")</th>
                                     <th>@rm.GetString("Specilazation")</th>
@@ -68,10 +69,9 @@
                             <tbody>
                             </tbody>
                         </table>
-
                     </div>
                     <div class="row justify-content-center">
-                        <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">Xem thêm</a>
+                        <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">@rm.GetString("LoadMore")</a>
                     </div>
                 </div>
             </div>
@@ -79,13 +79,10 @@
     </div>
 </div>
 @section scripts{
-
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
     <script>
-
-
         $('#search_nation').select2({
             placeholder: '@rm.GetString("Country")',
             allowClear: true,
@@ -108,7 +105,6 @@
                 $(this).find('td').eq(4).html('<a href="#' + data + '">' + data + '</a>')
             })
         }
-
         $(document).ready(function () {
             var datatable = $('#partner_table').DataTable({
                 searching: false,

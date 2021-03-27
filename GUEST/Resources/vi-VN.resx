@@ -129,6 +129,9 @@
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
   <data name="AddRow" xml:space="preserve">
     <value>Thêm dòng</value>
   </data>
@@ -338,6 +341,12 @@
   </data>
   <data name="Partner" xml:space="preserve">
     <value>Đối tác</value>
+  </data>
+  <data name="PartnerDetail" xml:space="preserve">
+    <value>Chi tiết đối tác</value>
+  </data>
+  <data name="PartnerList" xml:space="preserve">
+    <value>Danh sách đối tác</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Tên đối tác</value>

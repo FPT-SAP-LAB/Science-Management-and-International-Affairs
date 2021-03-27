@@ -97,6 +97,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add more row.
         /// </summary>
         public static string AddRow {
@@ -664,7 +673,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number.
+        ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Number {
             get {
@@ -723,6 +732,24 @@ namespace GUEST.Resources {
         public static string Partner {
             get {
                 return ResourceManager.GetString("Partner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner detail.
+        /// </summary>
+        public static string PartnerDetail {
+            get {
+                return ResourceManager.GetString("PartnerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner list.
+        /// </summary>
+        public static string PartnerList {
+            get {
+                return ResourceManager.GetString("PartnerList", resourceCulture);
             }
         }
         

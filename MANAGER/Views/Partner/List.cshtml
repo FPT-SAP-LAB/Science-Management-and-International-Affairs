@@ -51,7 +51,7 @@
                                                 <option label="Label"></option>
                                                 @foreach (var i in ViewBag.specializations)
                                                 {
-                                                    <option value="@i.specialization_name">@i.specialization_name</option>
+                                                    <option value="@i.name">@i.name</option>
                                                 }
                                             </select>
                                         </div>
@@ -237,6 +237,7 @@
                         "specialization": function () { return $('#search_specialization').val() },
                         "is_collab": function () { return $('#search_coop_agreement').val() },
                         "is_deleted": 0,
+                        "language": 1,
                     }
                 },
                 cache: "false"

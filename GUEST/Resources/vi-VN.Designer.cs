@@ -97,6 +97,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Địa chỉ.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thêm dòng.
         /// </summary>
         public static string AddRow {
@@ -726,8 +735,26 @@ namespace GUEST.Resources {
             }
         }
         
-       /// <summary>
-        ///   Looks up a localized string similar to Partner Name.
+        /// <summary>
+        ///   Looks up a localized string similar to Chi tiết đối tác.
+        /// </summary>
+        public static string PartnerDetail {
+            get {
+                return ResourceManager.GetString("PartnerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách đối tác.
+        /// </summary>
+        public static string PartnerList {
+            get {
+                return ResourceManager.GetString("PartnerList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên đối tác.
         /// </summary>
         public static string PartnerName {
             get {

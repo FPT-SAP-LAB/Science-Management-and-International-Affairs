@@ -129,6 +129,9 @@
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="AddRow" xml:space="preserve">
     <value>Add more row</value>
   </data>
@@ -319,7 +322,7 @@
     <value>November</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>Number</value>
+    <value>No</value>
   </data>
   <data name="Oct" xml:space="preserve">
     <value>October</value>
@@ -338,6 +341,12 @@
   </data>
   <data name="Partner" xml:space="preserve">
     <value>Partner</value>
+  </data>
+  <data name="PartnerDetail" xml:space="preserve">
+    <value>Partner detail</value>
+  </data>
+  <data name="PartnerList" xml:space="preserve">
+    <value>Partner list</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
