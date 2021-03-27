@@ -133,6 +133,13 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString("dd/MM/yyyy")</a>
                             </div>
+                            @if (ConferenceDetail.FinishedDate != null)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày kết thúc đề nghị:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
                             @if (ConferenceDetail.FormalityID == 2)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
@@ -357,7 +364,7 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <th scope="row">Hoàn ứng</th>
+                                <th class="align-middle" scope="row">Hoàn ứng</th>
                                 <td></td>
                                 <td></td>
                                 <td>
@@ -423,27 +430,22 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
+                            <th scope="col">Thời gian</th>
                             <th scope="col">Quyền</th>
                             <th scope="col">Người duyệt</th>
                             <th scope="col">Bình luận</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Giảng viên</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Trưởng bộ phận</td>
-                            <td>Cô Nguyên</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Nhân viên</td>
-                            <td>Chị Yến</td>
-                            <td></td>
-                        </tr>
+                        @foreach (var item in ApprovalProcesses)
+                        {
+                            <tr>
+                                <td>@item.CreatedDate</td>
+                                <td>@item.PositionName</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Comment</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -469,33 +471,7 @@
         </div>
         <div id="ConversationInformationChild1" class="collapse show" data-parent="#ConversationInformation">
             <div class="card-body">
-                <form>
-                    <div class="row">
-                        <div class="col-10">
-                            <input class="form-control" type="text" value="" id="example-text-input" />
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="btn btn-block btn-success">Gửi</button>
-                        </div>
-                    </div>
-                </form>
-                <br />
-                <table class="col-12 table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col" width="15%">Thời gian</th>
-                            <th scope="col" width="15%">Người gửi</th>
-                            <th scope="col">Tin nhắn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>01/01/21-10:00AM</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td>Sao lâu có phản hồi thế em</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ConferenceDetail.RequestID }); }
             </div>
         </div>
     </div>

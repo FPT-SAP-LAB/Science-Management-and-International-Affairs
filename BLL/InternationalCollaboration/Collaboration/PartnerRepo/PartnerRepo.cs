@@ -20,11 +20,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                string sql = @" select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
-                                    a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
-                                STRING_AGG(a.specialization_name, ',') 'specialization_name', a.country_name from 
+                string sql = @" select * from (select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
+                                a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
+                                STRING_AGG(a.[name], ',') 'specialization_name', a.country_name from 
                                 (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
-		                        t4.specialization_name,
+		                        t4.[name],
 		                        t5.country_name,
                                 case when t2.partner_id is null     
 		                        then 1 else 2 end as 'is_collab'
@@ -34,31 +34,33 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 		                        on t6.mou_id = t2.mou_id 
                                 left join IA_Collaboration.MOUPartnerSpecialization t3 on
                                 t3.mou_partner_id = t2.mou_partner_id
-                                left join General.Specialization t4 on 
+                                left join Localization.SpecializationLanguage t4 on 
                                 t4.specialization_id = t3.specialization_id 
 		                        left join General.Country t5 on 
-		                        t1.country_id = t5.country_id
-                                where t1.is_deleted = {0} ) as a
-								where isnull(a.partner_name, '') like {1} and
-								isnull(a.specialization_name, '') like {2} and
-								isnull(a.country_name, '') like {3} and
-								isnull(a.is_collab , '') like {4}
-		                        group by a.partner_name, a.partner_id, 
+		                        t1.country_id = t5.country_id 
+                                where t1.is_deleted = {0} and t4.language_id = {1} or t4.language_id is null) as a
+								group by a.partner_name, a.partner_id, 
 		                        a.is_deleted, a.website, a.address, a.partner_id,
-		                        a.country_name, a.is_collab ";
+		                        a.country_name, a.is_collab
+								) as xyz
+								where isnull(xyz.partner_name, '') like {2} and
+								isnull(xyz.specialization_name, '') like {3} and
+								isnull(xyz.country_name, '') like {4} and
+								isnull(xyz.is_collab , '') like {5} ";
 
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging, searchPartner.is_deleted,
+                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql + paging,
+                    searchPartner.is_deleted, searchPartner.language,
                       searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
                     "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
                     "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
                      searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").ToList();
 
-                int totalRecord = db.Database.SqlQuery<PartnerList>(sql, searchPartner.is_deleted,
+                int totalRecord = db.Database.SqlQuery<PartnerList>(sql, searchPartner.is_deleted, searchPartner.language,
                       searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
                     "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
                     "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
@@ -182,12 +184,39 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     avatar = partner.avatar,
                 };
 
-                if (partner.article_id != null)
+                ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).
+                    OrderBy(x => x.language_id).FirstOrDefault();
+                partnerArticle.partner_content = articleVersion.article_content;
+                partnerArticle.partner_language_type = articleVersion.language_id;
+                return partnerArticle;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public PartnerArticle LoadEditPartnerGuest(int id, int language_id)
+        {
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                Partner partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
+                PartnerArticle partnerArticle = new PartnerArticle
                 {
-                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).
-                        OrderBy(x => x.language_id).FirstOrDefault();
+                    partner_id = partner.partner_id,
+                    partner_name = partner.partner_name,
+                    country_id = partner.country_id,
+                    address = partner.address,
+                    website = partner.website,
+                    avatar = partner.avatar,
+                };
+
+                ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
+                 x.language_id == language_id).FirstOrDefault();
+                if (articleVersion != null)
+                {
                     partnerArticle.partner_content = articleVersion.article_content;
-                    partnerArticle.partner_language_type = articleVersion.language_id;
                 }
                 return partnerArticle;
             }
@@ -240,55 +269,29 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     {
                         partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
-                    if (partner.article_id != null)
-                    {
-                        Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
-                        article.account_id = account_id;
 
-                        ArticleVersion articleVersion =
-                            db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
-                            x.language_id == partner_article.partner_language_type).FirstOrDefault();
-                        if (articleVersion == null)
+                    Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                    article.account_id = account_id;
+
+                    ArticleVersion articleVersion =
+                        db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
+                        x.language_id == partner_article.partner_language_type).FirstOrDefault();
+                    if (articleVersion == null)
+                    {
+                        articleVersion = new ArticleVersion
                         {
-                            articleVersion = new ArticleVersion
-                            {
-                                article_id = article.article_id,
-                                article_content = content,
-                                language_id = partner_article.partner_language_type,
-                                publish_time = DateTime.Today,
-                                version_title = partner_article.partner_name,
-                            };
-                            db.ArticleVersions.Add(articleVersion);
-                        }
-                        else
-                        {
-                            articleVersion.article_content = content;
-                            articleVersion.language_id = partner_article.partner_language_type;
-                        }
-                        db.SaveChanges();
+                            article_id = article.article_id,
+                            article_content = content,
+                            language_id = partner_article.partner_language_type,
+                            publish_time = DateTime.Today,
+                            version_title = partner_article.partner_name,
+                        };
+                        db.ArticleVersions.Add(articleVersion);
                     }
                     else
                     {
-                        Article article = new Article
-                        {
-                            need_approved = false,
-                            article_status_id = 2,
-                            account_id = account_id
-                        };
-                        db.Articles.Add(article);
-                        db.SaveChanges();
-
-                        partner.article_id = article.article_id;
-
-                        ArticleVersion articleVersion = new ArticleVersion
-                        {
-                            article_content = content,
-                            publish_time = DateTime.Today,
-                            version_title = partner_article.partner_name,
-                            article_id = article.article_id,
-                            language_id = partner_article.partner_language_type
-                        };
-                        db.ArticleVersions.Add(articleVersion);
+                        articleVersion.article_content = content;
+                        articleVersion.language_id = partner_article.partner_language_type;
                     }
                     db.SaveChanges();
                     trans.Commit();

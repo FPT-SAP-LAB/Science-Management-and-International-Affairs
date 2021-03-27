@@ -13,5 +13,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Partner
         public string specialization { get; set; }
         public int is_collab { get; set; }
         public int is_deleted { get; set; }
+        public int language { get; set; }
     }
 }
