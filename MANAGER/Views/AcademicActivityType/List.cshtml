@@ -8,16 +8,28 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div>
-                            <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
-                        </div>
-                        <div>
-                            <select class="form-control text-center" id="language_select" name="param" style="width:100% !important">
-                                @foreach (var language in ViewBag.languages)
-                                {
-                                   <option value="@language.language_id">@language.language_name</option> 
-                                }
-                            </select>
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="language_select" name="param" style="width:200px !important">
+                                                @foreach (var language in ViewBag.languages)
+                                                {
+                                                    <option value="@language.language_id">@language.language_name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                        <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <table class="table table-bordered" id="academic_activity_type_table">
                             <thead>
