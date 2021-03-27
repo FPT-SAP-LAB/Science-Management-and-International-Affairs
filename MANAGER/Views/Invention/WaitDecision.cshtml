@@ -53,43 +53,11 @@
                                     Choose an option:
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-print"></i>
-                                        </span>
-                                        <span class="navi-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-copy"></i>
-                                        </span>
-                                        <span class="navi-text">Copy</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="#" class="navi-link" id="excel">
                                         <span class="navi-icon">
                                             <i class="la la-file-excel-o"></i>
                                         </span>
                                         <span class="navi-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-file-text-o"></i>
-                                        </span>
-                                        <span class="navi-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-file-pdf-o"></i>
-                                        </span>
-                                        <span class="navi-text">PDF</span>
                                     </a>
                                 </li>
                             </ul>
@@ -107,7 +75,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Tên tác giả</th>
+                        <th>Người request</th>
                         <th>MSNV/MSSV</th>
                         <th>Đơn vị công tác</th>
                         <th>Tên bằng sáng chế</th>
@@ -116,15 +84,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Nguyễn Quốc Long</td>
-                        <td>299923</td>
-                        <td>FU-HL</td>
-                        <td>An Evaluation of Image-Based Malware Classification Using Machine Learning</td>
-                        <td>Vietname Patent</td>
-                        <td></td>
-                    </tr>
+                    @{
+                        int count = 1;
+                        foreach (var item in ViewBag.list)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.author_name</td>
+                                <td>@item.mssv_msnv</td>
+                                <td>@item.office_abbreviation</td>
+                                <td>@item.name</td>
+                                <td>@item.type_name</td>
+                                <td>Có @item.note tác giả</td>
+                            </tr>
+                        }
+                        count++;
+                    }
                 </tbody>
             </table>
     </div>

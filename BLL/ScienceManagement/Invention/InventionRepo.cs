@@ -289,5 +289,72 @@ namespace BLL.ScienceManagement.Invention
                 return "ff";
             }
         }
+
+        public List<PendingInvention_Manager> getListPending()
+        {
+            string sql = @"select i.name, acc.email, br.created_date, i.invention_id
+                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
+	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
+	                            join [General].Account acc on acc.account_id = br.account_id
+                            where ri.status_id = 3";
+            List<PendingInvention_Manager> list = db.Database.SqlQuery<PendingInvention_Manager>(sql).ToList();
+            return list;
+        }
+
+        public string updateRewardInven(DetailInvention item)
+        {
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                ri.total_reward = item.total_reward;
+                ri.status_id = 4;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateAuthorReward(DetailInvention inven, List<AuthorInfoWithNull> people)
+        {
+            try
+            {
+                foreach (var item in people)
+                {
+                    AuthorInvention ai = db.AuthorInventions
+                                            .Where(x => x.invention_id == inven.invention_id)
+                                            .Where(x => x.people_id == item.people_id)
+                                            .FirstOrDefault();
+                    ai.money_reward = item.money_reward;
+                }
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public List<WaitDecisionInven> getListWaitDecision()
+        {
+            string sql = @"select i.name, it.name as 'type_name', po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ai.people_id) as 'note'
+                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
+	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
+	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
+                            where ri.status_id = 4
+                            group by i.name, it.name, po.name, pro.mssv_msnv, o.office_abbreviation";
+            List<WaitDecisionInven> list = db.Database.SqlQuery<WaitDecisionInven>(sql).ToList();
+            return list;
+        }
     }
 }

@@ -14,8 +14,14 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
         public string office_name { get; set; }
         public int partner_id { get; set; }
         public string partner_name { get; set; }
+        public int country_id { get; set; }
         public string country_name { get; set; }
+        public int scope_id { get; set; }
+        public string scope_name { get; set; }
         public int collab_status_id { get; set; }
         public string collab_status_name { get; set; }
+        public string file_name { get; set; }
+        public string file_link { get; set; }
+        public string file_drive_id { get; set; }
     }
 }
