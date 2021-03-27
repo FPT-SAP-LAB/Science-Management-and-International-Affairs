@@ -51,6 +51,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(String.Empty);
             }
         }
@@ -223,6 +224,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             repo = new DetailOfAcademicActivityRepo();
             DetailOfAcademicActivityRepo.baseForm data = repo.getFormbyPhase(phase_id);
             return Json(data);
+        }
+        [HttpPost]
+        public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data)
+        {
+            repo = new DetailOfAcademicActivityRepo();
+            bool res = repo.updateForm(data);
+            if (res)
+            {
+                return Json("Lưu mẫu đăng ký thành công");
+            }
+            else
+                return Json(String.Empty);
         }
         public class QuantityByUnit
         {

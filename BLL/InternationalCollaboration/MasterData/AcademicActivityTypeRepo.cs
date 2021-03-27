@@ -1,8 +1,11 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +14,7 @@ namespace BLL.InternationalCollaboration.MasterData
 {
     public class AcademicActivityTypeRepo
     {
-        public BaseServerSideData<AcademicActivityType> getlistAcademicActivityType(BaseDatatable baseDatatable)
+        public BaseServerSideData<AcademicActivityType_Ext> getlistAcademicActivityType(BaseDatatable baseDatatable, int language_id)
         {
             try
             {
@@ -19,12 +22,20 @@ namespace BLL.InternationalCollaboration.MasterData
                 {
                     db.Configuration.LazyLoadingEnabled = false;
                     //List<AcademicActivityType> academicActivityTypes = db.AcademicActivityTypes.ToList();
-                    List<AcademicActivityType> academicActivityTypes = db.Database.SqlQuery<AcademicActivityType>("select * from SMIA_AcademicActivity.AcademicActivityType " +
-                                                                        "ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
-                                                                        " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY").ToList();
-                    int recordsTotal = db.Database.SqlQuery<int>("select count(*) from SMIA_AcademicActivity.AcademicActivityType").FirstOrDefault();
+                    List<AcademicActivityType_Ext> academicActivityTypes = db.Database.SqlQuery<AcademicActivityType_Ext>(@"select aat.activity_type_id, aatl.activity_type_name from SMIA_AcademicActivity.AcademicActivityType aat
+                                                                                                                            join SMIA_AcademicActivity.AcademicActivityTypeLanguage aatl on aat.activity_type_id = aatl.activity_type_id 
+                                                                                                                            join Localization.[Language] l on l.language_id = aatl.language_id 
+                                                                                                                            where l.language_id = @language_id 
+                                                                                                                            ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                                                                                                                            " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY",
+                                                                                                                            new SqlParameter("language_id", language_id)).ToList();
+                    int recordsTotal = db.Database.SqlQuery<int>(@"select count(*) from SMIA_AcademicActivity.AcademicActivityType aat
+                                                                join SMIA_AcademicActivity.AcademicActivityTypeLanguage aatl on aat.activity_type_id = aatl.activity_type_id 
+                                                                join Localization.[Language] l on l.language_id = aatl.language_id 
+                                                                where l.language_id = @language_id",
+                                                                new SqlParameter("language_id", language_id)).FirstOrDefault();
 
-                    return new BaseServerSideData<AcademicActivityType>(academicActivityTypes, recordsTotal);
+                    return new BaseServerSideData<AcademicActivityType_Ext>(academicActivityTypes, recordsTotal);
                 }
             }
             catch (Exception e)
@@ -33,7 +44,24 @@ namespace BLL.InternationalCollaboration.MasterData
             }
         }
 
-        public AlertModal<AcademicActivityType> addAcademicActivityType(string academic_activity_type_name)
+        public AlertModal<List<Language>> getLanguages()
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    List<Language> languages = db.Languages.ToList();
+                    return new AlertModal<List<Language>>(languages, true, null, null);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<AcademicActivityType_Ext> addAcademicActivityType(int language_id, string activity_type_name)
         {
             try
             {
@@ -41,29 +69,53 @@ namespace BLL.InternationalCollaboration.MasterData
                 {
                     db.Configuration.LazyLoadingEnabled = false;
                     //empty error
-                    if (academic_activity_type_name == "")
+                    if (activity_type_name == "")
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động học thuật không được để trống.");
+                        return new AlertModal<AcademicActivityType_Ext>(null, false, "Tên loại hoạt động học thuật không được để trống.");
                     }
                     else
                     {
                         //check duplicate data
-                        AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
-                        if (academicActivityType == null)
+                        AcademicActivityType_Ext academicActivityType_Ext = db.Database.SqlQuery<AcademicActivityType_Ext>(@"select aat.activity_type_id, aatl.activity_type_name from SMIA_AcademicActivity.AcademicActivityType aat
+                                                                                                                        join SMIA_AcademicActivity.AcademicActivityTypeLanguage aatl on aat.activity_type_id = aatl.activity_type_id
+                                                                                                                        join Localization.[Language] l on l.language_id = aatl.language_id
+                                                                                                                        where l.language_id = @language_id and aatl.activity_type_name = @activity_type_name",
+                                                                                                                        new SqlParameter("language_id", language_id),
+                                                                                                                        new SqlParameter("activity_type_name", activity_type_name)).FirstOrDefault();
+                        if (academicActivityType_Ext == null)
                         {
-                            //add
-                            academicActivityType = new AcademicActivityType
+                            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
                             {
-                                activity_type_name = academic_activity_type_name
-                            };
-                            db.AcademicActivityTypes.Add(academicActivityType);
-                            db.SaveChanges();
-                            return new AlertModal<AcademicActivityType>(null, true, "Thêm loại hoạt động học thuật thành công.");
+                                try
+                                {
+                                    //add to AcademicActivity
+                                    AcademicActivityType academicActivityType = new AcademicActivityType();
+                                    db.AcademicActivityTypes.Add(academicActivityType);
+                                    db.SaveChanges();
+
+                                    //add to AcademicActivityLanguage
+                                    AcademicActivityTypeLanguage academicActivityTypeLanguage = new AcademicActivityTypeLanguage
+                                    {
+                                        activity_type_id = academicActivityType.activity_type_id,
+                                        activity_type_name = activity_type_name,
+                                        language_id = language_id
+                                    };
+                                    db.AcademicActivityTypeLanguages.Add(academicActivityTypeLanguage);
+                                    db.SaveChanges();
+                                    dbContext.Commit();
+                                    return new AlertModal<AcademicActivityType_Ext>(null, true, "Thêm loại hoạt động học thuật thành công.");
+                                }
+                                catch (Exception e)
+                                {
+                                    dbContext.Rollback();
+                                    throw e;
+                                }
+                            }
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicActivityType_Ext>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
@@ -71,36 +123,42 @@ namespace BLL.InternationalCollaboration.MasterData
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
+                return new AlertModal<AcademicActivityType_Ext>(null, false, "Có lỗi xảy ra.");
             }
         }
 
-        public AlertModal<AcademicActivityType> getAcademicActivityType(int academic_activity_type_id)
+        public AlertModal<AcademicActivityType_Ext> getAcademicActivityType(int language_id, int activity_type_id)
         {
             try
             {
                 using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
                 {
                     db.Configuration.LazyLoadingEnabled = false;
-                    AcademicActivityType academicActivityType = db.AcademicActivityTypes.Find(academic_activity_type_id);
+                    var sql = @"select aat.activity_type_id, aatl.activity_type_name from SMIA_AcademicActivity.AcademicActivityType aat
+                                join SMIA_AcademicActivity.AcademicActivityTypeLanguage aatl on aat.activity_type_id = aatl.activity_type_id
+                                join Localization.[Language] l on l.language_id = aatl.language_id
+                                where l.language_id = @language_id and aatl.activity_type_id = @activity_type_id";
+                    AcademicActivityType_Ext academicActivityType = db.Database.SqlQuery<AcademicActivityType_Ext>(sql,
+                                                                    new SqlParameter("language_id", language_id),
+                                                                    new SqlParameter("activity_type_id", activity_type_id)).FirstOrDefault();
                     if (academicActivityType != null)
                     {
-                        return new AlertModal<AcademicActivityType>(academicActivityType, true, null, null);
+                        return new AlertModal<AcademicActivityType_Ext>(academicActivityType, true, null, null);
                     }
                     else
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                        return new AlertModal<AcademicActivityType_Ext>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
+                return new AlertModal<AcademicActivityType_Ext>(null, false, "Có lỗi xảy ra.");
             }
         }
 
-        public AlertModal<AcademicActivityType> editAcademicActivityType(int academic_activity_type_id, string academic_activity_type_name)
+        public AlertModal<AcademicActivityType_Ext> editAcademicActivityType(int language_id, int activity_type_id, string activity_type_name)
         {
             try
             {
@@ -108,33 +166,32 @@ namespace BLL.InternationalCollaboration.MasterData
                 {
                     db.Configuration.LazyLoadingEnabled = false;
                     //empty error
-                    if (academic_activity_type_name == "")
+                    if (activity_type_name == "")
                     {
-                        return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động học thuật không được để trống.");
+                        return new AlertModal<AcademicActivityType_Ext>(null, false, "Tên loại hoạt động học thuật không được để trống.");
                     }
                     else
                     {
                         //check duplicate data
-                        AcademicActivityType academicActivityType = db.AcademicActivityTypes.Where(x => x.activity_type_name.Equals(academic_activity_type_name)).FirstOrDefault();
-                        if (academicActivityType == null)
+                        if (checkDuplicateAcademicActivityType(language_id, activity_type_id, activity_type_name, db))
                         {
                             //edit
-                            AcademicActivityType academicActivityType_edit = db.AcademicActivityTypes.Find(academic_activity_type_id);
-                            if (academicActivityType_edit != null)
+                            AcademicActivityTypeLanguage academicActivityTypeLanguage = db.AcademicActivityTypeLanguages.Find(language_id, activity_type_id);
+                            if (academicActivityTypeLanguage != null)
                             {
-                                academicActivityType_edit.activity_type_name = academic_activity_type_name;
+                                academicActivityTypeLanguage.activity_type_name = activity_type_name;
                                 db.SaveChanges();
-                                return new AlertModal<AcademicActivityType>(null, true, "Chỉnh sửa loại hoạt động học thuật thành công");
+                                return new AlertModal<AcademicActivityType_Ext>(null, true, "Chỉnh sửa loại hoạt động học thuật thành công");
                             }
                             else
                             {
-                                return new AlertModal<AcademicActivityType>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
+                                return new AlertModal<AcademicActivityType_Ext>(null, false, "Không xác định được loại hoạt động tương ứng. Vui lòng kiểm tra lại.");
                             }
                         }
                         else
                         {
                             //return duplicate error
-                            return new AlertModal<AcademicActivityType>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
+                            return new AlertModal<AcademicActivityType_Ext>(null, false, "Tên loại hoạt động không được trùng với dữ liệu đã có.");
                         }
                     }
                 }
@@ -142,35 +199,71 @@ namespace BLL.InternationalCollaboration.MasterData
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
+                return new AlertModal<AcademicActivityType_Ext>(null, false, "Có lỗi xảy ra.");
             }
         }
 
-        public AlertModal<AcademicActivityType> deleteAcademicActivityType(int academic_activity_type_id)
+        public bool checkDuplicateAcademicActivityType(int language_id, int activity_type_id, string activity_type_name, ScienceAndInternationalAffairsEntities db)
+        {
+            var sql = @"select aat.activity_type_id, aatl.activity_type_name from SMIA_AcademicActivity.AcademicActivityType aat
+                                join SMIA_AcademicActivity.AcademicActivityTypeLanguage aatl on aat.activity_type_id = aatl.activity_type_id
+                                join Localization.[Language] l on l.language_id = aatl.language_id
+                                where l.language_id = @language_id and aatl.activity_type_id != @activity_type_id and aatl.activity_type_name = @activity_type_name";
+            AcademicActivityType_Ext academicActivityType_Ext = db.Database.SqlQuery<AcademicActivityType_Ext>(sql,
+                                                                    new SqlParameter("language_id", language_id),
+                                                                    new SqlParameter("activity_type_id", activity_type_id),
+                                                                    new SqlParameter("activity_type_name", activity_type_name)).FirstOrDefault();
+            if (academicActivityType_Ext == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public AlertModal<AcademicActivityType_Ext> deleteAcademicActivityType(int language_id, int activity_type_id)
         {
             try
             {
                 using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
                 {
-                    db.Configuration.LazyLoadingEnabled = false;
-                    AcademicActivityType academicActivityType = db.AcademicActivityTypes.Find(academic_activity_type_id);
-                    try
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
                     {
-                        db.AcademicActivityTypes.Remove(academicActivityType);
-                        db.SaveChanges();
-                        return new AlertModal<AcademicActivityType>(null, true, "Xóa loại hoạt động học thuật thành công");
-                    }
-                    catch (Exception e)
-                    {
-                        db.Dispose();
-                        return new AlertModal<AcademicActivityType>(null, false, "Loại hoạt động học thuật đang có dữ liệu tại các màn hình khác.");
+                        try
+                        {
+                            db.Configuration.LazyLoadingEnabled = false;
+                            //delete AcademicLanguageTypeLanguage
+                            AcademicActivityTypeLanguage academicActivityTypeLanguage = db.AcademicActivityTypeLanguages.Find(language_id, activity_type_id);
+                            db.AcademicActivityTypeLanguages.Remove(academicActivityTypeLanguage);
+                            db.SaveChanges();
+                            try
+                            {
+                                AcademicActivityType academicActivityType = db.AcademicActivityTypes.Find(activity_type_id);
+                                db.AcademicActivityTypes.Remove(academicActivityType);
+                                db.SaveChanges();
+                                dbContext.Commit();
+                                return new AlertModal<AcademicActivityType_Ext>(null, true, "Xóa loại hoạt động học thuật thành công");
+                            }
+                            catch (Exception e)
+                            {
+                                dbContext.Rollback();
+                                return new AlertModal<AcademicActivityType_Ext>(null, false, "Loại hoạt động học thuật đang có dữ liệu tại các màn hình khác.");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicActivityType>(null, false, "Có lỗi xảy ra.");
+                return new AlertModal<AcademicActivityType_Ext>(null, false, "Có lỗi xảy ra.");
             }
         }
     }

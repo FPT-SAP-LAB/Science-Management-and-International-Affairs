@@ -18,12 +18,14 @@ namespace ENTITIES
         public AcademicActivityType()
         {
             this.AcademicActivities = new HashSet<AcademicActivity>();
+            this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
         }
     
         public int activity_type_id { get; set; }
-        public string activity_type_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityTypeLanguage> AcademicActivityTypeLanguages { get; set; }
     }
 }

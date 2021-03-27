@@ -18,5 +18,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public string name { get; set; }
         public string email { get; set; }
         public Nullable<int> office_id_string { get; set; }
+        public string money_string { get; set; }
     }
 }

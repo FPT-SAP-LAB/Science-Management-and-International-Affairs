@@ -20,8 +20,8 @@ namespace ENTITIES
         public int answer_type_id { get; set; }
         public bool is_compulsory { get; set; }
     
-        public virtual QuestionOption QuestionOption { get; set; }
         public virtual AnswerType AnswerType { get; set; }
         public virtual Form Form { get; set; }
+        public virtual QuestionOption QuestionOption { get; set; }
     }
 }

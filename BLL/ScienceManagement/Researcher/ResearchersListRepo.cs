@@ -20,8 +20,6 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                         from d in db.Positions.Where(x => a.Profile.Positions.Contains(x))
                         join e in db.PositionLanguages on d.position_id equals e.position_id
                         join f in db.Offices on b.office_id equals f.office_id
-                        from g in db.ResearchAreas.Where(x => x.Profiles.Contains(b))
-                        join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
                         where c.language_id == 1 && e.language_id == 1
                         select new ResearcherList
                         {
@@ -30,7 +28,6 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                             title = c.name,
                             position = e.name,
                             workplace = f.office_name,
-                            interest = h.name,
                             googleScholar = b.google_scholar
                         });
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)

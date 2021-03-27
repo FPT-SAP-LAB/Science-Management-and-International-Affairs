@@ -10,7 +10,9 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
     {
         public string people_name { get; set; }
         public string email { get; set; }
+        public int office_id { get; set; }
         public string office_name { get; set; }
+        public int partner_id { get; set; }
         public string partner_name { get; set; }
         public string country_name { get; set; }
         public int collab_status_id { get; set; }

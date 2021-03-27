@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
@@ -2179,7 +2180,12 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
+    <Content Include="Scripts\datetime-moment.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Training_Going.js" />
     <Content Include="Web.config" />
+    <Content Include="Excel_template\Paper.xlsx" />
+    <Content Include="Excel_template\Download\Paper.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
@@ -2332,6 +2338,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Views\ConferencesParticipationReport\" />
+    <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
   </ItemGroup>
   <ItemGroup>
