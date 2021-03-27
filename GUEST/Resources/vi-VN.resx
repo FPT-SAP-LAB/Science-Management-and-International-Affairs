@@ -234,6 +234,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
   </data>
+  <data name="FPTProgram" xml:space="preserve">
+    <value>Đào tạo của ĐH FPT</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
@@ -282,8 +285,17 @@
   <data name="ListMaga" xml:space="preserve">
     <value>Danh sách tạp chí trong nước</value>
   </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Xem thêm</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>Địa điểm</value>
+  </data>
+  <data name="LongTerm" xml:space="preserve">
+    <value>Đào tạo sau đại học</value>
+  </data>
+  <data name="LongTermIntroduction" xml:space="preserve">
+    <value>Giới thiệu chương trình</value>
   </data>
   <data name="Mar" xml:space="preserve">
     <value>Tháng 3</value>
@@ -306,6 +318,9 @@
   <data name="Nov" xml:space="preserve">
     <value>Tháng 11</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>STT</value>
+  </data>
   <data name="Oct" xml:space="preserve">
     <value>Tháng 10</value>
   </data>
@@ -321,8 +336,14 @@
   <data name="PaperType" xml:space="preserve">
     <value>Loại ấn phẩm</value>
   </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Đối tác</value>
+  </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Tên đối tác</value>
+  </data>
+  <data name="PartnerProgram" xml:space="preserve">
+    <value>Đào tạo của đối tác</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Ngày cấp</value>
@@ -336,6 +357,9 @@
   <data name="Pre" xml:space="preserve">
     <value>Trang trước</value>
   </data>
+  <data name="Program" xml:space="preserve">
+    <value>Chương trình</value>
+  </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Ngày xuất bản</value>
   </data>
@@ -345,11 +369,17 @@
   <data name="PublishName" xml:space="preserve">
     <value>Tên nhà xuất bản</value>
   </data>
+  <data name="PublishTime" xml:space="preserve">
+    <value>Ngày đăng</value>
+  </data>
   <data name="Quality" xml:space="preserve">
     <value>Chất lượng</value>
   </data>
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
+  </data>
+  <data name="RegistrationDeadline" xml:space="preserve">
+    <value>Thời hạn đăng ký</value>
   </data>
   <data name="Repre" xml:space="preserve">
     <value>Đại diện nhận thưởng</value>
@@ -425,5 +455,8 @@
   </data>
   <data name="WorkUnit" xml:space="preserve">
     <value>Cơ sở</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Năm</value>
   </data>
 </root>
