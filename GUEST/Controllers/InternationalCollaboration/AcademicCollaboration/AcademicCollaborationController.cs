@@ -16,47 +16,67 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
         // GET: AcademicCollaboration
         public ActionResult Long_Term()
         {
-            int language;
-            if (Request.Cookies["language_id"] is null)
-            {
-                language = 1;
-            }
-            else
-            {
-                language = Int32.Parse(Request.Cookies["language_id"].Value);
-            }
+            int language = Models.LanguageResource.GetCurrentLanguageID();
             var pagesTree = new List<PageTree>
             {
                 new PageTree(rm.GetString("LongTerm"), "/AcademicCollaboration/Long_Term"),
             };
             ViewBag.Title = rm.GetString("LongTerm");
             ViewBag.TypeDescription = guestRepo.getTypeDescription(2, language);
-            ViewBag.ListProgram = guestRepo.listProgram(0, 2, language);
+            ViewBag.ListProgram = guestRepo.listProgram(0, 2, 0, null, 0, language);
             ViewBag.ListCountry = guestRepo.listCountry();
             ViewBag.pagesTree = pagesTree;
             return View();
         }
         [HttpPost]
-        public ActionResult Load_More_List_Long_Term(int count)
+        public ActionResult Load_More_List_Long_Term(int count, string countrystr, string partner, string yearstr)
         {
-            int language = Int32.Parse(Request.Cookies["language_id"].Value);
-            List<ProgramInfo> data = guestRepo.listProgram(count, 2, language);
+            int country = 0;
+            int year = 0;
+            if(!String.IsNullOrEmpty(countrystr))
+            {
+                country = Int32.Parse(countrystr);    
+            }
+            if (!String.IsNullOrEmpty(yearstr))
+            {
+                year = Int32.Parse(yearstr);
+            }
+            int language = Models.LanguageResource.GetCurrentLanguageID();
+            List<ProgramInfo> data = guestRepo.listProgram(count, 2, country, partner, year, language);
+            return Json(data);
         }
-        int language = Int32.Parse(Request.Cookies["language_id"].Value);
-        List<ProgramInfo> data = guestRepo.listPartnerProgram(language);
-            return Json(new { success = true, data = data
-    }, JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        public ActionResult Partner_Program(string partner, string yearstr, string countrystr)
+        {
+            int language = Models.LanguageResource.GetCurrentLanguageID();
+            int year = 0;
+            int country = 0;
+            if(!String.IsNullOrEmpty(yearstr))
+            {
+                year = Int32.Parse(yearstr);
+            }
+            if(!String.IsNullOrEmpty(countrystr))
+            {
+                country = Int32.Parse(countrystr);
+            }
+            List<ProgramInfo> data = guestRepo.listPartnerProgram(partner, year, country, language);
+            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
         }
-[HttpPost]
-public ActionResult FPT_Program()
-{
-    int language = Int32.Parse(Request.Cookies["language_id"].Value);
-    List<ProgramInfo> data = guestRepo.listFPTProgram(language);
-    return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
-}
-public ActionResult Short_Term()
-{
-    var pagesTree = new List<PageTree>
+        [HttpPost]
+        public ActionResult FPT_Program(string yearstr)
+        {
+            int year = 0;
+            if (!String.IsNullOrEmpty(yearstr))
+            {
+                year = Int32.Parse(yearstr);
+            }
+            int language = Models.LanguageResource.GetCurrentLanguageID();
+            List<ProgramInfo> data = guestRepo.listFPTProgram(year,language);
+            return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Short_Term()
+        {
+            var pagesTree = new List<PageTree>
             {
                 new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
             };
@@ -76,13 +96,15 @@ public ActionResult Load_More_List_Short_Term()
     }
 }
 
-public ActionResult Program_Detail(string id, string type_program)
-{
-    var pagesTree = new List<PageTree>();
-    switch (type_program)
-    {
-        case "1":
-            pagesTree = new List<PageTree>
+        public ActionResult Program_Detail(string id, string type_program)
+        {
+            var pagesTree = new List<PageTree>();
+            int language = Models.LanguageResource.GetCurrentLanguageID();
+            ViewBag.Program = guestRepo.programInfo(id, language);
+            switch (type_program)
+            {
+                case "1":
+                    pagesTree = new List<PageTree>
             {
                 new PageTree("Đào tạo sau đại học", "/AcademicCollaboration/Long_Term"),
                 new PageTree("Đào tạo của đối tác", "/AcademicCollaboration/Program_Detail"),

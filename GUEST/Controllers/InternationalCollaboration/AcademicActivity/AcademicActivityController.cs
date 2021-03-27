@@ -15,16 +15,8 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         // GET: AcademicActivity
         public ActionResult Index()
         {
-            int language;
+            int language = Models.LanguageResource.GetCurrentLanguageID(); ;
             ViewBag.title = rm.GetString("AcademicActivity");
-            if (Request.Cookies["language_id"] is null)
-            {
-                language = 1;
-            }
-            else
-            {
-                language = Int32.Parse(Request.Cookies["language_id"].Value);
-            }
             ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null);
             ViewBag.listActivityType = guestRepo.getListType(language);
 
@@ -50,7 +42,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         [HttpPost]
         public ActionResult LoadMoreList(int count, List<int> type, string search)
         {
-            int language = Int32.Parse(Request.Cookies["language_id"].Value);
+            int language = Models.LanguageResource.GetCurrentLanguageID();
             List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search);
             return Json(data);
         }
