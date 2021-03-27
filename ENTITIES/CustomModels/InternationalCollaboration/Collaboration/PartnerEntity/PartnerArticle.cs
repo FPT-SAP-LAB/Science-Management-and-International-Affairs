@@ -9,5 +9,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Partner
     public class PartnerArticle : Partner
     {
         public string partner_content { get; set; }
+        public int partner_language_type { get; set; }
     }
 }
