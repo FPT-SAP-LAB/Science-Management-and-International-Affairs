@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 {
@@ -243,10 +244,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 var sql = @"-----1.8. Phạm vi hợp tác
                     select * from IA_Collaboration.CollaborationScope
-                    where scope_abbreviation like @collab_abbreviation_name
-                    or scope_name like @collab_abbreviation_name";
+                    where scope_abbreviation = @collab_abbreviation_name";
                 List<CollaborationScope> collaborationScopes = db.Database.SqlQuery<CollaborationScope>(sql,
-                    new SqlParameter("collab_abbreviation_name", collab_abbreviation_name == null ? "%%" : "%" + collab_abbreviation_name + "%")).ToList();
+                    new SqlParameter("collab_abbreviation_name", collab_abbreviation_name)).ToList();
                 return new AlertModal<List<CollaborationScope>>(collaborationScopes, true);
             }
             catch (Exception e)
@@ -273,7 +273,31 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<AcademicCollaboration_Ext> saveAcademicCollaboration(int direction_id, int collab_type_id, SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab, int account_id)
+        public Google.Apis.Drive.v3.Data.File uploadEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        {
+            string file_id = "";
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
+                file_id = InputFile.FileName;
+                return f;
+            }
+            catch (Exception e)
+            {
+                if (file_id != "")
+                {
+                    GlobalUploadDrive.DeleteFile(file_id);
+                }
+                throw e;
+            }
+
+        }
+
+        public AlertModal<AcademicCollaboration_Ext> saveAcademicCollaboration(int direction_id, int collab_type_id,
+            SaveAcadCollab_Person obj_person,
+            SaveAcadCollab_Partner obj_partner,
+            SaveAcadCollab_AcademicCollaboration obj_academic_collab,
+            Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -393,13 +417,23 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         db.AcademicCollaborations.Add(academic_collaboration);
                         db.SaveChanges();
 
+                        //add infor to File
+                        var evidence_file = new File()
+                        {
+                            name = evidence.FileName,
+                            link = f.WebViewLink,
+                            file_drive_id = f.Id
+                        };
+                        db.Files.Add(evidence_file);
+                        db.SaveChanges();
+
                         //add infor to CollaborationStatusHistory
                         var collab_status_hist = new CollaborationStatusHistory()
                         {
                             collab_id = academic_collaboration.collab_id,
                             collab_status_id = obj_academic_collab.status_id,
                             change_date = DateTime.Now,
-                            evidence = obj_academic_collab.evidence_link,
+                            file_id = evidence_file.file_id,
                             account_id = account_id
                         };
                         db.CollaborationStatusHistories.Add(collab_status_hist);
@@ -431,13 +465,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (partnerScope != null)
                 {
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
-                                                                && x.partner_scope_id == partnerScope.partner_scope_id
                                                                 &&
                                                                 ((x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
                                                                 ||
                                                                 (x.plan_study_start_date >= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
                                                                 ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.actual_start_date && x.plan_study_end_date <= obj_academic_collab.actual_end_date))).FirstOrDefault();
+                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
                     if (academicCollaboration != null)
                     {
                         return false;
@@ -448,37 +481,42 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         }
 
         //EDIT
-        public AlertModal<AcademicCollaboration_Ext> getAcademicCollaboration(int acad_collab_id)
+        public AlertModal<AcademicCollaboration_Ext> getAcademicCollaboration(int direction, int collab_type_id, int acad_collab_id)
         {
             try
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 var sql = @"select
-                            collab.collab_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
-                            pn.partner_id, pn.partner_name, c.country_name,
-                            collab.plan_study_start_date, collab.plan_study_end_date, collab.actual_study_start_date, collab.actual_study_end_date,
+                            collab.collab_id, collab.partner_scope_id, collab.collab_type_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
+                            pn.partner_id, pn.partner_name, c.country_id, c.country_name, cs.scope_id, cs.scope_name,
+                            collab.plan_study_start_date, collab.plan_study_end_date, csh.evidence, collab.actual_study_start_date, collab.actual_study_end_date,
                             acs.collab_status_id, acs.collab_status_name,
                             collab.is_supported, collab.note
                             from IA_AcademicCollaboration.AcademicCollaboration collab
                             join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
                             join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
+							join IA_Collaboration.CollaborationScope cs on cs.scope_id = mpc.scope_id
                             join General.Country c on c.country_id = pn.country_id
                             join General.People pp on collab.people_id = pp.people_id 
                             join General.[Profile] pf on pf.people_id = pp.people_id
                             join General.Office offi on pf.office_id = offi.office_id
-                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
+                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.evidence
 		                            from 
 		                            (select csh1.collab_id, MAX(csh1.change_date) 'change_date' 
 			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh1
 			                            group by csh1.collab_id) as csh1
 		                            join 
-		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date
+		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date, csh2.evidence
 			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh2) as csh2 
 		                            on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh 
                             on csh.collab_id = collab.collab_id
                             join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
-                            where collab.direction_id = 1 /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = 2 /*Chiều đi = 1, Chiều đến = 2*/
+                            where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
                             and collab.collab_id = @collab_id";
-                AcademicCollaboration_Ext academicCollaboration = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql, new SqlParameter("collab_id", acad_collab_id)).FirstOrDefault();
+                AcademicCollaboration_Ext academicCollaboration = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
+                    new SqlParameter("direction", direction),
+                    new SqlParameter("collab_type_id", collab_type_id),
+                    new SqlParameter("collab_id", acad_collab_id)).FirstOrDefault();
                 if (academicCollaboration != null)
                 {
                     return new AlertModal<AcademicCollaboration_Ext>(academicCollaboration, true, null, null);
