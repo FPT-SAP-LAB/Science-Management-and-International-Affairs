@@ -32,7 +32,7 @@ namespace ENTITIES
         public string avatar { get; set; }
         public bool is_deleted { get; set; }
         public int country_id { get; set; }
-        public Nullable<int> article_id { get; set; }
+        public int article_id { get; set; }
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -8,8 +8,28 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div>
-                            <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-offset-2 col-md-offset-12 col-sm-offset-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="language_select" name="param" style="width:200px !important">
+                                                @foreach (var language in ViewBag.languages)
+                                                {
+                                                    <option value="@language.language_id">@language.language_name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
+                                <div class="row align-items-center justify-content-end">
+                                    <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
+                                        <a href="#academic_activity_type_add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <table class="table table-bordered" id="academic_activity_type_table">
                             <thead>
@@ -74,7 +94,7 @@
 
 @section scripts{
     <script>
-        var dataTable = $("#academic_activity_type_table").DataTable({
+         var dataTable = $("#academic_activity_type_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -89,8 +109,10 @@
             ajax: {
                 url: "@Url.Action("listAcademicActivityType", "AcademicActivityType")",
                 type: "GET",
-                contentType: "application/json;charset=utf-8",
                 dataType: "json",
+                data: {
+                    language_id: function () { return $('#language_select').val(); }
+                },
                 cache: "false"
             },
             columns: [
@@ -111,6 +133,38 @@
                 }
             ]
         });
+
+        //Language select
+        $('#language_select').select2({
+            placeholder: 'Ngôn ngữ',
+            allowClear: true,
+            minimumResultsForSearch: -1, //hide search box
+            tags: true,
+            ajax: {
+                url: "@Url.Action("getLanguages", "AcademicActivityType")",
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.language_id;
+                        obj.text = obj.language_name;
+                        return data.obj;
+                    });
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatLanguageInfor
+        }).on('select2:select', function () {
+            dataTable.ajax.reload();
+        });
+
+        function formatLanguageInfor(language) {
+            return language.language_name;
+        }
+
     </script>
 
     <!--ADD-->
@@ -120,7 +174,8 @@
                 url: "@Url.Action("addAcademicActivityType", "AcademicActivityType")",
                 type: "POST",
                 data: {
-                    academic_activity_type_name: $("#add_modal_academic_activity_type_name").val()
+                    language_id: function () { return $('#language_select').val(); },
+                    activity_type_name: $("#add_modal_academic_activity_type_name").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -154,7 +209,8 @@
                 url: "@Url.Action("getAcademicActivityType", "AcademicActivityType")",
                 type: "POST",
                 data: {
-                    academic_activity_type_id: academic_activity_type_id
+                    language_id: function () { return $('#language_select').val(); },
+                    activity_type_id: academic_activity_type_id_temp
                 },
                 cache: true,
                 dataType: "json",
@@ -178,8 +234,9 @@
                 url: "@Url.Action("editAcademicActivtyType", "AcademicActivityType")",
                 type: "POST",
                 data: {
-                    academic_activity_type_id: academic_activity_type_id_temp,
-                    academic_activity_type_name: $("#edit_modal_academic_activity_type_name").val()
+                    language_id: function () { return $('#language_select').val(); },
+                    activity_type_id: academic_activity_type_id_temp,
+                    activity_type_name: $("#edit_modal_academic_activity_type_name").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -220,7 +277,8 @@
                         url: "@Url.Action("deleteAcademicActivityType", "AcademicActivityType")",
                         type: "POST",
                         data: {
-                            academic_activity_type_id: academic_activity_type_id
+                            language_id: function () { return $('#language_select').val(); },
+                            activity_type_id: academic_activity_type_id
                         },
                         dataType: "json",
                         success: function (data) {
