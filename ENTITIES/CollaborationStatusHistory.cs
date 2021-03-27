@@ -18,11 +18,12 @@ namespace ENTITIES
         public int collab_id { get; set; }
         public int collab_status_id { get; set; }
         public System.DateTime change_date { get; set; }
-        public string evidence { get; set; }
         public string note { get; set; }
         public int account_id { get; set; }
+        public Nullable<int> file_id { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
         public virtual AcademicCollaboration AcademicCollaboration { get; set; }
         public virtual AcademicCollaborationStatu AcademicCollaborationStatu { get; set; }
     }
