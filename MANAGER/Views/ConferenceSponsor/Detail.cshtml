@@ -10,6 +10,7 @@
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
+    DecisionDetail Decision = output["DecisionDetail"].ToObject<DecisionDetail>();
 }
 <style>
     .chinhsach-container {
@@ -132,81 +133,87 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString("dd/MM/yyyy")</a>
                             </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
-                                <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
-                                <span class="text-muted font-weight-bold">123456</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
-                                <a href="#" class="text-muted text-hover-primary">1234567</a>
-                            </div>
+                            @if (ConferenceDetail.FormalityID == 2)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">File quyết định:</span>
+                                    <a href="@Decision.Link" class="text-muted text-hover-primary">Xem</a>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                    <span class="text-muted font-weight-bold">@Decision.DecisionNumber</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@Decision.ValidDate.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
                         </div>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kt_datepicker_modal">
-                                Cập nhật quyết định
-                            </button>
+                        @if (ConferenceDetail.StatusID == 3 && ConferenceDetail.FormalityID == 2)
+                        {
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kt_datepicker_modal">
+                                    Cập nhật quyết định
+                                </button>
 
-                            <!--begin::Modal-->
-                            <div class="modal fade" id="kt_datepicker_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Cập nhật quyết định</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                            </button>
+                                <!--begin::Modal-->
+                                <div class="modal fade" id="kt_datepicker_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật quyết định</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i aria-hidden="true" class="ki ki-close"></i>
+                                                </button>
+                                            </div>
+                                            <form class="form">
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">File quyết định <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="uppy" id="kt_uppy_1">
+                                                                <div class="uppy-wrapper text-center">
+                                                                    <span class="form-text text-muted float-right">Max file size is 5MB and max number of files is 1.</span>
+                                                                </div>
+                                                                <div class="uppy-list"></div>
+                                                                <div class="uppy-status"></div>
+                                                                <div class="uppy-informer uppy-informer-min"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Số quyết định <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group date">
+                                                                <input id="decision_number" type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Ngày ban hành <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" readonly value="@DateTime.Today.ToString("dd/MM/yyyy")" id="kt_datepicker_3_modal" />
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text">
+                                                                        <i class="la la-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal">Đóng</button>
+                                                    <button type="button" id="SubmitPolicyButton" onclick="SubmitPolicy()" class="btn btn-secondary">Cập nhật</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <form class="form">
-                                            <div class="modal-body">
-                                                <div class="form-group row">
-                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">File quyết định <span style='color:red'>*</span>:</label>
-                                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                                        <div class="uppy" id="kt_uppy_1">
-                                                            <div class="uppy-wrapper text-center">
-                                                                <span class="form-text text-muted float-right">Max file size is 5MB and max number of files is 1.</span>
-                                                            </div>
-                                                            <div class="uppy-list"></div>
-                                                            <div class="uppy-status"></div>
-                                                            <div class="uppy-informer uppy-informer-min"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Số quyết định <span style='color:red'>*</span>:</label>
-                                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                                        <div class="input-group date">
-                                                            <input id="decision_number" type="text" class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Ngày ban hành <span style='color:red'>*</span>:</label>
-                                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                                        <div class="input-group date">
-                                                            <input type="text" class="form-control" readonly value="@DateTime.Today.ToString("dd/MM/yyyy")" id="kt_datepicker_3_modal" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">
-                                                                    <i class="la la-calendar"></i>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary mr-2" data-dismiss="modal">Đóng</button>
-                                                <button type="button" onclick="SubmitPolicy()" class="btn btn-secondary">Cập nhật</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
+                                <!--end::Modal-->
                             </div>
-                            <!--end::Modal-->
-                        </div>
+                        }
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="card card-custom chinhsach-container">
@@ -353,7 +360,16 @@
                                 <th scope="row">Hoàn ứng</th>
                                 <td></td>
                                 <td></td>
-                                <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                                <td>
+                                    @if (ConferenceDetail.StatusID != 4)
+                                    {
+                                        <span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="0">
+                                    }
+                                </td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -363,6 +379,14 @@
                         <div class="col-lg-12 col-xl-12" style="text-align: right;">
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-success" onclick="SubmitCost()">Xét duyệt</button>
+                            </div>
+                        </div>
+                    }
+                    else if (ConferenceDetail.StatusID == 4)
+                    {
+                        <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success" onclick="SubmitReimbursement()">Lưu và kết thúc</button>
                             </div>
                         </div>
                     }
@@ -502,6 +526,7 @@
         const StatusBar = Uppy.StatusBar;
         const FileInput = Uppy.FileInput;
         const Informer = Uppy.Informer;
+        const save_loader = new LoaderBtn($("#SubmitPolicyButton"));
 
         // Uppy variables
         // For more info refer: https://uppy.io/
@@ -593,17 +618,19 @@
             fd.append("decision_file", uppy1.getFiles()[0].data);
             fd.append("valid_date", valid_date);
             fd.append("decision_number", decision_number);
+            fd.append("request_id", @ConferenceDetail.RequestID);
 
+            save_loader.startLoading();
             $.ajax({
                 url: "/ConferenceSponsor/SubmitPolicy",
                 method: "post",
                 dataType: "json",
                 complete: function (result) {
-                    if (result.responseJSON.id) {
+                    if (result.responseJSON.success) {
                         location.reload();
                     }
                     else {
-                        toastr.error(result.responseJSON.message);
+                        toastr.error(result.content);
                     }
                     save_loader.stopLoading();
                 },
@@ -611,7 +638,9 @@
                     toastr.error("Có lỗi xảy ra");
                     save_loader.stopLoading();
                 },
-                data: fd
+                data: fd,
+                processData: false,
+                contentType: false,
             });
         }
     </script>
@@ -635,6 +664,10 @@
                     costs.push($("#ExpectedCostChild1 input[type='checkbox']")[i].dataset.id);
             }
             createAndSubmitForm("/ConferenceSponsor/UpdateCosts", JSON.stringify(costs))
+        }
+
+        function SubmitReimbursement() {
+            createAndSubmitForm("/ConferenceSponsor/UpdateReimbursement", $("#ReimbursementInput").val())
         }
 
         function createAndSubmitForm(url, data) {

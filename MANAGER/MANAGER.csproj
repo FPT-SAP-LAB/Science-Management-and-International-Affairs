@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
@@ -2337,6 +2338,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Views\ConferencesParticipationReport\" />
+    <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
   </ItemGroup>
   <ItemGroup>
