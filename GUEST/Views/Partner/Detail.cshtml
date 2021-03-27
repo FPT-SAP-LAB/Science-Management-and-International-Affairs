@@ -1,7 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "Thông tin chi tiết đối tác";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("PartnerDetail");
 }
 <style>
     img {
@@ -36,7 +37,7 @@
                                             <strong>Website: </strong>@ViewBag.partnerArticle.website
                                         </span><br>
                                         <span style="color:black;">
-                                            <strong>Address: </strong>
+                                            <strong>@rm.GetString("Address"): </strong>
                                             @ViewBag.partnerArticle.address
                                         </span>
                                     </p>

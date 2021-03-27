@@ -2,6 +2,7 @@
 using BLL.ModelDAL;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
+using GUEST.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,16 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
         private static readonly PartnerRepo partnerRePo = new PartnerRepo();
         private static readonly CountryRepo countryRepo = new CountryRepo();
         private static readonly SpecializationRepo specializationRepo = new SpecializationRepo();
+        readonly System.Resources.ResourceManager rm = LanguageResource.GetResourceManager();
         // GET: Partner
         public ActionResult List()
         {
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Danh sách đối tác", "Partner")
+                new PageTree(rm.GetString("PartnerList"), "/Partner")
             };
             ViewBag.countries = countryRepo.GetCountries();
-            ViewBag.specializations = specializationRepo.GetSpecializations();
+            ViewBag.specializations = specializationRepo.GetSpecializations(LanguageResource.GetCurrentLanguageID());
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -36,6 +38,7 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
+                searchPartner.language = LanguageResource.GetCurrentLanguageID();
                 BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
                 return Json(new
                 {
@@ -59,10 +62,10 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
             {
                 var pagesTree = new List<PageTree>
             {
-                new PageTree("Danh sách đối tác", "/Partner/List"),
-                new PageTree("Thông tin chi tiết đối tác", "/Partner/Partner_Detail?" + id)
+                new PageTree(rm.GetString("PartnerList"), "/Partner/List"),
+                new PageTree(rm.GetString("PartnerDetail"), "/Partner/Partner_Detail?" + id)
             };
-                ViewBag.partnerArticle = partnerRePo.LoadEditPartner(id);
+                ViewBag.partnerArticle = partnerRePo.LoadEditPartnerGuest(id, LanguageResource.GetCurrentLanguageID());
                 ViewBag.specializations_selected = partnerRePo.GetPartnerDetailSpec(id);
                 ViewBag.pagesTree = pagesTree;
                 return View();
