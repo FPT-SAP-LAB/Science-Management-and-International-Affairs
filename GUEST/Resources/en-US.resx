@@ -204,6 +204,9 @@
   <data name="DelRow" xml:space="preserve">
     <value>Delete a row</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
@@ -318,6 +321,9 @@
   <data name="PaperType" xml:space="preserve">
     <value>Paper type</value>
   </data>
+  <data name="PartnerName" xml:space="preserve">
+    <value>Partner name</value>
+  </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Patent license date</value>
   </data>
@@ -392,6 +398,9 @@
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Specialized</value>
+  </data>
+  <data name="Specilazation" xml:space="preserve">
+    <value>Specilazation</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>

@@ -322,6 +322,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domestic.
         /// </summary>
         public static string Domestic {
@@ -664,6 +673,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Partner name.
+        /// </summary>
+        public static string PartnerName {
+            get {
+                return ResourceManager.GetString("PartnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Patent license date.
         /// </summary>
         public static string PatentDate {
@@ -885,6 +903,15 @@ namespace GUEST.Resources {
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specilazation.
+        /// </summary>
+        public static string Specilazation {
+            get {
+                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         
