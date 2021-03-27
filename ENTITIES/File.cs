@@ -24,6 +24,7 @@ namespace ENTITIES
             this.Profiles = new HashSet<Profile>();
             this.Profiles1 = new HashSet<Profile>();
             this.RequestConferencePolicies = new HashSet<RequestConferencePolicy>();
+            this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
         }
     
         public int file_id { get; set; }
@@ -45,5 +46,7 @@ namespace ENTITIES
         public virtual ICollection<Profile> Profiles1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestConferencePolicy> RequestConferencePolicies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
     }
 }
