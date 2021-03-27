@@ -464,7 +464,7 @@
           <Property Name="avatar" Type="nvarchar" MaxLength="150" />
           <Property Name="is_deleted" Type="bit" Nullable="false" />
           <Property Name="country_id" Type="int" Nullable="false" />
-          <Property Name="article_id" Type="int" />
+          <Property Name="article_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PartnerScope">
           <Key>
@@ -2696,7 +2696,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Partner__article__2EA5EC27">
-          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
           <End Role="Partner" Type="Self.Partner" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -5161,7 +5161,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="avatar" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="is_deleted" Type="Boolean" Nullable="false" />
           <Property Name="country_id" Type="Int32" Nullable="false" />
-          <Property Name="article_id" Type="Int32" />
+          <Property Name="article_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Partner__country__2F9A1060" FromRole="Partner" ToRole="Country" />
           <NavigationProperty Name="AcademicPrograms" Relationship="Self.FK__AcademicP__partn__119F9925" FromRole="Partner" ToRole="AcademicProgram" />
           <NavigationProperty Name="Article" Relationship="Self.FK__Partner__article__2EA5EC27" FromRole="Partner" ToRole="Article" />
@@ -6981,7 +6981,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Partner__article__2EA5EC27">
-          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
           <End Role="Partner" Type="Self.Partner" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
