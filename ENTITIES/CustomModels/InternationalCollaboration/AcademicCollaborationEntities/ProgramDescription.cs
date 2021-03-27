@@ -10,10 +10,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
     {
         public int type_id { get; set; }
         public String description { get; set; }
-        public ProgramDescription()
-        {
-
-        }
+        public ProgramDescription(){}
         public ProgramDescription(int type_id, String description)
         {
             this.type_id = type_id;
