@@ -124,7 +124,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Add(HttpPostedFileBase image, string content, int numberOfImage,
-            string partner_name, int country_id, string website, string address)
+            string partner_name, int country_id, string website, string address, int partner_language_type)
         {
             try
             {
@@ -134,7 +134,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                     partner_name = partner_name,
                     country_id = country_id,
                     website = website,
-                    address = address
+                    address = address,
+                    partner_language_type = partner_language_type
                 };
 
                 LoginRepo.User u = new LoginRepo.User();
@@ -164,7 +165,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 }
                 else
                 {
-                    AlertModal<string> json = partnerRePo.AddPartner(files_request, content,
+                    AlertModal<string> json = partnerRePo.AddPartner(files_request, image, content,
                         partner_article, numberOfImage, acc.account_id);
                     return Json(new { json.success, json.content });
                 }
@@ -224,6 +225,24 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         }
 
         [HttpPost]
+        public ActionResult LoadContentDetailLanguage(int partner_id, int partner_language_type)
+        {
+            try
+            {
+                string content = partnerRePo.GetContentLanguage(partner_id, partner_language_type);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+
+        [HttpPost]
         public ActionResult Detail_History(int id)
         {
             try
@@ -245,7 +264,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Save_Edit(HttpPostedFileBase image, string content, int numberOfImage, int partner_id,
-            string partner_name, int country_id, string website, string address)
+            string partner_name, int country_id, string website, string address, int partner_language_type)
         {
             try
             {
@@ -262,7 +281,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                     partner_name = partner_name,
                     country_id = country_id,
                     website = website,
-                    address = address
+                    address = address,
+                    partner_language_type = partner_language_type
                 };
 
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
@@ -284,7 +304,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 }
                 else
                 {
-                    AlertModal<string> json = partnerRePo.EditPartner(files_request, content,
+                    AlertModal<string> json = partnerRePo.EditPartner(files_request, image, content,
                             partner_article, numberOfImage, partner_id, acc.account_id);
                     return Json(new { json.success, json.content });
                 }
