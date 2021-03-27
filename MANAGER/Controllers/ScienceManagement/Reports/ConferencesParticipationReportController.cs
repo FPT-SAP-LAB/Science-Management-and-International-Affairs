@@ -9,7 +9,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
     public class ConferencesParticipationReportController : Controller
     {
         // GET: ConferencesParticipationReport
-        public ActionResult View()
+        public ActionResult Index()
         {
             return View();
         }
