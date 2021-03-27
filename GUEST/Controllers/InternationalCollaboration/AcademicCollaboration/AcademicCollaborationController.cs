@@ -41,11 +41,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             int language = Int32.Parse(Request.Cookies["language_id"].Value);
             List<ProgramInfo> data = guestRepo.listProgram(count, 2, language);
-            return Json(data);           
         }
-        [HttpPost]
-        public ActionResult Partner_Program()
-        {
             int language = Int32.Parse(Request.Cookies["language_id"].Value);
             List<ProgramInfo> data = guestRepo.listPartnerProgram(language);
             return Json(new { success = true, data = data }, JsonRequestBehavior.AllowGet);

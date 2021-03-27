@@ -36,18 +36,13 @@ namespace BLL.ScienceManagement.Comment
                 return new AlertModal<string>(false, "Đề nghị không tồn tại");
             if (request.finished_date != null)
                 return new AlertModal<string>(false, "Đề nghị đã kết thúc");
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            request.CommentBases.Add(new CommentBase()
             {
-                CommentBase Comment = new CommentBase()
-                {
-                    account_id = account_id,
-                    content = content.Trim(),
-                    date = DateTime.Now
-                };
-                request.CommentBases.Add(Comment);
-                db.SaveChanges();
-                transaction.Commit();
-            }
+                account_id = account_id,
+                content = content.Trim(),
+                date = DateTime.Now
+            });
+            db.SaveChanges();
             return new AlertModal<string>(true);
         }
     }

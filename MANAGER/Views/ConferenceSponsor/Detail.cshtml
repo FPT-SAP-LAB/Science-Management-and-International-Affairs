@@ -133,6 +133,13 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString("dd/MM/yyyy")</a>
                             </div>
+                            @if (ConferenceDetail.FinishedDate != null)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày kết thúc đề nghị:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
                             @if (ConferenceDetail.FormalityID == 2)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
@@ -357,7 +364,7 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <th scope="row">Hoàn ứng</th>
+                                <th class="align-middle" scope="row">Hoàn ứng</th>
                                 <td></td>
                                 <td></td>
                                 <td>

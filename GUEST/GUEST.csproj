@@ -570,6 +570,8 @@
     <Content Include="Content\assets\media\books\8.png" />
     <Content Include="Content\assets\media\books\9.png" />
     <Content Include="Content\assets\media\books\img-72.jpg" />
+    <Content Include="Content\assets\media\custom-image\icona-partnership.png" />
+    <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\demos\demo1.jpg" />
     <Content Include="Content\assets\media\demos\demo10.jpg" />
     <Content Include="Content\assets\media\demos\demo11.jpg" />
@@ -2407,7 +2409,7 @@
     <Content Include="Views\Citation\Edit.cshtml" />
     <Content Include="Views\PartialView\AddAuthor.cshtml" />
     <Content Include="Views\Partner\List.cshtml" />
-    <Content Include="Views\Partner\Partner_Detail.cshtml" />
+    <Content Include="Views\Partner\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
     <Content Include="Views\Policy\Index.cshtml" />
