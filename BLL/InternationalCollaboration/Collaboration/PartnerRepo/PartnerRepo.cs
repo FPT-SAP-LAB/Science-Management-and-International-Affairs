@@ -71,7 +71,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public AlertModal<string> AddPartner(List<HttpPostedFileBase> files_request, string content,
+        public AlertModal<string> AddPartner(List<HttpPostedFileBase> files_request, HttpPostedFileBase image, string content,
             PartnerArticle partner_article, int number_of_image, int account_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
@@ -118,7 +118,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                         publish_time = DateTime.Today,
                         version_title = partner_article.partner_name,
                         article_id = article.article_id,
-                        language_id = 1
+                        language_id = partner_article.partner_language_type
                     };
                     db.ArticleVersions.Add(articleVersion);
 
@@ -131,7 +131,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                         country_id = partner_article.country_id,
                         article_id = article.article_id
                     };
-                    if (files_upload.Count != 0)
+                    if (files_upload.Count != 0 && image != null)
                     {
                         partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
@@ -179,13 +179,15 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     country_id = partner.country_id,
                     address = partner.address,
                     website = partner.website,
-                    avatar = partner.avatar
+                    avatar = partner.avatar,
                 };
 
                 if (partner.article_id != null)
                 {
-                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).
+                        OrderBy(x => x.language_id).FirstOrDefault();
                     partnerArticle.partner_content = articleVersion.article_content;
+                    partnerArticle.partner_language_type = articleVersion.language_id;
                 }
                 return partnerArticle;
             }
@@ -195,7 +197,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public AlertModal<string> EditPartner(List<HttpPostedFileBase> files_request, string content,
+        public AlertModal<string> EditPartner(List<HttpPostedFileBase> files_request, HttpPostedFileBase image, string content,
             PartnerArticle partner_article, int number_of_image, int partner_id, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -234,17 +236,59 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     partner.website = partner_article.website;
                     partner.address = partner_article.address;
                     partner.country_id = partner_article.country_id;
-                    if (files_upload.Count != 0)
+                    if (files_upload.Count != 0 && image != null)
                     {
                         partner.avatar = "https://drive.google.com/uc?id=" + files_upload.LastOrDefault().Id;
                     }
+                    if(partner.article_id != null)
+                    {
+                        Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                        article.account_id = account_id;
 
-                    Article article = db.Articles.Where(x => x.article_id == partner.article_id).FirstOrDefault();
-                    article.account_id = account_id;
+                        ArticleVersion articleVersion = 
+                            db.ArticleVersions.Where(x => x.article_id == partner.article_id && 
+                            x.language_id == partner_article.partner_language_type).FirstOrDefault();
+                        if(articleVersion == null)
+                        {
+                            articleVersion = new ArticleVersion
+                            {
+                                article_id = article.article_id,
+                                article_content = content,
+                                language_id = partner_article.partner_language_type,
+                                publish_time = DateTime.Today,
+                                version_title = partner_article.partner_name,
+                            };
+                            db.ArticleVersions.Add(articleVersion);
+                        }else
+                        {
+                            articleVersion.article_content = content;
+                            articleVersion.language_id = partner_article.partner_language_type;
+                        }
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        Article article = new Article
+                        {
+                            need_approved = false,
+                            article_status_id = 2,
+                            account_id = account_id
+                        };
+                        db.Articles.Add(article);
+                        db.SaveChanges();
 
-                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
-                    articleVersion.article_content = content;
+                        partner.article_id = article.article_id;
 
+                        ArticleVersion articleVersion = new ArticleVersion
+                        {
+                            article_content = content,
+                            publish_time = DateTime.Today,
+                            version_title = partner_article.partner_name,
+                            article_id = article.article_id,
+                            language_id = partner_article.partner_language_type
+                        };
+                        db.ArticleVersions.Add(articleVersion);
+                    }
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true);
@@ -331,6 +375,21 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 return String.Join(", ", list.ToArray());
             }
             catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string GetContentLanguage(int partner_id, int partner_language_type)
+        {
+            try
+            {
+                Partner partner = db.Partners.Where(x => x.partner_id == partner_id).FirstOrDefault();
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x =>x.article_id == partner.article_id && x.language_id == partner_language_type).FirstOrDefault();
+                return articleVersion?.article_content;
+            }
+            catch(Exception e)
             {
                 throw e;
             }
