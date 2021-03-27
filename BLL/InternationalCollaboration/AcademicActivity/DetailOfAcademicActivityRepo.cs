@@ -376,7 +376,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             removeQues(quess_id);
         }
-        public void updateQuesOption(Ques q,baseForm data)
+        public void updateQuesOption(Ques q, baseForm data)
         {
             Question qt = db.Questions.Find(q.question_id);
             qt.title = q.title == null ? String.Empty : q.title;
@@ -416,7 +416,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void addQuesOption(Ques q,baseForm data,Form f)
+        public void addQuesOption(Ques q, baseForm data, Form f)
         {
             Question qn = db.Questions.Add(new Question
             {
