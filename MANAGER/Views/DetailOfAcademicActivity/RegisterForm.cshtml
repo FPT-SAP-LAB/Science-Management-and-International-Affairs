@@ -4,86 +4,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-        #main-control input, textarea {
-            border: 0px !important;
-            border-radius: 0px !important;
-            font-size: 15px !important;
-            margin: 3px 0px 3px 0px !important;
-            white-space: pre-wrap;
-        }
+    #main-control input, textarea {
+        border: 0px !important;
+        border-radius: 0px !important;
+        font-size: 15px !important;
+        margin: 3px 0px 3px 0px !important;
+        white-space: pre-wrap;
+    }
 
-            #main-control input:focus {
-                border-bottom: 2px solid #0094ff !important;
-            }
-
-        #main-control textarea:focus {
+        #main-control input:focus {
             border-bottom: 2px solid #0094ff !important;
         }
 
-        .card-title {
-            border-top: 8px solid #0725d0 !important;
-        }
+    #main-control textarea:focus {
+        border-bottom: 2px solid #0094ff !important;
+    }
 
-        .custom-card {
-            border-left: 6px solid #0094ff !important;
-        }
+    .card-title {
+        border-top: 8px solid #0725d0 !important;
+    }
 
-        #main-control .input-title {
-            min-height: 20px !important;
-            font-size: 23px !important;
-            overflow: hidden !important;
-        }
+    .custom-card {
+        border-left: 6px solid #0094ff !important;
+    }
 
-        .row {
-            padding: 8px 10px !important;
-        }
+    #main-control .input-title {
+        min-height: 20px !important;
+        font-size: 23px !important;
+        overflow: hidden !important;
+    }
 
-        .card-after {
-            margin-top: 30px !important;
-        }
+    .row {
+        padding: 8px 10px !important;
+    }
 
-        .card-bottom {
-            border: 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
+    .card-after {
+        margin-top: 30px !important;
+    }
 
-        .custom-card-after {
-            margin-bottom: 2rem !important;
-        }
+    .card-bottom {
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
-        .card-bottom .row {
-            padding: unset !important;
-        }
+    .custom-card-after {
+        margin-bottom: 2rem !important;
+    }
 
-        #main-control textarea {
-            overflow: hidden !important;
-            min-height: 65px !important;
-        }
+    .card-bottom .row {
+        padding: unset !important;
+    }
 
-        #main-control .checkbox-inline {
-            height: 47px !important;
-        }
+    #main-control textarea {
+        overflow: hidden !important;
+        min-height: 65px !important;
+    }
 
-        #main-control .radio-inline {
-            height: 47px !important;
-        }
+    #main-control .checkbox-inline {
+        height: 47px !important;
+    }
 
-        #main-control .custom-checkbox {
-            border: 1px solid #ded6d6 !important;
-        }
+    #main-control .radio-inline {
+        height: 47px !important;
+    }
 
-        #main-control .custom-rv-checkbox {
-            font-size: 20px !important;
-        }
+    #main-control .custom-checkbox {
+        border: 1px solid #ded6d6 !important;
+    }
 
-        #main-control .custom-row {
-            padding-top: unset !important;
-            padding-bottom: unset !important;
-        }
+    #main-control .custom-rv-checkbox {
+        font-size: 20px !important;
+    }
 
-        #main-control .custom-font-choice {
-            font-size: 14px !important;
-        }
+    #main-control .custom-row {
+        padding-top: unset !important;
+        padding-bottom: unset !important;
+    }
+
+    #main-control .custom-font-choice {
+        font-size: 14px !important;
+    }
 </style>
 <div id="main-control">
     <div id="control-title">
@@ -577,24 +577,22 @@
                             is_compulsory: is_compulsory
                         }
                         arrQues.push(object);
+                        let quesOp_title = '';
                         if (answer_type == 3) {
-                            let quesOp_title = '';
                             arrM_content[arrDivControl[i]].forEach(function (x) {
-                                quesOp_title += x+"$^";
+                                if(x != '')
+                                    quesOp_title += x+"$^";
                             });
                             quesOp_title = quesOp_title.substring(0, quesOp_title.length - 2);
-                            var object = {
-                                question_id: ques_id,
-                                option_title: quesOp_title
-                            }
-                            arrQuesOp.push(object);
                         }
                         if (answer_type == 5) {
-                            let quesOp_title = '';
                             arrC_content[arrDivControl[i]].forEach(function (x) {
-                                quesOp_title += x + "$^";
+                                if(x != '')
+                                    quesOp_title += x + "$^";
                             });
                             quesOp_title = quesOp_title.substring(0, quesOp_title.length - 2);
+                        }
+                        if (quesOp_title != '') {
                             var object = {
                                 question_id: ques_id,
                                 option_title: quesOp_title
@@ -606,7 +604,7 @@
                         form_id: form_id,
                         phase_id: $('#phase_id').val(),
                         title: $('#form_title').val(),
-                        title_description : $('#form_title_description').val()
+                        title_description: $('#form_title_description').val()
                     };
                     console.log(arrQues);
                     console.log(arrQuesOp);
@@ -624,6 +622,9 @@
                         success: function (data) {
                             if (data != '') {
                                 toastr.success(data);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                             }
@@ -631,9 +632,6 @@
                         error: function (data) {
                         }
                     });
-                    //setTimeout(function () {
-                    //    window.close();
-                    //}, 2000);
                 }
             });
         });

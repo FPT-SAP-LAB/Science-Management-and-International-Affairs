@@ -10,6 +10,12 @@
         height: 100%;
         border: 1px solid black;
     }
+    .select2-container  {
+        float: right;
+    }
+    .note-editor {
+        margin-top: 1.25rem;
+    }
 </style>
 
 <div class="row justify-content-center" id="card-container">
@@ -76,9 +82,14 @@
                             <div class="row justify-content-center mb-5">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Mô tả</label>
+                                    <select id="partner_language_type" class="form-control form-control-lg" 
+                                            required style="width: 20% !important; float: right!important">
+                                        <option value="1">Tiếng Việt</option>
+                                        <option value="2">English</option>
+                                    </select>
                                     <label style="font-style: italic;">
                                     </label>
-                                    <div class="summernote"></div>
+                                    <div class="summernote mt-4"></div>
                                 </div>
                             </div>
                             <div class="row float-right mb-5">
@@ -100,6 +111,9 @@
         $('#partner_nation').select2({
             placeholder: 'Quốc gia',
             allowClear: true,
+        })
+        $('#partner_language_type').select2({
+            placeholder: 'Ngôn ngữ',
         })
 
 
@@ -167,6 +181,7 @@
             var form_data = new FormData();
 
             var partner_name = $('#partner_name').val()
+            var partner_language_type = $('#partner_language_type').val()
             var country_id = $('#partner_nation').val()
 
             var website = $('#partner_website').val()
@@ -204,6 +219,7 @@
             console.log(content)
 
             form_data.append('partner_name', partner_name)
+            form_data.append('partner_language_type', partner_language_type)
             form_data.append('country_id', country_id)
             form_data.append('website', website)
             form_data.append('address', address)

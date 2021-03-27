@@ -12,6 +12,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
     public class DetailOfAcademicActivityController : Controller
     {
         DetailOfAcademicActivityRepo repo;
+        FormRepo formRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
@@ -211,25 +212,23 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         public ActionResult RegisterForm(int id, int lid)
         {
-            repo = new DetailOfAcademicActivityRepo();
             ViewBag.phaseID = id;
             ViewBag.language_id = lid;
-
             ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
             return View();
         }
         [HttpPost]
         public JsonResult getFormbyPhase(int phase_id)
         {
-            repo = new DetailOfAcademicActivityRepo();
-            DetailOfAcademicActivityRepo.baseForm data = repo.getFormbyPhase(phase_id);
+            formRepo = new FormRepo();
+            DetailOfAcademicActivityRepo.baseForm data = formRepo.getFormbyPhase(phase_id);
             return Json(data);
         }
         [HttpPost]
         public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data)
         {
-            repo = new DetailOfAcademicActivityRepo();
-            bool res = repo.updateForm(data);
+            formRepo = new FormRepo();
+            bool res = formRepo.updateForm(data);
             if (res)
             {
                 return Json("Lưu mẫu đăng ký thành công");
