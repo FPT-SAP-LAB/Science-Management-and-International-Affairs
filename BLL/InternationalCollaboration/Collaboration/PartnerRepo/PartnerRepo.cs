@@ -182,11 +182,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     avatar = partner.avatar
                 };
 
-                if (partner.article_id != null)
-                {
-                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
-                    partnerArticle.partner_content = articleVersion.article_content;
-                }
+                //if (partner.article_id != null)
+                //{
+                ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id).FirstOrDefault();
+                partnerArticle.partner_content = articleVersion.article_content;
+                //}
                 return partnerArticle;
             }
             catch (Exception e)
