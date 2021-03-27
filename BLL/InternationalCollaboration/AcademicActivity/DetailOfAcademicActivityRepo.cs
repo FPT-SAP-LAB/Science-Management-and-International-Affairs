@@ -366,72 +366,84 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 if (quess_id.Contains(q.question_id))
                 {
-                    Question qt = db.Questions.Find(q.question_id);
-                    qt.title = q.title == null ? String.Empty : q.title;
-                    qt.answer_type_id = q.answer_type_id;
-                    qt.is_compulsory = q.is_compulsory == 1 ? true : false;
-                    db.Entry(qt).State = EntityState.Modified;
-                    if (q.answer_type_id == 3 || q.answer_type_id == 5)
-                    {
-                        QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
-                        if (data.quesOption != null)
-                        {
-                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
-                            if (qo != null)
-                            {
-                                if (qon != null)
-                                {
-                                    qo.option_title = qon.option_title == null ? String.Empty : qon.option_title;
-                                    db.Entry(qo).State = EntityState.Modified;
-                                }
-                                else
-                                {
-                                    db.QuestionOptions.Remove(qo);
-                                }
-                            }
-                            else
-                            {
-                                if (qon != null)
-                                {
-                                    db.QuestionOptions.Add(new QuestionOption
-                                    {
-                                        question_id = q.question_id,
-                                        option_title = qon.option_title
-                                    });
-                                }
-                            }
-                            db.SaveChanges();
-                        }
-                    }
+                    updateQuesOption(q, data);
                 }
                 else
                 {
-                    Question qn = db.Questions.Add(new Question
-                    {
-                        form_id = f.form_id,
-                        answer_type_id = q.answer_type_id,
-                        title = q.title == null ? String.Empty : q.title,
-                        is_compulsory = q.is_compulsory == 1 ? true : false
-                    });
-                    db.SaveChanges();
-                    if (q.answer_type_id == 3 || q.answer_type_id == 5)
-                    {
-                        if (data.quesOption != null)
-                        {
-                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
-                            if (qon != null)
-                            {
-                                db.QuestionOptions.Add(new QuestionOption
-                                {
-                                    question_id = qn.question_id,
-                                    option_title = qon.option_title
-                                });
-                            }
-                        }
-                    }
+                    addQuesOption(q, data, f);
                 }
                 quess_id.Remove(q.question_id);
             }
+            removeQues(quess_id);
+        }
+        public void updateQuesOption(Ques q,baseForm data)
+        {
+            Question qt = db.Questions.Find(q.question_id);
+            qt.title = q.title == null ? String.Empty : q.title;
+            qt.answer_type_id = q.answer_type_id;
+            qt.is_compulsory = q.is_compulsory == 1 ? true : false;
+            db.Entry(qt).State = EntityState.Modified;
+            if (q.answer_type_id == 3 || q.answer_type_id == 5)
+            {
+                QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
+                if (data.quesOption != null)
+                {
+                    QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
+                    if (qo != null)
+                    {
+                        if (qon != null)
+                        {
+                            qo.option_title = qon.option_title == null ? String.Empty : qon.option_title;
+                            db.Entry(qo).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.QuestionOptions.Remove(qo);
+                        }
+                    }
+                    else
+                    {
+                        if (qon != null)
+                        {
+                            db.QuestionOptions.Add(new QuestionOption
+                            {
+                                question_id = q.question_id,
+                                option_title = qon.option_title
+                            });
+                        }
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
+        public void addQuesOption(Ques q,baseForm data,Form f)
+        {
+            Question qn = db.Questions.Add(new Question
+            {
+                form_id = f.form_id,
+                answer_type_id = q.answer_type_id,
+                title = q.title == null ? String.Empty : q.title,
+                is_compulsory = q.is_compulsory == 1 ? true : false
+            });
+            db.SaveChanges();
+            if (q.answer_type_id == 3 || q.answer_type_id == 5)
+            {
+                if (data.quesOption != null)
+                {
+                    QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
+                    if (qon != null)
+                    {
+                        db.QuestionOptions.Add(new QuestionOption
+                        {
+                            question_id = qn.question_id,
+                            option_title = qon.option_title
+                        });
+                    }
+                }
+            }
+        }
+        public void removeQues(List<int> quess_id)
+        {
             foreach (int i in quess_id)
             {
                 Question q = db.Questions.Find(i);
