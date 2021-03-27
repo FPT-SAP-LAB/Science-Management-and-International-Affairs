@@ -469,5 +469,20 @@ namespace BLL.ScienceManagement.Paper
             List<Paper_Appendix_1> list = db.Database.SqlQuery<Paper_Appendix_1>(sql, new SqlParameter("type", type)).ToList();
             return list;
         }
+
+        public List<Paper_Apendix_3> getListAppendix3_4(string type)
+        {
+            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, sum(ap.money_reward) as 'sum_money'
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [General].People po on ap.people_id = po.people_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+                            where rp.status_id = 4 and rp.type = @type
+                            group by po.name, pro.mssv_msnv, o.office_abbreviation
+                            order by po.name";
+            List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type)).ToList();
+            return list;
+        }
     }
 }

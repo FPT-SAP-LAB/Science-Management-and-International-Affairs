@@ -20,7 +20,7 @@ namespace ENTITIES.CustomModels
         //SupportsAllDrives: hỗ trợ thêm trên cả drive của người dùng, shared drive
         //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
 
-        public static UserCredential credential;
+        public static GoogleCredential credential;
         public static string SMDrive;
         public static string IADrive;
         public static DriveService driveService;
@@ -31,11 +31,8 @@ namespace ENTITIES.CustomModels
                 new FileStream(filePath + "/credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string[] Scopes = { DriveService.Scope.Drive };
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "application",
-                    CancellationToken.None).Result;
+                credential = GoogleCredential.FromStream(stream)
+                                     .CreateScoped(Scopes);
                 driveService = new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
@@ -61,7 +58,7 @@ namespace ENTITIES.CustomModels
         {
             if (driveService == null)
                 return;
-            _ = credential.RevokeTokenAsync(CancellationToken.None).Result;
+            //_ = credential.RevokeTokenAsync(CancellationToken.None).Result;
             credential = null;
             driveService = null;
         }
