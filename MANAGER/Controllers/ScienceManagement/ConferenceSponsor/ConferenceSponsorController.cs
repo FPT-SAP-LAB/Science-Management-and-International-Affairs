@@ -69,7 +69,7 @@ namespace MANAGER.Controllers
             return Json(result);
         }
         [HttpPost]
-        public ActionResult UpdateReimbursement(int data, int request_id)
+        public ActionResult UpdateReimbursement(string data, int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
             DetailRepos.SubmitReimbursement(data, request_id);

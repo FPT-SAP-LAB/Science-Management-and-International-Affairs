@@ -274,8 +274,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return new AlertModal<string>(true);
         }
-        public AlertModal<string> SubmitReimbursement(int reimbursement, int request_id)
+        public AlertModal<string> SubmitReimbursement(string reimbursement_string, int request_id)
         {
+            reimbursement_string = reimbursement_string.Replace(",", "");
+            if (!int.TryParse(reimbursement_string, out int reimbursement))
+                return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
             RequestConference request = db.RequestConferences.Find(request_id);
             if (request.status_id != 4)
                 return new AlertModal<string>(false, "Đề nghị không được nhập hoàn ứng");

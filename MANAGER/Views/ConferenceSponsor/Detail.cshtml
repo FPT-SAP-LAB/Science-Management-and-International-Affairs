@@ -361,13 +361,13 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    @if (ConferenceDetail.StatusID != 4)
+                                    @if (ConferenceDetail.StatusID == 4)
                                     {
-                                        <span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span>
+                                        <input oninput="numberWithCommas(this)" type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="0">
                                     }
                                     else
                                     {
-                                        <input type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="0">
+                                        <span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span>
                                     }
                                 </td>
                                 <td></td>
@@ -389,6 +389,12 @@
                                 <button class="btn btn-success" onclick="SubmitReimbursement()">Lưu và kết thúc</button>
                             </div>
                         </div>
+                        <script>
+                            function numberWithCommas(ele) {
+                                var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                $(ele).val(x);
+                            }
+                        </script>
                     }
                 </div>
             </div>
