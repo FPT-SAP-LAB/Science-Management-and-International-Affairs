@@ -25,7 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC";
             ViewBag.countries = countryRepo.GetCountries();
-            ViewBag.specializations = specializationRepo.GetSpecializations();
+            ViewBag.specializations = specializationRepo.GetSpecializations(1);
             return View();
         }
 
@@ -55,7 +55,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             ViewBag.title = "DANH SÁCH ĐỐI TÁC ĐÃ XÓA";
             ViewBag.countries = countryRepo.GetCountries();
-            ViewBag.specializations = specializationRepo.GetSpecializations();
+            ViewBag.specializations = specializationRepo.GetSpecializations(1);
             return View();
         }
 
@@ -213,7 +213,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 ViewBag.title = "CHI TIẾT ĐỐI TÁC";
                 ViewBag.partnerArticle = partnerRePo.LoadEditPartner(id);
                 ViewBag.countries = countryRepo.GetCountries();
-                ViewBag.specializations = specializationRepo.GetSpecializations();
+                ViewBag.specializations = specializationRepo.GetSpecializations(1);
                 ViewBag.specializations_selected = partnerRePo.GetPartnerDetailSpec(id);
                 return View();
             }
