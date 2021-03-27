@@ -14,7 +14,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<ProgramInfo> listProgram(int count, int type, int language)
         {
-            try {
+            try
+            {
                 string sql = @"SELECT ap.program_id,pa.avatar, av.version_title as 'program_name'
                         FROM IA_AcademicCollaboration.AcademicProgram ap
                         JOIN IA_Article.Article ar ON ap.article_id = ar.article_id
@@ -28,12 +29,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
                     new SqlParameter("type", type), new SqlParameter("count", count)).ToList();
                 return obj;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<ProgramInfo>();
-            }                      
+            }
         }
-        
+
         public List<ProgramDescription> getTypeDescription(int type, int language)
         {
             try
@@ -72,7 +74,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 WHERE ap.direction_id = 1 AND av.language_id = @language AND ap.collab_type_id = 2";
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language)).ToList();
                 return obj;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<ProgramInfo>();
             }

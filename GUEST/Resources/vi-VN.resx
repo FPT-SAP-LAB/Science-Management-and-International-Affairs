@@ -204,6 +204,9 @@
   <data name="DelRow" xml:space="preserve">
     <value>Xóa dòng</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
   </data>
@@ -425,6 +428,9 @@
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Chuyên ngành</value>
+  </data>
+  <data name="Specilazation" xml:space="preserve">
+    <value>Lĩnh vực</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>

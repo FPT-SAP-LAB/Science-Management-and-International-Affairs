@@ -204,6 +204,9 @@
   <data name="DelRow" xml:space="preserve">
     <value>Delete a row</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
@@ -425,6 +428,9 @@
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Specialized</value>
+  </data>
+  <data name="Specilazation" xml:space="preserve">
+    <value>Specilazation</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
