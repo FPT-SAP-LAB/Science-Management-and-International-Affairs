@@ -289,7 +289,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
                     return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
