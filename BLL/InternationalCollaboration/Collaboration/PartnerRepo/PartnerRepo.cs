@@ -212,9 +212,9 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     avatar = partner.avatar,
                 };
 
-                ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id && 
+                ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
                  x.language_id == language_id).FirstOrDefault();
-                if(articleVersion != null)
+                if (articleVersion != null)
                 {
                     partnerArticle.partner_content = articleVersion.article_content;
                 }
