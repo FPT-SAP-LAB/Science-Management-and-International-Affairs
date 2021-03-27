@@ -91,6 +91,15 @@ var collab_going_table = $('#collab_going_table').DataTable({
         {
             data: 'note',
             name: 'note'
+        },
+        {
+            data: 'collab_id',
+            className: 'text-nowrap',
+            render: function (data, ) {
+                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=`+data+` data-toggle="modal" href="#edit_officer">Sửa</a>
+                        <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>`
+            },
+            orderable: false
         }
     ],
     columnDefs: [
@@ -143,15 +152,6 @@ var collab_going_table = $('#collab_going_table').DataTable({
                     + ' </g> '
                     + '</svg><!--end::Svg Icon--></span></a> '
                     ;
-            },
-        },
-        {
-            targets: -1,
-            title: 'Hành động',
-            orderable: false,
-            render: function () {
-                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" href="#edit_officer">Sửa</a>
-                        <a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>`
             }
         }
     ],

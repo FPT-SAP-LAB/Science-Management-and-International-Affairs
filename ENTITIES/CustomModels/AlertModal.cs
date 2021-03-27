@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ENTITIES.CustomModels
+﻿namespace ENTITIES.CustomModels
 {
     public class AlertModal<T>
     {
@@ -20,6 +14,7 @@ namespace ENTITIES.CustomModels
             this.title = title;
             this.content = content;
         }
+
         public AlertModal(T obj, bool success, string content)
         {
             this.obj = obj;
@@ -27,22 +22,26 @@ namespace ENTITIES.CustomModels
             title = success ? "Thành công" : "Lỗi";
             this.content = content;
         }
+
         public AlertModal(T obj, bool success)
         {
             this.obj = obj;
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
         }
+
         public AlertModal(bool success, string content)
         {
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
             this.content = content;
         }
+
         public AlertModal(bool success)
         {
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
+            content = "Có lỗi xảy ra";
         }
     }
 }

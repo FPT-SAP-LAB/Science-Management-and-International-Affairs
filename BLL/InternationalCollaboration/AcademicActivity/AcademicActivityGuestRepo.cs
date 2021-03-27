@@ -11,7 +11,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     public class AcademicActivityGuestRepo
     { 
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        
         public List<baseAA> getBaseAA(int count, List<int> type, int language, string search)
         {
             try
@@ -49,7 +48,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                            ORDER BY [from] DESC
                            OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
-                    new SqlParameter("language", language), new SqlParameter("search", "%"+ search + "%")).ToList();
+                    new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%")).ToList();
                 }
                 foreach (baseAA a in obj)
                 {
@@ -60,6 +59,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<baseAA>();
             }
         }
@@ -104,6 +104,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch(Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new baseAA();
             }
         }

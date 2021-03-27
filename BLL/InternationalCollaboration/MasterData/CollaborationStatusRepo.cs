@@ -26,6 +26,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 throw e;
             }
         }
@@ -159,6 +160,7 @@ namespace BLL.InternationalCollaboration.MasterData
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         return new AlertModal<CollaborationStatu>(null, false, "Lỗi", "Loại kinh phí đang có dữ liệu tại các màn hình khác.");
                     }
                 }

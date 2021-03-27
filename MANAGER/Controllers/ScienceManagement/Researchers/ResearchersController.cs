@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Authen;
 using BLL.ScienceManagement.ResearcherListRepo;
+using BLL.ScienceManagement.Researcher;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 namespace MANAGER.Controllers.ScienceManagement.Researchers
@@ -12,6 +13,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
     public class ResearchersController : Controller
     {
         ResearchersListRepo researcherListRepo;
+        ResearchersDetailRepo researcherDetailRepo;
         // GET: Researchers
 
         public ActionResult List()
@@ -31,8 +33,13 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public ActionResult ViewInfo()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
             return View();
         }
+
         public ActionResult Biography()
         {
             return View();

@@ -26,7 +26,6 @@ namespace ENTITIES
         }
     
         public virtual DbSet<CommentBase> CommentBases { get; set; }
-        public virtual DbSet<QuestionOption> QuestionOptions { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AccountRight> AccountRights { get; set; }
@@ -132,6 +131,7 @@ namespace ENTITIES
         public virtual DbSet<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         public virtual DbSet<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
         public virtual DbSet<AcademicActivityType> AcademicActivityTypes { get; set; }
+        public virtual DbSet<AcademicActivityTypeLanguage> AcademicActivityTypeLanguages { get; set; }
         public virtual DbSet<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
         public virtual DbSet<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
         public virtual DbSet<ActivityExpenseType> ActivityExpenseTypes { get; set; }
@@ -143,6 +143,7 @@ namespace ENTITIES
         public virtual DbSet<ParticipantRole> ParticipantRoles { get; set; }
         public virtual DbSet<PlanParticipant> PlanParticipants { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<QuestionOption> QuestionOptions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         public virtual DbSet<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }

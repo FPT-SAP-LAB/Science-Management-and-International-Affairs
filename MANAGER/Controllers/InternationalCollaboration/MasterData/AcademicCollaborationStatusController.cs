@@ -45,6 +45,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false });
             }
         }
@@ -59,7 +60,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return Json(new AlertModal<string>(false));
             }
         }
 
@@ -73,7 +75,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return Json(new AlertModal<string>(false));
             }
         }
 
@@ -87,7 +90,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return Json(new AlertModal<string>(false));
             }
         }
 
@@ -101,7 +105,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return Json(new AlertModal<string>(false));
             }
         }
     }
