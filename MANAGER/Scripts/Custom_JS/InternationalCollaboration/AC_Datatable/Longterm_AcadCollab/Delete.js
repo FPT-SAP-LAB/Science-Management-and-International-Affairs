@@ -23,7 +23,7 @@
                         Swal.fire(data.title, data.content, "error");
                     }
                 },
-                error: function (data) {
+                error: function () {
                     Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
                 },
             })
