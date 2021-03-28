@@ -106,5 +106,21 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<ResearcherPublications>();
             return data;
         }
+        public List<BaseRecord<Award>> GetAwards(int id)
+        {
+            var list = (from a in db.Awards
+                        where a.people_id == id
+                        select new BaseRecord<Award>
+                        {
+                           records = a
+                        }).OrderByDescending(x=>x.records.award_time).AsEnumerable<BaseRecord<Award>>()
+                        .Select((x, index) => new BaseRecord<Award>
+                        {
+                            index = index + 1,
+                            records = x.records
+                        }).ToList<BaseRecord<Award>>();
+            return list;
+
+        }
     }
 }

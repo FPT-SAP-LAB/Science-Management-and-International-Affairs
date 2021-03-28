@@ -83,6 +83,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
             ViewBag.profile = profile;
+            ///////////////////////////////////////////////////////////////
+            List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
+            ViewBag.awards = awards;
             return View();
         }
         public ActionResult AddResearcher()
