@@ -109,6 +109,8 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\FormRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationGuestRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProgramRepo.cs" />
@@ -128,7 +130,9 @@
     <Compile Include="InternationalCollaboration\MasterData\DirectionRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\InternalUnitRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
+    <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
+    <Compile Include="ModelDAL\PositionRepo.cs" />
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
@@ -140,6 +144,7 @@
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Researcher\ResearchersDetailRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />

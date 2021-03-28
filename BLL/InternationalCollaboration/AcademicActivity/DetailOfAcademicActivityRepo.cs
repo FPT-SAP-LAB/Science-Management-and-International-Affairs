@@ -57,6 +57,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine(e.ToString());
                             transaction.Rollback();
                         }
                     }
@@ -123,8 +124,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<AcademicActivityType>();
             }
         }
@@ -149,6 +151,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -276,103 +279,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 Console.WriteLine(e.ToString());
                 return new ContactInfo();
-            }
-        }
-        public baseForm getFormbyPhase(int phase_id)
-        {
-            try
-            {
-                db.Configuration.ProxyCreationEnabled = false;
-                Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
-                string sql = @"SELECT q.question_id, q.title, at.answer_type_id,cast(q.is_compulsory as int) as is_compulsory
-                                    FROM SMIA_AcademicActivity.Form f
-                                    INNER JOIN SMIA_AcademicActivity.Question q ON q.form_id = f.form_id
-                                    INNER JOIN SMIA_AcademicActivity.AnswerType at ON at.answer_type_id = q.answer_type_id
-                                    where f.phase_id = @phase_id";
-                List<Ques> ques = db.Database.SqlQuery<Ques>(sql, new SqlParameter("phase_id", phase_id)).ToList();
-                string ques_id = "";
-                List<int> type = new List<int> { 3, 5 };
-                foreach (Ques q in ques)
-                {
-                    if (type.Contains(q.answer_type_id))
-                    {
-                        ques_id += q.question_id + ",";
-                    }
-                }
-                ques_id = ques_id.Remove(ques_id.Length - 1);
-                sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in (" + ques_id + ")";
-                List<QuesOption> quesOption = db.Database.SqlQuery<QuesOption>(sql).ToList();
-                baseForm data = new baseForm
-                {
-                    form = f,
-                    ques = ques,
-                    quesOption = quesOption
-                };
-                return data;
-            }
-            catch (Exception e)
-            {
-                return new baseForm();
-            }
-        }
-        public bool updateForm(baseForm data)
-        {
-            using (DbContextTransaction transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    List<Question> questions = db.Questions.Where(x => x.form_id == data.form.form_id).ToList();
-                    List<int> quess_id = questions.Select(x => x.question_id).ToList();
-                    Form f = db.Forms.Find(data.form.form_id);
-                    f.title = data.form.title;
-                    f.title_description = data.form.title_description;
-                    db.Entry(f).State = EntityState.Modified;
-                    foreach (Ques q in data.ques)
-                    {
-                        if (quess_id.Contains(q.question_id))
-                        {
-                            Question qt = db.Questions.Find(q.question_id);
-                            qt.title = q.title;
-                            qt.answer_type_id = q.answer_type_id;
-                            qt.is_compulsory = q.is_compulsory == 1 ? true : false;
-                            db.Entry(qt).State = EntityState.Modified;
-                            QuestionOption rv = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
-                            db.QuestionOptions.Remove(rv);
-                            db.SaveChanges();
-                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
-                            db.QuestionOptions.Add(new QuestionOption
-                            {
-                                question_id = q.question_id,
-                                option_title = qon.option_title
-                            });
-                        }
-                        else
-                        {
-                            Question qn = db.Questions.Add(new Question
-                            {
-                                form_id = data.form.form_id,
-                                answer_type_id = q.answer_type_id,
-                                title = q.title,
-                                is_compulsory = q.is_compulsory == 1 ? true : false
-                            });
-                            db.SaveChanges();
-                            QuesOption qon = data.quesOption.Find(x => x.question_id == q.question_id);
-                            db.QuestionOptions.Add(new QuestionOption
-                            {
-                                question_id = qn.question_id,
-                                option_title = qon.option_title
-                            });
-                        }
-                    }
-                    db.SaveChanges();
-                    transaction.Commit();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    transaction.Rollback();
-                    return false;
-                }
             }
         }
         public class baseDetail

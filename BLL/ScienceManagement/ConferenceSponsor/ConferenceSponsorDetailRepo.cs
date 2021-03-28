@@ -1,4 +1,5 @@
-﻿using ENTITIES;
+﻿using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using Newtonsoft.Json;
@@ -40,6 +41,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                QsUniversity = b.qs_university,
                                                Co_organizedUnit = b.co_organized_unit,
                                                CreatedDate = r.created_date.Value,
+                                               FinishedDate = r.finished_date,
                                                TimeEnd = b.time_end,
                                                TimeStart = b.time_start,
                                                AttendanceEnd = a.attendance_end,
@@ -53,12 +55,27 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                CountryName = c.country_name,
                                                StatusName = h.name,
                                                StatusID = h.status_id,
+                                               FormalityID = j.formality_id,
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
                                                SpecializationName = k.name
                                            }).FirstOrDefault();
             if (Conference == null)
                 return null;
+            DecisionDetail DecisionDetail = null;
+            if (Conference.StatusID >= 3 && Conference.FormalityID == 2)
+            {
+                DecisionDetail = (from a in db.RequestDecisions
+                                  join b in db.Decisions on a.decision_id equals b.decision_id
+                                  join c in db.Files on b.file_id equals c.file_id
+                                  where a.request_id == request_id
+                                  select new DecisionDetail
+                                  {
+                                      DecisionNumber = b.decision_number,
+                                      Link = c.link,
+                                      ValidDate = b.valid_date
+                                  }).FirstOrDefault();
+            }
             string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
             List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
                                                   join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
@@ -98,15 +115,18 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          FullName = b.full_name,
                                          Comment = a.comment
                                      }).ToList();
-            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias });
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail });
         }
-        public AlertModal<string> UpdateCriterias(string criterias, int request_id)
+        public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
                     var CriteriaIDs = JsonConvert.DeserializeObject<List<int>>(criterias);
+                    if (CriteriaIDs.Count == 0)
+                        return new AlertModal<string>(true);
+
                     var Request = db.RequestConferences.Find(request_id);
                     if (Request == null)
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
@@ -118,9 +138,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     db.SaveChanges();
                     if (ListCri.All(x => x.is_accepted))
                         Request.status_id = 2;
+
+                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+
                     db.SaveChanges();
                     trans.Commit();
-                    return new AlertModal<string>(true, "Cập nhật thành công");
+                    return new AlertModal<string>(true);
                 }
                 catch (Exception)
                 {
@@ -129,13 +153,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
             }
         }
-        public AlertModal<string> UpdateCosts(string costs, int request_id)
+        public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
                     var CostIDs = JsonConvert.DeserializeObject<List<int>>(costs);
+                    if (CostIDs.Count == 0)
+                        return new AlertModal<string>(true);
+
                     var Request = db.RequestConferences.Find(request_id);
                     if (Request == null)
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
@@ -153,13 +180,23 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     db.SaveChanges();
                     if (ListCosts.All(x => x.is_accepted))
-                        Request.status_id = 3;
+                    {
+                        if (Request.Conference.formality_id == 2)
+                            Request.status_id = 3;
+                        else
+                            Request.status_id = 4;
+                    }
+
+                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true, "Cập nhật thành công");
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
                     throw;
                 }
@@ -176,9 +213,95 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             db.SaveChanges();
             return new AlertModal<string>(true, "Cập nhật thành công");
         }
-        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number)
+        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id, int account_id)
         {
+            string DriveId = null;
+            var temp = (from a in db.BaseRequests
+                        join b in db.RequestConferences on a.request_id equals b.request_id
+                        join c in db.Accounts on a.account_id equals c.account_id
+                        join d in db.Conferences on b.conference_id equals d.conference_id
+                        where c.account_id == account_id && a.request_id == request_id
+                        select new
+                        {
+                            d.conference_name,
+                            c.email,
+                            b.status_id,
+                            d.formality_id
+                        }).FirstOrDefault();
+            if (temp == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (temp.status_id != 3)
+                return new AlertModal<string>(false, "Trạng thái của quyết định không được phép đăng quyết định");
+            if (temp.formality_id != 2)
+                return new AlertModal<string>(false, "Loại quyết định không được phép đăng quyết định");
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Google.Apis.Drive.v3.Data.File drive = GlobalUploadDrive.UploadResearcherFile(decision_file, temp.conference_name, 1, temp.email);
+                    DriveId = drive.DriveId;
+                    File file = new File
+                    {
+                        file_drive_id = drive.Id,
+                        link = drive.WebViewLink,
+                        name = decision_file.FileName
+                    };
+                    db.Files.Add(file);
+                    db.SaveChanges();
+                    Decision decision = new Decision
+                    {
+                        decision_number = decision_number,
+                        valid_date = DateTime.ParseExact(valid_date, "dd/MM/yyyy", null),
+                        file_id = file.file_id
+                    };
+                    db.Decisions.Add(decision);
+                    db.SaveChanges();
+                    db.RequestDecisions.Add(new RequestDecision
+                    {
+                        decision_id = decision.decision_id,
+                        request_id = request_id
+                    });
+                    db.RequestConferences.Find(request_id).status_id = 4;
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    GlobalUploadDrive.DeleteFile(DriveId);
+                    trans.Rollback();
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
+                }
+            }
             return new AlertModal<string>(true);
+        }
+        public AlertModal<string> SubmitReimbursement(string reimbursement_string, int request_id)
+        {
+            reimbursement_string = reimbursement_string.Replace(",", "");
+            if (!int.TryParse(reimbursement_string, out int reimbursement))
+                return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
+            RequestConference request = db.RequestConferences.Find(request_id);
+            if (request.status_id != 4)
+                return new AlertModal<string>(false, "Đề nghị không được nhập hoàn ứng");
+
+            using (var trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    request.reimbursement = reimbursement;
+                    request.status_id = 5;
+                    request.BaseRequest.finished_date = DateTime.Now;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true, "Cập nhật thành công");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return new AlertModal<string>(false, "Có lỗi xảy ra");
+                }
+            }
         }
     }
 }

@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Email</label>
-                        <input value="sonnt69@fpt.edu.vn" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_officer_email" />
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="edit_officer_email" />
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
@@ -55,7 +55,11 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input value="Việt Nam" class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_officer_nation" />
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control text-center" id="edit_officer_nation" name="param" style="width:100% !important">
+                                <option selected value=""></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
@@ -84,7 +88,7 @@
                         <label class="font-weight-bolder">TG đi học dự kiến</label>
                         <label style="color:red">*</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_start_plan_date" data-target-input="nearest">
-                            <input value="01/01/2021" type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="edit_officer_start_plan_date" data-target="#kt_datetimepicker_edit_officer_start_plan_date" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="edit_officer_start_plan_date" data-target="#kt_datetimepicker_edit_officer_start_plan_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_start_plan_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -96,7 +100,7 @@
                         <label class="font-weight-bolder">TG kết thúc dự kiến</label>
                         <label style="color:red">*</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_end_plan_date" data-target-input="nearest">
-                            <input value="01/01/2022" type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="edit_officer_end_plan_date" data-target="#kt_datetimepicker_edit_officer_end_plan_date" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="edit_officer_end_plan_date" data-target="#kt_datetimepicker_edit_officer_end_plan_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_end_plan_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -117,7 +121,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG đi học thực tế</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_start_date" data-target-input="nearest">
-                            <input value="01/01/2021" type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="edit_officer_start_date" data-target="#kt_datetimepicker_edit_officer_start_date" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="edit_officer_start_date" data-target="#kt_datetimepicker_edit_officer_start_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_start_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -128,7 +132,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG kết thúc thực tế</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_end_date" data-target-input="nearest">
-                            <input value="01/01/2022" type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="edit_officer_end_date" data-target="#kt_datetimepicker_edit_officer_end_date" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="edit_officer_end_date" data-target="#kt_datetimepicker_edit_officer_end_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_end_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>

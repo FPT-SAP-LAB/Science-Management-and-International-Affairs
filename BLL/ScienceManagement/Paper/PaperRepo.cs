@@ -381,5 +381,108 @@ namespace BLL.ScienceManagement.Paper
                 return "ff";
             }
         }
+
+        public List<PendingPaper_Manager> listPending()
+        {
+            List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
+            string sql = @"select p.name, a.email, br.created_date, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account a on br.account_id = a.account_id
+                            where rp.status_id = 3";
+            list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
+            return list;
+        }
+
+        public string updateRewardPaper(DetailPaper paper)
+        {
+            try
+            {
+                RequestPaper p = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
+                p.total_reward = paper.total_reward;
+                p.status_id = 4;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people)
+        {
+            try
+            {
+                foreach (var item in people)
+                {
+                    AuthorPaper ap = db.AuthorPapers
+                                        .Where(x => x.paper_id == paper.paper_id)
+                                        .Where(x => x.people_id == item.people_id)
+                                        .FirstOrDefault();
+                    ap.money_reward = item.money_reward;
+                }
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public List<WaitDecisionPaper> getListWwaitDecision(string type)
+        {
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note'
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on o.office_id = pro.office_id
+                            where rp.status_id = 4 and rp.type = @type
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation";
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
+            return list;
+        }
+
+        public List<Paper_Appendix_1> getListAppendix1_2(string type)
+        {
+            string sql = @"select po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, p.name, p.company, a.sum, b.sumFE, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [General].People po on ap.people_id = po.people_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join (select p.paper_id, count(ap.people_id) as 'sum'
+			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+			                            group by p.paper_id) as a on p.paper_id = a.paper_id
+	                            join (select p.paper_id, count(ap.people_id) as 'sumFE'
+			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+				                            join [General].Profile pro on ap.people_id = pro.people_id
+			                            group by p.paper_id) as b on p.paper_id = b.paper_id
+                            where rp.status_id = 4 and rp.type = @type
+                            order by po.name";
+            List<Paper_Appendix_1> list = db.Database.SqlQuery<Paper_Appendix_1>(sql, new SqlParameter("type", type)).ToList();
+            return list;
+        }
+
+        public List<Paper_Apendix_3> getListAppendix3_4(string type)
+        {
+            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, sum(ap.money_reward) as 'sum_money'
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [General].People po on ap.people_id = po.people_id
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+                            where rp.status_id = 4 and rp.type = @type
+                            group by po.name, pro.mssv_msnv, o.office_abbreviation
+                            order by po.name";
+            List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type)).ToList();
+            return list;
+        }
     }
 }

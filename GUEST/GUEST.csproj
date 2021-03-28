@@ -570,6 +570,8 @@
     <Content Include="Content\assets\media\books\8.png" />
     <Content Include="Content\assets\media\books\9.png" />
     <Content Include="Content\assets\media\books\img-72.jpg" />
+    <Content Include="Content\assets\media\custom-image\icona-partnership.png" />
+    <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\demos\demo1.jpg" />
     <Content Include="Content\assets\media\demos\demo10.jpg" />
     <Content Include="Content\assets\media\demos\demo11.jpg" />
@@ -606,6 +608,7 @@
     <Content Include="Content\assets\media\error\bg4.jpg" />
     <Content Include="Content\assets\media\error\bg5.jpg" />
     <Content Include="Content\assets\media\error\bg6.jpg" />
+    <Content Include="Content\assets\media\error\smile.gif" />
     <Content Include="Content\assets\media\logos\favicon.ico" />
     <Content Include="Content\assets\media\logos\logo-1.png" />
     <Content Include="Content\assets\media\logos\logo-4.png" />
@@ -2406,7 +2409,7 @@
     <Content Include="Views\Citation\Edit.cshtml" />
     <Content Include="Views\PartialView\AddAuthor.cshtml" />
     <Content Include="Views\Partner\List.cshtml" />
-    <Content Include="Views\Partner\Partner_Detail.cshtml" />
+    <Content Include="Views\Partner\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
     <Content Include="Views\Policy\Index.cshtml" />
@@ -2428,6 +2431,7 @@
     <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+    <Content Include="Views\AcademicActivity\loadForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

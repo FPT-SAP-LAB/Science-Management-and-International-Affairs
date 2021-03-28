@@ -5,6 +5,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,32 +186,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult uploadEvidenceFile(HttpPostedFileBase evidence, string folder_name)
+        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id,
+            string obj_person_stringify,
+            string obj_partner_stringify,
+            string obj_academic_collab_stringify)
         {
             try
             {
-                if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
-                {
-                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
-                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-                }
-                else
-                {
-                    Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(evidence, folder_name, 4, false);
-                    return Json(new { evidence_link = f.WebViewLink });
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+                //parse to Object
+                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
+                SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
+                SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
-        [HttpPost]
-        public ActionResult saveAcademicCollaboration(int direction_id, int collab_type_id, SaveAcadCollab_Person obj_person, SaveAcadCollab_Partner obj_partner, SaveAcadCollab_AcademicCollaboration obj_academic_collab)
-        {
-            try
-            {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 LoginRepo.User u = new LoginRepo.User();
                 Account acc = new Account();
@@ -218,14 +205,28 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 {
                     u = (LoginRepo.User)Session["User"];
                     acc = u.account;
+
+                    //upload file
+                    if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                    {
+                        AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
+                        return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    }
+                    else
+                    {
+                        //upload file
+                        Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.uploadEvidenceFile(evidence, folder_name, 4, false);
+                        //Save academic collab
+                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
+                            obj_person, obj_partner, obj_academic_collab, f, evidence, acc.account_id);
+                        return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+                    }
                 }
                 else
                 {
                     AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
                     return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
                 }
-                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id, obj_person, obj_partner, obj_academic_collab, acc.account_id);
-                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
             {
@@ -233,16 +234,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public ActionResult Delete_Longterm(string id)
+        //EDIT
+        [HttpGet]
+        public ActionResult getAcademicCollaboration(int direction, int collab_type_id, int acad_collab_id)
         {
             try
             {
-                string result = id;
-                return Json("", JsonRequestBehavior.AllowGet);
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.getAcademicCollaboration(direction, collab_type_id, acad_collab_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                throw e;
             }
         }
 

@@ -14,6 +14,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string QsUniversity { get; set; }
         public string Co_organizedUnit { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime? FinishedDate { get; set; }
         public DateTime TimeEnd { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime AttendanceStart { get; set; }
@@ -27,6 +28,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string CountryName { get; set; }
         public string StatusName { get; set; }
         public int StatusID { get; set; }
+        public int FormalityID { get; set; }
         public string FormalityName { get; set; }
         public int Reimbursement { get; set; }
         public string SpecializationName { get; set; }
