@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Researcher
 {
-    public class InterestedField
+    public class SelectField
     {
         public int id { get; set; }
         public string name { get; set; }
