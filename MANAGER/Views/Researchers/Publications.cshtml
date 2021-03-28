@@ -31,86 +31,95 @@
                     <!--begin::Card-->
                     <div class="card card-custom card-stretch">
                         <!--begin::Header-->
-                        <div class="card-header py-3">
+                        <div class="card-header py-3" style="border-bottom:none">
                             <div class="card-title align-items-start flex-column">
                                 <h3 class="card-label font-weight-bolder text-dark">CÔNG BỐ KHOA HỌC, HỘI NGHỊ</h3>
                                 <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin về các công bố khoa học cho nghiên cứu viên</span>
                             </div>
                         </div>
-                        <!--end::Header-->
                         <!--begin::Form-->
                         <!--begin::Body-->
                         <div class="card-body">
-                            <div class="row">
-                                <label class="col-xl-3"></label>
-                                <div class="col-lg-12 col-xl-12">
-                                    <h5 class="font-weight-bold ">Tạp chí/sách</h5>
+                            <div class="tab-content mt-5" id="myTabContent">
+                                <div class="tabs-list">
+                                    <ul class="nav nav-tabs nav-bold">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#tapchi">
+                                                <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                                <span class="nav-text">Tạp ch&#237; khoa học</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#kyyeu">
+                                                <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                                <span class="nav-text">Kỷ yếu hội thảo</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="col-lg-12 col-xl-12">
-                                    <table class="table table-bordered table-checkable" id="tapchi_list">
-                                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Đồng tác giả</th><th>Ngày xuất bản</th></tr></thead>
-                                        <tbody>
-                                            @foreach (ResearcherPublications a in ViewBag.publications)
-                                            {
-                                            <tr>
-                                                <td>@a.rownum</td>
-                                                <td>@a.paper_name</td>
-                                                <td>@a.journal_or_cfr_name</td>
-                                                <td>
-                                                    @foreach (string author in a.co_author)
+                                <div class="tab-pane fade show active" id="tapchi"
+                                     role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                    <!----------------------------------------------------------->
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-12 col-xl-12">
+                                            <table class="table table-bordered table-checkable" id="tapchi_list">
+                                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Đồng tác giả</th><th>Ngày xuất bản</th></tr></thead>
+                                                <tbody>
+                                                    @foreach (ResearcherPublications a in ViewBag.publications)
                                                     {
-                                                    <span>@author, </span>                                            
+                                                        <tr>
+                                                            <td>@a.rownum</td>
+                                                            <td>@a.paper_name</td>
+                                                            <td>@a.journal_or_cfr_name</td>
+                                                            <td>
+                                                                @foreach (string author in a.co_author)
+                                                                {
+                                                                    <span>@author, </span>
+                                                                }
+                                                            </td>
+                                                            <td>@a.publish_date.Value.Year</td>
+                                                        </tr>
                                                     }
-                                                </td>
-                                                <td>@a.publish_date.Value.Year</td>
-                                            </tr>
-                                            }
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                                            <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                                Chi
-                                            </button>
-                                        </div>*@
+                                    <!----------------------------------------------------------->
                                 </div>
-                                <div class="row">
-                                    <label class="col-xl-3"></label>
-                                    <div class="col-lg-12 col-xl-12">
-                                        <h5 class="font-weight-bold ">Hội Nghị</h5>
+                                <div class="tab-pane fade" id="kyyeu" role="tabpanel"
+                                     aria-labelledby="kt_tab_pane_2">
+                                    <!----------------------------------------------------------->
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-12 col-xl-12">
+                                            <table class="table table-bordered table-checkable" id="conferences_list">
+                                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Đồng Tác giả</th><th>Năm</th></tr></thead>
+                                                <tbody>
+                                                    @foreach (ResearcherPublications a in ViewBag.conferences)
+                                                    {
+                                                        <tr>
+                                                            <td>@a.rownum</td>
+                                                            <td>@a.paper_name</td>
+                                                            <td>@a.journal_or_cfr_name</td>
+                                                            <td>
+                                                                @foreach (string author in a.co_author)
+                                                                {
+                                                                    <span>@author, </span>
+                                                                }
+                                                            </td>
+                                                            <td>@a.publish_date.Value.Year</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-12 col-xl-12">
-                                        <table class="table table-bordered table-checkable" id="conferences_list">
-                                            <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Đồng Tác giả</th><th>Năm</th></tr></thead>
-                                            <tbody>
-                                                @foreach (ResearcherPublications a in ViewBag.conferences)
-                                                {
-                                                    <tr>
-                                                        <td>@a.rownum</td>
-                                                        <td>@a.paper_name</td>
-                                                        <td>@a.journal_or_cfr_name</td>
-                                                        <td>
-                                                            @foreach (string author in a.co_author)
-                                                            {
-                                                                <span>@author, </span>
-                                                            }
-                                                        </td>
-                                                        <td>@a.publish_date.Value.Year</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                                            <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                                <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                                Thêm tiểu sử công tác
-                                            </button>
-                                        </div>*@
+                                    <!----------------------------------------------------------->
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                     <!--end::Content-->
                 </div>
@@ -146,7 +155,7 @@
 
                         lengthMenu: [5, 10, 25, 50],
 
-                        pageLength: 10,
+                        pageLength: 5,
 
                         language: {
                             'lengthMenu': 'Display _MENU_',
@@ -175,7 +184,6 @@
                             },
                             { "width": "20%", "targets": 3 },
                             { "width": "10%", "targets": 4 }
-
                         ],
                     });
 
@@ -213,7 +221,7 @@
 
                         lengthMenu: [5, 10, 25, 50],
 
-                        pageLength: 10,
+                        pageLength: 5,
 
                         language: {
                             'lengthMenu': 'Display _MENU_',
@@ -235,9 +243,9 @@
                                         return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
                                     }
                                 },
-                                "width": "40%"
+                                "width": "30%"
                             },
-                            { "width": "20%", "targets": 3 },
+                            { "width": "10%", "targets": 3 },
                             { "width": "10%", "targets": 4 }
                         ],
                     });
@@ -288,4 +296,5 @@
                 return { 'tooltip': tooltip, 'trimtext': trimtext }
             }
         </script>
+        <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
     }

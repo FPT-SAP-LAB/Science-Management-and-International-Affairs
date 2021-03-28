@@ -72,19 +72,34 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image: url('@ViewBag.profile.avatar')"></div>
-                    <i class="symbol-badge bg-success"></i>
+                    <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@ViewBag.profile.avatar)">
+                        <div class="image-input-wrapper"></div>
+
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
                 </div>
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                         @ViewBag.profile.name
                     </a>
                     <div class="text-muted">
-                        <span class="label label-success label-pill label-inline mr-2">@ViewBag.profile.position</span>
+                        <span class="label label-success label-pill label-inline mr-2">@ViewBag.profile.position_name</span>
                     </div>
                     <br/>
                     <div class="text-muted">
-                        @ViewBag.profile.title
+                        @ViewBag.profile.title_name
                     </div>
                     <div class="mt-2">
                         @ViewBag.profile.office
