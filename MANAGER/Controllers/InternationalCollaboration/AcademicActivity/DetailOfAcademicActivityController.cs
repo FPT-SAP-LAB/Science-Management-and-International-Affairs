@@ -90,20 +90,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, activity_id);
-            return Json(new {success = true,data = data });
+            return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult getDetailPhase(int language_id, int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id,phase_id);
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, phase_id);
             return Json(data);
         }
-        public JsonResult add_Phase(int language_id,int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
+        public JsonResult add_Phase(int language_id, int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            int account_id =  CurrentAccount.AccountID(Session);
-            bool res = phaseRepo.addPhase(language_id, activity_id,account_id, basePhase);
+            int account_id = CurrentAccount.AccountID(Session);
+            bool res = phaseRepo.addPhase(language_id, activity_id, account_id, basePhase);
             if (res)
             {
                 return Json("Thêm giai đoạn thành công");

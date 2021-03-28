@@ -119,7 +119,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         WHERE al.language_id = 1 and aa.activity_id = @id";
                 baseAA obj = db.Database.SqlQuery<baseAA>(sql,
                             new SqlParameter("id", id)).FirstOrDefault();
-                if(obj != null)
+                if (obj != null)
                 {
                     obj.from = changeFormatDate(obj.from);
                     obj.to = changeFormatDate(obj.to);

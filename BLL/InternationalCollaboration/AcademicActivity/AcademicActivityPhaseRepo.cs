@@ -11,7 +11,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     public class AcademicActivityPhaseRepo
     {
         ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<infoPhase> getPhase(int language_id,int activity_id)
+        public List<infoPhase> getPhase(int language_id, int activity_id)
         {
             try
             {
@@ -26,7 +26,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     new SqlParameter("language_id", language_id),
                     new SqlParameter("activity_id", activity_id)).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<infoPhase>();
             }
@@ -45,7 +46,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 new SqlParameter("phase_id", phase_id)).FirstOrDefault();
                 return data;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new basePhase();
             }
@@ -61,12 +62,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return data;
                 return new List<baseParticipantRole>();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new List<baseParticipantRole>();
             }
         }
-        public bool addPhase(int language_id,int activity_id,int account_id, basePhase data)
+        public bool addPhase(int language_id, int activity_id, int account_id, basePhase data)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -80,17 +81,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         created_by = activity_id
                     });
                     db.SaveChanges();
-                    
+
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
                 }
             }
         }
-        public  bool deletePhase(int phase_id)
+        public bool deletePhase(int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -106,7 +108,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool editPhase(int language_id,infoPhase data)
+        public bool editPhase(int language_id, infoPhase data)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
