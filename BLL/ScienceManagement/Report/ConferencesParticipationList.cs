@@ -13,8 +13,6 @@ namespace BLL.ScienceManagement.Report
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public BaseServerSideData<ConferencesParticipationReport> ListConferences(BaseDatatable baseDatatable)
         {
-
-
             var data = (from d in db.Decisions
                         join rd in db.RequestDecisions on d.decision_id equals rd.decision_id
                         join br in db.BaseRequests on rd.request_id equals br.request_id
@@ -37,8 +35,6 @@ namespace BLL.ScienceManagement.Report
                                        request_id = g.Key
 
                                    }) on rc.request_id equals b.request_id
-
-
                         where tl.language_id == 1
                         select new ConferencesParticipationReport
                         {
@@ -74,10 +70,7 @@ namespace BLL.ScienceManagement.Report
                                            {
                                                total = g.Sum(x => x.total),
                                                request_id = g.Key
-
                                            }) on rc.request_id equals b.request_id
-
-
                                 where tl.language_id == 1
                                 select new ConferencesParticipationReport
                                 {
@@ -93,6 +86,5 @@ namespace BLL.ScienceManagement.Report
                                 }).Count();
             return new BaseServerSideData<ConferencesParticipationReport>(data, recordsTotal);
         }
-
     }
 }
