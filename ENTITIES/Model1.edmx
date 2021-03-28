@@ -1827,7 +1827,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Collabora__colla__00750D23">
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1" />
+          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CollaborationStatusHistory" Type="Self.CollaborationStatusHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicCollaboration">
@@ -6860,7 +6862,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Collabora__colla__00750D23">
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1" />
+          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CollaborationStatusHistory" Type="Self.CollaborationStatusHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicCollaboration">

@@ -16,25 +16,45 @@
                 </tr>
             </thead>
             <tbody id="pending-body">
-                <tr>
-                    <td>1</td>
-                    <td>Nguyễn Quốc Long et al</td>
-                    <td>10/12/2019</td>
-                    <td><a href="/Citation/Detail" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Tran, Nghi C</td>
-                    <td>09/12/2019</td>
-                    <td><a href="/Citation/Detail" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                </tr>
+                @{
+                    int count = 1;
+                    foreach (var item in ViewBag.pending)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.email</td>
+                            <td>@item.created_date.ToString("dd/MM/yyyy")</td>
+                            <td><button id="@item.request_id" class="btn btn-sm btn-clean btn-icon btn_submit" title="View"> <i class="fas fa-eye"></i> </button></td>
+                        </tr>
+                        count++;
+                    }
+                }
             </tbody>
         </table>
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/datetime-moment.js"></script>
+    <script src="~/Scripts/moment.js"></script>
     <script>
+        $(".btn_submit").click(function () {
+            var id = this.id;
+            var form = document.createElement("form");
+            var element1 = document.createElement("input");
+
+            form.method = "POST";
+            form.action = "/Citation/Detail";
+
+            element1.value = id;
+            element1.name = "id";
+            form.appendChild(element1);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        });
         $(document).ready(function () {
+            $.fn.dataTable.moment('D/MM/YYYY');
             $("#pending").DataTable({
                 "columns": [
                     { width: "5%" },
@@ -46,9 +66,11 @@
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
+
+                order: [[2, "desc"]],
 
                 pageLength: 10,
 

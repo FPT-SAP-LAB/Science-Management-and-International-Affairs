@@ -46,7 +46,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search);
             return Json(data);
         }
-        public ActionResult loadForm(int fid)
+        public ActionResult loadForm(int pid)
         {
             ViewBag.title = "Đơn đăng kí tham dự";
             var pagesTree = new List<PageTree>
@@ -55,8 +55,24 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
                 new PageTree("Đơn đăng kí tham dự","/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.fid = fid;
+            ViewBag.pid = pid;
             return View();
+        }
+        [HttpPost]
+        public JsonResult getForm(int phase_id)
+        {
+            AcademicActivityGuestRepo.fullForm data = guestRepo.getForm(phase_id);
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult sendForm(int fid, string answer)
+        {
+            bool res = guestRepo.sendForm(fid, answer);
+            if (res)
+            {
+                return Json("Gửi đơn đăng kí thành công");
+            }
+            return Json(String.Empty);
         }
     }
 }

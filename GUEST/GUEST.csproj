@@ -167,7 +167,6 @@
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
-    <Compile Include="Controllers\SettingDriveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2430,7 +2429,6 @@
     <Content Include="Views\AcademicCollaboration\Procedure_Detail.cshtml" />
     <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
     <Content Include="Views\AcademicActivity\loadForm.cshtml" />
   </ItemGroup>
   <ItemGroup>

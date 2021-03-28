@@ -228,13 +228,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
                 else
                 {
-                    return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+                    return new AlertModal<AcademicCollaborationPerson_Ext>(false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaborationPerson_Ext>(null, false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaborationPerson_Ext>(false, "Lấy dữ liệu về cán bộ đã có lỗi xảy ra.");
             }
         }
 
@@ -278,7 +278,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             string file_id = "";
             try
             {
-                Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
                 file_id = InputFile.FileName;
                 return f;
             }
@@ -286,7 +286,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 if (file_id != "")
                 {
-                    GlobalUploadDrive.DeleteFile(file_id);
+                    GoogleDriveService.DeleteFile(file_id);
                 }
                 throw e;
             }
@@ -325,7 +325,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var office = db.Offices.Find(obj_person.person_profile_office_id);
                             if (office == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được cơ sở tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(false, "Không thêm được cơ sở tương ứng.");
                             }
                             else
                             {
@@ -341,7 +341,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var country = db.Countries.Find(obj_partner.partner_country_id);
                             if (country == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được quốc gia tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(false, "Không thêm được quốc gia tương ứng.");
                             }
                             else
                             {
@@ -384,9 +384,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var evidence_file = saveFile(f, evidence);
 
                         //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration, obj_academic_collab, evidence_file, account_id);
+                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
-                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
+                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thêm cán bộ giảng viên thành công.");
                     }
                     else
                     {
@@ -616,42 +616,23 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             return evidence_file;
         }
 
-        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence,
-            AcademicCollaboration academic_collaboration,
-            SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            File evidence_file,
-            int account_id)
+        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence, int collab_id, int collab_status_id, string note, File evidence_file, int account_id)
         {
             CollaborationStatusHistory collab_status_hist;
             try
             {
-                if (evidence != null)
+                //add infor to CollaborationStatusHistory
+                collab_status_hist = new CollaborationStatusHistory()
                 {
-                    //add infor to CollaborationStatusHistory
-                    collab_status_hist = new CollaborationStatusHistory()
-                    {
-                        collab_id = academic_collaboration.collab_id,
-                        collab_status_id = obj_academic_collab.status_id,
-                        change_date = DateTime.Now,
-                        file_id = evidence_file.file_id,
-                        account_id = account_id
-                    };
-                    db.CollaborationStatusHistories.Add(collab_status_hist);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    //add infor to CollaborationStatusHistory
-                    collab_status_hist = new CollaborationStatusHistory()
-                    {
-                        collab_id = academic_collaboration.collab_id,
-                        collab_status_id = obj_academic_collab.status_id,
-                        change_date = DateTime.Now,
-                        account_id = account_id
-                    };
-                    db.CollaborationStatusHistories.Add(collab_status_hist);
-                    db.SaveChanges();
-                }
+                    collab_id = collab_id,
+                    collab_status_id = collab_status_id,
+                    change_date = DateTime.Now,
+                    note = note,
+                    file_id = evidence == null ? null : (int?)evidence_file.file_id,
+                    account_id = account_id
+                };
+                db.CollaborationStatusHistories.Add(collab_status_hist);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -704,13 +685,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
                 else
                 {
-                    return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Có lỗi xảy ra khi lấy dữ liệu hợp tác học thuật tương ứng");
+                    return new AlertModal<AcademicCollaboration_Ext>(false, "Có lỗi xảy ra khi lấy dữ liệu hợp tác học thuật tương ứng");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Lấy dữ liệu về hợp tác học thuật đã có lỗi xảy ra.");
+                return new AlertModal<AcademicCollaboration_Ext>(false, "Lấy dữ liệu về hợp tác học thuật đã có lỗi xảy ra.");
             }
         }
 
@@ -725,7 +706,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             else if (new_evidence == null && old_evidence.file_id != 0)
             {
-                GlobalUploadDrive.DeleteFile(old_evidence.file_drive_id);
+                GoogleDriveService.DeleteFile(old_evidence.file_drive_id);
             }
             return f;
         }
@@ -762,7 +743,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var office = db.Offices.Find(obj_person.person_profile_office_id);
                             if (office == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được cơ sở tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(false, "Không thêm được cơ sở tương ứng.");
                             }
                             else
                             {
@@ -778,7 +759,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var country = db.Countries.Find(obj_partner.partner_country_id);
                             if (country == null)
                             {
-                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được quốc gia tương ứng.");
+                                return new AlertModal<AcademicCollaboration_Ext>(false, "Không thêm được quốc gia tương ứng.");
                             }
                             else
                             {
@@ -833,9 +814,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var evidence_file = saveFile(f, new_evidence);
 
                         //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration, obj_academic_collab, evidence_file, account_id);
+                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
-                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Cập nhật cán bộ giảng viên thành công.");
+                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Cập nhật cán bộ giảng viên thành công.");
                     }
                     else
                     {
@@ -846,6 +827,68 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 catch (Exception e)
                 {
                     trans.Rollback();
+                    throw e;
+                }
+            }
+        }
+
+        //DELETE
+        public AlertModal<string> deleteAcademicCollaboration(int acad_collab_id)
+        {
+            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
+                    //decrease reference_count in PartnerScope
+                    PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
+                    partnerScope.reference_count -= 1;
+                    //delete AcademicCollab
+                    db.AcademicCollaborations.Remove(academicCollaboration);
+                    db.SaveChanges();
+                    dbContext.Commit();
+                    return new AlertModal<string>(null, true, "Thành công", "Xóa hợp tác học thuật thành công.");
+                }
+                catch (Exception e)
+                {
+                    dbContext.Rollback();
+                    return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                }
+            }
+        }
+
+        //CHANGE STATUS HISTORY
+        public AlertModal<string> changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note, int account_id)
+        {
+            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    if (!(String.IsNullOrEmpty(status_id)))
+                    {
+                        int num_status_id = Int32.Parse(status_id);
+                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                        File file = new File();
+                        if (evidence_file != null)
+                        {
+                            //upload to Drive
+                            f = uploadEvidenceFile(evidence_file, folder_name, 4, false);
+                            //add file to db
+                            file = saveFile(f, evidence_file);
+                        }
+                        //add academic collab status history
+                        var collab_staus_hist = saveCollabStatusHistory(evidence_file, collab_id, num_status_id, note, file, account_id);
+                        dbContext.Commit();
+                        return new AlertModal<string>(null, true, "Thành công", "Chuyển trạng thái hợp tác học thuật thành công.");
+                    }
+                    else
+                    {
+                        return new AlertModal<string>(null, false, "Lỗi", "Thông tin về trạng thái chưa được chọn lựa.");
+                    }
+                }
+                catch (Exception e)
+                {
+                    dbContext.Rollback();
                     throw e;
                 }
             }

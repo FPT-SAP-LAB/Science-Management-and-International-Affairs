@@ -14,13 +14,18 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public string country { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
-        public string title { get; set; }
+        public int title_id { get; set; }
+        public string title_name { get; set; }
         public string office { get; set; }
-        public string position { get; set; }
+        public int position_id { get; set; }
+        public string position_name { get; set; }
         public string avatar { get; set; }
         public string website { get; set; }
         public string gscholar { get; set; }
         public string cv { get; set; }
-        public List<InterestedField> interested_fields { get; set; }
+        public List<SelectField> interested_fields { get; set; }
+        public List<SelectField> title_fields { get; set; }
+        public List<SelectField> position_fields { get; set; }
+        public List<SelectField> offices_fields { get; set; }
     }
 }

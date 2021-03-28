@@ -196,24 +196,25 @@
 @section scripts{
     @*datepicker and range*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    @*//////////////////////////////////////////////////UPDATE LONG-TERM CONTENT//////////////////////////////////////////////////*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Content/UpdateContent.js"></script>
+
     @*///////////////////////////////////////////TABLE1: LONG-TERM ACADEMIC COLLAB GOING//////////////////////////////////////////*@
     @**datatable*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/AcadCollab_Datatable.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/AcadCollab_Datatable.js"></script>
     @*search*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Search.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Search.js"></script>
     @*add modal*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Add.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Add.js"></script>
     @*edit modal*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Edit.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Edit.js"></script>
     @*delete*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Delete.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Delete.js"></script>
+    @*change status*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/ChangeCollabStatus.js"></script>
+
     @*update content*@
     <script>
-        $('#edit_content_long_term').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
         $('#edit_content_going').click(function () {
             $('#describe_content').find("textarea").val('').end()
             $('#describe_content').modal('show');
@@ -224,8 +225,6 @@
             $('#describe_content').modal('show');
         })
     </script>
-
-
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
@@ -290,11 +289,7 @@
     </script>
 
     <script>
-        var id_row = "";
-        //parse id fo delete
-        function parse_id(id) {
-            id_row = id;
-        }
+
         //collapse div
         $('#collapse_btn_tab_1').click(function () {
             $('.collapse_tab_1').toggle(700)
@@ -308,9 +303,6 @@
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
 
-        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        //});
         //split card
         //overflow
         $(document).ready(function () {
