@@ -783,24 +783,6 @@ namespace GUEST.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Partner Name.
         /// </summary>
-        public static string PartnerDetail {
-            get {
-                return ResourceManager.GetString("PartnerDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Partner list.
-        /// </summary>
-        public static string PartnerList {
-            get {
-                return ResourceManager.GetString("PartnerList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Partner Name.
-        /// </summary>
         public static string PartnerName {
             get {
                 return ResourceManager.GetString("PartnerName", resourceCulture);
