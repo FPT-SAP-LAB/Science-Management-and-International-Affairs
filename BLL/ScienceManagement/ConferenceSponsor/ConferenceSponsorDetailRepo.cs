@@ -238,7 +238,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 try
                 {
-                    Google.Apis.Drive.v3.Data.File drive = GlobalUploadDrive.UploadResearcherFile(decision_file, temp.conference_name, 1, temp.email);
+                    Google.Apis.Drive.v3.Data.File drive = GoogleDriveService.UploadResearcherFile(decision_file, temp.conference_name, 1, temp.email);
                     DriveId = drive.DriveId;
                     File file = new File
                     {
@@ -268,7 +268,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                    GlobalUploadDrive.DeleteFile(DriveId);
+                    GoogleDriveService.DeleteFile(DriveId);
                     trans.Rollback();
                     return new AlertModal<string>(false, "Có lỗi xảy ra");
                 }

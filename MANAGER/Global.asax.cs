@@ -16,7 +16,7 @@ namespace MANAGER
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalUploadDrive.InIt();
+            GoogleDriveService.InIt();
         }
 
         public void Application_Error(Object sender, EventArgs e)

@@ -63,10 +63,26 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public ActionResult Publications()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
+            ///////////////////////////////////////////////////////////////
+            List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
+            ViewBag.publications = publications;
+            ///////////////////////////////////////////////////////////////
+            List<ResearcherPublications> conferences = researcherBiographyRepo.GetConferencePublic(id);
+            ViewBag.conferences = conferences;
             return View();
         }
         public ActionResult Rewards()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
             return View();
         }
         public ActionResult AddResearcher()

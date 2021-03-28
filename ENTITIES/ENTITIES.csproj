@@ -230,7 +230,7 @@
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
-    <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\GoogleDriveService.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPartner_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPerson_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
@@ -285,6 +285,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
+    <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\DecisionDetail.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherPublications.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
