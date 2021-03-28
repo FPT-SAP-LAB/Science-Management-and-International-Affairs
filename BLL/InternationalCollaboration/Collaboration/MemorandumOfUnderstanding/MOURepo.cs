@@ -442,8 +442,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_partnerList = @"select * from IA_Collaboration.Partner";
-                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList).ToList();
+                List<ENTITIES.Partner> partnerList = db.Partners.ToList();
                 return partnerList;
             }
             catch (Exception ex)
@@ -455,8 +454,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_speList = @"select * from General.Specialization";
-                List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
+                //string sql_speList = @"select * from General.Specialization";
+                //List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
+                List<Specialization> speList = db.Specializations.ToList();
                 return speList;
             }
             catch (Exception ex)

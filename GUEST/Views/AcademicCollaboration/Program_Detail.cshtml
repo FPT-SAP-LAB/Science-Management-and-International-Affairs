@@ -1,13 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "Chi tiết chương trình";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("ProgramDetail");
 }
 
 <style>
-    #content img{
-        width: 100% !important;
-        height: 100%;
+    #content img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
     }
 </style>
 <div class="card card-custom pb-4">
