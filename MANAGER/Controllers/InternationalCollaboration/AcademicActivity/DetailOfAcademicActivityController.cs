@@ -12,13 +12,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
     public class DetailOfAcademicActivityController : Controller
     {
         DetailOfAcademicActivityRepo repo;
+        FormRepo formRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
             repo = new DetailOfAcademicActivityRepo();
             ViewBag.Title = "Thông tin hoạt động học thuật";
             ViewBag.activity_id = id;
-            ViewBag.types = repo.getType();
+            ViewBag.types = repo.getType(1);
             ViewBag.unit = repo.getUnits();
             return View();
         }
@@ -29,7 +30,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
             {
                 baseDetail = repo.getDetail(language_id, activity_id),
-                subContent = repo.getSubContents(language_id, activity_id)
+                subContent = repo.getSubContents(language_id, activity_id),
+                types = repo.getType(language_id)
             };
             return Json(data);
         }
@@ -50,6 +52,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(String.Empty);
             }
         }
@@ -207,11 +210,31 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(jerr, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult RegisterForm(int id)
+        public ActionResult RegisterForm(int id, int lid)
         {
             ViewBag.phaseID = id;
+            ViewBag.language_id = lid;
             ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
             return View();
+        }
+        [HttpPost]
+        public JsonResult getFormbyPhase(int phase_id)
+        {
+            formRepo = new FormRepo();
+            DetailOfAcademicActivityRepo.baseForm data = formRepo.getFormbyPhase(phase_id);
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data)
+        {
+            formRepo = new FormRepo();
+            bool res = formRepo.updateForm(data);
+            if (res)
+            {
+                return Json("Lưu mẫu đăng ký thành công");
+            }
+            else
+                return Json(String.Empty);
         }
         public class QuantityByUnit
         {

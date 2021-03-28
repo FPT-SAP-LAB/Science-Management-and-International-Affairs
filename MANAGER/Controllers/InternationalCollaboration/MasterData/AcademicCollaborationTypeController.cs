@@ -37,6 +37,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false });
             }
         }

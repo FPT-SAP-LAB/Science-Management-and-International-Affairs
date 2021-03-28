@@ -33,7 +33,6 @@
     <link href="~/Content/assets/css/themes/layout/brand/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
-
     <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
     <style>
         * {
@@ -48,7 +47,6 @@
     <!--FOR AUTHENTICATION-->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -86,9 +84,6 @@
             </div>
         </div>
     </div>
-
-
-    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
     <script>
         var KTAppSettings = {
             "breakpoints": {
@@ -149,18 +144,20 @@
             "font-family": "Poppins"
         };
     </script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/bundle.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
         var login_btn;
         $(document).ready(function () {
             login_btn = new LoaderBtn($("#login_btn"));
         });
         function onSignIn(googleUser) {
-            $('#login_btn').attr('disabled',true);
+            $('#login_btn').attr('disabled', true);
             login_btn.startLoading();
             var id_token = googleUser.getAuthResponse().id_token;
             var xhr = new XMLHttpRequest();

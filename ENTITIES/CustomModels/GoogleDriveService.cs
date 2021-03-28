@@ -13,14 +13,14 @@ using static Google.Apis.Drive.v3.FilesResource;
 
 namespace ENTITIES.CustomModels
 {
-    public static class GlobalUploadDrive
+    public static class GoogleDriveService
     {
         //Field: Dữ liệu trả về của loại request, Nếu là file nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
         //Q: query search, xem thêm tại đây https://developers.google.com/drive/api/v3/ref-search-terms
         //SupportsAllDrives: hỗ trợ thêm trên cả drive của người dùng, shared drive
         //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
 
-        public static UserCredential credential;
+        public static GoogleCredential credential;
         public static string SMDrive;
         public static string IADrive;
         public static DriveService driveService;
@@ -31,11 +31,8 @@ namespace ENTITIES.CustomModels
                 new FileStream(filePath + "/credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string[] Scopes = { DriveService.Scope.Drive };
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "application",
-                    CancellationToken.None).Result;
+                credential = GoogleCredential.FromStream(stream)
+                                     .CreateScoped(Scopes);
                 driveService = new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
@@ -61,7 +58,7 @@ namespace ENTITIES.CustomModels
         {
             if (driveService == null)
                 return;
-            _ = credential.RevokeTokenAsync(CancellationToken.None).Result;
+            //_ = credential.RevokeTokenAsync(CancellationToken.None).Result;
             credential = null;
             driveService = null;
         }
@@ -175,12 +172,14 @@ namespace ENTITIES.CustomModels
 
             return request.ResponseBody;
         }
-        public static Google.Apis.Drive.v3.Data.File UpdateFile(Stream InputStream, string ContentType, string FileID)
+
+        public static Google.Apis.Drive.v3.Data.File UpdateFile(string FileName, Stream InputStream, string ContentType, string FileID)
         {
             GetRequest RequestGet = driveService.Files.Get(FileID);
             RequestGet.Fields = "id,webViewLink";
             RequestGet.SupportsAllDrives = true;
-            Google.Apis.Drive.v3.Data.File file = RequestGet.Execute();
+            Google.Apis.Drive.v3.Data.File file = new Google.Apis.Drive.v3.Data.File();
+            file.Name = FileName;
 
             UpdateMediaUpload RequestPut = driveService.Files.Update(file, FileID, InputStream, ContentType);
             RequestPut.Fields = "id,webViewLink";
@@ -189,6 +188,7 @@ namespace ENTITIES.CustomModels
 
             return RequestPut.ResponseBody;
         }
+
         public static void ShareFile(string Email, string FileID)
         {
             Permission userPermission = new Permission

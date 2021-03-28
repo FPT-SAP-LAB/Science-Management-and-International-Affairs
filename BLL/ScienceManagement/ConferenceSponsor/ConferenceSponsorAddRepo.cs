@@ -1,3 +1,4 @@
+using BLL.ModelDAL;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
@@ -154,7 +155,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -261,13 +262,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     if (position != null)
                         position_id = position.position_id;
 
-                    db.ApprovalProcesses.Add(new ApprovalProcess
-                    {
-                        account_id = account_id,
-                        created_date = create_date,
-                        position_id = position_id,
-                        request_id = support.request_id
-                    });
+                    ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id);
 
                     foreach (var item in policy.Criteria)
                     {
@@ -289,7 +284,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     trans.Rollback();
                     foreach (var item in FileIDs)
                     {
-                        GlobalUploadDrive.DeleteFile(item);
+                        GoogleDriveService.DeleteFile(item);
                     }
                     return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
                 }

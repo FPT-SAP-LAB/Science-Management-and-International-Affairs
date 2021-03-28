@@ -24,12 +24,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 	                        WHEN aa.activity_date_start <= GETDATE() and GETDATE() <= aa.activity_date_end THEN N'Đang hoạt động'
 	                        WHEN GETDATE() > aa.activity_date_end THEN N'Đã kết thúc'
                         END as 'academic_status_name'
-                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityType [at]
+                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityTypeLanguage [at]
                         on aa.activity_type_id = [at].activity_type_id inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
-                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        on av.article_id = ai.article_id and al.language_id = av.language_id and at.language_id = al.language_id
                         WHERE al.language_id = 1 AND YEAR(aa.activity_date_start) = @year";
                 List<ListAA> data = db.Database.SqlQuery<ListAA>(sql,
                         new SqlParameter("year", year)).ToList();
@@ -93,16 +93,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<ENTITIES.AcademicActivityType> getType()
+        public List<AcademicActivityType> getType(int language_id)
         {
             try
             {
-                List<ENTITIES.AcademicActivityType> data = db.AcademicActivityTypes.ToList();
+                string sql = @"select al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
+                List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
             catch (Exception)
             {
-                return new List<ENTITIES.AcademicActivityType>();
+                return new List<AcademicActivityType>();
             }
         }
         public baseAA GetbaseAA(int id)

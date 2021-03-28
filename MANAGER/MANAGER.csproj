@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
@@ -181,7 +182,9 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\CollaborationStatusController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\DirectionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\InternalUnitController.cs" />
+    <Compile Include="Controllers\InternationalCollaboration\MasterData\SpecializationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2178,10 +2181,19 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Delete.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Edit.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Program\Program_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Search.js" />
+    <Content Include="Scripts\datetime-moment.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Add.js" />
+    <Content Include="Excel_template\Paper.xlsx" />
+    <Content Include="Excel_template\Download\Paper.xlsx" />
     <Content Include="Web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\AcadCollab_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\Partner\Preview.js" />
@@ -2312,8 +2324,14 @@
     <Content Include="Views\MOA\PartialView\MOAPartner\List_Partner_MOA.cshtml" />
     <Content Include="Views\MOA\PartialView\MOAPartner\List_History_MOA.cshtml" />
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
+    <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+
     <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
+
+    <Content Include="Views\CommentRequest\Index.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2329,6 +2347,11 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+
+    <Folder Include="Views\ConferencesParticipationReport\" />
+    <Folder Include="Views\ErrorPage\" />
+    <Folder Include="Views\Specialization\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2385,9 +2408,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

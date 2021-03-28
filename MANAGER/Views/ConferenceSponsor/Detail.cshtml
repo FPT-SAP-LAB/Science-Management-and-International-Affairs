@@ -10,6 +10,7 @@
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
+    DecisionDetail Decision = output["DecisionDetail"].ToObject<DecisionDetail>();
 }
 <style>
     .chinhsach-container {
@@ -132,19 +133,94 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString("dd/MM/yyyy")</a>
                             </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
-                                <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
-                                <span class="text-muted font-weight-bold">123456</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
-                                <a href="#" class="text-muted text-hover-primary">1234567</a>
-                            </div>
+                            @if (ConferenceDetail.FinishedDate != null)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày kết thúc đề nghị:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
+                            @if (ConferenceDetail.FormalityID == 2)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">File quyết định:</span>
+                                    <a href="@Decision.Link" class="text-muted text-hover-primary">Xem</a>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                    <span class="text-muted font-weight-bold">@Decision.DecisionNumber</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@Decision.ValidDate.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
                         </div>
+                        @if (ConferenceDetail.StatusID == 3 && ConferenceDetail.FormalityID == 2)
+                        {
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kt_datepicker_modal">
+                                    Cập nhật quyết định
+                                </button>
+
+                                <!--begin::Modal-->
+                                <div class="modal fade" id="kt_datepicker_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật quyết định</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i aria-hidden="true" class="ki ki-close"></i>
+                                                </button>
+                                            </div>
+                                            <form class="form">
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">File quyết định <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="uppy" id="kt_uppy_1">
+                                                                <div class="uppy-wrapper text-center">
+                                                                    <span class="form-text text-muted float-right">Max file size is 5MB and max number of files is 1.</span>
+                                                                </div>
+                                                                <div class="uppy-list"></div>
+                                                                <div class="uppy-status"></div>
+                                                                <div class="uppy-informer uppy-informer-min"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Số quyết định <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group date">
+                                                                <input id="decision_number" type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label text-left col-lg-3 col-md-3 col-sm-12">Ngày ban hành <span style='color:red'>*</span>:</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" readonly value="@DateTime.Today.ToString("dd/MM/yyyy")" id="kt_datepicker_3_modal" />
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text">
+                                                                        <i class="la la-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal">Đóng</button>
+                                                    <button type="button" id="SubmitPolicyButton" onclick="SubmitPolicy()" class="btn btn-secondary">Cập nhật</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Modal-->
+                            </div>
+                        }
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="card card-custom chinhsach-container">
@@ -265,20 +341,20 @@
                         <tbody>
                             @foreach (var item in Costs)
                             {
-                            <tr>
-                                <td class="align-middle">@item.content</td>
-                                <td class="align-middle">@item.sponsoring_organization</td>
-                                <td class="align-middle">@item.detail</td>
-                                <td>
-                                    <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
-                                </td>
-                                <td>
-                                    <label class="checkbox @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "checkbox-disabled")">
-                                        <input data-id="@item.cost_id" type="checkbox" @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "disabled") @(item.is_accepted ? "checked" : "") />
-                                        <span></span>
-                                    </label>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="align-middle">@item.content</td>
+                                    <td class="align-middle">@item.sponsoring_organization</td>
+                                    <td class="align-middle">@item.detail</td>
+                                    <td>
+                                        <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
+                                    </td>
+                                    <td>
+                                        <label class="checkbox @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "checkbox-disabled")">
+                                            <input data-id="@item.cost_id" type="checkbox" @(ConferenceDetail.StatusID == 2 && !item.is_accepted ? "" : "disabled") @(item.is_accepted ? "checked" : "") />
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                </tr>
                             }
                             <tr>
                                 <th scope="row">Tổng cộng</th>
@@ -288,10 +364,19 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <th scope="row">Hoàn ứng</th>
+                                <th class="align-middle" scope="row">Hoàn ứng</th>
                                 <td></td>
                                 <td></td>
-                                <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                                <td>
+                                    @if (ConferenceDetail.StatusID == 4)
+                                    {
+                                        <input oninput="numberWithCommas(this)" type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="0">
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span>
+                                    }
+                                </td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -303,6 +388,20 @@
                                 <button class="btn btn-success" onclick="SubmitCost()">Xét duyệt</button>
                             </div>
                         </div>
+                    }
+                    else if (ConferenceDetail.StatusID == 4)
+                    {
+                        <div class="col-lg-12 col-xl-12" style="text-align: right;">
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success" onclick="SubmitReimbursement()">Lưu và kết thúc</button>
+                            </div>
+                        </div>
+                        <script>
+                            function numberWithCommas(ele) {
+                                var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                $(ele).val(x);
+                            }
+                        </script>
                     }
                 </div>
             </div>
@@ -331,27 +430,22 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
+                            <th scope="col">Thời gian</th>
                             <th scope="col">Quyền</th>
                             <th scope="col">Người duyệt</th>
                             <th scope="col">Bình luận</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Giảng viên</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Trưởng bộ phận</td>
-                            <td>Cô Nguyên</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Nhân viên</td>
-                            <td>Chị Yến</td>
-                            <td></td>
-                        </tr>
+                        @foreach (var item in ApprovalProcesses)
+                        {
+                            <tr>
+                                <td>@item.CreatedDate</td>
+                                <td>@item.PositionName</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Comment</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -377,39 +471,162 @@
         </div>
         <div id="ConversationInformationChild1" class="collapse show" data-parent="#ConversationInformation">
             <div class="card-body">
-                <form>
-                    <div class="row">
-                        <div class="col-10">
-                            <input class="form-control" type="text" value="" id="example-text-input" />
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="btn btn-block btn-success">Gửi</button>
-                        </div>
-                    </div>
-                </form>
-                <br />
-                <table class="col-12 table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col" width="15%">Thời gian</th>
-                            <th scope="col" width="15%">Người gửi</th>
-                            <th scope="col">Tin nhắn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>01/01/21-10:00AM</td>
-                            <td>Ngô Tùng Sơn</td>
-                            <td>Sao lâu có phản hồi thế em</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ConferenceDetail.RequestID }); }
             </div>
         </div>
     </div>
 </div>
 
 @section scripts {
+    @*cập nhật quyết định*@
+    <link href="~/Content/assets/plugins/custom/uppy/uppy.bundle.css" rel="stylesheet" />
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js"></script>
+    <script>
+        var arrows;
+        if (KTUtil.isRTL()) {
+            arrows = {
+                leftArrow: '<i class="la la-angle-right"></i>',
+                rightArrow: '<i class="la la-angle-left"></i>'
+            }
+        } else {
+            arrows = {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+        }
+
+        // enable clear button for modal demo
+        $('#kt_datepicker_3_modal').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayBtn: "linked",
+            todayHighlight: true,
+            templates: arrows,
+            format: "dd/mm/yyyy"
+        });
+
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
+        const save_loader = new LoaderBtn($("#SubmitPolicyButton"));
+
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.pdf']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+
+        function SubmitPolicy() {
+            let decision_number = $("#decision_number").val().trim();
+            let valid_date = $("#kt_datepicker_3_modal").val();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Chưa có file quyết định");
+                return false;
+            }
+            if (decision_number == "") {
+                toastr.error("Chưa nhập số quyết định");
+                return false;
+            }
+            var fd = new FormData();
+            fd.append("decision_file", uppy1.getFiles()[0].data);
+            fd.append("valid_date", valid_date);
+            fd.append("decision_number", decision_number);
+            fd.append("request_id", @ConferenceDetail.RequestID);
+
+            save_loader.startLoading();
+            $.ajax({
+                url: "/ConferenceSponsor/SubmitPolicy",
+                method: "post",
+                dataType: "json",
+                complete: function (result) {
+                    if (result.responseJSON.success) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(result.content);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                data: fd,
+                processData: false,
+                contentType: false,
+            });
+        }
+    </script>
+    @*xét duyệt tiêu chí/chi phí*@
     <script>
         var ConferenceDetail = document.getElementById("ConferenceDetail").parentElement.removeAttribute("class");
 
@@ -429,6 +646,10 @@
                     costs.push($("#ExpectedCostChild1 input[type='checkbox']")[i].dataset.id);
             }
             createAndSubmitForm("/ConferenceSponsor/UpdateCosts", JSON.stringify(costs))
+        }
+
+        function SubmitReimbursement() {
+            createAndSubmitForm("/ConferenceSponsor/UpdateReimbursement", $("#ReimbursementInput").val())
         }
 
         function createAndSubmitForm(url, data) {

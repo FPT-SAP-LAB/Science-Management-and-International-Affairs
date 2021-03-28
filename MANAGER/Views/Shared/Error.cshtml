@@ -1,13 +1,14 @@
-﻿
+﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     Layout = null;
+    bool show_error_stack = true; //chạy thật thì tắt bỏ cái này đi
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <base href="../../../">
     <meta charset="utf-8" />
-    <title>Lỗi | @ViewBag.code</title>
+    <title>Error | @HttpContext.Current.Response.StatusDescription</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -25,30 +26,39 @@
     <link href="~/Content/assets/css/themes/layout/brand/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />        <!--end::Layout Themes-->
 
-    <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="https://daihoc.fpt.edu.vn/favicon.ico" />
 
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
-
     <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
         <!--begin::Error-->
-        <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="background-image: url(../Content/assets/media/error/bg1.jpg);">
+        <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="        background-image: url(../Content/assets/media/error/bg5.jpg);">
             <!--begin::Content-->
-            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">404</h1>
-            <p class="font-size-h3 text-muted font-weight-normal">
-                Có lỗi xảy ra! Vui lòng thử lại sau
-            </p>
-            <!--end::Content-->
-        </div>
+            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">
+                @HttpContext.Current.Response.StatusCode <!--<img width="170rem" src="~/Content/assets/media/error/smile.gif" />-->
+            </h1>
+                        <p class="font-size-h3 text-muted font-weight-normal">
+                            @HttpContext.Current.Response.StatusDescription
+                        </p>
+                        @if (show_error_stack)
+                        {
+                            <div>
+                                <p>
+                                    <pre>
+                    @ViewBag.exception
+                    </pre>
+                                </p>
+                            </div>
+                        }
+                        <!--------------------------------------------------------------------------------------------->
+                        <!--end::Content-->
+</div>
         <!--end::Error-->
     </div>
     <!--end::Main-->
-
-
-    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
     <!--begin::Global Config(global config for global JS scripts)-->
     <script>
         var KTAppSettings = {

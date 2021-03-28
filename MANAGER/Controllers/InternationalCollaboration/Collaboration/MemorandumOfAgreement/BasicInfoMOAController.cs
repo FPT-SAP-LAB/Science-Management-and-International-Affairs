@@ -29,6 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -42,6 +43,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -55,6 +57,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -68,6 +71,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -81,6 +85,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -94,6 +99,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -107,6 +113,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
@@ -114,12 +121,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.editExtraMOA(input, int.Parse(id));
+                moa.editExtraMOA(input);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }

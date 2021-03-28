@@ -72,22 +72,22 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="symbol-label" style="background-image: url('https://2.pik.vn/2021cd188198-38f1-43f1-ad94-9874818439c9.jpg')"></div>
+                    <div class="symbol-label" style="background-image: url('@ViewBag.profile.avatar')"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div>
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
-                        Bùi Ngọc Anh
+                        @ViewBag.profile.name
                     </a>
                     <div class="text-muted">
-                        <span class="label label-success label-pill label-inline mr-2">Chức danh ghi ở đây</span>
+                        <span class="label label-success label-pill label-inline mr-2">@ViewBag.profile.position</span>
                     </div>
                     <br/>
                     <div class="text-muted">
-                        Giảng viên
+                        @ViewBag.profile.title
                     </div>
                     <div class="mt-2">
-                        FU Hà Nội
+                        @ViewBag.profile.office
                     </div>
                 </div>
             </div>
@@ -96,11 +96,11 @@
             <div class="py-9">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="font-weight-bold mr-2">Email:</span>
-                    <a href="#" class="text-muted text-hover-primary">anhbn@fe.edu.vn</a>
+                    <a href="#" class="text-muted text-hover-primary">@ViewBag.profile.email</a>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="font-weight-bold mr-2">ĐT:</span>
-                    <span class="text-muted">0969696969</span>
+                    <span class="text-muted">@ViewBag.profile.phone</span>
                 </div>
                 <div class="d-flex align-items-center justify-content-between">
                     @*<span class="font-weight-bold mr-2">Location:</span>
@@ -111,7 +111,7 @@
             <!--begin::Nav-->
             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/ViewInfo" class="research-info-link navi-link py-4">
+                    <a href="/Researchers/ViewInfo?id=@ViewBag.profile.id" class="research-info-link navi-link py-4">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-user icon-md"></i>
                         </span>
@@ -121,7 +121,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Biography" class="research-info-link navi-link py-4">
+                    <a href="/Researchers/Biography?id=@ViewBag.profile.id" class="research-info-link navi-link py-4">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-history icon-md"></i>
                         </span>
@@ -131,7 +131,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Publications" class="research-info-link navi-link py-4 ">
+                    <a href="/Researchers/Publications?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 ">
                         <span class="navi-icon mr-2">
                             <i class="far fa-newspaper icon-md"></i>
                         </span>
@@ -141,7 +141,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Rewards" class="research-info-link navi-link py-4 ">
+                    <a href="/Researchers/Rewards?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 ">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-certificate icon-md"></i>
                         </span>

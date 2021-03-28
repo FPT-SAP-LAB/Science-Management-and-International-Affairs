@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Chi tiết đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 
     JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
     ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
@@ -11,6 +10,8 @@
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
+    DecisionDetail Decision = output["DecisionDetail"].ToObject<DecisionDetail>();
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 <style>
     .chinhsach-container {
@@ -133,18 +134,28 @@
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))</a>
                             </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Quyết định:</span>
-                                <a href="https://drive.google.com/file/d/1vYhSOoBNbv22v-quSb_SS52qKUML1II8/view?usp=sharing" class="text-muted text-hover-primary">Xem</a>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
-                                <span class="text-muted font-weight-bold">123456</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
-                                <a href="#" class="text-muted text-hover-primary">1234567</a>
-                            </div>
+                            @if (ConferenceDetail.FinishedDate != null)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày kết thúc đề nghị:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
+                                </div>
+                            }
+                            @if (ConferenceDetail.FormalityID == 2)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">File quyết định:</span>
+                                    <a href="@Decision.Link" class="text-muted text-hover-primary">Xem</a>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                    <span class="text-muted font-weight-bold">@Decision.DecisionNumber</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                    <a href="#" class="text-muted text-hover-primary">@Decision.ValidDate.ToString(rm.GetString("DateFormat"))</a>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">
@@ -379,7 +390,4 @@
     </div>
 </div>
 @section scripts{
-    <script>
-        var ID = "@ViewBag.id"
-    </script>
 }

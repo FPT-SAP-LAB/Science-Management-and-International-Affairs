@@ -199,7 +199,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public void addMOU(MOUAdd input)
+        public void addMOU(MOUAdd input, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -220,7 +220,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_note = input.BasicInfo.mou_note,
                         evidence = input.BasicInfo.evidence is null ? "" : input.BasicInfo.evidence,
                         office_id = input.BasicInfo.office_id,
-                        account_id = 1,
+                        account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,
                         is_deleted = false,
                         noti_count = 0
@@ -337,7 +337,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public ExcelPackage ExportMOUExcel()
+        public MemoryStream ExportMOUExcel()
         {
             string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
             string filename = "MOU.xlsx";
@@ -359,20 +359,26 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
                     excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
                     excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_email;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_phone;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).mou_start_date;
-                    excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_end_date;
-                    excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).scope_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).mou_status_name;
+                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_email;
+                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).contact_point_phone;
+                    excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_start_date.ToString("dd'/'MM'/'yyyy");
+                    excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).mou_end_date.ToString("dd'/'MM'/'yyyy");
+                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).office_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).scope_abbreviation;
+                    excelWorksheet.Cells[i + startRow, 14].Value = listMOU.ElementAt(i).mou_status_id == 1 ? "Active" : "Inactive";
                 }
                 string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                string downloadFile = "MOUDownload.xlsx";
+                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
                 excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
-                return excelPackage;
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    excelPackage.SaveAs(memoryStream);
+                    memoryStream.Position = 0;
+                    return memoryStream;
+                }
             }
         }
         public void deleteMOU(int mou_id)

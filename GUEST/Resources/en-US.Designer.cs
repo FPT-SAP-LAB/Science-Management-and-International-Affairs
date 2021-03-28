@@ -61,6 +61,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Academic Activity.
+        /// </summary>
+        public static string AcademicActivity {
+            get {
+                return ResourceManager.GetString("AcademicActivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account number.
         /// </summary>
         public static string AccNo {
@@ -84,6 +93,15 @@ namespace GUEST.Resources {
         public static string AddAu {
             get {
                 return ResourceManager.GetString("AddAu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
             }
         }
         
@@ -313,6 +331,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domestic.
         /// </summary>
         public static string Domestic {
@@ -327,6 +354,24 @@ namespace GUEST.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please return to the home page.
+        /// </summary>
+        public static string EmptyContentDetail {
+            get {
+                return ResourceManager.GetString("EmptyContentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This article is not available in your language version.
+        /// </summary>
+        public static string EmptyContentName {
+            get {
+                return ResourceManager.GetString("EmptyContentName", resourceCulture);
             }
         }
         
@@ -538,6 +583,60 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load more.
+        /// </summary>
+        public static string LoadMore {
+            get {
+                return ResourceManager.GetString("LoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postgraduate Education.
+        /// </summary>
+        public static string LongTerm {
+            get {
+                return ResourceManager.GetString("LongTerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPT Program.
+        /// </summary>
+        public static string LongTermFPTProgram {
+            get {
+                return ResourceManager.GetString("LongTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Introduction.
+        /// </summary>
+        public static string LongTermIntroduction {
+            get {
+                return ResourceManager.GetString("LongTermIntroduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Program.
+        /// </summary>
+        public static string LongTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("LongTermPartnerProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to March.
         /// </summary>
         public static string Mar {
@@ -601,6 +700,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to October.
         /// </summary>
         public static string Oct {
@@ -646,6 +754,42 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Partner.
+        /// </summary>
+        public static string Partner {
+            get {
+                return ResourceManager.GetString("Partner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner detail.
+        /// </summary>
+        public static string PartnerDetail {
+            get {
+                return ResourceManager.GetString("PartnerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner list.
+        /// </summary>
+        public static string PartnerList {
+            get {
+                return ResourceManager.GetString("PartnerList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Name.
+        /// </summary>
+        public static string PartnerName {
+            get {
+                return ResourceManager.GetString("PartnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Patent license date.
         /// </summary>
         public static string PatentDate {
@@ -682,6 +826,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Program.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time.
+        /// </summary>
+        public static string ProgramStart {
+            get {
+                return ResourceManager.GetString("ProgramStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publish date.
         /// </summary>
         public static string PublishDate {
@@ -709,6 +871,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publish Time.
+        /// </summary>
+        public static string PublishTime {
+            get {
+                return ResourceManager.GetString("PublishTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quality.
         /// </summary>
         public static string Quality {
@@ -723,6 +894,15 @@ namespace GUEST.Resources {
         public static string Record {
             get {
                 return ResourceManager.GetString("Record", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration Deadline.
+        /// </summary>
+        public static string RegistrationDeadline {
+            get {
+                return ResourceManager.GetString("RegistrationDeadline", resourceCulture);
             }
         }
         
@@ -835,6 +1015,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FPT Program.
+        /// </summary>
+        public static string ShortTermFPTProgram {
+            get {
+                return ResourceManager.GetString("ShortTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Program.
+        /// </summary>
+        public static string ShortTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("ShortTermPartnerProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
         public static string Show {
@@ -867,6 +1065,15 @@ namespace GUEST.Resources {
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specilazation.
+        /// </summary>
+        public static string Specilazation {
+            get {
+                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         
@@ -939,6 +1146,15 @@ namespace GUEST.Resources {
         public static string WorkUnit {
             get {
                 return ResourceManager.GetString("WorkUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

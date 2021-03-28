@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
+using BLL.ModelDAL;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
+using GUEST.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,90 +15,66 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
 {
     public class PartnerController : Controller
     {
+        private static readonly PartnerRepo partnerRePo = new PartnerRepo();
+        private static readonly CountryRepo countryRepo = new CountryRepo();
+        private static readonly SpecializationRepo specializationRepo = new SpecializationRepo();
+        readonly System.Resources.ResourceManager rm = LanguageResource.GetResourceManager();
         // GET: Partner
         public ActionResult List()
         {
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Danh sách đối tác", "Partner")
+                new PageTree(rm.GetString("PartnerList"), "/Partner")
             };
+            ViewBag.countries = countryRepo.GetCountries();
+            ViewBag.specializations = specializationRepo.GetSpecializations(LanguageResource.GetCurrentLanguageID());
             ViewBag.pagesTree = pagesTree;
             return View();
         }
 
-        //demo code back end thì xóa đi
-        //------------------------------------------------
-
-        class Person
+        [HttpPost]
+        public ActionResult List(SearchPartner searchPartner)
         {
-            private string partner_name_mou_code; // field
-            private string country_name; // field
-            private string specialization; // field
-            private string website; // field
-
-            public Person()
+            try
             {
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                searchPartner.language = LanguageResource.GetCurrentLanguageID();
+                BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
             }
-            public Person(string partner_name_mou_code, string country_name, string specialization, string website)
+            catch (Exception e)
             {
-                this.partner_name_mou_code = partner_name_mou_code;
-                this.country_name = country_name;
-                this.specialization = specialization;
-                this.website = website;
-            }
-
-            public string Partner_name_mou_code   // property
-            {
-                get { return partner_name_mou_code; }   // get method
-                set { partner_name_mou_code = value; }  // set method
-            }
-            public string Country_name   // property
-            {
-                get { return country_name; }   // get method
-                set { country_name = value; }  // set method
-            }
-            public string Specialization   // property
-            {
-                get { return specialization; }   // get method
-                set { specialization = value; }  // set method
-            }
-            public string Website   // property
-            {
-                get { return website; }   // get method
-                set { website = value; }  // set method
+                return Json(new { success = false, error = e.Message });
             }
         }
-        //------------------------------------------------
 
-        public ActionResult Load_List()
+        [HttpPost]
+        public ActionResult Detail(int id)
         {
-            List<Person> list = new List<Person>();
-
-            for (int i = 0; i < 100; i++)
+            try
             {
-                Person temp = new Person();
-                if (i % 2 == 0)
-                {
-                    temp = new Person("2021/01:SBI Graduate School", "Japan", "CNNT", "www");
-                }
-                else
-                {
-                    temp = new Person("2021/01:SBI Graduate School", "Japan", "CNNT", "https://");
-                }
-                list.Add(temp);
-            }
-            return Json(new { success = true, data = list }, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult Partner_Detail(string id)
-        {
-            var pagesTree = new List<PageTree>
+                var pagesTree = new List<PageTree>
             {
-                new PageTree("Danh sách đối tác", "/Partner/List"),
-                new PageTree("Thông tin chi tiết đối tác", "/Partner/Partner_Detail?" + id)
+                new PageTree(rm.GetString("PartnerList"), "/Partner/List"),
+                new PageTree(rm.GetString("PartnerDetail"), "/Partner/Partner_Detail?" + id)
             };
-            ViewBag.pagesTree = pagesTree;
-            return View();
+                ViewBag.partnerArticle = partnerRePo.LoadEditPartnerGuest(id, LanguageResource.GetCurrentLanguageID());
+                ViewBag.specializations_selected = partnerRePo.GetPartnerDetailSpec(id);
+                ViewBag.pagesTree = pagesTree;
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
     }
 }

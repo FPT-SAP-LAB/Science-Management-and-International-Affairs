@@ -16,7 +16,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult List()
         {
             ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
-            ViewBag.AAType = repo.getType();
+            ViewBag.AAType = repo.getType(1);
             return View();
         }
         [HttpPost]
@@ -56,6 +56,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(String.Empty);
             }
         }

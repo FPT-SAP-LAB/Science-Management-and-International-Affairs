@@ -57,6 +57,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine(e.ToString());
                             transaction.Rollback();
                         }
                     }
@@ -115,11 +116,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<subContent>();
             }
         }
-        public List<AcademicActivityType> getType()
+        public List<AcademicActivityType> getType(int language_id)
         {
             try
             {
-                List<AcademicActivityType> data = db.AcademicActivityTypes.ToList();
+                string sql = @"select al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
+                List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
             catch (Exception e)
@@ -149,6 +151,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -304,6 +307,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public baseDetail baseDetail { get; set; }
             public List<subContent> subContent { get; set; }
+            public List<AcademicActivityType> types { get; set; }
         }
         public class InfoSumDetail
         {
@@ -324,6 +328,24 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string contact_point_name { get; set; }
             public string contact_point_phone { get; set; }
             public string contact_point_email { get; set; }
+        }
+        public class Ques
+        {
+            public int question_id { get; set; }
+            public string title { get; set; }
+            public int answer_type_id { get; set; }
+            public int is_compulsory { get; set; }
+        }
+        public class QuesOption
+        {
+            public int question_id { get; set; }
+            public string option_title { get; set; }
+        }
+        public class baseForm
+        {
+            public Form form { get; set; }
+            public List<Ques> ques { get; set; }
+            public List<QuesOption> quesOption { get; set; }
         }
     }
 }
