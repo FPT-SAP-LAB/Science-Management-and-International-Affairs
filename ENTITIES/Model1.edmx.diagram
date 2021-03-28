@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0ee765b24f2a464b8c6ae5c7c28e4688" Name="Diagram1">
+      <Diagram DiagramId="d34c3ee691b144a99e4668e019ec75c3" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="4.5" PointY="61.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="5.75" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
@@ -318,8 +318,6 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeoplePosition" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeopleTitle" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.AreaCare" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.WorkingProcess" Width="1.5" PointX="3.875" PointY="0.75" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__WorkingPr__peppl__705EA0EB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
