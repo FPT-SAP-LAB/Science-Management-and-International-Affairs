@@ -703,7 +703,7 @@
                 } else {
                     toastr.error('Đối tác này đã được thêm');
                 }
-        }
+            }
 
             function ContentAddedIsDuplicated(start_date_string,partner_name) {
                 var obj =
@@ -886,7 +886,6 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
-                        alert(data);
                         if (data != "") {
                             toastr.error("Thông tin ký kết đối tác " + partner_name + " đã có trong biên bản " + data + ".");
                         } else {
@@ -1043,7 +1042,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
-                window.location = 'MOU/' + 'Download?fileGuid=' + data.data.FileGuid
+                window.location = '../MOU/' + 'Download?fileGuid=' + data.data.FileGuid
                     + '&filename=' + data.data.FileName;
             },
             error: function () {
@@ -1089,7 +1088,7 @@
                             if (data = "") {
                                 //Swal.fire("Good job!", "You clicked the button!", "error");
                             } else {
-                                Swal.fire("Deleted!", "Biên bản ghi nhớ đã được xóa", "success");
+                                Swal.fire("Thành công", "Biên bản ghi nhớ đã được xóa", "success");
                                 mou_table.ajax.reload();
                             }
                         },

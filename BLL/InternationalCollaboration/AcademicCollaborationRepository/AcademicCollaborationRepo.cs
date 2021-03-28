@@ -302,28 +302,25 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 try
                 {
+                    db.Configuration.LazyLoadingEnabled = false;
                     //check duplicate academic collaboration: person, partner, collab_scope base on time
                     if (checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab))
                     {
                         Person person;
-                        var person_id = 0;
+                        var person_id = obj_person.person_id;
                         Partner partner;
-                        var partner_id = 0;
+                        var partner_id = obj_partner.partner_id;
                         var partner_scope_id = 0;
+                        PartnerScope partner_scope;
 
                         //check available person
                         if (!obj_person.available_person)
                         {
-                            //add new person
-                            //add information to People
-                            person = new Person()
-                            {
-                                name = obj_person.person_name,
-                                email = obj_person.person_email
-                            };
-                            db.People.Add(person);
-                            db.SaveChanges();
+                            //add person
+                            person = savePerson(obj_person);
+                            person_id = person.people_id;
 
+                            //add office
                             //check office_id with Office
                             var office = db.Offices.Find(obj_person.person_profile_office_id);
                             if (office == null)
@@ -332,31 +329,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             else
                             {
-                                var profile = new Profile()
-                                {
-                                    people_id = person.people_id,
-                                    office_id = obj_person.person_profile_office_id
-                                };
-                                db.Profiles.Add(profile);
+                                saveProfile(person, obj_person);
                             }
-
-                            //pass person_id value
-                            person_id = person.people_id;
-                        }
-                        else
-                        {
-                            person_id = obj_person.person_id;
                         }
 
                         //check available partner
                         if (!obj_partner.available_partner)
                         {
                             //add new partner
-                            partner = new Partner()
-                            {
-                                partner_name = obj_partner.partner_name
-                            };
-
                             //check country_id with Country
                             var country = db.Countries.Find(obj_partner.partner_country_id);
                             if (country == null)
@@ -365,79 +345,46 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             else
                             {
-                                partner.country_id = obj_partner.partner_country_id;
-                                db.Partners.Add(partner);
-                                db.SaveChanges();
-
-                                //pass partner_id value
+                                //add Article 
+                                var article = saveArticle(account_id);
+                                //add ArticleVersion
+                                saveArticleVersion(obj_partner, article);
+                                //add Partner
+                                partner = savePartner(obj_partner, article);
+                                //get corresponsing partner_id value
                                 partner_id = partner.partner_id;
+                                //add partner_id & scope_id to PartnerScope
+                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
                             }
                         }
                         else
                         {
-                            partner_id = obj_partner.partner_id;
                             //check exist partner_scope
-                            var partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
+                            partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
                             if (partner_scope != null)
                             {
-                                //get corresponding partner_scope_id
-                                partner_scope_id = partner_scope.partner_scope_id;
+                                //incease 1 to referecen count
+                                increaseReferenceCountOfPartnerScope(partner_scope);
                             }
                             else
                             {
                                 //add partner_id & scope_id to PartnerScope
-                                partner_scope = new PartnerScope()
-                                {
-                                    partner_id = partner_id,
-                                    scope_id = obj_partner.collab_scope_id
-                                };
-                                db.PartnerScopes.Add(partner_scope);
-                                db.SaveChanges();
-
-                                //get corresponding partner_scope_id
-                                partner_scope_id = partner_scope.partner_scope_id;
+                                partner_scope = savePartnerScope(partner_id, obj_partner);
                             }
+                            //get corresponding partner_scope_id
+                            partner_scope_id = partner_scope.partner_scope_id;
                         }
 
-                        //add infor to AcademicCollaboration
-                        var academic_collaboration = new AcademicCollaboration()
-                        {
-                            direction_id = direction_id,
-                            collab_type_id = collab_type_id,
-                            people_id = person_id,
-                            partner_scope_id = partner_scope_id,
-                            plan_study_start_date = obj_academic_collab.plan_start_date,
-                            plan_study_end_date = obj_academic_collab.plan_end_date,
-                            actual_study_start_date = obj_academic_collab.actual_start_date,
-                            actual_study_end_date = obj_academic_collab.actual_end_date,
-                            is_supported = obj_academic_collab.support,
-                            note = obj_academic_collab.note
-                        };
-                        db.AcademicCollaborations.Add(academic_collaboration);
-                        db.SaveChanges();
+                        //add Academic Collab
+                        var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
 
                         //add infor to File
-                        var evidence_file = new File()
-                        {
-                            name = evidence.FileName,
-                            link = f.WebViewLink,
-                            file_drive_id = f.Id
-                        };
-                        db.Files.Add(evidence_file);
-                        db.SaveChanges();
+                        var evidence_file = saveFile(f, evidence);
 
                         //add infor to CollaborationStatusHistory
-                        var collab_status_hist = new CollaborationStatusHistory()
-                        {
-                            collab_id = academic_collaboration.collab_id,
-                            collab_status_id = obj_academic_collab.status_id,
-                            change_date = DateTime.Now,
-                            file_id = evidence_file.file_id,
-                            account_id = account_id
-                        };
-                        db.CollaborationStatusHistories.Add(collab_status_hist);
-                        db.SaveChanges();
-
+                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration, obj_academic_collab, evidence_file, account_id);
                         trans.Commit();
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Thêm cán bộ giảng viên thành công.");
                     }
@@ -465,11 +412,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 {
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
                                                                 &&
-                                                                ((x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
+                                                                x.collab_id != obj_academic_collab.collab_id
+                                                                &&
+                                                                ((x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
                                                                 ||
-                                                                (x.plan_study_start_date >= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                                (x.plan_study_start_date <= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
                                                                 ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
+                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date))).FirstOrDefault();
                     if (academicCollaboration != null)
                     {
                         return false;
@@ -477,6 +426,238 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
             }
             return true;
+        }
+
+        public Person savePerson(SaveAcadCollab_Person obj_person)
+        {
+            Person person;
+            try
+            {
+                //add new person
+                //add information to People
+                person = new Person()
+                {
+                    name = obj_person.person_name,
+                    email = obj_person.person_email
+                };
+                db.People.Add(person);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return person;
+        }
+
+        public void saveProfile(Person person, SaveAcadCollab_Person obj_person)
+        {
+            try
+            {
+                var profile = new Profile()
+                {
+                    people_id = person.people_id,
+                    office_id = obj_person.person_profile_office_id,
+                    mssv_msnv = "" //can make issues for Sicence Management
+                };
+                db.Profiles.Add(profile);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Article saveArticle(int account_id)
+        {
+            Article article;
+            try
+            {
+                //add Article
+                article = new Article()
+                {
+                    need_approved = false,
+                    article_status_id = 2, //Chấp thuận
+                    account_id = account_id
+                };
+                db.Articles.Add(article);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return article;
+        }
+
+        public void saveArticleVersion(SaveAcadCollab_Partner obj_partner, Article article)
+        {
+            try
+            {
+                //add ArticleVersion
+                var articleVersion = new ArticleVersion()
+                {
+                    publish_time = DateTime.Now,
+                    version_title = obj_partner.partner_name,
+                    article_id = article.article_id,
+                    language_id = 1 //Vietnamese
+                };
+                db.ArticleVersions.Add(articleVersion);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Partner savePartner(SaveAcadCollab_Partner obj_partner, Article article)
+        {
+            Partner partner;
+            try
+            {
+                partner = new Partner()
+                {
+                    partner_name = obj_partner.partner_name,
+                    country_id = obj_partner.partner_country_id,
+                    article_id = article.article_id
+                };
+                db.Partners.Add(partner);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return partner;
+        }
+
+        public PartnerScope savePartnerScope(int partner_id, SaveAcadCollab_Partner obj_partner)
+        {
+            PartnerScope partner_scope;
+            try
+            {
+                partner_scope = new PartnerScope()
+                {
+                    partner_id = partner_id,
+                    scope_id = obj_partner.collab_scope_id,
+                    reference_count = 1 //init first count for new PartnerScope
+                };
+                db.PartnerScopes.Add(partner_scope);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return partner_scope;
+        }
+
+        public void increaseReferenceCountOfPartnerScope(PartnerScope partner_scope)
+        {
+            try
+            {
+                partner_scope.reference_count += 1;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AcademicCollaboration saveAcademicCollaboration(int direction_id, int collab_type_id, int person_id, int partner_scope_id,
+            SaveAcadCollab_AcademicCollaboration obj_academic_collab)
+        {
+            AcademicCollaboration academic_collaboration;
+            try
+            {
+                //add infor to AcademicCollaboration
+                academic_collaboration = new AcademicCollaboration()
+                {
+                    direction_id = direction_id,
+                    collab_type_id = collab_type_id,
+                    people_id = person_id,
+                    partner_scope_id = partner_scope_id,
+                    plan_study_start_date = obj_academic_collab.plan_start_date,
+                    plan_study_end_date = obj_academic_collab.plan_end_date,
+                    actual_study_start_date = obj_academic_collab.actual_start_date,
+                    actual_study_end_date = obj_academic_collab.actual_end_date,
+                    is_supported = obj_academic_collab.support,
+                    note = obj_academic_collab.note
+                };
+                db.AcademicCollaborations.Add(academic_collaboration);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return academic_collaboration;
+        }
+
+        public File saveFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
+        {
+            File evidence_file = new File();
+            try
+            {
+                if (evidence != null)
+                {
+                    //add infor to File
+                    evidence_file.name = evidence.FileName;
+                    evidence_file.link = f.WebViewLink;
+                    evidence_file.file_drive_id = f.Id;
+                    db.Files.Add(evidence_file);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return evidence_file;
+        }
+
+        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence,
+            AcademicCollaboration academic_collaboration,
+            SaveAcadCollab_AcademicCollaboration obj_academic_collab,
+            File evidence_file,
+            int account_id)
+        {
+            CollaborationStatusHistory collab_status_hist;
+            try
+            {
+                if (evidence != null)
+                {
+                    //add infor to CollaborationStatusHistory
+                    collab_status_hist = new CollaborationStatusHistory()
+                    {
+                        collab_id = academic_collaboration.collab_id,
+                        collab_status_id = obj_academic_collab.status_id,
+                        change_date = DateTime.Now,
+                        file_id = evidence_file.file_id,
+                        account_id = account_id
+                    };
+                    db.CollaborationStatusHistories.Add(collab_status_hist);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    //add infor to CollaborationStatusHistory
+                    collab_status_hist = new CollaborationStatusHistory()
+                    {
+                        collab_id = academic_collaboration.collab_id,
+                        collab_status_id = obj_academic_collab.status_id,
+                        change_date = DateTime.Now,
+                        account_id = account_id
+                    };
+                    db.CollaborationStatusHistories.Add(collab_status_hist);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return collab_status_hist;
         }
 
         //EDIT
@@ -488,7 +669,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 var sql = @"select
                             collab.collab_id, collab.partner_scope_id, collab.collab_type_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
                             pn.partner_id, pn.partner_name, c.country_id, c.country_name, cs.scope_id, cs.scope_name,
-                            collab.plan_study_start_date, collab.plan_study_end_date, csh.file_name, csh.file_link, csh.file_drive_id, collab.actual_study_start_date, collab.actual_study_end_date,
+                            collab.plan_study_start_date, collab.plan_study_end_date, csh.file_id, csh.file_name, csh.file_link, csh.file_drive_id, collab.actual_study_start_date, collab.actual_study_end_date,
                             acs.collab_status_id, acs.collab_status_name,
                             collab.is_supported, collab.note
                             from IA_AcademicCollaboration.AcademicCollaboration collab
@@ -499,13 +680,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             join General.People pp on collab.people_id = pp.people_id 
                             join General.[Profile] pf on pf.people_id = pp.people_id
                             join General.Office offi on pf.office_id = offi.office_id
-                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.file_name, csh2.file_link, csh2.file_drive_id
+                            join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.file_id, csh2.file_name, csh2.file_link, csh2.file_drive_id
 		                            from 
 		                            (select csh1.collab_id, MAX(csh1.change_date) 'change_date' 
 			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh1
 			                            group by csh1.collab_id) as csh1
 		                            join 
-		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date, fi.name 'file_name', fi.link 'file_link', fi.file_drive_id
+		                            (select csh2.collab_status_id, csh2.collab_id, csh2.change_date, fi.file_id, fi.name 'file_name', fi.link 'file_link', fi.file_drive_id
 			                            from IA_AcademicCollaboration.CollaborationStatusHistory csh2
 										left join General.[File] fi on fi.file_id = csh2.file_id) as csh2 
 		                            on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh 
@@ -530,6 +711,143 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 Console.WriteLine(e.ToString());
                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Lấy dữ liệu về hợp tác học thuật đã có lỗi xảy ra.");
+            }
+        }
+
+        public Google.Apis.Drive.v3.Data.File updateEvidenceFile(File old_evidence, HttpPostedFileBase new_evidence, string folder_name, int type_folder, bool is_folder)
+        {
+            Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+            //update file
+            if (new_evidence != null)
+            {
+                //update file
+                f = uploadEvidenceFile(new_evidence, folder_name, type_folder, is_folder);
+            }
+            else if (new_evidence == null && old_evidence.file_id != 0)
+            {
+                GoogleDriveService.DeleteFile(old_evidence.file_drive_id);
+            }
+            return f;
+        }
+
+        public AlertModal<AcademicCollaboration_Ext> updateAcademicCollaboration(int direction_id, int collab_type_id,
+            SaveAcadCollab_Person obj_person,
+            SaveAcadCollab_Partner obj_partner,
+            SaveAcadCollab_AcademicCollaboration obj_academic_collab,
+            Google.Apis.Drive.v3.Data.File f, File old_evidence, HttpPostedFileBase new_evidence, int account_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    //check duplicate academic collaboration: person, partner, collab_scope base on time
+                    if (checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab))
+                    {
+                        Person person;
+                        var person_id = obj_person.person_id;
+                        Partner partner;
+                        var partner_id = obj_partner.partner_id;
+                        var partner_scope_id = 0;
+                        PartnerScope partner_scope;
+
+                        //check available person
+                        if (!obj_person.available_person)
+                        {
+                            //add person
+                            person = savePerson(obj_person);
+                            person_id = person.people_id;
+
+                            //add office
+                            //check office_id with Office
+                            var office = db.Offices.Find(obj_person.person_profile_office_id);
+                            if (office == null)
+                            {
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được cơ sở tương ứng.");
+                            }
+                            else
+                            {
+                                saveProfile(person, obj_person);
+                            }
+                        }
+
+                        //check available partner
+                        if (!obj_partner.available_partner)
+                        {
+                            //add new partner
+                            //check country_id with Country
+                            var country = db.Countries.Find(obj_partner.partner_country_id);
+                            if (country == null)
+                            {
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Không thêm được quốc gia tương ứng.");
+                            }
+                            else
+                            {
+                                //add Article 
+                                var article = saveArticle(account_id);
+                                //add ArticleVersion
+                                saveArticleVersion(obj_partner, article);
+                                //add Partner
+                                partner = savePartner(obj_partner, article);
+                                //get corresponsing partner_id value
+                                partner_id = partner.partner_id;
+                                //add partner_id & scope_id to PartnerScope
+                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
+                            }
+                        }
+                        else
+                        {
+                            //check exist partner_scope
+                            partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
+                            if (partner_scope != null)
+                            {
+                                //incease 1 to referecen count
+                                increaseReferenceCountOfPartnerScope(partner_scope);
+                            }
+                            else
+                            {
+                                //add partner_id & scope_id to PartnerScope
+                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                            }
+                            //get corresponding partner_scope_id
+                            partner_scope_id = partner_scope.partner_scope_id;
+                        }
+
+                        //update infor to AcademicCollaboration
+                        AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(obj_academic_collab.collab_id);
+                        academicCollaboration.direction_id = direction_id;
+                        academicCollaboration.collab_type_id = collab_type_id;
+                        academicCollaboration.people_id = person_id;
+                        academicCollaboration.partner_scope_id = partner_scope_id;
+                        academicCollaboration.plan_study_start_date = obj_academic_collab.plan_start_date;
+                        academicCollaboration.plan_study_end_date = obj_academic_collab.plan_end_date;
+                        academicCollaboration.actual_study_start_date = obj_academic_collab.actual_start_date;
+                        academicCollaboration.actual_study_end_date = obj_academic_collab.actual_end_date;
+                        academicCollaboration.is_supported = obj_academic_collab.support;
+                        academicCollaboration.note = obj_academic_collab.note;
+                        db.SaveChanges();
+
+                        //check exist file
+                        //add file
+                        var evidence_file = saveFile(f, new_evidence);
+
+                        //add infor to CollaborationStatusHistory
+                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration, obj_academic_collab, evidence_file, account_id);
+                        trans.Commit();
+                        return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thành công", "Cập nhật cán bộ giảng viên thành công.");
+                    }
+                    else
+                    {
+                        AlertModal<AcademicCollaboration_Ext> alertModal = new AlertModal<AcademicCollaboration_Ext>(null, false, "Cảnh báo", "Với thời gian kế hoạch, CBGV đang đi học tại đối tác.");
+                        return alertModal;
+                    }
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
             }
         }
     }

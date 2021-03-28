@@ -284,7 +284,12 @@
                             if (data = "") {
                                 Swal.fire("Lỗi", "Đã có lỗi xảy ra!", "error");
                             } else {
-                                Swal.fire("Thành công", "Đã xóa thành công", "success")
+                                Swal.fire("Thành công",
+                                    "Đã xóa thành công.", "success").then(function (result) {
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
                             }
                         },
                         error: function (data) {
@@ -625,12 +630,12 @@
 <script>
         var listStatus = [
             {
-                status_id: 1,
+                status_id: 2,
                 status_name: 'Inactive'
             }
             ,
             {
-                status_id: 2,
+                status_id: 1,
                 status_name: 'Active'
             }
         ];
@@ -1061,6 +1066,26 @@
             }
         }
 
+        function MOACodeIsInvalid(mou_code) {
+            //ex : 2021/1_MOA/2.
+            var bigToken = mou_code.split("_");
+            if (bigToken.length != 2) {
+                return true;
+            } else {
+                var old_mou_code = bigToken[0].split("/");
+                if (old_mou_code.length == 2 && /^\d+$/.test(old_mou_code[0]) && /^\d+$/.test(old_mou_code[1])) {
+                    var ex_code = bigToken[1].split("/");
+                    if (ex_code.length == 2 && ex_code[0] == 'MOA' && /^\d+$/.test(ex_code[1])) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+
         function saveBasicInfo() {
             if ($('#mou_code').val().trim() == "") {
                 toastr.error('Số hiệu không được bỏ trống');
@@ -1094,7 +1119,12 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
-                        Swal.fire("Thành công!", "Thông tin được cập nhật thành công.", "success")
+                        Swal.fire("Thành công",
+                            "Thông tin được cập nhật thành công.", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                        });
                     },
                     error: function () {
                         //alert("fail");
@@ -1120,10 +1150,6 @@
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
-            else if (listTempExMOUPartnerScope.length == 0) {
-                toastr.error('Chưa có đối tác nào được thêm');
-                return;
-            }
             else {
                 var ExBasicInfo = {
                 ex_mou_code: $('#ex_mou_id_add').val() ,
@@ -1146,8 +1172,13 @@
                     success: function (data) {
                         listTempExMOUPartnerScope = [];
                         $('#add_additional_mou').modal('hide');
-                        Swal.fire("Thành công!", "Đã bổ sung biên bản ghi nhớ thành công.", "success");
-                        mou_ex.ajax.reload();
+                        //mou_ex.ajax.reload();
+                        Swal.fire("Thành công",
+                            "Đã bổ sung biên bản ghi nhớ thành công.", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                        });
                     },
                     error: function () {
                         //alert("fail");
@@ -1369,10 +1400,7 @@
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
-            else if (listTempExMOUPartnerScopeEdit.length == 0) {
-                toastr.error('Chưa có đối tác nào được thêm');
-                return;
-            } else {
+            else {
                 var ExBasicInfo = {
                     ex_mou_code: $('#ex_mou_id_edit').val() ,
                     ex_mou_sign_date: $('#mou_addition_sign_time_edit').val(),
@@ -1395,16 +1423,20 @@
                     success: function (data) {
                         listTempExMOUPartnerScopeEdit = [];
                         $('#edit_additional_mou').modal('hide');
-                        Swal.fire("Thành công!", "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success");
-                        mou_ex.ajax.reload();
+                        Swal.fire("Thành công!",
+                            "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                            });
+                        //mou_ex.ajax.reload();
                     },
                     error: function () {
                         //alert("fail");
                     }
                 });
             }
-        }
-
+    }
 
     @*mou_partner*@
         var listSpeMOUPartner = [];
@@ -1628,8 +1660,13 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
-                    Swal.fire("Thành công!", "Đã thêm đối tác thành công.", "success");
                     $('#add_partner_mou').modal('hide');
+                    Swal.fire("Thành công!",
+                        "Đã thêm đối tác thành công.", "success").then(function (result) {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
                 },
                 error: function () {
                     //alert("fail");
@@ -1691,7 +1728,6 @@
             $('#partnerListEdit').append(HTMLPartnerdata);
             $('#mou_partner_specialization_edit').append(HTMLSpedata);
             $('#mou_partner_scope_edit').append(HTMLScopedata);
-
         }
 
     function checkPartnerEdit() {
@@ -1771,7 +1807,12 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
-                    Swal.fire("Thành công!", "Đã chỉnh sửa thông tin đối tác thành công.", "success");
+                    Swal.fire("Thành công!",
+                        "Đã chỉnh sửa thông tin đối tác thành công.", "success").then(function (result) {
+                            if (result.value) {
+                                location.reload();
+                            }
+                    });
                 },
                 error: function () {
                     //alert("fail");
@@ -1799,7 +1840,12 @@
                             if (data = "") {
                                 Swal.fire("Lỗi", "Đã có lỗi xảy ra", "error");
                             } else {
-                                Swal.fire("Thành công", "Bạn đã xóa thành công", "success")
+                                Swal.fire("Thành công!",
+                                    "Bạn đã xóa thành công", "success").then(function (result) {
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                });
                             }
                         },
                         error: function (data) {
@@ -1920,11 +1966,11 @@
                     width: '150px',
                     render: function (data) {
                         var status = {
-                            1: {
+                            2: {
                                 'title': 'Inactive',
                                 'class': 'label-light-danger'
                             },
-                            2: {
+                            1: {
                                 'title': 'Active',
                                 'class': 'label-light-success'
                             }
@@ -2093,12 +2139,12 @@
 
     function confirm_delete_temp_moa(index) {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Cảnh báo?",
+            text: "Dữ liệu sẽ bị xóa!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Đóng",
             reverseButtons: true
         }).then(function (result) {
             if (result.isConfirmed) {
@@ -2164,25 +2210,30 @@
             return;
         }
         else {
-            var TempObj = {
-                partnername_add: document.getElementById("moa_partner_name_add").value,
-                represent_add: document.getElementById("moa_partner_represent_add").value,
-                specialization_add: $("#moa_partner_specialization_add").val(),
-                nation_add: document.getElementById("moa_partner_nation_add").value,
-                website_add: document.getElementById("moa_partner_website_add").value,
-                address_add: document.getElementById("moa_partner_address_add").value,
-                email_add: document.getElementById("moa_partner_email_add").value,
-                sign_date_moa_add: document.getElementById("moa_sign_date_partner_add").value,
-                phone_add: document.getElementById("moa_partner_phone_add").value,
-                coop_scope_add: $("#moa_partner_scope_add").val(),
-                partner_id: document.getElementById("moa_partner_id_add").value,
-                list_scope: listScopesMOA
+            var objCheck = listTempPartnerMOAAdd.find(x => x.partnername_add == $('#moa_partner_name_add').val());
+            if (objCheck == null) {
+                var TempObj = {
+                    partnername_add: document.getElementById("moa_partner_name_add").value,
+                    represent_add: document.getElementById("moa_partner_represent_add").value,
+                    specialization_add: $("#moa_partner_specialization_add").val(),
+                    nation_add: document.getElementById("moa_partner_nation_add").value,
+                    website_add: document.getElementById("moa_partner_website_add").value,
+                    address_add: document.getElementById("moa_partner_address_add").value,
+                    email_add: document.getElementById("moa_partner_email_add").value,
+                    sign_date_moa_add: document.getElementById("moa_sign_date_partner_add").value,
+                    phone_add: document.getElementById("moa_partner_phone_add").value,
+                    coop_scope_add: $("#moa_partner_scope_add").val(),
+                    partner_id: document.getElementById("moa_partner_id_add").value,
+                    list_scope: listScopesMOA
+                }
+                listTempPartnerMOAAdd.push(TempObj);
+                clearInputAddMOA();
+                initAndRefreshTableMOAAdd();
+                updateMOAStartDateAndMainScope();
+                $('#add_partner_moa').modal('hide');
+            } else {
+                toastr.error('Đối tác này đã được thêm');
             }
-            listTempPartnerMOAAdd.push(TempObj);
-            clearInputAddMOA();
-            initAndRefreshTableMOAAdd();
-            updateMOAStartDateAndMainScope();
-            $('#add_partner_moa').modal('hide');
         }
     }
 
@@ -2238,6 +2289,7 @@
     function updateListScopeMOA(data){
         $('#moa_partner_scope_add').empty();
         var HTMLScopesdata = "";
+        listScopesMOA = [];
         for (j = 0; j < data.length; j++) {
             HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
             var obj = {
@@ -2373,7 +2425,7 @@
         else if (compareDate($('#sign_date_moa').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
         }
-        else if (MOUCodeIsInvalid($('#moa_code').val().trim())) {
+        else if (MOACodeIsInvalid($('#moa_code').val().trim())) {
             toastr.error('Số hiệu không hợp lệ');
         }
         else {
