@@ -15,7 +15,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         // GET: AcademicActivity
         public ActionResult Index()
         {
-            int language = Models.LanguageResource.GetCurrentLanguageID(); ;
+            int language = Models.LanguageResource.GetCurrentLanguageID();
             ViewBag.title = rm.GetString("AcademicActivity");
             ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null);
             ViewBag.listActivityType = guestRepo.getListType(language);

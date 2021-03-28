@@ -121,7 +121,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (year != 0)
                 {
                     sql += " AND YEAR(ap.program_start_date) = @year";
-
                 }
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language)).ToList();
                 return obj;
