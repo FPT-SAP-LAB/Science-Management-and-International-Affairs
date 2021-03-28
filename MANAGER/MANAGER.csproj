@@ -2327,7 +2327,11 @@
     <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+
+    <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
+
     <Content Include="Views\CommentRequest\Index.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2343,9 +2347,11 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+
     <Folder Include="Views\ConferencesParticipationReport\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
