@@ -11,7 +11,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     public class AcademicActivityGuestRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-
         public List<baseAA> getBaseAA(int count, List<int> type, int language, string search)
         {
             try
@@ -80,7 +79,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
                 return new List<activityType>();
             }
         }
