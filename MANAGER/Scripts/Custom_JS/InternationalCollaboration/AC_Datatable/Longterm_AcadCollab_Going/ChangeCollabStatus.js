@@ -6,7 +6,7 @@ var partner_name;
 var change_status_save = new LoaderBtn($('#change_status_save'));
 
 //get corresponding collab_id
-$(document).on('show.bs.modal', '#change_status', function (e) {
+$(document).on('show.bs.modal', '#change_status_modal', function (e) {
     collab_id = $(e.relatedTarget).data('id');
     person_name = $(e.relatedTarget).data('person_name');
     partner_name = $(e.relatedTarget).data('partner_name');
@@ -48,19 +48,19 @@ $("#change_status_save").on("click", function () {
     change_status_save.startLoading();
 
     let evidence_file = uppy3.getFiles();
-    let status_id = $("#change_status").val();
-    let note = $("#note").val();
+    let status_id = $('#change_status').val();
+    let note = $('#status_history_note').val();
 
     let formData = new FormData();
     formData.append("collab_id", collab_id);
-    formData.append("evidence_file", evidence_file);
+    formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
     formData.append("folder_name", person_name + " - " + partner_name);
 
     formData.append("status_id", status_id);
     formData.append("note", note);
 
     $.ajax({
-        url: "/AcademicCollaboration/chageCollaborationStatus",
+        url: "/AcademicCollaboration/changeStatus",
         type: "POST",
         data: formData,
         cache: false,

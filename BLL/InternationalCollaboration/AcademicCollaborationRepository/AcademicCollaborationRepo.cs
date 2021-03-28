@@ -384,7 +384,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var evidence_file = saveFile(f, evidence);
 
                         //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration, obj_academic_collab, evidence_file, account_id);
+                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thêm cán bộ giảng viên thành công.");
                     }
@@ -616,43 +616,23 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             return evidence_file;
         }
 
-        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence,
-            AcademicCollaboration academic_collaboration,
-            SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            File evidence_file,
-            int account_id)
+        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence, int collab_id, int collab_status_id, string note, File evidence_file, int account_id)
         {
             CollaborationStatusHistory collab_status_hist;
             try
             {
-                if (evidence != null)
+                //add infor to CollaborationStatusHistory
+                collab_status_hist = new CollaborationStatusHistory()
                 {
-                    //add infor to CollaborationStatusHistory
-                    collab_status_hist = new CollaborationStatusHistory()
-                    {
-                        collab_id = academic_collaboration.collab_id,
-                        collab_status_id = obj_academic_collab.status_id,
-                        change_date = DateTime.Now,
-                        note =
-                        file_id = evidence_file.file_id,
-                        account_id = account_id
-                    };
-                    db.CollaborationStatusHistories.Add(collab_status_hist);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    //add infor to CollaborationStatusHistory
-                    collab_status_hist = new CollaborationStatusHistory()
-                    {
-                        collab_id = academic_collaboration.collab_id,
-                        collab_status_id = obj_academic_collab.status_id,
-                        change_date = DateTime.Now,
-                        account_id = account_id
-                    };
-                    db.CollaborationStatusHistories.Add(collab_status_hist);
-                    db.SaveChanges();
-                }
+                    collab_id = collab_id,
+                    collab_status_id = collab_status_id,
+                    change_date = DateTime.Now,
+                    note = note,
+                    file_id = evidence == null ? null : (int?)evidence_file.file_id,
+                    account_id = account_id
+                };
+                db.CollaborationStatusHistories.Add(collab_status_hist);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -834,7 +814,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var evidence_file = saveFile(f, new_evidence);
 
                         //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration, obj_academic_collab, evidence_file, account_id);
+                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Cập nhật cán bộ giảng viên thành công.");
                     }
@@ -878,27 +858,38 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         }
 
         //CHANGE STATUS HISTORY
-        public AlertModal<string> changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, int status_id, string note, int account_id)
+        public AlertModal<string> changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note, int account_id)
         {
-            try
+            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
-                //upload to Drive
-                Google.Apis.Drive.v3.Data.File f = uploadEvidenceFile(evidence_file, folder_name, 4, false);
-                //add file to db
-                File file = saveFile(f, evidence_file);
-                //add academic collab status history
-                AcademicCollaboration academicCollaboration = new AcademicCollaboration()
+                try
                 {
-                    collab_id = collab_id
-                };
-                SaveAcadCollab_AcademicCollaboration saveAcadCollab_AcademicCollaboration = new SaveAcadCollab_AcademicCollaboration()
+                    if (!(String.IsNullOrEmpty(status_id)))
+                    {
+                        int num_status_id = Int32.Parse(status_id);
+                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                        File file = new File();
+                        if (evidence_file != null)
+                        {
+                            //upload to Drive
+                            f = uploadEvidenceFile(evidence_file, folder_name, 4, false);
+                            //add file to db
+                            file = saveFile(f, evidence_file);
+                        }
+                        //add academic collab status history
+                        var collab_staus_hist = saveCollabStatusHistory(evidence_file, collab_id, num_status_id, note, file, account_id);
+                        dbContext.Commit();
+                        return new AlertModal<string>(null, true, "Thành công", "Chuyển trạng thái hợp tác học thuật thành công.");
+                    } else
+                    {
+                        return new AlertModal<string>(null, false, "Lỗi", "Thông tin về trạng thái chưa được chọn lựa.");
+                    }
+                }
+                catch (Exception e)
                 {
-                    collab_id = collab_id,
-                };
-                var collab_staus_hist = saveCollabStatusHistory(evidence_file, academicCollaboration, )
-            }
-            catch (Exception e)
-            {
+                    dbContext.Rollback();
+                    throw e;
+                }
             }
         }
     }

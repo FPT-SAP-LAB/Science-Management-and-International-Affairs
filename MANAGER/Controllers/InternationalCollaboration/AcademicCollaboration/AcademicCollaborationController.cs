@@ -314,7 +314,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 
         //CHANGE STATUS HISTORY
         [HttpPost]
-        public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, int status_id, string note)
+        public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note)
         {
             try
             {

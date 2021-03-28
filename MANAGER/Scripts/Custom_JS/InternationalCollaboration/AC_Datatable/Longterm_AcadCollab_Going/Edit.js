@@ -338,10 +338,18 @@ $('#edit_officer').on('show.bs.modal', function (e) {
                     $("#edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    console.log(acadCollab.file_id);
-                    console.log(acadCollab.file_name);
-                    console.log(acadCollab.file_link);
-                    console.log(acadCollab.file_drive_id);
+                    if (acadCollab.file_id != null) {
+                        uppy2.addFile({
+                            name: acadCollab.file_name, // file name
+                            type: '', // file type
+                            data: new Blob(), // file blob
+                        });
+                    }
+
+                    //console.log(acadCollab.file_id);
+                    //console.log(acadCollab.file_name);
+                    //console.log(acadCollab.file_link);
+                    //console.log(acadCollab.file_drive_id);
 
                     file = {
                         file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,
@@ -491,6 +499,10 @@ $('#edit_officer_save').on('click', function () {
     }
 });
 
+$('#edit_officer').on('hide.bs.modal', function () {
+    clearContentEditModal();
+});
+
 function clearContentEditModal() {
     //enable input and select
     $('#add_officer_email').prop('disabled', false);
@@ -513,7 +525,7 @@ function clearContentEditModal() {
     $('#add_officer_end_plan_date').val('');
 
     //clear upload file
-    $('.uppy-list').html('');
+    $('#edit_officer_upload .uppy-list').html('');
     uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
 
     $('#add_officer_start_date').val('');
