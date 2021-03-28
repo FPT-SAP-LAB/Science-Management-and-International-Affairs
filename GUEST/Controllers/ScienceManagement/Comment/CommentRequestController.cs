@@ -19,7 +19,7 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {
-            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content));
+            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content, CurrentAccount.RoleID(Session)));
         }
     }
 }

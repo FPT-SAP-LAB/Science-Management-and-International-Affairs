@@ -200,7 +200,6 @@
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
-    <Compile Include="Controllers\SettingDriveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2329,12 +2328,8 @@
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
-
     <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
-
     <Content Include="Views\CommentRequest\Index.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2350,11 +2345,8 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-
-    <Folder Include="Views\ConferencesParticipationReport\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
-
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
