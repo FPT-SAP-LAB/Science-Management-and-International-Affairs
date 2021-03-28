@@ -119,7 +119,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult CheckPartnerExistedInEditMOU(string partner_name,int mou_partner_id)
+        public ActionResult CheckPartnerExistedInEditMOU(string partner_name, int mou_partner_id)
         {
             try
             {

@@ -457,7 +457,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public string CheckPartnerExistedInMOU(int mou_id,string partner_name)
+        public string CheckPartnerExistedInMOU(int mou_id, string partner_name)
         {
             try
             {
