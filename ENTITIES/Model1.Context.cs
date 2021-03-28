@@ -148,5 +148,6 @@ namespace ENTITIES
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         public virtual DbSet<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
+        public virtual DbSet<WorkingProcess> WorkingProcesses { get; set; }
     }
 }

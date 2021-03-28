@@ -318,6 +318,8 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeoplePosition" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeopleTitle" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.AreaCare" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.WorkingProcess" Width="1.5" PointX="3.875" PointY="0.75" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__WorkingPr__peppl__705EA0EB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
