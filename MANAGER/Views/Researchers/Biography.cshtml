@@ -2,6 +2,7 @@
     ViewBag.Title = "THÔNG TIN NCV: ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES.CustomModels.ScienceManagement.Researcher;
 <style>
     .nav-link {
         font-size: 17px;
@@ -53,341 +54,273 @@
                                                 <th>Học vị</th>
                                                 <th>Nơi học tập</th>
                                                 <th>Thời gian</th>
-                                                <th>Ghi chú</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Cử nhân</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2001-2005</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Thạc sĩ</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2005-2007</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Tiến sĩ</td>
-                                                <td>Viện toán học</td>
-                                                <td>2010-2013</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-lg-12 col-xl-12" style="text-align: right">
-                                    <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm tiểu sử học tập
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-xl-3"></label>
-                                <div class="col-lg-12 col-xl-12">
-                                    <h5 class="font-weight-bold ">Quá trình công tác</h5>
-                                </div>
-                                <div class="col-lg-12 col-xl-12">
-                                    <table class="custom-add-table table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Đơn vị công tác</th>
-                                                <th>Chức danh</th>
-                                                <th>Thời gian</th>
-                                                <th>Ghi chú</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>Giảng viên</td>
-                                                <td>2001-2005</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Thạc sĩ</td>
-                                                <td>Trường ĐH Sư Phạm HN</td>
-                                                <td>2005-2007</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Tiến sĩ</td>
-                                                <td>Viện toán học</td>
-                                                <td>2010-2013</td>
-                                                <td>...</td>
-                                                <td>
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                                        <span class="svg-icon svg-icon-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                 width="24px"
-                                                                 height="24px"
-                                                                 viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                                    <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                                </g>
-                                                            </svg>
-                                                        </span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="col-lg-12 col-xl-12" style="text-align: right">
-                                    <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm tiểu sử công tác
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal hoc tap-->
-                        <div class="modal fade" id="modal_themtieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                            @foreach (AcadBiography a in ViewBag.acadList)
+                                            {
+                                                <tr>
+                                                    <td>@a.rownum</td>
+                                                    <td>@a.degree</td>
+                                                    <td>@a.place</td>
+                                                    <td>@a.time</td>
+                                                    <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td>
+                                                </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                        <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                            Thêm tiểu sử học tập
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <select type="text" class="form-control" placeholder="Học vị" id="hocvi">
-                                                        <option value="" disabled selected>Học vị</option>
-                                                        <option value="">Cử nhân</option>
-                                                        <option value="1">Thạc sĩ</option>
-                                                        <option value="2">Tiến sĩ</option>
-                                                    </select>
-                                                    <span><i class="far fa-bookmark"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Nơi học tập" id="kt_datatable_search_query">
-                                                    <span><i class="fas fa-map-pin"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
-                                                    </div>
-                                                    <input type="text" class="form-control" placeholder="Đến" name="end">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                    <span><i class="far fa-sticky-note"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- Modal cong tac-->
-                        <div class="modal fade" id="modal_themtieusu_congtac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                <div class="row">
+                                    <label class="col-xl-3"></label>
+                                    <div class="col-lg-12 col-xl-12">
+                                        <h5 class="font-weight-bold ">Quá trình công tác</h5>
+                                    </div>
+                                    <div class="col-lg-12 col-xl-12">
+                                        <table class="custom-add-table table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Đơn vị công tác</th>
+                                                    <th>Chức danh</th>
+                                                    <th>Thời gian</th>
+                                                    <th>Ghi chú</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Trường ĐH Sư Phạm HN</td>
+                                                    <td>Giảng viên</td>
+                                                    <td>2001-2005</td>
+                                                    <td>...</td>
+                                                    <td>
+                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                                                            <span class="svg-icon svg-icon-md">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                     width="24px"
+                                                                     height="24px"
+                                                                     viewBox="0 0 24 24"
+                                                                     version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
+                                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Thạc sĩ</td>
+                                                    <td>Trường ĐH Sư Phạm HN</td>
+                                                    <td>2005-2007</td>
+                                                    <td>...</td>
+                                                    <td>
+                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                                                            <span class="svg-icon svg-icon-md">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                     width="24px"
+                                                                     height="24px"
+                                                                     viewBox="0 0 24 24"
+                                                                     version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
+                                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Tiến sĩ</td>
+                                                    <td>Viện toán học</td>
+                                                    <td>2010-2013</td>
+                                                    <td>...</td>
+                                                    <td>
+                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
+                                                            <span class="svg-icon svg-icon-md">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                     width="24px"
+                                                                     height="24px"
+                                                                     viewBox="0 0 24 24"
+                                                                     version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
+                                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                        <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                            Thêm tiểu sử công tác
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="kt_datatable_search_query">
-                                                    <span><i class="fas fa-map-pin"></i></span>
-                                                </div>
-                                            </div>
+                                </div>
+                            </div>
+                            <!-- Modal hoc tap-->
+                            <div class="modal fade" id="modal_themtieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
                                         </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <select type="text" class="form-control" placeholder="Chức danh" id="hocvi">
-                                                        <option value="" disabled selected></option>
-                                                        <option value="">Giảng viên</option>
-                                                        <option value="1">Hiệu trưởng</option>
-                                                        <option value="2">...</option>
-                                                    </select>
-                                                    <span><i class="far fa-bookmark"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        <div class="modal-body">
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <select type="text" class="form-control" placeholder="Học vị" id="hocvi">
+                                                            <option value="" disabled selected>Học vị</option>
+                                                            <option value="">Cử nhân</option>
+                                                            <option value="1">Thạc sĩ</option>
+                                                            <option value="2">Tiến sĩ</option>
+                                                        </select>
+                                                        <span><i class="far fa-bookmark"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Đến" name="end">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" placeholder="Nơi học tập" id="kt_datatable_search_query">
+                                                        <span><i class="fas fa-map-pin"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-daterange input-group" id="kt_datepicker_5">
+                                                        <input type="text" class="form-control" placeholder="Từ" name="start">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Đến" name="end">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                                        <span><i class="far fa-sticky-note"></i></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                    <span><i class="far fa-sticky-note"></i></span>
-                                                </div>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal cong tac-->
+                            <div class="modal fade" id="modal_themtieusu_congtac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" placeholder="Đơn vị công tác" id="kt_datatable_search_query">
+                                                        <span><i class="fas fa-map-pin"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <select type="text" class="form-control" placeholder="Chức danh" id="hocvi">
+                                                            <option value="" disabled selected></option>
+                                                            <option value="">Giảng viên</option>
+                                                            <option value="1">Hiệu trưởng</option>
+                                                            <option value="2">...</option>
+                                                        </select>
+                                                        <span><i class="far fa-bookmark"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-daterange input-group" id="kt_datepicker_5">
+                                                        <input type="text" class="form-control" placeholder="Từ" name="start">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Đến" name="end">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                                        <span><i class="far fa-sticky-note"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                            <!--end::Form-->
                         </div>
-                        <!--end::Body-->
-                        <!--end::Form-->
                     </div>
+                    <!--end::Content-->
                 </div>
-                <!--end::Content-->
+                <!--end::Profile Personal Information-->
             </div>
-            <!--end::Profile Personal Information-->
+            <!--end::Container-->
         </div>
-        <!--end::Container-->
+        <!--end::Entry-->
     </div>
-    <!--end::Entry-->
-</div>
-@section scripts{
-    <script>
-        $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
-        $(".research-info-link").each(function () {
-            if ($(this).attr('href').trim() == window.location.pathname) {
-                $(this).addClass('active')
-            }
-        })
-    </script>
-}
+    @section scripts{
+        <script>
+            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+            $(".research-info-link").each(function () {
+                if ($(this).attr('href').trim() == window.location.pathname) {
+                    $(this).addClass('active')
+                }
+            })
+        </script>
+    }

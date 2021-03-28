@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     Layout = null;
+    bool show_error_stack = true; //chạy thật thì tắt bỏ cái này đi
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -36,21 +37,24 @@
         <!--begin::Error-->
         <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="        background-image: url(../Content/assets/media/error/bg5.jpg);">
             <!--begin::Content-->
-            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">@HttpContext.Current.Response.StatusCode<img width="170rem" src="~/Content/assets/media/error/smile.gif"/></h1>
-            <p class="font-size-h3 text-muted font-weight-normal">
-                @HttpContext.Current.Response.StatusDescription
-            </p>
-            <!----COMMENT BLOCK NÀY LẠI KHI DELIVER DỰ ÁN ĐỂ KHÔNG BẮN ERROR STACK LÊN CHO USER NHÌN THẤY-->
-            <div>
-                <p>
-                    <pre>
+            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">
+                @HttpContext.Current.Response.StatusCode <!--<img width="170rem" src="~/Content/assets/media/error/smile.gif" /></h1>-->
+                        <p class="font-size-h3 text-muted font-weight-normal">
+                            @HttpContext.Current.Response.StatusDescription
+                        </p>
+                        @if (show_error_stack)
+                        {
+                            <div>
+                                <p>
+                                    <pre>
                     @ViewBag.exception
                     </pre>
-                </p>
-            </div>
-            <!--------------------------------------------------------------------------------------------->
-            <!--end::Content-->
-        </div>
+                                </p>
+                            </div>
+                        }
+                        <!--------------------------------------------------------------------------------------------->
+                        <!--end::Content-->
+</div>
         <!--end::Error-->
     </div>
     <!--end::Main-->

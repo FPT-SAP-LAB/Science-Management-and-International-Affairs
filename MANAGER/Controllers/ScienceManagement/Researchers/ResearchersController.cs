@@ -14,6 +14,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
     {
         ResearchersListRepo researcherListRepo;
         ResearchersDetailRepo researcherDetailRepo;
+        ResearchersBiographyRepo researcherBiographyRepo;
         // GET: Researchers
 
         public ActionResult List()
@@ -42,6 +43,14 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
 
         public ActionResult Biography()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
+            ///////////////////////////////////////////////////////////////
+            List<AcadBiography> acadList = researcherBiographyRepo.GetBio(id);
+            ViewBag.acadList = acadList;
             return View();
         }
         public ActionResult Publications()
