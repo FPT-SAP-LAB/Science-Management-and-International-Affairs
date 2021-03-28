@@ -214,11 +214,16 @@
                                         </a>
                                     </div>`;
                         });
-                        temp += '</div>';
-                        $(temp).hide().appendTo($('#detail-content')).slideDown(1000);
+                        for (var i = 0; i < 4 - $(data).length; i++) {
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                    </div>`;
+                        }
                         if ($(data).length < 4) {
                             $('#load-more').hide();
                         }
+                        temp += '</div>';
+                        $(temp).hide().appendTo($('#detail-content')).slideDown(1000);
+                        
                     },
                     error: function () {
 
@@ -359,7 +364,7 @@
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm đi học',
+            placeholder: '@rm.GetString("ProgramStart")',
             allowClear: true,
             tags: true,
         })
@@ -373,7 +378,7 @@
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm đi học',
+            placeholder: '@rm.GetString("ProgramStart")',
             allowClear: true,
             tags: true,
         })
