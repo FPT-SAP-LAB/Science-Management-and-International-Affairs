@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Tên tác giả</th>
+                        <th>Người request</th>
                         <th>MSNV/MSSV</th>
                         <th>Đơn vị công tác</th>
                         <th>Tổng số trích dẫn</th>
@@ -25,15 +25,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Nguyễn Quốc Long</td>
-                        <td>299923</td>
-                        <td>FU-HL</td>
-                        <td>10</td>
-                        <td>10000000</td>
-                        <td></td>
-                    </tr>
+                    @{
+                        int count = 1;
+                        foreach (var item in ViewBag.wait)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.name</td>
+                                <td>@item.mssv_msnv</td>
+                                <td>@item.office_abbreviation</td>
+                                <td>@item.sum</td>
+                                <td>@item.total_reward</td>
+                                <td></td>
+                            </tr>
+                        }
+                        count++;
+                    }
                 </tbody>
             </table>
     </div>
