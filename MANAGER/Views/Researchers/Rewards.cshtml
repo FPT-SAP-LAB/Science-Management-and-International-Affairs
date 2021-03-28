@@ -51,7 +51,7 @@
                                     <table class="table table-bordered table-checkable" id="tapchi_list">
                                         <thead><tr class="tableizer-firstrow"><th>STT</th><th>Cuộc thi, giải thưởng</th><th>Thứ hạng</th><th>Thời gian</th></tr></thead>
                                         <tbody>
-                                            @foreach(BaseRecord<Award> a in ViewBag.awards)
+                                            @foreach (BaseRecord<Award> a in ViewBag.awards)
                                             {
                                                 <tr>
                                                     <td>@a.index</td>
@@ -106,7 +106,7 @@
 
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                     lengthMenu: [5, 10, 25, 50],
 
@@ -182,4 +182,5 @@
             return { 'tooltip': tooltip, 'trimtext': trimtext }
         }
     </script>
+    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
 }
