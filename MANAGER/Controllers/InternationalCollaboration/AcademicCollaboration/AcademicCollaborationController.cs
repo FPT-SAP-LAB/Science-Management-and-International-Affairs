@@ -16,7 +16,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 {
     public class AcademicCollaborationController : Controller
     {
-        /*--------------------------------------------------------LONG TERM---------------------------------------------------------*/
+        /*--------------------------------------------------------LONG TERM ACADEMIC COLLABORATION---------------------------------------------------------*/
         AcademicCollaborationRepo academicCollaborationRepo;
 
         // GET: AcademicCollaboration
@@ -186,10 +186,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id,
-            string obj_person_stringify,
-            string obj_partner_stringify,
-            string obj_academic_collab_stringify)
+        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
         {
             try
             {
@@ -207,7 +204,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     acc = u.account;
 
                     //upload file
-                    if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                    if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
                         AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
                         return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
@@ -215,7 +212,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     else
                     {
                         //upload file
-                        Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.uploadEvidenceFile(evidence, folder_name, 4, false);
+                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                        if (evidence != null)
+                        {
+                            f = academicCollaborationRepo.uploadEvidenceFile(evidence, folder_name, 4, false);
+                        }
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
                             obj_person, obj_partner, obj_academic_collab, f, evidence, acc.account_id);
@@ -250,8 +251,97 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
+        [HttpPost]
+        public ActionResult updateAcademicCollaboration(string old_evidence_stringify, HttpPostedFileBase new_evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
+        {
+            try
+            {
+                //parse to Object
+                File old_evidence = JsonConvert.DeserializeObject<File>(old_evidence_stringify);
+                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
+                SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
+                SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+
+                    if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
+                    {
+                        AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
+                        return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    }
+                    else
+                    {
+                        Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
+                        //Save academic collab
+                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
+                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, acc.account_id);
+                        return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+                    }
+                }
+                else
+                {
+                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
+                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //DELETE
+        [HttpPost]
+        public ActionResult deleteAcademicCollaboration(int acad_collab_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.deleteAcademicCollaboration(acad_collab_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //CHANGE STATUS HISTORY
+        [HttpPost]
+        public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+
+                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, acc.account_id);
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+                }
+                else
+                {
+                    AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
+                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";

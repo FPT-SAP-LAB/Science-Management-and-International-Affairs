@@ -226,7 +226,7 @@
           <Property Name="collab_status_history_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="collab_id" Type="int" Nullable="false" />
           <Property Name="collab_status_id" Type="int" Nullable="false" />
-          <Property Name="change_date" Type="date" Nullable="false" />
+          <Property Name="change_date" Type="datetime" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="150" />
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="file_id" Type="int" />
@@ -940,6 +940,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="start_year" Type="int" Nullable="false" />
           <Property Name="end_year" Type="int" Nullable="false" />
           <Property Name="study_place" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WorkingProcess">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pepple_id" Type="int" />
+          <Property Name="work_unit" Type="nvarchar" MaxLength="1000" />
+          <Property Name="title" Type="nvarchar" MaxLength="500" />
+          <Property Name="start_year" Type="int" />
+          <Property Name="end_year" Type="int" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -1816,7 +1827,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Collabora__colla__00750D23">
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1" />
+          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CollaborationStatusHistory" Type="Self.CollaborationStatusHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicCollaboration">
@@ -3457,6 +3470,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__WorkingPr__peppl__705EA0EB">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="WorkingProcess" Type="Self.WorkingProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="people_id" />
+            </Principal>
+            <Dependent Role="WorkingProcess">
+              <PropertyRef Name="pepple_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AcademicActivityPhaseLanguage_AcademicActivityPhase">
           <End Role="AcademicActivityPhase" Type="Self.AcademicActivityPhase" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3729,6 +3754,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="PeopleContract" EntityType="Self.PeopleContract" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeoplePosition" EntityType="Self.PeoplePosition" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeopleTitle" EntityType="Self.PeopleTitle" Schema="SM_Researcher" store:Type="Tables" />
+          <EntitySet Name="WorkingProcess" EntityType="Self.WorkingProcess" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AuthorInvention" EntityType="Self.AuthorInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AuthorPaper" EntityType="Self.AuthorPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="Invention" EntityType="Self.Invention" Schema="SM_ScientificProduct" store:Type="Tables" />
@@ -4513,6 +4539,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Title" EntitySet="Title" />
             <End Role="TitleLanguage" EntitySet="TitleLanguage" />
           </AssociationSet>
+          <AssociationSet Name="FK__WorkingPr__peppl__705EA0EB" Association="Self.FK__WorkingPr__peppl__705EA0EB">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="WorkingProcess" EntitySet="WorkingProcess" />
+          </AssociationSet>
           <AssociationSet Name="FK_AcademicActivityPhaseLanguage_AcademicActivityPhase" Association="Self.FK_AcademicActivityPhaseLanguage_AcademicActivityPhase">
             <End Role="AcademicActivityPhase" EntitySet="AcademicActivityPhase" />
             <End Role="AcademicActivityPhaseLanguage" EntitySet="AcademicActivityPhaseLanguage" />
@@ -4754,6 +4784,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="CustomProfiles" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="Profile" ToRole="CustomProfile" />
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="Profile" ToRole="ProfileAcademicDegree" />
+          <NavigationProperty Name="WorkingProcesses" Relationship="Self.FK__WorkingPr__peppl__705EA0EB" FromRole="Profile" ToRole="WorkingProcess" />
           <NavigationProperty Name="ContractTypes" Relationship="Self.PeopleContract" FromRole="Profile" ToRole="ContractType" />
           <NavigationProperty Name="Positions" Relationship="Self.PeoplePosition" FromRole="Profile" ToRole="Position" />
           <NavigationProperty Name="Titles" Relationship="Self.PeopleTitle" FromRole="Profile" ToRole="Title" />
@@ -4880,7 +4911,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="collab_status_history_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="collab_id" Type="Int32" Nullable="false" />
           <Property Name="collab_status_id" Type="Int32" Nullable="false" />
-          <Property Name="change_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="change_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="file_id" Type="Int32" />
@@ -5719,6 +5750,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="content" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="CustomProfile" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="WorkingProcess">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pepple_id" Type="Int32" />
+          <Property Name="work_unit" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="start_year" Type="Int32" />
+          <Property Name="end_year" Type="Int32" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__WorkingPr__peppl__705EA0EB" FromRole="WorkingProcess" ToRole="Profile" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -6674,6 +6717,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__WorkingPr__peppl__705EA0EB">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="WorkingProcess" Type="Self.WorkingProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="people_id" />
+            </Principal>
+            <Dependent Role="WorkingProcess">
+              <PropertyRef Name="pepple_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RightByRole_Right">
           <End Role="Right" Type="Self.Right" Multiplicity="1" />
           <End Role="RightByRole" Type="Self.RightByRole" Multiplicity="*" />
@@ -6807,7 +6862,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Collabora__colla__00750D23">
-          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1" />
+          <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CollaborationStatusHistory" Type="Self.CollaborationStatusHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicCollaboration">
@@ -8441,6 +8498,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="AcademicDegreeTypes" EntityType="Self.AcademicDegreeType" />
           <EntitySet Name="Awards" EntityType="Self.Award" />
           <EntitySet Name="CustomProfiles" EntityType="Self.CustomProfile" />
+          <EntitySet Name="WorkingProcesses" EntityType="Self.WorkingProcess" />
           <EntitySet Name="AuthorInventions" EntityType="Self.AuthorInvention" />
           <EntitySet Name="AuthorPapers" EntityType="Self.AuthorPaper" />
           <EntitySet Name="Inventions" EntityType="Self.Invention" />
@@ -8656,6 +8714,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="FK__ProfileAc__peopl__27C3E46E" Association="Self.FK__ProfileAc__peopl__27C3E46E">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="ProfileAcademicDegree" EntitySet="ProfileAcademicDegrees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkingPr__peppl__705EA0EB" Association="Self.FK__WorkingPr__peppl__705EA0EB">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="WorkingProcess" EntitySet="WorkingProcesses" />
           </AssociationSet>
           <AssociationSet Name="FK_RightByRole_Right" Association="Self.FK_RightByRole_Right">
             <End Role="Right" EntitySet="Rights" />
@@ -10151,6 +10213,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="people_id" ColumnName="people_id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="content" ColumnName="content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkingProcesses">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.WorkingProcess">
+              <MappingFragment StoreEntitySet="WorkingProcess">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pepple_id" ColumnName="pepple_id" />
+                <ScalarProperty Name="work_unit" ColumnName="work_unit" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="start_year" ColumnName="start_year" />
+                <ScalarProperty Name="end_year" ColumnName="end_year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

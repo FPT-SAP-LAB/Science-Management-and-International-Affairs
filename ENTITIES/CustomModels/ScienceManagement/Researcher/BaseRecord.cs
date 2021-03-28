@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Researcher
 {
-    public class InterestedField
+    public class BaseRecord<T>
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public int selected { get; set; }
+        public int index { get; set; }
+        public T records { get; set; }
     }
 }

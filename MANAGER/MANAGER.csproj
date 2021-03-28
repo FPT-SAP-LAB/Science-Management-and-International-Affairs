@@ -200,7 +200,6 @@
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
-    <Compile Include="Controllers\SettingDriveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -381,6 +380,7 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\toastr.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
+    <Content Include="Content\assets\js\pages\researcher-edit-info.js" />
     <Content Include="Content\assets\js\pages\widgets.js" />
     <Content Include="Content\assets\js\scripts.bundle.js" />
     <Content Include="Content\assets\media\bg\bg-1.jpg" />
@@ -2181,15 +2181,21 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Content\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\ChangeCollabStatus.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Delete.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Edit.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Program\Program_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Search.js" />
     <Content Include="Scripts\datetime-moment.js" />
     <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Training_Going.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Add.js" />
     <Content Include="Excel_template\Paper.xlsx" />
     <Content Include="Excel_template\Download\Paper.xlsx" />
     <Content Include="Web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\AcadCollab_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ShortTerm_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\Partner\Preview.js" />
@@ -2322,7 +2328,7 @@
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
+    <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2339,7 +2345,6 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\ConferencesParticipationReport\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
   </ItemGroup>

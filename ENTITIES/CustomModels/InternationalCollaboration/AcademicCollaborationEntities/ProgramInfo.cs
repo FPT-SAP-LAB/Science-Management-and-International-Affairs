@@ -8,6 +8,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
 {
     public class ProgramInfo
     {
+        public long no { get; set; }
         public int program_id { get; set; }
         public string program_name { get; set; }
         public string avatar { get; set; }
@@ -15,9 +16,9 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
         public string registration_deadline { get; set; }
         public string publish_time { get; set; }
         public string country_name { get; set; }
-
         public string partner_name { get; set; }
-
+        public int direction_id { get; set; }
+        public int collab_type_id { get; set; }
         public ProgramInfo() { }
     }
 }

@@ -56,12 +56,12 @@
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>@rm.GetString("PartnerProgram")</label>
+                                    <label>@rm.GetString("LongTermPartnerProgram")</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>@rm.GetString("FPTProgram")</label>
+                                    <label>@rm.GetString("LongTermFPTProgram")</label>
                                 </a>
                             </div>
                         </div>
@@ -139,24 +139,34 @@
         })
 
         $(document).ready(function () {
-            var count = 0;
-            var partnerIndex = 1;
-            var fptIndex = 1;
+            let count = 0;
+            let partnerIndex = 1;
+            let fptIndex = 1;
+            var partner;
+            var countrystr;
+            var yearstr;
             $('#content-description').text(`@Html.Raw(ViewBag.TypeDescription[0].description)`);
-
-            $('#load-more').click(function () {
-                count++;
+            $('#search_1').click(function () {
+                partner = $('#search_partner_tab_1').val();
+                countrystr = $('#search_nation_tab_1').val();
+                yearstr = $('#search_year_tab_1').val();
+                count = 0;
                 $.ajax({
                     url: "@Url.Action("Load_More_List_Long_Term", "AcademicCollaboration")",
                     type: "POST",
                     datatype: "json",
                     cache: false,
-                    data: { count: count },
+                    data: {
+                        count: count,
+                        partner: partner,
+                        countrystr: countrystr,
+                        yearstr: yearstr
+                    },
                     success: function (data) {
                         var temp = `<div class="row justify-content-between">`;
                         $(data).each(function (i, item) {
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `,2)" class="link-load-detail">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
                                             <img src="`+ item.avatar + `" class="item-picture" />
                                             <label>
                                                 `+ item.program_name + `
@@ -165,9 +175,11 @@
                                     </div>`;
                         });
                         temp += '</div>';
-                        $(temp).hide().appendTo($("#detail-content")).slideDown(1000);
+                        $('#detail-content').html(temp);
                         if ($(data).length < 4) {
                             $('#load-more').hide();
+                        } else {
+                            $('#load-more').show();
                         }
                     },
                     error: function () {
@@ -177,7 +189,50 @@
                 });
                 return false;
             });
-            $("#colab_program_going_table").DataTable({
+            $('#load-more').click(function () {
+                count++;
+                $.ajax({
+                    url: "@Url.Action("Load_More_List_Long_Term", "AcademicCollaboration")",
+                    method: "POST",
+                    datatype: "json",
+                    cache: false,
+                    data: {
+                        count: count,
+                        partner: partner,
+                        countrystr: countrystr,
+                        yearstr: yearstr
+                    },
+                    success: function (data) {
+                        var temp = `<div class="row justify-content-between">`;
+                        $(data).each(function (i, item) {
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
+                                            <img src="`+ item.avatar + `" class="item-picture" />
+                                            <label>
+                                                `+ item.program_name + `
+                                            </label>
+                                        </a>
+                                    </div>`;
+                        });
+                        for (var i = 0; i < 4 - $(data).length; i++) {
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                    </div>`;
+                        }
+                        if ($(data).length < 4) {
+                            $('#load-more').hide();
+                        }
+                        temp += '</div>';
+                        $(temp).hide().appendTo($('#detail-content')).slideDown(1000);
+                        
+                    },
+                    error: function () {
+
+
+                    }
+                });
+                return false;
+            });
+            var goingTable = $("#colab_program_going_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "@rm.GetString("Pre")",
@@ -197,6 +252,12 @@
                 url: '/AcademicCollaboration/Partner_Program',
                 type: "POST",
                 datatype: "json",
+                data: {
+                    "collabtype": 1,
+                        "partner": function () { return $('#search_partner_tab_2').val() },
+                        "countrystr": function () { return $('#search_nation_tab_2').val() },
+                        "yearstr": function () { return $('#search_year_tab_2').val() },
+                },
             }),
             columns: [
                 {
@@ -208,7 +269,14 @@
                     data: "partner_name"
                 },
                 { data: "country_name" },
-                { data: "program_name" },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        // Combine the first and last names into a single table field
+                        return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                    },
+                    editField: ['program_id', 'program_name']
+                },
                 {
                     data: "registration_deadline",
                 },
@@ -222,7 +290,7 @@
             ]
         });
 
-        $("#colab_program_coming_table").DataTable({
+        var comingTable = $("#colab_program_coming_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "@rm.GetString("Pre")",
@@ -242,6 +310,10 @@
                 url: '/AcademicCollaboration/FPT_Program',
                 type: "POST",
                 datatype: "json",
+                data: {
+                    "collabtype": 2,
+                    "yearstr": function () { return $('#search_year_tab_3').val() },
+                },
             }),
             columns: [
                 {
@@ -249,7 +321,14 @@
                         return fptIndex++;
                     }
                 },
-                { data: "program_name" },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        // Combine the first and last names into a single table field
+                        return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                    },
+                    editField: ['program_id', 'program_name']
+                },
                 { data: "registration_deadline"},
                 { data: "publish_time" }
             ],
@@ -260,6 +339,12 @@
                 }
             ]
         });
+            $('#search_2').click(function () {
+                goingTable.ajax.reload();
+            });
+            $('#search_3').click(function () {
+                comingTable.ajax.reload();
+            });
         });
 
         $('.type-1').click(function () {
@@ -295,7 +380,7 @@
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm đi học',
+            placeholder: '@rm.GetString("ProgramStart")',
             allowClear: true,
             tags: true,
         })
@@ -309,7 +394,7 @@
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm đi học',
+            placeholder: '@rm.GetString("ProgramStart")',
             allowClear: true,
             tags: true,
         })

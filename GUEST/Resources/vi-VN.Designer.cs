@@ -358,6 +358,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xin hãy quay về trang chủ.
+        /// </summary>
+        public static string EmptyContentDetail {
+            get {
+                return ResourceManager.GetString("EmptyContentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bài viết chưa có phiên bản ngôn ngữ của bạn.
+        /// </summary>
+        public static string EmptyContentName {
+            get {
+                return ResourceManager.GetString("EmptyContentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Không có dữ liệu.
         /// </summary>
         public static string EmptyTB {
@@ -417,15 +435,6 @@ namespace GUEST.Resources {
         public static string FileCM {
             get {
                 return ResourceManager.GetString("FileCM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của ĐH FPT.
-        /// </summary>
-        public static string FPTProgram {
-            get {
-                return ResourceManager.GetString("FPTProgram", resourceCulture);
             }
         }
         
@@ -601,11 +610,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đào tạo của ĐH FPT.
+        /// </summary>
+        public static string LongTermFPTProgram {
+            get {
+                return ResourceManager.GetString("LongTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giới thiệu chương trình.
         /// </summary>
         public static string LongTermIntroduction {
             get {
                 return ResourceManager.GetString("LongTermIntroduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đào tạo của đối tác.
+        /// </summary>
+        public static string LongTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("LongTermPartnerProgram", resourceCulture);
             }
         }
         
@@ -756,6 +783,24 @@ namespace GUEST.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Tên đối tác.
         /// </summary>
+        public static string PartnerDetail {
+            get {
+                return ResourceManager.GetString("PartnerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách đối tác.
+        /// </summary>
+        public static string PartnerList {
+            get {
+                return ResourceManager.GetString("PartnerList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên đối tác.
+        /// </summary>
         public static string PartnerName {
             get {
                 return ResourceManager.GetString("PartnerName", resourceCulture);
@@ -763,20 +808,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner Program.
-        /// </summary>
-        public static string PartnerProgram {
-            get {
-                return ResourceManager.GetString("PartnerProgram", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Patent license date.
+        ///   Looks up a localized string similar to Ngày cấp.
         /// </summary>
         public static string PatentDate {
             get {
                 return ResourceManager.GetString("PatentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số bằng sáng chế.
+        /// </summary>
+        public static string PatentNumber {
+            get {
+                return ResourceManager.GetString("PatentNumber", resourceCulture);
             }
         }
         
@@ -799,11 +844,38 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiêu đề.
+        /// </summary>
+        public static string ProcedureTitle {
+            get {
+                return ResourceManager.GetString("ProcedureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chương trình.
         /// </summary>
         public static string Program {
             get {
                 return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi tiết chương trình.
+        /// </summary>
+        public static string ProgramDetail {
+            get {
+                return ResourceManager.GetString("ProgramDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thời gian bắt đầu.
+        /// </summary>
+        public static string ProgramStart {
+            get {
+                return ResourceManager.GetString("ProgramStart", resourceCulture);
             }
         }
         
@@ -867,6 +939,15 @@ namespace GUEST.Resources {
         public static string RegistrationDeadline {
             get {
                 return ResourceManager.GetString("RegistrationDeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Các thủ tục liên quan.
+        /// </summary>
+        public static string RelatedProcedure {
+            get {
+                return ResourceManager.GetString("RelatedProcedure", resourceCulture);
             }
         }
         
@@ -979,6 +1060,33 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chương trình trao đổi CBGV.
+        /// </summary>
+        public static string ShortTerm {
+            get {
+                return ResourceManager.GetString("ShortTerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trao đổi với FPT.
+        /// </summary>
+        public static string ShortTermFPTProgram {
+            get {
+                return ResourceManager.GetString("ShortTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trao đổi với đối tác.
+        /// </summary>
+        public static string ShortTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("ShortTermPartnerProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hiển thị.
         /// </summary>
         public static string Show {
@@ -1006,20 +1114,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lĩnh vực.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chuyên ngành.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lĩnh vực.
-        /// </summary>
-        public static string Specilazation {
-            get {
-                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         

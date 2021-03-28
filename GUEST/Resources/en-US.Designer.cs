@@ -358,6 +358,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please return to the home page.
+        /// </summary>
+        public static string EmptyContentDetail {
+            get {
+                return ResourceManager.GetString("EmptyContentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This article is not available in your language version.
+        /// </summary>
+        public static string EmptyContentName {
+            get {
+                return ResourceManager.GetString("EmptyContentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Record.
         /// </summary>
         public static string EmptyTB {
@@ -417,15 +435,6 @@ namespace GUEST.Resources {
         public static string FileCM {
             get {
                 return ResourceManager.GetString("FileCM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FPT Program.
-        /// </summary>
-        public static string FPTProgram {
-            get {
-                return ResourceManager.GetString("FPTProgram", resourceCulture);
             }
         }
         
@@ -601,11 +610,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FPT Program.
+        /// </summary>
+        public static string LongTermFPTProgram {
+            get {
+                return ResourceManager.GetString("LongTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Introduction.
         /// </summary>
         public static string LongTermIntroduction {
             get {
                 return ResourceManager.GetString("LongTermIntroduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Program.
+        /// </summary>
+        public static string LongTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("LongTermPartnerProgram", resourceCulture);
             }
         }
         
@@ -727,7 +754,6 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner name.
         ///   Looks up a localized string similar to Partner.
         /// </summary>
         public static string Partner {
@@ -757,18 +783,27 @@ namespace GUEST.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Partner Name.
         /// </summary>
-        public static string PartnerName {
+        public static string PartnerDetail {
             get {
-                return ResourceManager.GetString("PartnerName", resourceCulture);
+                return ResourceManager.GetString("PartnerDetail", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner Program.
+        ///   Looks up a localized string similar to Partner list.
         /// </summary>
-        public static string PartnerProgram {
+        public static string PartnerList {
             get {
-                return ResourceManager.GetString("PartnerProgram", resourceCulture);
+                return ResourceManager.GetString("PartnerList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Name.
+        /// </summary>
+        public static string PartnerName {
+            get {
+                return ResourceManager.GetString("PartnerName", resourceCulture);
             }
         }
         
@@ -809,11 +844,38 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string ProcedureTitle {
+            get {
+                return ResourceManager.GetString("ProcedureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Program.
         /// </summary>
         public static string Program {
             get {
                 return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program Detail.
+        /// </summary>
+        public static string ProgramDetail {
+            get {
+                return ResourceManager.GetString("ProgramDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time.
+        /// </summary>
+        public static string ProgramStart {
+            get {
+                return ResourceManager.GetString("ProgramStart", resourceCulture);
             }
         }
         
@@ -877,6 +939,15 @@ namespace GUEST.Resources {
         public static string RegistrationDeadline {
             get {
                 return ResourceManager.GetString("RegistrationDeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Procedure.
+        /// </summary>
+        public static string RelatedProcedure {
+            get {
+                return ResourceManager.GetString("RelatedProcedure", resourceCulture);
             }
         }
         
@@ -989,6 +1060,33 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exchange Program.
+        /// </summary>
+        public static string ShortTerm {
+            get {
+                return ResourceManager.GetString("ShortTerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPT Exchange Program.
+        /// </summary>
+        public static string ShortTermFPTProgram {
+            get {
+                return ResourceManager.GetString("ShortTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Exchange Program.
+        /// </summary>
+        public static string ShortTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("ShortTermPartnerProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
         public static string Show {
@@ -1016,20 +1114,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialization.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialized.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specilazation.
-        /// </summary>
-        public static string Specilazation {
-            get {
-                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         

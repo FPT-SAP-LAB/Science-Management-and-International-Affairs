@@ -230,12 +230,13 @@
     <Compile Include="CustomModels\Authen\Gmail.cs" />
     <Compile Include="CustomModels\BaseDatatable.cs" />
     <Compile Include="CustomModels\BaseServerSideData.cs" />
-    <Compile Include="CustomModels\GlobalUploadDrive.cs" />
+    <Compile Include="CustomModels\GoogleDriveService.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPartner_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPerson_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProcedureInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramDescription.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_AcademicCollaboration.cs" />
@@ -285,7 +286,10 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
+    <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\PendingCitation_manager.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\WaitDecisionCitation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\DecisionDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
@@ -304,10 +308,13 @@
     <Compile Include="CustomModels\ScienceManagement\Paper\PendingPaper_Manager.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaitDecisionPaper.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ConferencesParticipationReport.cs" />
-    <Compile Include="CustomModels\ScienceManagement\Researcher\InterestedField.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\AcademicHistory.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\BaseRecord.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\SelectField.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherPublications.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
@@ -551,6 +558,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TitleLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkingProcess.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>

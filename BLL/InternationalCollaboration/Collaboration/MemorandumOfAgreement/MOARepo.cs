@@ -91,21 +91,19 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
         {
             try
             {
-                string sql = @"select t4.country_name,t3.website,t3.address,
-                    t2.contact_point_name,t2.contact_point_email,t2.contact_point_phone,
-                    t6.specialization_name,t3.partner_name
-                    from IA_Collaboration.MOA t1 inner join
-                    IA_Collaboration.MOUPartner t2 on 
-                    t1.mou_id = t2.mou_id
-                    inner join IA_Collaboration.Partner t3 on
-                    t3.partner_id = t2.partner_id
-                    inner join General.Country t4 on 
-                    t4.country_id = t3.country_id
-                    inner join IA_Collaboration.MOUPartnerSpecialization t5 on 
-                    t5.mou_partner_id = t2.mou_partner_id
-                    inner join General.Specialization t6 on
-                    t6.specialization_id = t5.specialization_id
-                    where t2.mou_id = @mou_id and t3.partner_name like @partner_name";
+                string sql = @"select t3.country_name,t2.website,t2.address,
+                    t1.contact_point_name,t1.contact_point_email,t1.contact_point_phone,
+                    t5.specialization_name,t2.partner_name
+                    from IA_Collaboration.MOUPartner t1
+                    left join IA_Collaboration.Partner t2 on
+                    t1.partner_id = t2.partner_id
+                    left join General.Country t3 on 
+                    t3.country_id = t2.country_id
+                    left join IA_Collaboration.MOUPartnerSpecialization t4 on
+                    t4.mou_partner_id = t1.mou_partner_id
+                    left join General.Specialization t5 on
+                    t5.specialization_id = t4.specialization_id
+                    where t1.mou_id = @mou_id and t2.partner_name like @partner_name";
                 CustomPartnerMOA p = db.Database.SqlQuery<CustomPartnerMOA>(sql,
                     new SqlParameter("mou_id", mou_id),
                     new SqlParameter("partner_name", '%' + partner_name + '%')).FirstOrDefault();
