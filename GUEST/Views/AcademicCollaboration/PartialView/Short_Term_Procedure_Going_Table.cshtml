@@ -1,12 +1,14 @@
-﻿
+﻿@{
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+}
 <div class="row mb-4">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-6 col-sm-12 mb-4 pl-lg-0">
-                <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="search_title_tab_2" />
+                <input class="form-control" type="text" placeholder="@rm.GetString("ProcedureTitle")" autocomplete="off" required id="search_title_tab_2" />
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                <a id="search_proc_2" class="btn btn-light-primary px-6 font-weight-bold ">@rm.GetString("Search")</a>
             </div>
         </div>
     </div>
@@ -14,9 +16,9 @@
 <table class="table table-bordered" id="going_procedure_table">
     <thead>
         <tr>
-            <th>STT</th>
-            <th>Tiêu đề</th>
-            <th>Ngày đăng</th>
+            <th>@rm.GetString("Number")</th>
+            <th>@rm.GetString("ProcedureTitle")</th>
+            <th>@rm.GetString("PublishTime")</th>
         </tr>
     </thead>
     <tbody>
