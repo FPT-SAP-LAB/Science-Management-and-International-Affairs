@@ -807,14 +807,6 @@ namespace GUEST.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Số bằng sáng chế.
-        /// </summary>
-        public static string PatentNumber {
-            get {
-                return ResourceManager.GetString("PatentNumber", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to Loại SHTT.
