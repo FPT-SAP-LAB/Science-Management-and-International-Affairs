@@ -334,40 +334,42 @@ function formatAcadCollabStatus(acs) {
     return acs.collab_status_name;
 }
 
+var available_person;
+var available_partner;
 //2.2. SAVE BUTTON
 $('#add_officer_save').on('click', function () {
     //person
-    person = $('#add_officer_name').val();
-    person_name = person.split('/')[0];
-    person_id = person.split('/')[1]
+    let person = $('#add_officer_name').val();
+    let person_name = person.split('/')[0];
+    let person_id = person.split('/')[1]
 
-    person_email = $('#add_officer_email').val();
-    person_profile_office_id = $('#add_officer_facility').val();
+    let person_email = $('#add_officer_email').val();
+    let person_profile_office_id = $('#add_officer_facility').val();
 
     //partner
-    partner = $('#add_officer_traning').val();
-    partner_name = partner.split('/')[0];
-    partner_id = partner.split('/')[1];
+    let partner = $('#add_officer_traning').val();
+    let partner_name = partner.split('/')[0];
+    let partner_id = partner.split('/')[1];
 
-    partner_country_id = $('#add_officer_nation').val();
+    let partner_country_id = $('#add_officer_nation').val();
 
-    collab_scope_id = $('#add_officer_coop_scope').val();
+    let collab_scope_id = $('#add_officer_coop_scope').val();
 
     //detail
-    status_id = $('#add_officer_status').val();
+    let status_id = $('#add_officer_status').val();
 
-    plan_start_date = $('#add_officer_start_plan_date').val();
-    plan_end_date = $('#add_officer_end_plan_date').val();
+    let plan_start_date = $('#add_officer_start_plan_date').val();
+    let plan_end_date = $('#add_officer_end_plan_date').val();
 
-    actual_start_date = $('#add_officer_start_date').val();
-    actual_end_date = $('#add_officer_end_date').val();
+    let actual_start_date = $('#add_officer_start_date').val();
+    let actual_end_date = $('#add_officer_end_date').val();
 
-    evidence = uppy1.getFiles();
+    let evidence = uppy1.getFiles();
 
-    support = $('#add_officer_support').prop('checked');
-    note = $('#add_officer_note').val();
+    let support = $('#add_officer_support').prop('checked');
+    let note = $('#add_officer_note').val();
 
-    obj_person = {
+    let obj_person = {
         available_person: available_person,
         person_name: person_name,
         person_id: person_id,
@@ -375,7 +377,7 @@ $('#add_officer_save').on('click', function () {
         person_profile_office_id: person_profile_office_id
     }
 
-    obj_partner = {
+    let obj_partner = {
         available_partner: available_partner,
         partner_name: partner_name,
         partner_id: partner_id,
@@ -383,7 +385,7 @@ $('#add_officer_save').on('click', function () {
         collab_scope_id: collab_scope_id
     }
 
-    obj_academic_collab = {
+    let obj_academic_collab = {
         collab_id: 0, //set 0 when add new academic collaboration
         status_id: status_id,
         plan_start_date: formatDatePicker(plan_start_date),
