@@ -9,24 +9,17 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right">
+                        @*<label style="color:blue" class="float-right">
                             <a href="javascript:" onclick="checkPartnerAdd()">Kiểm tra</a>
-                        </label>
+                        </label>*@
                         @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                 <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
                             </div>*@
                         <input hidden readonly type="text" class="form-control" id="partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <input list="partnerListAdd" class="form-control select-search" id="partner_name_add" name="param" style="width:100% !important" onchange="preventAdd()"/> 
-                            <datalist id="partnerListAdd">
-                                @if (ViewBag.listPartners != null)
-                                {
-                                    foreach (var item in ViewBag.listPartners)
-                                    {
-                                        <option value="@item.partner_name">@item.partner_name</option>
-                                    }
-                                }
-                            </datalist>
+                            <select class="form-control text-center" id="partner_name_add" name="param" style="width:100% !important">
+                              <option selected value=""></option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
@@ -63,7 +56,7 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Ngày ký kết</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date_add" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_add" data-target="#kt_datetimepicker_sign_date_add" />
+                            <input type="text" class="form-control datetimepicker-input" id="sign_date_mou_add" data-target="#kt_datetimepicker_sign_date_add" placeholder="Chọn ngày ký kết"/>
                             <div class="input-group-append" data-target="#kt_datetimepicker_sign_date_add" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
@@ -78,7 +71,7 @@
                         <label class="font-weight-bolder">Lĩnh vực</label>
                         <label style="color:blue" class="float-right"><a href="#list_spe" data-toggle="modal">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important">
+                            <select class="form-control select2" id="specialization_add" name="param" multiple="multiple" style="width:100% !important" placeholder="Chọn lĩnh vực">
                                 @if (ViewBag.listSpe != null)
                                 {
                                     foreach (var item in ViewBag.listSpe)
@@ -94,7 +87,7 @@
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
                         <label style="color:blue" class="float-right"><a href="#list_scopes" data-toggle="modal">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important">
+                            <select class="form-control select2" id="coop_scope_add" name="param" multiple="multiple" style="width:100% !important" placeholder="Chọn phạm vi">
                                 @if (ViewBag.listScopes != null)
                                 {
                                     foreach (var item in ViewBag.listScopes)
