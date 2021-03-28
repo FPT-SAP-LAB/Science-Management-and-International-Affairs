@@ -62,8 +62,8 @@
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Trạng thái</label>&nbsp;
                         <select class="form-control" required id="status_moa">
-                            <option value="1">Inactive</option>
-                            <option value="2">Active</option>
+                            <option value="2">Inactive</option>
+                            <option value="1">Active</option>
                         </select>
                     </div>
                     <div class="col-xl-7 col-lg-7 col-md-8 col-sm-8">
@@ -105,19 +105,24 @@
                         <a href="#add_partner_moa" data-toggle="modal" id="" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                     </div>
                 </div>
-                <table class="table table-bordered table-hover table-checkable"
-                       id="moa-partner-table">
-                    <tr>
-                        <th class="text-center" rowspan="2">STT</th>
-                        <th class="text-center" rowspan="2">Tên đối tác</th>
-                        <th class="text-center" colspan="3">Người đại diện</th>
-                        <th class="text-center" rowspan="2"></th>
-                    </tr>
-                    <tr>
-                        <th>Họ và tên</th>
-                        <th>Điện thoại</th>
-                        <th>Email</th>
-                    </tr>
+                <table class="table table-bordered table-hover table-checkable">
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2">STT</th>
+                            <th class="text-center" rowspan="2">Tên đối tác</th>
+                            <th class="text-center" colspan="3">Người đại diện</th>
+                            <th class="text-center" rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Họ và tên</th>
+                            <th class="text-center">Điện thoại</th>
+                            <th class="text-center">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="moa-partner-table">
+
+                    </tbody>
+
                 </table>
             </div>
             <div class="modal-footer">
