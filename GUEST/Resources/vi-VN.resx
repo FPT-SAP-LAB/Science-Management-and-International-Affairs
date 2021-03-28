@@ -369,6 +369,9 @@
   <data name="Program" xml:space="preserve">
     <value>Chương trình</value>
   </data>
+  <data name="ProgramStart" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
+  </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Ngày xuất bản</value>
   </data>

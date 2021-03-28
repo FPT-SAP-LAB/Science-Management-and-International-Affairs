@@ -727,7 +727,6 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner name.
         ///   Looks up a localized string similar to Partner.
         /// </summary>
         public static string Partner {
@@ -814,6 +813,15 @@ namespace GUEST.Resources {
         public static string Program {
             get {
                 return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time.
+        /// </summary>
+        public static string ProgramStart {
+            get {
+                return ResourceManager.GetString("ProgramStart", resourceCulture);
             }
         }
         
