@@ -60,7 +60,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
             },
             {
                 targets: 2,
-                render: function (data, type, row) {
+                render: function (data) {
                     var status = {
                         1: {
                             'title': 'Đề xuất',
