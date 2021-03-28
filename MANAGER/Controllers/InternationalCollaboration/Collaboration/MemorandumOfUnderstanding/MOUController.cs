@@ -93,7 +93,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou.addMOU(input);
+                BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                mou.addMOU(input,user);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -117,15 +118,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                ExcelPackage excelPackage = mou.ExportMOUExcel();
+                MemoryStream memoryStream = mou.ExportMOUExcel();
                 string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    excelPackage.SaveAs(memoryStream);
-                    memoryStream.Position = 0;
-                    TempData[handle] = memoryStream.ToArray();
-                }
+                TempData[handle] = memoryStream.ToArray();
                 return Json(new { success = true, data = new { FileGuid = handle, FileName = downloadFile } }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
