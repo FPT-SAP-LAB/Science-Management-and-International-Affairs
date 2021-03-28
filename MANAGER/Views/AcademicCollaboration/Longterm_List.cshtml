@@ -224,8 +224,6 @@
             $('#describe_content').modal('show');
         })
     </script>
-
-
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
@@ -290,11 +288,7 @@
     </script>
 
     <script>
-        var id_row = "";
-        //parse id fo delete
-        function parse_id(id) {
-            id_row = id;
-        }
+
         //collapse div
         $('#collapse_btn_tab_1').click(function () {
             $('.collapse_tab_1').toggle(700)
@@ -308,9 +302,6 @@
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
 
-        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        //});
         //split card
         //overflow
         $(document).ready(function () {

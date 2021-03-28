@@ -16,7 +16,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 {
     public class AcademicCollaborationController : Controller
     {
-        /*--------------------------------------------------------LONG TERM---------------------------------------------------------*/
+        /*--------------------------------------------------------LONG TERM ACADEMIC COLLABORATION---------------------------------------------------------*/
         AcademicCollaborationRepo academicCollaborationRepo;
 
         // GET: AcademicCollaboration
@@ -289,6 +289,22 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
                     return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //DELETE
+        [HttpPost]
+        public ActionResult deleteAcademicCollaboration(int acad_collab_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.deleteAcademicCollaboration(acad_collab_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
             {

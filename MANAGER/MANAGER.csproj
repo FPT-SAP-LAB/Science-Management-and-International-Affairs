@@ -2183,7 +2183,7 @@
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Delete.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Edit.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Program_Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_Program\Program_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Search.js" />
     <Content Include="Scripts\datetime-moment.js" />
     <Content Include="Scripts\moment.js" />
@@ -2327,7 +2327,11 @@
     <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+
+    <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
+
     <Content Include="Views\CommentRequest\Index.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2343,9 +2347,11 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+
     <Folder Include="Views\ConferencesParticipationReport\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

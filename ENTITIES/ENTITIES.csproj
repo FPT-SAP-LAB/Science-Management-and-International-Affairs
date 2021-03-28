@@ -287,6 +287,8 @@
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\PendingCitation_manager.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\WaitDecisionCitation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\DecisionDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
@@ -311,6 +313,7 @@
     <Compile Include="CustomModels\ScienceManagement\Researcher\ProfileResearcher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherList.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherPublications.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AddAuthor.cs" />
     <Compile Include="CustomModels\ScienceManagement\ScientificProduct\AuthorInfo.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\DetailPaper.cs" />
