@@ -305,7 +305,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<string> alertModal = academicCollaborationRepo.deleteAcademicCollaboration(acad_collab_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
