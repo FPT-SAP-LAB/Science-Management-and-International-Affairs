@@ -1,8 +1,7 @@
-﻿var status_history_table;
 $(document).on('show.bs.modal', '#status_history_modal', function (e) {
     let collab_id = $(e.relatedTarget).data('id');
     //load datatable
-    status_history_table = $("#status_history_table").DataTable({
+    $("#status_history_table").DataTable({
         oLanguage: {
             oPaginate: {
                 sPrevious: "Trang trước",
@@ -61,7 +60,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
             },
             {
                 targets: 2,
-                render: function (data, type, row) {
+                render: function (data) {
                     var status = {
                         1: {
                             'title': 'Đề xuất',
