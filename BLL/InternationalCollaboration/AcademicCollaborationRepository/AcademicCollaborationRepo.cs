@@ -894,15 +894,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 SaveAcadCollab_AcademicCollaboration saveAcadCollab_AcademicCollaboration = new SaveAcadCollab_AcademicCollaboration()
                 {
                     collab_id = collab_id,
-
                 };
-
                 var collab_staus_hist = saveCollabStatusHistory(evidence_file, academicCollaboration, )
-
             }
             catch (Exception e)
             {
-
             }
         }
     }
