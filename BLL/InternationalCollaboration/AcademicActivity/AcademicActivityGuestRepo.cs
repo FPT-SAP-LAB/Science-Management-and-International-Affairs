@@ -115,7 +115,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id from SMIA_AcademicActivity.AcademicActivityPhase aap
+                string sql = @"select f.title as 'f_title',f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id from SMIA_AcademicActivity.AcademicActivityPhase aap
                                 inner join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
                                 inner join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
                                 where f.phase_id = @phase_id";
@@ -145,6 +145,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new fullForm();
             }
         }
+        public bool sendForm(int fid,string answer)
+        {
+            try
+            {
+                db.Responses.Add(new Response
+                {
+                    form_id = fid,
+                    answer = answer
+                });
+                db.SaveChanges();
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
         public class activityType
         {
             public string activity_type_name { get; set; }
@@ -161,6 +177,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public class baseFrom
         {
+            public string f_title { get; set; }
             public int form_id { get; set; }
             public int phase_id { get; set; }
             public int question_id { get; set; }
