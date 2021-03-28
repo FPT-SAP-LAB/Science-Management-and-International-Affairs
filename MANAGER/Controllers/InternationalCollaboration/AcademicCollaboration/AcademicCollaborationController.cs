@@ -207,7 +207,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     acc = u.account;
 
                     //upload file
-                    if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                    if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
                         AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
                         return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });

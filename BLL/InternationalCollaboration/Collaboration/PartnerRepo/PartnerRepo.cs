@@ -86,13 +86,13 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
                     if (files_request.Count != 0)
                     {
-                        if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                        if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                         {
                             return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
                         }
                         else
                         {
-                            files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
+                            files_upload = GoogleDriveService.UploadIAFile(files_request, partner_article.partner_name, 1, false);
                             for (int i = 0; i < number_of_image; i++)
                             {
                                 image_drive_id.Add(files_upload[i].Id);
@@ -211,13 +211,13 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
                     if (files_request.Count != 0)
                     {
-                        if (GlobalUploadDrive.credential == null && GlobalUploadDrive.driveService == null)
+                        if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                         {
                             return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
                         }
                         else
                         {
-                            files_upload = GlobalUploadDrive.UploadIAFile(files_request, partner_article.partner_name, 1, false);
+                            files_upload = GoogleDriveService.UploadIAFile(files_request, partner_article.partner_name, 1, false);
                             for (int i = 0; i < number_of_image; i++)
                             {
                                 image_drive_id.Add(files_upload[i].Id);

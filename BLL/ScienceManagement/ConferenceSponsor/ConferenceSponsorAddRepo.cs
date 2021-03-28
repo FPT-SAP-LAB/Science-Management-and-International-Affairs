@@ -155,7 +155,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GlobalUploadDrive.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -284,7 +284,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     trans.Rollback();
                     foreach (var item in FileIDs)
                     {
-                        GlobalUploadDrive.DeleteFile(item);
+                        GoogleDriveService.DeleteFile(item);
                     }
                     return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
                 }

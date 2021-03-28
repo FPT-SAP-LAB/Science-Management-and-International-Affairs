@@ -278,7 +278,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             string file_id = "";
             try
             {
-                Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
                 file_id = InputFile.FileName;
                 return f;
             }
@@ -286,7 +286,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 if (file_id != "")
                 {
-                    GlobalUploadDrive.DeleteFile(file_id);
+                    GoogleDriveService.DeleteFile(file_id);
                 }
                 throw e;
             }
