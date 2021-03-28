@@ -302,8 +302,7 @@ $('#edit_officer_status').select2({
 
 //3.2.GET CORESSPONDING DATA
 $('#edit_officer').on('show.bs.modal', function (e) {
-    //init save button
-    var acad_collab_id = $(e.relatedTarget).data('id');
+    let acad_collab_id = $(e.relatedTarget).data('id');
     $.ajax({
         url: "/AcademicCollaboration/getAcademicCollaboration",
         type: "GET",
@@ -368,41 +367,43 @@ $('#edit_officer').on('show.bs.modal', function (e) {
     })
 });
 
+var available_person;
+var available_partner;
 //3.3.EDIT SAVE BUTTON
 var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
 $('#edit_officer_save').on('click', function () {
     //person
-    person = $('#edit_officer_name').val();
-    person_name = person.split('/')[0];
-    person_id = person.split('/')[1]
+    let person = $('#edit_officer_name').val();
+    let person_name = person.split('/')[0];
+    let person_id = person.split('/')[1]
 
-    person_email = $('#edit_officer_email').val();
-    person_profile_office_id = $('#edit_officer_facility').val();
+    let person_email = $('#edit_officer_email').val();
+    let person_profile_office_id = $('#edit_officer_facility').val();
 
     //partner
-    partner = $('#edit_officer_traning').val();
-    partner_name = partner.split('/')[0];
-    partner_id = partner.split('/')[1];
+    let partner = $('#edit_officer_traning').val();
+    let partner_name = partner.split('/')[0];
+    let partner_id = partner.split('/')[1];
 
-    partner_country_id = $('#edit_officer_nation').val();
+    let partner_country_id = $('#edit_officer_nation').val();
 
-    collab_scope_id = $('#edit_officer_coop_scope').val();
+    let collab_scope_id = $('#edit_officer_coop_scope').val();
 
     //detail
-    status_id = $('#edit_officer_status').val();
+    let status_id = $('#edit_officer_status').val();
 
-    plan_start_date = $('#edit_officer_start_plan_date').val();
-    plan_end_date = $('#edit_officer_end_plan_date').val();
+    let plan_start_date = $('#edit_officer_start_plan_date').val();
+    let plan_end_date = $('#edit_officer_end_plan_date').val();
 
-    actual_start_date = $('#edit_officer_start_date').val();
-    actual_end_date = $('#edit_officer_end_date').val();
+    let actual_start_date = $('#edit_officer_start_date').val();
+    let actual_end_date = $('#edit_officer_end_date').val();
 
-    evidence = uppy2.getFiles();
+    let evidence = uppy2.getFiles();
 
-    support = $('#edit_officer_support').prop('checked');
-    note = $('#edit_officer_note').val();
+    let support = $('#edit_officer_support').prop('checked');
+    let note = $('#edit_officer_note').val();
 
-    obj_person = {
+    let obj_person = {
         available_person: available_person,
         person_name: person_name,
         person_id: person_id,
@@ -410,7 +411,7 @@ $('#edit_officer_save').on('click', function () {
         person_profile_office_id: person_profile_office_id
     }
 
-    obj_partner = {
+    let obj_partner = {
         available_partner: available_partner,
         partner_name: partner_name,
         partner_id: partner_id,
@@ -418,7 +419,7 @@ $('#edit_officer_save').on('click', function () {
         collab_scope_id: collab_scope_id
     }
 
-    obj_academic_collab = {
+    let obj_academic_collab = {
         collab_id: collab_id, //set corresponding collab_id when update an academic collaboration
         status_id: status_id,
         plan_start_date: formatDatePicker(plan_start_date),

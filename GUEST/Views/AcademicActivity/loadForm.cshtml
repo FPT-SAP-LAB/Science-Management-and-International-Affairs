@@ -4,29 +4,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    label{
-        font-size: 15px !important;
+    label {
+        font-size: 16px !important;
     }
-    input,textarea{
-        font-size: 13px !important;
+
+    input, textarea {
+        font-size: 14px !important;
     }
-    .checkbox{
-        margin-bottom: 12px !important
+
+    .checkbox {
+        margin-bottom: 13px !important
     }
-    .custom-span{
-        margin-right: 14px !important;
+
+    .custom-span {
+        margin-right: 15px !important;
     }
+
     .custom-radio {
         width: 20px !important;
         height: 20px !important;
         margin-right: 14px !important;
     }
-    .px-lg-custom{
+
+    .px-lg-custom {
         padding-left: 12em !important;
         padding-right: 12em !important;
     }
-    .radio{
-        margin-bottom: 10px !important;
+
+    .radio {
+        margin-bottom: 12px !important;
     }
 </style>
 <div class="row justify-content-left bg-gray-100 py-8 px-8 py-md-10">
@@ -34,7 +40,7 @@
         <div class="row justify-content-left bgi-size-cover bgi-no-repeat py-8 px-8" style="background-image: url(../Content/assets/media/bg/event_banner.jpg);">
             <div class="col-md-12">
                 <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <h1 class="display-4 text-white">GIAI ĐOẠN 1: ĐĂNG KÝ THAM DỰ</h1>
+                    <h1 class="display-4 text-white text-uppercase" id="form-title" onkeyup=""></h1>
                 </div>
             </div>
         </div>
@@ -42,93 +48,215 @@
         <div class="col-md-12">
             <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
                 <div class="col-md-12 col-sm-12">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Họ và tên <label style="color:red">*</label></b>:</label>
-                                <input type="text" class="form-control  form-control-lg" placeholder="Họ và tên" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Miêu tả</b>:</label>
-                                <textarea type="text" class="form-control  form-control-lg" placeholder="Miêu tả" onkeyup="textAreaAdjust(this)"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Giới tính:</b></label>
-                                <div class="radio-outline">
-                                    <label class="radio">
-                                        <input type="radio" name="radios2">
-                                        <span class="custom-radio"></span>
-                                        Nam
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="radios2">
-                                        <span class="custom-radio"></span>
-                                        Nữ
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Email</b>:</label>
-                                <input type="text" class="form-control  form-control-lg" placeholder="Email" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Số điện thoại</b>:</label>
-                                <input type="text" class="form-control  form-control-lg" placeholder="Số điện thoại" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Sở thích</b>:</label>
-                                <div class="checkbox-outline">
-                                    <label class="checkbox checkbox-lg">
-                                        <input type="checkbox" />
-                                        <span class="custom-span"></span>
-                                        Táo
-                                    </label>
-                                    <label class="checkbox checkbox-lg">
-                                        <input type="checkbox" />
-                                        <span class="custom-span"></span>
-                                        Táo
-                                    </label>
-                                    <label class="checkbox checkbox-lg">
-                                        <input type="checkbox" />
-                                        <span class="custom-span"></span>
-                                        GIAI ĐOẠN 1: ĐĂNG KÝ THAM DỰ
-                                    </label>
-                                    <label class="checkbox checkbox-lg">
-                                        <input type="checkbox" />
-                                        <span class="custom-span"></span>
-                                        Táo
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row" id="main-control">
+
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10">
+            <div class="row justify-content-center bg-gray-100 py-8 px-8">
                 <div class="col-12" style=" text-align: center;">
-                    <a href="javascript:;" class="btn btn-light-success px-6 font-weight-bold">Gửi đơn</a>
+                    <a href="javascript:;" class="btn btn-light-success px-6 font-weight-bold" onclick="sendForm()">Gửi đơn</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<input type="hidden" value="@ViewBag.pid" id="phase_id" />
 @section scripts{
     <script>
+        let arrQues = [];
+        let fid = 0;
         function textAreaAdjust(element) {
             element.style.height = "1px";
             element.style.height = (25 + element.scrollHeight) + "px";
         }
+        function init() {
+            var object = {
+                phase_id : $('#phase_id').val()
+            }
+            $.ajax({
+                url: "@Url.Action("getForm", "AcademicActivity")",
+                type: "POST",
+                data: JSON.stringify(object),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    fid = data.question[0].form_id;
+                    document.getElementById('form-title').innerHTML = data.question[0].f_title;
+                    data.question.forEach(function (x) {
+                        var object = {
+                            question_id: x.question_id,
+                            answer_type: x.answer_type_id,
+                            is_compulsory: x.is_compulsory
+                        }
+                        arrQues.push(object);
+                        let ques_html = '';
+                        switch (x.answer_type_id){
+                            case 1:
+                                ques_html += '<div class="col-md-12 col-sm-12">'+
+                                            '<div class="form-group fv-plugins-icon-container">'+
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') +' >*</label></b>:</label> '+
+                                    '<input type="text" id="ques-answer-' + x.question_id+'" class="form-control form-control-lg" placeholder="'+x.title+'" autocomplete="off"> '+
+                                            '</div>'+
+                                        '</div>';
+                                break;
+                            case 2:
+                                ques_html += '<div class="col-md-12 col-sm-12">' +
+                                    '<div class="form-group fv-plugins-icon-container">' +
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label> ' +
+                                    '<textarea type="text" id="ques-answer-' + x.question_id + '" class="form-control  form-control-lg" placeholder="' + x.title +'" onkeyup="textAreaAdjust(this)"></textarea> ' +
+                                    '</div>'+
+                                '</div>';
+                                break;
+                            case 3:
+                                ques_html += '<div class="col-md-12 col-sm-12" id="ques-answer-' + x.question_id+'">' +
+                                    '<div class="form-group fv-plugins-icon-container">' +
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
+                                data.optins.forEach(function (y) {
+                                    if (y.question_id == x.question_id) {
+                                        let str = y.option_title.split('$^');
+                                        ques_html += '<div class="checkbox-outline">';
+                                        str.forEach(function (z) {
+                                            ques_html += '<label class="checkbox checkbox-lg">' +
+                                                '<input type="checkbox" value="' + z +'" id="ques-option-' + y.question_id + z+'"/>' +
+                                                '<span class="custom-span"></span>' +
+                                                '' + z + '' +
+                                                '</label>';
+                                        });
+                                        ques_html += '</div>';
+                                    }
+                                });
+                                ques_html += '</div></div>';
+                                break;
+                            case 5:
+                                ques_html += '<div class="col-md-12 col-sm-12">' +
+                                    '<div class="form-group fv-plugins-icon-container">' +
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
+                                data.optins.forEach(function (y) {
+                                    if (y.question_id == x.question_id) {
+                                        let str = y.option_title.split('$^');
+                                        ques_html += '<div class="radio-outline">';
+                                        str.forEach(function (z) {
+                                            ques_html += '<label class="radio">' +
+                                                '<input type="radio" value="'+z+'" name="question-option-' + y.question_id + '"/>' +
+                                                '<span class="custom-radio"></span>' +
+                                                '' + z + '' +
+                                                '</label>';
+                                        });
+                                        ques_html += '</div>';
+                                    }
+                                });
+                                ques_html += '</div></div>';
+                                break;
+                            case 6:
+                                ques_html += '<div class="input-group date kt_datetimepicker_3" id="ques-date-' + x.question_id+'" data-target-input="nearest">'+
+                                    '<input type="text" class="form-control datetimepicker-input" placeholder="" data-target="#ques-date-' + x.question_id + '" autocomplete="off" id="ques-answer-' + x.question_id +'" /> '+
+                                    '<div class="input-group-append" data-target="#ques-date-' + x.question_id+'" data-toggle="datetimepicker" > '+
+                                    '<span class="input-group-text"> '+
+                                    '<i class="ki ki-calendar"></i> '+
+                                            '</span> '+
+                                        '</div> '+
+                                '</div>';
+                                break;
+                        }
+                        $('#main-control').append(ques_html);
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
+        function sendForm() {
+            let arrAnswer = [];
+            let req = false;
+            arrQues.forEach(function (x) {
+                if (!req) {
+                    switch (x.answer_type) {
+                        case 1:
+                            if (x.is_compulsory == 1 && $('#ques-answer-' + x.question_id).val() == '') {
+                                req = true;
+                                return;
+                            }
+                            arrAnswer.push($('#ques-answer-' + x.question_id).val());
+                            break;
+                        case 2:
+                            if (x.is_compulsory == 1 && $('#ques-answer-' + x.question_id).val() == '') {
+                                req = true;
+                                return;
+                            }
+                            arrAnswer.push($('#ques-answer-' + x.question_id).val());
+                            break;
+                        case 3:
+                            let str = '';
+                            $('#ques-answer-' + x.question_id).find('input:checkbox')
+                                .each(function () {
+                                    if ($('#' + this.id).is(":checked")) {
+                                        str += $('#' + this.id).val();
+                                        str += '<>';
+                                    }
+                                });
+                            if (x.is_compulsory == 1 && str == '') {
+                                req = true;
+                                return;
+                            }
+                            str = str.substring(0, str.length - 2);
+                            arrAnswer.push(str);
+                            break;
+                        case 5:
+                            if (x.is_compulsory == 1 && typeof $('input[name="question-option-' + x.question_id + '"]:checked').val() == 'undefined') {
+                                req = true;
+                                return;
+                            }
+                            arrAnswer.push($('input[name="question-option-' + x.question_id + '"]:checked').val());
+                            break;
+                        case 6:
+                            if (x.is_compulsory == 1 && $('#ques-answer-' + x.question_id).val() == '') {
+                                req = true;
+                                return;
+                            }
+                            arrAnswer.push($('#ques-answer-' + x.question_id).val());
+                            break;
+                    }
+                }
+            });
+            if (req) {
+                toastr.warning('Bạn chưa điền hết các trường bắt buộc.');
+                return;
+            }
+            var object = {
+                fid: fid,
+                answer: arrAnswer.join('<$>')
+            };
+            $.ajax({
+                url: "@Url.Action("sendForm", "AcademicActivity")",
+                type: "POST",
+                data: JSON.stringify(object),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                    } else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+            });
+        }
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+            }
+            return {
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
         $(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+            init();
 
         });
     </script>

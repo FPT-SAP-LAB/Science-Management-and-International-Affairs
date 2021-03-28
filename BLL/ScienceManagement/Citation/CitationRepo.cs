@@ -1,10 +1,12 @@
 ﻿using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement;
+using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -31,7 +33,7 @@ namespace BLL.ScienceManagement.Citation
         public AuthorInfo getAuthor(string id)
         {
             AuthorInfo item = new AuthorInfo();
-            string sql = @"select po.*, o.office_abbreviation, ct.contract_id, t.title_id, rc.total_reward, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number
+            string sql = @"select po.*, o.office_abbreviation, ct.contract_id, t.title_id, rc.total_reward, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, ct.name as 'contract_name'
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [General].People po on rc.people_id = po.people_id
@@ -221,6 +223,63 @@ namespace BLL.ScienceManagement.Citation
                 Console.WriteLine(e.Message);
                 return "ff";
             }
+        }
+
+        public List<PendingCitation_manager> getListPending()
+        {
+            string sql = @"select acc.email, br.created_date, br.request_id
+                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+                            where rc.status_id = 3";
+            List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
+            return list;
+        }
+
+        public Nullable<int> getTotalReward(string id)
+        {
+            int request_id = Int32.Parse(id);
+            RequestCitation item = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+            return item.total_reward;
+        }
+
+        public string updateReward(string id, string total)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int request_id = Int32.Parse(id);
+                string temp = total.Replace(",", "");
+                int reward = Int32.Parse(temp);
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                rc.total_reward = reward;
+                rc.status_id = 4;
+                db.SaveChanges();
+                dbc.Commit();
+
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
+        public List<WaitDecisionCitation> getListWait()
+        {
+            string sql = @"select po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward, SUM(c.COUNT) as 'sum'
+                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
+	                            join [General].Account acc on acc.account_id = br.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [SM_Citation].RequestHasCitation rhc on rc.request_id = rhc.request_id
+	                            join [SM_Citation].Citation c on rhc.citation_id = c.citation_id
+                            where rc.status_id = 4
+                            group by po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward";
+            List<WaitDecisionCitation> list = db.Database.SqlQuery<WaitDecisionCitation>(sql).ToList();
+            return list;
         }
     }
 }

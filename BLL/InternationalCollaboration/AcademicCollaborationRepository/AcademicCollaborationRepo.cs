@@ -850,5 +850,31 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
             }
         }
+
+        //DELETE
+
+        public AlertModal<string> deleteAcademicCollaboration(int acad_collab_id)
+        {
+            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
+                    //decrease reference_count in PartnerScope
+                    PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
+                    partnerScope.reference_count -= 1;
+                    //delete AcademicCollab
+                    db.AcademicCollaborations.Remove(academicCollaboration);
+                    db.SaveChanges();
+                    dbContext.Commit();
+                    return new AlertModal<string>(null, true, "Thành công", "Xóa hợp tác học thuật thành công.");
+                }
+                catch (Exception e)
+                {
+                    dbContext.Rollback();
+                    return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
+                }
+            }
+        }
     }
 }
