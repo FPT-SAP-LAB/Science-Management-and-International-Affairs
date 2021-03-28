@@ -880,7 +880,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var collab_staus_hist = saveCollabStatusHistory(evidence_file, collab_id, num_status_id, note, file, account_id);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chuyển trạng thái hợp tác học thuật thành công.");
-                    } else
+                    }
+                    else
                     {
                         return new AlertModal<string>(null, false, "Lỗi", "Thông tin về trạng thái chưa được chọn lựa.");
                     }
