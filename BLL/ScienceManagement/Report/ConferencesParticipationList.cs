@@ -33,7 +33,6 @@ namespace BLL.ScienceManagement.Report
                                    {
                                        total = g.Sum(x => x.total),
                                        request_id = g.Key
-
                                    }) on rc.request_id equals b.request_id
                         where tl.language_id == 1
                         select new ConferencesParticipationReport
