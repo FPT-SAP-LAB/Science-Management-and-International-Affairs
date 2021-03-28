@@ -73,7 +73,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [HttpPost]
-        public JsonResult sendForm(int fid,string answer)
+        public JsonResult sendForm(int fid, string answer)
         {
             bool res = guestRepo.sendForm(fid, answer);
             if (res)

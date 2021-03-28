@@ -145,7 +145,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new fullForm();
             }
         }
-        public bool sendForm(int fid,string answer)
+        public bool sendForm(int fid, string answer)
         {
             try
             {
@@ -156,7 +156,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 });
                 db.SaveChanges();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
