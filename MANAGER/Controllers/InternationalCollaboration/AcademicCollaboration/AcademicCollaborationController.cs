@@ -321,7 +321,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     recordsFiltered = baseServerSideData.RecordsTotal
                 }, JsonRequestBehavior.AllowGet);
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }

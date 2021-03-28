@@ -874,11 +874,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 List<StatusHistory> statusHistory = db.Database.SqlQuery<StatusHistory>(sql, new SqlParameter("collab_id", collab_id)).ToList();
                 int totalRecords = db.CollaborationStatusHistories.Where(x => x.collab_id == collab_id).Count();
                 return new BaseServerSideData<StatusHistory>(statusHistory, totalRecords);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
-        } 
+        }
 
         //CHANGE STATUS HISTORY
         public AlertModal<string> changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note, int account_id)
