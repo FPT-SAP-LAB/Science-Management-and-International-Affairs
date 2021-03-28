@@ -94,7 +94,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                mou.addMOU(input,user);
+                mou.addMOU(input, user);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

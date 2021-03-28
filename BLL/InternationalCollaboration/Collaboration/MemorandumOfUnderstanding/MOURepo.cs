@@ -372,7 +372,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
                 excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
-                
+
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     excelPackage.SaveAs(memoryStream);
