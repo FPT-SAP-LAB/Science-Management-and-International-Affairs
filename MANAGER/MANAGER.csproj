@@ -2183,7 +2183,6 @@
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Delete.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Edit.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\InitModalData.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Program_Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab\Search.js" />
     <Content Include="Scripts\datetime-moment.js" />
