@@ -448,9 +448,6 @@ $('#add_officer_save').on('click', function () {
                     add_officer_save.stopLoading();
                 }
             });
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
         }
     }
 });

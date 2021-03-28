@@ -312,8 +312,34 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
+        //CHANGE STATUS HISTORY
+        [HttpPost]
+        public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, int status_id, string note)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
 
+                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, acc.account_id);
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+                } else
+                {
+                    AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
+                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                }
+            } catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";

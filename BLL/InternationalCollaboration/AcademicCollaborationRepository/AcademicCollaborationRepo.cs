@@ -633,6 +633,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         collab_id = academic_collaboration.collab_id,
                         collab_status_id = obj_academic_collab.status_id,
                         change_date = DateTime.Now,
+                        note = 
                         file_id = evidence_file.file_id,
                         account_id = account_id
                     };
@@ -852,7 +853,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         }
 
         //DELETE
-
         public AlertModal<string> deleteAcademicCollaboration(int acad_collab_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
@@ -874,6 +874,34 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     dbContext.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }
+            }
+        }
+
+        //CHANGE STATUS HISTORY
+        public AlertModal<string> changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, int status_id, string note, int account_id)
+        {
+            try
+            {
+                //upload to Drive
+                Google.Apis.Drive.v3.Data.File f = uploadEvidenceFile(evidence_file, folder_name, 4, false);
+                //add file to db
+                File file = saveFile(f, evidence_file);
+                //add academic collab status history
+                AcademicCollaboration academicCollaboration = new AcademicCollaboration()
+                {
+                    collab_id = collab_id
+                };
+                SaveAcadCollab_AcademicCollaboration saveAcadCollab_AcademicCollaboration = new SaveAcadCollab_AcademicCollaboration()
+                {
+                    collab_id = collab_id,
+                    
+                };
+
+                var collab_staus_hist = saveCollabStatusHistory(evidence_file, academicCollaboration, )
+
+            } catch (Exception e)
+            {
+
             }
         }
     }

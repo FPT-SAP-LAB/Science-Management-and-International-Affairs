@@ -114,7 +114,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
         },
         {
             targets: 8,
-            render: function (data) {
+            render: function (data, type, row) {
                 var status = {
                     1: {
                         'title': 'Đề xuất',
@@ -137,14 +137,14 @@ var collab_going_table = $('#collab_going_table').DataTable({
                     return data;
                 }
                 return '<span class="label label-lg label-pill font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> '
-                    + '<a href="#add_status" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">'
+                    + '<a href="#change_status" data-id=' + row.collab_id + ' data-person_name = "' + row.people_name + '" data-partner_name = "' + row.partner_name + '" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">'
                     + ' <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> '
                     + '<rect x="0" y="0" width="24" height="24"/> '
                     + '<path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "/> '
                     + ' <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"/> '
                     + '   </g> '
                     + '</svg><!--end::Svg Icon--></span></a>'
-                    + '<a onclick="show_status_history(13)" class="show-status-history" href="#status_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> '
+                    + '<a id="view_status_history" class="show-status-history" href="#status_history" data-id=' + row.collab_id + ' data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> '
                     + '  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> '
                     + '    <rect x="0" y="0" width="24" height="24"/> '
                     + '  <path d="M10.9630156,7.5 L11.0475062,7.5 C11.3043819,7.5 11.5194647,7.69464724 11.5450248,7.95024814 L12,12.5 L15.2480695,14.3560397 C15.403857,14.4450611 15.5,14.6107328 15.5,14.7901613 L15.5,15 C15.5,15.2109164 15.3290185,15.3818979 15.1181021,15.3818979 C15.0841582,15.3818979 15.0503659,15.3773725 15.0176181,15.3684413 L10.3986612,14.1087258 C10.1672824,14.0456225 10.0132986,13.8271186 10.0316926,13.5879956 L10.4644883,7.96165175 C10.4845267,7.70115317 10.7017474,7.5 10.9630156,7.5 Z" fill="#000000"/> '
