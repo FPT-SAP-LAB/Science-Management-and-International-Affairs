@@ -8,6 +8,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
 {
     public class SaveAcadCollab_AcademicCollaboration
     {
+        public int collab_id { get; set; }
         public int status_id { get; set; }
         public DateTime plan_start_date { get; set; }
         public DateTime plan_end_date { get; set; }

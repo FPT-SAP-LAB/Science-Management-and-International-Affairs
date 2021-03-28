@@ -216,6 +216,12 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="EmptyContentDetail" xml:space="preserve">
+    <value>Please return to the home page</value>
+  </data>
+  <data name="EmptyContentName" xml:space="preserve">
+    <value>This article is not available in your language version</value>
+  </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>No Record</value>
   </data>
@@ -236,9 +242,6 @@
   </data>
   <data name="FileCM" xml:space="preserve">
     <value>File</value>
-  </data>
-  <data name="FPTProgram" xml:space="preserve">
-    <value>FPT Program</value>
   </data>
   <data name="homepage" xml:space="preserve">
     <value>Home</value>
@@ -297,8 +300,14 @@
   <data name="LongTerm" xml:space="preserve">
     <value>Postgraduate Education</value>
   </data>
+  <data name="LongTermFPTProgram" xml:space="preserve">
+    <value>FPT Program</value>
+  </data>
   <data name="LongTermIntroduction" xml:space="preserve">
     <value>Introduction</value>
+  </data>
+  <data name="LongTermPartnerProgram" xml:space="preserve">
+    <value>Partner Program</value>
   </data>
   <data name="Mar" xml:space="preserve">
     <value>March</value>
@@ -350,9 +359,6 @@
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
-  </data>
-  <data name="PartnerProgram" xml:space="preserve">
-    <value>Partner Program</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Patent license date</value>
@@ -428,6 +434,12 @@
   </data>
   <data name="Sep" xml:space="preserve">
     <value>September</value>
+  </data>
+  <data name="ShortTermFPTProgram" xml:space="preserve">
+    <value>FPT Program</value>
+  </data>
+  <data name="ShortTermPartnerProgram" xml:space="preserve">
+    <value>Partner Program</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
