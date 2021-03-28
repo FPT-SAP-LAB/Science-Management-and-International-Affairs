@@ -633,7 +633,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         collab_id = academic_collaboration.collab_id,
                         collab_status_id = obj_academic_collab.status_id,
                         change_date = DateTime.Now,
-                        note = 
+                        note =
                         file_id = evidence_file.file_id,
                         account_id = account_id
                     };
@@ -894,12 +894,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 SaveAcadCollab_AcademicCollaboration saveAcadCollab_AcademicCollaboration = new SaveAcadCollab_AcademicCollaboration()
                 {
                     collab_id = collab_id,
-                    
+
                 };
 
                 var collab_staus_hist = saveCollabStatusHistory(evidence_file, academicCollaboration, )
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
 
             }

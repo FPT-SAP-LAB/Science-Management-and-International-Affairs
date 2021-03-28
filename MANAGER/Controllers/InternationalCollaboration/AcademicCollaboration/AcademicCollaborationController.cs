@@ -328,12 +328,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 
                     AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, acc.account_id);
                     return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-                } else
+                }
+                else
                 {
                     AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
                     return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
