@@ -15,9 +15,9 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
         public string registration_deadline { get; set; }
         public string publish_time { get; set; }
         public string country_name { get; set; }
-
         public string partner_name { get; set; }
-
+        public int direction_id { get; set; }
+        public int collab_type_id { get; set; }
         public ProgramInfo() { }
     }
 }

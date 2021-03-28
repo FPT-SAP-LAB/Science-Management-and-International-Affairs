@@ -96,45 +96,58 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        public ActionResult Program_Detail(string id, string type_program)
+        public ActionResult Program_Detail(string id)
         {
             var pagesTree = new List<PageTree>();
             int language = Models.LanguageResource.GetCurrentLanguageID();
-            ViewBag.Program = guestRepo.programInfo(id, language);
-            switch (type_program)
+            ProgramInfo pi = guestRepo.programInfo(id, language);
+            if(pi is null)
             {
-                case "1":
-                    pagesTree = new List<PageTree>
+                pi = new ProgramInfo()
+                {
+                    program_name = rm.GetString("EmptyContentName"),
+                    content = rm.GetString("EmptyContentDetail")
+                };
+            }
+            ViewBag.Program = pi;
+            if (pi.collab_type_id == 2 & pi.direction_id == 1)
             {
-                new PageTree("Đào tạo sau đại học", "/AcademicCollaboration/Long_Term"),
-                new PageTree("Đào tạo của đối tác", "/AcademicCollaboration/Program_Detail"),
-                //new PageTree("Đào tạo của đối tác", "/AcademicCollaboration/Program_Detail?id=" + id),
+                pagesTree = new List<PageTree>
+            {
+                new PageTree(rm.GetString("LongTerm"), "/AcademicCollaboration/Long_Term"),
+                new PageTree(rm.GetString("LongTermPartnerProgram"), "/AcademicCollaboration/Program_Detail"),
             };
-                    break;
-                case "2":
-                    pagesTree = new List<PageTree>
+            }
+            else if (pi.collab_type_id == 2 & pi.direction_id == 2)
             {
-                new PageTree("Đào tạo sau đại học", "/AcademicCollaboration/Long_Term"),
-                new PageTree("Đào tạo của FPT", "/AcademicCollaboration/Program_Detail"),
-                //new PageTree("Đào tạo của FPT", "/AcademicCollaboration/Program_Detail?id=" + id),
-            };
-                    break;
-                case "3":
-                    pagesTree = new List<PageTree>
+                pagesTree = new List<PageTree>
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
-                new PageTree("Trao đổi với đối tác", "/AcademicCollaboration/Program_Detail"),
-                //new PageTree("Trao đổi với đối tác", "/AcademicCollaboration/Program_Detail?id=" + id),
+                new PageTree(rm.GetString("LongTerm"), "/AcademicCollaboration/Long_Term"),
+                new PageTree(rm.GetString("LongTermFPTProgram"), "/AcademicCollaboration/Program_Detail"),
             };
-                    break;
-                case "4":
-                    pagesTree = new List<PageTree>
+            }
+            else if (pi.collab_type_id == 1 & pi.direction_id == 1)
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
-                new PageTree("Trao đổi với FPT", "/AcademicCollaboration/Program_Detail"),
-                //new PageTree("Trao đổi với FPT", "/AcademicCollaboration/Program_Detail?id=" + id),
+                pagesTree = new List<PageTree>
+            {
+                new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
+                new PageTree(rm.GetString("ShortTermPartnerProgram"), "/AcademicCollaboration/Program_Detail"),
             };
-                    break;
+            }
+            else if (pi.collab_type_id == 1 & pi.direction_id == 2)
+            {
+                pagesTree = new List<PageTree>
+            {
+                new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
+                new PageTree(rm.GetString("ShortTermFPTProgram"), "/AcademicCollaboration/Program_Detail"),
+            };
+            } 
+            else
+            {
+                pagesTree = new List<PageTree>
+            {
+                new PageTree(rm.GetString("LongTerm"), "/AcademicCollaboration/Short_Term"),
+            };
             }
             ViewBag.pagesTree = pagesTree;
             return View();

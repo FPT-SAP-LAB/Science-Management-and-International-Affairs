@@ -358,6 +358,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xin hãy quay về trang chủ.
+        /// </summary>
+        public static string EmptyContentDetail {
+            get {
+                return ResourceManager.GetString("EmptyContentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bài viết chưa có phiên bản ngôn ngữ của bạn.
+        /// </summary>
+        public static string EmptyContentName {
+            get {
+                return ResourceManager.GetString("EmptyContentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Không có dữ liệu.
         /// </summary>
         public static string EmptyTB {
@@ -417,15 +435,6 @@ namespace GUEST.Resources {
         public static string FileCM {
             get {
                 return ResourceManager.GetString("FileCM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của ĐH FPT.
-        /// </summary>
-        public static string FPTProgram {
-            get {
-                return ResourceManager.GetString("FPTProgram", resourceCulture);
             }
         }
         
@@ -601,11 +610,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đào tạo của ĐH FPT.
+        /// </summary>
+        public static string LongTermFPTProgram {
+            get {
+                return ResourceManager.GetString("LongTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giới thiệu chương trình.
         /// </summary>
         public static string LongTermIntroduction {
             get {
                 return ResourceManager.GetString("LongTermIntroduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đào tạo của đối tác.
+        /// </summary>
+        public static string LongTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("LongTermPartnerProgram", resourceCulture);
             }
         }
         
@@ -759,15 +786,6 @@ namespace GUEST.Resources {
         public static string PartnerName {
             get {
                 return ResourceManager.GetString("PartnerName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của đối tác.
-        /// </summary>
-        public static string PartnerProgram {
-            get {
-                return ResourceManager.GetString("PartnerProgram", resourceCulture);
             }
         }
         
@@ -993,6 +1011,24 @@ namespace GUEST.Resources {
         public static string Sep {
             get {
                 return ResourceManager.GetString("Sep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trao đổi với FPT.
+        /// </summary>
+        public static string ShortTermFPTProgram {
+            get {
+                return ResourceManager.GetString("ShortTermFPTProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trao đổi với đối tác.
+        /// </summary>
+        public static string ShortTermPartnerProgram {
+            get {
+                return ResourceManager.GetString("ShortTermPartnerProgram", resourceCulture);
             }
         }
         

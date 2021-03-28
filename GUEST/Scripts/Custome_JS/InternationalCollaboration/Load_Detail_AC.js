@@ -8,8 +8,8 @@ class Load_detail {
         window.location.href = url
     }
 
-    load_program_detail(id, type_program) {
-        var url = '/AcademicCollaboration/Program_Detail?id=' + id + '&type_program=' + type_program
+    load_program_detail(id) {
+        var url = '/AcademicCollaboration/Program_Detail?id=' + id
         window.location.href = url
     }
 }
