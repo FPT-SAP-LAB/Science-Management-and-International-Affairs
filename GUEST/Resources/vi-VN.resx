@@ -216,6 +216,12 @@
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
   </data>
+  <data name="EmptyContentDetail" xml:space="preserve">
+    <value>Xin hãy quay về trang chủ</value>
+  </data>
+  <data name="EmptyContentName" xml:space="preserve">
+    <value>Bài viết chưa có phiên bản ngôn ngữ của bạn</value>
+  </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>Không có dữ liệu</value>
   </data>
@@ -236,9 +242,6 @@
   </data>
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
-  </data>
-  <data name="FPTProgram" xml:space="preserve">
-    <value>Đào tạo của ĐH FPT</value>
   </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
@@ -297,8 +300,14 @@
   <data name="LongTerm" xml:space="preserve">
     <value>Đào tạo sau đại học</value>
   </data>
+  <data name="LongTermFPTProgram" xml:space="preserve">
+    <value>Đào tạo của ĐH FPT</value>
+  </data>
   <data name="LongTermIntroduction" xml:space="preserve">
     <value>Giới thiệu chương trình</value>
+  </data>
+  <data name="LongTermPartnerProgram" xml:space="preserve">
+    <value>Đào tạo của đối tác</value>
   </data>
   <data name="Mar" xml:space="preserve">
     <value>Tháng 3</value>
@@ -351,9 +360,6 @@
   <data name="PartnerName" xml:space="preserve">
     <value>Tên đối tác</value>
   </data>
-  <data name="PartnerProgram" xml:space="preserve">
-    <value>Đào tạo của đối tác</value>
-  </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Ngày cấp</value>
   </data>
@@ -368,6 +374,9 @@
   </data>
   <data name="Program" xml:space="preserve">
     <value>Chương trình</value>
+  </data>
+  <data name="ProgramStart" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
   </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Ngày xuất bản</value>
@@ -425,6 +434,12 @@
   </data>
   <data name="Sep" xml:space="preserve">
     <value>Tháng 9</value>
+  </data>
+  <data name="ShortTermFPTProgram" xml:space="preserve">
+    <value>Trao đổi với FPT</value>
+  </data>
+  <data name="ShortTermPartnerProgram" xml:space="preserve">
+    <value>Trao đổi với đối tác</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Hiển thị</value>

@@ -21,6 +21,7 @@ namespace ENTITIES
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.CustomProfiles = new HashSet<CustomProfile>();
             this.ProfileAcademicDegrees = new HashSet<ProfileAcademicDegree>();
+            this.WorkingProcesses = new HashSet<WorkingProcess>();
             this.ContractTypes = new HashSet<ContractType>();
             this.Positions = new HashSet<Position>();
             this.Titles = new HashSet<Title>();
@@ -61,6 +62,8 @@ namespace ENTITIES
         public virtual AcademicDegree AcademicDegree { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkingProcess> WorkingProcesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContractType> ContractTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
