@@ -236,8 +236,13 @@ function formatPersonInfo(person) {
         let name = person.name;
         if (mssv_msnv === undefined && name === undefined) {
             return "Dữ liệu cá nhân mới."
-        } else {
-            return mssv_msnv + " - " + name;
+        }
+        else {
+            if (mssv_msnv == "") {
+                return name;
+            } else {
+                return mssv_msnv + " - " + name;
+            }
         }
     }
 }
@@ -1016,7 +1021,7 @@ $('#edit_officer').on('show.bs.modal', function (e) {
                     $("#edit_officer_facility").prop("disabled", true);
 
                     available_partner = true; //partner had data in db
-                    $("#edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_name + '/' +acadCollab.partner_id, false, true)).trigger('change');
+                    $("#edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_name + '/' + acadCollab.partner_id, false, true)).trigger('change');
                     $("#edit_officer_nation").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
                     $("#edit_officer_nation").prop("disabled", true);
                     $("#edit_officer_coop_scope").append(new Option(acadCollab.scope_name, acadCollab.scope_id, false, true)).trigger('change');
@@ -1028,14 +1033,17 @@ $('#edit_officer').on('show.bs.modal', function (e) {
                     $("#edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
+                    console.log(acadCollab.file_id);
                     console.log(acadCollab.file_name);
                     console.log(acadCollab.file_link);
                     console.log(acadCollab.file_drive_id);
 
-                    file.file_id = acadCollab.file_id;
-                    file.name = acadCollab.file_name;
-                    file.link = acadCollab.file_link;
-                    file.file_drive_id = acadCollab.file_drive_id;
+                    file.file_id = acadCollab.file_id === null ? 0 : acadCollab.file_id;
+                    file.name = acadCollab.file_name === null ? null : acadCollab.file_name;
+                    file.link = acadCollab.file_link === null ? "" : acadCollab.file_link;
+                    file.file_drive_id = acadCollab.file_drive_id === null ? "" : acadCollab.file_drive_id;
+
+                    console.log(file);
 
                     collab_id = acadCollab.collab_id;
 
@@ -1054,7 +1062,6 @@ $('#edit_officer').on('show.bs.modal', function (e) {
 
 //3.3.EDIT SAVE BUTTON
 var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
-var old_evidence = "";
 $('#edit_officer_save').on('click', function () {
     //person
     person = $('#edit_officer_name').val();
