@@ -27,13 +27,16 @@ namespace BLL.ScienceManagement.Comment
                                         }).ToList();
             return list;
         }
-        public AlertModal<string> AddComment(int request_id, int account_id, string content)
+        public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id)
         {
+            List<int> manager_account_id = new List<int> { 2, 3 };
             if (String.IsNullOrWhiteSpace(content))
                 return new AlertModal<string>(false, "Nội dung không được bỏ trống");
-            BaseRequest request = db.BaseRequests.Where(x => x.account_id == account_id && x.request_id == request_id).FirstOrDefault();
+            BaseRequest request = db.BaseRequests.Find(request_id);
             if (request == null)
                 return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (request.account_id != account_id && !(manager_account_id.Contains(role_id)))
+                return new AlertModal<string>(false, "Bạn không có quyền bình luận vào đề nghị này");
             if (request.finished_date != null)
                 return new AlertModal<string>(false, "Đề nghị đã kết thúc");
             request.CommentBases.Add(new CommentBase()
