@@ -20,6 +20,7 @@ namespace ENTITIES
         public string title { get; set; }
         public Nullable<int> start_year { get; set; }
         public Nullable<int> end_year { get; set; }
+    
         public virtual Profile Profile { get; set; }
     }
 }
