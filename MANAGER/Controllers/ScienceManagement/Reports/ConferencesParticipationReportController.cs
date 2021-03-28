@@ -33,7 +33,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         public JsonResult GetPeopleByName(String name)
         {
             PeopleRepo repo = new PeopleRepo();
-            return Json(repo.GetPeopleName(name,10), JsonRequestBehavior.AllowGet);
+            return Json(repo.GetPeopleName(name, 10), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOfficeName(String name)
         {

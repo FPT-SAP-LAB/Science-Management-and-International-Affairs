@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ModelDAL
 {
-  public class OfficeRepo
+    public class OfficeRepo
     {
         ScienceAndInternationalAffairsEntities db;
         public List<String> GetOfficeName(string name, int numberOfRow)
