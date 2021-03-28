@@ -104,7 +104,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
-                
+
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql + paging, new SqlParameter("language", language),
                     new SqlParameter("country", country), new SqlParameter("partner", "%" + partner + "%"), new SqlParameter("type", type),
                     new SqlParameter("year", year)).ToList();
@@ -119,7 +119,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public BaseServerSideData<ProgramInfo> listFPTProgram(BaseDatatable baseDatatable ,int type, int year, int language)
+        public BaseServerSideData<ProgramInfo> listFPTProgram(BaseDatatable baseDatatable, int type, int year, int language)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public BaseServerSideData<ProcedureInfo> listProcedure(BaseDatatable baseDatatable,string title, int direction,int language)
+        public BaseServerSideData<ProcedureInfo> listProcedure(BaseDatatable baseDatatable, string title, int direction, int language)
         {
             try
             {
@@ -196,7 +196,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 		    join IA_Article.Article ar on ar.article_id = pr.article_id
 		    join IA_Article.ArticleVersion av on av.article_id = pr.article_id
             where pr.direction_id = @direction AND av.language_id = @language";
-                if(!String.IsNullOrEmpty(title))
+                if (!String.IsNullOrEmpty(title))
                 {
                     sql += " AND av.version_title LIKE @title";
                 }
@@ -207,10 +207,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 List<ProcedureInfo> obj = db.Database.SqlQuery<ProcedureInfo>(sql + paging, new SqlParameter("language", language),
                     new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).ToList();
                 int totalRecord = db.Database.SqlQuery<ProcedureInfo>(sql, new SqlParameter("language", language),
-                    new SqlParameter("direction", direction), new SqlParameter("title","%" + title + "%")).Count();
+                    new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).Count();
                 return new BaseServerSideData<ProcedureInfo>(obj, totalRecord);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -228,7 +228,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         new SqlParameter("id", id)).FirstOrDefault();
                 return obj;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 return new ProcedureInfo();

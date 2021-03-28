@@ -85,7 +85,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 year = Int32.Parse(yearstr);
             }
             int language = Models.LanguageResource.GetCurrentLanguageID();
-            BaseServerSideData<ProgramInfo> baseServerSideData = guestRepo.listFPTProgram(baseDatatable,collabtype, year, language);
+            BaseServerSideData<ProgramInfo> baseServerSideData = guestRepo.listFPTProgram(baseDatatable, collabtype, year, language);
             return Json(new
             {
                 success = true,
@@ -134,7 +134,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             guestRepo = new AcademicCollaborationGuestRepo();
             BaseDatatable baseDatatable = new BaseDatatable(Request);
             int language = Models.LanguageResource.GetCurrentLanguageID();
-            BaseServerSideData<ProcedureInfo> baseServerSideData = guestRepo.listProcedure(baseDatatable,title, direction, language);
+            BaseServerSideData<ProcedureInfo> baseServerSideData = guestRepo.listProcedure(baseDatatable, title, direction, language);
             return Json(new
             {
                 success = true,
