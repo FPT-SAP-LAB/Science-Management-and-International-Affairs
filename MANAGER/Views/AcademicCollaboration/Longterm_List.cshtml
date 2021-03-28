@@ -194,13 +194,20 @@
 }
 
 @section scripts{
-    @*//datatable*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_Datatable.js"></script>
-
     @*datepicker and range*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
-
-    @*modal trigger*@
+    @*///////////////////////////////////////////TABLE1: LONG-TERM ACADEMIC COLLAB GOING//////////////////////////////////////////*@
+    @**datatable*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/AcadCollab_Datatable.js"></script>
+    @*search*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Search.js"></script>
+    @*add modal*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Add.js"></script>
+    @*edit modal*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Edit.js"></script>
+    @*delete*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Delete.js"></script>
+    @*update content*@
     <script>
         $('#edit_content_long_term').click(function () {
             $('#describe_content').find("textarea").val('').end()
@@ -218,8 +225,7 @@
         })
     </script>
 
-    @*scripts of long-term going table*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_Training_Going.js"></script>
+
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
