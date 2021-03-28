@@ -82,7 +82,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult addFile(HttpPostedFileBase file, string name)
         {
-            Google.Apis.Drive.v3.Data.File f = GlobalUploadDrive.UploadResearcherFile(file, name, 3, "hieumv0163@gmail.com");
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 3, "hieumv0163@gmail.com");
             ENTITIES.File fl = new ENTITIES.File
             {
                 link = f.WebViewLink,
