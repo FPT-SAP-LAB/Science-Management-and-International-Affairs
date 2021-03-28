@@ -287,6 +287,8 @@
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\PendingCitation_manager.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\WaitDecisionCitation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Comment\DetailComment.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\DecisionDetail.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceApprovalProcess.cs" />
