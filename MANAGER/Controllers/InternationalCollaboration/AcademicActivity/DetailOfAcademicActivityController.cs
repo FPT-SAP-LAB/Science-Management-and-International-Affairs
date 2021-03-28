@@ -13,6 +13,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
     {
         DetailOfAcademicActivityRepo repo;
         FormRepo formRepo;
+        AcademicActivityPhaseRepo phaseRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
@@ -84,25 +85,32 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             DetailOfAcademicActivityRepo.ContactInfo data = repo.getContact(activity_partner_id);
             return Json(data);
         }
-        public JsonResult add_Phase(int id, string name, string from, string to)
+        [HttpPost]
+        public ActionResult getPhase(int language_id, int activity_id)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, activity_id);
+            return Json(new {success = true,data = data });
+        }
+        [HttpPost]
+        public JsonResult getDetailPhase(int language_id, int phase_id)
+        {
+            phaseRepo = new AcademicActivityPhaseRepo();
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id,phase_id);
+            return Json(data);
+        }
+        public JsonResult add_Phase(int language_id,int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
+        {
+            phaseRepo = new AcademicActivityPhaseRepo();
+            int account_id =  CurrentAccount.AccountID(Session);
+            bool res = phaseRepo.addPhase(language_id, activity_id,account_id, basePhase);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã thêm thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Thêm giai đoạn thành công");
             }
-            catch (Exception)
+            else
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json(String.Empty);
             }
         }
         public JsonResult delete_Phase(int id)

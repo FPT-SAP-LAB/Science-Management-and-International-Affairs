@@ -154,22 +154,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Sơ khảo</td>
-                            <td>01/01/2021</td>
-                            <td>14/01/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Chung kết</td>
-                            <td>14/01/2021</td>
-                            <td>26/01/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -723,7 +707,7 @@
         </div>
     </div>
 </div>
-
+@*cc*@
 <div class="modal fade" id="editModal_Giaidoan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -737,14 +721,14 @@
                 <div class="form-group row pb-0 mb-0">
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Giai đoạn</label>
-                        <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" value="Sơ khảo" />
+                        <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" value="08/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -759,7 +743,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" value="16/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -777,10 +761,10 @@
             <div class="modal-body pt-3 pb-0">
                 <div class="row form-group">
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <table id="TuCachDatatable" class="table table-bordered table-checkable">
@@ -1406,7 +1390,6 @@
         });
     </script>
     <script>
-        let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;
         let id_edit_tu_cach = 0;
@@ -1571,19 +1554,26 @@
         function getContactInfo() {
             return;
         }
-        function editDetailGiaiDoan(id) {
+        function editGiaiDoan(id) {
             id_edit_giai_doan = id;
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                phase_id : id
+            };
             $.ajax({
-                url: '/DetailOfAcademicActivity/edit_Phase',
-                data: { 'id': id_edit_giai_doan },
+                url: "@Url.Action("getDetailPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
+                    document.getElementById('edit_name_giaidoan').value = data.phase_name;
+                    document.getElementById('edit_from_giaidoan').value = data.from;
+                    document.getElementById('edit_to_giaidoan').value = data.to;
                     $('#editModal_Giaidoan').modal('show');
                 },
             });
-
         }
-        function deleteDetailGiaiDoan(id) {
-            id_delete_giai_doan = id;
+        function deleteGiaiDoan(id) {
             Swal.fire({
                 title: "Bạn có muốn xóa giai đoạn này không ?",
                 text: "",
@@ -1594,11 +1584,19 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deletePhase", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ phase_id: id }),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại.');
+                            }
+                        },
+            });
                 }
             });
         }
@@ -1801,20 +1799,31 @@
             }
         });
         $('#btn_add_giaidoan').click(function () {
-            let object = {
-                id: 1,
-                name: document.getElementById('add_name_giaidoan').value,
+            var basePhase = {
+                phase_name: document.getElementById('add_name_giaidoan').value,
                 from: document.getElementById('add_from_giaidoan').value,
                 to: document.getElementById('add_to_giaidoan').value
+            };
+            if (basePhase.from > basePhase.to) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
             }
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                activity_id: document.getElementById('activity_id').value,
+                basePhase: basePhase
+            };
             $.ajax({
-                url: '/DetailOfAcademicActivity/add_Phase',
-                data: object,
+                url: "@Url.Action("addPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
+                    if (data != '') {
+                        datatableGD.ajax.reload();
+                        toastr.success(data);
                     } else {
-                        toastr.error(data.err_content);
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
                 },
             });
@@ -1921,7 +1930,7 @@
         $('#btn_edit_kpThucTe').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });
-        $("#GiaiDoanDatatable").DataTable({
+        var datatableGD = $("#GiaiDoanDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1933,20 +1942,48 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getPhase", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { language_id: document.getElementById('detail_language_content').value,activity_id: document.getElementById('activity_id').value },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    width: '15%',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
+                    data: "phase_name"
+                },
+                {
+                    data: "from"
+                },
+                {
+                    data: "to"
+                },
+                {
+                    data: "full_name"
+                },
+                {
+                    data: "phase_id",
+                    title : "Hành động",
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editGiaiDoan(' + data +')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteGiaiDoan('+data+')">Xóa</a>';
+                    }
+                },
+            ],
+            columnDefs: [
+                {
                     className: "text-center",
-                    targets: [0, 1, 2, 3, 4, -1],
-                }
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
         });
         $("#TuCachDatatable").DataTable({
