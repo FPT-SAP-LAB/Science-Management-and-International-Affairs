@@ -2313,6 +2313,7 @@
     <Content Include="Views\MOA\PartialView\MOAPartner\List_History_MOA.cshtml" />
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
     <Content Include="Views\SettingDrive\Index.cshtml" />
+    <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2328,7 +2329,6 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\ConferencesParticipationReport\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
