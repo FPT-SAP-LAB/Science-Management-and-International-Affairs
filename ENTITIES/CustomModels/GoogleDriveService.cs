@@ -13,7 +13,7 @@ using static Google.Apis.Drive.v3.FilesResource;
 
 namespace ENTITIES.CustomModels
 {
-    public static class GlobalUploadDrive
+    public static class GoogleDriveService
     {
         //Field: Dữ liệu trả về của loại request, Nếu là file nên để là id và webViewLink, xem thêm tại đây https://developers.google.com/drive/api/v3/reference/files
         //Q: query search, xem thêm tại đây https://developers.google.com/drive/api/v3/ref-search-terms
