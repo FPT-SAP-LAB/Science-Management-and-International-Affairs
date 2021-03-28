@@ -242,6 +242,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_File.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_Partner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_Person.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusHistory.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />

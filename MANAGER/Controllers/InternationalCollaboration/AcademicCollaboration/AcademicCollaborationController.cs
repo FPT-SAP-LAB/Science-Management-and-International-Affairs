@@ -5,6 +5,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
+using MANAGER.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -196,13 +197,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
                     //upload file
                     if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
@@ -219,14 +216,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         }
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, evidence, acc.account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
                 else
                 {
-                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    return Redirect("/Hom/Index"); //return login page if session's out
                 }
             }
             catch (Exception e)
@@ -263,13 +259,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
                     if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
                         AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
@@ -280,14 +272,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, acc.account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
                 else
                 {
-                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    return Redirect("/Home/Index"); //return login page if session's out
                 }
             }
             catch (Exception e)
@@ -312,6 +303,30 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        //VIEW STATUS HISTORY
+        [HttpGet]
+        public ActionResult getStatusHistories(int collab_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<StatusHistory> baseServerSideData = academicCollaborationRepo.getStatusHistories(baseDatatable, collab_id);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+
+            } catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         //CHANGE STATUS HISTORY
         [HttpPost]
         public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note)
@@ -319,20 +334,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
-                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, acc.account_id);
+                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, account_id);
                     return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
                 else
                 {
-                    AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    return Redirect("/Home/Index"); //return login page if session's out
                 }
             }
             catch (Exception e)
