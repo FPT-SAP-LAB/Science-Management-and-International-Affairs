@@ -113,6 +113,39 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseAA();
             }
         }
+        public fullForm getForm(int phase_id)
+        {
+            try
+            {
+                string sql = @"select f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id from SMIA_AcademicActivity.AcademicActivityPhase aap
+                                inner join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
+                                inner join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
+                                where f.phase_id = @phase_id";
+                List<baseFrom> data = db.Database.SqlQuery<baseFrom>(sql, new SqlParameter("phase_id", phase_id)).ToList();
+                List<int> quesOp = data.Where(x => x.answer_type_id == 3 || x.answer_type_id == 5).Select(y => y.question_id).ToList();
+                string list_option = "";
+                foreach(int i in quesOp)
+                {
+                    list_option += i + ",";
+                }
+                list_option = list_option.Remove(list_option.Length - 1);
+                List<QuesOption> quesOptions = new List<QuesOption>();
+                if (!String.IsNullOrEmpty(list_option))
+                {
+                    sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in ("+list_option+")";
+                    quesOptions  = db.Database.SqlQuery<QuesOption>(sql).ToList();
+                }
+                fullForm ff = new fullForm
+                {
+                    question = data,
+                    optins = quesOptions
+                };
+                return ff;
+            }catch(Exception e)
+            {
+                return new fullForm();
+            }
+        }
         public class activityType
         {
             public string activity_type_name { get; set; }
@@ -126,6 +159,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string location { get; set; }
             public string from { get; set; }
             public string to { get; set; }
+        }
+        public class baseFrom
+        {
+            public int form_id { get; set; }
+            public int phase_id { get; set; }
+            public int question_id { get; set; }
+            public string title { get; set; }
+            public int is_compulsory { get; set; }
+            public int answer_type_id { get; set; }
+        }
+        public class QuesOption
+        {
+            public int question_id { get; set; }
+            public string option_title { get; set; }
+        }
+        public class fullForm
+        {
+            public List<baseFrom> question { get; set; }
+            public List<QuesOption> optins { get; set; }
         }
     }
 }

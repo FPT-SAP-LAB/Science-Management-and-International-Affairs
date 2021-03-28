@@ -4,28 +4,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    label{
+    label {
         font-size: 15px !important;
     }
-    input,textarea{
+
+    input, textarea {
         font-size: 13px !important;
     }
-    .checkbox{
+
+    .checkbox {
         margin-bottom: 12px !important
     }
-    .custom-span{
+
+    .custom-span {
         margin-right: 14px !important;
     }
+
     .custom-radio {
         width: 20px !important;
         height: 20px !important;
         margin-right: 14px !important;
     }
-    .px-lg-custom{
+
+    .px-lg-custom {
         padding-left: 12em !important;
         padding-right: 12em !important;
     }
-    .radio{
+
+    .radio {
         margin-bottom: 10px !important;
     }
 </style>
@@ -42,7 +48,7 @@
         <div class="col-md-12">
             <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
                 <div class="col-md-12 col-sm-12">
-                    <div class="row">
+                    <div class="row" id="main-control">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Họ và tên <label style="color:red">*</label></b>:</label>
@@ -72,16 +78,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-12 col-sm-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Email</b>:</label>
                                 <input type="text" class="form-control  form-control-lg" placeholder="Email" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-12 col-sm-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Số điện thoại</b>:</label>
                                 <input type="text" class="form-control  form-control-lg" placeholder="Số điện thoại" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Số điện thoại</b>:</label>
+                                <div class="input-group date kt_datetimepicker_3" id="ques-answer-" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#ques-answer-" autocomplete="off" id="ques-answer" />
+                                    <div class="input-group-append" data-target="#ques-answer-" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12">
@@ -122,13 +141,80 @@
         </div>
     </div>
 </div>
+<input type="hidden" value="@ViewBag.fid" id="phase_id" />
 @section scripts{
     <script>
         function textAreaAdjust(element) {
             element.style.height = "1px";
             element.style.height = (25 + element.scrollHeight) + "px";
         }
+        function init() {
+            var object = {
+                phase_id : $('#phase_id').val()
+            }
+            $.ajax({
+                url: "@Url.Action("getForm", "AcademicActivity")",
+                type: "POST",
+                data: JSON.stringify(object),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    data.question.forEach(function (x) {
+                        let ques_html = '';
+                        switch (x.answer_type_id){
+                            case '1':
+                                html = '<div class="col-md-12 col-sm-12">'+
+                                            '<div class=\"form-group fv-plugins-icon-container\">'+
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + x.is_compulsory == 0 ? 'hidden' : '' +'>*</label></b>:</label> '+
+                                    '<input type="text" id="ques-answer-' + x.question_id+'" class="form-control form-control-lg" placeholder="'+x.title+'" autocomplete="off"> '+
+                                            '</div>'
+                                        '</div>';
+                                break;
+                            case '2':
+                                html = '<div class="col-md-12 col-sm-12">' +
+                                    '<div class=\"form-group fv-plugins-icon-container\">' +
+                                    '<label><b>' + x.title + ' <label style="color:red" ' + x.is_compulsory == 0 ? 'hidden' : '' + '>*</label></b>:</label> ' +
+                                    '<textarea type="text" id="ques-answer-' + x.question_id + '" class="form-control  form-control-lg" placeholder="' + x.title +'" onkeyup="textAreaAdjust(this)"></textarea> ' +
+                                    '</div>'
+                                '</div>';
+                                break;
+                            case '3':
+                                break;
+                            case '5':
+                                break;
+                            case '6':
+                                html = '<div class="input-group date kt_datetimepicker_3" id="ques-date-' + x.question_id+'" data-target-input="nearest">'+
+                                    '<input type="text" class="form-control datetimepicker-input" placeholder="" data-target="#ques-date-' + x.question_id + '" autocomplete="off" id="ques-answer' + x.question_id +'" /> '+
+                                    '<div class="input-group-append" data-target="#ques-date-' + x.question_id+'" data-toggle="datetimepicker" > '+
+                                    '<span class="input-group-text"> '+
+                                    '<i class="ki ki-calendar"></i> '+
+                                            '</span> '+
+                                        '</div> '+
+                                '</div>';
+                                break;
+                        }
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
+        var KTBootstrapDatetimepicker = function () {
+            var baseDemos = function () {
+                $('.kt_datetimepicker_3').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+            }
+            return {
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
         $(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+            init();
 
         });
     </script>

@@ -66,5 +66,10 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.fid = fid;
             return View();
         }
+        public JsonResult getForm(int phase_id)
+        {
+            AcademicActivityGuestRepo.fullForm data = guestRepo.getForm(phase_id);
+            return Json(data);
+        }
     }
 }
