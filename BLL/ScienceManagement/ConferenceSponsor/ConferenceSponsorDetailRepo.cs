@@ -41,6 +41,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                QsUniversity = b.qs_university,
                                                Co_organizedUnit = b.co_organized_unit,
                                                CreatedDate = r.created_date.Value,
+                                               FinishedDate = r.finished_date,
                                                TimeEnd = b.time_end,
                                                TimeStart = b.time_start,
                                                AttendanceEnd = a.attendance_end,
@@ -287,8 +288,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 try
                 {
-                    db.RequestConferences.Find(request_id).reimbursement = reimbursement;
-                    db.RequestConferences.Find(request_id).status_id = 5;
+                    request.reimbursement = reimbursement;
+                    request.status_id = 5;
+                    request.BaseRequest.finished_date = DateTime.Now;
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true, "Cập nhật thành công");

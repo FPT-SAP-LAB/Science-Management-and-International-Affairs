@@ -26,11 +26,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         from IA_Collaboration.MOU t1
                         inner join General.Office t2 on t1.office_id = t2.office_id
                         inner join
-                        (select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                        from IA_Collaboration.MOUStatusHistory 
-                        group by mou_status_id, mou_id) t3 on t3.mou_id = t1.mou_id
+                        (select a.mou_id,a.mou_status_id,max_date from IA_Collaboration.MOUStatusHistory a
+                        inner join 
+                        (select max(datetime) as max_date,mou_id from IA_Collaboration.MOUStatusHistory
+                        group by mou_id) b on
+                        a.datetime = b.max_date and a.mou_id = b.mou_id) t3 on t3.mou_id = t1.mou_id
                         inner join IA_Collaboration.MOUStatusHistory t4 on 
-                        t4.datetime = t3.maxdate and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
+                        t4.datetime = t3.max_date and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
                         inner join IA_Collaboration.CollaborationStatus t5 on
                         t5.mou_status_id = t3.mou_status_id
                         where t1.mou_id = @mou_id ";
@@ -81,12 +83,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
-                        t1.mou_bonus_id = t2.mou_bonus_id inner join 
+                        t1.mou_bonus_id = t2.mou_bonus_id left join 
                         IA_Collaboration.PartnerScope t3 on
                         t3.partner_scope_id = t2.partner_scope_id
-                        inner join 
+                        left join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-                        inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.mou_id = @mou_id
                         order by mou_bonus_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
@@ -173,16 +175,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_mouEx =
                     @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,t1.mou_bonus_end_date,
                         t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id,
-                        t5.scope_id,t4.partner_id
+                        ISNULL(t5.scope_id, 0) as scope_id, ISNULL(t4.partner_id, 0) as partner_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
-                        t1.mou_bonus_id = t2.mou_bonus_id inner join 
+                        t1.mou_bonus_id = t2.mou_bonus_id left join 
                         IA_Collaboration.PartnerScope t3 on
                         t3.partner_scope_id = t2.partner_scope_id
-                        inner join 
+                        left join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-                        inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
-                        where t1.mou_id = @mou_id and t1.mou_bonus_id = @mou_bonus_id order by partner_id ";
+                        left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        where t1.mou_id = @mou_id and t1.mou_bonus_id = @mou_bonus_id order by partner_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouEx
                     , new SqlParameter("mou_id", mou_id)
                     , new SqlParameter("mou_bonus_id", mou_bonus_id)).ToList();
@@ -241,43 +243,47 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     });
                     //checkpoint 1
                     db.SaveChanges();
-                    foreach (PartnerScopeInfo partnerScopeItem in input.PartnerScopeInfo.ToList())
+
+                    if (input.PartnerScopeInfo != null)
                     {
-                        foreach (int scopeItem in partnerScopeItem.scopes_id.ToList())
+                        foreach (PartnerScopeInfo partnerScopeItem in input.PartnerScopeInfo.ToList())
                         {
-                            //PartnerScope
-                            //MOUPartnerScope
-                            PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == partnerScopeItem.partner_id && x.scope_id == scopeItem).FirstOrDefault();
-                            if (ps is null)
+                            foreach (int scopeItem in partnerScopeItem.scopes_id.ToList())
                             {
-                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                //PartnerScope
+                                //MOUPartnerScope
+                                PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == partnerScopeItem.partner_id && x.scope_id == scopeItem).FirstOrDefault();
+                                if (ps is null)
                                 {
-                                    partner_id = partnerScopeItem.partner_id,
-                                    scope_id = scopeItem,
-                                    reference_count = 1
-                                });
-                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                    {
+                                        partner_id = partnerScopeItem.partner_id,
+                                        scope_id = scopeItem,
+                                        reference_count = 1
+                                    });
+                                    db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    {
+                                        mou_id = mou_id,
+                                        mou_bonus_id = mb.mou_bonus_id,
+                                        partner_scope_id = psAdded.partner_scope_id
+                                    });
+                                }
+                                else
                                 {
-                                    mou_id = mou_id,
-                                    mou_bonus_id = mb.mou_bonus_id,
-                                    partner_scope_id = psAdded.partner_scope_id
-                                });
-                            }
-                            else
-                            {
-                                ps.reference_count += 1;
-                                db.Entry(ps).State = EntityState.Modified;
-                                db.MOUPartnerScopes.Add(new MOUPartnerScope
-                                {
-                                    mou_id = mou_id,
-                                    mou_bonus_id = mb.mou_bonus_id,
-                                    partner_scope_id = ps.partner_scope_id
-                                });
+                                    ps.reference_count += 1;
+                                    db.Entry(ps).State = EntityState.Modified;
+                                    db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    {
+                                        mou_id = mou_id,
+                                        mou_bonus_id = mb.mou_bonus_id,
+                                        partner_scope_id = ps.partner_scope_id
+                                    });
+                                }
                             }
                         }
+                        //checkpoint 2
+                        db.SaveChanges();
                     }
-                    //checkpoint 2
-                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -389,22 +395,18 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                string sql_countInYear = @"select count(*) from IA_Collaboration.MOU where mou_code like @year";
-                string sql_checkDup = @"select count(*) from IA_Collaboration.MOUBonus where mou_bonus_code = @newCode";
                 bool isDuplicated = false;
                 string newCode = "";
-                int countInYear = db.Database.SqlQuery<int>(sql_countInYear,
-                        new SqlParameter("year", '%' + DateTime.Now.Year + '%')).First();
-                int countInMOU = db.MOUBonus.Where(x => x.mou_id == mou_id).Count();
+
+                string old_mou_code = db.MOUs.Find(mou_id).mou_code;
+                int count_ex_mou = db.MOUBonus.Where(x => x.mou_id == mou_id).Count();
 
                 //fix duplicate mou_code:
-                countInYear++;
                 do
                 {
-                    countInMOU++;
-                    newCode = DateTime.Now.Year + "/" + countInYear + "_BS/" + countInMOU;
-                    isDuplicated = db.Database.SqlQuery<int>(sql_checkDup,
-                        new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
+                    count_ex_mou++;
+                    newCode = old_mou_code + "_BS/" + count_ex_mou;
+                    isDuplicated = db.MOUBonus.Where(x => x.mou_bonus_code.Equals(newCode)).FirstOrDefault() is null ? false : true;
                 } while (isDuplicated);
                 return newCode;
             }

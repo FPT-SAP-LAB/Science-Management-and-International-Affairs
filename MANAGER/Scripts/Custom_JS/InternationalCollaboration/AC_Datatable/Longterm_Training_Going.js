@@ -408,15 +408,15 @@ $('#add_officer_nation').select2({
 $('#add_officer_coop_scope').select2({
     placeholder: 'Phạm vi hợp tác',
     allowClear: true,
-    //minimumResultsForSearch: -1, //hide search box
+    minimumResultsForSearch: -1, //hide search box
     ajax: {
         url: '/AcademicCollaboration/getCollabScopes',
         delay: 250,
         cache: true,
         dataType: 'json',
-        data: function (params) {
+        data: function () {
             return {
-                collab_abbreviation_name: params.term
+                collab_abbreviation_name: 'JTP' //join training program
             };
         },
         processResults: function (data) {
@@ -475,10 +475,6 @@ function formatAcadCollabStatus(acs) {
 
 //2.2. SAVE BUTTON
 $('#add_officer_save').on('click', function () {
-    saveAcademicCollaboration();
-});
-
-function saveAcademicCollaboration() {
     //person
     person = $('#add_officer_name').val();
     person_name = person.split('/')[0];
@@ -533,8 +529,7 @@ function saveAcademicCollaboration() {
         actual_start_date: formatDatePicker(actual_start_date),
         actual_end_date: formatDatePicker(actual_end_date),
         support: support,
-        note: note,
-        evidence_link: null
+        note: note
     }
 
     //check empty
@@ -545,80 +540,136 @@ function saveAcademicCollaboration() {
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
             return toastr.error("`TG đi học` không được vượt quá `TG kết thúc`.")
         } else {
-            saveAcademicCollaborationProcess_Step1(evidence, obj_person, obj_partner, obj_academic_collab); //Step1 auto trigger Step2 when ajax success
-        }
-    }
-}
+            //start load
+            add_officer_save.startLoading();
 
-function saveAcademicCollaborationProcess_Step1(evidence, obj_person, obj_partner, obj_academic_collab) {
-    //start load
-    add_officer_save.startLoading();
+            let formData = new FormData();
+            formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+            formData.append("folder_name", person_name + " - " + partner_name);
 
-    if (evidence.length != 0) { //if file was attached
-        let formData = new FormData();
-        formData.append("evidence", evidence[0].data);
-        formData.append("folder_name", person_name + " - " + partner_name);
-        //Step 1
-        //upload file
-        $.ajax({
-            url: "/AcademicCollaboration/uploadEvidenceFile",
-            type: "POST",
-            data: formData,
-            cache: false,
-            processData: false,
-            contentType: false,
-            dataType: "json",
-            success: function (data) {
-                //get evidence_link after upload to Google Drive
-                var evidence_link = data.evidence_link;
-                obj_academic_collab.evidence_link = evidence_link;
+            formData.append("direction_id", 1); //going case
+            formData.append("collab_type_id", 2); //long-term
 
-                //continuous Step 2
-                saveAcademicCollaborationProcess_Step2(obj_person, obj_partner, obj_academic_collab);
-            },
-            error: function () {
-                toastr.error("Có lỗi xảy ra khi upload file.");
-            }
-        });
-    } else {
-        saveAcademicCollaborationProcess_Step2(obj_person, obj_partner, obj_academic_collab);
-    }
-}
+            let obj_person_stringify = JSON.stringify(obj_person);
+            let obj_partner_stringify = JSON.stringify(obj_partner);
+            let obj_academic_collab_stringify = JSON.stringify(obj_academic_collab);
 
-function saveAcademicCollaborationProcess_Step2(obj_person, obj_partner, obj_academic_collab) {
-    $.ajax({
-        url: "/AcademicCollaboration/saveAcademicCollaboration",
-        type: "POST",
-        data: {
-            direction_id: 1, //going
-            collab_type_id: 2, //long-term
-            obj_person: obj_person,
-            obj_partner: obj_partner,
-            obj_academic_collab: obj_academic_collab
-        },
-        cache: false,
-        dataType: "json",
-        success: function (data) {
-            if (data != null) {
-                if (data.success) {
-                    toastr.success(data.content);
-                    collab_going_table.ajax.reload();
-                    $("#add_officer_close").click();
-                    clearContentAddModal();
-                    //stop loading
-                    add_officer_save.stopLoading();
-                } else {
-                    toastr.warning(data.content);
-                    //stop loading
+            formData.append("obj_person_stringify", obj_person_stringify);
+            formData.append("obj_partner_stringify", obj_partner_stringify);
+            formData.append("obj_academic_collab_stringify", obj_academic_collab_stringify);
+
+            //Step 1
+            //upload file
+            $.ajax({
+                url: "/AcademicCollaboration/saveAcademicCollaboration",
+                type: "POST",
+                data: formData,
+                cache: false,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.content);
+                        collab_going_table.ajax.reload();
+                        add_officer_save.stopLoading();
+                        $("#add_officer_close").click();
+                        clearContentAddModal();
+                    } else {
+                        toastr.warning(data.content);
+                        add_officer_save.stopLoading();
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra khi upload file.");
                     add_officer_save.stopLoading();
                 }
+            });
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
             }
-        },
-        error: function () {
-            toastr.error("Có lỗi xảy ra.");
         }
-    })
-}
+    }
+});
+
+//function saveAcademicCollaboration() {
+
+//}
+
+//function saveAcademicCollaborationProcess_Step1(evidence, obj_person, obj_partner, obj_academic_collab) {
+//    //start load
+//    add_officer_save.startLoading();
+
+//    let formData = new FormData();
+//    formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+//    formData.append("folder_name", person_name + " - " + partner_name);
+
+//    formData.append("direction_id", 1); //going case
+//    formData.append("collab_type_id", 2); //long-term
+
+//    formData.append("obj_person_stringigy", JSON.stringify(obj_person));
+//    formData.append("obj_partner_stringigy", JSON.stringify(obj_partner));
+//    formData.append("obj_academic_collab_stringify", JSON.stringify(obj_academic_collab));
+
+//    //Step 1
+//    //upload file
+//    $.ajax({
+//        url: "/AcademicCollaboration/saveAcademicCollaboration",
+//        type: "POST",
+//        data: formData,
+//        cache: false,
+//        dataType: "json",
+//        success: function (data) {
+//            if (data.success) {
+//                toastr.success(data.content);
+//                add_officer_save.stopLoading();
+//            } else {
+//                toastr.warning(data.content);
+//                add_officer_save.stopLoading();
+//            }
+//        },
+//        error: function () {
+//            toastr.error("Có lỗi xảy ra khi upload file.");
+//            add_officer_save.stopLoading();
+//        }
+//    });
+//}
+
+//function saveAcademicCollaborationProcess_Step2(obj_person, obj_partner, obj_academic_collab, obj_evidence_file) {
+//    $.ajax({
+//        url: "/AcademicCollaboration/saveAcademicCollaboration",
+//        type: "POST",
+//        data: {
+//            direction_id: 1, //going
+//            collab_type_id: 2, //long-term
+//            obj_person: obj_person,
+//            obj_partner: obj_partner,
+//            obj_academic_collab: obj_academic_collab,
+//            obj_evidence_file: obj_evidence_file
+//        },
+//        cache: false,
+//        dataType: "json",
+//        success: function (data) {
+//            if (data != null) {
+//                if (data.success) {
+//                    toastr.success(data.content);
+//                    collab_going_table.ajax.reload();
+//                    $("#add_officer_close").click();
+//                    clearContentAddModal();
+//                    //stop loading
+//                    add_officer_save.stopLoading();
+//                } else {
+//                    toastr.warning(data.content);
+//                    //stop loading
+//                    add_officer_save.stopLoading();
+//                }
+//            }
+//        },
+//        error: function () {
+//            toastr.error("Có lỗi xảy ra.");
+//        }
+//    });
+//}
 
 function isEmpty(value) {
     return value === "" ? true : false;
@@ -637,7 +688,9 @@ function datePickerFromToValidate(from, to) {
 }
 
 function formatDatePicker(date) {
-    return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
+    if (date != '') {
+        return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
+    }
 }
 
 function clearContentAddModal() {
@@ -663,7 +716,7 @@ function clearContentAddModal() {
 
     //clear upload file
     $('.uppy-list').html('');
-    uppy1.removeFile(uppy1.getFiles()[0].id);
+    uppy1.removeFile(uppy1.getFiles().length == 0 ? '' : uppy1.getFiles()[0].id);
 
     $('#add_officer_start_date').val('');
     $('#add_officer_end_date').val('');
@@ -672,18 +725,20 @@ function clearContentAddModal() {
 }
 
 //3.EDIT MODAL
-//var uppy2; //init uppy2
+var uppy2; //init uppy2
 
 //get corresponding data
 $('#edit_officer').on('show.bs.modal', function (e) {
     //init save button
-    //var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
+    var edit_officer_save = new LoaderBtn($('#edit_officer_save'));
     var acad_collab_id = $(e.relatedTarget).data('id');
     alert(acad_collab_id);
     $.ajax({
         url: "/AcademicCollaboration/getAcademicCollaboration",
         type: "GET",
         data: {
+            direction: 1, /*going*/
+            collab_type_id: 2 /*long-term*/,
             acad_collab_id: acad_collab_id
         },
         cache: false,
@@ -699,8 +754,22 @@ $('#edit_officer').on('show.bs.modal', function (e) {
 
                     $("#edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_id, false, true)).trigger('change');
                     $("#edit_officer_nation").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
-                    $("#edit_officer_coop_scope").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
+                    $("#edit_officer_coop_scope").append(new Option(acadCollab.scope_name, acadCollab.scope_id, false, true)).trigger('change');
 
+                    $("#edit_officer_status").append(new Option(acadCollab.collab_status_name, acadCollab.collab_status_id, false, true)).trigger('change');
+                    $("#edit_officer_start_plan_date").val(moment(acadCollab.plan_study_start_date).format("DD/MM/YYYY"));
+                    $("#edit_officer_end_plan_date").val(moment(acadCollab.plan_study_start_date).format("DD/MM/YYYY"));
+
+                    $("#edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
+                    $("#edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
+
+                    console.log(acadCollab.file_name);
+                    console.log(acadCollab.file_link);
+                    console.log(acadCollab.file_drive_id);
+
+
+                    $("#edit_officer_support").prop("checked", acadCollab.support);
+                    $("#edit_officer_note").val(acadCollab.not);
                 } else {
                     toastr.error(data.content);
                 }

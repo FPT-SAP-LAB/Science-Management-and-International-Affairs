@@ -22,29 +22,29 @@
                                 <input type="text" class="form-control" id="mou_partner_name_edit" list="partnerListEdit" onchange="preventEditMOUPartner()" />
                             </div>
                             <datalist id="partnerListEdit">
-                                @if (ViewBag.listPartnerMOUPartner != null)
+                                @*@if (ViewBag.listPartnerMOUPartner != null)
                                 {
                                     foreach (var item in ViewBag.listPartnerMOUPartner)
                                     {
                                         <option value="@item.partner_name">@item.partner_name</option>
                                     }
-                                }
+                                }*@
                             </datalist>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
-                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="mou_partner_nation_edit" />
+                        <input class="form-control " type="text" placeholder="Quốc gia" autocomplete="off" id="mou_partner_nation_edit" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Website</label>
-                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="mou_partner_website_edit" />
+                        <input class="form-control" type="text" placeholder="Website" autocomplete="off" id="mou_partner_website_edit" disabled/>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Địa chỉ đối tác</label>
-                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="mou_partner_address_edit" />
+                        <input class="form-control " type="text" placeholder="Địa chỉ đối tác" autocomplete="off" id="mou_partner_address_edit" disabled/>
                     </div>
                 </div>
                 <div class="row mt-3">
