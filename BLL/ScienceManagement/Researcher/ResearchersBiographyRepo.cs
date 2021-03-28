@@ -22,31 +22,34 @@ namespace BLL.ScienceManagement.Researcher
                 where d.language_id == 1 && a.people_id == id
                 select new AcadBiography
                 {
-                    people_id=a.people_id,
-                    acad_id=c.academic_degree_id,
-                    degree=d.name,
-                    time=b.start_year.ToString()+"-"+b.end_year.ToString(),
-                    place=b.study_place
-                }).AsEnumerable<AcadBiography>().Select((x,index) => new AcadBiography {
-                rownum=index+1,
-                people_id=x.people_id,
-                acad_id=x.acad_id,
-                degree=x.degree,
-                time=x.time,
-                place=x.place
+                    people_id = a.people_id,
+                    acad_id = c.academic_degree_id,
+                    degree = d.name,
+                    time = b.start_year.ToString() + "-" + b.end_year.ToString(),
+                    place = b.study_place
+                }).AsEnumerable<AcadBiography>().Select((x, index) => new AcadBiography
+                {
+                    rownum = index + 1,
+                    people_id = x.people_id,
+                    acad_id = x.acad_id,
+                    degree = x.degree,
+                    time = x.time,
+                    place = x.place
                 }).ToList<AcadBiography>();
             return profile;
         }
         public List<BaseRecord<WorkingProcess>> GetHistory(int id)
         {
             var list = (from a in db.WorkingProcesses
-                        where a.Profile.people_id==id
-                        select new BaseRecord<WorkingProcess> { 
-                            records=a
+                        where a.Profile.people_id == id
+                        select new BaseRecord<WorkingProcess>
+                        {
+                            records = a
                         }).AsEnumerable<BaseRecord<WorkingProcess>>()
-                        .Select((x,index)=> new BaseRecord<WorkingProcess> { 
-                        index=index+1,
-                        records=x.records
+                        .Select((x, index) => new BaseRecord<WorkingProcess>
+                        {
+                            index = index + 1,
+                            records = x.records
                         }).ToList<BaseRecord<WorkingProcess>>();
             return list;
         }

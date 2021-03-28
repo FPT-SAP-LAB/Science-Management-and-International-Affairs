@@ -56,12 +56,12 @@
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>@rm.GetString("PartnerProgram")</label>
+                                    <label>@rm.GetString("LongTermPartnerProgram")</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>@rm.GetString("FPTProgram")</label>
+                                    <label>@rm.GetString("LongTermFPTProgram")</label>
                                 </a>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                         var temp = `<div class="row justify-content-between">`;
                         $(data).each(function (i, item) {
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `,2)" class="link-load-detail">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
                                             <img src="`+ item.avatar + `" class="item-picture" />
                                             <label>
                                                 `+ item.program_name + `
@@ -206,7 +206,7 @@
                         var temp = `<div class="row justify-content-between">`;
                         $(data).each(function (i, item) {
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `,2)" class="link-load-detail">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
                                             <img src="`+ item.avatar + `" class="item-picture" />
                                             <label>
                                                 `+ item.program_name + `
@@ -268,7 +268,14 @@
                     data: "partner_name"
                 },
                 { data: "country_name" },
-                { data: "program_name" },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        // Combine the first and last names into a single table field
+                        return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                    },
+                    editField: ['program_id', 'program_name']
+                },
                 {
                     data: "registration_deadline",
                 },
@@ -312,7 +319,14 @@
                         return fptIndex++;
                     }
                 },
-                { data: "program_name" },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        // Combine the first and last names into a single table field
+                        return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                    },
+                    editField: ['program_id', 'program_name']
+                },
                 { data: "registration_deadline"},
                 { data: "publish_time" }
             ],
