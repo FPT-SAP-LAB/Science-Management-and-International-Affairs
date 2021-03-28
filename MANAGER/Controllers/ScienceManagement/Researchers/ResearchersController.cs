@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BLL.Authen;
+﻿using BLL.ScienceManagement.Researcher;
 using BLL.ScienceManagement.ResearcherListRepo;
-using BLL.ScienceManagement.Researcher;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 namespace MANAGER.Controllers.ScienceManagement.Researchers
 {
     public class ResearchersController : Controller
@@ -23,14 +21,21 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public JsonResult GetList()
         {
-            researcherListRepo = new ResearchersListRepo();
-            BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable);
-            for (int i = 0; i < output.Data.Count; i++)
+            try
             {
-                output.Data[i].rowNum = datatable.Start + 1 + i;
+                researcherListRepo = new ResearchersListRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable);
+                for (int i = 0; i < output.Data.Count; i++)
+                {
+                    output.Data[i].rowNum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = e.Message });
+            }
         }
         public ActionResult ViewInfo()
         {
@@ -51,6 +56,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ///////////////////////////////////////////////////////////////
             List<AcadBiography> acadList = researcherBiographyRepo.GetBio(id);
             ViewBag.acadList = acadList;
+            /////////////////////////////////////////////////////////////
+            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetHistory(id);
+            ViewBag.workList = workList;
             return View();
         }
         public ActionResult Publications()

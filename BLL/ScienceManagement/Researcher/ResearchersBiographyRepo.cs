@@ -37,5 +37,18 @@ namespace BLL.ScienceManagement.Researcher
                 }).ToList<AcadBiography>();
             return profile;
         }
+        public List<BaseRecord<WorkingProcess>> GetHistory(int id)
+        {
+            var list = (from a in db.WorkingProcesses
+                        where a.Profile.people_id==id
+                        select new BaseRecord<WorkingProcess> { 
+                            records=a
+                        }).AsEnumerable<BaseRecord<WorkingProcess>>()
+                        .Select((x,index)=> new BaseRecord<WorkingProcess> { 
+                        index=index+1,
+                        records=x.records
+                        }).ToList<BaseRecord<WorkingProcess>>();
+            return list;
+        }
     }
 }
