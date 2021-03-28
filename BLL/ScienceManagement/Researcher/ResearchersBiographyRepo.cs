@@ -120,7 +120,6 @@ namespace BLL.ScienceManagement.Researcher
                             records = x.records
                         }).ToList<BaseRecord<Award>>();
             return list;
-
         }
     }
 }
