@@ -25,6 +25,7 @@ namespace ENTITIES
             this.Positions = new HashSet<Position>();
             this.Titles = new HashSet<Title>();
             this.ResearchAreas = new HashSet<ResearchArea>();
+            this.WorkingProcesses = new HashSet<WorkingProcess>();
         }
     
         public int people_id { get; set; }
@@ -69,5 +70,7 @@ namespace ENTITIES
         public virtual ICollection<Title> Titles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchArea> ResearchAreas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkingProcess> WorkingProcesses { get; set; }
     }
 }

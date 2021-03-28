@@ -1,12 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "Danh sách đối tác";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("PartnerList");
+
 }
 <style>
-    .select2-selection__rendered {
-        padding-left: 55px !important;
-    }
 
     table thead tr th {
         font-weight: bolder !important;
@@ -16,53 +15,63 @@
         overflow-x: auto;
     }
 </style>
-
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                                <input type="text" class="form-control text-center" placeholder="Tên đối tác" id="search_partner_name" />
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 mb-4">
-                                <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0 text-center">
-                                    <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                        <option label="Label"></option>
-                                        <option value="1">Việt Nam</option>
-                                        <option value="2">USA</option>
-                                    </select>
+                        <div class="row mt-4">
+                            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3 col-md-12 col-sm-12 mr-3 mb-4">
+                                        <input type="text" class="form-control" placeholder="@rm.GetString("PartnerName")" id="search_partner_name" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
+                                                <option label="Label"></option>  
+                                                @foreach (var i in ViewBag.countries)
+                                                {
+                                                    <option value="@i.country_name">@i.country_name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12 mr-3 mb-4">
+                                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                            <select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
+                                                <option label="Label"></option>
+                                                @foreach (var i in ViewBag.specializations)
+                                                {
+                                                    <option value="@i.name">@i.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-12 col-sm-12 mb-4">
+                                        <a id="search_btn" class="btn btn-light-primary px-6 font-weight-bold ">@rm.GetString("Search")</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                                <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
-                            </div>
-                            <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 mb-4" style="padding-right:12.5px">
-                                <a href="#" class="btn btn-light-primary font-weight-bold">Tìm kiếm</a>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-112 col-sm-12">
-                                <table id="partner_table" class="table table-bordered table-checkable">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Tên đối tác</th>
-                                            <th>Quốc gia</th>
-                                            <th>Lĩnh vực</th>
-                                            <th>Website</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">Xem thêm</a>
-                        </div>
+                        <table id="partner_table" class="table table-bordered table-checkable">
+                            <thead>
+                                <tr>
+                                    <th>@rm.GetString("Number")</th>
+                                    <th>@rm.GetString("PartnerName")</th>
+                                    <th>@rm.GetString("Country")</th>
+                                    <th>@rm.GetString("Specilazation")</th>
+                                    <th>Website</th>
+                                    <th>@rm.GetString("Detail")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">@rm.GetString("LoadMore")</a>
                     </div>
                 </div>
             </div>
@@ -70,20 +79,19 @@
     </div>
 </div>
 @section scripts{
-
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
     <script>
-
-
         $('#search_nation').select2({
-            placeholder: 'Quốc gia',
+            placeholder: '@rm.GetString("Country")',
             allowClear: true,
+            tags: true
         })
-        $(document).ready(function () {
-            $('.select2-selection__rendered').addClass('justify-content-center')
-
+        $('#search_specialization').select2({
+            placeholder: '@rm.GetString("Specilazation")',
+            allowClear: true,
+            tags: true
         })
         function link_icon() {
             $('#partner_table tbody tr').each(function () {
@@ -97,40 +105,61 @@
                 $(this).find('td').eq(4).html('<a href="#' + data + '">' + data + '</a>')
             })
         }
-
         $(document).ready(function () {
-            var rowIdx = 1;
-            var table = $('#partner_table').DataTable({
+            var datatable = $('#partner_table').DataTable({
                 searching: false,
                 dom: 'frt',
                 processing: true,
+                serverSide: true,
                 ajax: ({
-                    url: '/Partner/Load_List',
+                    url: '/Partner/List',
                     type: "POST",
                     datatype: "json",
+                    data: {
+                        "searchPartner": {
+                            "partner_name": function () { return $('#search_partner_name').val() },
+                            "nation": function () { return $('#search_nation').val() },
+                            "specialization": function () { return $('#search_specialization').val() },
+                            "is_collab": "",
+                            "is_deleted": 0,
+                        }
+                    },
+                    cache: "false"
                 }),
                 columns: [
                     {
+                        name: "no",
+                        data: "no",
+                        className: 'text-center'
+                    },
+                    {
+                        data: "partner_name",
+                        name: "partner_name",
                         render: function (data) {
-                            return rowIdx++;
+                            return data;
                         }
                     },
                     {
-                        data: "Partner_name_mou_code",
+                        data: "country_name",
+                        name: "country_name",
+                        className: 'text-center',
+                    },
+                    {
+                        data: "specialization_name",
+                        name: "specialization_name",
                         render: function (data) {
-                            if (data != "") {
-                                var id = data.split(':')[0]
-                                var name = data.split(':')[1]
-                                return '<a href="/Partner/Partner_Detail" onclick="abc("' + id + '")">' + name + '</a>';
+                            if (data == null) {
+                                return "";
                             } else {
+                                data = data.replaceAll(',', '<br />')
                                 return data;
                             }
                         }
                     },
-                    { data: "Country_name" },
-                    { data: "Specialization" },
                     {
-                        data: "Website",
+                        data: "website",
+                        className: 'text-center',
+                        orderable: false,
                         render: function (data) {
                             if (data == null) {
                                 return "";
@@ -139,9 +168,21 @@
                             }
                         }
                     },
+                    {
+                        data: "partner_id",
+                        name: "partner_id",
+                        className: 'text-center',
+                        orderable: false,
+                        render: function (data) {
+                            if (data == null) {
+                                return "";
+                            } else {
+                                return '<a onclick="load_detail(' + data + ')" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a>';
+                            }
+                        }
+                    },
                 ],
                 drawCallback: function () {
-                    //link_icon();
                     // Show or hide "Load more" button based on whether there is more data available
                     $('#btn-example-load-more').toggle(this.api().page.hasMore());
                 },
@@ -150,11 +191,19 @@
             //Handle click on "Load more" button
             $('#btn-example-load-more').on('click', function () {
                 // Load more data
-                table.page.loadMore();
+                datatable.page.loadMore();
             });
-
+          
+            $('#search_btn').click(function () {
+                datatable.ajax.reload();
+            })
         });
 
+        function load_detail(id) {
+            $('#partner_table').append(`<form id="form_hidden" method="POST" action="/Partner/Detail" style="display: none"><input name="id" id="input_hidden"/></form>`)
+            $('#input_hidden').val(id)
+            $('#form_hidden').submit();
+        }
 
     </script>
 }

@@ -1,0 +1,73 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("PartnerDetail");
+}
+<style>
+    img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+<div class="row justify-content-center">
+    <div class="card card-custom col-xl-4 col-lg-4 col-md-4 col-sm-4 mr-3">
+        <div class="card-body p-0">
+            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                <div class="col-xl-12 col-xxl-12">
+                    <div class="tabbable-line">
+                        <div class="tab-content" id="">
+                            <div id="" class="row partner-detail-title">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    @{
+                                        if (ViewBag.partnerArticle.avatar == null)
+                                        {
+                                            <img id="avata" src="~/Content/assets/media/custom-image/icona-partnership.png" />
+                                        }
+                                        else
+                                        {
+                                            <img id="avatar" src="@ViewBag.partnerArticle.avatar" />
+                                        }
+                                    }
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+                                    <p style="margin-left:0in;">
+                                        <span style="color:black;">
+                                            <strong>Website: </strong>@ViewBag.partnerArticle.website
+                                        </span><br>
+                                        <span style="color:black;">
+                                            <strong>@rm.GetString("Address"): </strong>
+                                            @ViewBag.partnerArticle.address
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-custom col-xl-7 col-lg-7 col-md-7 col-sm-7">
+        <div class="card-body p-0">
+            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                <div class="col-xl-12 col-xxl-12">
+                    <div class="tabbable-line">
+                        <div class="tab-content" id="">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                   @Html.Raw(ViewBag.partnerArticle.partner_content)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+
+}
