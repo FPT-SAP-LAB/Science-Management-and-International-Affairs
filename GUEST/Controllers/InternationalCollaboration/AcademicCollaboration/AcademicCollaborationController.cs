@@ -101,7 +101,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             var pagesTree = new List<PageTree>();
             int language = Models.LanguageResource.GetCurrentLanguageID();
             ProgramInfo pi = guestRepo.programInfo(id, language);
-            if(pi is null)
+            if (pi is null)
             {
                 pi = new ProgramInfo()
                 {
@@ -141,7 +141,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
                 new PageTree(rm.GetString("ShortTermFPTProgram"), "/AcademicCollaboration/Program_Detail"),
             };
-            } 
+            }
             else
             {
                 pagesTree = new List<PageTree>
