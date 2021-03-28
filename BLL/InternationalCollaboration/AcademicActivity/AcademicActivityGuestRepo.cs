@@ -124,7 +124,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<baseFrom> data = db.Database.SqlQuery<baseFrom>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 List<int> quesOp = data.Where(x => x.answer_type_id == 3 || x.answer_type_id == 5).Select(y => y.question_id).ToList();
                 string list_option = "";
-                foreach(int i in quesOp)
+                foreach (int i in quesOp)
                 {
                     list_option += i + ",";
                 }
@@ -132,8 +132,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<QuesOption> quesOptions = new List<QuesOption>();
                 if (!String.IsNullOrEmpty(list_option))
                 {
-                    sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in ("+list_option+")";
-                    quesOptions  = db.Database.SqlQuery<QuesOption>(sql).ToList();
+                    sql = @"select qo.* from SMIA_AcademicActivity.QuestionOption qo where qo.question_id in (" + list_option + ")";
+                    quesOptions = db.Database.SqlQuery<QuesOption>(sql).ToList();
                 }
                 fullForm ff = new fullForm
                 {
@@ -141,7 +141,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     optins = quesOptions
                 };
                 return ff;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new fullForm();
             }
