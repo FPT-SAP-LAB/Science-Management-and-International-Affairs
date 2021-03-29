@@ -2181,6 +2181,9 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Content\assets\plugins\global\summernote-bs4.js.map" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Coming\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Content\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ProcedureContentProcessing.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\ChangeCollabStatus.js" />
@@ -2332,6 +2335,8 @@
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
     <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Going_Modal_Description.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Description.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2347,6 +2352,7 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Shortterm_AcadCollab_Going\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
   </ItemGroup>
