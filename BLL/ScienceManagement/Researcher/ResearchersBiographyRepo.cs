@@ -26,7 +26,7 @@ namespace BLL.ScienceManagement.Researcher
                 select new AcadBiography
                 {
                     people_id = a.people_id,
-                    acad_id = c.academic_degree_id,
+                    acad_id = b.academic_degree_id,
                     degree = d.name,
                     time = b.start_year.ToString() + "-" + b.end_year.ToString(),
                     place = b.study_place
@@ -56,6 +56,7 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<BaseRecord<WorkingProcess>>();
             return list;
         }
+
         public List<ResearcherPublications> GetPublications(int id)
         {
             var data = (from a in db.Papers
@@ -223,6 +224,117 @@ namespace BLL.ScienceManagement.Researcher
                 }
                 return 1;
             }
+        }
+        public int EditAcadEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int people_id = (int)info["data"]["people_id"];
+                    int acad_id = (int)info["data"]["acad_id"];
+                    int degree = (int)info["data"]["degree"];
+                    string location = (string)info["data"]["location"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    ProfileAcademicDegree acad = db.ProfileAcademicDegrees.Find(people_id, acad_id);
+                    db.ProfileAcademicDegrees.Remove(acad);
+                    db.SaveChanges();
+                    db.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
+                    {
+                        people_id = people_id,
+                        academic_degree_id = degree,
+                        start_year = start,
+                        end_year = end,
+                        study_place = location,
+                        Profile = db.Profiles.Find(people_id),
+                        AcademicDegree = db.AcademicDegrees.Find(degree)
+                    });
+                    db.SaveChanges();
+                    trans.Commit();
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+               }
+            return 1;
+        }
+        public int EditWorkEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int id = (int)info["data"]["id"];
+                    string place = (string)info["data"]["place"];
+                    string work_title = (string)info["data"]["work_title"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    WorkingProcess w = db.WorkingProcesses.Find(id);
+                    w.title = work_title;
+                    w.start_year = start;
+                    w.end_year = end;
+                    w.work_unit = place;
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        public int DeleteAcadEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int acad_id = (int)info["data"]["acad_id"];
+                    int people_id = (int)info["data"]["people_id"];
+                    ProfileAcademicDegree pa= db.ProfileAcademicDegrees.Find(people_id, acad_id);
+                    db.ProfileAcademicDegrees.Remove(pa);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        public int DeleteWorkEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int id = (int)info["data"]["id"];
+                    WorkingProcess pa= db.WorkingProcesses.Find(id);
+                    db.WorkingProcesses.Remove(pa);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
         }
     }
 }
