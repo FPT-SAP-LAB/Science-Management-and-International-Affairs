@@ -14,6 +14,7 @@ namespace ENTITIES
     
     public partial class ApprovalProcess
     {
+        public int approval_process_id { get; set; }
         public int account_id { get; set; }
         public int request_id { get; set; }
         public Nullable<int> position_id { get; set; }

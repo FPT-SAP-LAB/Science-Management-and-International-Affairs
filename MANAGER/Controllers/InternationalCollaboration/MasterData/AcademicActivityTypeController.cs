@@ -14,13 +14,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
 {
     public class AcademicActivityTypeController : Controller
     {
-        private static AcademicActivityTypeRepo academicActivityTypeRepo = new AcademicActivityTypeRepo();
+        private static AcademicActivityTypeRepo academicActivityTypeRepo;
 
         [Auther(RightID = "4")]
         public ActionResult List()
         {
             ViewBag.title = "QUẢN LÝ LOẠI HOẠT ĐỘNG HỌC THUẬT";
-            AlertModal<List<Language>> alertModal_Languages = academicActivityTypeRepo.getLanguages();
+            AlertModal<List<Language>> alertModal_Languages = AcademicActivityTypeRepo.getLanguages();
             ViewBag.languages = alertModal_Languages.obj;
             return View();
         }
@@ -30,6 +30,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
                 int language_id = Int32.Parse(Request["language_id"]);
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 BaseServerSideData<AcademicActivityType_Ext> academicActivityTypes = academicActivityTypeRepo.getlistAcademicActivityType(baseDatatable, language_id);
@@ -54,7 +55,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
-                AlertModal<List<Language>> alertModal = academicActivityTypeRepo.getLanguages();
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
+                AlertModal<List<Language>> alertModal = AcademicActivityTypeRepo.getLanguages();
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -68,6 +70,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
                 AlertModal<AcademicActivityType_Ext> alertModal = academicActivityTypeRepo.addAcademicActivityType(language_id, activity_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
@@ -83,6 +86,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
                 AlertModal<AcademicActivityType_Ext> alertModal = academicActivityTypeRepo.getAcademicActivityType(language_id, activity_type_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
@@ -98,6 +102,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
                 AlertModal<AcademicActivityType_Ext> alertModal = academicActivityTypeRepo.editAcademicActivityType(language_id, activity_type_id, activity_type_name);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
@@ -113,6 +118,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MasterData
         {
             try
             {
+                academicActivityTypeRepo = new AcademicActivityTypeRepo();
                 AlertModal<AcademicActivityType_Ext> alertModal = academicActivityTypeRepo.deleteAcademicActivityType(language_id, activity_type_id);
                 return Json(new { alertModal.success, alertModal.title, alertModal.content });
             }
