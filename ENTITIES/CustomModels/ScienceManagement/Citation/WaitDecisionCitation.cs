@@ -13,5 +13,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Citation
         public string mssv_msnv { get; set; }
         public int total_reward { get; set; }
         public int sum { get; set; }
+        public int request_id { get; set; }
     }
 }

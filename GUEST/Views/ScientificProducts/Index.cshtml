@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
                                             <button id="search-btn"
-                                               class="btn btn-light-primary px-6 font-weight-bold">
+                                                    class="btn btn-light-primary px-6 font-weight-bold">
                                                 Tìm kiếm
                                             </button>
                                         </div>
@@ -63,135 +63,135 @@
                             </div>
                         </div>
                         <div class="col-xl-12">
-                                    <div class="card-toolbar">
-                                        <ul class="nav nav-tabs nav-bold">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#tapchi">
-                                                    <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
-                                                    <span class="nav-text">@rm.GetString("JournalPaper")</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#kyyeu">
-                                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
-                                                    <span class="nav-text">@rm.GetString("ConferencePaper")</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#sangche">
-                                                    <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
-                                                    <span class="nav-text">@rm.GetString("Invention")</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tapchi" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
-                                            <table id="table_tapchi" class="table table-bordered table-checkable">
-                                                <thead>
+                            <div class="card-toolbar">
+                                <ul class="nav nav-tabs nav-bold">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#tapchi">
+                                            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                            <span class="nav-text">@rm.GetString("JournalPaper")</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#kyyeu">
+                                            <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                            <span class="nav-text">@rm.GetString("ConferencePaper")</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#sangche">
+                                            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                            <span class="nav-text">@rm.GetString("Invention")</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="tapchi" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
+                                    <table id="table_tapchi" class="table table-bordered table-checkable">
+                                        <thead>
+                                            <tr>
+                                                <th>@rm.GetString("Index")</th>
+                                                <th>@rm.GetString("PaperName")</th>
+                                                <th>@rm.GetString("AuthorName")</th>
+                                                <th>@rm.GetString("JournalName")</th>
+                                                <th>@rm.GetString("Quality")</th>
+                                                <th>@rm.GetString("Vol")</th>
+                                                <th>@rm.GetString("Page")</th>
+                                                <th>@rm.GetString("LinkFull")</th>
+                                                <th>Link scholar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int count = 1;
+                                                foreach (var item in ViewBag.listJournal)
+                                                {
                                                     <tr>
-                                                        <th>@rm.GetString("Index")</th>
-                                                        <th>@rm.GetString("PaperName")</th>
-                                                        <th>@rm.GetString("AuthorName")</th>
-                                                        <th>@rm.GetString("JournalName")</th>
-                                                        <th>@rm.GetString("Quality")</th>
-                                                        <th>@rm.GetString("Vol")</th>
-                                                        <th>@rm.GetString("Page")</th>
-                                                        <th>@rm.GetString("LinkFull")</th>
-                                                        <th>Link scholar</th>
+                                                        <td>@count</td>
+                                                        <td>@item.name</td>
+                                                        <td>@item.author</td>
+                                                        <td>@item.journal_name</td>
+                                                        <td>@item.quality</td>
+                                                        <td>@item.vol</td>
+                                                        <td>@item.page</td>
+                                                        <td>@item.link_doi</td>
+                                                        <td>@item.link_scholar</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        int count = 1;
-                                                        foreach (var item in ViewBag.listJournal)
-                                                        {
-                                                            <tr>
-                                                                <td>@count</td>
-                                                                <td>@item.name</td>
-                                                                <td>@item.author</td>
-                                                                <td>@item.journal_name</td>
-                                                                <td>@item.quality</td>
-                                                                <td>@item.vol</td>
-                                                                <td>@item.page</td>
-                                                                <td>@item.link_doi</td>
-                                                                <td>@item.link_scholar</td>
-                                                            </tr>
-                                                            count++;
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="tab-pane fade" id="kyyeu" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
-                                            <table id="table_kyyeu" class="table table-bordered table-checkable">
-                                                <thead>
+                                                    count++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="kyyeu" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
+                                    <table id="table_kyyeu" class="table table-bordered table-checkable">
+                                        <thead>
+                                            <tr>
+                                                <th>@rm.GetString("Index")</th>
+                                                <th>@rm.GetString("PaperName")</th>
+                                                <th>@rm.GetString("AuthorName")</th>
+                                                <th>@rm.GetString("JournalName")</th>
+                                                <th>@rm.GetString("Quality")</th>
+                                                <th>@rm.GetString("Vol")</th>
+                                                <th>@rm.GetString("Page")</th>
+                                                <th>@rm.GetString("LinkFull")</th>
+                                                <th>Link scholar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                count = 1;
+                                                foreach (var item in ViewBag.listConferen)
+                                                {
                                                     <tr>
-                                                        <th>@rm.GetString("Index")</th>
-                                                        <th>@rm.GetString("PaperName")</th>
-                                                        <th>@rm.GetString("AuthorName")</th>
-                                                        <th>@rm.GetString("JournalName")</th>
-                                                        <th>@rm.GetString("Quality")</th>
-                                                        <th>@rm.GetString("Vol")</th>
-                                                        <th>@rm.GetString("Page")</th>
-                                                        <th>@rm.GetString("LinkFull")</th>
-                                                        <th>Link scholar</th>
+                                                        <td>@count</td>
+                                                        <td>@item.name</td>
+                                                        <td>@item.author</td>
+                                                        <td>@item.journal_name</td>
+                                                        <td>@item.quality</td>
+                                                        <td>@item.vol</td>
+                                                        <td>@item.page</td>
+                                                        <td>@item.link_doi</td>
+                                                        <td>@item.link_scholar</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        count = 1;
-                                                        foreach (var item in ViewBag.listConferen)
-                                                        {
-                                                            <tr>
-                                                                <td>@count</td>
-                                                                <td>@item.name</td>
-                                                                <td>@item.author</td>
-                                                                <td>@item.journal_name</td>
-                                                                <td>@item.quality</td>
-                                                                <td>@item.vol</td>
-                                                                <td>@item.page</td>
-                                                                <td>@item.link_doi</td>
-                                                                <td>@item.link_scholar</td>
-                                                            </tr>
-                                                            count++;
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="tab-pane fade" id="sangche" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
-                                            <table id="table_sangche" class="table table-bordered table-checkable">
-                                                <thead>
+                                                    count++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="sangche" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
+                                    <table id="table_sangche" class="table table-bordered table-checkable">
+                                        <thead>
+                                            <tr>
+                                                <th>@rm.GetString("Index")</th>
+                                                <th>@rm.GetString("InvenName")</th>
+                                                <th>@rm.GetString("AuthorName")</th>
+                                                <th>@rm.GetString("PatentType")</th>
+                                                <th>@rm.GetString("PatentDate")</th>
+                                                <th>@rm.GetString("PatentNumber")</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                count = 1;
+                                                foreach (var item in ViewBag.listInven)
+                                                {
                                                     <tr>
-                                                        <th>@rm.GetString("Index")</th>
-                                                        <th>@rm.GetString("InvenName")</th>
-                                                        <th>@rm.GetString("AuthorName")</th>
-                                                        <th>@rm.GetString("PatentType")</th>
-                                                        <th>@rm.GetString("PatentDate")</th>
-                                                        <th>@rm.GetString("PatentNumber")</th>
+                                                        <td>@count</td>
+                                                        <td>@item.name</td>
+                                                        <td>@item.author</td>
+                                                        <td>@item.name_shtt</td>
+                                                        <td>@item.date.ToString("dd/MM/yyyy")</td>
+                                                        <td>@item.no</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        count = 1;
-                                                        foreach (var item in ViewBag.listInven)
-                                                        {
-                                                            <tr>
-                                                                <td>@count</td>
-                                                                <td>@item.name</td>
-                                                                <td>@item.author</td>
-                                                                <td>@item.name_shtt</td>
-                                                                <td>@item.date.ToString("dd/MM/yyyy")</td>
-                                                                <td>@item.no</td>
-                                                            </tr>
-                                                            count++;
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                    count++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -202,6 +202,8 @@
 
 
 @section scripts{
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/datetime-moment.js"></script>
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script>
         $('#search_thang').select2({
@@ -285,6 +287,7 @@
         }
 
         $(document).ready(function () {
+            $.fn.dataTable.moment('D/MM/YYYY');
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
             });

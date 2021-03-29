@@ -3,6 +3,7 @@ using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -94,6 +95,25 @@ namespace BLL.ScienceManagement.MasterData
         {
             List<PaperType> list = db.PaperTypes.ToList();
             return list;
+        }
+
+        public File addFile(File file)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                db.Files.Add(file);
+                db.SaveChanges();
+                dbc.Commit();
+                return file;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+
+                return null;
+            }
         }
     }
 }
