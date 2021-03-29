@@ -876,8 +876,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="type_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.AreaCare' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AreaCare">
           <Key>
             <PropertyRef Name="people_id" />
@@ -3750,6 +3748,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="RequestDecision" EntityType="Self.RequestDecision" Schema="SM_Request" store:Type="Tables" />
           <EntitySet Name="AcademicDegree" EntityType="Self.AcademicDegree" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AcademicDegreeType" EntityType="Self.AcademicDegreeType" Schema="SM_Researcher" store:Type="Tables" />
+          <EntitySet Name="AreaCare" EntityType="Self.AreaCare" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="Award" EntityType="Self.Award" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="CustomProfile" EntityType="Self.CustomProfile" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeopleContract" EntityType="Self.PeopleContract" Schema="SM_Researcher" store:Type="Tables" />
@@ -3792,12 +3791,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
     [ConferenceStatusLanguage].[status_id] AS [status_id], 
     [ConferenceStatusLanguage].[name] AS [name]
     FROM [Localization].[ConferenceStatusLanguage] AS [ConferenceStatusLanguage]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="AreaCare" EntityType="Self.AreaCare" store:Type="Tables" store:Schema="SM_Researcher">
-            <DefiningQuery>SELECT 
-    [AreaCare].[people_id] AS [people_id], 
-    [AreaCare].[research_area_id] AS [research_area_id]
-    FROM [SM_Researcher].[AreaCare] AS [AreaCare]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ProfileAcademicDegree" EntityType="Self.ProfileAcademicDegree" store:Type="Tables" store:Schema="SM_Researcher">
             <DefiningQuery>SELECT 
@@ -4787,10 +4780,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="Profile" ToRole="ProfileAcademicDegree" />
           <NavigationProperty Name="WorkingProcesses" Relationship="Self.FK__WorkingPr__peppl__705EA0EB" FromRole="Profile" ToRole="WorkingProcess" />
+          <NavigationProperty Name="ResearchAreas" Relationship="Self.AreaCare" FromRole="Profile" ToRole="ResearchArea" />
           <NavigationProperty Name="ContractTypes" Relationship="Self.PeopleContract" FromRole="Profile" ToRole="ContractType" />
           <NavigationProperty Name="Positions" Relationship="Self.PeoplePosition" FromRole="Profile" ToRole="Position" />
           <NavigationProperty Name="Titles" Relationship="Self.PeopleTitle" FromRole="Profile" ToRole="Title" />
-          <NavigationProperty Name="ResearchAreas" Relationship="Self.AreaCare" FromRole="Profile" ToRole="ResearchArea" />
         </EntityType>
         <EntityType Name="Right">
           <Key>
@@ -8393,6 +8386,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <End Role="Citation" Type="Self.Citation" Multiplicity="*" />
           <End Role="RequestCitation" Type="Self.RequestCitation" Multiplicity="*" />
         </Association>
+        <Association Name="AreaCare">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
+        </Association>
         <Association Name="PeopleContract">
           <End Role="ContractType" Type="Self.ContractType" Multiplicity="*" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -8404,10 +8401,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         <Association Name="PeopleTitle">
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
           <End Role="Title" Type="Self.Title" Multiplicity="*" />
-        </Association>
-        <Association Name="AreaCare">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
         </Association>
         <EntityContainer Name="ScienceAndInternationalAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentBases" EntityType="Self.CommentBase" />
@@ -9277,6 +9270,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Citation" EntitySet="Citations" />
             <End Role="RequestCitation" EntitySet="RequestCitations" />
           </AssociationSet>
+          <AssociationSet Name="AreaCare" Association="Self.AreaCare">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="ResearchArea" EntitySet="ResearchAreas" />
+          </AssociationSet>
           <AssociationSet Name="PeopleContract" Association="Self.PeopleContract">
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
@@ -9288,10 +9285,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="PeopleTitle" Association="Self.PeopleTitle">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Title" EntitySet="Titles" />
-          </AssociationSet>
-          <AssociationSet Name="AreaCare" Association="Self.AreaCare">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="ResearchArea" EntitySet="ResearchAreas" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -10609,6 +10602,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <ScalarProperty Name="request_id" ColumnName="request_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">
+            <EndProperty Name="Profile">
+              <ScalarProperty Name="people_id" ColumnName="people_id" />
+            </EndProperty>
+            <EndProperty Name="ResearchArea">
+              <ScalarProperty Name="research_area_id" ColumnName="research_area_id" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="PeopleContract" TypeName="ScienceAndInternationalAffairsModel.PeopleContract" StoreEntitySet="PeopleContract">
             <EndProperty Name="ContractType">
               <ScalarProperty Name="contract_id" ColumnName="contract_id" />
@@ -10631,14 +10632,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </EndProperty>
             <EndProperty Name="Title">
               <ScalarProperty Name="title_id" ColumnName="title_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">
-            <EndProperty Name="Profile">
-              <ScalarProperty Name="people_id" ColumnName="people_id" />
-            </EndProperty>
-            <EndProperty Name="ResearchArea">
-              <ScalarProperty Name="research_area_id" ColumnName="research_area_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
