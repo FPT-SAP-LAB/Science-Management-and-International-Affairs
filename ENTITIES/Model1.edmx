@@ -926,15 +926,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="title_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.ProfileAcademicDegree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProfileAcademicDegree">
           <Key>
-            <PropertyRef Name="start_year" />
-            <PropertyRef Name="end_year" />
+            <PropertyRef Name="people_id" />
+            <PropertyRef Name="academic_degree_id" />
           </Key>
-          <Property Name="people_id" Type="int" />
-          <Property Name="academic_degree_id" Type="int" />
+          <Property Name="people_id" Type="int" Nullable="false" />
+          <Property Name="academic_degree_id" Type="int" Nullable="false" />
           <Property Name="start_year" Type="int" Nullable="false" />
           <Property Name="end_year" Type="int" Nullable="false" />
           <Property Name="study_place" Type="nvarchar" MaxLength="50" />
@@ -2963,7 +2961,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
-          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicDegree">
@@ -2975,7 +2973,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__peopl__27C3E46E">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
@@ -3743,6 +3741,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="PeopleContract" EntityType="Self.PeopleContract" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeoplePosition" EntityType="Self.PeoplePosition" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeopleTitle" EntityType="Self.PeopleTitle" Schema="SM_Researcher" store:Type="Tables" />
+          <EntitySet Name="ProfileAcademicDegree" EntityType="Self.ProfileAcademicDegree" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="WorkingProcess" EntityType="Self.WorkingProcess" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AuthorInvention" EntityType="Self.AuthorInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AuthorPaper" EntityType="Self.AuthorPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
@@ -3780,15 +3779,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
     [ConferenceStatusLanguage].[status_id] AS [status_id], 
     [ConferenceStatusLanguage].[name] AS [name]
     FROM [Localization].[ConferenceStatusLanguage] AS [ConferenceStatusLanguage]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ProfileAcademicDegree" EntityType="Self.ProfileAcademicDegree" store:Type="Tables" store:Schema="SM_Researcher">
-            <DefiningQuery>SELECT 
-    [ProfileAcademicDegree].[people_id] AS [people_id], 
-    [ProfileAcademicDegree].[academic_degree_id] AS [academic_degree_id], 
-    [ProfileAcademicDegree].[start_year] AS [start_year], 
-    [ProfileAcademicDegree].[end_year] AS [end_year], 
-    [ProfileAcademicDegree].[study_place] AS [study_place]
-    FROM [SM_Researcher].[ProfileAcademicDegree] AS [ProfileAcademicDegree]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__AcademicA__activ__2610A626" Association="Self.FK__AcademicA__activ__2610A626">
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
@@ -5728,6 +5718,19 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="content" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="CustomProfile" ToRole="Profile" />
         </EntityType>
+        <EntityType Name="ProfileAcademicDegree">
+          <Key>
+            <PropertyRef Name="people_id" />
+            <PropertyRef Name="academic_degree_id" />
+          </Key>
+          <Property Name="people_id" Type="Int32" Nullable="false" />
+          <Property Name="academic_degree_id" Type="Int32" Nullable="false" />
+          <Property Name="start_year" Type="Int32" Nullable="false" />
+          <Property Name="end_year" Type="Int32" Nullable="false" />
+          <Property Name="study_place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="ProfileAcademicDegree" ToRole="Profile" />
+          <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="ProfileAcademicDegree" ToRole="AcademicDegree" />
+        </EntityType>
         <EntityType Name="WorkingProcess">
           <Key>
             <PropertyRef Name="id" />
@@ -6128,19 +6131,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__73501C2F" FromRole="ConferenceStatusLanguage" ToRole="Language" />
           <NavigationProperty Name="ConferenceStatu" Relationship="Self.FK__Conferenc__statu__74444068" FromRole="ConferenceStatusLanguage" ToRole="ConferenceStatus" />
-        </EntityType>
-        <EntityType Name="ProfileAcademicDegree">
-          <Key>
-            <PropertyRef Name="start_year" />
-            <PropertyRef Name="end_year" />
-          </Key>
-          <Property Name="people_id" Type="Int32" />
-          <Property Name="academic_degree_id" Type="Int32" />
-          <Property Name="start_year" Type="Int32" Nullable="false" />
-          <Property Name="end_year" Type="Int32" Nullable="false" />
-          <Property Name="study_place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Profile" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="ProfileAcademicDegree" ToRole="Profile" />
-          <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="ProfileAcademicDegree" ToRole="AcademicDegree" />
         </EntityType>
         <Association Name="FK__CommentBa__accou__2077C861">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
@@ -6671,7 +6661,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__peopl__27C3E46E">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
@@ -7987,7 +7977,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
-          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicDegree">
@@ -8465,6 +8455,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="AcademicDegreeTypes" EntityType="Self.AcademicDegreeType" />
           <EntitySet Name="Awards" EntityType="Self.Award" />
           <EntitySet Name="CustomProfiles" EntityType="Self.CustomProfile" />
+          <EntitySet Name="ProfileAcademicDegrees" EntityType="Self.ProfileAcademicDegree" />
           <EntitySet Name="WorkingProcesses" EntityType="Self.WorkingProcess" />
           <EntitySet Name="AuthorInventions" EntityType="Self.AuthorInvention" />
           <EntitySet Name="AuthorPapers" EntityType="Self.AuthorPaper" />
@@ -8497,7 +8488,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="QuestionOptions" EntityType="Self.QuestionOption" />
           <EntitySet Name="Responses" EntityType="Self.Response" />
           <EntitySet Name="ConferenceStatusLanguages" EntityType="Self.ConferenceStatusLanguage" />
-          <EntitySet Name="ProfileAcademicDegrees" EntityType="Self.ProfileAcademicDegree" />
           <AssociationSet Name="FK__CommentBa__accou__2077C861" Association="Self.FK__CommentBa__accou__2077C861">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="CommentBase" EntitySet="CommentBases" />
@@ -10180,6 +10170,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProfileAcademicDegrees">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ProfileAcademicDegree">
+              <MappingFragment StoreEntitySet="ProfileAcademicDegree">
+                <ScalarProperty Name="people_id" ColumnName="people_id" />
+                <ScalarProperty Name="academic_degree_id" ColumnName="academic_degree_id" />
+                <ScalarProperty Name="start_year" ColumnName="start_year" />
+                <ScalarProperty Name="end_year" ColumnName="end_year" />
+                <ScalarProperty Name="study_place" ColumnName="study_place" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WorkingProcesses">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.WorkingProcess">
               <MappingFragment StoreEntitySet="WorkingProcess">
@@ -10524,17 +10525,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProfileAcademicDegrees">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ProfileAcademicDegree">
-              <MappingFragment StoreEntitySet="ProfileAcademicDegree">
-                <ScalarProperty Name="people_id" ColumnName="people_id" />
-                <ScalarProperty Name="academic_degree_id" ColumnName="academic_degree_id" />
-                <ScalarProperty Name="start_year" ColumnName="start_year" />
-                <ScalarProperty Name="end_year" ColumnName="end_year" />
-                <ScalarProperty Name="study_place" ColumnName="study_place" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

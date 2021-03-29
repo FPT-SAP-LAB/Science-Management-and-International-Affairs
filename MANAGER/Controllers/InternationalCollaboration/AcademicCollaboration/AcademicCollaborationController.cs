@@ -224,7 +224,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Hom/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -280,7 +281,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Home/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -344,7 +346,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Home/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -484,6 +487,22 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProcedure(int article_id)
+        {
+            try
+            {
+                AlertModal<string> json = acShortRepo.DeleteProcedure(article_id);
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
                 AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
                 return Json(new { json.success, json.content });
             }

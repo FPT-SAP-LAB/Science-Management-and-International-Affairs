@@ -110,36 +110,10 @@
         <div class="card card-custom gutter-b card-stretch bgi-no-repeat">
             <div class="card-body">
                 <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin hội thoại</h3>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <form>
-                            <div class="row">
-                                <div class="col-10">
-                                    <input class="form-control" type="text" value="" id="example-text-input" />
-                                </div>
-                                <div class="col-2">
-                                    <button type="submit" class="btn btn-block btn-success">Gửi</button>
-                                </div>
-                            </div>
-                        </form>
-                        <br />
-                        <table class="col-12 table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col" width="15%">Thời gian</th>
-                                    <th scope="col" width="15%">Người gửi</th>
-                                    <th scope="col">Nội dung</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>01/01/21-10:00AM</td>
-                                    <td>Ngô Tùng Sơn</td>
-                                    <td>Sao lâu có phản hồi thế em</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div>
+                    @{
+                        Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id });
+                    }
                 </div>
             </div>
             <!--end::Body-->

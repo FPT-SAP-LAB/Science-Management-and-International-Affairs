@@ -14,5 +14,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string mssv_msnv { get; set; }
         public string office_abbreviation { get; set; }
         public int note { get; set; }
+        public int request_id { get; set; }
     }
 }
