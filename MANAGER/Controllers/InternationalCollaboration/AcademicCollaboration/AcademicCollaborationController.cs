@@ -362,7 +362,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<AcademicActivityTypeLanguage> alertModal = academicCollaborationRepo.getLTContent(activity_type_id, language_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
