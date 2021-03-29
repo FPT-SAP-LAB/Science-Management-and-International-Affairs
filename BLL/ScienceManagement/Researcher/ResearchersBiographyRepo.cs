@@ -253,13 +253,14 @@ namespace BLL.ScienceManagement.Researcher
                     });
                     db.SaveChanges();
                     trans.Commit();
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
                     trans.Rollback();
                     return 0;
                 }
-               }
+            }
             return 1;
         }
         public int EditWorkEvent(string data)
@@ -300,7 +301,7 @@ namespace BLL.ScienceManagement.Researcher
                     var info = JObject.Parse(data);
                     int acad_id = (int)info["data"]["acad_id"];
                     int people_id = (int)info["data"]["people_id"];
-                    ProfileAcademicDegree pa= db.ProfileAcademicDegrees.Find(people_id, acad_id);
+                    ProfileAcademicDegree pa = db.ProfileAcademicDegrees.Find(people_id, acad_id);
                     db.ProfileAcademicDegrees.Remove(pa);
                     db.SaveChanges();
                     trans.Commit();
@@ -322,7 +323,7 @@ namespace BLL.ScienceManagement.Researcher
                 {
                     var info = JObject.Parse(data);
                     int id = (int)info["data"]["id"];
-                    WorkingProcess pa= db.WorkingProcesses.Find(id);
+                    WorkingProcess pa = db.WorkingProcesses.Find(id);
                     db.WorkingProcesses.Remove(pa);
                     db.SaveChanges();
                     trans.Commit();
