@@ -94,11 +94,15 @@ namespace ENTITIES.CustomModels
                 case 3:
                     SubFolderName = "Bằng sáng chế";
                     break;
+                case 4:
+                    SubFolderName = "Quyết định";
+                    break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
             }
-
-            string ResearcherFolderName = ShareWithEmail.Split('@')[0];
+            string ResearcherFolderName = "";
+            if (ShareWithEmail == null) ResearcherFolderName = "Phòng KH";
+            else ResearcherFolderName = ShareWithEmail.Split('@')[0];
 
             var ResearcherFolder = FindFirstFolder(ResearcherFolderName, SMDrive) ?? CreateFolder(ResearcherFolderName, SMDrive);
 
@@ -114,7 +118,7 @@ namespace ENTITIES.CustomModels
 
                 UploadedFiles.Add(file);
 
-                ShareFile(ShareWithEmail, file.Id);
+                if(ShareWithEmail != null) ShareFile(ShareWithEmail, file.Id);
             }
 
             return UploadedFiles;

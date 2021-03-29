@@ -1,8 +1,10 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -208,6 +210,84 @@ namespace BLL.ScienceManagement.Paper
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1, 
+                                     DateTime date_format2, int file_id2, string number2, string file_drive_id2)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Decision decision = new Decision
+                {
+                    valid_date = date_format1,
+                    file_id = file_id1,
+                    decision_number = number1
+                };
+                db.Decisions.Add(decision);
+
+                Decision decision2 = new Decision
+                {
+                    valid_date = date_format2,
+                    file_id = file_id2,
+                    decision_number = number2
+                };
+                db.Decisions.Add(decision2);
+                db.SaveChanges();
+
+                List<WaitDecisionPaper> listTN = getListWwaitDecision("Trongnuoc");
+                List<WaitDecisionPaper> listQT = getListWwaitDecision("Quocte");
+                foreach (var item in listTN)
+                {
+                    RequestDecision request = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision.decision_id
+                    };
+                    db.RequestDecisions.Add(request);
+
+                    RequestDecision request2 = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision2.decision_id
+                    };
+                    db.RequestDecisions.Add(request2);
+
+                    RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 2;
+                }
+                foreach (var item in listQT)
+                {
+                    RequestDecision request = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision.decision_id
+                    };
+                    db.RequestDecisions.Add(request);
+
+                    RequestDecision request2 = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision2.decision_id
+                    };
+                    db.RequestDecisions.Add(request2);
+
+                    RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 2;
+                }
+
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(file_drive_id1);
+                GoogleDriveService.DeleteFile(file_drive_id2);
                 return "ff";
             }
         }
@@ -435,7 +515,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<WaitDecisionPaper> getListWwaitDecision(string type)
         {
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note'
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -444,7 +524,7 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on o.office_id = pro.office_id
                             where rp.status_id = 4 and rp.type = @type
-                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation";
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id";
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
             return list;
         }

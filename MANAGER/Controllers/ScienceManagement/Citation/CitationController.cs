@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.MasterData;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
@@ -56,6 +57,29 @@ namespace MANAGER.Controllers
         public JsonResult editCitation(string request_id, string total)
         {
             string mess = cr.updateReward(request_id, total);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult uploadDecision(HttpPostedFileBase file, string number, string date)
+        {
+            string[] arr = date.Split('/');
+            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
+            DateTime date_format = DateTime.Parse(format);
+
+            string name = "QD_" + number + "_" + date;
+
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 4, null);
+            ENTITIES.File fl = new ENTITIES.File
+            {
+                link = f.WebViewLink,
+                file_drive_id = f.Id,
+                name = name
+            };
+
+            ENTITIES.File myFile = mrd.addFile(fl);
+            string mess = cr.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
+
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

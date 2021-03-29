@@ -2128,6 +2128,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom JS\Citation.js" />
+    <Content Include="Content\Custom JS\ListAllPaper.js" />
     <Content Include="Content\Custom_CSS\MOU\MOU.css" />
     <Content Include="Content\Custom_CSS\MOU\MOUDetail.css" />
     <Content Include="favicon.ico" />

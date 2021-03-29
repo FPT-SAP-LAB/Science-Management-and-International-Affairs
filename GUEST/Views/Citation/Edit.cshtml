@@ -89,6 +89,9 @@
             var ck = "@ViewBag.ckEdit";
             if (ck != "5") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
+
+            var x = $("#totalreward").val();
+            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
 
         $(".addrow").click(function () {
