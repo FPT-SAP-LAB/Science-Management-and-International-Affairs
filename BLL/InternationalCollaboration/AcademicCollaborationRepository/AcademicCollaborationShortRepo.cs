@@ -53,7 +53,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-
                 return new AlertModal<string>(true);
             }
             catch (Exception e)
