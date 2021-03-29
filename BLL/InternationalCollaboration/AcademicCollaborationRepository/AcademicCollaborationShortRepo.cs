@@ -132,7 +132,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     db.Articles.Remove(db.Articles.Find(article_id));
                     db.SaveChanges();
                     trans.Commit();
-                return new AlertModal<string>(true);
+                    return new AlertModal<string>(true);
                 }
                 catch (Exception e)
                 {
