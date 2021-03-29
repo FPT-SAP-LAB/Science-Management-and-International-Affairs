@@ -2186,6 +2186,7 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Officer\Edit.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Officer\Search.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureContentProcessing.js" />

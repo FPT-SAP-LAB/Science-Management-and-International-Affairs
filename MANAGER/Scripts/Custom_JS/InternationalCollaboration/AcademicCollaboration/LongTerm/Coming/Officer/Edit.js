@@ -455,7 +455,7 @@ $('#coming_edit_officer_save').on('click', function () {
             formData.append("new_evidence", evidence.length == 0 ? null : evidence[0].data);
             formData.append("folder_name", person_name + " - " + partner_name);
 
-            formData.append("direction_id", 1); //coming case
+            formData.append("direction_id", 2); //coming case
             formData.append("collab_type_id", 2); //long-term
 
             let obj_person_stringify = JSON.stringify(obj_person);
