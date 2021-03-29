@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -132,10 +132,8 @@
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
-
     <Compile Include="ModelDAL\OfficeRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
-
     <Compile Include="ModelDAL\PositionRepo.cs" />
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -148,6 +146,7 @@
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersDetailRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />

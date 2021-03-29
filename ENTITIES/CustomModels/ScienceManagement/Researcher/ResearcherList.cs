@@ -12,7 +12,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public String name { get; set; }
         public int rowNum { get; set; }
         public String title { get; set; }
-        public String position { get; set; }
+        public List<String> positions { get; set; }
         public String workplace { get; set; }
         public String googleScholar { get; set; }
     }
