@@ -91,7 +91,7 @@ $(function () {
         console.log(info)
         fd.append('info', JSON.stringify({ info: info }));
         $.ajax({
-            url: "/Researchers/EditResearcher",
+            url: "/Biography/AddNewAcadEvent",
             type: "POST",
             data: fd,
             processData: false,
@@ -111,3 +111,5 @@ $(function () {
 
     })
 })
+
+// Class definition

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using Newtonsoft.Json.Linq;
+
 namespace BLL.ScienceManagement.Researcher
 {
     public class ResearchersBiographyRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<AcadBiography> GetBio(int id)
+        public List<AcadBiography> GetAcadHistory(int id)
         {
             var profile = (
                 from a in db.Profiles
@@ -38,7 +41,7 @@ namespace BLL.ScienceManagement.Researcher
                 }).ToList<AcadBiography>();
             return profile;
         }
-        public List<BaseRecord<WorkingProcess>> GetHistory(int id)
+        public List<BaseRecord<WorkingProcess>> GetWorkHistory(int id)
         {
             var list = (from a in db.WorkingProcesses
                         where a.Profile.people_id == id
@@ -124,5 +127,78 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<BaseRecord<Award>>();
             return list;
         }
+
+        public List<SelectField> getAcadDegrees()
+        {
+            var data = (from c in db.AcademicDegrees
+                        join d in db.AcademicDegreeLanguages on c.academic_degree_id equals d.academic_degree_id
+                        where d.language_id==1
+                        select new SelectField
+                        {
+                            id = c.academic_degree_id,
+                            name = d.name,
+                            selected=0
+                        }).ToList();
+            return data;
+        }
+
+        public int AddNewAcadEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int people_id = (int)info["data"]["people_id"];
+                    int degree = (int)info["data"]["degree"];
+                    string location = (string)info["data"]["location"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    Profile profile = db.Profiles.Find(people_id);
+                    profile.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
+                    {
+                        people_id=people_id,
+                        academic_degree_id=degree,
+                        start_year=start,
+                        end_year=end,
+                        study_place=location
+                    });
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        //public List<SelectField> getAcadDegreeByPeopleId(int id)
+        //{
+        //    var data = (from a in db.Profiles
+        //                from g in db.AcademicDegrees.Where(x => x.Profiles.Contains(a))
+        //                join h in db.AcademicDegreeLanguages on g.academic_degree_id equals h.academic_degree_id
+        //                where a.people_id == id && h.language_id == 1
+        //                select new SelectField
+        //                {
+        //                    id = h.academic_degree_id,
+        //                    name = h.name,
+        //                    selected = 1
+        //                }).Union(from g in db.AcademicDegrees
+        //                         join h in db.AcademicDegrees on g.academic_degree_id equals h.academic_degree_id
+        //                         where !((from m in db.Profiles
+        //                                  from n in db.AcademicDegrees
+        //                                  where m.AcademicDegree==n && m.people_id == id
+        //                                  select n.title_id).Contains(h.title_id)) && h.language_id == 1
+        //                         select new SelectField
+        //                         {
+        //                             id = h.title_id,
+        //                             name = h.name,
+        //                             selected = 0
+        //                         }).ToList<SelectField>();
+        //    return data;
+        //}
     }
 }

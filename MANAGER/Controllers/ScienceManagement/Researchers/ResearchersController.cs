@@ -56,11 +56,13 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
             ViewBag.profile = profile;
             ///////////////////////////////////////////////////////////////
-            List<AcadBiography> acadList = researcherBiographyRepo.GetBio(id);
+            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
             ViewBag.acadList = acadList;
             /////////////////////////////////////////////////////////////
-            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetHistory(id);
+            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
             ViewBag.workList = workList;
+            ViewBag.listAcadDegree = listAcadDegree;
             return View();
         }
         public ActionResult Publications()
