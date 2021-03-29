@@ -132,12 +132,12 @@ namespace BLL.ScienceManagement.Researcher
         {
             var data = (from c in db.AcademicDegrees
                         join d in db.AcademicDegreeLanguages on c.academic_degree_id equals d.academic_degree_id
-                        where d.language_id==1
+                        where d.language_id == 1
                         select new SelectField
                         {
                             id = c.academic_degree_id,
                             name = d.name,
-                            selected=0
+                            selected = 0
                         }).ToList();
             return data;
         }
@@ -157,11 +157,11 @@ namespace BLL.ScienceManagement.Researcher
                     Profile profile = db.Profiles.Find(people_id);
                     profile.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
                     {
-                        people_id=people_id,
-                        academic_degree_id=degree,
-                        start_year=start,
-                        end_year=end,
-                        study_place=location
+                        people_id = people_id,
+                        academic_degree_id = degree,
+                        start_year = start,
+                        end_year = end,
+                        study_place = location
                     });
                     db.SaveChanges();
                     trans.Commit();
