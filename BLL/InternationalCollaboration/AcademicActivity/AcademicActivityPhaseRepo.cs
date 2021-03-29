@@ -60,7 +60,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 where pr.phase_id = @phase_id";
                 List<baseParticipantRole> data = db.Database.SqlQuery<baseParticipantRole>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 return data;
-                return new List<baseParticipantRole>();
             }
             catch (Exception e)
             {
@@ -78,10 +77,42 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         phase_start = DateTime.ParseExact(data.from, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         phase_end = DateTime.ParseExact(data.to, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         activity_id = activity_id,
-                        created_by = activity_id
+                        created_by = account_id
                     });
                     db.SaveChanges();
-
+                    db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
+                    {
+                        phase_id = phase.phase_id,
+                        language_id = language_id,
+                        phase_name = data.phase_name
+                    });
+                    if (language_id == 1)
+                    {
+                        AcademicActivityPhaseLanguage aapl = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == phase.phase_id && x.language_id == 2).FirstOrDefault();
+                        if (aapl == null)
+                        {
+                            db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
+                            {
+                                phase_id = phase.phase_id,
+                                language_id = 2,
+                                phase_name = String.Empty
+                            });
+                        }
+                    }
+                    else
+                    {
+                        AcademicActivityPhaseLanguage aapl = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == phase.phase_id && x.language_id == 1).FirstOrDefault();
+                        if (aapl == null)
+                        {
+                            db.AcademicActivityPhaseLanguages.Add(new AcademicActivityPhaseLanguage
+                            {
+                                phase_id = phase.phase_id,
+                                language_id = 1,
+                                phase_name = String.Empty
+                            });
+                        }
+                    }
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
@@ -98,6 +129,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AcademicActivityPhase aap = db.AcademicActivityPhases.Find(phase_id);
+                    db.AcademicActivityPhases.Remove(aap);
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
@@ -114,6 +148,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AcademicActivityPhase aap = db.AcademicActivityPhases.Find(data.phase_id);
+                    aap.phase_start = DateTime.ParseExact(data.from, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    aap.phase_end = DateTime.ParseExact(data.to, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    db.Entry(aap).State = EntityState.Modified;
+                    AcademicActivityPhaseLanguage aapl = db.AcademicActivityPhaseLanguages.Where(x => x.language_id == language_id && x.phase_id == data.phase_id).FirstOrDefault();
+                    aapl.phase_name = data.phase_name;
+                    db.Entry(aapl).State = EntityState.Modified;
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
@@ -122,6 +164,33 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     transaction.Rollback();
                     return false;
                 }
+            }
+        }
+        public List<PlanParticipant> getParticipantPlanByRole(int participant_role_id)
+        {
+            try
+            {
+                string sql = @"select pp.participant_role_id,pp.quantity,pp.office_id from SMIA_AcademicActivity.PlanParticipant pp
+                                inner join SMIA_AcademicActivity.ParticipantRole pr on pr.participant_role_id = pp.participant_role_id
+                                where pr.participant_role_id = @participant_role_id";
+                List<PlanParticipant> data = db.Database.SqlQuery<PlanParticipant>(sql, new SqlParameter("participant_role_id", participant_role_id)).ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                return new List<PlanParticipant>();
+            }
+        }
+        public List<baseOffice> getOffices()
+        {
+            try
+            {
+                string sql = @"select o.office_id,o.office_name from General.Office o ";
+                List<baseOffice> data = db.Database.SqlQuery<baseOffice>(sql).ToList();
+                return data;
+            }catch(Exception e)
+            {
+                return new List<baseOffice>();
             }
         }
         public class basePhase
@@ -140,6 +209,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int participant_role_id { get; set; }
             public string participant_role_name { get; set; }
             public string price { get; set; }
+        }
+        public class baseOffice
+        {
+            public int office_id { get; set; }
+            public string office_name { get; set; } 
+        }
+        public class basePlanParticipant
+        {
+            public int office_id { get; set; }
+            public string quantity { get; set; }
         }
     }
 }

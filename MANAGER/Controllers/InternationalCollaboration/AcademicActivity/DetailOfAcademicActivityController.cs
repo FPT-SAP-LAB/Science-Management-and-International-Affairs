@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MANAGER.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
 using MANAGER.Support;
+using ENTITIES;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -18,6 +19,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult Index(int id)
         {
             repo = new DetailOfAcademicActivityRepo();
+            phaseRepo = new AcademicActivityPhaseRepo();
             ViewBag.Title = "Thông tin hoạt động học thuật";
             ViewBag.activity_id = id;
             ViewBag.types = repo.getType(1);
@@ -99,7 +101,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, phase_id);
             return Json(data);
         }
-        public JsonResult add_Phase(int language_id, int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
+        [HttpPost]
+        public JsonResult addPhase(int language_id, int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
             int account_id = CurrentAccount.AccountID(Session);
@@ -113,47 +116,47 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(String.Empty);
             }
         }
-        public JsonResult delete_Phase(int id)
+        [HttpPost]
+        public JsonResult deletePhase(int phase_id)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            bool res = phaseRepo.deletePhase(phase_id);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã xóa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Xóa giai đoạn thành công");
             }
-            catch (Exception)
+            else
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json(String.Empty);
             }
         }
-        public JsonResult edit_Phase(int id, string name, string from, string to)
+        [HttpPost]
+        public JsonResult editPhase(int language_id, AcademicActivityPhaseRepo.infoPhase data)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            bool res = phaseRepo.editPhase(language_id,data);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã chỉnh sửa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Chỉnh sửa giai đoạn thành công");
             }
-            catch (Exception)
+            else
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json(String.Empty);
             }
+        }
+        [HttpPost]
+        public ActionResult getParticipantRoleByPhase(int phase_id)
+        {
+            phaseRepo = new AcademicActivityPhaseRepo();
+            List<AcademicActivityPhaseRepo.baseParticipantRole> data = phaseRepo.getParticipantRoleByPhase(phase_id);
+            return Json(new { success = true, data = data });
+        }
+        [HttpPost]
+        public JsonResult getParticipantPlanByRole(int participant_role_id)
+        {
+            phaseRepo = new AcademicActivityPhaseRepo();
+            List<PlanParticipant> data = phaseRepo.getParticipantPlanByRole(participant_role_id);
+            return Json(data);
         }
         public JsonResult add_Tucach(int id, string name, int quantity, bool by, List<QuantityByUnit> arr)
         {
@@ -243,6 +246,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else
                 return Json(String.Empty);
+        }
+        public JsonResult getOffice()
+        {
+            phaseRepo = new AcademicActivityPhaseRepo();
+            List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
+            return Json(data);
         }
         public class QuantityByUnit
         {
