@@ -155,13 +155,15 @@ namespace BLL.ScienceManagement.Researcher
                     int start = (int)info["data"]["start"];
                     int end = (int)info["data"]["end"];
                     Profile profile = db.Profiles.Find(people_id);
-                    profile.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
+                    db.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
                     {
                         people_id = people_id,
                         academic_degree_id = degree,
                         start_year = start,
                         end_year = end,
-                        study_place = location
+                        study_place = location,
+                        Profile=db.Profiles.Find(people_id),
+                        AcademicDegree=db.AcademicDegrees.Find(degree)
                     });
                     db.SaveChanges();
                     trans.Commit();
