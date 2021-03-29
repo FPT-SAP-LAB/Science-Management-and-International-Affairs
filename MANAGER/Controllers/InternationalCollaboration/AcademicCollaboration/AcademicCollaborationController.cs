@@ -225,7 +225,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Hom/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -281,7 +282,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Home/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -345,7 +347,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    return Redirect("/Home/Index"); //return login page if session's out
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
