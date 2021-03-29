@@ -162,8 +162,8 @@ namespace BLL.ScienceManagement.Researcher
                         start_year = start,
                         end_year = end,
                         study_place = location,
-                        Profile=db.Profiles.Find(people_id),
-                        AcademicDegree=db.AcademicDegrees.Find(degree)
+                        Profile = db.Profiles.Find(people_id),
+                        AcademicDegree = db.AcademicDegrees.Find(degree)
                     });
                     db.SaveChanges();
                     trans.Commit();
