@@ -237,7 +237,6 @@
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ProcedureContentProcessing.js"></script>
 
     @*-------------------datatable check this file-------------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ShortTerm_Datatable.js"></script>
@@ -381,14 +380,8 @@
             allowClear: true,
             tags: true,
         })
-
     </script>
     <script>
-        var id_row = "";
-        //parse id fo delete
-        function parse_id(id) {
-            id_row = id;
-        }
         //collapse div
         $('#collapse_btn_tab_1').click(function () {
             $('.collapse_tab_1').toggle(700)
@@ -411,22 +404,6 @@
             $('#main-card').parent().css("background-color", "#eef0f8");
             //$('.collaboration_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
-        });
-
-        //funtion delete
-        $('#btn_delete').click(function() {
-            $.ajax({
-                url: '@Url.Action("Delete_Longterm", "AcademicCollaboration")',
-                data: { 'id': id_row },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        toastr.success("Đã xóa thành công");
-                    }
-
-                },
-            });
         });
 
         //load status history table
@@ -495,7 +472,6 @@
             KTSummernoteDemo.init();
         });
     </script>
-
 
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
