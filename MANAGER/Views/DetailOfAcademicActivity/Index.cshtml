@@ -154,22 +154,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Sơ khảo</td>
-                            <td>01/01/2021</td>
-                            <td>14/01/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Chung kết</td>
-                            <td>14/01/2021</td>
-                            <td>26/01/2021</td>
-                            <td>Sơn Nguyễn</td>
-                            <td></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -621,7 +605,7 @@
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12 pb-3">
                         <div id="add_control_btn">
-                            <a href="#" class="btn-sm btn btn-primary" onclick="bonusRow()">
+                            <a href="#" class="btn-sm btn btn-primary" onclick="bonusRow(0)">
                                 <i class="fas fa-plus" style="color: #ffffff;"></i>
                             </a>
                         </div>
@@ -723,7 +707,7 @@
         </div>
     </div>
 </div>
-
+@*cc*@
 <div class="modal fade" id="editModal_Giaidoan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -737,14 +721,14 @@
                 <div class="form-group row pb-0 mb-0">
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Giai đoạn</label>
-                        <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" value="Sơ khảo" />
+                        <input class="form-control" type="text" placeholder="Giai đoạn" autocomplete="off" required id="edit_name_giaidoan" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" value="08/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_giaidoan" autocomplete="off" id="edit_from_giaidoan" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -759,7 +743,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_giaidoan" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" value="16/02/2021" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_giaidoan" autocomplete="off" id="edit_to_giaidoan" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_giaidoan" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -777,10 +761,10 @@
             <div class="modal-body pt-3 pb-0">
                 <div class="row form-group">
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_Tucach">Thêm tư cách</a>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold float-right" onclick="setUpForm()">Đơn đăng kí</a>
                     </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <table id="TuCachDatatable" class="table table-bordered table-checkable">
@@ -1406,7 +1390,6 @@
         });
     </script>
     <script>
-        let id_delete_giai_doan = 0;
         let id_edit_giai_doan = 0;
         let id_delete_tu_cach = 0;
         let id_edit_tu_cach = 0;
@@ -1414,6 +1397,17 @@
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
         let id_delete_KP = 0;
+        function convertDate(date) {
+            correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
+                myDate = new Date(correctFormat);
+            return myDate;
+        }
+        function clearModal(id) {
+            $(id).find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+        }
         function changeStatusActivity(id) {
             var object = {
                 activity_id: document.getElementById('activity_id').value,
@@ -1546,11 +1540,28 @@
             arrIndexContent = arrIndexContent.filter(function (e) { return e !== id });
         }
 
-        function bonusRow() {
-            arrIndexDonvi.push(numberOfIndexDonvi);
-            $('#add_control').append("<div class=\"row customrow\" id=\"row-" + numberOfIndexDonvi + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + numberOfIndexDonvi + "\" class=\"form-control\"><option>FPTU - Hà Nội</option><option>FPTU - Đà Nẵng</option><option>FPTU - HCM</option><option>FPTU - Cần Thơ</option></select>" +
-                "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"number\" id=\"amount-" + numberOfIndexDonvi + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\"><a href=\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRow(" + numberOfIndexDonvi + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;\"></i></a></div></div>");
-            numberOfIndexDonvi = numberOfIndexDonvi + 1;
+        function bonusRow(index) {
+            if (index == 0) {
+                var ind = 0;
+                if (arrIndexContent.length == 0) {
+                    ind = numberOfIndexContent;
+                    arrIndexContent.push(ind);
+                    numberOfIndexContent = numberOfIndexContent + 1;
+                } else {
+                    ind = Math.max.apply(Math, arrIndexContent) + 1;
+                    arrIndexContent.push(ind);
+                }
+                $('#add_control').append("<div class=\"row customrow\" id=\"row-" + ind + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + ind + "\" class=\"form-control\"></select>" +
+                    "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"number\" id=\"amount-" + ind + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\">"+
+                    "<a href =\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRow(" + ind + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;padding:0px !important\"></i></a></div></div>");
+                genOffice('#name_coso' +ind);
+            } else {
+                arrIndexContent.push(index);
+                $('#add_control').append("<div class=\"row customrow\" id=\"row-" + index + "\"><div class=\"col-md-6 col-xl-6 col-lg-6\"><select id=\"name_coso" + index + "\" class=\"form-control\"></select>" +
+                    "</div><div class=\"col-md-4 col-xl-4 col-lg-4\"><input type=\"number\" id=\"amount-" + index + "\" class=\"form-control\" autocomplete=\"off\" placeholder=\"Số lượng\"></div><div class=\"col-md-2 col-xl-2 col-lg-2\">" +
+                    "<a href =\"#\" class=\"btn-sm btn btn-primary\" onclick=\"removeRow(" + index + ")\"><i class=\"fas fa-minus\" style=\"color:#ffffff;padding:0px !important\"></i></a></div></div>");
+                genOffice('#name_coso' +index);
+            }
         }
 
         function removeRow(id) {
@@ -1571,19 +1582,30 @@
         function getContactInfo() {
             return;
         }
-        function editDetailGiaiDoan(id) {
+        function editGiaiDoan(id) {
             id_edit_giai_doan = id;
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                phase_id : id
+            };
             $.ajax({
-                url: '/DetailOfAcademicActivity/edit_Phase',
-                data: { 'id': id_edit_giai_doan },
+                url: "@Url.Action("getDetailPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
+                    document.getElementById('edit_name_giaidoan').value = data.phase_name;
+                    document.getElementById('edit_from_giaidoan').value = data.from;
+                    document.getElementById('edit_to_giaidoan').value = data.to;
                     $('#editModal_Giaidoan').modal('show');
+                    if (typeof datatableTC != 'undefined') {
+                        datatableTC.ajax.reload();
+                    } else
+                        initDatatableTuCach();
                 },
             });
-
         }
-        function deleteDetailGiaiDoan(id) {
-            id_delete_giai_doan = id;
+        function deleteGiaiDoan(id) {
             Swal.fire({
                 title: "Bạn có muốn xóa giai đoạn này không ?",
                 text: "",
@@ -1594,11 +1616,20 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deletePhase", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ phase_id: id }),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatableGD.ajax.reload();
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại.');
+                            }
+                        },
+            });
                 }
             });
         }
@@ -1774,19 +1805,7 @@
             } else
                 $('#edit_cost_tucach').attr('disabled', false);
         });
-        $('#add_donvi_tucach').click(function () {
-            if ($(this).prop('checked')) {
-                $('#add_control_title').show();
-                $('#add_control_btn').show();
-                $('#add_control').show();
-                $('#add_quantity_tucach').attr('readonly', true)
-            } else {
-                $('#add_control_title').hide();
-                $('#add_control_btn').hide();
-                $('#add_control').hide();
-                $('#add_quantity_tucach').attr('readonly', false)
-            }
-        });
+
         $('#edit_donvi_tucach').click(function () {
             if ($(this).prop('checked')) {
                 $('#edit_control_title').show();
@@ -1801,20 +1820,32 @@
             }
         });
         $('#btn_add_giaidoan').click(function () {
-            let object = {
-                id: 1,
-                name: document.getElementById('add_name_giaidoan').value,
+            var basePhase = {
+                phase_name: document.getElementById('add_name_giaidoan').value,
                 from: document.getElementById('add_from_giaidoan').value,
                 to: document.getElementById('add_to_giaidoan').value
+            };
+            if (convertDate(basePhase.from).getTime() > convertDate(basePhase.to).getTime()) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
             }
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                activity_id: document.getElementById('activity_id').value,
+                basePhase: basePhase
+            };
             $.ajax({
-                url: '/DetailOfAcademicActivity/add_Phase',
-                data: object,
+                url: "@Url.Action("addPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
+                    if (data != '') {
+                        datatableGD.ajax.reload();
+                        clearModal('#addModal_DongToChuc');
+                        toastr.success(data);
                     } else {
-                        toastr.error(data.err_content);
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
                 },
             });
@@ -1841,26 +1872,35 @@
         });
 
         $('#btn_edit_giaidoan').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
-            //let object = {
-            //    name: document.getElementById('add_name_giaidoan').value,
-            //    from: document.getElementById('add_from_giaidoan').value,
-            //    to: document.getElementById('add_to_giaidoan').value
-            //}
-            //$.ajax({
-            //    url: '/DetailOfAcademicActivity/add_Phase',
-            //    data: object,
-            //    success: function (data) {
-            //        if (data.code = 1) {
-            //            toastr.success(data.err_content);
-            //        } else {
-            //            toastr.error(data.err_content);
-            //        }
-            //    },
-            //});
-        });
-        $('#btn_edit_tucach').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+            var data = {
+                phase_id: id_edit_giai_doan,
+                full_name: '',
+                phase_name: document.getElementById('edit_name_giaidoan').value,
+                from: document.getElementById('edit_from_giaidoan').value,
+                to: document.getElementById('edit_to_giaidoan').value
+            };
+            if (convertDate(data.from).getTime() > convertDate(data.to).getTime()) {
+                toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
+            var obj = {
+                language_id: document.getElementById('detail_language_content').value,
+                data: data
+            };
+            $.ajax({
+                url: "@Url.Action("editPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(obj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        datatableGD.ajax.reload();
+                    } else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                }
+            });
         });
         $('#btn_edit_DongToChuc').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
@@ -1879,26 +1919,67 @@
                 },
             });
         });
-
-        $('#btn_add_tucach').click(function () {
-            let object = {
-                id: 1,
-                title: document.getElementById('add_name_tucach').value,
-                quantity: document.getElementById('add_quantity_tucach').value,
-                price: document.getElementById('add_price_tucach').value,
-                arr: []
+        $('#add_donvi_tucach').click(function () {
+            if ($(this).prop('checked')) {
+                $('#add_control_title').show();
+                $('#add_control_btn').show();
+                $('#add_control').show();
+                $('#add_quantity_tucach').attr('readonly', true)
+            } else {
+                $('#add_control_title').hide();
+                $('#add_control_btn').hide();
+                $('#add_control').hide();
+                $('#add_quantity_tucach').attr('readonly', false)
             }
+        });
+        $('#btn_add_tucach').click(function () {
+            let arrOffice = [];
+            let price;
+            if ($('#add_price_tucach').val() == 'CP') {
+                price = $('#add_cost_tucach').val();
+            } else {
+                price = -1;
+            }
+            arrIndexDonvi.forEach(function (x) {
+                var obj = {
+                    office_id: $('#name_coso' + x).val(),
+                    quantity: $('#amount-' + x).val()
+                };
+                if (obj.quantity == '') {
+                    check = true;
+                }
+                arrOffice.push(obj);
+            });
+            var baseParticipantRole = {
+                participant_role_id: 1,
+                participant_role_name: document.getElementById('add_name_tucach').value,
+                price: price
+            };
+            var object = {
+                baseParticipantRole: baseParticipantRole,
+                arrOffice: arrOffice,
+            };
             $.ajax({
-                url: '/DetailOfAcademicActivity/add_TuCach',
-                data: object,
+                url: "@Url.Action("getPhase", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.code = 1) {
-                        toastr.success(data.err_content);
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal_Tucach');
+                        if (typeof datatableTC != 'undefined') {
+                            datatableTC.ajax.reload();
+                        } else
+                            initDatatableTuCach();
                     } else {
-                        toastr.error(data.err_content);
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
                 },
             });
+        });
+        $('#btn_edit_tucach').click(function () {
+            toastr.success("Đã chỉnh sửa thành công");
         });
         $('#btn_edit_kinhphi').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
@@ -1921,7 +2002,7 @@
         $('#btn_edit_kpThucTe').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });
-        $("#GiaiDoanDatatable").DataTable({
+        var datatableGD = $("#GiaiDoanDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1933,23 +2014,56 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getPhase", "DetailOfAcademicActivity")",
+                 type: "POST",
+                datatype: "json",
+                 data: {
+                     "language_id": function () { return document.getElementById('detail_language_content').value },
+                     activity_id: document.getElementById('activity_id').value
+                 },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    width: '15%',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 btn-light-primary mr-5" onclick="editDetailGiaiDoan(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDetailGiaiDoan(1)">Xóa</a>'
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
+                    data: "phase_name"
+                },
+                {
+                    data: "from"
+                },
+                {
+                    data: "to"
+                },
+                {
+                    data: "full_name"
+                },
+                {
+                    data: "phase_id",
+                    title : "Hành động",
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editGiaiDoan(' + data +')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteGiaiDoan('+data+')">Xóa</a>';
+                    }
+                },
+            ],
+            columnDefs: [
+                {
                     className: "text-center",
-                    targets: [0, 1, 2, 3, 4, -1],
-                }
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
         });
-        $("#TuCachDatatable").DataTable({
+        let datatableTC;
+        function initDatatableTuCach() {
+            datatableTC=  $("#TuCachDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1961,22 +2075,52 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getParticipantRoleByPhase", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: {
+                     "phase_id": function () { return id_edit_giai_doan }
+                 },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: 3,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm btn-light-primary mr-5 px-6" onclick="editTuCach(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach(1)">Xóa</a>'
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
+                    data: "participant_role_name"
+                },
+                {
+                    data: "price",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else return 'Miễn phí';
+                    }
+                },
+                {
+                    data: "participant_role_id",
+                    title : "Hành động",
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editTucach(' + data +')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteTuCach('+data+')">Xóa</a>';
+                    }
+                },
+            ],
+            columnDefs: [
+                {
                     className: "text-center",
-                    targets: [-1],
-                }
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
-        });
-        let sttDTC = 1;
+            });
+        }
         $("#DongTochucDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1998,8 +2142,8 @@
                 },
             columns: [
                 {
-                    render: function () {
-                        return sttDTC++;
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
@@ -2396,7 +2540,7 @@
                 toastr.warning("Nội dung đề mục không thể để trống.");
                 return false;
             }
-            if (item.from > item.to) {
+            if (convertDate(item.from).getTime() > convertDate(item.to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }
@@ -2423,6 +2567,26 @@
         });
         function reInit() {
             initDetail();
+            datatableGD.ajax.reload();
+        }
+        let arrOffice = [];
+        function getOffice() {
+            $.ajax({
+                url: "@Url.Action("getOffice", "DetailOfAcademicActivity")",
+                data: {},
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    arrOffice = data;
+                }
+            });
+        }
+        function genOffice(id) {
+            let html = '';
+            arrOffice.forEach(function (x) {
+                html += '<option value="' + x.office_id + '">' + x.office_name + '</option>';
+            });
+            $(id).append(html);
         }
         $(document).ready(function () {
             $('#add_control_title').hide();
@@ -2433,6 +2597,7 @@
         jQuery(document).ready(function () {
             initDetail();
             KTSummernoteDemo.init();
+            getOffice();
         });
     </script>
 }
