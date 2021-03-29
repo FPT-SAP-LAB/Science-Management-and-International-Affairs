@@ -20,7 +20,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
     {
         /*--------------------------------------------------------LONG TERM ACADEMIC COLLABORATION---------------------------------------------------------*/
         AcademicCollaborationRepo academicCollaborationRepo;
-        AcademicCollaborationShortRepo acShortRepo;
 
         // GET: AcademicCollaboration
         public ActionResult Longterm_List()

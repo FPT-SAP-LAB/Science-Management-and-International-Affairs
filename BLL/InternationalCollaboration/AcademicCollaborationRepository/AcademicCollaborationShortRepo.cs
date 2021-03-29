@@ -108,7 +108,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         direction_id = direction,
                         article_id = article.article_id,
-                        account_id = account_id
                     };
                     db.Procedures.Add(procedure);
                     db.SaveChanges();
