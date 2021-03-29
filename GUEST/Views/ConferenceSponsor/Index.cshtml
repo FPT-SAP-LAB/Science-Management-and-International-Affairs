@@ -74,9 +74,12 @@
                         }, width: "80px", className: "text-center"
                     },
                     {
-                        data: "RequestID", orderable: false, render: function (data) {
-                            return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
-                        }
+                        data: {}, orderable: false, render: function (data) {
+                            let html = "<a href='/ConferenceSponsor/Detail?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>";
+                            if (data.EditAble)
+                                html += "<a href='/ConferenceSponsor/Edit?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fa fa-edit'></i> </a>";
+                            return html
+                        }, width: "66px", className: "text-left"
                     }
                 ],
                 order: [3, "desc"]
