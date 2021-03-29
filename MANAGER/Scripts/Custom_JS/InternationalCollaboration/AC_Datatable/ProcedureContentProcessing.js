@@ -1,24 +1,4 @@
-﻿function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            var image = new Image();
-            image.src = e.target.result;
-            image.onload = function () {
-                var canvas = document.createElement("canvas");
-                var ctx = canvas.getContext("2d");
-                canvas.width = image.width;
-                canvas.height = image.height;
-                ctx.drawImage(image, 0, 0);
-                var URL = canvas.toDataURL('image/jpeg');
-                $('#avata').attr('src', URL);
-            };
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
+﻿
 function dataURItoBlob(dataURI) {
     var blobBin = atob(dataURI.split(',')[1]);
     var array = [];
