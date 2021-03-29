@@ -132,11 +132,12 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <select type="text" class="form-control" placeholder="Học vị" id="hocvi">
+                                                    <select type="text" class="form-control" placeholder="Học vị" id="acad_hocvi">
                                                         <option value="" disabled selected>Học vị</option>
-                                                        <option value="">Cử nhân</option>
-                                                        <option value="1">Thạc sĩ</option>
-                                                        <option value="2">Tiến sĩ</option>
+                                                        @foreach (SelectField a in ViewBag.listAcadDegree)
+                                                        {
+                                                            <option value="@a.id">@a.name</option>
+                                                        }
                                                     </select>
                                                     <span><i class="far fa-bookmark"></i></span>
                                                 </div>
@@ -145,34 +146,49 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Nơi học tập" id="kt_datatable_search_query">
+                                                    <input type="text" class="form-control" placeholder="Nơi học tập" id="acad_location">
                                                     <span><i class="fas fa-map-pin"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        <div class="form-group row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_1" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" id="add_acad_start" placeholder="Start date" data-target="#kt_datetimepicker_7_1" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_1" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Đến" name="end">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_2" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_acad_end" data-target="#kt_datetimepicker_7_2" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_2" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                    <span><i class="far fa-sticky-note"></i></span>
+                                        @*<div class="row form-group">
+                                                <div class="col-12">
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                                        <span><i class="far fa-sticky-note"></i></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div>*@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                        <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_acad">Lưu</button>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +272,8 @@
             if ($(this).attr('href').trim() == window.location.pathname) {
                 $(this).addClass('active')
             }
-        })
+        });
     </script>
-    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
+    <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
+    <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
 }

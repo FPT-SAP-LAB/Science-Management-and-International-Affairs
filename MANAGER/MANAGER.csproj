@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -379,7 +380,9 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\sweetalert2.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\toastr.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.js" />
+    <Content Include="Content\assets\js\pages\researcher-bio.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
+    <Content Include="Content\assets\js\pages\researcher-change-avt.js" />
     <Content Include="Content\assets\js\pages\researcher-edit-info.js" />
     <Content Include="Content\assets\js\pages\widgets.js" />
     <Content Include="Content\assets\js\scripts.bundle.js" />
@@ -2358,6 +2361,8 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
+    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Shortterm_AcadCollab_Going\" />
+    <Folder Include="Views\Biography\" />
     <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
     <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\" />
     <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Procedure\" />

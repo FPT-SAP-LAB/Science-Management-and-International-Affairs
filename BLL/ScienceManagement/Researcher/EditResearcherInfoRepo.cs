@@ -87,9 +87,10 @@ namespace BLL.ScienceManagement.Researcher
                 {
                     Console.WriteLine(e.ToString());
                     trans.Rollback();
+                    return 0;
                 }
             }
-            return 0;
+            return 1;
         }
     }
 }
