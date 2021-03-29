@@ -8,14 +8,14 @@
                 <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="search_procedure_going_title" />
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mb-4">
-                <a href="#" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
+                <a id="procedure_going_search_btn" class="btn btn-light-primary px-6 font-weight-bold text-nowrap">Tìm kiếm</a>
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2">
         <div class="row align-items-center justify-content-end">
             <div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 mb-4">
-                <a href="#add_procedure" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                <a href="#add_procedure" id="add_procedure_going" class="procedure_table btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
        id="procedure_going_table">
     <thead>
         <tr>
-            <th class="">S<br />T<br />T</th>
+            <th class="text-center">STT</th>
             <th class="text-center">Tiêu đề</th>
             <th class="text-center">Người đăng</th>
             <th class="text-center">Hành động</th>

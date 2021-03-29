@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 
 namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
@@ -74,7 +75,21 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 return new List<ProgramDescription>();
             }
         }
-
+        public YearSearching yearSearching()
+        {
+            try
+            {
+                string sql = @"SELECT YEAR(MIN(program_start_date)) 'year_from', YEAR(MAX(program_start_date)) 'year_to'
+                FROM IA_AcademicCollaboration.AcademicProgram ap";
+                YearSearching obj = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
+                return obj;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new YearSearching();
+            }
+        }
         public BaseServerSideData<ProgramInfo> listPartnerProgram(BaseDatatable baseDatatable, int type, string partner, int year, int country, int language)
         {
             try
@@ -219,7 +234,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                string sql = @"select av.version_title 'procedure_name', CONVERT(NVARCHAR,av.publish_time, 20) 'publish_time', av.article_content 'content'
+                string sql = @"select av.version_title 'procedure_name', pr.direction_id, CONVERT(NVARCHAR, av.publish_time, 20) 'publish_time', av.article_content 'content'
                 from IA_AcademicCollaboration.[Procedure] pr
                 join IA_Article.Article ar on ar.article_id = pr.article_id
                 join IA_Article.ArticleVersion av on av.article_id = pr.article_id
