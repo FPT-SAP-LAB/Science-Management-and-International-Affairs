@@ -14,8 +14,8 @@ namespace ENTITIES
     
     public partial class ProfileAcademicDegree
     {
-        public Nullable<int> people_id { get; set; }
-        public Nullable<int> academic_degree_id { get; set; }
+        public int people_id { get; set; }
+        public int academic_degree_id { get; set; }
         public int start_year { get; set; }
         public int end_year { get; set; }
         public string study_place { get; set; }

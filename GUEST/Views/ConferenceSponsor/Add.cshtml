@@ -113,7 +113,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Hình thức <span style='color:red'>*</span>:</label>
                                             <select id="formality" class="form-control">
-                                                @foreach (var item in ViewBag.data.FormalityLanguages)
+                                                @foreach (var item in ViewBag.FormalityLanguages)
                                                 {
                                                     <option value="@item.formality_id">@item.name</option>
                                                 }
@@ -124,7 +124,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Chuyên ngành <span style='color:red'>*</span>:</label>
                                             <select id="specialization" class="form-control">
-                                                @foreach (var item in ViewBag.data.SpecializationLanguages)
+                                                @foreach (var item in ViewBag.SpecializationLanguages)
                                                 {
                                                     <option value="@item.specialization_id">@item.name</option>
                                                 }
@@ -169,13 +169,13 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
+                                            @foreach (var item in ViewBag.ConferenceCriteriaLanguages)
                                             {
                                                 <li>@item</li>
                                             }
                                         </ul>
                                         <br />
-                                        <a href="@ViewBag.data.Link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                        <a href="@ViewBag.Link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                     </div>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
-                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
+                                                    @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
                                                         <option @(item.office_id == Profile.OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
                                                     }
@@ -217,7 +217,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectTitle">
-                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
+                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
                                                         <option @(item.title_id == Profile.TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
                                                     }
@@ -241,7 +241,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
-                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
+                                                    @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
                                                         <option value="@item.office_id">@item.office_name</option>
                                                     }
@@ -249,7 +249,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectTitle">
-                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
+                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
                                                         <option value="@item.title_id">@item.name</option>
                                                     }
@@ -282,7 +282,7 @@
                         <div class="pb-5">
                             <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-md-3">
                                     <label>Mệnh giá chi phí</label>
                                     <select class="form-control selectTitle">
@@ -297,7 +297,7 @@
                                         <option value="USD">USD</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>

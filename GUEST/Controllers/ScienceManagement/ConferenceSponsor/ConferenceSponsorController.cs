@@ -22,6 +22,13 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
         readonly CountryRepo countryRepo = new CountryRepo();
+        readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
+        readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
+        readonly ConferenceCriteriaLanguageRepo criteriaLanguageRepo = new ConferenceCriteriaLanguageRepo();
+        readonly RequestConferencePolicyRepo policyRepo = new RequestConferencePolicyRepo();
+        readonly OfficeRepo officeRepo = new OfficeRepo();
+        readonly TitleLanguageRepo titleRepo = new TitleLanguageRepo();
+
         private readonly List<PageTree> pagesTree = new List<PageTree>
             {
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
@@ -46,13 +53,39 @@ namespace GUEST.Controllers
         [HttpGet]
         public ActionResult Add()
         {
+            int language_id = LanguageResource.GetCurrentLanguageID();
             pagesTree.Add(new PageTree("Thêm", "/ConferenceSponsor/Add"));
-            string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
+            string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), language_id);
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
 
             ViewBag.data = data;
             ViewBag.countries = countryRepo.GetCountries();
             ViewBag.pagesTree = pagesTree;
+            ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
+            ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
+            ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
+            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Offices = officeRepo.GetList();
+            ViewBag.TitleLanguages = titleRepo.GetList(language_id);
+            return View();
+        }
+        public ActionResult Edit(int id)
+        {
+            int language_id = LanguageResource.GetCurrentLanguageID();
+            pagesTree.Add(new PageTree("Chỉnh sửa", "/ConferenceSponsor/Edit?id=" + id));
+            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
+
+            ViewBag.pagesTree = pagesTree;
+            ViewBag.output = output;
+            ViewBag.countries = countryRepo.GetCountries();
+            ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
+            ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
+            ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
+            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Offices = officeRepo.GetList();
+            ViewBag.TitleLanguages = titleRepo.GetList(language_id);
             return View();
         }
         [HttpPost]
@@ -70,18 +103,6 @@ namespace GUEST.Controllers
 
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
-            return View();
-        }
-        public ActionResult Edit(int id)
-        {
-            pagesTree.Add(new PageTree("Chỉnh sửa", "/ConferenceSponsor/Edit?id=" + id));
-            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
-            if (output == null)
-                return Redirect("/ConferenceSponsor");
-
-            ViewBag.pagesTree = pagesTree;
-            ViewBag.output = output;
-            ViewBag.countries = countryRepo.GetCountries();
             return View();
         }
         [ChildActionOnly]
@@ -107,13 +128,7 @@ namespace GUEST.Controllers
         }
         public class DataAddPage
         {
-            public List<string> ConferenceCriteriaLanguages { get; set; }
-            public List<FormalityLanguage> FormalityLanguages { get; set; }
-            public List<Office> Offices { get; set; }
-            public List<TitleLanguage> TitleLanguages { get; set; }
-            public string Link { get; set; }
             public ProfileResearcher Profile { get; set; }
-            public List<SpecializationLanguage> SpecializationLanguages { get; set; }
         }
     }
 }

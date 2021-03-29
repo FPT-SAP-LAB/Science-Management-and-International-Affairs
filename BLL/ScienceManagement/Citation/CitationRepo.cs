@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
@@ -268,7 +269,7 @@ namespace BLL.ScienceManagement.Citation
 
         public List<WaitDecisionCitation> getListWait()
         {
-            string sql = @"select po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward, SUM(c.COUNT) as 'sum'
+            string sql = @"select po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward, SUM(c.COUNT) as 'sum', rc.request_id
                             from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on acc.account_id = br.account_id
 	                            join [General].People po on acc.email = po.email
@@ -277,9 +278,49 @@ namespace BLL.ScienceManagement.Citation
 	                            join [SM_Citation].RequestHasCitation rhc on rc.request_id = rhc.request_id
 	                            join [SM_Citation].Citation c on rhc.citation_id = c.citation_id
                             where rc.status_id = 4
-                            group by po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward";
+                            group by po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward, rc.request_id";
             List<WaitDecisionCitation> list = db.Database.SqlQuery<WaitDecisionCitation>(sql).ToList();
             return list;
+        }
+
+        public string uploadDecision(DateTime date, int file_id, string number, string file_drive_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Decision decision = new Decision
+                {
+                    valid_date = date,
+                    file_id = file_id,
+                    decision_number = number
+                };
+                db.Decisions.Add(decision);
+                db.SaveChanges();
+
+                List<WaitDecisionCitation> wait = getListWait();
+                foreach (var item in wait)
+                {
+                    RequestDecision request = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision.decision_id
+                    };
+                    db.RequestDecisions.Add(request);
+                    RequestCitation rc = db.RequestCitations.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 2;
+                }
+
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(file_drive_id);
+                return "ff";
+            }
         }
     }
 }

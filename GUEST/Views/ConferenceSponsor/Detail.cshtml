@@ -74,7 +74,7 @@
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="mb-7">
                             <div class="d-flex justify-content-lg-start align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian diễn ra:</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))</a>
                             </div>
                             <div class="d-flex justify-content-lg-start align-items-cente my-1">
@@ -300,7 +300,7 @@
                             <th scope="row">Tổng cộng</th>
                             <td></td>
                             <td></td>
-                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
+                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Sum(x => x.total)) đ</span></td>
                             <td></td>
                         </tr>
                         <tr>

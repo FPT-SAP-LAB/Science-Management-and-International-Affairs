@@ -16,7 +16,8 @@ namespace ENTITIES
     {
         public Nullable<int> quantity { get; set; }
         public int participant_role_id { get; set; }
-        public int office_id { get; set; }
+        public Nullable<int> office_id { get; set; }
+        public int plan_participant_id { get; set; }
     
         public virtual Office Office { get; set; }
         public virtual ParticipantRole ParticipantRole { get; set; }

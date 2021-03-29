@@ -22,15 +22,19 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public int ConferenceID { get; set; }
         public bool EditAble { get; set; }
         public string InvitationLink { get; set; }
+        public string InvitationFileName { get; set; }
         public string PaperLink { get; set; }
+        public string PaperFileName { get; set; }
         public string PaperName { get; set; }
         public int RequestID { get; set; }
+        public int CountryID { get; set; }
         public string CountryName { get; set; }
         public string StatusName { get; set; }
         public int StatusID { get; set; }
         public int FormalityID { get; set; }
         public string FormalityName { get; set; }
         public int Reimbursement { get; set; }
+        public int SpecializationID { get; set; }
         public string SpecializationName { get; set; }
     }
 }

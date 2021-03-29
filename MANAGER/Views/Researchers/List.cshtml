@@ -208,7 +208,11 @@
                             }
                         },
                         { data: "title", name: "title" },
-                        { data: "position", name: "position" },
+                        {
+                            data: "positions", name: "positions", render: function (data) {
+                                return data
+                            }
+                        },
                         { data: "workplace", name: "workplace" },
                         { data: "googleScholar", name: "googleScholar" },
                         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using Newtonsoft.Json.Linq;
+
 namespace BLL.ScienceManagement.Researcher
 {
     public class ResearchersBiographyRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<AcadBiography> GetBio(int id)
+        public List<AcadBiography> GetAcadHistory(int id)
         {
             var profile = (
                 from a in db.Profiles
@@ -38,7 +41,7 @@ namespace BLL.ScienceManagement.Researcher
                 }).ToList<AcadBiography>();
             return profile;
         }
-        public List<BaseRecord<WorkingProcess>> GetHistory(int id)
+        public List<BaseRecord<WorkingProcess>> GetWorkHistory(int id)
         {
             var list = (from a in db.WorkingProcesses
                         where a.Profile.people_id == id
@@ -123,6 +126,103 @@ namespace BLL.ScienceManagement.Researcher
                             records = x.records
                         }).ToList<BaseRecord<Award>>();
             return list;
+        }
+
+        public List<SelectField> getAcadDegrees()
+        {
+            var data = (from c in db.AcademicDegrees
+                        join d in db.AcademicDegreeLanguages on c.academic_degree_id equals d.academic_degree_id
+                        where d.language_id == 1
+                        select new SelectField
+                        {
+                            id = c.academic_degree_id,
+                            name = d.name,
+                            selected = 0
+                        }).ToList();
+            return data;
+        }
+
+        public int AddNewAcadEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int people_id = (int)info["data"]["people_id"];
+                    int degree = (int)info["data"]["degree"];
+                    string location = (string)info["data"]["location"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    Profile profile = db.Profiles.Find(people_id);
+                    db.ProfileAcademicDegrees.Add(new ProfileAcademicDegree
+                    {
+                        people_id = people_id,
+                        academic_degree_id = degree,
+                        start_year = start,
+                        end_year = end,
+                        study_place = location,
+                        Profile = db.Profiles.Find(people_id),
+                        AcademicDegree = db.AcademicDegrees.Find(degree)
+                    });
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
+        public List<SelectField> getTitles()
+        {
+            var data = (from a in db.Titles
+                        join b in db.TitleLanguages on a.title_id equals b.title_id
+                        where b.language_id == 1
+                        select new SelectField
+                        {
+                            id = a.title_id,
+                            name = b.name,
+                            selected = 0
+                        }).ToList();
+            return data;
+        }
+        public int AddNewWorkEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int people_id = (int)info["data"]["people_id"];
+                    string title = (string)info["data"]["title"];
+                    string location = (string)info["data"]["location"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    db.WorkingProcesses.Add(new WorkingProcess
+                    {
+                        pepple_id = people_id,
+                        work_unit = location,
+                        start_year = start,
+                        end_year = end,
+                        title = title,
+                        Profile = db.Profiles.Find(people_id)
+                    });
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+                return 1;
+            }
         }
     }
 }
