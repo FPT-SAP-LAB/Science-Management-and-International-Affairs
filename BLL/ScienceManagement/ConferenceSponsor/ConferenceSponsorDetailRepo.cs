@@ -132,24 +132,31 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
                     if (Request.status_id != 1)
                         return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
-                    var ListCri = Request.EligibilityCriterias;
-                    foreach (var item in ListCri)
-                        if (CriteriaIDs.Contains(item.criteria_id)) item.is_accepted = true;
-                    db.SaveChanges();
-                    if (ListCri.All(x => x.is_accepted))
-                        Request.status_id = 2;
+                    var ListCri = Request.EligibilityCriterias.Where(x => !x.is_accepted && CriteriaIDs.Contains(x.criteria_id));
 
-                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
-                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+                    if (ListCri.Count() > 0)
+                    {
+                        foreach (var item in ListCri)
+                        {
+                            item.is_accepted = true;
+                        }
+                        db.SaveChanges();
+                        if (ListCri.All(x => x.is_accepted))
+                            Request.status_id = 2;
 
-                    db.SaveChanges();
-                    trans.Commit();
+                        int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+                        ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+
+                        db.SaveChanges();
+                        trans.Commit();
+                    }
                     return new AlertModal<string>(true);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
-                    throw;
+                    return new AlertModal<string>(false);
                 }
             }
         }

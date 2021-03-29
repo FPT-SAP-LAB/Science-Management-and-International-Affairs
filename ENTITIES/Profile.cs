@@ -46,6 +46,7 @@ namespace ENTITIES
         public int office_id { get; set; }
         public string mssv_msnv { get; set; }
         public Nullable<int> account_id { get; set; }
+        public bool profile_page_active { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Country Country { get; set; }
