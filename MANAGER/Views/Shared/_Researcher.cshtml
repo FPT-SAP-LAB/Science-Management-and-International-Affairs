@@ -1,4 +1,18 @@
-﻿<div class="flex-row-auto offcanvas-mobile w-250px w-xxl-350px" id="kt_profile_aside">
+﻿@using ENTITIES.CustomModels.ScienceManagement.Researcher;
+<style>
+    .title-tags {
+        margin-bottom: 0.2rem;
+    }
+
+    .profile-bar {
+        margin-top: 1.5rem
+    }
+    .info-basic td{
+        padding-bottom: 1rem;
+        vertical-align:initial
+    }
+</style>
+<div class="flex-row-auto offcanvas-mobile w-250px w-xxl-350px" id="kt_profile_aside">
     <!--begin::Profile Card-->
     <div class="card card-custom card-stretch">
         <!--begin::Body-->
@@ -90,37 +104,57 @@
                         </span>
                     </div>
                 </div>
-                <div>
+                <div class="profile-bar">
                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                         @ViewBag.profile.name
                     </a>
                     <div class="text-muted">
-                        <span class="label label-success label-pill label-inline mr-2">@ViewBag.profile.position_name</span>
+                        @foreach (SelectField a in ViewBag.profile.position_fields)
+                        {
+                            if (a.selected == 1)
+                            {
+                                <span class="label label-success label-pill label-inline mr-2 title-tags">@a.name</span>
+                            }
+                        }
                     </div>
-                    <br/>
-                    <div class="text-muted">
-                        @ViewBag.profile.title_name
-                    </div>
-                    <div class="mt-2">
-                        @ViewBag.profile.office
-                    </div>
+                    <br />
+
                 </div>
             </div>
             <!--end::User-->
             <!--begin::Contact-->
             <div class="py-9">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">Email:</span>
-                    <a href="#" class="text-muted text-hover-primary">@ViewBag.profile.email</a>
-                </div>
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">ĐT:</span>
-                    <span class="text-muted">@ViewBag.profile.phone</span>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    @*<span class="font-weight-bold mr-2">Location:</span>
-                        <span class="text-muted">Melbourne</span>*@
-                </div>
+                <table class="info-basic">
+                    <thead>
+                        <tr><th style="width:5rem"></th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="text-dark-75 font-weight-bolder mr-2">Email:</span></td>
+                            <td>@ViewBag.profile.email</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-dark-75 font-weight-bolder mr-2">SĐT:</span></td>
+                            <td>@ViewBag.profile.phone</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-dark-75 font-weight-bolder mr-2">Đơn vị:</span></td>
+                            <td>@ViewBag.profile.office</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-dark-75 font-weight-bolder mr-2">Chức vụ:</span></td>
+                            <td>
+                                @foreach (SelectField a in ViewBag.profile.title_fields)
+                                {
+                                    if (a.selected == 1)
+                                    {
+                                        <span class="label label-outline-danger title-tags label-pill label-inline mr-1">@a.name</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <!--end::Contact-->
             <!--begin::Nav-->

@@ -19,7 +19,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public string GetAddPageJson(int account_id, int language_id)
         {
-            var Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File.link).FirstOrDefault();
             var Profile = (from a in db.Profiles
                            join b in db.Accounts on a.account_id equals b.account_id
                            join c in db.Offices on a.office_id equals c.office_id
@@ -33,38 +32,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                OfficeID = c.office_id,
                                TitleID = a.Titles.FirstOrDefault().title_id
                            }).FirstOrDefault();
-            var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
-                                               join b in db.Criteria on a.policy_id equals b.policy_id
-                                               join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
-                                               where a.expired_date == null && c.language_id == language_id
-                                               select c.name).ToList();
-            var SpecializationLanguages = db.SpecializationLanguages.Where(x => x.language_id == language_id).ToList()
-                .Select(x => new SpecializationLanguage
-                {
-                    name = x.name,
-                    specialization_id = x.specialization_id
-                }).ToList();
-            var FormalityLanguages = db.FormalityLanguages.Where(x => x.language_id == language_id)
-                .Select(x => new { x.formality_id, x.name }).ToList()
-                .Select(x => new FormalityLanguage
-                {
-                    formality_id = x.formality_id,
-                    name = x.name
-                }).ToList();
-            var Offices = db.Offices.Select(x => new { x.office_id, x.office_name }).ToList()
-                .Select(x => new Office
-                {
-                    office_id = x.office_id,
-                    office_name = x.office_name
-                }).ToList();
-            var TitleLanguages = db.TitleLanguages.Where(x => x.language_id == language_id)
-                .Select(x => new { x.title_id, x.name }).ToList()
-                .Select(x => new TitleLanguage
-                {
-                    title_id = x.title_id,
-                    name = x.name
-                }).ToList();
-            return JsonConvert.SerializeObject(new { FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile, SpecializationLanguages });
+            return JsonConvert.SerializeObject(new { Profile });
         }
         public List<Info> GetAllProfileBy(string id, int language_id)
         {
@@ -251,10 +219,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     db.ConferenceParticipants.AddRange(participants);
                     db.SaveChanges();
 
-                    int? position_id = null;
-                    Position position = db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault().Positions.FirstOrDefault();
-                    if (position != null)
-                        position_id = position.position_id;
+                    int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
 
                     ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id);
 

@@ -49,15 +49,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                ConferenceID = a.conference_id,
                                                EditAble = a.editable,
                                                InvitationLink = d.link,
+                                               InvitationFileName = d.name,
                                                PaperLink = f.link,
+                                               PaperFileName = f.name,
                                                PaperName = e.name,
                                                RequestID = a.request_id,
+                                               CountryID = c.country_id,
                                                CountryName = c.country_name,
                                                StatusName = h.name,
                                                StatusID = h.status_id,
                                                FormalityID = j.formality_id,
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
+                                               SpecializationID = k.specialization_id,
                                                SpecializationName = k.name
                                            }).FirstOrDefault();
             if (Conference == null)
@@ -122,6 +126,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id)
         {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+            if (position_id == null)
+                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
+
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -147,7 +155,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         if (ListCri.All(x => x.is_accepted))
                             Request.status_id = 2;
 
-                        int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
                         ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
 
                         db.SaveChanges();
@@ -165,6 +172,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id)
         {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+            if (position_id == null)
+                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
+
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -197,7 +208,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Request.status_id = 4;
                     }
 
-                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
                     ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
 
                     db.SaveChanges();
