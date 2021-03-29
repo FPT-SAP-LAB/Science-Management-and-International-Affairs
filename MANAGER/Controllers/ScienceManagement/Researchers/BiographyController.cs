@@ -12,10 +12,30 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         ResearchersBiographyRepo researcherBiographyRepo;
         public ActionResult AddNewAcadEvent()
         {
-            researcherBiographyRepo = new ResearchersBiographyRepo();
-            string data = Request["data"];
-            researcherBiographyRepo.AddNewAcadEvent(data);
-            return View();
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.AddNewAcadEvent(data);
+                return Json(new { success = true });
+            }catch(Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult AddWorkEvent()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.AddNewWorkEvent(data);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }
