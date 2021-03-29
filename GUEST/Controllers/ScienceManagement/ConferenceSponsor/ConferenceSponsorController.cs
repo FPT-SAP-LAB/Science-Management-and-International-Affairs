@@ -20,13 +20,12 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        // GET: ConferenceSponsor
-        public ActionResult Index()
-        {
-            var pagesTree = new List<PageTree>
+        private readonly List<PageTree> pagesTree = new List<PageTree>
             {
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
             };
+        public ActionResult Index()
+        {
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -44,11 +43,7 @@ namespace GUEST.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
-                new PageTree("Thêm","/ConferenceSponsor/Add"),
-            };
+            pagesTree.Add(new PageTree("Thêm", "/ConferenceSponsor/Add"));
             string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
             ViewBag.data = data;
@@ -63,16 +58,17 @@ namespace GUEST.Controllers
         }
         public ActionResult Detail(int id)
         {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
-                new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
-            };
+            pagesTree.Add(new PageTree("Chi tiết", "/ConferenceSponsor/Detail?id=" + id));
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
+            return View();
+        }
+        public ActionResult Edit(int id)
+        {
+            pagesTree.Add(new PageTree("Chỉnh sửa", "/ConferenceSponsor/Edit?id=" + id));
             return View();
         }
         [ChildActionOnly]
@@ -84,11 +80,13 @@ namespace GUEST.Controllers
             ViewBag.EditAble = id == 2;
             return PartialView();
         }
+        [AjaxOnly]
         public JsonResult GetInformationPeopleWithID(string id)
         {
             var infos = AppRepos.GetAllProfileBy(id, LanguageResource.GetCurrentLanguageID());
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
+        [AjaxOnly]
         public JsonResult GetConferenceWithName(string name)
         {
             var confer = AppRepos.GetAllConferenceBy(name);

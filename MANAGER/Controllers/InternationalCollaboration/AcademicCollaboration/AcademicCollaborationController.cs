@@ -20,6 +20,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
     {
         /*--------------------------------------------------------LONG TERM ACADEMIC COLLABORATION---------------------------------------------------------*/
         AcademicCollaborationRepo academicCollaborationRepo;
+        AcademicCollaborationShortRepo acShortRepo;
 
         // GET: AcademicCollaboration
         public ActionResult Longterm_List()
@@ -422,6 +423,49 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetProcedureList(int direction, string title)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<ProcedureInfoManager> baseServerSideData = acShortRepo.GetListProcedure(baseDatatable, title, direction, 1);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { data = "" });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AddProcedure(string proceduce_title, string content, int numberOfImage, int partner_language_type)
+        {
+            try
+            {
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                return Json(new { data = "" });
+            }
+            catch (Exception)
+            {
+                return Json(new { data = "" });
+            }
         }
 
         public ActionResult Get_Status_History(string id)

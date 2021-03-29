@@ -2184,6 +2184,8 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Coming\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Content\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\ProcedureContentProcessing.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\ChangeCollabStatus.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Delete.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AC_Datatable\Longterm_AcadCollab_Going\Edit.js" />
@@ -2331,7 +2333,6 @@
     <Content Include="Views\Report_IC\Dashboard.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Spe.cshtml" />
     <Content Include="Views\MOU\PartialView\MOU\Manage_Scopes.cshtml" />
-    <Content Include="Views\SettingDrive\Index.cshtml" />
     <Content Include="Views\ConferencesParticipationReport\Index.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Going_Modal_Description.cshtml" />
