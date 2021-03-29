@@ -164,6 +164,7 @@
             serverSide: true,
             searching: false,
             lengthChange: false,
+            pageLength: 5,
             ajax: {
                 url: '/AcademicCollaboration/GetProcedureList',
                 type: 'POST',
@@ -186,8 +187,8 @@
                     name: "full_name"
                 },
                 {
-                    data: "procedure_name",
-                    name: "procedure_name"
+                    data: "artcle_id",
+                    name: "artcle_id"
                 }
             ],
             columnDefs: [
@@ -229,6 +230,7 @@
             },
             serverSide: true,
             searching: false,
+            pageLength: 5,
             lengthChange: false,
             ajax: {
                 url: '/AcademicCollaboration/GetProcedureList',
@@ -252,8 +254,8 @@
                     name: "full_name"
                 },
                 {
-                    data: "procedure_name",
-                    name: "procedure_name"
+                    data: "artcle_id",
+                    name: "artcle_id"
                 }
             ],
             columnDefs: [
@@ -342,3 +344,4 @@
         ]
     });
 })
+

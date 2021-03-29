@@ -237,15 +237,13 @@
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ProcedureContentProcessing.js"></script>
 
     @*-------------------datatable check this file-------------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ShortTerm_Datatable.js"></script>
     @*-------------------datatable check this file-------------*@
-
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ProcedureContentProcessing.js"></script>
     @*--------------init datepicker and rangepicker-----------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
-
     @*--------------init datepicker and rangepicker-----------------*@
 
 
@@ -267,8 +265,6 @@
         })
 
     </script>
-
-
     <script>
         //select2 officer going
         $('#search_nation_tab_1_table_1').select2({
@@ -351,11 +347,8 @@
     </script>
     <script>
         //select2 procedure going
-
-        $('.modal_procedure_language').select2({
+        $('.procedure_language').select2({
             placeholder: 'Ngôn ngữ',
-            allowClear: true,
-            tags: true,
         })
 
     </script>
@@ -408,9 +401,9 @@
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
 
-        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        //});
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
         //split card
         //overflow
         $(document).ready(function () {
