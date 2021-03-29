@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace BLL.ScienceManagement.Researcher
                     }
                     List<Title> titles = db.Titles.Where(x => title_ids.Contains(x.title_id)).ToList<Title>();
                     profile.Titles.Clear();
-                    foreach(Title t in titles)
+                    foreach (Title t in titles)
                     {
                         profile.Titles.Add(t);
                     }
@@ -60,7 +61,7 @@ namespace BLL.ScienceManagement.Researcher
                     string website = (string)editInfo["info"]["website"];
                     string googlescholar = (string)editInfo["info"]["googlescholar"];
                     string cv = (string)editInfo["info"]["cv"];
-                    profile.birth_date = DateTime.Parse(birthdate);
+                    profile.birth_date = DateTime.ParseExact(birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     person.phone_number = phone;
                     profile.website = website;
                     profile.cv = cv;

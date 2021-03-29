@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using ENTITIES.CustomModels.ScienceManagement.Researcher;
+@using System.Globalization;
 <style>
     .nav-link {
         font-size: 17px;
@@ -64,16 +65,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_dob" disabled type="text" value="@ViewBag.profile.dob" />
-                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                        <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+                                            <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
+                                            <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                                                <span class="input-group-text">
+                                                    <i class="ki ki-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- <span class="form-text text-muted pt-2">Use locals from <a href="https://momentjs.com/">https://momentjs.com/</a></span> -->
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <select class="form-control select2  researcher_infomation" disabled id="country_select" name="param" >
+                                        <select class="form-control select2  researcher_infomation" disabled id="country_select" name="param">
                                             @foreach (SelectField a in ViewBag.profile.countries_fields)
                                             {
                                                 <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
@@ -231,27 +240,33 @@
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
-        $(function () {
-            var save_loader = new LoaderBtn($("#save-btn"))
-            $("#edit-control-area").hide()
-            $("#edit-enable-btn").click(function () {
-                enableEdit()
-            })
-            $("#save-btn").click(function () {
-                save_loader.startLoading()
-                $(".researcher_infomation").attr('disabled', false)
-                ////////////////////xử lý ở đây/////////////////////
 
-                ////////////////////xử lý ở đây/////////////////////
-
-            })
-        })
 
         function enableEdit() {
             $("#edit-control-area").show()
             $("#edit-enable-area").hide()
             $(".researcher_infomation").attr('disabled', false)
         }
+
+
+        var KTBootstrapDatetimepicker = function () {
+            // Private functions
+            var baseDemos = function () {
+                $('#kt_datetimepicker_2').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+            }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+        });
     </script>
     <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
 }
