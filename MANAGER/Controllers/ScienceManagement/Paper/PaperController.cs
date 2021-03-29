@@ -178,7 +178,7 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult uploadDecision(HttpPostedFileBase file1, string number1, string date1, 
+        public JsonResult uploadDecision(HttpPostedFileBase file1, string number1, string date1,
                                          HttpPostedFileBase file2, string number2, string date2)
         {
             string[] arr = date1.Split('/');
@@ -211,7 +211,7 @@ namespace MANAGER.Controllers
             ENTITIES.File myFile1 = mdr.addFile(fl1);
             ENTITIES.File myFile2 = mdr.addFile(fl2);
 
-            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, 
+            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id,
                                             date_format2, myFile2.file_id, number2, myFile2.file_drive_id);
 
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);

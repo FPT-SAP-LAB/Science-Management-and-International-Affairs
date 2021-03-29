@@ -214,7 +214,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1, 
+        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1,
                                      DateTime date_format2, int file_id2, string number2, string file_drive_id2)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
