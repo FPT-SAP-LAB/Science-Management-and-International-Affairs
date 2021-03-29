@@ -19,17 +19,14 @@
                             @*<select class="form-control select-search" id="mou_partner_name_edit" name="param" style="width:100% !important">
                             </select>*@
                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                <input type="text" class="form-control" id="mou_partner_name_edit" list="partnerListEdit" onchange="preventEditMOUPartner()" />
+                                @*<input type="text" class="form-control" id="mou_partner_name_edit" list="partnerListEdit" onchange="preventEditMOUPartner()" />*@
+                                <select class="form-control text-center" id="mou_partner_name_edit" name="param" style="width:100% !important">
+                                    <option selected value=""></option>
+                                </select>
                             </div>
-                            <datalist id="partnerListEdit">
-                                @*@if (ViewBag.listPartnerMOUPartner != null)
-                                {
-                                    foreach (var item in ViewBag.listPartnerMOUPartner)
-                                    {
-                                        <option value="@item.partner_name">@item.partner_name</option>
-                                    }
-                                }*@
-                            </datalist>
+                            @*<datalist id="partnerListEdit">
+
+                            </datalist>*@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">

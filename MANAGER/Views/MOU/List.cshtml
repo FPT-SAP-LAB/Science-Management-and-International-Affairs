@@ -332,12 +332,90 @@
     </script>
 
     @*custom select*@
-    <script>
+<script>
         $('#search_office').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
         });
-    </script>
+        $('#partner_name_add').select2({
+            placeholder: 'Chọn đối tác',
+            allowClear: true,
+            tags: true,
+            ajax: {
+                url: '/AcademicCollaboration/getPartners',
+                delay: 250,
+                cache: false,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        partner_name: params.term
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.partner_name;
+                        obj.text = obj.partner_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatPartnerInfo
+        }).on("select2:select", function () { //after select partner
+            //check partner
+            checkPartnerAdd();
+        }).on("select2:unselecting", function () {
+            
+        });
+
+        $('#partner_name_edit').select2({
+            placeholder: 'Chọn đối tác',
+            allowClear: true,
+            tags: true,
+            ajax: {
+                url: '/AcademicCollaboration/getPartners',
+                delay: 250,
+                cache: false,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        partner_name: params.term
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.partner_name;
+                        obj.text = obj.partner_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatPartnerInfo
+        }).on("select2:select", function () { //after select partner
+            //check partner
+            checkPartnerEdit();
+        }).on("select2:unselecting", function () {
+
+        });
+
+        function formatPartnerInfo(partner) {
+            if (partner.id) {
+                let partner_name = partner.partner_name;
+                if (partner_name === undefined) {
+                    return "Dữ liệu đơn vị đào tạo mới."
+                } else {
+                    return partner.partner_name;
+                }
+            }
+        }
+</script>
 
     @*multi select*@
     <script>
@@ -350,6 +428,7 @@
                 // multi select
                 $('#specialization_add').select2({
                     placeholder: 'Chọn lĩnh vực',
+                    allowClear: true,
                 });
                 $('#coop_scope_add').select2({
                     placeholder: 'Chọn phạm vi',
@@ -618,8 +697,8 @@
                 });
             }
 
-            function checkPartnerAdd() {
-                var partner_name = document.getElementById("partner_name_add").value;
+    function checkPartnerAdd() {
+            var partner_name = $('#partner_name_add').val();
                 var em = { partner_name: partner_name };
                 $.ajax({
                     url: "@Url.Action("CheckPartner", "MOU")",
@@ -787,7 +866,11 @@
             $('#specialization_edit').append(HTMLSpedata);
             $('#coop_scope_edit').append(HTMLScopedata);
 
-            $('#partner_name_edit').val(listTempPartnerMOUAdd[index].partnername_add);
+            //load data of partner_name
+            var partner_name = listTempPartnerMOUAdd[index].partnername_add;
+            var option = new Option(partner_name, partner_name, true, true);
+            $('#partner_name_edit').append(option).trigger('change');
+
             $('#represent_edit').val(listTempPartnerMOUAdd[index].represent_add);
             $('#nation_edit').val(listTempPartnerMOUAdd[index].nation_add);
             $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
@@ -812,7 +895,7 @@
         }
 
         function checkPartnerEdit() {
-            var partner_name = document.getElementById("partner_name_edit").value;
+            var partner_name = $('#partner_name_edit').val();
             var em = { partner_name: partner_name };
             $.ajax({
                 url: "@Url.Action("CheckPartner", "MOU")",

@@ -141,7 +141,7 @@
                                     <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
                                 </div>
                             }
-                            @if (ConferenceDetail.FormalityID == 2)
+                            @if (ConferenceDetail.StatusID > 3 && ConferenceDetail.FormalityID == 2)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
                                     <span class="text-dark-75 font-weight-bolder mr-2">File quyết định:</span>
@@ -214,6 +214,7 @@
                             <th scope="col">STT</th>
                             <th scope="col">MSNV/MSSV</th>
                             <th scope="col">Họ và tên</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Cơ sở công tác</th>
                             <th scope="col">Chức danh</th>
                         </tr>
@@ -225,6 +226,7 @@
                                 <th scope="row">@item.RowNumber</th>
                                 <td>@item.ID</td>
                                 <td>@item.FullName</td>
+                                <td>@item.Email</td>
                                 <td>@item.OfficeName</td>
                                 <td>@item.TitleName</td>
                             </tr>

@@ -826,11 +826,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string ProcedureTitle {
+            get {
+                return ResourceManager.GetString("ProcedureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Program.
         /// </summary>
         public static string Program {
             get {
                 return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program Detail.
+        /// </summary>
+        public static string ProgramDetail {
+            get {
+                return ResourceManager.GetString("ProgramDetail", resourceCulture);
             }
         }
         
@@ -903,6 +921,15 @@ namespace GUEST.Resources {
         public static string RegistrationDeadline {
             get {
                 return ResourceManager.GetString("RegistrationDeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Procedure.
+        /// </summary>
+        public static string RelatedProcedure {
+            get {
+                return ResourceManager.GetString("RelatedProcedure", resourceCulture);
             }
         }
         
@@ -1015,7 +1042,16 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FPT Program.
+        ///   Looks up a localized string similar to Exchange Program.
+        /// </summary>
+        public static string ShortTerm {
+            get {
+                return ResourceManager.GetString("ShortTerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPT Exchange Program.
         /// </summary>
         public static string ShortTermFPTProgram {
             get {
@@ -1024,7 +1060,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner Program.
+        ///   Looks up a localized string similar to Partner Exchange Program.
         /// </summary>
         public static string ShortTermPartnerProgram {
             get {
@@ -1060,20 +1096,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialization.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialized.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specilazation.
-        /// </summary>
-        public static string Specilazation {
-            get {
-                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         

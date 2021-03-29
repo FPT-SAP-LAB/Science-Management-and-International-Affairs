@@ -17,5 +17,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string StatusName { get; set; }
         public int StatusID { get; set; }
         public string FullName { get; set; }
+        public bool EditAble { get; set; }
     }
 }

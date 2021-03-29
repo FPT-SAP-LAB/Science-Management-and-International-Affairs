@@ -37,8 +37,12 @@
 </style>
 <div class="row mb-5">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <a href="javascript:;" class="" id="edit_content_long_term">Chỉnh sửa nội dung miêu tả</a>
+        <a href="#lt_describe_content" class="" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
     </div>
+    @*modal description*@
+    @{
+        Html.RenderPartial("PartialView/Long_Term_Modal_Description");
+    }
 </div>
 <div class="card card-custom mb-1 collapse-title" id="collapse-title">
     <div class="card-body p-0 collapse-div">
@@ -67,8 +71,12 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a href="javascript:;" class="nav-link" id="edit_content_going">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="#ltg_describe_content" class="nav-link" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
                             </li>
+                            @*modal going content*@
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Going_Modal_Description");
+                            }
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -126,8 +134,12 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a href="javascript:;" class="nav-link" id="edit_content_coming">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="#ltc_describe_content" class="nav-link" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
                             </li>
+                            @*modal going content*@
+                            @{
+                                Html.RenderPartial("PartialView/Long_Term_Coming_Modal_Description");
+                            }
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -157,11 +169,6 @@
         </div>
     </div>
 </div>
-
-@*modal description*@
-@{
-    Html.RenderPartial("PartialView/Long_Term_Modal_Description");
-}
 
 @*modal add status*@
 @{
@@ -196,37 +203,25 @@
 @section scripts{
     @*datepicker and range*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    @*//////////////////////////////////////////////////UPDATE LONG-TERM CONTENT//////////////////////////////////////////////////*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/UpdateContent.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/UpdateContent.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Coming/UpdateContent.js"></script>>
     @*///////////////////////////////////////////TABLE1: LONG-TERM ACADEMIC COLLAB GOING//////////////////////////////////////////*@
     @**datatable*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/AcadCollab_Datatable.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/AcadCollab_Datatable.js"></script>
     @*search*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Search.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Search.js"></script>
     @*add modal*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Add.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Add.js"></script>
     @*edit modal*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Edit.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Edit.js"></script>
     @*delete*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab/Delete.js"></script>
-    @*update content*@
-    <script>
-        $('#edit_content_long_term').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
-        $('#edit_content_going').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
-        $('#edit_content_coming').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-    </script>
-    @*upload*@
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/Delete.js"></script>
+    @*status history*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/StatusHistory.js"></script>
+    @*change status*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/Longterm_AcadCollab_Going/ChangeCollabStatus.js"></script>
 
     @*///////////////////////////////////////////TABLE 2: LONG-TERM COMING/////////////////////////////////////////*@
     <script>
@@ -309,63 +304,6 @@
             //$('.collaboration_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
-
-        //funtion delete
-        $('#btn_delete').click(function() {
-            $.ajax({
-                url: '@Url.Action("Delete_Longterm", "AcademicCollaboration")',
-                data: { 'id': id_row },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        toastr.success("Đã xóa thành công");
-                    }
-
-                },
-            });
-        });
-
-        //load status history table
-        function show_status_history(id){
-            $.ajax({
-                url: '@Url.Action("Get_Status_History", "AcademicCollaboration")',
-                data: { 'id': id },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        var status = {
-                            1: {
-                                'title': 'Không hoàn thành',
-                                'class': 'label-secondary'
-                            },
-                            2: {
-                                'title': 'Đã hoàn thành',
-                                'class': 'label-success'
-                            },
-                            3: {
-                                'title': 'Đang thực hiện',
-                                'class': 'label-danger'
-                            }
-                        };
-                        var temp = '';
-                        for (i = 0; i < 3; i++) {
-                            temp += '<tr><td  class="text-center">' + eval(i+1) + '</td> ' +
-                                '<td class="text-center">01/01/2021 12:10:11</td> ' +
-                                '<td class="text-center"> ' +
-                                '<span class="label label-lg label-pill font-weight-bold ' + status[eval(i+1)].class +
-                                ' label-inline">' + status[eval(i + 1)].title + '</span></td> ' +
-                                '<td class="text-center">Lê Phương Anh</td> ' +
-                                '<td class="text-center">abc.pdf</td>' +
-                                '<td class="text-center">Đã học xong</td></tr>';
-                        }
-                        $('#status_history_table').html(temp);
-                    }
-                },
-            });
-        };
-
     </script>
 
     @*text editor*@
@@ -392,5 +330,9 @@
             KTSummernoteDemo.init();
         });
     </script>
+
+    @*upload file*@
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
 }
 

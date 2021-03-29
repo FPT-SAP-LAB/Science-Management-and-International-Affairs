@@ -17,5 +17,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
         public bool support { get; set; }
         public string note { get; set; }
         public string evidence_link { get; set; }
+        public string status_history_note { get; set; }
     }
 }

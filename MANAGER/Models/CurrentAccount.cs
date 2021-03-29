@@ -10,6 +10,10 @@ namespace MANAGER.Models
         {
             return Account(Session).account_id;
         }
+        public static int RoleID(HttpSessionStateBase Session)
+        {
+            return Account(Session).role_id;
+        }
         public static Account Account(HttpSessionStateBase Session)
         {
             Account acc = new Account();

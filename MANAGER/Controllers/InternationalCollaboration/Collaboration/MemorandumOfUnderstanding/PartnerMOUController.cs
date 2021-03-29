@@ -1,5 +1,6 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
-
+using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUPartner;
 using MANAGER.Support;
@@ -97,6 +98,33 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 string id = Session["mou_detail_id"].ToString();
                 mou.deleteMOUPartner(int.Parse(id), mou_bonus_id);
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckPartnerExistedInMOU(string partner_name)
+        {
+            try
+            {
+                string id = Session["mou_detail_id"].ToString();
+                string partner = mou.CheckPartnerExistedInMOU(int.Parse(id), partner_name);
+                return Json(partner);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckPartnerExistedInEditMOU(string partner_name, int mou_partner_id)
+        {
+            try
+            {
+                string partner = mou.CheckPartnerExistedInMOU(mou_partner_id, partner_name);
+                return Json(partner);
             }
             catch (Exception ex)
             {
