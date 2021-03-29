@@ -88,7 +88,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
         ],
         initComplete: function () {
             $(this).parent().css('overflow-x', 'auto');
-            $(this).parent().removeClass();
+            //$(this).parent().removeClass();
         }
     });
 
