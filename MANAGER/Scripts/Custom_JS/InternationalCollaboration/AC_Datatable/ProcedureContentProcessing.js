@@ -49,9 +49,6 @@ $('#save_procedure').click(function () {
     $.ajax({
         url: "/AcademicCollaboration/AddProcedure",
         method: "post",
-        error: function () {
-            toastr.error("Có lỗi xảy ra");
-        },
         dataType: "json",
         data: form_data,
         processData: false,
