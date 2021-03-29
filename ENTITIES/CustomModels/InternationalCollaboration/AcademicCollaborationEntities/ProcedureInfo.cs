@@ -13,6 +13,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
         public string procedure_name { get; set; }
         public string publish_time { get; set; }
         public string content { get; set; }
+        public int direction_id { get; set; }
         public ProcedureInfo() { }
     }
 }
