@@ -50,7 +50,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         and ISNULL(offi.office_name, '') like @office_name
                         or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)
                         ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
-                    " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
+                        " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
 
                 List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
                                                     new SqlParameter("direction", direction),
@@ -854,6 +854,30 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     dbContext.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }
+            }
+        }
+
+        //VIEW STATUS HISTORY
+        public BaseServerSideData<StatusHistory> getStatusHistories(BaseDatatable baseDatatable, int collab_id)
+        {
+            try
+            {
+                var sql = @"select csh.change_date, acs.collab_status_id, a.full_name, 
+                            ISNULL(f.name, '') 'file_name', ISNULL(f.link, '') 'file_link', csh.note
+                            from IA_AcademicCollaboration.CollaborationStatusHistory csh
+                            join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
+                            join General.Account a on a.account_id = csh.account_id
+                            left join General.[File] f on f.[file_id] = csh.[file_id]
+                            where csh.collab_id = @collab_id
+                            ORDER BY csh.change_date DESC 
+                            OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
+                List<StatusHistory> statusHistory = db.Database.SqlQuery<StatusHistory>(sql, new SqlParameter("collab_id", collab_id)).ToList();
+                int totalRecords = db.CollaborationStatusHistories.Where(x => x.collab_id == collab_id).Count();
+                return new BaseServerSideData<StatusHistory>(statusHistory, totalRecords);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
