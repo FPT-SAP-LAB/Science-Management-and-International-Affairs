@@ -917,5 +917,17 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
             }
         }
+
+        //LONG-TERM CONTENT
+        public AlertModal<string> getLTContent(int collab_id, int language_id)
+        {
+            try { 
+                var ltContent = db
+            }
+            catch (Exception e)
+            {
+                return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra");
+            }
+        }
     }
 }
