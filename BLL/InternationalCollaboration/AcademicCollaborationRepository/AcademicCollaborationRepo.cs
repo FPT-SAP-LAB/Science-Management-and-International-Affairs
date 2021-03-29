@@ -942,7 +942,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 academicCollaborationTypeLanguage.description = description;
                 db.SaveChanges();
                 return new AlertModal<string>(null, true, "Thành công", "Cập nhật nội dung thành công.");
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
