@@ -62,7 +62,6 @@ $("#submit_new_acad").click(function () {
         contentType: false,
         success: function (response) {
             if (response.mess == "ss") {
-                //editRequest();
                 window.location.reload()
             }
             else window.location.reload()
