@@ -1638,6 +1638,10 @@
         else if (compareDate($('#mou_sign_date_partner_add').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
+        else if (checkMOUPartnerAddDuplicated()) {
+            toastr.error('Đối tác đã có trong biên bản ghi nhớ');
+            return;
+        }
         else {
             var PartnerInfo = {
                 partnername_add: document.getElementById("partner_name_add").value,
@@ -1675,6 +1679,57 @@
         }
     }
 
+    function checkMOUPartnerAddDuplicated(){
+            var obj =
+            {
+                partner_name: $('#partner_name_add').val()
+            };
+            $.ajax({
+                url: "@Url.Action("CheckPartnerExistedInMOU", "PartnerMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(obj),
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    if (data == "") {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                error: function () {
+
+                }
+            });
+    }
+
+    function checkMOUPartnerEditDuplicated(){
+            var obj =
+            {
+                partner_name: $('#mou_partner_name_edit').val(),
+                mou_partner_id: $('#mou_partner_id_edit').val()
+            };
+            $.ajax({
+                url: "@Url.Action("CheckPartnerExistedInEditMOU", "PartnerMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(obj),
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    if (data == "") {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                error: function () {
+
+                }
+            });
+    }
+
     function goDetailMOUPartner(mou_partner_id) {
         var em = { mou_partner_id: mou_partner_id };
         $.ajax({
@@ -1705,7 +1760,6 @@
     function loadDataMOUPartnerForEdit(data) {
             var HTMLSpedata = "";
             var HTMLScopedata = "";
-            var HTMLPartnerdata = '<option value = "' + data.partner_name + '">' + data.partner_name + '</option>';
             $('#mou_partner_specialization_edit').empty();
             $('#mou_partner_scope_edit').empty();
 
@@ -1724,8 +1778,11 @@
                 }
             }
             //add current choice of partner_name_for_edit
+            //load data of partner_name
+            var option = new Option(data.partner_name, data.partner_name, true, true);
+            $('#mou_partner_name_edit').append(option).trigger('change');
 
-            $('#partnerListEdit').append(HTMLPartnerdata);
+            //$('#partnerListEdit').append(HTMLPartnerdata);
             $('#mou_partner_specialization_edit').append(HTMLSpedata);
             $('#mou_partner_scope_edit').append(HTMLScopedata);
         }
@@ -1784,7 +1841,12 @@
         }
         else if (compareDate($('#mou_sign_date_partner_edit').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
-        } else {
+        }
+        else if (checkMOUPartnerEditDuplicated()) {
+            toastr.error('Đối tác đã có trong biên bản ghi nhớ');
+            return;
+        }
+        else {
             var PartnerInfo = {
                 partnername_add: document.getElementById("mou_partner_name_edit").value,
                 represent_add: document.getElementById("mou_partner_represent_edit").value,
@@ -2135,7 +2197,7 @@
         $('#moa_partner_specialization_edit').val(listTempPartnerMOAAdd[index].specialization_add);
         $('#moa_partner_phone_edit').val(listTempPartnerMOAAdd[index].phone_add);
         $('#moa_partner_id_edit').val(listTempPartnerMOAAdd[index].partner_id);
-    } 
+    }
 
     function confirm_delete_temp_moa(index) {
         Swal.fire({
@@ -2181,6 +2243,85 @@
     function initAndRefreshTableMOAAdd() {
         resetTableMOA();
         initTableMOA();
+    }
+
+    $('#partner_name_add').select2({
+        placeholder: 'Chọn đối tác',
+        allowClear: true,
+        tags: true,
+        ajax: {
+            url: '/AcademicCollaboration/getPartners',
+            delay: 250,
+            cache: false,
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    partner_name: params.term
+                };
+            },
+            processResults: function (data) {
+                data.obj.map(function (obj) {
+                    obj.id = obj.partner_name;
+                    obj.text = obj.partner_name;
+                    return data.obj;
+                });
+
+                return {
+                    results: data.obj
+                };
+            }
+        },
+        templateResult: formatPartnerInfo
+    }).on("select2:select", function () { //after select partner
+        //check partner
+        checkPartnerAdd();
+    }).on("select2:unselecting", function () {
+
+    });
+
+    $('#mou_partner_name_edit').select2({
+        placeholder: 'Chọn đối tác',
+        allowClear: true,
+        tags: true,
+        ajax: {
+            url: '/AcademicCollaboration/getPartners',
+            delay: 250,
+            cache: false,
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    partner_name: params.term
+                };
+            },
+            processResults: function (data) {
+                data.obj.map(function (obj) {
+                    obj.id = obj.partner_name;
+                    obj.text = obj.partner_name;
+                    return data.obj;
+                });
+
+                return {
+                    results: data.obj
+                };
+            }
+        },
+        templateResult: formatPartnerInfo
+    }).on("select2:select", function () { //after select partner
+        //check partner
+        checkPartnerEdit();
+    }).on("select2:unselecting", function () {
+
+    });
+
+    function formatPartnerInfo(partner) {
+        if (partner.id) {
+            let partner_name = partner.partner_name;
+            if (partner_name === undefined) {
+                return "Dữ liệu đơn vị đào tạo mới."
+            } else {
+                return partner.partner_name;
+            }
+        }
     }
 
     function clearInputAddMOA() {

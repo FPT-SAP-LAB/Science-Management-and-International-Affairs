@@ -29,7 +29,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 mou.UpdateStatusMOU();
                 ViewBag.listOffice = mou.GetOffice();
                 ViewBag.newMOUCode = mou.getSuggestedMOUCode();
-                ViewBag.listPartners = mou.GetPartners();
                 ViewBag.listScopes = mou.GetCollaborationScopes();
                 ViewBag.listSpe = mou.GetSpecializations();
                 ViewBag.noti = mou.getNoti();
@@ -114,6 +113,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 CustomPartner partner = mou.CheckPartner(partner_name);
                 return partner is null ? Json("") : Json(partner);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        [HttpGet]
+        public ActionResult GetPartner()
+        {
+            try
+            {
+                List<Partner> partners = mou.GetPartners();
+                return partners is null ? Json("") : Json(partners);
             }
             catch (Exception ex)
             {

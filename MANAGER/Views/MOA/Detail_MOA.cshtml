@@ -682,7 +682,12 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
-                        Swal.fire("Thành công!", "Thông tin được cập nhật thành công.", "success");
+                        Swal.fire("Thành công",
+                            "Thông tin được cập nhật thành công", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                        });
                     },
                     error: function () {
                         //alert("fail");
@@ -1109,8 +1114,12 @@
                     success: function (data) {
                         listTempExMOAPartnerScope = [];
                         $('#add_additional_moa').modal('hide');
-                        Swal.fire("Thành công!", "Đã bổ sung biên bản ghi nhớ thành công.", "success");
-                        moa_ex.ajax.reload();
+                        Swal.fire("Thành công",
+                            "Đã bổ sung biên bản ghi nhớ thành công", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                        });
                     },
                     error: function () {
                         //alert("fail");
@@ -1336,8 +1345,12 @@
                     success: function (data) {
                         listTempExMOAPartnerScopeEdit = [];
                         $('#edit_additional_moa').modal('hide');
-                        Swal.fire("Thành công!", "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success");
-                        moa_ex.ajax.reload();
+                        Swal.fire("Thành công",
+                            "Đã sửa biên bản ghi nhớ bổ sung thành công", "success").then(function (result) {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                        });
                     },
                     error: function () {
                         //alert("fail");
@@ -1582,8 +1595,12 @@
                 cache: false,
                 success: function (data) {
                     $('#add_partner_moa').modal('hide');
-                    moa_partner_table.ajax.reload();
-                    Swal.fire("Thành công!", "Đã thêm đối tác thành công.", "success");
+                    Swal.fire("Thành công",
+                        "Đã thêm đối tác thành công", "success").then(function (result) {
+                            if (result.value) {
+                                location.reload();
+                            }
+                    });
                 },
                 error: function () {
                     //alert("fail");
@@ -1767,7 +1784,12 @@
                 success: function (data) {
                     moa_partner_table.ajax.reload();
                     $('#edit_partner_moa').modal('hide');
-                    Swal.fire("Thành công!", "Đã chỉnh sửa thông tin đối tác thành công.", "success");
+                    Swal.fire("Thành công",
+                        "Đã chỉnh sửa thông tin đối tác thành công", "success").then(function (result) {
+                            if (result.value) {
+                                location.reload();
+                            }
+                    });
                 },
                 error: function () {
                     //alert("fail");

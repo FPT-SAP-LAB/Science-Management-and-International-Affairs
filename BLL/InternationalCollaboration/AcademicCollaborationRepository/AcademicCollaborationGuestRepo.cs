@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 
 namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
@@ -45,6 +46,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<ProgramInfo>();
             }
         }
@@ -68,15 +70,16 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<ProgramDescription>();
             }
         }
 
-        public List<ProgramInfo> listPartnerProgram(string partner, int year, int country, int language)
+        public BaseServerSideData<ProgramInfo> listPartnerProgram(BaseDatatable baseDatatable, int type, string partner, int year, int country, int language)
         {
             try
             {
-                string sql = @"select ap.program_id, pa.partner_name, cou.country_name, av.version_title 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' +CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY ap.program_id ASC) AS 'no', ap.program_id, pa.partner_name, cou.country_name, av.version_title 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' +CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
                 from IA_AcademicCollaboration.AcademicProgram ap
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
@@ -84,50 +87,66 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 join General.Account ac on ac.account_id = ar.account_id
                 join IA_Collaboration.[Partner] pa on pa.partner_id = ap.partner_id
                 join General.Country cou on cou.country_id = pa.country_id
-                WHERE ap.direction_id = 1 AND av.language_id = @language AND ap.collab_type_id = 2";
+                WHERE ap.direction_id = 1 AND av.language_id = @language AND ap.collab_type_id = @type";
                 if (country != 0)
                 {
                     sql += " AND pa.country_id = @country";
                 }
                 if (!String.IsNullOrEmpty(partner))
                 {
-                    sql += " AND pa.partner_id LIKE @partner";
+                    sql += " AND pa.partner_name LIKE @partner";
                 }
                 if (year != 0)
                 {
                     sql += " AND YEAR(ap.program_start_date) = @year";
                 }
-                List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
-                    new SqlParameter("country", country), new SqlParameter("partner", "%" + partner + "%"), new SqlParameter("year", year)).ToList();
-                return obj;
+                string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
+                            + baseDatatable.SortDirection +
+                            " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
+                            + baseDatatable.Length + " ROWS ONLY";
+
+                List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql + paging, new SqlParameter("language", language),
+                    new SqlParameter("country", country), new SqlParameter("partner", "%" + partner + "%"), new SqlParameter("type", type),
+                    new SqlParameter("year", year)).ToList();
+                int totalRecord = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
+                    new SqlParameter("country", country), new SqlParameter("partner", "%" + partner + "%"), new SqlParameter("type", type),
+                    new SqlParameter("year", year)).Count();
+                return new BaseServerSideData<ProgramInfo>(obj, totalRecord);
             }
             catch (Exception e)
             {
-                return new List<ProgramInfo>();
+                throw e;
             }
         }
 
-        public List<ProgramInfo> listFPTProgram(int year, int language)
+        public BaseServerSideData<ProgramInfo> listFPTProgram(BaseDatatable baseDatatable, int type, int year, int language)
         {
             try
             {
-                string sql = @"select ap.program_id, av.version_title as 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' + CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY ap.program_id ASC) AS 'no', ap.program_id, av.version_title as 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' + CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
                 from IA_AcademicCollaboration.AcademicProgram ap
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
                 join Localization.[Language] la on la.language_id = av.language_id
                 join General.Account ac on ac.account_id = ar.account_id
-                where av.language_id = @language and ap.direction_id = 2 AND ap.collab_type_id = 2";
+                where av.language_id = @language and ap.direction_id = 2 AND ap.collab_type_id = @type";
                 if (year != 0)
                 {
                     sql += " AND YEAR(ap.program_start_date) = @year";
                 }
-                List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language)).ToList();
-                return obj;
+                string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
+                            + baseDatatable.SortDirection +
+                            " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
+                            + baseDatatable.Length + " ROWS ONLY";
+                List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql + paging, new SqlParameter("language", language),
+                    new SqlParameter("type", type)).ToList();
+                int totalRecord = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
+                    new SqlParameter("type", type)).Count();
+                return new BaseServerSideData<ProgramInfo>(obj, totalRecord);
             }
             catch (Exception e)
             {
-                return new List<ProgramInfo>();
+                throw e;
             }
         }
 
@@ -142,6 +161,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Country>();
             }
         }
@@ -149,7 +169,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                string sql = @"select ap.direction_id, ap.collab_type_id, av.version_title 'program_name', CONVERT(nvarchar,av.publish_time) 'publish_time', av.article_content as 'content'
+                string sql = @"select ap.direction_id, ap.collab_type_id, av.version_title 'program_name', CONVERT(nvarchar,av.publish_time,20) 'publish_time', av.article_content as 'content'
                 from IA_AcademicCollaboration.AcademicProgram ap
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
@@ -162,7 +182,56 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new ProgramInfo();
+            }
+        }
+
+        public BaseServerSideData<ProcedureInfo> listProcedure(BaseDatatable baseDatatable, string title, int direction, int language)
+        {
+            try
+            {
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY pr.procedure_id ASC) AS 'no', pr.procedure_id, av.version_title 'procedure_name', CONVERT(nvarchar,av.publish_time, 20) 'publish_time' 
+		    from IA_AcademicCollaboration.[Procedure] pr
+		    join IA_Article.Article ar on ar.article_id = pr.article_id
+		    join IA_Article.ArticleVersion av on av.article_id = pr.article_id
+            where pr.direction_id = @direction AND av.language_id = @language";
+                if (!String.IsNullOrEmpty(title))
+                {
+                    sql += " AND av.version_title LIKE @title";
+                }
+                string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
+                            + baseDatatable.SortDirection +
+                            " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
+                            + baseDatatable.Length + " ROWS ONLY";
+                List<ProcedureInfo> obj = db.Database.SqlQuery<ProcedureInfo>(sql + paging, new SqlParameter("language", language),
+                    new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).ToList();
+                int totalRecord = db.Database.SqlQuery<ProcedureInfo>(sql, new SqlParameter("language", language),
+                    new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).Count();
+                return new BaseServerSideData<ProcedureInfo>(obj, totalRecord);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public ProcedureInfo procedureInfo(int id, int language)
+        {
+            try
+            {
+                string sql = @"select av.version_title 'procedure_name', CONVERT(NVARCHAR,av.publish_time, 20) 'publish_time', av.article_content 'content'
+                from IA_AcademicCollaboration.[Procedure] pr
+                join IA_Article.Article ar on ar.article_id = pr.article_id
+                join IA_Article.ArticleVersion av on av.article_id = pr.article_id
+                where av.language_id = @language and pr.procedure_id = @id";
+                ProcedureInfo obj = db.Database.SqlQuery<ProcedureInfo>(sql, new SqlParameter("language", language),
+                        new SqlParameter("id", id)).FirstOrDefault();
+                return obj;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new ProcedureInfo();
             }
         }
     }
