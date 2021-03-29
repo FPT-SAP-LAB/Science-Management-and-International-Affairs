@@ -1,5 +1,6 @@
 ﻿using BLL.Authen;
 using BLL.InternationalCollaboration.AcademicCollaborationRepository;
+using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
@@ -25,6 +26,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Longterm_List()
         {
             ViewBag.title = "DANH SÁCH ĐÀO TẠO SAU ĐẠI HỌC";
+            ViewBag.languages = AcademicActivityTypeRepo.getLanguages().obj;
             return View();
         }
 
@@ -345,6 +347,70 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 {
                     return Redirect("/Home/Index"); //return login page if session's out
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        //LONG-TERM CONTENT
+        public ActionResult getLTContent(int collab_type_id, int language_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationRepo.getLTContent(collab_type_id, language_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //LONG-TERM UPDATE CONTENT
+        [HttpPost]
+        public ActionResult updateLTContent(int collab_type_id, int language_id, string description)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.updateLTContent(collab_type_id, language_id, description);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        //LONG-TERM GOING || COMING CONTENT
+        public ActionResult getLTGCContent(int direction_id, int collab_type_id, int language_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationRepo.getLTGCContent(direction_id, collab_type_id, language_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //LONG-TERM GOING || COMING UPDATE CONTENT
+        [HttpPost]
+        public ActionResult updateLTGCContent(int collab_type_direction_id, int language_id, string description)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.updateLTGCContent(collab_type_direction_id, language_id, description);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
             {

@@ -44,7 +44,7 @@ namespace BLL.InternationalCollaboration.MasterData
             }
         }
 
-        public AlertModal<List<Language>> getLanguages()
+        public static AlertModal<List<Language>> getLanguages()
         {
             try
             {

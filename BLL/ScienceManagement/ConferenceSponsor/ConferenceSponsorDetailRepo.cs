@@ -96,7 +96,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                                   ID = b.current_mssv_msnv,
                                                                   FullName = d.name,
                                                                   OfficeName = e.office_name,
-                                                                  TitleName = c.name
+                                                                  OfficeID = e.office_id,
+                                                                  TitleName = c.name,
+                                                                  TitleID = c.title_id,
+                                                                  Email = d.email
                                                               }).ToList();
             for (int i = 0; i < Participants.Count; i++)
             {

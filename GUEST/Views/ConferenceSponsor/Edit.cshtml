@@ -1,9 +1,17 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Conference
+@using Newtonsoft.Json.Linq
 @{
     ViewBag.Title = "Chỉnh sửa đề nghị hỗ trợ hội nghị";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
+    ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
+    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
+    List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
+    List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
+    DecisionDetail Decision = output["DecisionDetail"].ToObject<DecisionDetail>();
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
-    ENTITIES.CustomModels.ScienceManagement.Researcher.ProfileResearcher Profile = ViewBag.data.Profile;
 }
 <style>
     .table-responsive > .table-bordered {
@@ -57,7 +65,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Quốc gia <span style='color:red'>*</span>:</label>
                                             <select class="form-control" id="country">
-                                                @foreach (var item in ViewBag.data.Countries)
+                                                @foreach (var item in ViewBag.countries)
                                                 {
                                                     <option value="@item.country_id">@item.country_name</option>
                                                 }
@@ -198,20 +206,20 @@
                                         <tr role="row" class="odd">
                                             <td>
                                                 <select class="form-control select2 selectPeople" name="param">
-                                                    <option label="Label">@Profile.ID</option>
+                                                    <option label="Label">@Participants[0].ID</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Profile.FullName">
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
                                             </td>
                                             <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Profile.Email">
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
                                                     @foreach (ENTITIES.Office item in ViewBag.data.Offices)
                                                     {
-                                                        <option @(item.office_id == Profile.OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
+                                                        <option @(item.office_id == Participants[0].OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
                                                     }
                                                 </select>
                                             </td>
@@ -219,7 +227,7 @@
                                                 <select class="form-control selectTitle">
                                                     @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
                                                     {
-                                                        <option @(item.title_id == Profile.TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
+                                                        <option @(item.title_id == Participants[0].TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
                                                     }
                                                 </select>
                                             </td>
