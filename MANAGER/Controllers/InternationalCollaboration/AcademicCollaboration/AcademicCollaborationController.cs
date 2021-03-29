@@ -20,7 +20,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
     {
         /*--------------------------------------------------------LONG TERM ACADEMIC COLLABORATION---------------------------------------------------------*/
         AcademicCollaborationRepo academicCollaborationRepo;
-        AcademicCollaborationShortRepo acShortRepo;
 
         // GET: AcademicCollaboration
         public ActionResult Longterm_List()
@@ -422,6 +421,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
+        AcademicCollaborationShortRepo acShortRepo;
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";
@@ -453,21 +453,42 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AddProcedure(string proceduce_title, string content, int numberOfImage, int partner_language_type)
+        public ActionResult AddProcedure(string procedure_title, string content, int direction,
+            int numberOfImage, int partner_language_type)
         {
             try
             {
+                acShortRepo = new AcademicCollaborationShortRepo();
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
                 for (int i = 0; i < numberOfImage; i++)
                 {
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                return Json(new { data = "" });
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+
+                AlertModal<string> json = acShortRepo.AddProcedure(files_request, procedure_title, direction,
+                    content, numberOfImage, partner_language_type, acc.account_id);
+                return Json(new { json.success, json.content });
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Json(new { data = "" });
+                Console.WriteLine(e);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
             }
         }
 

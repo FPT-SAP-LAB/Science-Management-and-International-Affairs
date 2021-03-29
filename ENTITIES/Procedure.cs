@@ -15,11 +15,9 @@ namespace ENTITIES
     public partial class Procedure
     {
         public int procedure_id { get; set; }
-        public int account_id { get; set; }
         public int article_id { get; set; }
         public int direction_id { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual Direction Direction { get; set; }
         public virtual Article Article { get; set; }
     }

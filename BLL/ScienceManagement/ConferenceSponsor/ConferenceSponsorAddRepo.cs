@@ -44,12 +44,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     name = x.name,
                     specialization_id = x.specialization_id
                 }).ToList();
-            var Countries = db.Countries.Select(x => new { x.country_id, x.country_name }).ToList()
-                .Select(x => new Country
-                {
-                    country_id = x.country_id,
-                    country_name = x.country_name
-                }).ToList();
             var FormalityLanguages = db.FormalityLanguages.Where(x => x.language_id == language_id)
                 .Select(x => new { x.formality_id, x.name }).ToList()
                 .Select(x => new FormalityLanguage
@@ -70,7 +64,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     title_id = x.title_id,
                     name = x.name
                 }).ToList();
-            return JsonConvert.SerializeObject(new { Countries, FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile, SpecializationLanguages });
+            return JsonConvert.SerializeObject(new { FormalityLanguages, Offices, TitleLanguages, ConferenceCriteriaLanguages, Link, Profile, SpecializationLanguages });
         }
         public List<Info> GetAllProfileBy(string id, int language_id)
         {

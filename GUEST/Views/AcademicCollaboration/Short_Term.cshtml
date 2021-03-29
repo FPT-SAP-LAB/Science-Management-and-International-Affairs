@@ -201,10 +201,16 @@
                     },
                     success: function (data) {
                         var temp = `<div class="row justify-content-between">`;
+                        var temp2 = '';
                         $(data).each(function (i, item) {
+                            if (item.avatar != null) {
+                                temp2 = `<img src="` + item.avatar + `" class="item-picture" />`;
+                            } else {
+                                temp2 = `<img src="../Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />`;
+                            }
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
                                         <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
-                                            <img src="`+ item.avatar + `" class="item-picture" />
+                                            `+ temp2 + `
                                             <label>
                                                 `+ item.program_name + `
                                             </label>
@@ -286,7 +292,6 @@
                 },
                 initComplete: function () {
                     $(this).parent().css('overflow-x', 'auto');
-                    $(this).parent().css('padding', '0');
                     //$(this).parent().removeClass();
                 },
                 serverSide: true,
@@ -340,7 +345,6 @@
                 },
                 initComplete: function () {
                     $(this).parent().css('overflow-x', 'auto');
-                    $(this).parent().css('padding', '0');
                     //$(this).parent().removeClass();
                 },
                 serverSide: true,
@@ -393,7 +397,6 @@
                 },
                 initComplete: function () {
                     $(this).parent().css('overflow-x', 'auto');
-                    $(this).parent().css('padding', '0');
                     //$(this).parent().removeClass();
                 },
                 serverSide: true,
@@ -466,7 +469,6 @@
                 },
                 initComplete: function () {
                     $(this).parent().css('overflow-x', 'auto');
-                    $(this).parent().css('padding', '0');
                     //$(this).parent().removeClass();
                 },
                 serverSide: true,

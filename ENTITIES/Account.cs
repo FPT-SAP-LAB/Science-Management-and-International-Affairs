@@ -27,7 +27,6 @@ namespace ENTITIES
             this.MOAs = new HashSet<MOA>();
             this.MOUs = new HashSet<MOU>();
             this.Notifications = new HashSet<Notification>();
-            this.Procedures = new HashSet<Procedure>();
             this.Profiles = new HashSet<Profile>();
         }
     
@@ -60,8 +59,6 @@ namespace ENTITIES
         public virtual ICollection<MOU> MOUs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Notification> Notifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Procedure> Procedures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
     }

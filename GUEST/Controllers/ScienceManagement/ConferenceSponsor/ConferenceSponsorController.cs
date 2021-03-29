@@ -12,6 +12,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using BLL.ModelDAL;
 
 namespace GUEST.Controllers
 {
@@ -20,6 +21,7 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
+        readonly CountryRepo countryRepo = new CountryRepo();
         private readonly List<PageTree> pagesTree = new List<PageTree>
             {
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
@@ -29,6 +31,7 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        [AjaxOnly]
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
@@ -46,7 +49,9 @@ namespace GUEST.Controllers
             pagesTree.Add(new PageTree("Thêm", "/ConferenceSponsor/Add"));
             string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
+
             ViewBag.data = data;
+            ViewBag.countries = countryRepo.GetCountries();
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -62,6 +67,7 @@ namespace GUEST.Controllers
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
+
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
             return View();
@@ -69,6 +75,13 @@ namespace GUEST.Controllers
         public ActionResult Edit(int id)
         {
             pagesTree.Add(new PageTree("Chỉnh sửa", "/ConferenceSponsor/Edit?id=" + id));
+            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
+
+            ViewBag.pagesTree = pagesTree;
+            ViewBag.output = output;
+            ViewBag.countries = countryRepo.GetCountries();
             return View();
         }
         [ChildActionOnly]
@@ -95,7 +108,6 @@ namespace GUEST.Controllers
         public class DataAddPage
         {
             public List<string> ConferenceCriteriaLanguages { get; set; }
-            public List<Country> Countries { get; set; }
             public List<FormalityLanguage> FormalityLanguages { get; set; }
             public List<Office> Offices { get; set; }
             public List<TitleLanguage> TitleLanguages { get; set; }
