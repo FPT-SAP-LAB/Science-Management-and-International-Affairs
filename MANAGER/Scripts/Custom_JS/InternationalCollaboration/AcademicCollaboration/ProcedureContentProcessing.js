@@ -9,6 +9,7 @@ function dataURItoBlob(dataURI) {
     return file;
 }
 $(document).ready(function() {
+
     var save_loader = new LoaderBtn($(".load-btn"))
 
     var direction = 1;
@@ -94,7 +95,7 @@ $(document).ready(function() {
                     $('#procedure_coming_table').DataTable().ajax.reload()
                 } else {
                     toastr.clear()
-                    toastr.warning(data.json.content);
+                    toastr.warning(data.content);
                     save_loader.stopLoading()
                 }
             },

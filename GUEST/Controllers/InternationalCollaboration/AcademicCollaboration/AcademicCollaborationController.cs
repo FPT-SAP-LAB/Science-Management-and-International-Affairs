@@ -24,6 +24,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 new PageTree(rm.GetString("LongTerm"), "/AcademicCollaboration/Long_Term"),
             };
             ViewBag.Title = rm.GetString("LongTerm");
+            ViewBag.YearSearching = guestRepo.yearSearching();
             ViewBag.TypeDescription = guestRepo.getTypeDescription(2, language);
             ViewBag.ListProgram = guestRepo.listProgram(0, 2, 0, null, 0, language);
             ViewBag.ListCountry = guestRepo.listCountry();

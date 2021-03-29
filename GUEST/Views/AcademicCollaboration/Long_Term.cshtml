@@ -51,17 +51,17 @@
                         <div class="row justify-content-center training-type-list">
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-1 active-nav">
                                 <a class="nav-link-custom" id="button-tab-1">
-                                    <label>@rm.GetString("LongTermIntroduction")</label>
+                                    <label>@rm.GetString("LongTermIntroduction").ToUpper()</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>@rm.GetString("LongTermPartnerProgram")</label>
+                                    <label>@rm.GetString("LongTermPartnerProgram").ToUpper()</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>@rm.GetString("LongTermFPTProgram")</label>
+                                    <label>@rm.GetString("LongTermFPTProgram").ToUpper()</label>
                                 </a>
                             </div>
                         </div>
@@ -140,8 +140,6 @@
 
         $(document).ready(function () {
             let count = 0;
-            let partnerIndex = 1;
-            let fptIndex = 1;
             var partner;
             var countrystr;
             var yearstr;
@@ -164,10 +162,16 @@
                     },
                     success: function (data) {
                         var temp = `<div class="row justify-content-between">`;
+                        var temp2 = '';
                         $(data).each(function (i, item) {
+                            if (item.avatar != null) {
+                                temp2 = `<img src="` + item.avatar + `" class="item-picture" />`;
+                            } else {
+                                temp2 = `<img src="../Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />`;
+                            }
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
                                         <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
-                                            <img src="`+ item.avatar + `" class="item-picture" />
+                                            `+ temp2 + `
                                             <label>
                                                 `+ item.program_name + `
                                             </label>
@@ -204,10 +208,16 @@
                     },
                     success: function (data) {
                         var temp = `<div class="row justify-content-between">`;
+                        var temp2 = '';
                         $(data).each(function (i, item) {
+                            if (item.avatar != null) {
+                                temp2 = `<img src="` + item.avatar + `" class="item-picture" />`;
+                            } else {
+                                temp2 = `<img src="../Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />`;
+                            }
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
                                         <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
-                                            <img src="`+ item.avatar + `" class="item-picture" />
+                                            `+ temp2 + `
                                             <label>
                                                 `+ item.program_name + `
                                             </label>
@@ -223,7 +233,7 @@
                         }
                         temp += '</div>';
                         $(temp).hide().appendTo($('#detail-content')).slideDown(1000);
-                        
+
                     },
                     error: function () {
 
@@ -243,9 +253,9 @@
             },
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
                 //$(this).parent().removeClass();
-            },
+                },
+            serverSide: true,
             searching: false,
             lengthChange: false,
             ajax: ({
@@ -261,26 +271,40 @@
             }),
             columns: [
                 {
-                    render: function (data) {
-                        return partnerIndex++;
-                    }
+                    data: 'no',
+                    name: 'no'
                 },
                 {
-                    data: "partner_name"
+                    data: "partner_name",
+                    name: "partner_name"
                 },
-                { data: "country_name" },
+                {
+                    data: "country_name",
+                    name: "country_name"
+                },
                 {
                     data: null,
                     render: function (data, type, row) {
                         // Combine the first and last names into a single table field
                         return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
                     },
-                    editField: ['program_id', 'program_name']
+                    editField: ['program_id', 'program_name'],
+                    name: ['program_name']
                 },
                 {
                     data: "registration_deadline",
+                    name: "registration_deadline"
                 },
-                { data: "publish_time" }
+                {
+                    data: 'publish_time',
+                    render: function (data, type) {
+                        if (type === "sort" || type === "") {
+                            return data;
+                        }
+                        return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                    },
+                    name: 'publish_time'
+                }
             ],
             columnDefs: [
                 {
@@ -301,9 +325,9 @@
             },
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
                 //$(this).parent().removeClass();
             },
+            serverSide: true,
             searching: false,
             lengthChange: false,
             ajax: ({
@@ -317,9 +341,8 @@
             }),
             columns: [
                 {
-                    render: function (data) {
-                        return fptIndex++;
-                    }
+                    data: 'no',
+                    name: 'no'
                 },
                 {
                     data: null,
@@ -327,10 +350,23 @@
                         // Combine the first and last names into a single table field
                         return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
                     },
-                    editField: ['program_id', 'program_name']
+                    editField: ['program_id', 'program_name'],
+                    name: 'program_name'
                 },
-                { data: "registration_deadline"},
-                { data: "publish_time" }
+                {
+                    data: "registration_deadline",
+                    name: "registration_deadline"
+                },
+                {
+                    data: 'publish_time',
+                    render: function (data, type) {
+                        if (type === "sort" || type === "") {
+                            return data;
+                        }
+                        return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                    },
+                    name: 'publish_time'
+                }
             ],
             columnDefs: [
                 {

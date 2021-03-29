@@ -261,7 +261,6 @@
             <PropertyRef Name="procedure_id" />
           </Key>
           <Property Name="procedure_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="article_id" Type="int" Nullable="false" />
           <Property Name="direction_id" Type="int" Nullable="false" />
         </EntityType>
@@ -1221,12 +1220,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </EntityType>
         <EntityType Name="PlanParticipant">
           <Key>
-            <PropertyRef Name="participant_role_id" />
-            <PropertyRef Name="office_id" />
+            <PropertyRef Name="plan_participant_id" />
           </Key>
           <Property Name="quantity" Type="int" />
           <Property Name="participant_role_id" Type="int" Nullable="false" />
-          <Property Name="office_id" Type="int" Nullable="false" />
+          <Property Name="office_id" Type="int" />
+          <Property Name="plan_participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -2816,7 +2815,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PlanParti__offic__05A3D694">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="PlanParticipant" Type="Self.PlanParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Office">
@@ -2865,20 +2864,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Procedure__accou__308E3499">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Procedure">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Procedure__artic__40C49C62">
-          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -4333,10 +4322,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Position" EntitySet="Position" />
             <End Role="PositionLanguage" EntitySet="PositionLanguage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Procedure__accou__308E3499" Association="Self.FK__Procedure__accou__308E3499">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Procedure" EntitySet="Procedure" />
-          </AssociationSet>
           <AssociationSet Name="FK__Procedure__artic__40C49C62" Association="Self.FK__Procedure__artic__40C49C62">
             <End Role="Article" EntitySet="Article" />
             <End Role="Procedure" EntitySet="Procedure" />
@@ -4642,7 +4627,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__account_id__4865BE2A" FromRole="Account" ToRole="MOA" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="Account" ToRole="MOU" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__accou__15A53433" FromRole="Account" ToRole="Notification" />
-          <NavigationProperty Name="Procedures" Relationship="Self.FK__Procedure__accou__308E3499" FromRole="Account" ToRole="Procedure" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Account" ToRole="Profile" />
         </EntityType>
         <EntityType Name="AccountRight">
@@ -4953,10 +4937,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <PropertyRef Name="procedure_id" />
           </Key>
           <Property Name="procedure_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="article_id" Type="Int32" Nullable="false" />
           <Property Name="direction_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Procedure__accou__308E3499" FromRole="Procedure" ToRole="Account" />
           <NavigationProperty Name="Direction" Relationship="Self.FK_Procedure_Direction" FromRole="Procedure" ToRole="Direction" />
           <NavigationProperty Name="Article" Relationship="Self.FK__Procedure__artic__40C49C62" FromRole="Procedure" ToRole="Article" />
         </EntityType>
@@ -6096,12 +6078,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </EntityType>
         <EntityType Name="PlanParticipant">
           <Key>
-            <PropertyRef Name="participant_role_id" />
-            <PropertyRef Name="office_id" />
+            <PropertyRef Name="plan_participant_id" />
           </Key>
           <Property Name="quantity" Type="Int32" />
           <Property Name="participant_role_id" Type="Int32" Nullable="false" />
-          <Property Name="office_id" Type="Int32" Nullable="false" />
+          <Property Name="office_id" Type="Int32" />
+          <Property Name="plan_participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Office" Relationship="Self.FK__PlanParti__offic__05A3D694" FromRole="PlanParticipant" ToRole="Office" />
           <NavigationProperty Name="ParticipantRole" Relationship="Self.FK__PlanParti__parti__32767D0B" FromRole="PlanParticipant" ToRole="ParticipantRole" />
         </EntityType>
@@ -6288,18 +6270,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <PropertyRef Name="account_id" />
             </Principal>
             <Dependent Role="Notification">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Procedure__accou__308E3499">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Procedure">
               <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -6569,7 +6539,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PlanParti__offic__05A3D694">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="PlanParticipant" Type="Self.PlanParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Office">
@@ -7015,7 +6985,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Procedure__artic__40C49C62">
-          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -8570,10 +8542,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK__Procedure__accou__308E3499" Association="Self.FK__Procedure__accou__308E3499">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Procedure" EntitySet="Procedures" />
-          </AssociationSet>
           <AssociationSet Name="FK__Profile__account__0BB1B5A5" Association="Self.FK__Profile__account__0BB1B5A5">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Profile" EntitySet="Profiles" />
@@ -9564,7 +9532,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Procedure">
               <MappingFragment StoreEntitySet="Procedure">
                 <ScalarProperty Name="procedure_id" ColumnName="procedure_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="direction_id" ColumnName="direction_id" />
               </MappingFragment>
@@ -10519,6 +10486,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="participant_role_id" ColumnName="participant_role_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
+                <ScalarProperty Name="plan_participant_id" ColumnName="plan_participant_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

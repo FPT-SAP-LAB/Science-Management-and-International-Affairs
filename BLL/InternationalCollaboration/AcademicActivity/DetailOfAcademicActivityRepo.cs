@@ -116,18 +116,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<subContent>();
             }
         }
-        public List<AcademicActivityType> getType(int language_id)
+        public List<AcademicActivityTypeLanguage> getType(int language_id)
         {
             try
             {
-                string sql = @"select al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
-                List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
+                string sql = @"select al.language_id,al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
+                List<AcademicActivityTypeLanguage> data = db.Database.SqlQuery<AcademicActivityTypeLanguage>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return new List<AcademicActivityType>();
+                return new List<AcademicActivityTypeLanguage>();
             }
         }
         public bool updateDetail(InfoSumDetail data, Authen.LoginRepo.User u)
@@ -307,7 +307,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public baseDetail baseDetail { get; set; }
             public List<subContent> subContent { get; set; }
-            public List<AcademicActivityType> types { get; set; }
+            public List<AcademicActivityTypeLanguage> types { get; set; }
         }
         public class InfoSumDetail
         {
