@@ -18,7 +18,8 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 string data = Request["data"];
                 researcherBiographyRepo.AddNewAcadEvent(data);
                 return Json(new { success = true });
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return Json(new { success = false });
             }
