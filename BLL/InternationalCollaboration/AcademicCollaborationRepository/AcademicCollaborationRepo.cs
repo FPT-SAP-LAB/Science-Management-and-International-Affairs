@@ -919,15 +919,16 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         }
 
         //LONG-TERM CONTENT
-        public AlertModal<string> getLTContent(int collab_id, int language_id)
+        public AlertModal<AcademicActivityTypeLanguage> getLTContent(int activity_type_id, int language_id)
         {
             try
             {
-                var ltContent = db
+                AcademicActivityTypeLanguage ltContent = db.AcademicActivityTypeLanguages.Where(x => x.activity_type_id == activity_type_id && x.language_id == language_id).FirstOrDefault();
+                return new AlertModal<AcademicActivityTypeLanguage>(ltContent, true, null, null);
             }
             catch (Exception e)
             {
-                return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra");
+                return new AlertModal<AcademicActivityTypeLanguage>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
         }
     }

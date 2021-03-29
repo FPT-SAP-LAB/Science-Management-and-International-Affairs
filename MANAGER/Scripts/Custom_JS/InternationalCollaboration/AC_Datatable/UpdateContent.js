@@ -5,14 +5,14 @@
         type: "GET",
         cache: false,
         data: {
-            collab_type: 2, //dài hạn
+            activity_type_id: 2, //dài hạn
             language_id: function () { return $('#lt_describe_content_language').val(); }
         },
         dataType: "json",
         success: function (data) {
             if (data != null) {
                 if (data.success) {
-                    $('#lt_describe_content_note').val(data.obj);
+                    $('#lt_describe_content_note').val(data.obj.descrpition);
                 } else {
                     toastr.error(data.content);
                 }

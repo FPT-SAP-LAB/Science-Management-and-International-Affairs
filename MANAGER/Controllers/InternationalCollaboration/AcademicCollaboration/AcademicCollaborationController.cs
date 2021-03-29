@@ -1,5 +1,6 @@
 ﻿using BLL.Authen;
 using BLL.InternationalCollaboration.AcademicCollaborationRepository;
+using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
@@ -24,6 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Longterm_List()
         {
             ViewBag.title = "DANH SÁCH ĐÀO TẠO SAU ĐẠI HỌC";
+            ViewBag.languages = AcademicActivityTypeRepo.getLanguages().obj;
             return View();
         }
 
@@ -346,6 +348,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
             }
             catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        //LONG-TERM CONTENT
+        public ActionResult getLTContent(int activity_type_id, int language_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicActivityTypeLanguage> alertModal = academicCollaborationRepo.getLTContent(activity_type_id, language_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            } catch (Exception e)
             {
                 throw e;
             }
