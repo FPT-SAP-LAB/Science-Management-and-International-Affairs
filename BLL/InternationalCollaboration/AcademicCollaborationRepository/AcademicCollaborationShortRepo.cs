@@ -49,8 +49,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<string> AddProcedure() {
-            try {
+        public AlertModal<string> AddProcedure()
+        {
+            try
+            {
 
                 return new AlertModal<string>(true);
             }
