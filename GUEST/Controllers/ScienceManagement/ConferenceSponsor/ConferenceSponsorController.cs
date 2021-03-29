@@ -31,6 +31,7 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        [AjaxOnly]
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
@@ -66,6 +67,7 @@ namespace GUEST.Controllers
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
+
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
             return View();

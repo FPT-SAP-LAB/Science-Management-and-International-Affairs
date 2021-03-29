@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6816477f9b7b4d418c0ab1823b9b6dd8" Name="Diagram1">
+      <Diagram DiagramId="f8a44fb732774dd2a0ed65eef507a4a3" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="4.5" PointY="61.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
@@ -314,10 +314,10 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.ArticleTag" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.CollaborationOfficer" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.RequestHasCitation" ManuallyRouted="false" />
+        <AssociationConnector Association="ScienceAndInternationalAffairsModel.AreaCare" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeopleContract" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeoplePosition" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.PeopleTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.AreaCare" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
