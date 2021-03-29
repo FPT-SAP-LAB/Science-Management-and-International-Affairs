@@ -207,7 +207,7 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="kt_datatable_search_query">
+                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="work_location">
                                                     <span><i class="fas fa-map-pin"></i></span>
                                                 </div>
                                             </div>
@@ -215,40 +215,41 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <select type="text" class="form-control" placeholder="Chức danh" id="hocvi">
-                                                        <option value="" disabled selected></option>
-                                                        <option value="">Giảng viên</option>
-                                                        <option value="1">Hiệu trưởng</option>
-                                                        <option value="2">...</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" placeholder="Chức danh" id="work_title">
                                                     <span><i class="far fa-bookmark"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        <div class="form-group row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_3" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" id="add_work_start" placeholder="Start date" data-target="#kt_datetimepicker_7_3" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_3" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Đến" name="end">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                    <span><i class="far fa-sticky-note"></i></span>
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_4" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_work_end" data-target="#kt_datetimepicker_7_4" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_4" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                        <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">Save changes</button>
                                     </div>
                                 </div>
                             </div>

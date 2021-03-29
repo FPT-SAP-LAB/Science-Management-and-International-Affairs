@@ -177,30 +177,52 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
-        //public List<SelectField> getAcadDegreeByPeopleId(int id)
-        //{
-        //    var data = (from a in db.Profiles
-        //                from g in db.AcademicDegrees.Where(x => x.Profiles.Contains(a))
-        //                join h in db.AcademicDegreeLanguages on g.academic_degree_id equals h.academic_degree_id
-        //                where a.people_id == id && h.language_id == 1
-        //                select new SelectField
-        //                {
-        //                    id = h.academic_degree_id,
-        //                    name = h.name,
-        //                    selected = 1
-        //                }).Union(from g in db.AcademicDegrees
-        //                         join h in db.AcademicDegrees on g.academic_degree_id equals h.academic_degree_id
-        //                         where !((from m in db.Profiles
-        //                                  from n in db.AcademicDegrees
-        //                                  where m.AcademicDegree==n && m.people_id == id
-        //                                  select n.title_id).Contains(h.title_id)) && h.language_id == 1
-        //                         select new SelectField
-        //                         {
-        //                             id = h.title_id,
-        //                             name = h.name,
-        //                             selected = 0
-        //                         }).ToList<SelectField>();
-        //    return data;
-        //}
+
+        public List<SelectField> getTitles()
+        {
+            var data = (from a in db.Titles
+                        join b in db.TitleLanguages on a.title_id equals b.title_id
+                        where b.language_id == 1
+                        select new SelectField
+                        {
+                            id = a.title_id,
+                            name = b.name,
+                            selected = 0
+                        }).ToList();
+            return data;
+        }
+        public int AddNewWorkEvent(string data)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var info = JObject.Parse(data);
+                    int people_id = (int)info["data"]["people_id"];
+                    string title = (string)info["data"]["title"];
+                    string location = (string)info["data"]["location"];
+                    int start = (int)info["data"]["start"];
+                    int end = (int)info["data"]["end"];
+                    db.WorkingProcesses.Add(new WorkingProcess
+                    {
+                        pepple_id = people_id,
+                        work_unit = location,
+                        start_year = start,
+                        end_year = end,
+                        title = title,
+                        Profile = db.Profiles.Find(people_id)
+                    });
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+                return 1;
+            }
+        }
     }
 }

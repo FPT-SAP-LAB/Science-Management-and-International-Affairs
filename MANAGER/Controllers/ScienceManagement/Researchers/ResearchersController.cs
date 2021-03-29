@@ -61,8 +61,10 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             /////////////////////////////////////////////////////////////
             List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles();
             ViewBag.workList = workList;
             ViewBag.listAcadDegree = listAcadDegree;
+            ViewBag.listWorkHistory = listWorkHistory;
             return View();
         }
         public ActionResult Publications()
