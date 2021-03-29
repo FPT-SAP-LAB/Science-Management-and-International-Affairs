@@ -83,8 +83,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 FROM IA_AcademicCollaboration.AcademicProgram ap";
                 YearSearching obj = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 return obj;
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 return new YearSearching();
