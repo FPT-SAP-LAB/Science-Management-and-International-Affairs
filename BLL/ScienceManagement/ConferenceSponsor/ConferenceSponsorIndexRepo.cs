@@ -31,7 +31,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Date = d.created_date.Value,
                             StatusName = e.name,
                             FullName = f.full_name,
-                            StatusID = e.status_id
+                            StatusID = e.status_id,
+                            EditAble = b.editable
                         })
                              .OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                              .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();

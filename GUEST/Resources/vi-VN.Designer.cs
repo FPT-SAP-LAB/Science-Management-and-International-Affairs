@@ -807,7 +807,6 @@ namespace GUEST.Resources {
             }
         }
         
-        
         /// <summary>
         ///   Looks up a localized string similar to Loại SHTT.
         /// </summary>
@@ -827,11 +826,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiêu đề.
+        /// </summary>
+        public static string ProcedureTitle {
+            get {
+                return ResourceManager.GetString("ProcedureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chương trình.
         /// </summary>
         public static string Program {
             get {
                 return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi tiết chương trình.
+        /// </summary>
+        public static string ProgramDetail {
+            get {
+                return ResourceManager.GetString("ProgramDetail", resourceCulture);
             }
         }
         
@@ -904,6 +921,15 @@ namespace GUEST.Resources {
         public static string RegistrationDeadline {
             get {
                 return ResourceManager.GetString("RegistrationDeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Các thủ tục liên quan.
+        /// </summary>
+        public static string RelatedProcedure {
+            get {
+                return ResourceManager.GetString("RelatedProcedure", resourceCulture);
             }
         }
         
@@ -1016,6 +1042,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chương trình trao đổi CBGV.
+        /// </summary>
+        public static string ShortTerm {
+            get {
+                return ResourceManager.GetString("ShortTerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trao đổi với FPT.
         /// </summary>
         public static string ShortTermFPTProgram {
@@ -1061,20 +1096,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lĩnh vực.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chuyên ngành.
         /// </summary>
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lĩnh vực.
-        /// </summary>
-        public static string Specilazation {
-            get {
-                return ResourceManager.GetString("Specilazation", resourceCulture);
             }
         }
         
