@@ -489,6 +489,22 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteProcedure(int article_id)
+        {
+            try
+            {
+                AlertModal<string> json = acShortRepo.DeleteProcedure(article_id);
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
+        }
+
         public ActionResult Get_Status_History(string id)
         {
             try
