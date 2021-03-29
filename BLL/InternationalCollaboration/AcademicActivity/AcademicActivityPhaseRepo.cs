@@ -188,7 +188,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 string sql = @"select o.office_id,o.office_name from General.Office o ";
                 List<baseOffice> data = db.Database.SqlQuery<baseOffice>(sql).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<baseOffice>();
             }
@@ -213,7 +214,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         public class baseOffice
         {
             public int office_id { get; set; }
-            public string office_name { get; set; } 
+            public string office_name { get; set; }
         }
         public class basePlanParticipant
         {

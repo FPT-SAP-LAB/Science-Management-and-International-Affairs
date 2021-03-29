@@ -134,7 +134,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editPhase(int language_id, AcademicActivityPhaseRepo.infoPhase data)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.editPhase(language_id,data);
+            bool res = phaseRepo.editPhase(language_id, data);
             if (res)
             {
                 return Json("Chỉnh sửa giai đoạn thành công");
