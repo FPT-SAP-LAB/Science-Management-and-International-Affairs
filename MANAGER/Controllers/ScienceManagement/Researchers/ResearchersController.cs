@@ -3,6 +3,7 @@ using BLL.ScienceManagement.ResearcherListRepo;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         ResearchersListRepo researcherListRepo;
         ResearchersDetailRepo researcherDetailRepo;
         ResearchersBiographyRepo researcherBiographyRepo;
+        EditResearcherInfoRepo researcherEditResearcherInfo;
         // GET: Researchers
 
         public ActionResult List()
@@ -54,11 +56,13 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
             ViewBag.profile = profile;
             ///////////////////////////////////////////////////////////////
-            List<AcadBiography> acadList = researcherBiographyRepo.GetBio(id);
+            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
             ViewBag.acadList = acadList;
             /////////////////////////////////////////////////////////////
-            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetHistory(id);
+            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
             ViewBag.workList = workList;
+            ViewBag.listAcadDegree = listAcadDegree;
             return View();
         }
         public ActionResult Publications()
@@ -87,6 +91,14 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
             ViewBag.awards = awards;
             return View();
+        }
+
+        public ActionResult EditResearcher()
+        {
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            string data = Request["info"];
+            researcherEditResearcherInfo.EditResearcherProfile(data);
+            return null;
         }
         public ActionResult AddResearcher()
         {
