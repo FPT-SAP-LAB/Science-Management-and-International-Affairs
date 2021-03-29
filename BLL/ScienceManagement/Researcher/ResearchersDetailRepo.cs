@@ -28,14 +28,14 @@ namespace BLL.ScienceManagement.Researcher
                     phone = a.phone_number,
                     avatar = w.link,
                     website = b.website,
-                    office=b.Office.office_name,
+                    office = b.Office.office_name,
                     gscholar = b.google_scholar,
                     cv = b.cv
                 }).FirstOrDefault();
             var interested_fields = (from a in db.Profiles
                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
                                      join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                     where a.people_id == id && h.language_id==1
+                                     where a.people_id == id && h.language_id == 1
                                      select new SelectField
                                      {
                                          id = h.research_area_id,
@@ -54,85 +54,85 @@ namespace BLL.ScienceManagement.Researcher
                                                   selected = 0
                                               }).ToList<SelectField>();
             var title_fields = (from a in db.Profiles
-                               from g in db.Titles.Where(x => x.Profiles.Contains(a))
-                               join h in db.TitleLanguages on g.title_id equals h.title_id
-                               where a.people_id == id && h.language_id == 1
-                                select new SelectField
-                               {
-                                   id = h.title_id,
-                                   name = h.name,
-                                   selected = 1
-                               }).Union(from g in db.Titles
-                                        join h in db.TitleLanguages on g.title_id equals h.title_id
-                                        where !((from m in db.Profiles
-                                                 from n in db.Titles
-                                                 where m.Titles.Contains(n) && m.people_id == id
-                                                 select n.title_id).Contains(h.title_id)) && h.language_id == 1
-                                        select new SelectField
-                                        {
-                                            id = h.title_id,
-                                            name = h.name,
-                                            selected = 0
-                                        }).ToList<SelectField>();
-            var position_fields = (from a in db.Profiles
-                                from g in db.Positions.Where(x => x.Profiles.Contains(a))
-                                join h in db.PositionLanguages on g.position_id equals h.position_id
+                                from g in db.Titles.Where(x => x.Profiles.Contains(a))
+                                join h in db.TitleLanguages on g.title_id equals h.title_id
                                 where a.people_id == id && h.language_id == 1
-                                   select new SelectField
+                                select new SelectField
                                 {
-                                    id = h.position_id,
+                                    id = h.title_id,
                                     name = h.name,
                                     selected = 1
-                                }).Union(from g in db.Positions
-                                         join h in db.PositionLanguages on g.position_id equals h.position_id
+                                }).Union(from g in db.Titles
+                                         join h in db.TitleLanguages on g.title_id equals h.title_id
                                          where !((from m in db.Profiles
-                                                  from n in db.Positions
-                                                  where m.Positions.Contains(n) && m.people_id == id
-                                                  select n.position_id).Contains(h.position_id)) && h.language_id == 1
+                                                  from n in db.Titles
+                                                  where m.Titles.Contains(n) && m.people_id == id
+                                                  select n.title_id).Contains(h.title_id)) && h.language_id == 1
                                          select new SelectField
                                          {
-                                             id = h.position_id,
+                                             id = h.title_id,
                                              name = h.name,
                                              selected = 0
                                          }).ToList<SelectField>();
-            var offices_fields = (from a in db.Profiles
-                                   from g in db.Offices.Where(x => x.Profiles.Contains(a))
-                                   where a.people_id == id
-                                  select new SelectField
+            var position_fields = (from a in db.Profiles
+                                   from g in db.Positions.Where(x => x.Profiles.Contains(a))
+                                   join h in db.PositionLanguages on g.position_id equals h.position_id
+                                   where a.people_id == id && h.language_id == 1
+                                   select new SelectField
                                    {
-                                       id = g.office_id,
-                                       name = g.office_name,
+                                       id = h.position_id,
+                                       name = h.name,
                                        selected = 1
-                                   }).Union(from g in db.Offices
+                                   }).Union(from g in db.Positions
+                                            join h in db.PositionLanguages on g.position_id equals h.position_id
                                             where !((from m in db.Profiles
-                                                     from n in db.Offices.Where(x => x.Profiles.Contains(m))
-                                                     where m.people_id == id
-                                                     select n.office_id).Contains(g.office_id))
+                                                     from n in db.Positions
+                                                     where m.Positions.Contains(n) && m.people_id == id
+                                                     select n.position_id).Contains(h.position_id)) && h.language_id == 1
                                             select new SelectField
                                             {
-                                                id = g.office_id,
-                                                name = g.office_name,
+                                                id = h.position_id,
+                                                name = h.name,
                                                 selected = 0
                                             }).ToList<SelectField>();
-            var countries_fields = (from a in db.Profiles
-                                  from g in db.Countries.Where(x => x.Profiles.Contains(a))
-                                  where a.people_id == id 
+            var offices_fields = (from a in db.Profiles
+                                  from g in db.Offices.Where(x => x.Profiles.Contains(a))
+                                  where a.people_id == id
                                   select new SelectField
                                   {
-                                      id = g.country_id,
-                                      name = g.country_name,
+                                      id = g.office_id,
+                                      name = g.office_name,
                                       selected = 1
-                                  }).Union(from g in db.Countries
+                                  }).Union(from g in db.Offices
                                            where !((from m in db.Profiles
-                                                    from n in db.Countries.Where(x => x.Profiles.Contains(m))
+                                                    from n in db.Offices.Where(x => x.Profiles.Contains(m))
                                                     where m.people_id == id
-                                                    select n.country_id).Contains(g.country_id))
+                                                    select n.office_id).Contains(g.office_id))
                                            select new SelectField
                                            {
-                                               id = g.country_id,
-                                               name = g.country_name,
+                                               id = g.office_id,
+                                               name = g.office_name,
                                                selected = 0
                                            }).ToList<SelectField>();
+            var countries_fields = (from a in db.Profiles
+                                    from g in db.Countries.Where(x => x.Profiles.Contains(a))
+                                    where a.people_id == id
+                                    select new SelectField
+                                    {
+                                        id = g.country_id,
+                                        name = g.country_name,
+                                        selected = 1
+                                    }).Union(from g in db.Countries
+                                             where !((from m in db.Profiles
+                                                      from n in db.Countries.Where(x => x.Profiles.Contains(m))
+                                                      where m.people_id == id
+                                                      select n.country_id).Contains(g.country_id))
+                                             select new SelectField
+                                             {
+                                                 id = g.country_id,
+                                                 name = g.country_name,
+                                                 selected = 0
+                                             }).ToList<SelectField>();
             profile.interested_fields = interested_fields;
             profile.title_fields = title_fields;
             profile.position_fields = position_fields;

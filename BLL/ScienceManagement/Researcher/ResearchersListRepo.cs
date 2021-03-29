@@ -18,17 +18,17 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                         join b in db.Profiles on a.people_id equals b.people_id
                         join c in db.AcademicDegreeLanguages on b.current_academic_degree_id equals c.academic_degree_id
                         join f in db.Offices on b.office_id equals f.office_id
-                        where c.language_id == 1 
+                        where c.language_id == 1
                         select new ResearcherList
                         {
                             peopleId = a.people_id,
                             name = a.name,
                             title = c.name,
-                            positions=((from m in db.People
-                                        from n in db.Positions.Where(x => m.Profile.Positions.Contains(x))
-                                        join h in db.PositionLanguages on n.position_id equals h.position_id
-                                        where h.language_id == 1 && m.people_id== a.people_id
-                                        select h.name
+                            positions = ((from m in db.People
+                                          from n in db.Positions.Where(x => m.Profile.Positions.Contains(x))
+                                          join h in db.PositionLanguages on n.position_id equals h.position_id
+                                          where h.language_id == 1 && m.people_id == a.people_id
+                                          select h.name
                             ).ToList<String>()),
                             workplace = f.office_name,
                             googleScholar = b.google_scholar

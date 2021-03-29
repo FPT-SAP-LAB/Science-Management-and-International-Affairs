@@ -115,8 +115,8 @@ namespace BLL.ScienceManagement.Researcher
                         where a.people_id == id
                         select new BaseRecord<Award>
                         {
-                           records = a
-                        }).OrderByDescending(x=>x.records.award_time).AsEnumerable<BaseRecord<Award>>()
+                            records = a
+                        }).OrderByDescending(x => x.records.award_time).AsEnumerable<BaseRecord<Award>>()
                         .Select((x, index) => new BaseRecord<Award>
                         {
                             index = index + 1,
