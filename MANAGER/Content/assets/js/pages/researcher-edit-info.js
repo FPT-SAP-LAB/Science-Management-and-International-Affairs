@@ -91,7 +91,7 @@ $(function () {
         console.log(info)
         fd.append('info', JSON.stringify({ info: info }));
         $.ajax({
-            url: "/Biography/AddNewAcadEvent",
+            url: "/Researchers/EditResearcher",
             type: "POST",
             data: fd,
             processData: false,
@@ -108,8 +108,5 @@ $(function () {
             }
         });
         ////////////////////xử lý ở đây/////////////////////
-
     })
 })
-
-// Class definition

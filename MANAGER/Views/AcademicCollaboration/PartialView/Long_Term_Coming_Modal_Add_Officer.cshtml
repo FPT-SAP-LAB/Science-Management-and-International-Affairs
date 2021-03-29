@@ -1,9 +1,8 @@
-﻿
-<div class="modal fade in" id="edit_officer" aria-hidden="true">
+﻿<div class="modal fade in" id="coming_add_officer" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h4 class="modal-title">CHỈNH SỬA CÁN BỘ</h4>
+                <h4 class="modal-title">BỔ SUNG CÁN BỘ ĐẾN HỌC</h4>
             </div>
             <div class="modal-body">
                 <!--------------------------THÔNG TIN CÁ NHÂN------------------------->
@@ -15,40 +14,40 @@
                         <label class="font-weight-bolder">Họ và tên</label>
                         <label style="color:red">*</label>
                         @*<label style="color:blue" class="float-right">
-                                <a href="#" onclick="">Kiểm tra</a>
+                                <a href="javascipt:;" id="check_person">Kiểm tra</a>
                             </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_name" name="param" style="width:100% !important">
+                            <select class="form-control text-center" id="coming_add_officer_name" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Email</label>
-                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="edit_officer_email" />
+                        <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="coming_add_officer_email" />
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
-                        <label class="font-weight-bolder">Đơn vị - Cơ sở</label>
+                        <label class="font-weight-bolder">Đơn vị đào tạo</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_facility" name="param" style="width:100% !important">
+                            <select class="form-control text-center" id="coming_add_officer_facility" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <!--------------------------ĐƠN VỊ ĐÀO TẠO------------------------->
+                <!--------------------------ĐƠN VỊ CÔNG TÁC------------------------->
                 <div class="row mt-4">
-                    <h5 class="font-weight-bolder">ĐƠN VỊ ĐÀO TẠO</h5>
+                    <h5 class="font-weight-bolder">ĐƠN VỊ CÔNG TÁC</h5>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                        <label class="font-weight-bolder">Tên đơn vị đào tạo</label>
+                        <label class="font-weight-bolder">Tên đơn vị công tác</label>
                         <label style="color:red">*</label>
                         @*<label style="color:blue" class="float-right">
                                 <a href="#" onclick="">Kiểm tra</a>
                             </label>*@
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_traning" name="param" style="width:100% !important">
+                            <select class="form-control text-center" id="coming_add_officer_traning" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
@@ -56,16 +55,16 @@
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Quốc gia</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_nation" name="param" style="width:100% !important">
+                            <select class="form-control text-center" id="coming_add_officer_nation" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:red">*</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_coop_scope" name="param" style="width:100% !important">
-                                <option selected value=""></option>
+                            <select class="form-control text-center" id="coming_add_officer_coop_scope" name="param" style="width:100% !important">
                             </select>
                         </div>
                     </div>
@@ -79,7 +78,7 @@
                         <label class="font-weight-bolder">Trạng thái</label>
                         <label style="color:red">*</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="edit_officer_status" name="param" style="width:100% !important">
+                            <select class="form-control text-center" id="coming_add_officer_status" name="param" style="width:100% !important">
                                 <option selected value=""></option>
                             </select>
                         </div>
@@ -87,9 +86,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG đi học dự kiến</label>
                         <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_start_plan_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="edit_officer_start_plan_date" data-target="#kt_datetimepicker_edit_officer_start_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_start_plan_date" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_add_officer_start_plan_date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="coming_add_officer_start_plan_date" data-target="#kt_datetimepicker_coming_add_officer_start_plan_date" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_coming_add_officer_start_plan_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -99,9 +98,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG kết thúc dự kiến</label>
                         <label style="color:red">*</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_end_plan_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="edit_officer_end_plan_date" data-target="#kt_datetimepicker_edit_officer_end_plan_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_end_plan_date" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_add_officer_end_plan_date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc dự kiến" id="coming_add_officer_end_plan_date" data-target="#kt_datetimepicker_coming_add_officer_end_plan_date" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_coming_add_officer_end_plan_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -111,7 +110,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">Bản mềm</label>
                         <label style="font-style: italic;">(Tối đa 5MB và 1 tệp tin)</label>
-                        <div class="uppy row" id="edit_officer_upload">
+                        <div class="uppy row" id="coming_add_officer_upload">
                             <div class="uppy-wrapper col-6"></div>
                             <div class="uppy-list col-6"></div>
                             <div class="uppy-status"></div>
@@ -120,9 +119,9 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG đi học thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_start_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="edit_officer_start_date" data-target="#kt_datetimepicker_edit_officer_start_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_start_date" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_add_officer_start_date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="coming_add_officer_start_date" data-target="#kt_datetimepicker_coming_add_officer_start_date" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_coming_add_officer_start_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -131,9 +130,9 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">TG kết thúc thực tế</label>
-                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_officer_end_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="edit_officer_end_date" data-target="#kt_datetimepicker_edit_officer_end_date" />
-                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_officer_end_date" data-toggle="datetimepicker">
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_add_officer_end_date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="TG kết thúc thực tế" id="coming_add_officer_end_date" data-target="#kt_datetimepicker_coming_add_officer_end_date" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_coming_add_officer_end_date" data-toggle="datetimepicker">
                                 <span class="input-group-text">
                                     <i class="ki ki-calendar"></i>
                                 </span>
@@ -144,7 +143,7 @@
                         <div class="form-group">
                             <div class="checkbox-list">
                                 <label class="checkbox font-weight-bolder">
-                                    <input type="checkbox" name="" id="edit_officer_support" />
+                                    <input type="checkbox" id="coming_add_officer_support" />
                                     <span></span>
                                     Hỗ trợ qua phòng QLKH & HTQT
                                 </label>
@@ -153,13 +152,13 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" id="edit_officer_note" rows="3"></textarea>
+                        <textarea class="form-control" id="coming_add_officer_note" rows="3"></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="edit_officer_close" type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button id="edit_officer_save" type="button" class="btn btn-sm btn-light-primary">Lưu</button>
+                <button id="coming_add_officer_close" type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
+                <button id="coming_add_officer_save" type="button" class="btn btn-sm btn-light-primary">Lưu</button>
             </div>
         </div>
     </div>

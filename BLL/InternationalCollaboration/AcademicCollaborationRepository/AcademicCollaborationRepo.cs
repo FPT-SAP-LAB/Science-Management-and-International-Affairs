@@ -458,9 +458,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 {
                     people_id = person.people_id,
                     office_id = obj_person.person_profile_office_id,
-                    mssv_msnv = "" //can make issues for Sicence Management
+                    mssv_msnv = "", //can make issues for Sicence Management
+                    profile_page_active = false
                 };
                 db.Profiles.Add(profile);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
