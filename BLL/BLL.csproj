@@ -133,11 +133,16 @@
     <Compile Include="InternationalCollaboration\MasterData\InternalUnitRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
+    <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
+    <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
+    <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
+    <Compile Include="ModelDAL\SpecializationLanguageRepo.cs" />
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
+    <Compile Include="ModelDAL\TitleLanguageRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
