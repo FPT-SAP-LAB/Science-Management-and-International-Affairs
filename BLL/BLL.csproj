@@ -106,6 +106,7 @@
     <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\LoginRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityPhaseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />

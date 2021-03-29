@@ -9,5 +9,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
     public class ProcedureInfoManager : ProcedureInfo
     {
         public string full_name { get; set; }
+        public int article_id { get; set; }
     }
 }
