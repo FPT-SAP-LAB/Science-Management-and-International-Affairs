@@ -170,6 +170,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AjaxOnlyAttribute.cs" />
     <Compile Include="Models\CurrentAccount.cs" />
     <Compile Include="Models\LanguageResource.cs" />
     <Compile Include="Models\PageTree.cs" />
@@ -2430,6 +2431,7 @@
     <Content Include="Views\PartialView\EditAuthor.cshtml" />
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <Content Include="Views\AcademicActivity\loadForm.cshtml" />
+    <Content Include="Views\ConferenceSponsor\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
