@@ -66,6 +66,7 @@
     <script>
         let arrQues = [];
         let fid = 0;
+        let stt_ck = 0;
         function textAreaAdjust(element) {
             element.style.height = "1px";
             element.style.height = (25 + element.scrollHeight) + "px";
@@ -119,10 +120,11 @@
                                         ques_html += '<div class="checkbox-outline">';
                                         str.forEach(function (z) {
                                             ques_html += '<label class="checkbox checkbox-lg">' +
-                                                '<input type="checkbox" value="' + z +'" id="ques-option-' + y.question_id + z+'"/>' +
+                                                '<input type="checkbox" value="' + z + '" id="ques-option-' + y.question_id + stt_ck+'"/>' +
                                                 '<span class="custom-span"></span>' +
                                                 '' + z + '' +
                                                 '</label>';
+                                            stt_ck += 1;
                                         });
                                         ques_html += '</div>';
                                     }
