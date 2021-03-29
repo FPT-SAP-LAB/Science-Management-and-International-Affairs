@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
-                            <input class="form-control form-control-lg edit" readonly type="text" value="@ViewBag.Paper.total_reward" />
+                            <input class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.Paper.total_reward" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("RewardType")</label>
@@ -372,6 +372,9 @@
                 option.prop('disabled', true);
             });
 
+            var x = $("#totalreward").val();
+            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
             $.ajax({
                 url: "@Url.Action("listAuthor", "Paper")",
                 type: "POST",
@@ -388,7 +391,10 @@
                         add_author_tax = response.author[i].tax_code;
                         add_author_bank = response.author[i].bank_branch;
                         add_author_accno = response.author[i].bank_number;
-                        add_author_reward = response.author[i].money_reward;
+
+                        var temp_money = response.author[i].money_reward;
+                        add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
                         add_author_note = '';
                         add_author_email = response.author[i].email;
                         id = new Date().getTime();

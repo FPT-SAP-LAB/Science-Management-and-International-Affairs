@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -59,6 +60,45 @@ namespace BLL.ScienceManagement.Invention
                             where i.invention_id = @id";
             list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             return list;
+        }
+
+        public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Decision decision = new Decision
+                {
+                    valid_date = date_format,
+                    file_id = file_id,
+                    decision_number = number
+                };
+                db.Decisions.Add(decision);
+
+                List<WaitDecisionInven> wait = getListWaitDecision();
+                foreach (var item in wait)
+                {
+                    RequestDecision request = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision.decision_id
+                    };
+                    db.RequestDecisions.Add(request);
+                    RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 2;
+                }
+
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(file_drive_id);
+                return "ff";
+            }
         }
 
         public string addFile(File f)
@@ -342,7 +382,7 @@ namespace BLL.ScienceManagement.Invention
 
         public List<WaitDecisionInven> getListWaitDecision()
         {
-            string sql = @"select i.name, it.name as 'type_name', po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ai.people_id) as 'note'
+            string sql = @"select i.name, it.name as 'type_name', po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ai.people_id) as 'note', ri.request_id
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
@@ -352,7 +392,7 @@ namespace BLL.ScienceManagement.Invention
 	                            join [General].Office o on pro.office_id = o.office_id
 	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
                             where ri.status_id = 4
-                            group by i.name, it.name, po.name, pro.mssv_msnv, o.office_abbreviation";
+                            group by i.name, it.name, po.name, pro.mssv_msnv, o.office_abbreviation, ri.request_id";
             List<WaitDecisionInven> list = db.Database.SqlQuery<WaitDecisionInven>(sql).ToList();
             return list;
         }
