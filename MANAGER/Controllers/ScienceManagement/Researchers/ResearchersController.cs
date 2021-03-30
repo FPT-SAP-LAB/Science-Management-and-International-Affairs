@@ -3,9 +3,11 @@ using BLL.ScienceManagement.ResearcherListRepo;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using MANAGER.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 namespace MANAGER.Controllers.ScienceManagement.Researchers
 {
@@ -95,6 +97,16 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             return View();
         }
 
+        public ActionResult EditProfilePhoto()
+        {
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            var uploadfile= Request.Files["imageInput"];
+            int people_id = Int32.Parse(Request.Form["people_id"]);
+            Account account = CurrentAccount.Account(Session);
+            var file=GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
+            int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
+            return Json(new { res=res });
+        }
         public ActionResult EditResearcher()
         {
             researcherEditResearcherInfo = new EditResearcherInfoRepo();

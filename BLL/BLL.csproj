@@ -153,6 +153,7 @@
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersDetailRepo.cs" />

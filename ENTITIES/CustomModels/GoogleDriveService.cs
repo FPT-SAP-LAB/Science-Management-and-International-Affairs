@@ -80,6 +80,22 @@ namespace ENTITIES.CustomModels
         {
             return UploadResearcherFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, ShareWithEmail)[0];
         }
+        public static Google.Apis.Drive.v3.Data.File UploadProfileMedia(HttpPostedFileBase InputFile, string ShareWithEmail)
+        {
+            string ResearcherFolderName = ShareWithEmail.Split('@')[0];
+            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, SMDrive) ?? CreateFolder(ResearcherFolderName, SMDrive);
+            var SubFolder = FindFirstFolder("ProfileMedia", ResearcherFolder.Id) ?? CreateFolder("ProfileMedia", ResearcherFolder.Id);
+            var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, SubFolder.Id);
+            Permission userPermission = new Permission
+            {
+                Type = "anyone",
+                Role = "reader"
+            };
+            PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, file.Id);
+            createRequest.SupportsAllDrives = true;
+            createRequest.Execute();
+            return file;
+        }
         public static List<Google.Apis.Drive.v3.Data.File> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string ShareWithEmail)
         {
             string SubFolderName;
@@ -96,6 +112,9 @@ namespace ENTITIES.CustomModels
                     break;
                 case 4:
                     SubFolderName = "Quyết định";
+                    break;
+                case 5:
+                    SubFolderName = "ProfileMedia";
                     break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");

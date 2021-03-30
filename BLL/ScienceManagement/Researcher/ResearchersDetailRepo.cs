@@ -18,7 +18,6 @@ namespace BLL.ScienceManagement.Researcher
             var profile = (
                 from a in db.People
                 join b in db.Profiles on a.people_id equals b.people_id
-                join w in db.Files on b.avatar_id equals w.file_id
                 where a.people_id == id
                 select new ResearcherDetail
                 {
@@ -27,7 +26,11 @@ namespace BLL.ScienceManagement.Researcher
                     dob = b.birth_date,
                     email = a.email,
                     phone = a.phone_number,
-                    avatar = w.link,
+                    avatar = (from f in db.Profiles
+                                    join ff in db.Files on f.avatar_id equals ff.file_id
+                                    where f.people_id == a.people_id
+                                    select ff.link
+                                      ).FirstOrDefault(),
                     website = b.website,
                     office = b.Office.office_name,
                     gscholar = b.google_scholar,
