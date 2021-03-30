@@ -62,6 +62,24 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
+        public string changeStatus(DetailInvention inven)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                ri.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -202,11 +220,11 @@ namespace BLL.ScienceManagement.Invention
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " update [SM_Researcher].PeopleTitle set title_id = @title" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.contract_id);
+                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
                             listParam1.Add(tempParam2);
 
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, item.people_id);
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
                         }
                     }
