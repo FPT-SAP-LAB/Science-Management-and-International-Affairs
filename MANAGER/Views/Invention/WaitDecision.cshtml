@@ -12,10 +12,15 @@
                 <div class="col-lg-10 col-xl-8">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
-                            <a href="#"
-                               class="btn btn-light-primary px-6 font-weight-bold">
-                                Upload Quyết định
-                            </a>
+                            @{
+                                if (ViewBag.list.Count > 0)
+                                {
+                                    <a data-toggle="modal" data-target="#uploadDecision"
+                                       class="btn btn-light-primary px-6 font-weight-bold">
+                                        Upload Quyết định
+                                    </a>
+                                }
+                            }
                         </div>
 
                     </div>
@@ -71,41 +76,111 @@
 
             </div>
         </div>
-            <table id="tapchiin" class="table table-bordered table-checkable">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Người request</th>
-                        <th>MSNV/MSSV</th>
-                        <th>Đơn vị công tác</th>
-                        <th>Tên bằng sáng chế</th>
-                        <th>Loại bằng sáng chế</th>
-                        <th>Ghi chú</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int count = 1;
-                        foreach (var item in ViewBag.list)
-                        {
-                            <tr>
-                                <td>@count</td>
-                                <td>@item.author_name</td>
-                                <td>@item.mssv_msnv</td>
-                                <td>@item.office_abbreviation</td>
-                                <td>@item.name</td>
-                                <td>@item.type_name</td>
-                                <td>Có @item.note tác giả</td>
-                            </tr>
-                        }
-                        count++;
+        <table id="tapchiin" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Người request</th>
+                    <th>MSNV/MSSV</th>
+                    <th>Đơn vị công tác</th>
+                    <th>Tên bằng sáng chế</th>
+                    <th>Loại bằng sáng chế</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1;
+                    foreach (var item in ViewBag.list)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.author_name</td>
+                            <td>@item.mssv_msnv</td>
+                            <td>@item.office_abbreviation</td>
+                            <td>@item.name</td>
+                            <td>@item.type_name</td>
+                            <td>Có @item.note tác giả</td>
+                        </tr>
                     }
-                </tbody>
-            </table>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="uploadDecision" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm quyết định</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <label>Ngày có hiệu lực</label>
+                        <input class="form-control form-control-lg custom-pickdate" id="valid_date" type="text" value="" />
+                    </div>
+                    <div class="col-xl-6">
+                        <label>Số quyết định</label>
+                        <input class="form-control form-control-lg" id="decisionNo" type="text" value="" />
+                    </div>
+                    <div class="col-xl-6">
+                        <label>Upload file</label>
+                        <div class="uppy" id="kt_uppy_1">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
+                        <button class="btn btn-light-primary px-6 font-weight-bold" id="btn_submit" data-dismiss="modal">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @section scripts{
+    <script src="~/Content/Custom JS/ListAllPaper.js"></script>
     <script>
+        var uppy1;
+        var formdata;
+        $("#btn_submit").click(function () {
+            formData = new FormData();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file quyết định");
+                return false;
+            }
+            var number = $("#decisionNo").val();
+            var date = $("#valid_date").val();
+            formData.append('file', uppy1.getFiles()[0].data);
+            formData.append('number', number);
+            formData.append('date', date);
+
+            $.ajax({
+                url: "/Invention/uploadDecision",
+                method: "post",
+                complete: function (data) {
+                    var mess = data.responseJSON.mess;
+                    if (mess == "ss") {
+                        alert(mess);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+        });
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
@@ -124,7 +199,7 @@
 
                 // DOM Layout settings
                 dom: `<'row'<'col-sm-12'tr>>
-                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                          <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                 lengthMenu: [5, 10, 25, 50],
 
@@ -136,5 +211,7 @@
             });
         });
     </script>
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js"></script>
+    <script src="~/Content/Custom JS/Citation.js"></script>
 }
 

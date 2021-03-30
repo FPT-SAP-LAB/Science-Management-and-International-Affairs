@@ -1,6 +1,7 @@
 ﻿using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using OfficeOpenXml;
@@ -47,6 +48,8 @@ namespace MANAGER.Controllers
 
             List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
             ViewBag.author = listAuthor;
+
+            ViewBag.request_id = paper.request_id;
 
             return View();
         }
@@ -129,7 +132,7 @@ namespace MANAGER.Controllers
                 excelWorksheet2.Cells[i, 6].Value = item.company;
                 string note = item.sum + " tác giả, " + item.sumFE + " địa chỉ FPTU";
                 excelWorksheet2.Cells[i, 7].Value = note;
-                temp = item;
+                temp2 = item;
                 i++;
             }
 
@@ -172,6 +175,46 @@ namespace MANAGER.Controllers
             excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Paper.xlsx")));
 
             return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult uploadDecision(HttpPostedFileBase file1, string number1, string date1,
+                                         HttpPostedFileBase file2, string number2, string date2)
+        {
+            string[] arr = date1.Split('/');
+            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
+            DateTime date_format1 = DateTime.Parse(format);
+
+            arr = date2.Split('/');
+            format = arr[1] + "/" + arr[0] + "/" + arr[2];
+            DateTime date_format2 = DateTime.Parse(format);
+
+            string name1 = "QD_" + number1 + "_" + date1;
+            string name2 = "QD_" + number2 + "_" + date2;
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            ENTITIES.File fl1 = new ENTITIES.File
+            {
+                link = f1.WebViewLink,
+                file_drive_id = f1.Id,
+                name = name1
+            };
+
+            Google.Apis.Drive.v3.Data.File f2 = GoogleDriveService.UploadResearcherFile(file2, name2, 4, null);
+            ENTITIES.File fl2 = new ENTITIES.File
+            {
+                link = f2.WebViewLink,
+                file_drive_id = f2.Id,
+                name = name2
+            };
+
+            ENTITIES.File myFile1 = mdr.addFile(fl1);
+            ENTITIES.File myFile2 = mdr.addFile(fl2);
+
+            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id,
+                                            date_format2, myFile2.file_id, number2, myFile2.file_drive_id);
+
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

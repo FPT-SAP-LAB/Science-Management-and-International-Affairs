@@ -12,10 +12,15 @@
                 <div class="col-lg-10 col-xl-8">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
-                            <a href="#"
-                               class="btn btn-light-primary px-6 font-weight-bold">
-                                Upload Quyết định
-                            </a>
+                            @{
+                                if (ViewBag.waitTN.Count > 0 || ViewBag.waitQT.Count > 0)
+                                {
+                                    <a data-toggle="modal" data-target="#uploadDecision"
+                                       class="btn btn-light-primary px-6 font-weight-bold">
+                                        Upload Quyết định
+                                    </a>
+                                }
+                            }
                         </div>
 
                     </div>
@@ -117,8 +122,8 @@
                                     <td>@item.company</td>
                                     <td>Có @item.note tác giả</td>
                                 </tr>
+                                count++;
                             }
-                            count++;
                         }
                     </tbody>
                 </table>
@@ -128,7 +133,7 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên tác giả</th>
+                            <th>Người request</th>
                             <th>MSNV/MSSV</th>
                             <th>Đơn vị công tác</th>
                             <th>Tên bài báo</th>
@@ -150,8 +155,8 @@
                                     <td>@item.company</td>
                                     <td>Có @item.note tác giả</td>
                                 </tr>
+                                count++;
                             }
-                            count++;
                         }
                     </tbody>
                 </table>
@@ -159,9 +164,117 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="uploadDecision" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Thêm quyết định</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <label>Ngày có hiệu lực</label>
+                        <input class="form-control form-control-lg custom-pickdate" id="valid_date" type="text" value="" />
+                    </div>
+                    <div class="col-xl-6">
+                        <label>Ngày có hiệu lực</label>
+                        <input class="form-control form-control-lg custom-pickdate" id="valid_date_2" type="text" value="" />
+                    </div>
+
+                    <div class="col-xl-6 mt-5">
+                        <label>Số quyết định</label>
+                        <input class="form-control form-control-lg" id="decisionNo" type="text" value="" />
+                    </div>
+                    <div class="col-xl-6 mt-5">
+                        <label>Số quyết định</label>
+                        <input class="form-control form-control-lg" id="decisionNo_2" type="text" value="" />
+                    </div>
+
+                    <div class="col-xl-6 mt-5">
+                        <label>File QĐ cho nghiên cứu viên</label>
+                        <div class="uppy" id="kt_uppy_1">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 mt-5">
+                        <label>File QĐ cho giảng viên/sinh viên</label>
+                        <div class="uppy" id="kt_uppy_2">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
+                        <button class="btn btn-light-primary px-6 font-weight-bold" id="btn_submit" data-dismiss="modal">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
+    <script src="~/Content/Custom JS/ListAllPaper.js"></script>
     <script>
+        var uppy1, uppy2;
+        var formdata;
+        $("#btn_submit").click(function () {
+            formData = new FormData();
+
+            var number = $("#decisionNo").val();
+            var date = $("#valid_date").val();
+
+            var number2 = $("#decisionNo_2").val();
+            var date2 = $("#valid_date_2").val();
+
+            if (number == "" || date == "" || number2 == "" || date2 == "") {
+                toastr.error("Cần nhập đủ các trường");
+                return false;
+            }
+
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file quyết định cho nghiên cứu viên");
+                return false;
+            }
+            if (uppy2.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file quyết định cho giảng viên/sinh viên");
+                return false;
+            }
+
+            formData.append('file1', uppy1.getFiles()[0].data);
+            formData.append('file2', uppy2.getFiles()[0].data);
+            formData.append('number1', number);
+            formData.append('date1', date);
+            formData.append('number2', number2);
+            formData.append('date2', date2);
+
+            $.ajax({
+                url: "/Paper/uploadDecision",
+                method: "post",
+                complete: function (data) {
+                    var mess = data.responseJSON.mess;
+                    alert(mess);
+                    if (mess == "ss") {
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+        });
+
         $("#excel").click(function () {
             $.ajax({
                 url: "@Url.Action("exportExcel", "Paper")",
@@ -205,4 +318,6 @@
             });
         });
     </script>
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js"></script>
+    <script src="~/Content/Custom JS/Citation.js"></script>
 }
