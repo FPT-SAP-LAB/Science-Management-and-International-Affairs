@@ -84,8 +84,20 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
                new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
            };
+            researcherDetailRepo = new ResearchersDetailRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
             ViewBag.pagesTree = pagesTree;
             return View();
+        }
+        public ActionResult EditResearcher()
+        {
+            //Chỗ này cần thêm chỉ có user đang đăng nhập trùng với profile này mới sửa được
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            string data = Request["info"];
+            researcherEditResearcherInfo.EditResearcherProfile(data);
+            return null;
         }
     }
 }

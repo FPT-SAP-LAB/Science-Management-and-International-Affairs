@@ -5,7 +5,7 @@
 }
 @using ENTITIES;
 @using ENTITIES.CustomModels.ScienceManagement.Researcher;
-@using System.Globalization;
+@using GUEST.Models;
 <style>
     h3.card-label {
         padding-left: 2rem;
@@ -54,10 +54,12 @@
                         <a href="#" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">@ViewBag.profile.name</a>
                         <a href="#"><i class="flaticon2-correct text-success font-size-h5"></i></a>
                     </div>
-
-                    <div class="my-lg-0 my-3">
-                        <a href="#" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
-                    </div>
+                    @if (CurrentAccount.getProfile(Session)!=null&&CurrentAccount.getProfile(Session).people_id == ViewBag.profile.id)
+                    {
+                        <div class="my-lg-0 my-3">
+                            <a href="/Researchers/EditInfo?id=@CurrentAccount.getProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
+                        </div>
+                    }
                 </div>
                 <!--end::Title-->
                 <!--begin::Content-->
