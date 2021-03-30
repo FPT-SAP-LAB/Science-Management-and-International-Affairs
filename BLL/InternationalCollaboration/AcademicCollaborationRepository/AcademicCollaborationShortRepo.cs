@@ -122,13 +122,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<string> DeleteProcedure(int article_id)
+        public AlertModal<string> DeleteProcedure(int procedure_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
-                    Article article = db.Articles.Find(article_id);
+                    Procedure procedure = db.Procedures.Find(procedure_id);
+                    Article article = db.Articles.Find(procedure.article_id);
                     db.Articles.Remove(article);
                     db.SaveChanges();
                     trans.Commit();
@@ -139,6 +140,49 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     trans.Rollback();
                     throw e;
                 }
+            }
+        }
+
+        public ProcedureInfoManager LoadEditProcedure(int procedure_id)
+        {
+            try
+            {
+                Procedure procedure = db.Procedures.Find(procedure_id);
+
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x => x.article_id == procedure.article_id).OrderBy(x => x.language_id).FirstOrDefault();
+                if(articleVersion != null)
+                {
+                    ProcedureInfoManager procedureInfoManager = new ProcedureInfoManager
+                    {
+                        procedure_name = articleVersion.version_title,
+                        content = articleVersion.article_content,
+                        language_id = articleVersion.language_id
+                    };
+                    return procedureInfoManager;
+                }else
+                {
+                    return new ProcedureInfoManager();
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string GetContentLanguage(int procedure_id, int partner_language_type)
+        {
+            try
+            {
+                Procedure procedure = db.Procedures.Where(x => x.procedure_id == procedure_id).FirstOrDefault();
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x => x.article_id == procedure.article_id && x.language_id == partner_language_type).FirstOrDefault();
+                return articleVersion?.article_content;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

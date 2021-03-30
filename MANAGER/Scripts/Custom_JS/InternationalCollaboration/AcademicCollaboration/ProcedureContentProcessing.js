@@ -98,9 +98,9 @@ $('#save_procedure').click(function () {
                 save_loader.stopLoading()
             }
         },
-        error: function () {
+        error: function (data) {
             toastr.clear();
-            toastr.error('Có lỗi xảy ra khi thêm');
+            toastr.error(data.content);
             save_loader.stopLoading()
         }
     });

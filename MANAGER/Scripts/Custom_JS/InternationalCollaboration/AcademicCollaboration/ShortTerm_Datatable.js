@@ -182,10 +182,11 @@
                 name: "full_name"
             },
             {
-                data: "article_id",
-                name: "article_id",
+                data: "procedure_id",
+                name: "procedure_id",
                 render: function (data) {
-                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" onclick="' + data + '" href="#edit_procedure">Sửa</a><a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
+                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" onclick="load_procedure_detail(' + data + ')">Sửa</a> ' +
+                        '<a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
                 }
             }
             ],
@@ -247,10 +248,11 @@
                 name: "full_name"
             },
             {
-                data: "article_id",
-                name: "article_id",
+                data: "procedure_id",
+                name: "procedure_id",
                 render: function (data) {
-                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-toggle="modal" onclick="' + data + '" href="#edit_procedure">Sửa</a><a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
+                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" onclick="load_procedure_detail(' + data +
+                        ')">Sửa</a><a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
                 }
             }
             ],
