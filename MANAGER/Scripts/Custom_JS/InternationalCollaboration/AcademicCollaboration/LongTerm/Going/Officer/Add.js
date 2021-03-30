@@ -339,31 +339,21 @@ var available_partner;
 $('#going_add_officer_save').on('click', function () {
     //person
     let person = $('#going_add_officer_name').val();
-
     let person_email = $('#going_add_officer_email').val();
     let person_profile_office_id = $('#going_add_officer_facility').val();
-
     //partner
     let partner = $('#going_add_officer_traning').val();
-
     let partner_country_id = $('#going_add_officer_nation').val();
-
     let collab_scope_id = $('#going_add_officer_coop_scope').val();
-
     //detail
     let status_id = $('#going_add_officer_status').val();
-
     let plan_start_date = $('#going_add_officer_start_plan_date').val();
     let plan_end_date = $('#going_add_officer_end_plan_date').val();
-
     let actual_start_date = $('#going_add_officer_start_date').val();
     let actual_end_date = $('#going_add_officer_end_date').val();
-
     let evidence = uppy1.getFiles();
-
     let support = $('#going_add_officer_support').prop('checked');
     let note = $('#going_add_officer_note').val();
-
     //check empty
     if (isEmptyOrNullOrUndefined(person) || isEmptyOrNullOrUndefined(person_email)
         || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
