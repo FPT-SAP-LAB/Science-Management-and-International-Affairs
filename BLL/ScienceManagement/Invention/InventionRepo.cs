@@ -46,7 +46,7 @@ namespace BLL.ScienceManagement.Invention
         public List<AuthorInfoWithNull> getAuthor(string id)
         {
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [General].People po on ai.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
