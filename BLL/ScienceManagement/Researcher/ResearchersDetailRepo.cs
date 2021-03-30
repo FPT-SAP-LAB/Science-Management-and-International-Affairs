@@ -27,9 +27,9 @@ namespace BLL.ScienceManagement.Researcher
                     email = a.email,
                     phone = a.phone_number,
                     avatar = (from f in db.Profiles
-                                    join ff in db.Files on f.avatar_id equals ff.file_id
-                                    where f.people_id == a.people_id
-                                    select ff.link
+                              join ff in db.Files on f.avatar_id equals ff.file_id
+                              where f.people_id == a.people_id
+                              select ff.link
                                       ).FirstOrDefault(),
                     website = b.website,
                     office = b.Office.office_name,

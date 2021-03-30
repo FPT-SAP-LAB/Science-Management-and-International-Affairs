@@ -100,12 +100,12 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         public ActionResult EditProfilePhoto()
         {
             researcherEditResearcherInfo = new EditResearcherInfoRepo();
-            var uploadfile= Request.Files["imageInput"];
+            var uploadfile = Request.Files["imageInput"];
             int people_id = Int32.Parse(Request.Form["people_id"]);
             Account account = CurrentAccount.Account(Session);
-            var file=GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
+            var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
-            return Json(new { res=res });
+            return Json(new { res = res });
         }
         public ActionResult EditResearcher()
         {

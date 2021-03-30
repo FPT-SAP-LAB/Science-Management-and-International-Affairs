@@ -112,12 +112,13 @@ namespace BLL.ScienceManagement.Researcher
                     db.SaveChanges();
                     trans.Commit();
                     return 1;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     return 0;
                 }
             }
-            
+
         }
     }
 }
