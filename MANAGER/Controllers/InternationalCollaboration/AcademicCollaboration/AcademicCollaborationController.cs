@@ -5,6 +5,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.DeserializeAcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
 using MANAGER.Models;
 using Newtonsoft.Json;
@@ -189,11 +190,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
+        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id,
+            string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
         {
             try
             {
-                //parse to Object
+                //deserialize json obj string
                 SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
                 SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);

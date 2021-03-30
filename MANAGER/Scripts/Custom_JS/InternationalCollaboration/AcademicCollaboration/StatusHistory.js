@@ -35,7 +35,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
                     if (type === "sort" || type === "") {
                         return data;
                     }
-                    return moment(data).format('DD-MM-YYYY');
+                    return moment(data).format('DD-MM-YYYY hh:mm:ss A');
                 }
             },
             {
@@ -88,7 +88,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
         ],
         initComplete: function () {
             $(this).parent().css('overflow-x', 'auto');
-            //$(this).parent().removeClass();
+            $(this).parent().removeClass();
         }
     });
 
