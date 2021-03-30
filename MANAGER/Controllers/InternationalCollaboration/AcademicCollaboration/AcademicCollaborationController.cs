@@ -476,12 +476,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 if (acc.account_id == 0)
                 {
-                    return Json(new
-                    {
-                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
-                    });
+                    AlertModal<string> json_false = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài");
+                    return Json(new { json_false.success, json_false.content });
                 }
-
                 AlertModal<string> json = acShortRepo.AddProcedure(files_request, procedure_title, direction,
                     content, numberOfImage, partner_language_type, acc.account_id);
                 return Json(new { json.success, json.content });
@@ -489,18 +486,54 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                AlertModal<string> json_false = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json_false.success, json_false.content });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadEdit(int procedure_id)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                ProcedureInfoManager procedureInfoManager = acShortRepo.LoadEditProcedure(procedure_id);
+                ViewBag.procedure_id = procedure_id;
+                return Json(new { json = procedureInfoManager });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
                 AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
                 return Json(new { json.success, json.content });
             }
         }
 
         [HttpPost]
-        public ActionResult DeleteProcedure(int article_id)
+        public ActionResult LoadContentDetailLanguage(int procedure_id, int language_id)
         {
             try
             {
                 acShortRepo = new AcademicCollaborationShortRepo();
-                AlertModal<string> json = acShortRepo.DeleteProcedure(article_id);
+                string content = acShortRepo.GetContentLanguage(procedure_id, language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+        [HttpPost]
+        public ActionResult DeleteProcedure(int procedure_id)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                AlertModal<string> json = acShortRepo.DeleteProcedure(procedure_id);
                 return Json(new { json.success, json.content });
             }
             catch (Exception e)

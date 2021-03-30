@@ -10,5 +10,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
     {
         public string full_name { get; set; }
         public int article_id { get; set; }
+        public int language_id { get; set; }
     }
 }
