@@ -851,47 +851,71 @@
                     partner_name: $(this).text()
                 });
             });
-
         }
 
-        function addExMOATemp(){
-            if ($('#coop_scope_ex_moa_add').val().length == 0) {
+        $('#partner_name_ex_moa_add').on('change', function () {
+            var em = { partner_id: this.value };
+            $.ajax({
+                url: "@Url.Action("getNewExMOAScopesList", "BasicInfoMOA")",
+                type: "POST",
+                data: JSON.stringify(em),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    $('#coop_scope_ex_moa_add').empty();
+                    for (i = 0; i < data.length; i++) {
+                        var newOption = new Option(data[i].scope_abbreviation, data[i].scope_id, false, false);
+                        $('#coop_scope_ex_moa_add').append(newOption).trigger('change');
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        function addExMOATemp() {
+            if ($('#partner_name_ex_moa_add').val() == "") {
+                toastr.error('Đối tác chưa được chọn');
+                return;
+            }
+            else if ($('#coop_scope_ex_moa_add').val().length == 0) {
                 toastr.error('Phạm vi hợp tác chưa được chọn');
                 return;
             }
-            var partner_id = $('#partner_name_ex_moa_add').val();
-            var partner_name_ex_add = listPartner.find(x => x.partner_id == partner_id).partner_name;
-            var objCheck = listTempExMOAPartnerScope.find(x => x.partner_name == partner_name_ex_add);
-            if (objCheck == null)
-            {
-                var scopes = $('#coop_scope_ex_moa_add').val();
-                var scopes_name = '';
-                for (i = 0; i < scopes.length; i++) {
-                    var objScope = listScopes.find(x => x.scope_id == scopes[i]);
-                    scopes_name += objScope.scope_abbreviation + ',';
-                }
+            else {
+                var partner_id = $('#partner_name_ex_moa_add').val();
+                var partner_name_ex_add = listPartner.find(x => x.partner_id == partner_id).partner_name;
+                var objCheck = listTempExMOAPartnerScope.find(x => x.partner_name == partner_name_ex_add);
+                if (objCheck == null) {
+                    var scopes = $("#coop_scope_ex_moa_add").select2('data');
+                    var scopes_name = '';
+                    for (i = 0; i < scopes.length; i++) {
+                        scopes_name += scopes[i].text + ',';
+                    }
 
-                var objPartner = listPartner.find(x => x.partner_id == partner_id);
-                var partner_name = objPartner.partner_name;
+                    var objPartner = listPartner.find(x => x.partner_id == partner_id);
+                    var partner_name = objPartner.partner_name;
 
-                if (scopes_name.endsWith(",")) {
-                    scopes_name = scopes_name.slice(0, -1);
-                }
+                    if (scopes_name.endsWith(",")) {
+                        scopes_name = scopes_name.slice(0, -1);
+                    }
 
-                var temp = {
-                    partner_id: partner_id,
-                    partner_name: partner_name,
-                    scopes_id: scopes,
-                    scopes_name: scopes_name,
+                    var temp = {
+                        partner_id: partner_id,
+                        partner_name: partner_name,
+                        scopes_id: $("#coop_scope_ex_moa_add").val(),
+                        scopes_name: scopes_name,
+                    }
+                    $('#add-partner-scope').modal('hide');
+                    listTempExMOAPartnerScope.push(temp);
+                    clearInputAddExMOAPartner();
+                    initAndRefreshTableExMOAAdd();
                 }
-                $('#add-partner-scope').modal('hide');
-                listTempExMOAPartnerScope.push(temp);
-                clearInputAddExMOAPartner();
-                initAndRefreshTableExMOAAdd();
-            }
-            else
-            {
-                toastr.error('Đối tác này đã được thêm');
+                else {
+                    toastr.error('Đối tác này đã được thêm');
+                }
             }
         }
 
@@ -1332,7 +1356,7 @@
                 var ExMOAAdd = {
                     ExMOABasicInfo: ExMOABasicInfo,
                     PartnerScopeInfoMOA: listTempExMOAPartnerScopeEdit,
-                    moa_bonus_id: $('#moa_bonus_id').val() 
+                    moa_bonus_id: $('#moa_bonus_id').val()
                 };
 
                 $.ajax({
@@ -1374,8 +1398,8 @@
     });
 
     function addToList() {
-        //listScopeMOAPartner = [];
-        //listPartnerMOAPartner = [];
+        listScopeMOAPartner = [];
+        listPartnerMOAPartner = [];
         $("#coop_scope option").each(function () {
             listScopeMOAPartner.push({
                 scope_id: $(this).val(),
@@ -1384,7 +1408,8 @@
         });
         $("#partner_name_form option").each(function () {
             listPartnerMOAPartner.push({
-                partner_name: $(this).val()
+                partner_id: $(this).val(),
+                partner_name: $(this).text()
             });
         });
     }
@@ -1482,8 +1507,8 @@
     }
 
     function checkPartnerAddMOA() {
-        var partner_name = document.getElementById("partner_name_form").value;
-        var em = { partner_name: partner_name };
+        var partner_id = document.getElementById("partner_name_form").value;
+        var em = { partner_id: partner_id };
         $.ajax({
             url: "@Url.Action("GetMOAScopesByPartner", "PartnerMOA")",
             type: "POST",
@@ -1515,7 +1540,7 @@
                     document.getElementById("nation").value = data.country_name == null ? "" : data.country_name;
                     document.getElementById("phone").value = data.contact_point_phone == null ? "" : data.contact_point_phone;
                     document.getElementById("moa_partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
-                    document.getElementById("specialization").value = data.specialization_name == null ? "" : data.specialization_name;
+                    document.getElementById("specialization").value = data.specializations == null ? "" : data.specializations;
                 }
                 document.getElementById("add_moa_partner_button").removeAttribute('disabled');
             },
@@ -1526,8 +1551,8 @@
     }
 
     function checkPartnerEditMOA() {
-        var partner_name = document.getElementById("partner_name_form_edit").value;
-        var em = { partner_name: partner_name };
+        var partner_id = document.getElementById("partner_name_form_edit").value;
+        var em = { partner_id: partner_id };
         $.ajax({
             url: "@Url.Action("GetMOAScopesByPartner", "PartnerMOA")",
             type: "POST",
@@ -1581,10 +1606,10 @@
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         } else {
             var MOAPartnerInfo = {
-                partnername_add: document.getElementById("partner_name_form").value,
+                partner_id: document.getElementById("partner_name_form").value,
                 sign_date_moa_add: document.getElementById("sign_date").value,
-                coop_scope_add: $("#coop_scope").val(),
-                partner_id: document.getElementById("moa_partner_id_add").value,
+                coop_scope_add: $("#coop_scope").val()
+                //partner_id: document.getElementById("moa_partner_id_add").value,
             }
             $.ajax({
                 url: "@Url.Action("Add_Moa_Partner", "PartnerMOA")",
@@ -1640,20 +1665,19 @@
     function loadDataMOAPartnerForEdit(input) {
         //add html to partner_input
         $('#partner_name_form_edit').empty();
-
-        var partner_name = input.partner_name;
+        var partner_id = input.partner_id;
         var HTMLPartnerdata = "";
         for (k = 0; k < listPartnerMOAPartner.length; k++) {
-            if (partner_name == listPartnerMOAPartner[k].partner_name) {
-                HTMLPartnerdata += '<option value = "' + listPartnerMOAPartner[k].partner_name + '" selected>' + listPartnerMOAPartner[k].partner_name + '</option>'
+            if (partner_id == listPartnerMOAPartner[k].partner_id) {
+                HTMLPartnerdata += '<option value = "' + listPartnerMOAPartner[k].partner_id + '" selected>' + listPartnerMOAPartner[k].partner_name + '</option>'
             } else {
-                HTMLPartnerdata += '<option value = "' + listPartnerMOAPartner[k].partner_name + '">' + listPartnerMOAPartner[k].partner_name + '</option>'
+                HTMLPartnerdata += '<option value = "' + listPartnerMOAPartner[k].partner_id + '">' + listPartnerMOAPartner[k].partner_name + '</option>'
             }
         }
         $('#partner_name_form_edit').append(HTMLPartnerdata);
 
         //add html to scopes input
-        var em = { partner_name: input.partner_name };
+        var em = { partner_id: input.partner_id };
         $.ajax({
             url: "@Url.Action("GetMOAScopesByPartner", "PartnerMOA")",
             type: "POST",
@@ -1661,16 +1685,25 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (data) {
-                var HTMLScopedata = "";
                 $('#coop_scope_edit').empty();
+                //add all options.
+                //split and add choice
+                var token = (input.scopes + '').split(',');
                 for (j = 0; j < data.length; j++) {
-                    if ((input.scopes + '').includes(data[j].scope_id)) {
-                        HTMLScopedata += '<option value = "' + data[j].scope_id + '" selected>' + data[j].scope_abbreviation + '</option>'
-                    } else {
-                        HTMLScopedata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>'
+                    var isSelected = false;
+                    for (i = 0; i < token.length; i++) {
+                        if (token[i] == data[j].scope_id) {
+                            isSelected = true;
+                            var newOption = new Option(data[j].scope_abbreviation, data[j].scope_id, true, true);
+                            $('#coop_scope_edit').append(newOption).trigger('change');
+                            break;
+                        }
+                    }
+                    if (!isSelected) {
+                        var newOption = new Option(data[j].scope_abbreviation, data[j].scope_id, false, false);
+                        $('#coop_scope_edit').append(newOption).trigger('change');
                     }
                 }
-                $('#coop_scope_edit').append(HTMLScopedata);
             },
             error: function () {
                 //alert("fail");
@@ -1770,7 +1803,7 @@
         else {
             var MOAPartnerEdited = {
                 scopes: $('#coop_scope_edit').val(),
-                partner_name: $('#partner_name_form_edit').val(),
+                partner_id: $('#partner_name_form_edit').val(),
                 sign_date_string: $('#sign_date_edit').val(),
                 moa_partner_id: moa_partner_id_item
             }

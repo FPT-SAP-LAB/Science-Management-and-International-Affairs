@@ -509,6 +509,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
+                acShortRepo = new AcademicCollaborationShortRepo();
                 AlertModal<string> json = acShortRepo.DeleteProcedure(article_id);
                 return Json(new { json.success, json.content });
             }

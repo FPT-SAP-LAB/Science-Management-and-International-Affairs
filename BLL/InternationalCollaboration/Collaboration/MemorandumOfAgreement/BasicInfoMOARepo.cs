@@ -49,10 +49,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 	                        (select mou.mou_id, offi.office_abbreviation
 	                        from IA_Collaboration.MOU mou
                             inner join General.Office offi on offi.office_id = mou.office_id) as mou on mou.mou_id = moa.mou_id ";
-                MOABasicInfo basicInfo = db.Database.SqlQuery<MOABasicInfo>(sql_moaBasicInfo,
-                        new SqlParameter("moa_id", moa_id)).First();
+                List<MOABasicInfo> basicInfo = db.Database.SqlQuery<MOABasicInfo>(sql_moaBasicInfo,
+                        new SqlParameter("moa_id", moa_id)).ToList();
                 handlingMOAData(basicInfo);
-                return basicInfo;
+                return basicInfo[0];
             }
             catch (Exception ex)
             {
@@ -114,11 +114,36 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        private void handlingMOAData(MOABasicInfo basicInfo)
+        private void handlingMOAData(List<MOABasicInfo> basicInfo)
         {
-            //handle date display
-            basicInfo.moa_end_date_string = basicInfo.moa_end_date.ToString("dd'/'MM'/'yyyy");
-            basicInfo.moa_start_date_string = basicInfo.moa_start_date.ToString("dd'/'MM'/'yyyy");
+            MOABasicInfo previousItem = null;
+            foreach (MOABasicInfo item in basicInfo.ToList())
+            {
+                if (previousItem == null) //first record
+                {
+                    previousItem = item;
+                    previousItem.moa_start_date_string = item.moa_start_date.ToString("dd'/'MM'/'yyyy");
+                    previousItem.moa_end_date_string = item.moa_end_date.ToString("dd'/'MM'/'yyyy");
+                }
+                else
+                {
+                    if (item.moa_id.Equals(previousItem.moa_id))
+                    {
+                        if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
+                        {
+                            previousItem.scope_abbreviation = previousItem.scope_abbreviation + "," + item.scope_abbreviation;
+                        }
+                        //then remove current object
+                        basicInfo.Remove(item);
+                    }
+                    else
+                    {
+                        previousItem = item;
+                        previousItem.moa_start_date_string = item.moa_start_date.ToString("dd'/'MM'/'yyyy");
+                        previousItem.moa_end_date_string = item.moa_end_date.ToString("dd'/'MM'/'yyyy");
+                    }
+                }
+            }
         }
         public void editMOABasicInfo(int moa_id, MOABasicInfo newBasicInfo)
         {
@@ -154,25 +179,26 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public List<CollaborationScope> GetScopesExMOA(int moa_id, int mou_id)
+        public List<CollaborationScope> GetScopesExMOA(int moa_id, int mou_id, int partner_id)
         {
             try
             {
                 string sql_scopeList = @"select tb3.* from(
 					select * from(
-					select distinct t2.scope_id from IA_Collaboration.MOUPartnerScope t1 left join
+					select distinct scope_id from IA_Collaboration.MOUPartnerScope t1 left join
                     IA_Collaboration.PartnerScope t2 on 
                     t1.partner_scope_id = t2.partner_scope_id
-                    where mou_id = @mou_id
+                    where mou_id = @mou_id and partner_id = @partner_id
 					) tb1 where scope_id not in(
 					select distinct scope_id from IA_Collaboration.MOAPartnerScope t1 left join
                     IA_Collaboration.PartnerScope t2 on 
                     t1.partner_scope_id = t2.partner_scope_id
-					where moa_id = @moa_id and moa_bonus_id is null)) tb2 inner join IA_Collaboration.CollaborationScope tb3
+					where moa_id = @moa_id and moa_bonus_id is null and partner_id = @partner_id)) tb2 inner join IA_Collaboration.CollaborationScope tb3
 					on tb3.scope_id = tb2.scope_id";
                 List<CollaborationScope> scopeList = db.Database.SqlQuery<CollaborationScope>(sql_scopeList,
                     new SqlParameter("mou_id", mou_id),
-                    new SqlParameter("moa_id", moa_id)).ToList();
+                    new SqlParameter("moa_id", moa_id),
+                    new SqlParameter("partner_id", partner_id)).ToList();
                 return scopeList;
             }
             catch (Exception ex)
@@ -249,6 +275,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         }
                     }
                     db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -321,6 +351,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         }
                     }
                     //checkpoint 2
+                    db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
                     db.SaveChanges();
                     transaction.Commit();
                 }
