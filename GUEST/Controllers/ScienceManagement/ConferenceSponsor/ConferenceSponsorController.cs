@@ -57,6 +57,8 @@ namespace GUEST.Controllers
             pagesTree.Add(new PageTree("Thêm", "/ConferenceSponsor/Add"));
             string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), language_id);
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
+            if (data.Profile == null)
+                return Redirect("/");
 
             ViewBag.data = data;
             ViewBag.countries = countryRepo.GetCountries();

@@ -325,6 +325,7 @@
         var tbodyCost = document.getElementById("tableCost");
         var rowTotalCost = tbodyCost.lastElementChild;
         var conferenceID = @(ConferenceDetail.ConferenceID);
+        var decreaseID = 0;
         var uppy1, uppy2;
         var save_loader = new LoaderBtn($("#SendRequestButton"))
 
@@ -354,7 +355,20 @@
                         data.map(function (obj) {
                             obj.id = obj.conference_id;
                             return obj;
-                        })
+                        });
+                        if (data.length == 0) {
+                            data.push({
+                                id: decreaseID,
+                                conference_name: params.term,
+                                website: "",
+                                keynote_speaker: "",
+                                qs_university: "",
+                                country_id: 1,
+                                formality_id: 1,
+                                co_organized_unit: ""
+                            });
+                            decreaseID = decreaseID - 1;
+                        }
 
                         return {
                             results: data
@@ -580,14 +594,20 @@
         }
 
         function formatRepoSelection(repo) {
-            if (repo.id && repo.website) {
+            if (repo.id && repo.website != undefined) {
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
                 document.getElementById("qs_university").value = repo.qs_university;
                 $('#country').val(repo.country_id).trigger('change');
-                let startDate = new Date(parseInt(repo.time_start.substr(6)));
-                let endDate = new Date(parseInt(repo.time_end.substr(6)));
-                inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2");
+                if (repo.time_start == undefined)
+                    startDate = new Date();
+                else
+                    startDate = new Date(parseInt(repo.time_start.substr(6)));
+                if (repo.time_end == undefined)
+                    endDate = new Date();
+                else
+                    endDate = new Date(parseInt(repo.time_end.substr(6)));
+                inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2", startDate, endDate);
                 document.getElementById("formality").value = repo.formality_id;
                 document.getElementById("co_organized_unit").value = repo.co_organized_unit;
                 conferenceID = repo.id;

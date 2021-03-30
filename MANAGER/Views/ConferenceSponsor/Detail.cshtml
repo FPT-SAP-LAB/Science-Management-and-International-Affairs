@@ -127,7 +127,16 @@
                         <div class="mb-7">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="text-dark-75 font-weight-bolder mr-2">Trạng thái:</span>
-                                <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.StatusName</span>
+                                @if (ConferenceDetail.EditAble)
+                                {
+                                    <span class='label label-lg label-warning label-pill label-inline'>Cần chỉnh sửa</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-lg label-primary label-pill label-inline">
+                                        @ConferenceDetail.StatusName
+                                    </span>
+                                }
                             </div>
                             <div class="d-flex justify-content-between align-items-cente my-1">
                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>

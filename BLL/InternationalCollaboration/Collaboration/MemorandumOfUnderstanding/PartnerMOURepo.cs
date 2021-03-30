@@ -176,6 +176,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         });
                     }
                     db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -192,6 +196,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    db.Configuration.ProxyCreationEnabled = false;
                     int partner_id_item = 0;
                     //new partner
                     if (input.partner_id == 0)
@@ -243,12 +249,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //get old records of PartnerScope in MOU
-                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id,reference_count from IA_Collaboration.PartnerScope t1 inner join 
+                    string sql_old_partnerScope = @"select t1.partner_scope_id,t1.partner_id,scope_id,reference_count from IA_Collaboration.PartnerScope t1 inner join 
                         IA_Collaboration.MOUPartnerScope t2 on
                         t1.partner_scope_id = t2.partner_scope_id
-                        where mou_id = @mou_id";
+                        inner join IA_Collaboration.MOUPartner t3 on
+                        t3.mou_id = t2.mou_id and t3.partner_id = t1.partner_id
+                        where t3.mou_partner_id = @mou_partner_id and t2.mou_bonus_id is null";
                     List<PartnerScope> listOldPS = db.Database.SqlQuery<PartnerScope>(sql_old_partnerScope,
-                        new SqlParameter("mou_id", mou_id)).ToList();
+                        new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
 
                     //reset old records of scopes of partner.
                     foreach (PartnerScope token in listOldPS.ToList())
@@ -259,7 +267,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         db.Entry(objPS).State = EntityState.Modified;
 
                         //delete record of MOUPartnerScope.
-                        db.MOUPartnerScopes.Remove(db.MOUPartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id).First());
+                        db.MOUPartnerScopes.Remove(db.MOUPartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id && x.mou_id == mou_id).First());
                     }
 
                     //add new records of scopes of partner.
@@ -285,14 +293,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             objPS.reference_count += 1;
                             db.Entry(objPS).State = EntityState.Modified;
                             partner_scope_id = objPS.partner_scope_id;
+                            db.SaveChanges();
                         }
                         db.MOUPartnerScopes.Add(new MOUPartnerScope
                         {
                             partner_scope_id = partner_scope_id,
                             mou_id = mou_id
                         });
+                        db.SaveChanges();
                     }
                     //checkpoint 7
+                    db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
                     db.SaveChanges();
                     transaction.Commit();
                 }
@@ -335,6 +349,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.MOUPartners.Remove(db.MOUPartners.Find(mou_partner_id));
 
                     //checkpoint 2
+                    db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
                     db.SaveChanges();
                     transaction.Commit();
                 }

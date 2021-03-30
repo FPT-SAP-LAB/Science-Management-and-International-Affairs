@@ -152,7 +152,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             item.is_accepted = true;
                         }
                         db.SaveChanges();
-                        if (ListCri.All(x => x.is_accepted))
+                        if (Request.EligibilityCriterias.All(x => x.is_accepted))
                             Request.status_id = 2;
 
                         ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
@@ -227,8 +227,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Request = db.RequestConferences.Find(request_id);
             if (Request == null)
                 return new AlertModal<string>(false, "Đề nghị không tồn tại");
-            if (Request.status_id != 2)
-                return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+            if (Request.status_id >= 2)
+                return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
             Request.editable = true;
             db.SaveChanges();
             return new AlertModal<string>(true, "Cập nhật thành công");

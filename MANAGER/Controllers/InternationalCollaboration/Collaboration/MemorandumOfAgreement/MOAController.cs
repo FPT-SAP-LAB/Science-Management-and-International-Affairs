@@ -23,7 +23,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
             string moa_id = Session["moa_detail_id"].ToString();
             string mou_id = Session["mou_detail_id"].ToString();
-            ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
+            //ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
             ViewBag.partnerList = moa_detail.getPartnerExMOA(int.Parse(moa_id));
             ViewBag.newExMOACode = moa_detail.getNewExMOACode(int.Parse(moa_id));
 
@@ -46,12 +46,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult CheckPartner(string partner_name)
+        public ActionResult CheckPartner(int partner_id)
         {
             try
             {
                 string mou_id = Session["mou_detail_id"].ToString();
-                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_name);
+                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_id);
                 return partner is null ? Json("") : Json(partner);
             }
             catch (Exception)

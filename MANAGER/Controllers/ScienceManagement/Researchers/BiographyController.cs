@@ -38,5 +38,61 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        public ActionResult EditWorkEvent()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.EditWorkEvent(data);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult EditAcadEvent()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.EditAcadEvent(data);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult DeleteAcadEvent()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.DeleteAcadEvent(data);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult DeleteWorkEvent()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                string data = Request["data"];
+                researcherBiographyRepo.DeleteWorkEvent(data);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+        }
     }
 }
