@@ -246,10 +246,43 @@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
     @*--------------init datepicker and rangepicker-----------------*@
 
-
     <script>
+        //delete procedure======================================================================
+        function confirm_delete_procedure(article_id) {
+            var id = { article_id: article_id }
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Có muốn xóa bản ghi này",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: '/AcademicCollaboration/DeleteProcedure',
+                        type: "POST",
+                        dataType: 'json',
+                        data: id,
+                        success: function (data) {
+                            if (data.success) {
 
-        
+                                $('#procedure_going_table').DataTable().ajax.reload()
+                                $('#procedure_coming_table').DataTable().ajax.reload()
+                                Swal.fire("Thành công", "Xóa thành công", "success");
+                            } else {
+                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                        },
+                    })
+                }
+            })
+        };
+    //delete procedure======================================================================
     </script>
     <script>
 
