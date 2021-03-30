@@ -153,7 +153,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         }
                         db.SaveChanges();
                         if (Request.EligibilityCriterias.All(x => x.is_accepted))
+                        {
                             Request.status_id = 2;
+                            Request.Conference.is_verified = true;
+                        }
 
                         ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
 
