@@ -1370,7 +1370,16 @@
             document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
             location.reload();
         });
-        function onSignIn(googleUser) {
+        function onLoad() {
+            return new Promise((resolve, reject) => {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+                resolve();
+            });
+        }
+        async function onSignIn(googleUser) {
+            await onLoad();
             var id_token = googleUser.getAuthResponse().id_token;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Authen/SigninGoogleAsync');
@@ -1390,7 +1399,8 @@
             };
             xhr.send('idtoken=' + id_token);
         }
-        function gp_signOut() {
+        async function gp_signOut() {
+            await onLoad();
             $.ajax({
                 url: '/Authen/Logout',
                 data: {},
@@ -1410,11 +1420,6 @@
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
         });
-        function onLoad() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init();
-            });
-        }
         $(document).ready(function () {
             onLoad();
         });

@@ -82,6 +82,20 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<activityType>();
             }
         }
+        public int getPhaseCurrentByActivity(int activity_id)
+        {
+            try
+            {
+                string sql = @"select aap.phase_id from SMIA_AcademicActivity.AcademicActivity aa
+                        inner join SMIA_AcademicActivity.AcademicActivityPhase aap on aap.activity_id = aa.activity_id
+                        where aa.activity_id = @activity_id and GETDATE() between aap.phase_start and aap.phase_end";
+                int phase_id = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_id", activity_id)).FirstOrDefault();
+                return phase_id;
+            }catch(Exception e)
+            {
+                return 0;
+            }
+        }
 
         public string changeFormatDate(string date)
         {
