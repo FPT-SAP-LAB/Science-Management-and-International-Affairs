@@ -38,7 +38,7 @@
                         <br />
                         <br />
                         <span class="font-weight-bolde mb-2r"><i class="far fa-clock icon-md"></i>@rm.GetString("Time")</span>
-                        <span class=" label label-success label-pill label-inline mr-2">@ViewBag.Detail.from - @ViewBag.Detail.from</span>
+                        <span class=" label label-success label-pill label-inline mr-2">@ViewBag.Detail.from - @ViewBag.Detail.to</span>
                     </div>
                 </div>
             </div>
@@ -63,9 +63,6 @@
                 {
                     <p id="p-@item.id" class="event-content" hidden>@item.content</p>
                 }
-                <p id="event-content">
-                    
-                </p>
             </div>
         </div>
         <!-- end: Invoice body-->
