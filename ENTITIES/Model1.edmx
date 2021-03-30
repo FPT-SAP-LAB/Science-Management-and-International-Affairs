@@ -110,6 +110,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="office_id" Type="int" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -130,7 +131,6 @@
           <Property Name="tax_code" Type="bigint" />
           <Property Name="identification_number" Type="nvarchar" MaxLength="50" />
           <Property Name="identification_file_id" Type="int" />
-          <Property Name="office_id" Type="int" Nullable="false" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="account_id" Type="int" />
           <Property Name="profile_page_active" Type="bit" Nullable="false" />
@@ -2742,6 +2742,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__People__office_i__1960B67E">
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="office_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PeopleCon__contr__55209ACA">
           <End Role="ContractType" Type="Self.ContractType" Multiplicity="1" />
           <End Role="PeopleContract" Type="Self.PeopleContract" Multiplicity="*" />
@@ -2935,18 +2947,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="identification_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Profile__office___7993056A">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4274,6 +4274,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="CollaborationScope" EntitySet="CollaborationScope" />
             <End Role="PartnerScope" EntitySet="PartnerScope" />
           </AssociationSet>
+          <AssociationSet Name="FK__People__office_i__1960B67E" Association="Self.FK__People__office_i__1960B67E">
+            <End Role="Office" EntitySet="Office" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
           <AssociationSet Name="FK__PeopleCon__contr__55209ACA" Association="Self.FK__PeopleCon__contr__55209ACA">
             <End Role="ContractType" EntitySet="ContractType" />
             <End Role="PeopleContract" EntitySet="PeopleContract" />
@@ -4336,10 +4340,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </AssociationSet>
           <AssociationSet Name="FK__Profile__identif__789EE131" Association="Self.FK__Profile__identif__789EE131">
             <End Role="File" EntitySet="File" />
-            <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Profile__office___7993056A" Association="Self.FK__Profile__office___7993056A">
-            <End Role="Office" EntitySet="Office" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
           <AssociationSet Name="FK__Profile__people___3335971A" Association="Self.FK__Profile__people___3335971A">
@@ -4703,8 +4703,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="Office" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="Office" ToRole="MOU" />
           <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__offic__278EDA44" FromRole="Office" ToRole="Participant" />
+          <NavigationProperty Name="People" Relationship="Self.FK__People__office_i__1960B67E" FromRole="Office" ToRole="People" />
           <NavigationProperty Name="PlanParticipants" Relationship="Self.FK__PlanParti__offic__05A3D694" FromRole="Office" ToRole="PlanParticipant" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__office___7993056A" FromRole="Office" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -4714,6 +4714,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="office_id" Type="Int32" />
+          <NavigationProperty Name="Office" Relationship="Self.FK__People__office_i__1960B67E" FromRole="People" ToRole="Office" />
           <NavigationProperty Name="AcademicCollaborations" Relationship="Self.FK__AcademicC__peopl__0D44F85C" FromRole="People" ToRole="AcademicCollaboration" />
           <NavigationProperty Name="AuthorInventions" Relationship="Self.FK__AuthorInv__peopl__3F9B6DFF" FromRole="People" ToRole="AuthorInvention" />
           <NavigationProperty Name="AuthorPapers" Relationship="Self.FK__AuthorPap__peopl__4183B671" FromRole="People" ToRole="AuthorPaper" />
@@ -4740,7 +4742,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="tax_code" Type="Int64" />
           <Property Name="identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="identification_file_id" Type="Int32" />
-          <Property Name="office_id" Type="Int32" Nullable="false" />
           <Property Name="mssv_msnv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="profile_page_active" Type="Boolean" Nullable="false" />
@@ -4749,7 +4750,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="Country" Relationship="Self.FK__Profile__country__70FDBF69" FromRole="Profile" ToRole="Country" />
           <NavigationProperty Name="File" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="Profile" ToRole="File" />
           <NavigationProperty Name="File1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="Profile" ToRole="File" />
-          <NavigationProperty Name="Office" Relationship="Self.FK__Profile__office___7993056A" FromRole="Profile" ToRole="Office" />
           <NavigationProperty Name="Person" Relationship="Self.FK__Profile__people___3335971A" FromRole="Profile" ToRole="People" />
           <NavigationProperty Name="Awards" Relationship="Self.FK__Award__people_id__2AA05119" FromRole="Profile" ToRole="Award" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__peopl__1C5231C2" FromRole="Profile" ToRole="ConferenceParticipant" />
@@ -6532,6 +6532,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__People__office_i__1960B67E">
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
+          <End Role="People" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="office_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PlanParti__offic__05A3D694">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="PlanParticipant" Type="Self.PlanParticipant" Multiplicity="*" />
@@ -6540,18 +6552,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <PropertyRef Name="office_id" />
             </Principal>
             <Dependent Role="PlanParticipant">
-              <PropertyRef Name="office_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Profile__office___7993056A">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="Profile">
               <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8624,13 +8624,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Office" EntitySet="Offices" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>
+          <AssociationSet Name="FK__People__office_i__1960B67E" Association="Self.FK__People__office_i__1960B67E">
+            <End Role="Office" EntitySet="Offices" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
           <AssociationSet Name="FK__PlanParti__offic__05A3D694" Association="Self.FK__PlanParti__offic__05A3D694">
             <End Role="Office" EntitySet="Offices" />
             <End Role="PlanParticipant" EntitySet="PlanParticipants" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Profile__office___7993056A" Association="Self.FK__Profile__office___7993056A">
-            <End Role="Office" EntitySet="Offices" />
-            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicC__peopl__0D44F85C" Association="Self.FK__AcademicC__peopl__0D44F85C">
             <End Role="People" EntitySet="People" />
@@ -9362,6 +9362,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="office_id" ColumnName="office_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9383,7 +9384,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="tax_code" ColumnName="tax_code" />
                 <ScalarProperty Name="identification_number" ColumnName="identification_number" />
                 <ScalarProperty Name="identification_file_id" ColumnName="identification_file_id" />
-                <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="profile_page_active" ColumnName="profile_page_active" />

@@ -22,7 +22,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"select
-                        collab.collab_id, pp.[name] 'people_name', pp.email, offi.office_name, pn.partner_name, c.country_name,
+                        collab.collab_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_name, pn.partner_name, c.country_name,
                         collab.plan_study_start_date, collab.plan_study_end_date,
                         acs.collab_status_id, acs.collab_status_id, acs.collab_status_name,
                         collab.is_supported, collab.note
@@ -423,8 +423,32 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 //add information to People
                 person.name = obj_person.person_name;
                 person.email = obj_person.person_email;
-                //if (obj_person.person_profile_office_id != null) person.office_id = obj_person.person_profile_office_id;
+                if (obj_person.person_profile_office_id != 0) person.office_id = obj_person.person_profile_office_id;
                 db.People.Add(person);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return person;
+        }
+
+        public Person updatePerson(SaveAcadCollab_Person obj_person)
+        {
+            Person person = new Person();
+            try
+            {
+                person = db.People.Find(obj_person.person_id);
+                //update person
+                if (obj_person.person_profile_office_id != 0)
+                {
+                    person.office_id = obj_person.person_profile_office_id;
+                }
+                else
+                {
+                    person.office_id = null;
+                }
                 db.SaveChanges();
             }
             catch (Exception e)
@@ -628,7 +652,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 var sql = @"select
-                            collab.collab_id, collab.partner_scope_id, collab.collab_type_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
+                            collab.collab_id, collab.partner_scope_id, collab.collab_type_id, pp.people_id, pp.people_id, pp.[name] 'people_name', pp.email, offi.office_id, offi.office_name,
                             pn.partner_id, pn.partner_name, c.country_id, c.country_name, cs.scope_id, cs.scope_name,
                             collab.plan_study_start_date, collab.plan_study_end_date, csh.file_id, csh.file_name, csh.file_link, csh.file_drive_id, collab.actual_study_start_date, collab.actual_study_end_date,
                             acs.collab_status_id, acs.collab_status_name,
@@ -716,20 +740,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         {
                             //add person
                             person = savePerson(obj_person);
-                            person_id = person.people_id;
-
-                            //add office
-                            //check office_id with Office
-                            //var office = db.Offices.Find(obj_person.person_profile_office_id);
-                            //if (office == null)
-                            //{
-                            //    return new AlertModal<AcademicCollaboration_Ext>(false, "Không thêm được cơ sở tương ứng.");
-                            //}
-                            //else
-                            //{
-                            //    saveProfile(person, obj_person);
-                            //}
                         }
+                        else
+                        {
+                            //update office_id
+                            person = updatePerson(obj_person);
+                        }
+                        person_id = person.people_id;
 
                         //check available partner
                         if (!obj_partner.available_partner)

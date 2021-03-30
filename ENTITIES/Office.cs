@@ -21,8 +21,8 @@ namespace ENTITIES
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.MOUs = new HashSet<MOU>();
             this.Participants = new HashSet<Participant>();
+            this.People = new HashSet<Person>();
             this.PlanParticipants = new HashSet<PlanParticipant>();
-            this.Profiles = new HashSet<Profile>();
         }
     
         public int office_id { get; set; }
@@ -42,8 +42,8 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Participant> Participants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanParticipant> PlanParticipants { get; set; }
+        public virtual ICollection<Person> People { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<PlanParticipant> PlanParticipants { get; set; }
     }
 }
