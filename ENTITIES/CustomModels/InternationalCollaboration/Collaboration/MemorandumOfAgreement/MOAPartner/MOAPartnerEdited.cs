@@ -9,7 +9,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     public class MOAPartnerEdited
     {
         public List<int> scopes { get; set; }
-        public string partner_name { get; set; }
+        public int partner_id { get; set; }
         public string sign_date_string { get; set; }
         public int moa_partner_id { get; set; }
     }

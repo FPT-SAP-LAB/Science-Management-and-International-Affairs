@@ -301,7 +301,7 @@ $("#delete_acad").click(function () {
                 success: function (response) {
                     if (response.mess == "ss") {
                         window.location.reload()
-                  g  }
+                    }
                     else window.location.reload()
                 },
                 error: function () {
