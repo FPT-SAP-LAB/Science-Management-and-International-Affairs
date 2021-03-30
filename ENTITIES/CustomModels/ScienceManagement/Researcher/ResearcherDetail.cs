@@ -12,6 +12,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public string name { get; set; }
         public System.DateTime? dob { get; set; }
         public string country { get; set; }
+        public int country_id { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
         public int title_id { get; set; }
@@ -27,5 +28,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public List<SelectField> title_fields { get; set; }
         public List<SelectField> position_fields { get; set; }
         public List<SelectField> offices_fields { get; set; }
+        public List<SelectField> countries_fields { get; set; }
     }
 }

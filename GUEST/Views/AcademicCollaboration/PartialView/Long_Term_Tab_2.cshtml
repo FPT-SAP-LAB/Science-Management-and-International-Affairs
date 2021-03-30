@@ -22,8 +22,10 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_year_tab_2" name="param" style="width:100% !important">
                         <option label="Label"></option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
+                        @for (var i = ViewBag.YearSearching.year_from; i <= ViewBag.YearSearching.year_to; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -37,13 +39,13 @@
     <thead>
         <tr>
             <th rowspan="2">@rm.GetString("Number")</th>
-            <th colspan="2">@rm.GetString("Partner")</th>
+            <th colspan="2" class="text-center">@rm.GetString("Partner")</th>
             <th rowspan="2">@rm.GetString("Program")</th>
             <th rowspan="2">@rm.GetString("RegistrationDeadline")</th>
             <th rowspan="2">@rm.GetString("PublishTime")</th>
         </tr>
         <tr>
-            <th>@rm.GetString("Name")</th>
+            <th>@rm.GetString("PartnerName")</th>
             <th style="border-right-width: 1px !important">@rm.GetString("Country")</th>
         </tr>
     </thead>

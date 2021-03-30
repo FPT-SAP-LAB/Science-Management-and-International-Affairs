@@ -306,6 +306,11 @@
         let id_clone = "";
         let stt = 1;
         document.getElementById('search_year').value = new Date().getFullYear();
+        function convertDate(date) {
+            correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
+                myDate = new Date(correctFormat);
+            return myDate;
+        }
         function saveTempIdDelete(id) {
             Swal.fire({
                 title: "Bạn có muốn xóa hoạt động học thuật này không ?",
@@ -381,7 +386,7 @@
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
-            if (from > to) {
+            if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }
@@ -428,7 +433,7 @@
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
-            if (from > to) {
+            if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }
@@ -476,7 +481,7 @@
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
-            if (from > to) {
+            if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }

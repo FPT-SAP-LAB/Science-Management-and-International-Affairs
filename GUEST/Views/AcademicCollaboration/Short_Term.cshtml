@@ -1,7 +1,7 @@
-﻿
-@{
-    ViewBag.Title = "Trao đổi cán bộ giảng viên";
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("ShortTerm");
 }
 
 <style>
@@ -52,17 +52,17 @@
                         <div class="row justify-content-center training-type-list">
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-1 active-nav">
                                 <a class="nav-link-custom" id="button-tab-1">
-                                    <label>CHƯƠNG TRÌNH TRAO ĐỔI CBGV</label>
+                                    <label>@rm.GetString("ShortTerm").ToUpper()</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>TỪ TỔ CHỨC ĐỐI TÁC</label>
+                                    <label>@rm.GetString("ShortTermPartnerProgram").ToUpper()</label>
                                 </a>
                             </div>
                             <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>TỬ TỔ CHỨC GIÁO DỤC FPT</label>
+                                    <label>@rm.GetString("ShortTermFPTProgram").ToUpper()</label>
                                 </a>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                             <div class="mb-10">
                                 <div class="row mb-4">
                                     <h4 style="font-weight: bold;">
-                                        CÁC THỦ TỤC LIÊN QUAN
+                                        @rm.GetString("RelatedProcedure")
                                     </h4>
                                 </div>
                                 @{
@@ -104,7 +104,7 @@
                             <div class="mt-10">
                                 <div class="row mb-4">
                                     <h4 style="font-weight: bold;">
-                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC ĐỐI TÁC
+                                        @rm.GetString("ShortTermPartnerProgram")
                                     </h4>
                                 </div>
                                 @{
@@ -116,7 +116,7 @@
                             <div class="mb-10">
                                 <div class="row mb-4">
                                     <h4 style="font-weight: bold;">
-                                        CÁC THỦ TỤC LIÊN QUAN
+                                        @rm.GetString("RelatedProcedure")
                                     </h4>
                                 </div>
                                 @{
@@ -126,7 +126,7 @@
                             <div class="mt-10">
                                 <div class="row mb-4">
                                     <h4 style="font-weight: bold;">
-                                        DANH SÁCH CHƯƠNG TRÌNH TRAO ĐỔI CBGV TỪ TỔ CHỨC GIÁO DỤC FPT
+                                        @rm.GetString("ShortTermFPTProgram")
                                     </h4>
                                 </div>
                                 @{
@@ -174,211 +174,411 @@
         })
 
         $(document).ready(function () {
-            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
+            let count = 0;
+            let partnerIndex = 1;
+            let fptIndex = 1;
+            let comingProcIndex = 1;
+            let goingProcIndex = 1;
+            var partner;
+            var countrystr;
+            var yearstr;
+            $('#content-description').text(`@Html.Raw(ViewBag.TypeDescription[0].description)`);
+            $('#search_1').click(function () {
+                partner = $('#search_partner_tab_1').val();
+                countrystr = $('#search_nation_tab_1').val();
+                yearstr = $('#search_year_tab_1').val();
+                count = 0;
+                $.ajax({
+                    url: "@Url.Action("Load_More_List_Short_Term", "AcademicCollaboration")",
+                    type: "POST",
+                    datatype: "json",
+                    cache: false,
+                    data: {
+                        count: count,
+                        partner: partner,
+                        countrystr: countrystr,
+                        yearstr: yearstr
+                    },
+                    success: function (data) {
+                        var temp = `<div class="row justify-content-between">`;
+                        var temp2 = '';
+                        $(data).each(function (i, item) {
+                            if (item.avatar != null) {
+                                temp2 = `<img src="` + item.avatar + `" class="item-picture" />`;
+                            } else {
+                                temp2 = `<img src="../Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />`;
+                            }
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
+                                            `+ temp2 + `
+                                            <label>
+                                                `+ item.program_name + `
+                                            </label>
+                                        </a>
+                                    </div>`;
+                        });
+                        temp += '</div>';
+                        $('#detail-content').html(temp);
+                        if ($(data).length < 4) {
+                            $('#load-more').hide();
+                        } else {
+                            $('#load-more').show();
+                        }
+                    },
+                    error: function () {
+
+
+                    }
+                });
+                return false;
+            });
+            $('#load-more').click(function () {
+                count++;
+                $.ajax({
+                    url: "@Url.Action("Load_More_List_Short_Term", "AcademicCollaboration")",
+                    method: "POST",
+                    datatype: "json",
+                    cache: false,
+                    data: {
+                        count: count,
+                        partner: partner,
+                        countrystr: countrystr,
+                        yearstr: yearstr
+                    },
+                    success: function (data) {
+                        var temp = `<div class="row justify-content-between">`;
+                        var temp2 = '';
+                        $(data).each(function (i, item) {
+                            if (item.avatar != null) {
+                                temp2 = `<img src="`+ item.avatar +`" class="item-picture" />`;
+                            } else {
+                                temp2 = `<img src="../Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />`;
+                            }
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
+                                            `+ temp2 + `
+                                            <label>
+                                                `+ item.program_name + `
+                                            </label>
+                                        </a>
+                                    </div>`;
+                        });
+                        for (var i = 0; i < 4 - $(data).length; i++) {
+                            temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                                    </div>`;
+                        }
+                        if ($(data).length < 4) {
+                            $('#load-more').hide();
+                        }
+                        temp += '</div>';
+                        $(temp).hide().appendTo($('#detail-content')).slideDown(1000);
+
+                    },
+                    error: function () {
+
+
+                    }
+                });
+                return false;
+            });
+            var goingProcTable = $("#going_procedure_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
+                    },
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                },
+                initComplete: function () {
+                    $(this).parent().css('overflow-x', 'auto');
+                    //$(this).parent().removeClass();
+                },
+                serverSide: true,
+                searching: false,
+                lengthChange: false,
+                ajax: ({
+                    url: '/AcademicCollaboration/Procedure_List',
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "direction": 1,
+                        "title": function () { return $('#search_title_tab_2').val() },
+                    },
+                }),
+                columns: [
+                    {
+                        data: 'no',
+                        name: 'no'
+                    },
+                    {
+                        data: 'procedure_name',
+                        name: 'procedure_name'
+                    },
+                    {
+                        data: 'publish_time',
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        },
+                        name: 'publish_time'
+                    }
+                ],
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'text-center',
+                    }
+                ]
+            });
+
+            var comingProcTable = $("#coming_procedure_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
+                    },
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                },
+                initComplete: function () {
+                    $(this).parent().css('overflow-x', 'auto');
+                    //$(this).parent().removeClass();
+                },
+                serverSide: true,
+                searching: false,
+                lengthChange: false,
+                ajax: ({
+                    url: '/AcademicCollaboration/Procedure_List',
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "direction": 2,
+                        "title": function () { return $('#search_title_tab_3').val() },
+                    },
+                }),
+                columns: [
+                    {
+                        data: 'no',
+                        name: 'no'
+                    },
+                    {
+                        data: 'procedure_name',
+                        name: 'procedure_name'
+                    },
+                    {
+                        data: 'publish_time',
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        },
+                        name: 'publish_time'
+                    }
+                ],
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'text-center',
+                    }
+                ]
+            });
+            var goingTable = $("#colab_program_going_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
+                    },
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                },
+                initComplete: function () {
+                    $(this).parent().css('overflow-x', 'auto');
+                    //$(this).parent().removeClass();
+                },
+                serverSide: true,
+                searching: false,
+                lengthChange: false,
+                ajax: ({
+                    url: '/AcademicCollaboration/Partner_Program',
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "collabtype": 1,
+                        "partner": function () { return $('#search_partner_tab_2').val() },
+                        "countrystr": function () { return $('#search_nation_tab_2').val() },
+                        "yearstr": function () { return $('#search_year_tab_2').val() },
+                    },
+                }),
+                columns: [
+                    {
+                        data: 'no',
+                        name: 'no'
+                    },
+                    {
+                        data: "partner_name",
+                        name: "partner_name"
+                    },
+                    {
+                        data: "country_name",
+                        name: "country_name"
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            // Combine the first and last names into a single table field
+                            return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                        },
+                        editField: ['program_id', 'program_name'],
+                        name: 'program_name'
+                    },
+                    {
+                        data: "registration_deadline",
+                        name: "registration_deadline",
+                    },
+                    {
+                        data: "publish_time",
+                        name: "publish_time",
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        }
+                    }
+                ],
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'text-center',
+                    }
+                ]
+            });
+
+            var comingTable = $("#colab_program_coming_table").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "@rm.GetString("Pre")",
+                        sNext: "@rm.GetString("Next")"
+                    },
+                    sEmptyTable: "@rm.GetString("EmptyTB")",
+                    sInfo: "@rm.GetString("ShowTB")",
+                },
+                initComplete: function () {
+                    $(this).parent().css('overflow-x', 'auto');
+                    //$(this).parent().removeClass();
+                },
+                serverSide: true,
+                searching: false,
+                lengthChange: false,
+                ajax: ({
+                    url: '/AcademicCollaboration/FPT_Program',
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "collabtype": 2,
+                        "yearstr": function () { return $('#search_year_tab_3').val() },
+                    },
+                }),
+                columns: [
+                    {
+                        data: 'no',
+                        name: 'no'
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            // Combine the first and last names into a single table field
+                            return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
+                        },
+                        editField: ['program_id', 'program_name'],
+                        name: 'program_name'
+                    },
+                    {
+                        data: "registration_deadline",
+                        name: "registration_deadline"
+                    },
+                    {
+                        data: "publish_time",
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        },
+                        name: "publish_time"
+                    }
+                ],
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'text-center',
+                    }
+                ]
+            });
+            $('#search_2').click(function () {
+                goingTable.ajax.reload();
+            });
+            $('#search_3').click(function () {
+                comingTable.ajax.reload();
+            });
+            $('#search_proc_2').click(function () {
+                goingProcTable.ajax.reload();
+            });
+            $('#search_proc_3').click(function () {
+                comingProcTable.ajax.reload();
+            });
         })
 
         $('.type-1').click(function () {
-            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
-        })
+            $('#content-description').text(`@Html.Raw(ViewBag.TypeDescription[0].description)`)
+        });
 
         $('.type-2').click(function () {
-            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
-        })
+            $('#content-description').text(`@Html.Raw(ViewBag.TypeDescription[1].description)`)
+        });
 
         $('.type-3').click(function () {
-            $('#content-description').text('Nhằm trau dồi, nâng cao chuyên môn và mở rộng các cơ hội hợp tác về nghiên cứu và đào tạo song phương giữa cán bộ giảng viên Tổ chức giáo dục FPT và các tổ chức đối tác.')
-        })
-
-    </script>
-
-    <script>
-
-        $('#load-more').click(function () {
-            $.ajax({
-                url: "@Url.Action("Load_More_List_Short_Term", "AcademicCollaboration")",
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (data) {
-                    var temp = `<div class="row justify-content-between">
-                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                            <a onclick="load_detail.load_program_detail(1,3)" class="link-load-detail">
-                                                <img src="../Content/Picture1.jpg" class="item-picture" />
-                                                <label>
-                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
-                                                </label>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                            <a onclick="load_detail.load_program_detail(1,3)" class="link-load-detail">
-                                                <img src="../Content/Picture2.jpg" class="item-picture" />
-                                                <label>
-                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
-                                                </label>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                            <a onclick="load_detail.load_program_detail(1,4)" class="link-load-detail">
-                                                <img src="../Content/Picture3.jpg" class="item-picture" />
-                                                <label>
-                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
-                                                </label>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                            <a onclick="load_detail.load_program_detail(1,4)" class="link-load-detail">
-                                                <img src="../Content/Picture4.jpg" class="item-picture" />
-                                                <label>
-                                                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
-                                                </label>
-                                            </a>
-                                        </div>
-                                    </div>`
-                    $(temp).hide().appendTo($("#detail-content")).slideDown(1000);
-
-                },
-                 error: function () {
-
-
-                }
-        });
-            return false;
-        })
-
-    </script>
-
-    <script>
-
-        $("#going_procedure_table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-            },
-            initComplete: function () {
-                $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-            },
-            searching: false,
-            lengthChange: false,
-            columnDefs: [
-                {
-                    targets: '_all',
-                    className: 'text-center',
-                }
-            ]
+            $('#content-description').text(`@Html.Raw(ViewBag.TypeDescription[2].description)`)
         });
 
-        $("#colab_program_going_table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-            },
-            initComplete: function () {
-                $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-            },
-            searching: false,
-            lengthChange: false,
-            columnDefs: [
-                {
-                    targets: '_all',
-                    className: 'text-center',
-                }
-            ]
-        });
-
-        $("#coming_procedure_table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-            },
-            initComplete: function () {
-                $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-            },
-            searching: false,
-            lengthChange: false,
-            columnDefs: [
-                {
-                    targets: '_all',
-                    className: 'text-center',
-                }
-            ]
-        });
-
-        $("#colab_program_coming_table").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-            },
-            initComplete: function () {
-                $(this).parent().css('overflow-x', 'auto');
-                $(this).parent().css('padding', '0');
-                //$(this).parent().removeClass();
-            },
-            searching: false,
-            lengthChange: false,
-            columnDefs: [
-                {
-                    targets: '_all',
-                    className: 'text-center',
-                }
-            ]
-        });
     </script>
     <script>
         $('#search_nation_tab_1').select2({
-            placeholder: 'Quốc gia',
+            placeholder: '@rm.GetString("Country")',
             allowClear: true,
             tags: true,
         })
 
         $('#search_year_tab_1').select2({
-            placeholder: 'Năm',
+            placeholder: '@rm.GetString("Year")',
             allowClear: true,
             tags: true,
         })
 
         $('#search_nation_tab_2').select2({
-            placeholder: 'Quốc gia',
+            placeholder: '@rm.GetString("Country")',
             allowClear: true,
             tags: true,
         })
 
         $('#search_year_tab_2').select2({
-            placeholder: 'Năm',
+            placeholder: '@rm.GetString("Year")',
             allowClear: true,
             tags: true,
         })
 
         $('#search_nation_tab_3').select2({
-            placeholder: 'Quốc gia',
+            placeholder: '@rm.GetString("Country")',
             allowClear: true,
             tags: true,
         })
 
         $('#search_year_tab_3').select2({
-            placeholder: 'Năm',
+            placeholder: '@rm.GetString("Year")',
             allowClear: true,
             tags: true,
         })

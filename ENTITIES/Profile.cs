@@ -22,10 +22,10 @@ namespace ENTITIES
             this.CustomProfiles = new HashSet<CustomProfile>();
             this.ProfileAcademicDegrees = new HashSet<ProfileAcademicDegree>();
             this.WorkingProcesses = new HashSet<WorkingProcess>();
+            this.ResearchAreas = new HashSet<ResearchArea>();
             this.ContractTypes = new HashSet<ContractType>();
             this.Positions = new HashSet<Position>();
             this.Titles = new HashSet<Title>();
-            this.ResearchAreas = new HashSet<ResearchArea>();
         }
     
         public int people_id { get; set; }
@@ -46,6 +46,7 @@ namespace ENTITIES
         public int office_id { get; set; }
         public string mssv_msnv { get; set; }
         public Nullable<int> account_id { get; set; }
+        public bool profile_page_active { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Country Country { get; set; }
@@ -65,12 +66,12 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkingProcess> WorkingProcesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ResearchArea> ResearchAreas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContractType> ContractTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Position> Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Title> Titles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResearchArea> ResearchAreas { get; set; }
     }
 }

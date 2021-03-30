@@ -39,6 +39,23 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.detail = guestRepo.getBaseAADetail(id);
             return View();
         }
+
+        [HttpPost]
+        public ActionResult DetailContent(int content_id)
+        {
+            if (content_id == 0)
+            {
+                return Json(new { content = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas ultricies mi eget mauris pharetra et ultrices neque ornare. Volutpat diam ut venenatis tellus. Faucibus a pellentesque sit amet porttitor. Mattis nunc sed blandit libero volutpat sed cras. A cras semper auctor neque vitae tempus. Euismod in pellentesque massa placerat duis ultricies lacus. Ipsum consequat nisl vel pretium lectus quam id leo in. Ut consequat semper viverra nam libero justo laoreet. Fusce id velit ut tortor pretium viverra suspendisse. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Tortor condimentum lacinia quis vel eros donec ac odio. Felis eget nunc lobortis mattis aliquam faucibus purus in massa." });
+            }
+            else if (content_id == 1)
+            {
+                return Json(new { content = "Wibu" });
+            }
+            else
+            {
+                return Json(new { content = "Dương-san no Baka" });
+            }
+        }
         [HttpPost]
         public ActionResult LoadMoreList(int count, List<int> type, string search)
         {

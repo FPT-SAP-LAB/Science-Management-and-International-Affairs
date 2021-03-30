@@ -49,15 +49,19 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                ConferenceID = a.conference_id,
                                                EditAble = a.editable,
                                                InvitationLink = d.link,
+                                               InvitationFileName = d.name,
                                                PaperLink = f.link,
+                                               PaperFileName = f.name,
                                                PaperName = e.name,
                                                RequestID = a.request_id,
+                                               CountryID = c.country_id,
                                                CountryName = c.country_name,
                                                StatusName = h.name,
                                                StatusID = h.status_id,
                                                FormalityID = j.formality_id,
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
+                                               SpecializationID = k.specialization_id,
                                                SpecializationName = k.name
                                            }).FirstOrDefault();
             if (Conference == null)
@@ -96,7 +100,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                                   ID = b.current_mssv_msnv,
                                                                   FullName = d.name,
                                                                   OfficeName = e.office_name,
-                                                                  TitleName = c.name
+                                                                  OfficeID = e.office_id,
+                                                                  TitleName = c.name,
+                                                                  TitleID = c.title_id,
+                                                                  Email = d.email
                                                               }).ToList();
             for (int i = 0; i < Participants.Count; i++)
             {
@@ -119,6 +126,10 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id)
         {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+            if (position_id == null)
+                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
+
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -132,29 +143,39 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
                     if (Request.status_id != 1)
                         return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
-                    var ListCri = Request.EligibilityCriterias;
-                    foreach (var item in ListCri)
-                        if (CriteriaIDs.Contains(item.criteria_id)) item.is_accepted = true;
-                    db.SaveChanges();
-                    if (ListCri.All(x => x.is_accepted))
-                        Request.status_id = 2;
+                    var ListCri = Request.EligibilityCriterias.Where(x => !x.is_accepted && CriteriaIDs.Contains(x.criteria_id));
 
-                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
-                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+                    if (ListCri.Count() > 0)
+                    {
+                        foreach (var item in ListCri)
+                        {
+                            item.is_accepted = true;
+                        }
+                        db.SaveChanges();
+                        if (Request.EligibilityCriterias.All(x => x.is_accepted))
+                            Request.status_id = 2;
 
-                    db.SaveChanges();
-                    trans.Commit();
+                        ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+
+                        db.SaveChanges();
+                        trans.Commit();
+                    }
                     return new AlertModal<string>(true);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
-                    throw;
+                    return new AlertModal<string>(false);
                 }
             }
         }
         public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id)
         {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+            if (position_id == null)
+                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
+
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -187,7 +208,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Request.status_id = 4;
                     }
 
-                    int position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
                     ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
 
                     db.SaveChanges();
@@ -207,8 +227,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Request = db.RequestConferences.Find(request_id);
             if (Request == null)
                 return new AlertModal<string>(false, "Đề nghị không tồn tại");
-            if (Request.status_id != 2)
-                return new AlertModal<string>(false, "Đề nghị đã đóng chi phí");
+            if (Request.status_id >= 2)
+                return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
             Request.editable = true;
             db.SaveChanges();
             return new AlertModal<string>(true, "Cập nhật thành công");

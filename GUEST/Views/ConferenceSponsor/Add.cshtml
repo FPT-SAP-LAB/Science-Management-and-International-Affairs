@@ -57,7 +57,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Quốc gia <span style='color:red'>*</span>:</label>
                                             <select class="form-control" id="country">
-                                                @foreach (var item in ViewBag.data.Countries)
+                                                @foreach (var item in ViewBag.countries)
                                                 {
                                                     <option value="@item.country_id">@item.country_name</option>
                                                 }
@@ -113,7 +113,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Hình thức <span style='color:red'>*</span>:</label>
                                             <select id="formality" class="form-control">
-                                                @foreach (var item in ViewBag.data.FormalityLanguages)
+                                                @foreach (var item in ViewBag.FormalityLanguages)
                                                 {
                                                     <option value="@item.formality_id">@item.name</option>
                                                 }
@@ -124,7 +124,7 @@
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Chuyên ngành <span style='color:red'>*</span>:</label>
                                             <select id="specialization" class="form-control">
-                                                @foreach (var item in ViewBag.data.SpecializationLanguages)
+                                                @foreach (var item in ViewBag.SpecializationLanguages)
                                                 {
                                                     <option value="@item.specialization_id">@item.name</option>
                                                 }
@@ -169,13 +169,13 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            @foreach (var item in ViewBag.data.ConferenceCriteriaLanguages)
+                                            @foreach (var item in ViewBag.ConferenceCriteriaLanguages)
                                             {
                                                 <li>@item</li>
                                             }
                                         </ul>
                                         <br />
-                                        <a href="@ViewBag.data.Link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                        <a href="@ViewBag.Link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +191,6 @@
                                             <th style="min-width: 200px;">Email</th>
                                             <th>Cơ sở</th>
                                             <th>Chức danh</th>
-                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableParticipant">
@@ -209,7 +208,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
-                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
+                                                    @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
                                                         <option @(item.office_id == Profile.OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
                                                     }
@@ -217,72 +216,21 @@
                                             </td>
                                             <td>
                                                 <select class="form-control selectTitle">
-                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
+                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
                                                         <option @(item.title_id == Profile.TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
                                                     }
                                                 </select>
                                             </td>
-                                            <td nowrap="">
-                                                <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="odd" id="baseParticipant">
-                                            <td>
-                                                <select class="form-control select2 selectPeople" name="param">
-                                                    <option label="Label"></option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên">
-                                            </td>
-                                            <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email">
-                                            </td>
-                                            <td>
-                                                <select class="form-control selectOffice">
-                                                    @foreach (ENTITIES.Office item in ViewBag.data.Offices)
-                                                    {
-                                                        <option value="@item.office_id">@item.office_name</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control selectTitle">
-                                                    @foreach (ENTITIES.TitleLanguage item in ViewBag.data.TitleLanguages)
-                                                    {
-                                                        <option value="@item.title_id">@item.name</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td nowrap="">
-                                                <a onclick="deleteParticipant(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12" style="    text-align: end;">
-                                    <a onclick="addParticipant()" class="btn btn-success font-weight-bolder">
-                                        <span class="svg-icon svg-icon-md">
-                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                    <circle fill="#000000" cx="9" cy="15" r="6"></circle>
-                                                    <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
-                                                </g>
-                                            </svg><!--end::Svg Icon-->
-                                        </span> Thêm
-                                    </a>
-                                </div>
                             </div>
                         </div>
                         <div class="pb-5">
                             <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-md-3">
                                     <label>Mệnh giá chi phí</label>
                                     <select class="form-control selectTitle">
@@ -297,7 +245,7 @@
                                         <option value="USD">USD</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
@@ -367,7 +315,6 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        var baseParticipant = document.getElementById("baseParticipant").cloneNode(true);
         var baseCost = document.getElementById("baseCost").cloneNode(true);
         var tbodyParticipant = document.getElementById("tableParticipant");
         var tbodyCost = document.getElementById("tableCost");
@@ -375,6 +322,7 @@
         var startDate = new Date();
         var endDate = new Date();
         var conferenceID = 0;
+        var decreaseID = 0;
         var uppy1, uppy2;
         var save_loader = new LoaderBtn($("#SendRequestButton"))
 
@@ -403,7 +351,20 @@
                         data.map(function (obj) {
                             obj.id = obj.conference_id;
                             return obj;
-                        })
+                        });
+                        if (data.length == 0) {
+                            data.push({
+                                id: decreaseID,
+                                conference_name: params.term,
+                                website: "",
+                                keynote_speaker: "",
+                                qs_university: "",
+                                country_id: 1,
+                                formality_id: 1,
+                                co_organized_unit: ""
+                            });
+                            decreaseID = decreaseID - 1;
+                        }
 
                         return {
                             results: data
@@ -594,17 +555,6 @@
             });
         })
 
-        function addParticipant() {
-            let temp = baseParticipant.cloneNode(true);
-            $(temp).find(".selectOffice, .selectTitle").select2();
-            inItSelectPeople(temp.getElementsByClassName("selectPeople"));
-            tbodyParticipant.appendChild(temp);
-        }
-
-        function deleteParticipant(ele) {
-            ele.closest("tr").remove();
-        }
-
         function addCost() {
             let temp = baseCost.cloneNode(true);
             tbodyCost.insertBefore(temp, rowTotalCost);
@@ -650,8 +600,14 @@
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
                 document.getElementById("qs_university").value = repo.qs_university;
                 $('#country').val(repo.country_id).trigger('change');
-                startDate = new Date(parseInt(repo.time_start.substr(6)));
-                endDate = new Date(parseInt(repo.time_end.substr(6)));
+                if (repo.time_start == undefined)
+                    startDate = new Date();
+                else
+                    startDate = new Date(parseInt(repo.time_start.substr(6)));
+                if (repo.time_end == undefined)
+                    endDate = new Date();
+                else
+                    endDate = new Date(parseInt(repo.time_end.substr(6)));
                 inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2");
                 document.getElementById("formality").value = repo.formality_id;
                 document.getElementById("co_organized_unit").value = repo.co_organized_unit;

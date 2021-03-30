@@ -12,6 +12,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using BLL.ModelDAL;
 
 namespace GUEST.Controllers
 {
@@ -20,16 +21,24 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        // GET: ConferenceSponsor
-        public ActionResult Index()
-        {
-            var pagesTree = new List<PageTree>
+        readonly CountryRepo countryRepo = new CountryRepo();
+        readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
+        readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
+        readonly ConferenceCriteriaLanguageRepo criteriaLanguageRepo = new ConferenceCriteriaLanguageRepo();
+        readonly RequestConferencePolicyRepo policyRepo = new RequestConferencePolicyRepo();
+        readonly OfficeRepo officeRepo = new OfficeRepo();
+        readonly TitleLanguageRepo titleRepo = new TitleLanguageRepo();
+
+        private readonly List<PageTree> pagesTree = new List<PageTree>
             {
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
             };
+        public ActionResult Index()
+        {
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        [AjaxOnly]
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
@@ -44,15 +53,41 @@ namespace GUEST.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
-                new PageTree("Thêm","/ConferenceSponsor/Add"),
-            };
-            string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
+            int language_id = LanguageResource.GetCurrentLanguageID();
+            pagesTree.Add(new PageTree("Thêm", "/ConferenceSponsor/Add"));
+            string output = AppRepos.GetAddPageJson(CurrentAccount.AccountID(Session), language_id);
             DataAddPage data = JsonConvert.DeserializeObject<DataAddPage>(output);
+            if (data.Profile == null)
+                return Redirect("/");
+
             ViewBag.data = data;
+            ViewBag.countries = countryRepo.GetCountries();
             ViewBag.pagesTree = pagesTree;
+            ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
+            ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
+            ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
+            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Offices = officeRepo.GetList();
+            ViewBag.TitleLanguages = titleRepo.GetList(language_id);
+            return View();
+        }
+        public ActionResult Edit(int id)
+        {
+            int language_id = LanguageResource.GetCurrentLanguageID();
+            pagesTree.Add(new PageTree("Chỉnh sửa", "/ConferenceSponsor/Edit?id=" + id));
+            string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
+
+            ViewBag.pagesTree = pagesTree;
+            ViewBag.output = output;
+            ViewBag.countries = countryRepo.GetCountries();
+            ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
+            ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
+            ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
+            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Offices = officeRepo.GetList();
+            ViewBag.TitleLanguages = titleRepo.GetList(language_id);
             return View();
         }
         [HttpPost]
@@ -63,14 +98,11 @@ namespace GUEST.Controllers
         }
         public ActionResult Detail(int id)
         {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
-                new PageTree("Chi tiết","/ConferenceSponsor/Detail"),
-            };
+            pagesTree.Add(new PageTree("Chi tiết", "/ConferenceSponsor/Detail?id=" + id));
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
+
             ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
             return View();
@@ -84,11 +116,13 @@ namespace GUEST.Controllers
             ViewBag.EditAble = id == 2;
             return PartialView();
         }
+        [AjaxOnly]
         public JsonResult GetInformationPeopleWithID(string id)
         {
             var infos = AppRepos.GetAllProfileBy(id, LanguageResource.GetCurrentLanguageID());
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
+        [AjaxOnly]
         public JsonResult GetConferenceWithName(string name)
         {
             var confer = AppRepos.GetAllConferenceBy(name);
@@ -96,14 +130,7 @@ namespace GUEST.Controllers
         }
         public class DataAddPage
         {
-            public List<string> ConferenceCriteriaLanguages { get; set; }
-            public List<Country> Countries { get; set; }
-            public List<FormalityLanguage> FormalityLanguages { get; set; }
-            public List<Office> Offices { get; set; }
-            public List<TitleLanguage> TitleLanguages { get; set; }
-            public string Link { get; set; }
             public ProfileResearcher Profile { get; set; }
-            public List<SpecializationLanguage> SpecializationLanguages { get; set; }
         }
     }
 }

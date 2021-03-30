@@ -93,17 +93,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<AcademicActivityType> getType(int language_id)
+        public List<AcademicActivityTypeLanguage> getType(int language_id)
         {
             try
             {
-                string sql = @"select al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
-                List<AcademicActivityType> data = db.Database.SqlQuery<AcademicActivityType>(sql, new SqlParameter("language_id", language_id)).ToList();
+                string sql = @"select al.language_id, al.activity_type_id,al.activity_type_name from SMIA_AcademicActivity.AcademicActivityTypeLanguage al where al.language_id = @language_id";
+                List<AcademicActivityTypeLanguage> data = db.Database.SqlQuery<AcademicActivityTypeLanguage>(sql, new SqlParameter("language_id", language_id)).ToList();
                 return data;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return new List<AcademicActivityType>();
+                return new List<AcademicActivityTypeLanguage>();
             }
         }
         public baseAA GetbaseAA(int id)
@@ -119,8 +119,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         WHERE al.language_id = 1 and aa.activity_id = @id";
                 baseAA obj = db.Database.SqlQuery<baseAA>(sql,
                             new SqlParameter("id", id)).FirstOrDefault();
-                obj.from = changeFormatDate(obj.from);
-                obj.to = changeFormatDate(obj.to);
+                if (obj != null)
+                {
+                    obj.from = changeFormatDate(obj.from);
+                    obj.to = changeFormatDate(obj.to);
+                }
                 return obj;
             }
             catch (Exception e)

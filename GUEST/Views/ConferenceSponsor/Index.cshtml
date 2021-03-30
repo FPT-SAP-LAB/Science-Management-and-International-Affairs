@@ -70,13 +70,19 @@
                     { data: "CreatedDate", name: "Date" },
                     {
                         data: {}, name: "StatusID", render: function (data) {
-                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline mr-2'>" + data.StatusName + "</span>"
+                            if (data.EditAble)
+                                return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
+                            else
+                                return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
                         }, width: "80px", className: "text-center"
                     },
                     {
-                        data: "RequestID", orderable: false, render: function (data) {
-                            return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
-                        }
+                        data: {}, orderable: false, render: function (data) {
+                            let html = "<a href='/ConferenceSponsor/Detail?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>";
+                            if (data.EditAble)
+                                html += "<a href='/ConferenceSponsor/Edit?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fa fa-edit'></i> </a>";
+                            return html
+                        }, width: "66px", className: "text-left"
                     }
                 ],
                 order: [3, "desc"]

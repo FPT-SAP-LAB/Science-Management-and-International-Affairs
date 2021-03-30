@@ -1,0 +1,26 @@
+﻿<div class="modal fade" id="ltg_describe_content" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">S
+                <h3 class="modal-title">NỘI DUNG MIÊU TẢ ĐÀO TẠO SAU ĐẠI HỌC CHIỀU ĐI</h3>
+            </div>
+            <div class="modal-body row">
+                <div class="col-xl-12 col-lg-12 mb-3">
+                    <select class="form-control text-center" id="ltg_describe_content_language" name="param" style="width:100% !important">
+                        @foreach (var language in ViewBag.languages)
+                        {
+                            <option value="@language.language_id">@language.language_name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-xl-12 col-lg-12">
+                    <textarea id="ltg_describe_content_description" class="form-control" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm px-6 btn-secondary font-weight-bold" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-sm px-6 btn-light-success font-weight-bold" id="ltg_describe_content_save">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

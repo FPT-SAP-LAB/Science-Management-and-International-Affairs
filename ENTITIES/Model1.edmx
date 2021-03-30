@@ -133,6 +133,7 @@
           <Property Name="office_id" Type="int" Nullable="false" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="account_id" Type="int" />
+          <Property Name="profile_page_active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Right">
           <Key>
@@ -260,7 +261,6 @@
             <PropertyRef Name="procedure_id" />
           </Key>
           <Property Name="procedure_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="article_id" Type="int" Nullable="false" />
           <Property Name="direction_id" Type="int" Nullable="false" />
         </EntityType>
@@ -688,9 +688,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="ApprovalProcess">
           <Key>
-            <PropertyRef Name="account_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="approval_process_id" />
           </Key>
+          <Property Name="approval_process_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="position_id" Type="int" />
@@ -875,8 +875,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="type_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.AreaCare' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AreaCare">
           <Key>
             <PropertyRef Name="people_id" />
@@ -928,15 +926,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.AreaC
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="title_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.ProfileAcademicDegree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProfileAcademicDegree">
           <Key>
-            <PropertyRef Name="start_year" />
-            <PropertyRef Name="end_year" />
+            <PropertyRef Name="people_id" />
+            <PropertyRef Name="academic_degree_id" />
           </Key>
-          <Property Name="people_id" Type="int" />
-          <Property Name="academic_degree_id" Type="int" />
+          <Property Name="people_id" Type="int" Nullable="false" />
+          <Property Name="academic_degree_id" Type="int" Nullable="false" />
           <Property Name="start_year" Type="int" Nullable="false" />
           <Property Name="end_year" Type="int" Nullable="false" />
           <Property Name="study_place" Type="nvarchar" MaxLength="50" />
@@ -1222,12 +1218,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </EntityType>
         <EntityType Name="PlanParticipant">
           <Key>
-            <PropertyRef Name="participant_role_id" />
-            <PropertyRef Name="office_id" />
+            <PropertyRef Name="plan_participant_id" />
           </Key>
           <Property Name="quantity" Type="int" />
           <Property Name="participant_role_id" Type="int" Nullable="false" />
-          <Property Name="office_id" Type="int" Nullable="false" />
+          <Property Name="office_id" Type="int" />
+          <Property Name="plan_participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -2817,7 +2813,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PlanParti__offic__05A3D694">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="PlanParticipant" Type="Self.PlanParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Office">
@@ -2866,20 +2862,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Procedure__accou__308E3499">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Procedure">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Procedure__artic__40C49C62">
-          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -2975,7 +2961,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
-          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicDegree">
@@ -2987,7 +2973,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__peopl__27C3E46E">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
@@ -3749,11 +3735,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="RequestDecision" EntityType="Self.RequestDecision" Schema="SM_Request" store:Type="Tables" />
           <EntitySet Name="AcademicDegree" EntityType="Self.AcademicDegree" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AcademicDegreeType" EntityType="Self.AcademicDegreeType" Schema="SM_Researcher" store:Type="Tables" />
+          <EntitySet Name="AreaCare" EntityType="Self.AreaCare" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="Award" EntityType="Self.Award" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="CustomProfile" EntityType="Self.CustomProfile" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeopleContract" EntityType="Self.PeopleContract" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeoplePosition" EntityType="Self.PeoplePosition" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="PeopleTitle" EntityType="Self.PeopleTitle" Schema="SM_Researcher" store:Type="Tables" />
+          <EntitySet Name="ProfileAcademicDegree" EntityType="Self.ProfileAcademicDegree" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="WorkingProcess" EntityType="Self.WorkingProcess" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AuthorInvention" EntityType="Self.AuthorInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AuthorPaper" EntityType="Self.AuthorPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
@@ -3791,21 +3779,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
     [ConferenceStatusLanguage].[status_id] AS [status_id], 
     [ConferenceStatusLanguage].[name] AS [name]
     FROM [Localization].[ConferenceStatusLanguage] AS [ConferenceStatusLanguage]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="AreaCare" EntityType="Self.AreaCare" store:Type="Tables" store:Schema="SM_Researcher">
-            <DefiningQuery>SELECT 
-    [AreaCare].[people_id] AS [people_id], 
-    [AreaCare].[research_area_id] AS [research_area_id]
-    FROM [SM_Researcher].[AreaCare] AS [AreaCare]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ProfileAcademicDegree" EntityType="Self.ProfileAcademicDegree" store:Type="Tables" store:Schema="SM_Researcher">
-            <DefiningQuery>SELECT 
-    [ProfileAcademicDegree].[people_id] AS [people_id], 
-    [ProfileAcademicDegree].[academic_degree_id] AS [academic_degree_id], 
-    [ProfileAcademicDegree].[start_year] AS [start_year], 
-    [ProfileAcademicDegree].[end_year] AS [end_year], 
-    [ProfileAcademicDegree].[study_place] AS [study_place]
-    FROM [SM_Researcher].[ProfileAcademicDegree] AS [ProfileAcademicDegree]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__AcademicA__activ__2610A626" Association="Self.FK__AcademicA__activ__2610A626">
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
@@ -4339,10 +4312,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Position" EntitySet="Position" />
             <End Role="PositionLanguage" EntitySet="PositionLanguage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Procedure__accou__308E3499" Association="Self.FK__Procedure__accou__308E3499">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Procedure" EntitySet="Procedure" />
-          </AssociationSet>
           <AssociationSet Name="FK__Procedure__artic__40C49C62" Association="Self.FK__Procedure__artic__40C49C62">
             <End Role="Article" EntitySet="Article" />
             <End Role="Procedure" EntitySet="Procedure" />
@@ -4648,7 +4617,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__account_id__4865BE2A" FromRole="Account" ToRole="MOA" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="Account" ToRole="MOU" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__accou__15A53433" FromRole="Account" ToRole="Notification" />
-          <NavigationProperty Name="Procedures" Relationship="Self.FK__Procedure__accou__308E3499" FromRole="Account" ToRole="Procedure" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Account" ToRole="Profile" />
         </EntityType>
         <EntityType Name="AccountRight">
@@ -4773,6 +4741,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="office_id" Type="Int32" Nullable="false" />
           <Property Name="mssv_msnv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="account_id" Type="Int32" />
+          <Property Name="profile_page_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Profile" ToRole="Account" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Profile__country__70FDBF69" FromRole="Profile" ToRole="Country" />
           <NavigationProperty Name="File" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="Profile" ToRole="File" />
@@ -4785,10 +4754,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="Profile" ToRole="ProfileAcademicDegree" />
           <NavigationProperty Name="WorkingProcesses" Relationship="Self.FK__WorkingPr__peppl__705EA0EB" FromRole="Profile" ToRole="WorkingProcess" />
+          <NavigationProperty Name="ResearchAreas" Relationship="Self.AreaCare" FromRole="Profile" ToRole="ResearchArea" />
           <NavigationProperty Name="ContractTypes" Relationship="Self.PeopleContract" FromRole="Profile" ToRole="ContractType" />
           <NavigationProperty Name="Positions" Relationship="Self.PeoplePosition" FromRole="Profile" ToRole="Position" />
           <NavigationProperty Name="Titles" Relationship="Self.PeopleTitle" FromRole="Profile" ToRole="Title" />
-          <NavigationProperty Name="ResearchAreas" Relationship="Self.AreaCare" FromRole="Profile" ToRole="ResearchArea" />
         </EntityType>
         <EntityType Name="Right">
           <Key>
@@ -4958,10 +4927,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <PropertyRef Name="procedure_id" />
           </Key>
           <Property Name="procedure_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="article_id" Type="Int32" Nullable="false" />
           <Property Name="direction_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Procedure__accou__308E3499" FromRole="Procedure" ToRole="Account" />
           <NavigationProperty Name="Direction" Relationship="Self.FK_Procedure_Direction" FromRole="Procedure" ToRole="Direction" />
           <NavigationProperty Name="Article" Relationship="Self.FK__Procedure__artic__40C49C62" FromRole="Procedure" ToRole="Article" />
         </EntityType>
@@ -5478,9 +5445,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </EntityType>
         <EntityType Name="ApprovalProcess">
           <Key>
-            <PropertyRef Name="account_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="approval_process_id" />
           </Key>
+          <Property Name="approval_process_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="position_id" Type="Int32" />
@@ -5750,6 +5717,19 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="content" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Profile" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="CustomProfile" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="ProfileAcademicDegree">
+          <Key>
+            <PropertyRef Name="people_id" />
+            <PropertyRef Name="academic_degree_id" />
+          </Key>
+          <Property Name="people_id" Type="Int32" Nullable="false" />
+          <Property Name="academic_degree_id" Type="Int32" Nullable="false" />
+          <Property Name="start_year" Type="Int32" Nullable="false" />
+          <Property Name="end_year" Type="Int32" Nullable="false" />
+          <Property Name="study_place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="ProfileAcademicDegree" ToRole="Profile" />
+          <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="ProfileAcademicDegree" ToRole="AcademicDegree" />
         </EntityType>
         <EntityType Name="WorkingProcess">
           <Key>
@@ -6101,12 +6081,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         </EntityType>
         <EntityType Name="PlanParticipant">
           <Key>
-            <PropertyRef Name="participant_role_id" />
-            <PropertyRef Name="office_id" />
+            <PropertyRef Name="plan_participant_id" />
           </Key>
           <Property Name="quantity" Type="Int32" />
           <Property Name="participant_role_id" Type="Int32" Nullable="false" />
-          <Property Name="office_id" Type="Int32" Nullable="false" />
+          <Property Name="office_id" Type="Int32" />
+          <Property Name="plan_participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Office" Relationship="Self.FK__PlanParti__offic__05A3D694" FromRole="PlanParticipant" ToRole="Office" />
           <NavigationProperty Name="ParticipantRole" Relationship="Self.FK__PlanParti__parti__32767D0B" FromRole="PlanParticipant" ToRole="ParticipantRole" />
         </EntityType>
@@ -6151,19 +6131,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__73501C2F" FromRole="ConferenceStatusLanguage" ToRole="Language" />
           <NavigationProperty Name="ConferenceStatu" Relationship="Self.FK__Conferenc__statu__74444068" FromRole="ConferenceStatusLanguage" ToRole="ConferenceStatus" />
-        </EntityType>
-        <EntityType Name="ProfileAcademicDegree">
-          <Key>
-            <PropertyRef Name="start_year" />
-            <PropertyRef Name="end_year" />
-          </Key>
-          <Property Name="people_id" Type="Int32" />
-          <Property Name="academic_degree_id" Type="Int32" />
-          <Property Name="start_year" Type="Int32" Nullable="false" />
-          <Property Name="end_year" Type="Int32" Nullable="false" />
-          <Property Name="study_place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Profile" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="ProfileAcademicDegree" ToRole="Profile" />
-          <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__ProfileAc__acade__26CFC035" FromRole="ProfileAcademicDegree" ToRole="AcademicDegree" />
         </EntityType>
         <Association Name="FK__CommentBa__accou__2077C861">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
@@ -6293,18 +6260,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <PropertyRef Name="account_id" />
             </Principal>
             <Dependent Role="Notification">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Procedure__accou__308E3499">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Procedure">
               <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -6574,7 +6529,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PlanParti__offic__05A3D694">
-          <End Role="Office" Type="Self.Office" Multiplicity="1" />
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="PlanParticipant" Type="Self.PlanParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Office">
@@ -6706,7 +6661,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__peopl__27C3E46E">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
@@ -7020,7 +6975,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Procedure__artic__40C49C62">
-          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -8020,7 +7977,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ProfileAc__acade__26CFC035">
-          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="0..1" />
+          <End Role="AcademicDegree" Type="Self.AcademicDegree" Multiplicity="1" />
           <End Role="ProfileAcademicDegree" Type="Self.ProfileAcademicDegree" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AcademicDegree">
@@ -8391,6 +8348,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <End Role="Citation" Type="Self.Citation" Multiplicity="*" />
           <End Role="RequestCitation" Type="Self.RequestCitation" Multiplicity="*" />
         </Association>
+        <Association Name="AreaCare">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
+        </Association>
         <Association Name="PeopleContract">
           <End Role="ContractType" Type="Self.ContractType" Multiplicity="*" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -8402,10 +8363,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
         <Association Name="PeopleTitle">
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
           <End Role="Title" Type="Self.Title" Multiplicity="*" />
-        </Association>
-        <Association Name="AreaCare">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <End Role="ResearchArea" Type="Self.ResearchArea" Multiplicity="*" />
         </Association>
         <EntityContainer Name="ScienceAndInternationalAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentBases" EntityType="Self.CommentBase" />
@@ -8498,6 +8455,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="AcademicDegreeTypes" EntityType="Self.AcademicDegreeType" />
           <EntitySet Name="Awards" EntityType="Self.Award" />
           <EntitySet Name="CustomProfiles" EntityType="Self.CustomProfile" />
+          <EntitySet Name="ProfileAcademicDegrees" EntityType="Self.ProfileAcademicDegree" />
           <EntitySet Name="WorkingProcesses" EntityType="Self.WorkingProcess" />
           <EntitySet Name="AuthorInventions" EntityType="Self.AuthorInvention" />
           <EntitySet Name="AuthorPapers" EntityType="Self.AuthorPaper" />
@@ -8530,7 +8488,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySet Name="QuestionOptions" EntityType="Self.QuestionOption" />
           <EntitySet Name="Responses" EntityType="Self.Response" />
           <EntitySet Name="ConferenceStatusLanguages" EntityType="Self.ConferenceStatusLanguage" />
-          <EntitySet Name="ProfileAcademicDegrees" EntityType="Self.ProfileAcademicDegree" />
           <AssociationSet Name="FK__CommentBa__accou__2077C861" Association="Self.FK__CommentBa__accou__2077C861">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="CommentBase" EntitySet="CommentBases" />
@@ -8574,10 +8531,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="FK__Notificat__accou__15A53433" Association="Self.FK__Notificat__accou__15A53433">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Procedure__accou__308E3499" Association="Self.FK__Procedure__accou__308E3499">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Procedure" EntitySet="Procedures" />
           </AssociationSet>
           <AssociationSet Name="FK__Profile__account__0BB1B5A5" Association="Self.FK__Profile__account__0BB1B5A5">
             <End Role="Account" EntitySet="Accounts" />
@@ -9275,6 +9228,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <End Role="Citation" EntitySet="Citations" />
             <End Role="RequestCitation" EntitySet="RequestCitations" />
           </AssociationSet>
+          <AssociationSet Name="AreaCare" Association="Self.AreaCare">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="ResearchArea" EntitySet="ResearchAreas" />
+          </AssociationSet>
           <AssociationSet Name="PeopleContract" Association="Self.PeopleContract">
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
@@ -9286,10 +9243,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <AssociationSet Name="PeopleTitle" Association="Self.PeopleTitle">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Title" EntitySet="Titles" />
-          </AssociationSet>
-          <AssociationSet Name="AreaCare" Association="Self.AreaCare">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="ResearchArea" EntitySet="ResearchAreas" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -9429,6 +9382,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="profile_page_active" ColumnName="profile_page_active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9568,7 +9522,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Procedure">
               <MappingFragment StoreEntitySet="Procedure">
                 <ScalarProperty Name="procedure_id" ColumnName="procedure_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="direction_id" ColumnName="direction_id" />
               </MappingFragment>
@@ -9990,6 +9943,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
           <EntitySetMapping Name="ApprovalProcesses">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ApprovalProcess">
               <MappingFragment StoreEntitySet="ApprovalProcess">
+                <ScalarProperty Name="approval_process_id" ColumnName="approval_process_id" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="position_id" ColumnName="position_id" />
@@ -10213,6 +10167,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="people_id" ColumnName="people_id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="content" ColumnName="content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfileAcademicDegrees">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ProfileAcademicDegree">
+              <MappingFragment StoreEntitySet="ProfileAcademicDegree">
+                <ScalarProperty Name="people_id" ColumnName="people_id" />
+                <ScalarProperty Name="academic_degree_id" ColumnName="academic_degree_id" />
+                <ScalarProperty Name="start_year" ColumnName="start_year" />
+                <ScalarProperty Name="end_year" ColumnName="end_year" />
+                <ScalarProperty Name="study_place" ColumnName="study_place" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10522,6 +10487,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="participant_role_id" ColumnName="participant_role_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
+                <ScalarProperty Name="plan_participant_id" ColumnName="plan_participant_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10562,17 +10528,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProfileAcademicDegrees">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ProfileAcademicDegree">
-              <MappingFragment StoreEntitySet="ProfileAcademicDegree">
-                <ScalarProperty Name="people_id" ColumnName="people_id" />
-                <ScalarProperty Name="academic_degree_id" ColumnName="academic_degree_id" />
-                <ScalarProperty Name="start_year" ColumnName="start_year" />
-                <ScalarProperty Name="end_year" ColumnName="end_year" />
-                <ScalarProperty Name="study_place" ColumnName="study_place" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="CommentRequest" TypeName="ScienceAndInternationalAffairsModel.CommentRequest" StoreEntitySet="CommentRequest">
             <EndProperty Name="CommentBase">
               <ScalarProperty Name="comment_id" ColumnName="comment_id" />
@@ -10605,6 +10560,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
               <ScalarProperty Name="request_id" ColumnName="request_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">
+            <EndProperty Name="Profile">
+              <ScalarProperty Name="people_id" ColumnName="people_id" />
+            </EndProperty>
+            <EndProperty Name="ResearchArea">
+              <ScalarProperty Name="research_area_id" ColumnName="research_area_id" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="PeopleContract" TypeName="ScienceAndInternationalAffairsModel.PeopleContract" StoreEntitySet="PeopleContract">
             <EndProperty Name="ContractType">
               <ScalarProperty Name="contract_id" ColumnName="contract_id" />
@@ -10627,14 +10590,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.SM_Researcher.Profi
             </EndProperty>
             <EndProperty Name="Title">
               <ScalarProperty Name="title_id" ColumnName="title_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AreaCare" TypeName="ScienceAndInternationalAffairsModel.AreaCare" StoreEntitySet="AreaCare">
-            <EndProperty Name="Profile">
-              <ScalarProperty Name="people_id" ColumnName="people_id" />
-            </EndProperty>
-            <EndProperty Name="ResearchArea">
-              <ScalarProperty Name="research_area_id" ColumnName="research_area_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

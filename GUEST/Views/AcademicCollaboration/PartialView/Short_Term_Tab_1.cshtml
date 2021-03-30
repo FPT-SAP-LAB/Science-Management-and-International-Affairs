@@ -1,15 +1,21 @@
-﻿<div class="row mb-4">
+﻿@{
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+}
+
+<div class="row mb-4">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                <input class="form-control" type="text" placeholder="Tên đối tác" autocomplete="off" required id="search_partner_tab_1" />
+                <input class="form-control" type="text" autocomplete="off" placeholder="@rm.GetString("PartnerName")" required id="search_partner_tab_1" />
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_nation_tab_1" name="param" style="width:100% !important">
                         <option label="Label"></option>
-                        <option value="1">UK</option>
-                        <option value="2">US</option>
+                        @foreach (var item in ViewBag.listCountry)
+                        {
+                            <option value="@item.country_id">@item.country_name</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -17,20 +23,42 @@
                 <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                     <select class="form-control text-center" id="search_year_tab_1" name="param" style="width:100% !important">
                         <option label="Label"></option>
-                        <option value="1">2021</option>
-                        <option value="2">2020</option>
+                        @for (var i = ViewBag.YearSearching.year_from; i <= ViewBag.YearSearching.year_to; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
                     </select>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                <a href="#" class="btn btn-light-primary px-6 font-weight-bold ">Tìm kiếm</a>
+                <a id="search_1" class="btn btn-light-primary px-6 font-weight-bold ">@rm.GetString("Search")</a>
             </div>
         </div>
     </div>
 </div>
 <div id="detail-content" class="">
     <div class="row justify-content-between">
-        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+        @foreach (var item in ViewBag.ListProgram)
+        {
+            <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                <a onclick="load_detail.load_program_detail(@item.program_id)" class="link-load-detail">
+                    @if (item.avatar is null)
+                    {
+                        <img src="~/Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />
+                    }
+                    else
+                    {
+                        <img src="@item.avatar" class="item-picture" />
+                    }
+
+
+                    <label>
+                        @item.program_name
+                    </label>
+                </a>
+            </div>
+        }
+        @*<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
             <a onclick="load_detail.load_program_detail(1,3)" class="link-load-detail">
                 <img src="~/Content/Picture1.jpg" class="item-picture" />
                 <label>
@@ -61,11 +89,11 @@
                     Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
                 </label>
             </a>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 text-center my-5 py-3">
-        <a id="load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6">Xem thêm</a>
+        <a id="load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6">@rm.GetString("LoadMore")</a>
     </div>
 </div>

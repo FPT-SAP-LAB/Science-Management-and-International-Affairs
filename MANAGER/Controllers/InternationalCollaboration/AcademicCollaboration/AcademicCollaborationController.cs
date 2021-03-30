@@ -1,10 +1,12 @@
 ﻿using BLL.Authen;
 using BLL.InternationalCollaboration.AcademicCollaborationRepository;
+using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
+using MANAGER.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Longterm_List()
         {
             ViewBag.title = "DANH SÁCH ĐÀO TẠO SAU ĐẠI HỌC";
+            ViewBag.languages = AcademicActivityTypeRepo.getLanguages().obj;
             return View();
         }
 
@@ -196,13 +199,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
                     //upload file
                     if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
@@ -219,14 +218,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         }
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, evidence, acc.account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
                 else
                 {
-                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -263,13 +262,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
                     if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
                     {
                         AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền.");
@@ -280,14 +275,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, acc.account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
                 else
                 {
-                    AlertModal<AcademicCollaboration_Ext> alertModal1 = new AlertModal<AcademicCollaboration_Ext>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -312,6 +307,30 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        //VIEW STATUS HISTORY
+        [HttpGet]
+        public ActionResult getStatusHistories(int collab_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<StatusHistory> baseServerSideData = academicCollaborationRepo.getStatusHistories(baseDatatable, collab_id);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         //CHANGE STATUS HISTORY
         [HttpPost]
         public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note)
@@ -319,20 +338,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id != 0)
                 {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-
-                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, acc.account_id);
+                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, account_id);
                     return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
                 else
                 {
-                    AlertModal<string> alertModal1 = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập.");
-                    return Json(new { alertModal1.obj, alertModal1.success, alertModal1.title, alertModal1.content });
+                    AlertModal<string> alertModal = new AlertModal<string>(null, false, "Lỗi", "Người dùng chưa đăng nhập vào hệ thống");
+                    return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
             }
             catch (Exception e)
@@ -341,11 +356,157 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [HttpGet]
+        //LONG-TERM CONTENT
+        public ActionResult getLTContent(int collab_type_id, int language_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationRepo.getLTContent(collab_type_id, language_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //LONG-TERM UPDATE CONTENT
+        [HttpPost]
+        public ActionResult updateLTContent(int collab_type_id, int language_id, string description)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.updateLTContent(collab_type_id, language_id, description);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        //LONG-TERM GOING || COMING CONTENT
+        public ActionResult getLTGCContent(int direction_id, int collab_type_id, int language_id)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationRepo.getLTGCContent(direction_id, collab_type_id, language_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //LONG-TERM GOING || COMING UPDATE CONTENT
+        [HttpPost]
+        public ActionResult updateLTGCContent(int collab_type_direction_id, int language_id, string description)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<string> alertModal = academicCollaborationRepo.updateLTGCContent(collab_type_direction_id, language_id, description);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
+        AcademicCollaborationShortRepo acShortRepo;
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetProcedureList(int direction, string title)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<ProcedureInfoManager> baseServerSideData = acShortRepo.GetListProcedure(baseDatatable, title, direction, 1);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { data = "" });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AddProcedure(string procedure_title, string content, int direction,
+            int numberOfImage, int partner_language_type)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+
+                AlertModal<string> json = acShortRepo.AddProcedure(files_request, procedure_title, direction,
+                    content, numberOfImage, partner_language_type, acc.account_id);
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProcedure(int article_id)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                AlertModal<string> json = acShortRepo.DeleteProcedure(article_id);
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
         }
 
         public ActionResult Get_Status_History(string id)

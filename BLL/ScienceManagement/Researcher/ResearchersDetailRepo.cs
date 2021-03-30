@@ -17,36 +17,25 @@ namespace BLL.ScienceManagement.Researcher
             var profile = (
                 from a in db.People
                 join b in db.Profiles on a.people_id equals b.people_id
-                join c in db.Countries on b.country_id equals c.country_id
-                from d in db.Titles.Where(x => b.Titles.Contains(x))
-                join e in db.TitleLanguages on d.title_id equals e.title_id
-                join f in db.Offices on b.office_id equals f.office_id
-                from g in db.Positions.Where(x => a.Profile.Positions.Contains(x))
-                join h in db.PositionLanguages on g.position_id equals h.position_id
                 join w in db.Files on b.avatar_id equals w.file_id
-                where h.language_id == 1 && e.language_id == 1 && a.people_id == id
+                where a.people_id == id
                 select new ResearcherDetail
                 {
                     id = a.people_id,
                     name = a.name,
                     dob = b.birth_date,
-                    country = c.country_name,
                     email = a.email,
                     phone = a.phone_number,
-                    title_id = e.title_id,
-                    office = f.office_name,
-                    position_id = h.position_id,
-                    position_name = h.name,
-                    title_name = h.name,
                     avatar = w.link,
                     website = b.website,
+                    office = b.Office.office_name,
                     gscholar = b.google_scholar,
                     cv = b.cv
                 }).FirstOrDefault();
             var interested_fields = (from a in db.Profiles
                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
                                      join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                     where a.people_id == id
+                                     where a.people_id == id && h.language_id == 1
                                      select new SelectField
                                      {
                                          id = h.research_area_id,
@@ -57,7 +46,7 @@ namespace BLL.ScienceManagement.Researcher
                                               where !((from m in db.Profiles
                                                        from n in db.ResearchAreas
                                                        where m.ResearchAreas.Contains(n) && m.people_id == id
-                                                       select n.research_area_id).Contains(h.research_area_id))
+                                                       select n.research_area_id).Contains(h.research_area_id)) && h.language_id == 1
                                               select new SelectField
                                               {
                                                   id = h.research_area_id,
@@ -67,7 +56,7 @@ namespace BLL.ScienceManagement.Researcher
             var title_fields = (from a in db.Profiles
                                 from g in db.Titles.Where(x => x.Profiles.Contains(a))
                                 join h in db.TitleLanguages on g.title_id equals h.title_id
-                                where a.people_id == id
+                                where a.people_id == id && h.language_id == 1
                                 select new SelectField
                                 {
                                     id = h.title_id,
@@ -78,7 +67,7 @@ namespace BLL.ScienceManagement.Researcher
                                          where !((from m in db.Profiles
                                                   from n in db.Titles
                                                   where m.Titles.Contains(n) && m.people_id == id
-                                                  select n.title_id).Contains(h.title_id))
+                                                  select n.title_id).Contains(h.title_id)) && h.language_id == 1
                                          select new SelectField
                                          {
                                              id = h.title_id,
@@ -88,7 +77,7 @@ namespace BLL.ScienceManagement.Researcher
             var position_fields = (from a in db.Profiles
                                    from g in db.Positions.Where(x => x.Profiles.Contains(a))
                                    join h in db.PositionLanguages on g.position_id equals h.position_id
-                                   where a.people_id == id
+                                   where a.people_id == id && h.language_id == 1
                                    select new SelectField
                                    {
                                        id = h.position_id,
@@ -99,7 +88,7 @@ namespace BLL.ScienceManagement.Researcher
                                             where !((from m in db.Profiles
                                                      from n in db.Positions
                                                      where m.Positions.Contains(n) && m.people_id == id
-                                                     select n.position_id).Contains(h.position_id))
+                                                     select n.position_id).Contains(h.position_id)) && h.language_id == 1
                                             select new SelectField
                                             {
                                                 id = h.position_id,
@@ -125,10 +114,30 @@ namespace BLL.ScienceManagement.Researcher
                                                name = g.office_name,
                                                selected = 0
                                            }).ToList<SelectField>();
+            var countries_fields = (from a in db.Profiles
+                                    from g in db.Countries.Where(x => x.Profiles.Contains(a))
+                                    where a.people_id == id
+                                    select new SelectField
+                                    {
+                                        id = g.country_id,
+                                        name = g.country_name,
+                                        selected = 1
+                                    }).Union(from g in db.Countries
+                                             where !((from m in db.Profiles
+                                                      from n in db.Countries.Where(x => x.Profiles.Contains(m))
+                                                      where m.people_id == id
+                                                      select n.country_id).Contains(g.country_id))
+                                             select new SelectField
+                                             {
+                                                 id = g.country_id,
+                                                 name = g.country_name,
+                                                 selected = 0
+                                             }).ToList<SelectField>();
             profile.interested_fields = interested_fields;
             profile.title_fields = title_fields;
             profile.position_fields = position_fields;
             profile.offices_fields = offices_fields;
+            profile.countries_fields = countries_fields;
             return profile;
         }
     }

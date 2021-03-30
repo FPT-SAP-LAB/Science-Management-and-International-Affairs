@@ -239,15 +239,51 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     @*-------------------datatable check this file-------------*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AC_Datatable/ShortTerm_Datatable.js"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ShortTerm_Datatable.js"></script>
     @*-------------------datatable check this file-------------*@
-
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ProcedureContentProcessing.js"></script>
     @*--------------init datepicker and rangepicker-----------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
-
     @*--------------init datepicker and rangepicker-----------------*@
 
+    <script>
+        //delete procedure======================================================================
+        function confirm_delete_procedure(article_id) {
+            var id = { article_id: article_id }
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Có muốn xóa bản ghi này",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: '/AcademicCollaboration/DeleteProcedure',
+                        type: "POST",
+                        dataType: 'json',
+                        data: id,
+                        success: function (data) {
+                            if (data.success) {
 
+                                $('#procedure_going_table').DataTable().ajax.reload()
+                                $('#procedure_coming_table').DataTable().ajax.reload()
+                                Swal.fire("Thành công", "Xóa thành công", "success");
+                            } else {
+                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                        },
+                    })
+                }
+            })
+        };
+    //delete procedure======================================================================
+    </script>
     <script>
 
         $('#edit_content_short_term').click(function () {
@@ -266,8 +302,6 @@
         })
 
     </script>
-
-
     <script>
         //select2 officer going
         $('#search_nation_tab_1_table_1').select2({
@@ -350,11 +384,8 @@
     </script>
     <script>
         //select2 procedure going
-
-        $('.modal_procedure_language').select2({
+        $('.procedure_language').select2({
             placeholder: 'Ngôn ngữ',
-            allowClear: true,
-            tags: true,
         })
 
     </script>
@@ -386,14 +417,8 @@
             allowClear: true,
             tags: true,
         })
-
     </script>
     <script>
-        var id_row = "";
-        //parse id fo delete
-        function parse_id(id) {
-            id_row = id;
-        }
         //collapse div
         $('#collapse_btn_tab_1').click(function () {
             $('.collapse_tab_1').toggle(700)
@@ -407,31 +432,15 @@
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
 
-        //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        //    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        //});
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
         //split card
         //overflow
         $(document).ready(function () {
             $('#main-card').parent().css("background-color", "#eef0f8");
             //$('.collaboration_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
-        });
-
-        //funtion delete
-        $('#btn_delete').click(function() {
-            $.ajax({
-                url: '@Url.Action("Delete_Longterm", "AcademicCollaboration")',
-                data: { 'id': id_row },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        toastr.success("Đã xóa thành công");
-                    }
-
-                },
-            });
         });
 
         //load status history table
@@ -501,9 +510,9 @@
         });
     </script>
 
-
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
 }
 
