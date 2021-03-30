@@ -424,7 +424,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 person.name = obj_person.person_name;
                 person.email = obj_person.person_email;
                 //if (obj_person.person_profile_office_id != null) person.office_id = obj_person.person_profile_office_id;
-                db.People.Add(person); 
+                db.People.Add(person);
                 db.SaveChanges();
             }
             catch (Exception e)
