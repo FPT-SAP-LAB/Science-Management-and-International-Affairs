@@ -41,6 +41,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pagesTree = pagesTree;
             ViewBag.Detail = guestRepo.getBaseAADetail(id, language);
             ViewBag.SubContent = guestRepo.GetSubContent(id, language);
+            ViewBag.phase_id = guestRepo.getPhaseCurrentByActivity(id);
             return View();
         }
 

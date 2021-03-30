@@ -87,5 +87,12 @@ namespace MANAGER.Controllers
 
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult changeStatus(DetailInvention inven)
+        {
+            string mess = ir.changeStatus(inven);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

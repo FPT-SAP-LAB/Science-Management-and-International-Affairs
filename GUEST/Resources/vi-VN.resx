@@ -258,6 +258,9 @@
   <data name="International" xml:space="preserve">
     <value>Quốc tế</value>
   </data>
+  <data name="InternationalAffair" xml:space="preserve">
+    <value>Hợp tác quốc tế</value>
+  </data>
   <data name="InvenName" xml:space="preserve">
     <value>Tên sản phẩm</value>
   </data>
@@ -297,6 +300,9 @@
   <data name="Location" xml:space="preserve">
     <value>Địa điểm</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
   <data name="LongTerm" xml:space="preserve">
     <value>Đào tạo sau đại học</value>
   </data>
@@ -320,6 +326,9 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Tên tác giả</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Tin tức</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Trang sau</value>
@@ -445,7 +454,7 @@
     <value>Tháng 9</value>
   </data>
   <data name="ShortTerm" xml:space="preserve">
-    <value>Chương trình trao đổi CBGV</value>
+    <value>Trao đổi giảng viên ngắn hạn</value>
   </data>
   <data name="ShortTermFPTProgram" xml:space="preserve">
     <value>Trao đổi với FPT</value>
