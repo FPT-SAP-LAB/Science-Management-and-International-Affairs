@@ -43,7 +43,6 @@ namespace ENTITIES
         public Nullable<long> tax_code { get; set; }
         public string identification_number { get; set; }
         public Nullable<int> identification_file_id { get; set; }
-        public int office_id { get; set; }
         public string mssv_msnv { get; set; }
         public Nullable<int> account_id { get; set; }
         public bool profile_page_active { get; set; }
@@ -53,7 +52,6 @@ namespace ENTITIES
         public virtual Country Country { get; set; }
         public virtual File File { get; set; }
         public virtual File File1 { get; set; }
-        public virtual Office Office { get; set; }
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Award> Awards { get; set; }

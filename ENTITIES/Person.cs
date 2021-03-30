@@ -28,7 +28,9 @@ namespace ENTITIES
         public string name { get; set; }
         public string email { get; set; }
         public string phone_number { get; set; }
+        public Nullable<int> office_id { get; set; }
     
+        public virtual Office Office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
