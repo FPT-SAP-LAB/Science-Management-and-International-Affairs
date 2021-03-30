@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOAPartner;
 using MANAGER.Support;
@@ -33,7 +34,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
+                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult Get_MOA_History(string moa_partner_id)
@@ -45,7 +47,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
             catch (Exception)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
+                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult deletePartnerMOA(int moa_partner_id)
@@ -73,7 +76,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
+                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult Edit_Moa_Partner(MOAPartnerEdited input)
@@ -87,7 +91,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
+                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult Get_Partner_Detail(int moa_partner_id)
@@ -100,14 +105,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return Json("", JsonRequestBehavior.AllowGet);
+                //return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult GetMOAScopesByPartner(string partner_name)
+        public ActionResult GetMOAScopesByPartner(int partner_id)
         {
             try
             {
-                List<CustomScopesMOA> scopeList = moa.getMOAScope(partner_name);
+                string moa_id = Session["moa_detail_id"].ToString();
+                string mou_id = Session["mou_detail_id"].ToString();
+                List<CollaborationScope> scopeList = moa.getMOAScope(int.Parse(moa_id), partner_id, int.Parse(mou_id));
                 return Json(scopeList);
             }
             catch (Exception ex)

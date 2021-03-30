@@ -105,6 +105,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
             };
             ViewBag.Title = rm.GetString("ShortTerm");
+            ViewBag.YearSearching = guestRepo.yearSearching();
             ViewBag.TypeDescription = guestRepo.getTypeDescription(1, language);
             ViewBag.ListProgram = guestRepo.listProgram(0, 1, 0, null, 0, language);
             ViewBag.ListCountry = guestRepo.listCountry();

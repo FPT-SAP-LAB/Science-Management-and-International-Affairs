@@ -21,5 +21,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public List<int> scopes { get; set; }
         public DateTime moa_start_date { get; set; }
         public string moa_start_date_string { get; set; }
+        public string specializations { get; set; }
     }
 }

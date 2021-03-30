@@ -63,10 +63,10 @@
                                             {
                                                 <tr>
                                                     <td>@a.rownum</td>
-                                                    <td>@a.degree</td>
-                                                    <td>@a.place</td>
-                                                    <td>@a.time</td>
-                                                    <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td>
+                                                    <td class="acad-degree" data-id="@a.acad_id">@a.degree</td>
+                                                    <td class="acad-place">@a.place</td>
+                                                    <td class="acad-time">@a.time</td>
+                                                    <td><a data-id="@a.people_id-@a.acad_id" data-toggle="modal" data-target="#modal_suatieusu_hoctap" class="btn btn-sm btn-clean btn-icon edit-acad" title="Edit"> <i class="far fa-edit"></i> </a></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -100,10 +100,10 @@
                                             {
                                                 <tr>
                                                     <td>@a.index</td>
-                                                    <td>@a.records.work_unit</td>
-                                                    <td>@a.records.title</td>
-                                                    <td>@a.records.start_year-@a.records.end_year</td>
-                                                    <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td>
+                                                    <td class="work_unit">@a.records.work_unit</td>
+                                                    <td class="work_title">@a.records.title</td>
+                                                    <td class="work_time">@a.records.start_year-@a.records.end_year</td>
+                                                    <td><a data-id="@a.records.id" class="btn btn-sm btn-clean btn-icon edit-work" data-toggle="modal" data-target="#modal_suatieusu_work" title="Edit"> <i class="far fa-edit"></i> </a></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -178,13 +178,13 @@
                                             </div>
                                         </div>
                                         @*<div class="row form-group">
-                                                <div class="col-12">
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                        <span><i class="far fa-sticky-note"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>*@
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
@@ -207,7 +207,7 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="kt_datatable_search_query">
+                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="work_location">
                                                     <span><i class="fas fa-map-pin"></i></span>
                                                 </div>
                                             </div>
@@ -215,46 +215,192 @@
                                         <div class="row form-group">
                                             <div class="col-12">
                                                 <div class="input-icon">
-                                                    <select type="text" class="form-control" placeholder="Chức danh" id="hocvi">
-                                                        <option value="" disabled selected></option>
-                                                        <option value="">Giảng viên</option>
-                                                        <option value="1">Hiệu trưởng</option>
-                                                        <option value="2">...</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" placeholder="Chức danh" id="work_title">
                                                     <span><i class="far fa-bookmark"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        <div class="form-group row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_3" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" id="add_work_start" placeholder="Start date" data-target="#kt_datetimepicker_7_3" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_3" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Đến" name="end">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12">
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                                    <span><i class="far fa-sticky-note"></i></span>
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_4" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_work_end" data-target="#kt_datetimepicker_7_4" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_4" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                        <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">Lưu</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--end::Body-->
-                        <!--end::Form-->
+                        <!-- Modal edit hoc tap-->
+                        <div class="modal fade" id="modal_suatieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử học tập</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row form-group">
+                                            <div class="col-12">
+                                                <div class="input-icon">
+                                                    <select type="text" class="form-control" placeholder="Học vị" id="acad_suahocvi">
+                                                        <option value="" disabled selected>Học vị</option>
+                                                        @foreach (SelectField a in ViewBag.listAcadDegree)
+                                                        {
+                                                            <option value="@a.id">@a.name</option>
+                                                        }
+                                                    </select>
+                                                    <span><i class="far fa-bookmark"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-12">
+                                                <div class="input-icon">
+                                                    <input type="text" class="form-control" placeholder="Nơi học tập" id="edit_location">
+                                                    <span><i class="fas fa-map-pin"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_5" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" id="edit-acad-start" placeholder="Start date" data-target="#kt_datetimepicker_7_5" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_5" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_6" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-acad-end" data-target="#kt_datetimepicker_7_6" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_6" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="row form-group">
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_acad">Lưu</button>
+                                        <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_acad">Xoá</button>
+                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal edit work-->
+                        <div class="modal fade" id="modal_suatieusu_work" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử công tác</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row form-group">
+                                            <div class="col-12">
+                                                <div class="input-icon">
+                                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="edit_work_location">
+                                                    <span><i class="fas fa-map-pin"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-12">
+                                                <div class="input-icon">
+                                                    <input type="text" class="form-control" placeholder="Chức danh" id="edit_work_title">
+                                                    <span><i class="fas fa-map-pin"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_7" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" id="edit-work-start" placeholder="Start date" data-target="#kt_datetimepicker_7_7" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_7" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group date" id="kt_datetimepicker_7_8" data-target-input="nearest">
+                                                            <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-work-end" data-target="#kt_datetimepicker_7_8" />
+                                                            <div class="input-group-append" data-target="#kt_datetimepicker_7_8" data-toggle="datetimepicker">
+                                                                <span class="input-group-text">
+                                                                    <i class="ki ki-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="row form-group">
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">Lưu</button>
+                                        <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_work">Xoá</button>
+                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!--end::Content-->
