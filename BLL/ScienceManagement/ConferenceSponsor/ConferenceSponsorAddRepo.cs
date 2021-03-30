@@ -93,6 +93,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     else
                     {
+                        conference.is_verified = false;
                         db.Conferences.Add(conference);
                         db.SaveChanges();
                     }

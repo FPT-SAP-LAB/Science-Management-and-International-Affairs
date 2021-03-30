@@ -30,6 +30,7 @@ namespace ENTITIES
         public System.DateTime time_end { get; set; }
         public int formality_id { get; set; }
         public string co_organized_unit { get; set; }
+        public bool is_verified { get; set; }
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
