@@ -92,5 +92,33 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
+
+        public int EditResearcherProfilePicture(Google.Apis.Drive.v3.Data.File file, int people_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Profile profile = db.Profiles.Find(people_id);
+                    File avt = new File()
+                    {
+                        name = "avatar-" + people_id,
+                        file_drive_id = file.Id,
+                        link = "https://drive.google.com/uc?export=view&id=" + file.Id
+                    };
+                    db.Files.Add(avt);
+                    db.SaveChanges();
+                    profile.avatar_id = avt.file_id;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
+
+        }
     }
 }
