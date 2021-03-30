@@ -80,6 +80,7 @@ namespace BLL.ScienceManagement.Researcher
                             journal_or_cfr_name = x.journal_or_cfr_name,
                             paper_name = x.paper_name,
                             publish_date = x.publish_date,
+                            year = x.publish_date.Value.Year.ToString(),
                             co_author = x.co_author
                         }).ToList<ResearcherPublications>();
             return data;

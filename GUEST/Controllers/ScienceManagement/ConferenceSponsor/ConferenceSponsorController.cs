@@ -21,6 +21,7 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
+        readonly ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
         readonly CountryRepo countryRepo = new CountryRepo();
         readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
         readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
@@ -71,6 +72,12 @@ namespace GUEST.Controllers
             ViewBag.TitleLanguages = titleRepo.GetList(language_id);
             return View();
         }
+        [HttpPost]
+        public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
+        {
+            string output = AppRepos.AddRequestConference(CurrentAccount.AccountID(Session), input, invite, paper);
+            return output;
+        }
         public ActionResult Edit(int id)
         {
             int language_id = LanguageResource.GetCurrentLanguageID();
@@ -91,9 +98,9 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public string Add(string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
+        public string Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
-            string output = AppRepos.AddRequestConference(CurrentAccount.AccountID(Session), input, invite, paper);
+            string output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
             return output;
         }
         public ActionResult Detail(int id)
