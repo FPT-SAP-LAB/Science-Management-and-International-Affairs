@@ -128,7 +128,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 try
                 {
-                    db.Articles.Remove(db.Articles.Find(article_id));
+                    Article article = db.Articles.Find(article_id);
+                    db.Articles.Remove(article);
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true, "Xóa thành công");
