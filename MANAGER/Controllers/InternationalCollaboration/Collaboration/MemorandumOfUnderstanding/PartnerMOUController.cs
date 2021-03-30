@@ -88,7 +88,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return Json("", JsonRequestBehavior.AllowGet);
+                return null;
             }
         }
         public ActionResult deletePartnerMOU(int mou_bonus_id)
