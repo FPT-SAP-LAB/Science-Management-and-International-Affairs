@@ -235,6 +235,9 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPerson_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationStatu_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaboration_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\DeserializeAcademicCollaborationEntities\DeserializeAcadCollab_AcadCollab.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\DeserializeAcademicCollaborationEntities\DeserializeAcadCollab_Partner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\DeserializeAcademicCollaborationEntities\DeserializeAcadCollab_Person.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ObjectSearching_AcademicCollaboration.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProcedureInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProcedureInfoManager.cs" />
@@ -288,6 +291,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
