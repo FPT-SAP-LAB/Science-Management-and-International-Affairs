@@ -484,6 +484,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hợp tác quốc tế.
+        /// </summary>
+        public static string InternationalAffair {
+            get {
+                return ResourceManager.GetString("InternationalAffair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên sản phẩm.
         /// </summary>
         public static string InvenName {
@@ -601,6 +610,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đăng nhập.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đào tạo sau đại học.
         /// </summary>
         public static string LongTerm {
@@ -669,6 +687,15 @@ namespace GUEST.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tin tức.
+        /// </summary>
+        public static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
             }
         }
         
@@ -1042,7 +1069,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chương trình trao đổi CBGV.
+        ///   Looks up a localized string similar to Trao đổi giảng viên ngắn hạn.
         /// </summary>
         public static string ShortTerm {
             get {

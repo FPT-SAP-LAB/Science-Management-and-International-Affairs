@@ -35,7 +35,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             researcherListRepo = new ResearchersListRepo();
             BaseDatatable datatable = new BaseDatatable();
-            datatable.Start = 1;
+            datatable.Start = 0;
             datatable.Length = 20;
             datatable.SortColumnName = "name";
             datatable.SortDirection = "asc";

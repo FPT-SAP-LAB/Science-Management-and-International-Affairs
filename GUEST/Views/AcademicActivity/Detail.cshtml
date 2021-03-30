@@ -59,9 +59,13 @@
                 </table>
             </div>
             <div class="col-9">
-                @foreach(var item in ViewBag.SubContent)
+                @foreach (var item in ViewBag.SubContent)
                 {
                     <p id="p-@item.id" class="event-content" hidden>@item.content</p>
+                    if (@item == @ViewBag.SubContent[0])
+                    {
+                        <p><a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">Link đăng ký tham dự</a></p>
+                    }
                 }
             </div>
         </div>
@@ -75,30 +79,29 @@
     <script>
         $(document).ready(function () {
             var id = $('#nav_table').find('tr:first').attr('id');
-            $('#'+id).removeClass('content-nav').addClass('content-active');
-            $('#p-'+id).removeAttr('hidden');
-            $('.content-nav').click(function () {
-                $('.content-nav').each(function () {
-                    $('.content-active').removeClass('content-active').addClass('content-nav')
-                });
-                $(this).removeClass('content-nav').addClass('content-active');
-                let id = $(this).attr('id');
-                $('.event-content').attr("hidden", true);
-                $('#p-' + id).removeAttr('hidden');
-            })
-            })
-
-        //function click_load_detail(content_id) {
-        //    var id = { content_id: content_id}
-        //    $.ajax({
-        //        url: '/AcademicActivity/DetailContent',
-        //        type: 'post',
-        //        dataType: 'json',
-        //        data: id,
-        //        success: function (data) {
-        //            $('#event-content').text(data.content)
-        //        }
-        //    })
-        //}
+            $('#' + id).removeClass('content-nav').addClass('content-active');
+            $('#p-' + id).removeAttr('hidden');
+        })
+        $('.content-nav').click(function () {
+            $('.content-nav').each(function () {
+                $('.content-active').removeClass('content-active').addClass('content-nav')
+            });
+            $(this).removeClass('content-nav').addClass('content-active');
+            let id = $(this).attr('id');
+            $('.event-content').attr("hidden", true);
+            $('#p-' + id).removeAttr('hidden');
+        });
+            //function click_load_detail(content_id) {
+            //    var id = { content_id: content_id}
+            //    $.ajax({
+            //        url: '/AcademicActivity/DetailContent',
+            //        type: 'post',
+            //        dataType: 'json',
+            //        data: id,
+            //        success: function (data) {
+            //            $('#event-content').text(data.content)
+            //        }
+            //    })
+            //}
     </script>
 }

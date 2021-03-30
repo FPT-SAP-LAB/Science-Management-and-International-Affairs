@@ -50,6 +50,26 @@ namespace BLL.ScienceManagement.Citation
             return item;
         }
 
+        public string changeStatus(string request_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int id = Int32.Parse(request_id);
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
+                rc.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public List<ENTITIES.Citation> getCitation(string id)
         {
             List<ENTITIES.Citation> list = new List<ENTITIES.Citation>();
@@ -68,6 +88,9 @@ namespace BLL.ScienceManagement.Citation
                 PaperRepo pr = new PaperRepo();
                 List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
                 string listmail = "";
+                string tempSql = "";
+                List<SqlParameter> listParam1 = new List<SqlParameter>();
+                int count = 1;
                 foreach (var item in list)
                 {
                     if (!listMail.Contains(item.email))
@@ -96,6 +119,17 @@ namespace BLL.ScienceManagement.Citation
                             pro.identification_number = item.identification_number;
                             pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
+
+                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
+                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
+                            listParam1.Add(tempParam1);
+
+                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            listParam1.Add(tempParam2);
+
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
+                            listParam1.Add(tempParam3);
                         }
                     }
                     listmail += "," + item.email;

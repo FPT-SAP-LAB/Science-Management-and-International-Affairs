@@ -46,7 +46,7 @@ namespace BLL.ScienceManagement.Invention
         public List<AuthorInfoWithNull> getAuthor(string id)
         {
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [General].People po on ai.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -60,6 +60,24 @@ namespace BLL.ScienceManagement.Invention
                             where i.invention_id = @id";
             list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             return list;
+        }
+
+        public string changeStatus(DetailInvention inven)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                ri.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                dbc.Rollback();
+                return "ff";
+            }
         }
 
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
@@ -202,11 +220,11 @@ namespace BLL.ScienceManagement.Invention
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " update [SM_Researcher].PeopleTitle set title_id = @title" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.contract_id);
+                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
                             listParam1.Add(tempParam2);
 
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, item.people_id);
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
                         }
                     }

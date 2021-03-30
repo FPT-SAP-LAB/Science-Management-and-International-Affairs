@@ -148,11 +148,13 @@
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
+    <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorEditRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorIndexRepo.cs" />
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersDetailRepo.cs" />
