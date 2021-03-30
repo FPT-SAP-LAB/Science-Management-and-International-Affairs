@@ -197,7 +197,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 var sql = @"-----1.7. Danh sách cán bộ
                     select peo.people_id, name, email, phone_number, pro.mssv_msnv
                     from General.People peo
-                    inner join General.Profile pro on peo.people_id = pro.people_id
+                    left join General.Profile pro on peo.people_id = pro.people_id
                     where name like @person_name";
                 List<AcademicCollaborationPerson_Ext> people = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
                     new SqlParameter("person_name", person_name == null ? "%%" : "%" + person_name + "%")).ToList();
@@ -216,8 +216,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 var sql = @"-----1.7.1. Check person
                     select peo.*, pro.office_id, offi.office_name, pro.mssv_msnv
                     from General.People peo
-                    inner join General.Profile pro on peo.people_id = pro.people_id
-                    inner join General.Office offi on offi.office_id = pro.office_id
+                    left join General.Profile pro on peo.people_id = pro.people_id
+                    left join General.Office offi on offi.office_id = pro.office_id
                     where peo.name = @people_name or peo.people_id = @people_id";
                 AcademicCollaborationPerson_Ext person = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
                     new SqlParameter("people_name", people_name),
@@ -637,10 +637,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
                             join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
 							join IA_Collaboration.CollaborationScope cs on cs.scope_id = mpc.scope_id
-                            join General.Country c on c.country_id = pn.country_id
+                            left join General.Country c on c.country_id = pn.country_id
                             join General.People pp on collab.people_id = pp.people_id 
-                            join General.[Profile] pf on pf.people_id = pp.people_id
-                            join General.Office offi on pf.office_id = offi.office_id
+                            left join General.[Profile] pf on pf.people_id = pp.people_id
+                            left join General.Office offi on pf.office_id = offi.office_id
                             join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.file_id, csh2.file_name, csh2.file_link, csh2.file_drive_id
 		                            from 
 		                            (select csh1.collab_id, MAX(csh1.change_date) 'change_date' 

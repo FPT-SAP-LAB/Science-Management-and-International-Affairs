@@ -195,20 +195,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                ////parse to Object
-                //DeserializeAcadCollab_Person deserialize_person = JsonConvert.DeserializeObject<DeserializeAcadCollab_Person>(obj_person_stringify);
-                //DeserializeAcadCollab_Partner deserialize_partner = JsonConvert.DeserializeObject<DeserializeAcadCollab_Partner>(obj_partner_stringify);
-                //DeserializeAcadCollab_AcadCollab deserialize_academic_collab = JsonConvert.DeserializeObject<DeserializeAcadCollab_AcadCollab>(obj_academic_collab_stringify);
-
-                //pass deserialize obj to save obj
+                //deserialize json obj string
                 SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
                 SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
-
-                ////pass deserialize obj to save obj
-                //SaveAcadCollab_Person obj_person = new SaveAcadCollab_Person();
-                //SaveAcadCollab_Partner obj_partner = new SaveAcadCollab_Partner();
-                //SaveAcadCollab_AcademicCollaboration obj_academic_collab = new SaveAcadCollab_AcademicCollaboration();
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 int account_id = CurrentAccount.AccountID(Session);

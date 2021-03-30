@@ -11,8 +11,8 @@ $('#going_add_officer_name').select2({
     tags: true,
     ajax: {
         url: '/AcademicCollaboration/getPeople',
-        delay: 250,
         cache: true,
+        delay: 250,
         dataType: 'json',
         data: function (params) {
             return {
@@ -48,15 +48,12 @@ function formatPersonInfo(person) {
     if (person.id) {
         let mssv_msnv = person.mssv_msnv;
         let name = person.name;
-        if (mssv_msnv === undefined && name === undefined) {
-            return "Dữ liệu cá nhân mới."
-        }
-        else {
-            if (mssv_msnv == "") {
-                return name;
-            } else {
-                return mssv_msnv + " - " + name;
-            }
+        if (isEmptyOrNullOrUndefined(mssv_msnv) && isEmptyOrNullOrUndefined(name)) {
+            return 'Dữ liệu mới về người.';
+        } else if (isEmptyOrNullOrUndefined(mssv_msnv)) {
+            return name;
+        } else {
+            return mssv_msnv + " - " + name;
         }
     }
 }
@@ -112,9 +109,8 @@ function checkPersonAdd() {
 }
 
 $('#going_add_officer_facility').select2({
-    placeholder: 'Đơn vị - Cơ sở',
+    placeholder: 'Đơn vị công tác',
     allowClear: true,
-    tags: true,
     ajax: {
         url: '/AcademicCollaboration/getOffices',
         delay: 250,
@@ -182,7 +178,7 @@ $('#going_add_officer_traning').select2({
 function formatPartnerInfo(partner) {
     if (partner.id) {
         let partner_name = partner.partner_name;
-        if (partner_name === undefined) {
+        if (isEmptyOrNullOrUndefined(partner_name)) {
             return "Dữ liệu đơn vị đào tạo mới."
         } else {
             return partner.partner_name;
@@ -366,29 +362,11 @@ $('#going_add_officer_save').on('click', function () {
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
-        let obj_person = {}
-        if (!isEmptyOrNullOrUndefined(available_person)) obj_person.available_person = available_person;
-        if (!isEmptyOrNullOrUndefined(person_name)) obj_person.person_name = person_name;
-        if (!isEmptyOrNullOrUndefined(person_id)) obj_person.person_id = person_id;
-        if (!isEmptyOrNullOrUndefined(person_email)) obj_person.person_email = person_email;
-        if (!isEmptyOrNullOrUndefined(person_profile_office_id)) obj_person.person_profile_office_id = person_profile_office_id;
+        let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
 
-        let obj_partner = {}
-        if (!isEmptyOrNullOrUndefined(available_partner)) obj_partner.available_partner = available_partner;
-        if (!isEmptyOrNullOrUndefined(partner_name)) obj_partner.partner_name = partner_name;
-        if (!isEmptyOrNullOrUndefined(partner_id)) obj_partner.partner_id = partner_id;
-        if (!isEmptyOrNullOrUndefined(partner_country_id)) obj_partner.partner_country_id = partner_country_id;
-        if (!isEmptyOrNullOrUndefined(collab_scope_id)) obj_partner.collab_scope_id = collab_scope_id;
+        let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = {}
-        obj_academic_collab.collab_id = 0; //set 0 when add new academic collaboration
-        if (!isEmptyOrNullOrUndefined(status_id)) obj_academic_collab.status_id = status_id;
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_start_date))) obj_academic_collab.plan_start_date = formatDatePicker(plan_start_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_end_date))) obj_academic_collab.plan_end_date = formatDatePicker(plan_end_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_start_date))) obj_academic_collab.actual_start_date = formatDatePicker(actual_start_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_end_date))) obj_academic_collab.actual_end_date = formatDatePicker(actual_end_date);
-        if (!isEmptyOrNullOrUndefined(support)) obj_academic_collab.support = support;
-        if (!isEmptyOrNullOrUndefined(note)) obj_academic_collab.note = note;
+        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
@@ -441,6 +419,42 @@ $('#going_add_officer_save').on('click', function () {
         }
     }
 });
+
+function objPerson(available_person, person_name,
+    person_id, person_email, person_profile_office_id) {
+    let obj_person = {};
+    if (!isEmptyOrNullOrUndefined(available_person)) obj_person.available_person = available_person;
+    if (!isEmptyOrNullOrUndefined(person_name)) obj_person.person_name = person_name;
+    if (!isEmptyOrNullOrUndefined(person_id)) obj_person.person_id = person_id;
+    if (!isEmptyOrNullOrUndefined(person_email)) obj_person.person_email = person_email;
+    if (!isEmptyOrNullOrUndefined(person_profile_office_id)) obj_person.person_profile_office_id = person_profile_office_id;
+    return obj_person;
+}
+
+function objPartner(available_partner, partner_name, partner_id,
+    partner_country_id, collab_scope_id) {
+    let obj_partner = {}
+    if (!isEmptyOrNullOrUndefined(available_partner)) obj_partner.available_partner = available_partner;
+    if (!isEmptyOrNullOrUndefined(partner_name)) obj_partner.partner_name = partner_name;
+    if (!isEmptyOrNullOrUndefined(partner_id)) obj_partner.partner_id = partner_id;
+    if (!isEmptyOrNullOrUndefined(partner_country_id)) obj_partner.partner_country_id = partner_country_id;
+    if (!isEmptyOrNullOrUndefined(collab_scope_id)) obj_partner.collab_scope_id = collab_scope_id;
+    return obj_partner;
+}
+
+function objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date,
+    actual_start_date, actual_end_date, support, note) {
+    let obj_academic_collab = {};
+    obj_academic_collab.collab_id = collab_id;
+    if (!isEmptyOrNullOrUndefined(status_id)) obj_academic_collab.status_id = status_id;
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_start_date))) obj_academic_collab.plan_start_date = formatDatePicker(plan_start_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_end_date))) obj_academic_collab.plan_end_date = formatDatePicker(plan_end_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_start_date))) obj_academic_collab.actual_start_date = formatDatePicker(actual_start_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_end_date))) obj_academic_collab.actual_end_date = formatDatePicker(actual_end_date);
+    if (!isEmptyOrNullOrUndefined(support)) obj_academic_collab.support = support;
+    if (!isEmptyOrNullOrUndefined(note)) obj_academic_collab.note = note;
+    return obj_academic_collab;
+}
 
 function isEmptyOrNullOrUndefined(value) {
     if (value === null || value === undefined || value === "") {

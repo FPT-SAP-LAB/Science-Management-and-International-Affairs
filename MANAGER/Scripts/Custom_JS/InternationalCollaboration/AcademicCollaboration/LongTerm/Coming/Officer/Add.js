@@ -44,23 +44,6 @@ $('#coming_add_officer_name').select2({
     $('#coming_add_officer_facility').prop('disabled', false);
 });
 
-//function formatPersonInfo(person) {
-//    if (person.id) {
-//        let mssv_msnv = person.mssv_msnv;
-//        let name = person.name;
-//        if (mssv_msnv === undefined && name === undefined) {
-//            return "Dữ liệu cá nhân mới."
-//        }
-//        else {
-//            if (mssv_msnv == "") {
-//                return name;
-//            } else {
-//                return mssv_msnv + " - " + name;
-//            }
-//        }
-//    }
-//}
-
 function checkPersonComingAdd() {
     person = $('#coming_add_officer_name').val();
     person_name = person.split('/')[0] === undefined ? '' : person.split('/')[0];
@@ -112,9 +95,8 @@ function checkPersonComingAdd() {
 }
 
 $('#coming_add_officer_facility').select2({
-    placeholder: 'Đơn vị - Cơ sở',
+    placeholder: 'Đơn vị đào tạo',
     allowClear: true,
-    tags: true,
     ajax: {
         url: '/AcademicCollaboration/getOffices',
         delay: 250,
@@ -140,9 +122,9 @@ $('#coming_add_officer_facility').select2({
     templateResult: formatOfficeInfo
 });
 
-///2.1.2.ĐƠN VỊ ĐÀO TẠO
+///2.1.2.ĐƠN VỊ CÔNG TÁC
 $('#coming_add_officer_traning').select2({
-    placeholder: 'Đơn vị đào tạo',
+    placeholder: 'Đơn vị công tác',
     allowClear: true,
     tags: true,
     ajax: {
@@ -178,17 +160,6 @@ $('#coming_add_officer_traning').select2({
     ///enable country
     $('#coming_add_officer_nation').prop('disabled', false);
 });
-
-//function formatPartnerInfo(partner) {
-//    if (partner.id) {
-//        let partner_name = partner.partner_name;
-//        if (partner_name === undefined) {
-//            return "Dữ liệu đơn vị đào tạo mới."
-//        } else {
-//            return partner.partner_name;
-//        }
-//    }
-//}
 
 function checkPartnerComingAdd() {
     //process partner_name
@@ -294,10 +265,6 @@ $('#coming_add_officer_coop_scope').select2({
     templateResult: formatCollabScope
 });
 
-//function formatCollabScope(scope) {
-//    return scope.scope_abbreviation + " - " + scope.scope_name;
-//}
-
 ///2.1.3.CHI TIẾT
 $('#coming_add_officer_status').select2({
     placeholder: 'Trạng thái',
@@ -329,12 +296,6 @@ $('#coming_add_officer_status').select2({
     templateResult: formatAcadCollabStatus
 });
 
-//function formatAcadCollabStatus(acs) {
-//    return acs.collab_status_name;
-//}
-
-//var available_person;
-//var available_partner;
 //2.2. SAVE BUTTON
 $('#coming_add_officer_save').on('click', function () {
     //person
@@ -376,29 +337,11 @@ $('#coming_add_officer_save').on('click', function () {
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
-        let obj_person = {}
-        if (!isEmptyOrNullOrUndefined(available_person)) obj_person.available_person = available_person;
-        if (!isEmptyOrNullOrUndefined(person_name)) obj_person.person_name = person_name;
-        if (!isEmptyOrNullOrUndefined(person_id)) obj_person.person_id = person_id;
-        if (!isEmptyOrNullOrUndefined(person_email)) obj_person.person_email = person_email;
-        if (!isEmptyOrNullOrUndefined(person_profile_office_id)) obj_person.person_profile_office_id = person_profile_office_id;
+        let obj_person = (available_person, person_name, person_id, person_email, person_profile_office_id);
 
-        let obj_partner = {}
-        if (!isEmptyOrNullOrUndefined(available_partner)) obj_partner.available_partner = available_partner;
-        if (!isEmptyOrNullOrUndefined(partner_name)) obj_partner.partner_name = partner_name;
-        if (!isEmptyOrNullOrUndefined(partner_id)) obj_partner.partner_id = partner_id;
-        if (!isEmptyOrNullOrUndefined(partner_country_id)) obj_partner.partner_country_id = partner_country_id;
-        if (!isEmptyOrNullOrUndefined(collab_scope_id)) obj_partner.collab_scope_id = collab_scope_id;
+        let obj_partner = (available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = {}
-        obj_academic_collab.collab_id = 0; //set 0 when add new academic collaboration
-        if (!isEmptyOrNullOrUndefined(status_id)) obj_academic_collab.status_id = status_id;
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_start_date))) obj_academic_collab.plan_start_date = formatDatePicker(plan_start_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_end_date))) obj_academic_collab.plan_end_date = formatDatePicker(plan_end_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_start_date))) obj_academic_collab.actual_start_date = formatDatePicker(actual_start_date);
-        if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_end_date))) obj_academic_collab.actual_end_date = formatDatePicker(actual_end_date);
-        if (!isEmptyOrNullOrUndefined(support)) obj_academic_collab.support = support;
-        if (!isEmptyOrNullOrUndefined(note)) obj_academic_collab.note = note;
+        let obj_academic_collab = objAcadCollab(0, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note); 
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
@@ -451,28 +394,6 @@ $('#coming_add_officer_save').on('click', function () {
         }
     }
 });
-
-//function isEmpty(value) {
-//    return value === "" ? true : false;
-//}
-
-//function datePickerFromToValidate(from, to) {
-//    if (!(from === "" || to === "")) {
-//        let date_from = Date.parse(formatDatePicker(from));
-//        let date_to = Date.parse(formatDatePicker(to));
-//        if (date_from > date_to) {
-//            return false;
-//        }
-//        return true;
-//    }
-//    return true;
-//}
-
-//function formatDatePicker(date) {
-//    if (date != '') {
-//        return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
-//    }
-//}
 
 function clearContentComingAddModal() {
     //enable input and select
