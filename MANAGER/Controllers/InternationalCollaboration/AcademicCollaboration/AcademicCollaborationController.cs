@@ -194,7 +194,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 //parse to Object
-                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
+                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
                 SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
 

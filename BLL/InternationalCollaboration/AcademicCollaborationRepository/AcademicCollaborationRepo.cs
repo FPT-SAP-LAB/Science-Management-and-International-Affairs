@@ -319,7 +319,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             //add person
                             person = savePerson(obj_person);
                             person_id = person.people_id;
-
                             //add office
                             //check office_id with Office
                             var office = db.Offices.Find(obj_person.person_profile_office_id);

@@ -340,16 +340,12 @@ var available_partner;
 $('#going_add_officer_save').on('click', function () {
     //person
     let person = $('#going_add_officer_name').val();
-    let person_name = person.split('/')[0];
-    let person_id = person.split('/')[1]
 
     let person_email = $('#going_add_officer_email').val();
     let person_profile_office_id = $('#going_add_officer_facility').val();
 
     //partner
     let partner = $('#going_add_officer_traning').val();
-    let partner_name = partner.split('/')[0];
-    let partner_id = partner.split('/')[1];
 
     let partner_country_id = $('#going_add_officer_nation').val();
 
@@ -369,37 +365,42 @@ $('#going_add_officer_save').on('click', function () {
     let support = $('#going_add_officer_support').prop('checked');
     let note = $('#going_add_officer_note').val();
 
-    let obj_person = {
-        available_person: available_person,
-        person_name: person_name,
-        person_id: person_id,
-        person_email: person_email,
-        person_profile_office_id: person_profile_office_id
-    }
-
-    let obj_partner = {
-        available_partner: available_partner,
-        partner_name: partner_name,
-        partner_id: partner_id,
-        partner_country_id: partner_country_id,
-        collab_scope_id: collab_scope_id
-    }
-
-    let obj_academic_collab = {
-        collab_id: 0, //set 0 when add new academic collaboration
-        status_id: status_id,
-        plan_start_date: formatDatePicker(plan_start_date),
-        plan_end_date: formatDatePicker(plan_end_date),
-        actual_start_date: formatDatePicker(actual_start_date),
-        actual_end_date: formatDatePicker(actual_end_date),
-        support: support,
-        note: note
-    }
-
     //check empty
     if (isEmpty(person) || isEmpty(partner) || isEmpty(collab_scope_id) || isEmpty(status_id) || isEmpty(plan_start_date) || isEmpty(plan_end_date)) {
         return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
+        let person_name = person.split('/')[0];
+        let person_id = person.split('/')[1];
+        let partner_name = partner.split('/')[0];
+        let partner_id = partner.split('/')[1];
+
+        let obj_person = {
+            available_person: available_person,
+            person_name: person_name,
+            person_id: person_id,
+            person_email: person_email,
+            person_profile_office_id: person_profile_office_id
+        }
+
+        let obj_partner = {
+            available_partner: available_partner,
+            partner_name: partner_name,
+            partner_id: partner_id,
+            partner_country_id: partner_country_id,
+            collab_scope_id: collab_scope_id
+        }
+
+        let obj_academic_collab = {
+            collab_id: 0, //set 0 when add new academic collaboration
+            status_id: status_id,
+            plan_start_date: formatDatePicker(plan_start_date),
+            plan_end_date: formatDatePicker(plan_end_date),
+            actual_start_date: formatDatePicker(actual_start_date),
+            actual_end_date: formatDatePicker(actual_end_date),
+            support: support,
+            note: note
+        }
+
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
             return toastr.error("`TG đi học` không được vượt quá `TG kết thúc`.")
