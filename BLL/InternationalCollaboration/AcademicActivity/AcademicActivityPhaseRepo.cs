@@ -55,7 +55,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT pr.participant_role_id,pr.participant_role_name, pr.price
+                string sql = @"SELECT pr.participant_role_id,pr.participant_role_name,cast(pr.price as nvarchar) as 'price'
                                 FROM SMIA_AcademicActivity.ParticipantRole pr
                                 where pr.phase_id = @phase_id";
                 List<baseParticipantRole> data = db.Database.SqlQuery<baseParticipantRole>(sql, new SqlParameter("phase_id", phase_id)).ToList();
@@ -166,19 +166,27 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<PlanParticipant> getParticipantPlanByRole(int participant_role_id)
+        public infoPlanParticipant getParticipantPlanByRole(int participant_role_id)
         {
             try
             {
-                string sql = @"select pp.participant_role_id,pp.quantity,pp.office_id from SMIA_AcademicActivity.PlanParticipant pp
+                string sql = @"select pp.office_id,cast(pp.quantity as nvarchar) as 'quantity' from SMIA_AcademicActivity.PlanParticipant pp
                                 inner join SMIA_AcademicActivity.ParticipantRole pr on pr.participant_role_id = pp.participant_role_id
                                 where pr.participant_role_id = @participant_role_id";
-                List<PlanParticipant> data = db.Database.SqlQuery<PlanParticipant>(sql, new SqlParameter("participant_role_id", participant_role_id)).ToList();
+                List<basePlanParticipant> offices = db.Database.SqlQuery<basePlanParticipant>(sql, new SqlParameter("participant_role_id", participant_role_id)).ToList();
+                sql = @"select pr.participant_role_id,pr.participant_role_name,cast(pr.price as nvarchar) as 'price' from SMIA_AcademicActivity.ParticipantRole pr
+                                where pr.participant_role_id = @participant_role_id";
+                baseParticipantRole role = db.Database.SqlQuery<baseParticipantRole>(sql, new SqlParameter("participant_role_id", participant_role_id)).FirstOrDefault();
+                infoPlanParticipant data = new infoPlanParticipant
+                {
+                    role = role,
+                    offices = offices
+                };
                 return data;
             }
             catch (Exception e)
             {
-                return new List<PlanParticipant>();
+                return new infoPlanParticipant();
             }
         }
         public List<baseOffice> getOffices()
@@ -192,6 +200,154 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 return new List<baseOffice>();
+            }
+        }
+        public bool addParticipantRole(baseParticipantRole baseParticipant,List<basePlanParticipant> arrOffice,string check,string quantity,int phase_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ParticipantRole pr = db.ParticipantRoles.Add(new ParticipantRole
+                    {
+                        participant_role_name = baseParticipant.participant_role_name,
+                        need_payed = int.Parse(baseParticipant.price) == -1 ? false : true,
+                        phase_id = phase_id
+                    });
+                    db.SaveChanges();
+                    if (pr.need_payed)
+                    {
+                        pr.price = Double.Parse(baseParticipant.price);
+                        db.Entry(pr).State = EntityState.Modified;
+                    }
+                    if (check.Equals("True"))
+                    {
+                        foreach(basePlanParticipant pp in arrOffice)
+                        {
+                            db.PlanParticipants.Add(new PlanParticipant
+                            {
+                                quantity = int.Parse(pp.quantity),
+                                participant_role_id = pr.participant_role_id,
+                                office_id = pp.office_id
+                            });
+                        }
+                    }
+                    else
+                    {
+                        db.PlanParticipants.Add(new PlanParticipant
+                        {
+                            quantity = int.Parse(quantity),
+                            participant_role_id = pr.participant_role_id
+                        });
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }catch(Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        public bool editParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ParticipantRole pr = db.ParticipantRoles.Find(baseParticipant.participant_role_id);
+                    pr.participant_role_name = baseParticipant.participant_role_name;
+                    pr.need_payed = int.Parse(baseParticipant.price) == -1 ? false : true; 
+                    if(pr.need_payed == true)
+                    {
+                        pr.price = double.Parse(baseParticipant.price);
+                    }
+                    else
+                    {
+                        pr.price = null;
+                    }
+                    db.Entry(pr).State = EntityState.Modified;
+                    db.SaveChanges();
+                    updatePlanParticipant(baseParticipant, arrOffice, check, quantity);
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        public void updatePlanParticipant(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity)
+        {
+            if (check.Equals("True"))
+            {
+                List<PlanParticipant> plans = db.PlanParticipants.Where(x => x.participant_role_id == baseParticipant.participant_role_id).ToList();
+                List<int?> plan_ids = plans.Select(x => x.office_id).ToList();
+                if (plan_ids.Count == 1 && plan_ids[0] == null)
+                {
+                    PlanParticipant pprv = db.PlanParticipants.Where(x => x.office_id == null && x.participant_role_id == baseParticipant.participant_role_id).FirstOrDefault();
+                    db.PlanParticipants.Remove(pprv);
+                    plan_ids.Clear();
+                    db.SaveChanges();
+                }
+                foreach (basePlanParticipant bpp in arrOffice)
+                {
+                    if (plan_ids.Contains(bpp.office_id))
+                    {
+                        PlanParticipant pp = db.PlanParticipants.Where(x => x.office_id == bpp.office_id && x.participant_role_id == baseParticipant.participant_role_id).FirstOrDefault();
+                        pp.quantity = int.Parse(bpp.quantity);
+                        db.Entry(pp).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.PlanParticipants.Add(new PlanParticipant
+                        {
+                            office_id = bpp.office_id,
+                            quantity = int.Parse(bpp.quantity),
+                            participant_role_id = baseParticipant.participant_role_id
+                        });
+                    }
+                    plan_ids.Remove(bpp.office_id);
+                }
+                db.SaveChanges();
+                foreach (int i in plan_ids)
+                {
+                    PlanParticipant pprv = db.PlanParticipants.Where(x => x.office_id == i && x.participant_role_id == baseParticipant.participant_role_id).FirstOrDefault();
+                    db.PlanParticipants.Remove(pprv);
+                }
+            }
+            else
+            {
+                List<PlanParticipant> listplanrv = db.PlanParticipants.Where(x => x.participant_role_id == baseParticipant.participant_role_id).ToList();
+                db.PlanParticipants.RemoveRange(listplanrv);
+                db.SaveChanges();
+                db.PlanParticipants.Add(new PlanParticipant
+                {
+                    participant_role_id = baseParticipant.participant_role_id,
+                    quantity = int.Parse(quantity)
+                });
+            }
+        }
+        public bool deleteParticipantRole(int participant_role_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ParticipantRole prrv = db.ParticipantRoles.Find(participant_role_id);
+                    db.ParticipantRoles.Remove(prrv);
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }catch(Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
         public class basePhase
@@ -218,8 +374,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public class basePlanParticipant
         {
-            public int office_id { get; set; }
+            public int? office_id { get; set; }
             public string quantity { get; set; }
+        }
+        public class infoPlanParticipant
+        {
+            public baseParticipantRole role { get; set; }
+            public List<basePlanParticipant> offices { get; set; }
         }
     }
 }
