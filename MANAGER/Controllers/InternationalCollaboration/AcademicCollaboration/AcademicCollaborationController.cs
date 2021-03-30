@@ -5,6 +5,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.DeserializeAcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
 using MANAGER.Models;
 using Newtonsoft.Json;
@@ -189,17 +190,25 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
+        public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id, 
+            string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
         {
             try
             {
-                //parse to Object
-                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+                ////parse to Object
+                //DeserializeAcadCollab_Person deserialize_person = JsonConvert.DeserializeObject<DeserializeAcadCollab_Person>(obj_person_stringify);
+                //DeserializeAcadCollab_Partner deserialize_partner = JsonConvert.DeserializeObject<DeserializeAcadCollab_Partner>(obj_partner_stringify);
+                //DeserializeAcadCollab_AcadCollab deserialize_academic_collab = JsonConvert.DeserializeObject<DeserializeAcadCollab_AcadCollab>(obj_academic_collab_stringify);
+
+                //pass deserialize obj to save obj
+                SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
                 SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
+
+                ////pass deserialize obj to save obj
+                //SaveAcadCollab_Person obj_person = new SaveAcadCollab_Person();
+                //SaveAcadCollab_Partner obj_partner = new SaveAcadCollab_Partner();
+                //SaveAcadCollab_AcademicCollaboration obj_academic_collab = new SaveAcadCollab_AcademicCollaboration();
 
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 int account_id = CurrentAccount.AccountID(Session);
