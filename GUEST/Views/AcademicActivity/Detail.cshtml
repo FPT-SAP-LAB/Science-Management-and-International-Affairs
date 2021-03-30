@@ -7,6 +7,16 @@
         font-size: 14px;
         text-align: justify
     }
+
+    .content-active {
+        color: white;
+        background: #b7b2b2;
+    }
+
+    .content-nav :hover {
+        background: darkgray;
+        cursor: pointer;
+    }
 </style>
 <!-- begin::Card-->
 <div class="card card-custom overflow-hidden">
@@ -34,7 +44,12 @@
         <!-- end: Invoice header-->
         <!-- begin: Invoice body-->
         <div class="row justify-content-left py-8 px-8 py-md-10">
-            <div class="col-md-12">
+            <div class="col-3">
+                <table class="table table-bordered" id="nav_table">
+                   
+                </table>
+            </div>
+            <div class="col-9">
                 <p id="event-content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas ultricies mi eget mauris pharetra et ultrices neque ornare. Volutpat diam ut venenatis tellus. Faucibus a pellentesque sit amet porttitor. Mattis nunc sed blandit libero volutpat sed cras. A cras semper auctor neque vitae tempus. Euismod in pellentesque massa placerat duis ultricies lacus. Ipsum consequat nisl vel pretium lectus quam id leo in. Ut consequat semper viverra nam libero justo laoreet. Fusce id velit ut tortor pretium viverra suspendisse. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Tortor condimentum lacinia quis vel eros donec ac odio. Felis eget nunc lobortis mattis aliquam faucibus purus in massa.
                 </p>
@@ -43,10 +58,42 @@
         <!-- end: Invoice body-->
         <!-- begin: Invoice footer-->
     </div>
-    <!-- end::Card-->
+</div>
+<!-- end::Card-->
 
-    @section scripts{
-        <script>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var temp = 2;
+            var html = `<tr class="content-nav content-active">
+                        <td class="text-center" onclick="click_load_detail(0)">ViewBag.abc gì đó</td>
+                        </tr>`;
+            for (i = 1; i <= temp; i++) {
+                html += `<tr class="content-nav">
+                        <td class="text-center" onclick="click_load_detail(`+i+`)" >ViewBag.abc[i] gì đó</td>
+                        </tr>`
+            }
+            $('#nav_table').html(html)
 
-        </script>
-    }
+            $('.content-nav').click(function () {
+                $('.content-nav').each(function () {
+                    $('.content-active').removeClass('content-active').addClass('content-nav')
+                })
+                $(this).removeClass('content-nav').addClass('content-active')
+            })
+        })
+
+        function click_load_detail(content_id) {
+            var id = { content_id: content_id}
+            $.ajax({
+                url: '/AcademicActivity/DetailContent',
+                type: 'post',
+                dataType: 'json',
+                data: id,
+                success: function (data) {
+                    $('#event-content').text(data.content)
+                }
+            })
+        }
+    </script>
+}
