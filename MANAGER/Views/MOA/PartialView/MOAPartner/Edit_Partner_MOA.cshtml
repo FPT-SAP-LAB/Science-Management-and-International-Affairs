@@ -24,7 +24,6 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Lĩnh vực</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <input disabled class="form-control" type="text" placeholder="Đại diện" autocomplete="off" id="specialization_edit" style="width:100% !important" />
                         </div>
@@ -65,13 +64,12 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Phạm vi hợp tác</label>
-                        <label style="color:blue" class="float-right"><a href="#">Quản lý</a></label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control search2" id="coop_scope_edit" name="param" style="width:100% !important" multiple="multiple">
-                                @foreach (var item in ViewBag.listScopesMOAPartner)
+                                @*@foreach (var item in ViewBag.listScopesMOAPartner)
                                 {
                                     <option value="@item.scope_id">@item.scope_abbreviation</option>
-                                }
+                                }*@
                             </select>
                         </div>
                     </div>
@@ -85,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button id="edit_moa_partner_button" type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" onclick="editMOAPartner()" disabled>Sửa</button>
+                <button id="edit_moa_partner_button" type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" onclick="editMOAPartner()" >Sửa</button>
             </div>
         </div>
     </div>

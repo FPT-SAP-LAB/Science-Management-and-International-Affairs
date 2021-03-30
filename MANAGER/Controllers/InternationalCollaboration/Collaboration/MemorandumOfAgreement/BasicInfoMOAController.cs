@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
+using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOABasicInfo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using MANAGER.Support;
@@ -128,6 +129,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult getNewExMOAScopesList(int partner_id)
+        {
+            try
+            {
+                string moa_id = Session["moa_detail_id"].ToString();
+                string mou_id = Session["mou_detail_id"].ToString();
+                List<CollaborationScope> data = moa.GetScopesExMOA(int.Parse(moa_id),int.Parse(mou_id),partner_id);
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
             }
         }
     }
