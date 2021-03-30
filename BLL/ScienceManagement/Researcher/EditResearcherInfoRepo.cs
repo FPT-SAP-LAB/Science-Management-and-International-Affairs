@@ -118,7 +118,6 @@ namespace BLL.ScienceManagement.Researcher
                     return 0;
                 }
             }
-
         }
     }
 }
