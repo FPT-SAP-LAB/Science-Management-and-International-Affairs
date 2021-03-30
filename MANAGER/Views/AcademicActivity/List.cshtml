@@ -333,6 +333,8 @@
                         success: function (data) {
                             if (data != '') {
                                 toastr.success(data);
+                                stt = 1;
+                                datatable.ajax.reload();
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                             }
