@@ -73,7 +73,7 @@ $("#change_status_save").on("click", function () {
                 collab_going_table.ajax.reload();
                 change_status_save.stopLoading();
                 $("#change_status_close").click();
-                clearContentAddModal();
+                clearContentChangeStatus();
             } else {
                 toastr.warning(data.content);
                 change_status_save.stopLoading();
@@ -85,3 +85,11 @@ $("#change_status_save").on("click", function () {
         }
     });
 });
+
+function clearContentChangeStatus() {
+    $('#change_status').val(null).trigger('change');
+    //clear upload file
+    $('#change_status_upload .uppy-list').html('');
+    uppy3.removeFile(uppy3.getFiles().length == 0 ? '' : uppy3.getFiles()[0].id);
+    $('#status_history_note').val('');
+}
