@@ -11,13 +11,13 @@ namespace BLL.ScienceManagement.Researcher
 {
     public class ResearchersDetailRepo
     {
+        ResearchersBiographyRepo researcherBiographyRepo;
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public ResearcherDetail GetProfile(int id)
         {
             var profile = (
                 from a in db.People
                 join b in db.Profiles on a.people_id equals b.people_id
-                join w in db.Files on b.avatar_id equals w.file_id
                 where a.people_id == id
                 select new ResearcherDetail
                 {
@@ -26,7 +26,11 @@ namespace BLL.ScienceManagement.Researcher
                     dob = b.birth_date,
                     email = a.email,
                     phone = a.phone_number,
-                    avatar = w.link,
+                    avatar = (from f in db.Profiles
+                              join ff in db.Files on f.avatar_id equals ff.file_id
+                              where f.people_id == a.people_id
+                              select ff.link
+                                      ).FirstOrDefault(),
                     website = b.website,
                     office = b.Office.office_name,
                     gscholar = b.google_scholar,
@@ -138,6 +142,61 @@ namespace BLL.ScienceManagement.Researcher
             profile.position_fields = position_fields;
             profile.offices_fields = offices_fields;
             profile.countries_fields = countries_fields;
+            return profile;
+        }
+
+        public ResearcherView GetDetailView(int id)
+        {
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            var profile = (
+               from a in db.People
+               join b in db.Profiles on a.people_id equals b.people_id
+               from i in db.Offices.Where(x => x.Profiles.Contains(b))
+               from k in db.Countries.Where(x => x.Profiles.Contains(b))
+               where a.people_id == id
+               select new ResearcherView
+               {
+                   id = a.people_id,
+                   name = a.name,
+                   dob = b.birth_date,
+                   position_fields = (from a in db.Profiles
+                                      from g in db.Positions.Where(x => x.Profiles.Contains(a))
+                                      join h in db.PositionLanguages on g.position_id equals h.position_id
+                                      where a.people_id == id && h.language_id == 1
+                                      select new SelectField
+                                      {
+                                          name = h.name
+                                      }).ToList(),
+                   interested_fields = (from a in db.Profiles
+                                        from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
+                                        join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
+                                        where a.people_id == id && h.language_id == 1
+                                        select new SelectField
+                                        {
+                                            name = h.name
+                                        }).ToList(),
+                   title_fields = (from a in db.Profiles
+                                   from g in db.Titles.Where(x => x.Profiles.Contains(a))
+                                   join h in db.TitleLanguages on g.title_id equals h.title_id
+                                   where a.people_id == id && h.language_id == 1
+                                   select new SelectField
+                                   {
+                                       name = h.name
+                                   }).ToList(),
+                   email = a.email,
+                   phone = a.phone_number,
+                   avatar = (from f in db.Profiles
+                             join ff in db.Files on f.avatar_id equals ff.file_id
+                             where f.people_id == a.people_id
+                             select ff.link
+                                      ).FirstOrDefault(),
+                   website = b.website,
+                   office = b.Office.office_name,
+                   gscholar = b.google_scholar,
+                   cv = b.cv
+               }).FirstOrDefault();
+            profile.awards = researcherBiographyRepo.GetAwards(id);
+            profile.acadBiography = researcherBiographyRepo.GetAcadHistory(id);
             return profile;
         }
     }

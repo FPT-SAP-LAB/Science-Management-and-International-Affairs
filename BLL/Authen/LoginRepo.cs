@@ -90,6 +90,12 @@ namespace BLL.Authen
                 return new List<baseRight>();
             }
         }
+        public static Profile getProfileByAccount(Account account)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            Profile profile = db.Profiles.Where(x => x.account_id == account.account_id).FirstOrDefault();
+            return profile;
+        }
         public class User
         {
             public List<int> rights { get; set; }

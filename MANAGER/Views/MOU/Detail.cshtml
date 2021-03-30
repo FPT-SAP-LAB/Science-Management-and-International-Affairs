@@ -1206,12 +1206,13 @@
 
         function addToPartnerScopeListEdit(data) {
             listTempExMOUPartnerScopeEdit = [];
+            
             for (i = 0; i < data.PartnerScopeInfo.length; i++){
                 var partner_id = data.PartnerScopeInfo[i].partner_id;
                 var scopes = data.PartnerScopeInfo[i].scopes_id;
                 var scopes_name = '';
-                for (i = 0; i < scopes.length; i++) {
-                    var objScope = listFullScopes.find(x => x.scope_id == scopes[i]);
+                for (j = 0; j < scopes.length; j++) {
+                    var objScope = listFullScopes.find(x => x.scope_id == scopes[j]);
                     if (objScope != null) {
                         scopes_name += objScope.scope_abbreviation + ',';
                     }

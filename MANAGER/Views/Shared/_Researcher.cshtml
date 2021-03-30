@@ -86,7 +86,7 @@
             <!--begin::User-->
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                    <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@ViewBag.profile.avatar)">
+                    <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
                         <div class="image-input-wrapper"></div>
 
                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">

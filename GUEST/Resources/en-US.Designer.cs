@@ -484,6 +484,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to International Affair.
+        /// </summary>
+        public static string InternationalAffair {
+            get {
+                return ResourceManager.GetString("InternationalAffair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invention&apos;s name.
         /// </summary>
         public static string InvenName {
@@ -601,6 +610,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Postgraduate Education.
         /// </summary>
         public static string LongTerm {
@@ -669,6 +687,15 @@ namespace GUEST.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News.
+        /// </summary>
+        public static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
             }
         }
         
@@ -763,7 +790,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner detail.
+        ///   Looks up a localized string similar to Partner Detail.
         /// </summary>
         public static string PartnerDetail {
             get {
@@ -772,7 +799,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner list.
+        ///   Looks up a localized string similar to Partner List.
         /// </summary>
         public static string PartnerList {
             get {
@@ -1042,7 +1069,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exchange Program.
+        ///   Looks up a localized string similar to Faculty Exchange Program.
         /// </summary>
         public static string ShortTerm {
             get {
@@ -1051,7 +1078,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FPT Exchange Program.
+        ///   Looks up a localized string similar to FPT Faculty Exchange Program.
         /// </summary>
         public static string ShortTermFPTProgram {
             get {
@@ -1060,7 +1087,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partner Exchange Program.
+        ///   Looks up a localized string similar to Partner Faculty Exchange Program.
         /// </summary>
         public static string ShortTermPartnerProgram {
             get {

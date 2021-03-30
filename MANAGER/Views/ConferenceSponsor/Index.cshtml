@@ -61,7 +61,10 @@
                     { data: "CreatedDate", name: "Date" },
                     {
                         data: {}, name: "StatusID", render: function (data) {
-                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline mr-2'>" + data.StatusName + "</span>"
+                            if (data.EditAble)
+                                return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
+                            else
+                                return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
                         }, width: "80px", className: "text-center"
                     },
                     {

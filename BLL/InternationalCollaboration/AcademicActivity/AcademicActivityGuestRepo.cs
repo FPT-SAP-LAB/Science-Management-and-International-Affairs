@@ -82,6 +82,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<activityType>();
             }
         }
+        public int getPhaseCurrentByActivity(int activity_id)
+        {
+            try
+            {
+                string sql = @"select aap.phase_id from SMIA_AcademicActivity.AcademicActivity aa
+                        inner join SMIA_AcademicActivity.AcademicActivityPhase aap on aap.activity_id = aa.activity_id
+                        where aa.activity_id = @activity_id and GETDATE() between aap.phase_start and aap.phase_end";
+                int phase_id = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_id", activity_id)).FirstOrDefault();
+                return phase_id;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
 
         public string changeFormatDate(string date)
         {
@@ -89,18 +104,19 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
 
-        public baseAA getBaseAADetail(int id)
+        public baseAA getBaseAADetail(int id, int language)
         {
             try
             {
-                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(adetail.activity_date_start as nvarchar) as 'from', cast(adetail.activity_date_end as nvarchar) as 'to', al.language_id
-                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
-                        on adetail.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
-                        on ai.activity_id = adetail.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
-                        on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
-                        on av.article_id = ai.article_id and al.language_id = av.language_id
-                        WHERE al.language_id = 1 AND [aa].activity_id = @id and ai.main_article = 1";
-                baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to', al.language_id
+                        FROM SMIA_AcademicActivity.AcademicActivity aa left join SMIA_AcademicActivity.AcademicActivityLanguage al 
+                        on aa.activity_id = al.activity_id left join SMIA_AcademicActivity.ActivityInfo ai
+                        on ai.activity_id = aa.activity_id and ai.main_article = 1 left join IA_Article.Article ar
+                        on ar.article_id = ai.article_id left join IA_Article.ArticleVersion av
+                        on av.article_id = ai.article_id and (al.language_id = av.language_id or al.language_id is null or av.language_id is null)
+                        WHERE (al.language_id = @language or av.language_id = @language) AND [aa].activity_id = @id and ai.main_article = 1";
+                baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id),
+                    new SqlParameter("language", language)).FirstOrDefault();
                 detail.from = changeFormatDate(detail.from);
                 detail.to = changeFormatDate(detail.to);
                 return detail;
@@ -109,6 +125,26 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 Console.WriteLine(e.ToString());
                 return new baseAA();
+            }
+        }
+        public List<subContent> GetSubContent(int id, int language)
+        {
+            try
+            {
+                string sql = @"SELECT av.article_id 'id', av.version_title as 'name', av.article_content 'content'
+                FROM SMIA_AcademicActivity.AcademicActivity aa join SMIA_AcademicActivity.ActivityInfo ai
+                on ai.activity_id = aa.activity_id join IA_Article.Article ar
+                on ar.article_id = ai.article_id join IA_Article.ArticleVersion av
+                on av.article_id = ai.article_id 
+                WHERE av.language_id = @language AND [aa].activity_id = @id
+                ORDER BY ai.main_article DESC";
+                List<subContent> obj = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language", language),
+                    new SqlParameter("id", id)).ToList();
+                return obj;
+            }
+            catch (Exception e)
+            {
+                return new List<subContent>();
             }
         }
         public fullForm getForm(int phase_id)
@@ -175,6 +211,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string location { get; set; }
             public string from { get; set; }
             public string to { get; set; }
+            public string content { get; set; }
         }
         public class baseFrom
         {
@@ -195,6 +232,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public List<baseFrom> question { get; set; }
             public List<QuesOption> optins { get; set; }
+        }
+
+        public class subContent
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+            public string content { get; set; }
         }
     }
 }
