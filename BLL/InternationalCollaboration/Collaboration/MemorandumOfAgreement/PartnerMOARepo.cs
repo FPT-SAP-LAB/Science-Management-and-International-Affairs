@@ -220,7 +220,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         //decrese refer_count in PartnerScope
                         objPS.reference_count -= 1;
                         db.Entry(objPS).State = EntityState.Modified;
-
                     }
                     db.SaveChanges();
 
