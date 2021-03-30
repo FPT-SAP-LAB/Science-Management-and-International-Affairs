@@ -226,7 +226,8 @@
                         add_author_accno = response.author[i].bank_number;
 
                         var temp_money = response.author[i].money_reward;
-                        add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if (response.author[i].money_reward != null) add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        else add_author_reward = temp_money;
 
                         add_author_note = '';
                         add_author_email = response.author[i].email;
