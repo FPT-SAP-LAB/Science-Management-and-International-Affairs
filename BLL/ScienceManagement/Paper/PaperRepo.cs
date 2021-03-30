@@ -27,18 +27,16 @@ namespace BLL.ScienceManagement.Paper
 
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
-            List<ListCriteriaOfOnePaper> list = new List<ListCriteriaOfOnePaper>();
             string sql = @"select pc.name, pwc.*
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].PaperWithCriteria pwc on p.paper_id = pwc.paper_id
 	                            join [SM_ScientificProduct].PaperCriteria pc on pwc.criteria_id = pc.criteria_id
                             where p.paper_id = @id";
-            list = db.Database.SqlQuery<ListCriteriaOfOnePaper>(sql, new SqlParameter("id", id)).ToList();
+            List<ListCriteriaOfOnePaper> list = db.Database.SqlQuery<ListCriteriaOfOnePaper>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
 
         public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
-            List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
             string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
@@ -51,7 +49,7 @@ namespace BLL.ScienceManagement.Paper
 	                            left join [General].Office o on po.office_id = o.office_id
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
-            list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
+            List<AuthorInfoWithNull> list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             foreach (var item in list)
             {
                 item.title_strring = item.title_name;
@@ -164,7 +162,7 @@ namespace BLL.ScienceManagement.Paper
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
-                            pro.is_reseacher = item.is_reseacher;
+                            pro.is_reseacher = item.is_reseacher != null && item.is_reseacher.Value;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
