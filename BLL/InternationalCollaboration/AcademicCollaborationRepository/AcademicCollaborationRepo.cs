@@ -444,7 +444,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (obj_person.person_profile_office_id != 0)
                 {
                     person.office_id = obj_person.person_profile_office_id;
-                } else
+                }
+                else
                 {
                     person.office_id = null;
                 }
