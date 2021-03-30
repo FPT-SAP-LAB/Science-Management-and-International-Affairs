@@ -92,7 +92,7 @@
                                         <!--begin::User-->
                                         <div class="mt-7 pb-2">
                                             <div class="symbol symbol-circle symbol-lg-75">
-                                                <img src="~/Content/assets/media/users/blank.png" alt="image" />
+                                                <img src="@(researcher.avatar==null?"/Content/assets/media/users/blank.png":researcher.avatar)" alt="image" />
                                             </div>
                                             <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
                                                 <span class="font-size-h3 font-weight-boldest">JB</span>

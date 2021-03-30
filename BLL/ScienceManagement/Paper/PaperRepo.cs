@@ -39,7 +39,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -52,6 +52,11 @@ namespace BLL.ScienceManagement.Paper
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
             list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
+            foreach (var item in list)
+            {
+                item.title_strring = item.title_name;
+                if (item.is_reseacher == true) item.title_strring += ", Nghiên cứu viên";
+            }
             return list;
         }
 
@@ -159,16 +164,17 @@ namespace BLL.ScienceManagement.Paper
                             pro.identification_number = item.identification_number;
                             pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
+                            pro.is_reseacher = item.is_reseacher;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " update [SM_Researcher].PeopleTitle set title_id = @title" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.contract_id);
+                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
                             listParam1.Add(tempParam2);
 
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, item.people_id);
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
                         }
                     }
@@ -210,6 +216,24 @@ namespace BLL.ScienceManagement.Paper
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "ff";
+            }
+        }
+
+        public string changeStatus(DetailPaper paper)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
+                rp.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                dbc.Rollback();
                 return "ff";
             }
         }
@@ -417,10 +441,10 @@ namespace BLL.ScienceManagement.Paper
                 rp.reward_type = item.reward_type;
                 rp.status_id = 3;
 
-                if (item.type == "Trongnuoc")
-                {
-                    db.Database.ExecuteSqlCommand("DELETE FROM [SM_ScientificProduct].RequestPaper where paper_id = @id", new SqlParameter("id", item.paper_id));
-                }
+                //if (item.type == "Trongnuoc")
+                //{
+                //    db.Database.ExecuteSqlCommand("DELETE FROM [SM_ScientificProduct].RequestPaper where paper_id = @id", new SqlParameter("id", item.paper_id));
+                //}
 
                 db.SaveChanges();
                 return "ss";
