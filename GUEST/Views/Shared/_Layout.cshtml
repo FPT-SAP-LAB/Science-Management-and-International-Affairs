@@ -135,43 +135,44 @@
                                         <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                                             <a href="javascript:;" class="menu-link menu-toggle">
                                                 <span class="menu-text">
-                                                    Hợp tác quốc tế
+                                                    @rm.GetString("InternationalAffair")
                                                 </span><span class="menu-desc"></span><i class="menu-arrow"></i>
                                             </a>
                                             <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                                                 <ul class="menu-subnav">
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"><span class="menu-text">Trao đổi giảng viên ngắn hạn</span></a>
+                                                        <a href="@Url.Action("Long_Term","AcademicCollaboration")" class="menu-link"><span class="menu-text">@rm.GetString("LongTerm")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"><span class="menu-text">Hoạt động với đối tác quốc tế</span></a>
+                                                        <a href="@Url.Action("Short_Term","AcademicCollaboration")" class="menu-link"><span class="menu-text">@rm.GetString("ShortTerm")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="@Url.Action("List", "Partner")" class="menu-link"><span class="menu-text">Danh sách đối tác</span></a>
-                                                    </li>
-                                                    <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"><span class="menu-text">Thăm và làm việc</span></a>
-                                                    </li>
-                                                    <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="/Policy" class="menu-link"><span class="menu-text">Chính sách</span></a>
+                                                        <a href="@Url.Action("List", "Partner")" class="menu-link"><span class="menu-text">@rm.GetString("PartnerList")</span></a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                            <a href="@Url.Action("Index","AcademicActivity")" class="menu-link menu-toggle">
+                                                <span class="menu-text">
+                                                    @rm.GetString("AcademicActivity")
+                                                </span><span class="menu-desc"></span><i class="menu-arrow"></i>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                                             <a href="#" class="menu-link">
-                                                <span class="menu-text">Tin tức</span><span class="menu-desc"></span><i class="menu-arrow"></i>
+                                                <span class="menu-text">@rm.GetString("News")</span><span class="menu-desc"></span><i class="menu-arrow"></i>
                                             </a>
                                         </li>
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
                                         <!--@if (@user != null && (user.account.role_id == 1 || true))
-                                        {
-                                            <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
-                                                <a href="/SettingDrive" class="menu-link">
-                                                    <span class="menu-text">SETUP DRIVE</span><span class="menu-desc"></span><i class="menu-arrow"></i>
-                                                </a>
-                                            </li>
-                                        }-->
+    {
+        <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="/SettingDrive" class="menu-link">
+                <span class="menu-text">SETUP DRIVE</span><span class="menu-desc"></span><i class="menu-arrow"></i>
+            </a>
+        </li>
+    }-->
                                     </ul>
                                     <!--end::Header Nav-->
                                 </div>
@@ -1040,7 +1041,7 @@
                                         else
                                         {
                                             <div id="login_btn" class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
-                                                Login
+                                                @rm.GetString("Login")
                                             </div>
                                             <div class="g-signin2" id="google_auth_login" hidden data-onsuccess="onSignIn" data-theme="dark"></div>
                                         }
@@ -1169,7 +1170,7 @@
                                         <!--begin::Item-->
                                         <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
                                         <a href="/" class="text-white text-hover-white opacity-75 hover-opacity-100">
-                                            Trang chủ
+                                            @rm.GetString("homepage")
                                         </a>
                                         @foreach (User.Models.PageTree page in ViewBag.pagesTree)
                                         {
