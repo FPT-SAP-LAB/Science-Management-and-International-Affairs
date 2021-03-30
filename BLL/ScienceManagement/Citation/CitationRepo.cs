@@ -107,6 +107,7 @@ namespace BLL.ScienceManagement.Citation
                         Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
                         p.name = item.name;
                         p.phone_number = item.phone_number;
+                        p.office_id = item.office_id;
                         if (item.office_abbreviation != "Khác")
                         {
                             Profile pro = (from a in db.Profiles
