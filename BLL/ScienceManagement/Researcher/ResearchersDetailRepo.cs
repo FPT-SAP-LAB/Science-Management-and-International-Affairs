@@ -144,7 +144,7 @@ namespace BLL.ScienceManagement.Researcher
 
         public ResearcherView GetDetailView(int id)
         {
-            researcherBiographyRepo=new ResearchersBiographyRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
             var profile = (
                from a in db.People
                join b in db.Profiles on a.people_id equals b.people_id
@@ -157,29 +157,30 @@ namespace BLL.ScienceManagement.Researcher
                    id = a.people_id,
                    name = a.name,
                    dob = b.birth_date,
-                   position_fields=(from a in db.Profiles
-                                    from g in db.Positions.Where(x => x.Profiles.Contains(a))
-                                    join h in db.PositionLanguages on g.position_id equals h.position_id
-                                    where a.people_id == id && h.language_id == 1 
-                                    select new SelectField { 
-                                     name=h.name
-                                    }).ToList(),
-                   interested_fields = (from a in db.Profiles
-                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
-                                      join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
+                   position_fields = (from a in db.Profiles
+                                      from g in db.Positions.Where(x => x.Profiles.Contains(a))
+                                      join h in db.PositionLanguages on g.position_id equals h.position_id
                                       where a.people_id == id && h.language_id == 1
                                       select new SelectField
                                       {
                                           name = h.name
                                       }).ToList(),
-                   title_fields = (from a in db.Profiles
-                                        from g in db.Titles.Where(x => x.Profiles.Contains(a))
-                                        join h in db.TitleLanguages on g.title_id equals h.title_id
+                   interested_fields = (from a in db.Profiles
+                                        from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
+                                        join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
                                         where a.people_id == id && h.language_id == 1
                                         select new SelectField
                                         {
                                             name = h.name
                                         }).ToList(),
+                   title_fields = (from a in db.Profiles
+                                   from g in db.Titles.Where(x => x.Profiles.Contains(a))
+                                   join h in db.TitleLanguages on g.title_id equals h.title_id
+                                   where a.people_id == id && h.language_id == 1
+                                   select new SelectField
+                                   {
+                                       name = h.name
+                                   }).ToList(),
                    email = a.email,
                    phone = a.phone_number,
                    avatar = w.link,

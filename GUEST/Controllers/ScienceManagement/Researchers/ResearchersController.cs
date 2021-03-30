@@ -48,7 +48,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             researcherListRepo = new ResearchersListRepo();
             BaseDatatable datatable = new BaseDatatable();
-            string request= Request["request"];
+            string request = Request["request"];
             var requestJson = JObject.Parse(request);
             datatable.Start = (int)requestJson["request"]["start"];
             datatable.Start = (int)requestJson["request"]["length"];
