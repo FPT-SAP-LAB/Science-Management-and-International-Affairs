@@ -594,8 +594,18 @@
             return markup;
         }
 
+        toastr.options = {
+            "preventDuplicates": true,
+        }
+
         function formatRepoSelection(repo) {
             if (repo.id) {
+                if (repo.is_verified) {
+                    toastr.warning("Hội nghị này đã được thông qua tại một đề nghị khác");
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", true);
+                } else {
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", false);
+                }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
                 document.getElementById("qs_university").value = repo.qs_university;

@@ -12,16 +12,16 @@ function dataURItoBlob(dataURI) {
 var save_loader = new LoaderBtn($(".load-btn"))
 
 var direction = 1;
-$("#add_procedure_coming").click(function () {
+$("#add_procedure_coming").click(function() {
     direction = 2;
     $('#add_procedure input').val('');
     $('#add_procedure .summernote').summernote('code', '');
 })
-$("#add_procedure_going").click(function () {
+$("#add_procedure_going").click(function() {
     direction = 1;
 })
 
-$('#save_procedure').click(function () {
+$('#save_procedure').click(function() {
     var form_data = new FormData();
 
     var proceduce_title = $('#add_procedure_title').val()
@@ -63,7 +63,7 @@ $('#save_procedure').click(function () {
         data: form_data,
         processData: false,
         contentType: false,
-        success: function (data) {
+        success: function(data) {
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -98,9 +98,9 @@ $('#save_procedure').click(function () {
                 save_loader.stopLoading()
             }
         },
-        error: function () {
+        error: function(data) {
             toastr.clear();
-            toastr.error('Có lỗi xảy ra khi thêm');
+            toastr.error(data.content);
             save_loader.stopLoading()
         }
     });
