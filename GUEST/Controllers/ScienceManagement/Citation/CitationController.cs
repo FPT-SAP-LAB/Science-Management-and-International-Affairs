@@ -28,9 +28,9 @@ namespace User.Controllers
         {
             ViewBag.title = "Số trích dẫn";
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Số trích dẫn","/Citation/List"),
-            };
+           {
+               new PageTree("Số trích dẫn","/Citation/List"),
+           };
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -39,9 +39,9 @@ namespace User.Controllers
         {
             ViewBag.title = "Đề xuất khen thưởng số trích dẫn";
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Đề xuất khen thưởng số trích dẫn","/Citation/AddRequest"),
-            };
+           {
+               new PageTree("Đề xuất khen thưởng số trích dẫn","/Citation/AddRequest"),
+           };
             ViewBag.pagesTree = pagesTree;
             return View();
         }
@@ -50,9 +50,9 @@ namespace User.Controllers
         {
             ViewBag.title = "Số trích dẫn đang xử lý";
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Số trích dẫn đang xử lý","/Citation/Pending"),
-            };
+           {
+               new PageTree("Số trích dẫn đang xử lý","/Citation/Pending"),
+           };
             ViewBag.pagesTree = pagesTree;
             LoginRepo.User u = new LoginRepo.User();
             Account acc = new Account();
@@ -75,9 +75,9 @@ namespace User.Controllers
         {
             ViewBag.title = "Chỉnh sửa số trích dẫn";
             var pagesTree = new List<PageTree>
-            {
-                new PageTree("Chỉnh sửa số trích dẫn","/Citation/Edit"),
-            };
+           {
+               new PageTree("Chỉnh sửa số trích dẫn","/Citation/Edit"),
+           };
             ViewBag.pagesTree = pagesTree;
             ViewBag.ckEdit = editable;
 
@@ -122,8 +122,9 @@ namespace User.Controllers
         {
             cr.addAuthor(people);
             List<Citation> oldcitation = cr.getCitation(request_id);
-            string mess = cr.editCitation(oldcitation, citation, request_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            AuthorInfo author = cr.addAuthor(people);
+            string mess = cr.editCitation(oldcitation, citation, request_id, author);
+            return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
         }
     }
 }

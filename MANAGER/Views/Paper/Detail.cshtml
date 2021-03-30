@@ -270,6 +270,7 @@
             $(this).blur();
         });
         $("#editconfirm").click(function () {
+            $("#loading").show();
             var paper_id = "@ViewBag.paper.paper_id";
             var request_id = "@ViewBag.paper.request_id";
             var paper = {
@@ -285,8 +286,10 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         //editRequest();
-                        alert(response.mess);
+                        //alert(response.mess);
+                        window.location.href = "/Paper/Pending";
                     }
                     else alert('loi');
                 },
@@ -297,8 +300,10 @@
         });
 
         $("#confirmbtn").click(function () {
+            $("#loading").show();
             var temp = $("#totalreward").val();
             if (temp == "") {
+                $("#loading").hide();
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
                 check = false;
             } else {
@@ -309,6 +314,7 @@
                         var value = $(this).text();
                         //console.log(value);
                         if (value == "") {
+                            $("#loading").hide();
                             toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                             check = false;
                             return false;
@@ -361,7 +367,8 @@
                         success: function (response) {
                             if (response.mess == "ss") {
                                 //editRequest();
-                                alert(response.mess);
+                                $("#loading").hide();
+                                window.location.href = "/Paper/Pending";
                             }
                             else alert('loi');
                         },
