@@ -155,71 +155,43 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getParticipantPlanByRole(int participant_role_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            List<PlanParticipant> data = phaseRepo.getParticipantPlanByRole(participant_role_id);
+            AcademicActivityPhaseRepo.infoPlanParticipant data = phaseRepo.getParticipantPlanByRole(participant_role_id);
             return Json(data);
         }
-        public JsonResult add_Tucach(int id, string name, int quantity, bool by, List<QuantityByUnit> arr)
+        [HttpPost]
+        public JsonResult addParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            bool res = phaseRepo.addParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã thêm thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Thêm tư cách tham gia thành công");
             }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+            else
+                return Json(String.Empty);
         }
-        public JsonResult delete_Tucach(int id)
+        [HttpPost]
+        public JsonResult editParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            bool res = phaseRepo.editParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã xóa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Chỉnh sửa tư cách tham gia thành công");
             }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+            else
+                return Json(String.Empty);
         }
-        public JsonResult edit_Tucach(int id)
+        public JsonResult deleteParticipantRole(int participant_role_id)
         {
-            try
+            phaseRepo = new AcademicActivityPhaseRepo();
+            bool res = phaseRepo.deleteParticipantRole(participant_role_id);
+            if (res)
             {
-                JsonError jerr = new JsonError()
-                {
-                    code = 1,
-                    err_content = "Đã chỉnh sửa thành công"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
+                return Json("Xóa tư cách tham gia thành công");
             }
-            catch (Exception)
-            {
-                JsonError jerr = new JsonError()
-                {
-                    code = 2,
-                    err_content = "Có lỗi xảy ra. Vui lòng thử lại"
-                };
-                return Json(jerr, JsonRequestBehavior.AllowGet);
-            }
+            else
+                return Json(String.Empty);
         }
         public ActionResult RegisterForm(int id, int lid)
         {
