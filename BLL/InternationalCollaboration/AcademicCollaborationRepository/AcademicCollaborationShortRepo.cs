@@ -151,7 +151,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 
                 ArticleVersion articleVersion = db.ArticleVersions.
                     Where(x => x.article_id == procedure.article_id).OrderBy(x => x.language_id).FirstOrDefault();
-                if(articleVersion != null)
+                if (articleVersion != null)
                 {
                     ProcedureInfoManager procedureInfoManager = new ProcedureInfoManager
                     {
@@ -160,12 +160,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         language_id = articleVersion.language_id
                     };
                     return procedureInfoManager;
-                }else
+                }
+                else
                 {
                     return new ProcedureInfoManager();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }

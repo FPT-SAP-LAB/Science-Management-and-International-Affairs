@@ -489,7 +489,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
-        [HttpPost] 
+        [HttpPost]
         public ActionResult LoadEdit(int procedure_id)
         {
             try
@@ -499,7 +499,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 ViewBag.procedure_id = procedure_id;
                 return Json(new { json = procedureInfoManager });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Write(e.Message);
                 AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
