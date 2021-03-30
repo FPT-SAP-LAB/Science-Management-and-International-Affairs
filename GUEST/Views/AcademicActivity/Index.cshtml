@@ -139,7 +139,7 @@
 @section scripts{
     <script>
         function goDetail(id) {
-            window.location.href = 'Detail?id=' + id;
+            window.location.href = '/AcademicActivity/Detail?id=' + id;
         }
     </script>
     <script>
@@ -171,7 +171,7 @@
                 <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side-`+ item.activity_type_id +`">
                     <div class="font-content">
                         <h4 class="font-size-h4">
-                            <a href="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
+                            <a href="javascript:;" onclick="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
                         </h4>
                         <div class="">
                             Thời gian: `+ item.from + ` - ` + item.to + `
@@ -228,7 +228,7 @@
                 <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side-`+ item.activity_type_id +`">
                     <div class="font-content">
                         <h4 class="font-size-h4">
-                            <a href="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
+                            <a href="javascript:;" onclick="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
                         </h4>
                         <div class="">
                             Thời gian: `+ item.from + ` - ` + item.to + `
@@ -269,7 +269,7 @@
                 <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side-`+ item.activity_type_id +`">
                     <div class="font-content">
                         <h4 class="font-size-h4">
-                            <a href="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
+                            <a href="javascript:;" onclick="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
                         </h4>
                         <div class="">
                             Thời gian: `+ item.from + ` - ` + item.to + `
