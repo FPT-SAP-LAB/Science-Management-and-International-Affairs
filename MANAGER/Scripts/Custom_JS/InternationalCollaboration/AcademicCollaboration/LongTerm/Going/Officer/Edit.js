@@ -93,9 +93,8 @@ function checkPersonEdit() {
 }
 
 $('#going_edit_officer_facility').select2({
-    placeholder: 'Đơn vị - Cơ sở',
+    placeholder: 'Đơn vị công tác',
     allowClear: true,
-    tags: true,
     ajax: {
         url: '/AcademicCollaboration/getOffices',
         delay: 250,
@@ -210,7 +209,6 @@ function checkPartnerEdit() {
 $('#going_edit_officer_nation').select2({
     placeholder: 'Quốc gia',
     allowClear: true,
-    tags: true,
     ajax: {
         url: '/AcademicCollaboration/getCountries',
         delay: 250,
@@ -317,12 +315,13 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
             if (data != null) {
                 if (data.success) {
                     let acadCollab = data.obj;
+                    console.log(acadCollab);
                     //fill data to correspoding select, input
                     available_person = true; //person had data in db
                     $("#going_edit_officer_name").append(new Option(acadCollab.people_name, acadCollab.people_name + '/' + acadCollab.people_id, false, true)).trigger('change');
                     $("#going_edit_officer_email").val(acadCollab.email);
                     $("#going_edit_officer_email").prop("disabled", true);
-                    $("#going_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
+                    if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) $("#going_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
                     $("#going_edit_officer_facility").prop("disabled", true);
 
                     available_partner = true; //partner had data in db
@@ -341,7 +340,7 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     if (acadCollab.file_id != null) {
                         uppy2.addFile({
                             name: acadCollab.file_name, // file name
-                            type: '', // file type
+                            type: '*', // file type
                             data: new Blob(), // file blob
                         });
                     }
@@ -382,16 +381,12 @@ var going_edit_officer_save = new LoaderBtn($('#going_edit_officer_save'));
 $('#going_edit_officer_save').on('click', function () {
     //person
     let person = $('#going_edit_officer_name').val();
-    let person_name = person.split('/')[0];
-    let person_id = person.split('/')[1]
 
     let person_email = $('#going_edit_officer_email').val();
     let person_profile_office_id = $('#going_edit_officer_facility').val();
 
     //partner
     let partner = $('#going_edit_officer_traning').val();
-    let partner_name = partner.split('/')[0];
-    let partner_id = partner.split('/')[1];
 
     let partner_country_id = $('#going_edit_officer_nation').val();
 
@@ -411,37 +406,24 @@ $('#going_edit_officer_save').on('click', function () {
     let support = $('#going_edit_officer_support').prop('checked');
     let note = $('#going_edit_officer_note').val();
 
-    let obj_person = {
-        available_person: available_person,
-        person_name: person_name,
-        person_id: person_id,
-        person_email: person_email,
-        person_profile_office_id: person_profile_office_id
-    }
-
-    let obj_partner = {
-        available_partner: available_partner,
-        partner_name: partner_name,
-        partner_id: partner_id,
-        partner_country_id: partner_country_id,
-        collab_scope_id: collab_scope_id
-    }
-
-    let obj_academic_collab = {
-        collab_id: collab_id, //set corresponding collab_id when update an academic collaboration
-        status_id: status_id,
-        plan_start_date: formatDatePicker(plan_start_date),
-        plan_end_date: formatDatePicker(plan_end_date),
-        actual_start_date: formatDatePicker(actual_start_date),
-        actual_end_date: formatDatePicker(actual_end_date),
-        support: support,
-        note: note
-    }
-
     //check empty
-    if (isEmpty(person) || isEmpty(partner) || isEmpty(collab_scope_id) || isEmpty(status_id) || isEmpty(plan_start_date) || isEmpty(plan_end_date)) {
+    if (isEmptyOrNullOrUndefined(person) || isEmptyOrNullOrUndefined(person_email)
+        || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
+        || isEmptyOrNullOrUndefined(collab_scope_id) || isEmptyOrNullOrUndefined(status_id)
+        || isEmptyOrNullOrUndefined(plan_start_date) || isEmptyOrNullOrUndefined(plan_end_date)) {
         return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
+        let person_name = person.split('/')[0];
+        let person_id = person.split('/')[1]
+        let partner_name = partner.split('/')[0];
+        let partner_id = partner.split('/')[1];
+
+        let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
+
+        let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
+
+        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
+
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
             return toastr.error("`TG đi học` không được vượt quá `TG kết thúc`.")

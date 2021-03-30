@@ -20,8 +20,8 @@
             restrictions: {
                 maxFileSize: 5242880, // 5mb
                 maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+                minNumberOfFiles: 0,
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
             }
         });
 
@@ -97,8 +97,8 @@
             restrictions: {
                 maxFileSize: 5242880, // 5mb
                 maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+                minNumberOfFiles: 0,
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
             }
         });
 
@@ -145,7 +145,7 @@
             //    }
             //}
             var uploadListHtml = uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-            
+
             $uploadedList.append(uploadListHtml);
             $statusBar.addClass('uppy-status-hidden');
             $statusBar.removeClass('uppy-status-ongoing');
@@ -175,7 +175,7 @@
                 maxFileSize: 5242880, // 5mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
             }
         });
 
@@ -251,8 +251,8 @@
             restrictions: {
                 maxFileSize: 5242880, // 5mb
                 maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+                minNumberOfFiles: 0,
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
             }
         });
 
@@ -328,8 +328,8 @@
             restrictions: {
                 maxFileSize: 5242880, // 5mb
                 maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf', 'image/*', '.jpg', '.jpeg', '.png', '.gif']
+                minNumberOfFiles: 0,
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
             }
         });
 
@@ -364,18 +364,18 @@
         });
 
         uppy5.on('file-added', function (file) {
-            var sizeLabel = "bytes";
-            var filesize = file.size;
-            if (filesize > 1024) {
-                filesize = filesize / 1024;
-                sizeLabel = "kb";
+            //var sizeLabel = "bytes";
+            //var filesize = file.size;
+            //if (filesize > 1024) {
+            //    filesize = filesize / 1024;
+            //    sizeLabel = "kb";
 
-                if (filesize > 1024) {
-                    filesize = filesize / 1024;
-                    sizeLabel = "MB";
-                }
-            }
-            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            //    if (filesize > 1024) {
+            //        filesize = filesize / 1024;
+            //        sizeLabel = "MB";
+            //    }
+            //}
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
             $uploadedList.append(uploadListHtml);
 
             $statusBar.addClass('uppy-status-hidden');
