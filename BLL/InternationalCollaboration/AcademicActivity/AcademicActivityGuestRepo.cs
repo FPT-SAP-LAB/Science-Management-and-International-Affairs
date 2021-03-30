@@ -91,7 +91,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         where aa.activity_id = @activity_id and GETDATE() between aap.phase_start and aap.phase_end";
                 int phase_id = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_id", activity_id)).FirstOrDefault();
                 return phase_id;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return 0;
             }
