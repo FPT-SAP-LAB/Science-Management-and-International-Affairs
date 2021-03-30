@@ -46,7 +46,7 @@ namespace BLL.ScienceManagement.Invention
         public List<AuthorInfoWithNull> getAuthor(string id)
         {
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [General].People po on ai.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -55,7 +55,7 @@ namespace BLL.ScienceManagement.Invention
 	                            left join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            left join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
 	                            left join [General].Profile pro on pro.people_id = po.people_id
-	                            left join [General].Office o on pro.office_id = o.office_id
+	                            left join [General].Office o on po.office_id = o.office_id
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where i.invention_id = @id";
             list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
@@ -213,16 +213,15 @@ namespace BLL.ScienceManagement.Invention
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
-                            pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            listParam1.Add(tempParam2);
+                            //tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            //SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            //listParam1.Add(tempParam2);
 
                             SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
@@ -407,7 +406,7 @@ namespace BLL.ScienceManagement.Invention
 	                            join [General].Account acc on br.account_id = acc.account_id
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
                             where ri.status_id = 4
                             group by i.name, it.name, po.name, pro.mssv_msnv, o.office_abbreviation, ri.request_id";

@@ -39,7 +39,7 @@ namespace BLL.ScienceManagement.Citation
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [General].People po on rc.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [General].Area a on o.area_id = a.area_id
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
@@ -117,16 +117,15 @@ namespace BLL.ScienceManagement.Citation
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
-                            pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            listParam1.Add(tempParam2);
+                            //tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            //SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            //listParam1.Add(tempParam2);
 
                             SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
@@ -224,7 +223,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id)
+        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, AuthorInfo author)
         {
             try
             {
@@ -249,6 +248,7 @@ namespace BLL.ScienceManagement.Citation
                 addCitaion(newcitation);
                 addRequestHasCitation(newcitation, br);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
+                rc.people_id = author.people_id;
                 rc.status_id = 3;
                 db.SaveChanges();
                 return "ss";
@@ -308,7 +308,7 @@ namespace BLL.ScienceManagement.Citation
 	                            join [General].Account acc on acc.account_id = br.account_id
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_Citation].RequestHasCitation rhc on rc.request_id = rhc.request_id
 	                            join [SM_Citation].Citation c on rhc.citation_id = c.citation_id
                             where rc.status_id = 4

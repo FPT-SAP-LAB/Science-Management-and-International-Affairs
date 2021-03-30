@@ -637,6 +637,7 @@
     <Content Include="Content\assets\media\misc\bg-1.jpg" />
     <Content Include="Content\assets\media\misc\bg-2.jpg" />
     <Content Include="Content\assets\media\plugins\jstree\32px.png" />
+    <Content Include="Content\Custom CSS\Eclipse-1s-200px.gif" />
     <Content Include="Content\assets\media\products\1.png" />
     <Content Include="Content\assets\media\products\10.png" />
     <Content Include="Content\assets\media\products\11.png" />
@@ -2308,6 +2309,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom CSS\preloader.css" />
     <Content Include="Content\demo_partner_detail_guest.jpg" />
     <Content Include="Content\Picture1.jpg" />
     <Content Include="Content\Picture2.jpg" />
@@ -2437,6 +2439,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\media\Preloader\" />
     <Folder Include="Controllers\InternationalCollaboration\MasterData\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
