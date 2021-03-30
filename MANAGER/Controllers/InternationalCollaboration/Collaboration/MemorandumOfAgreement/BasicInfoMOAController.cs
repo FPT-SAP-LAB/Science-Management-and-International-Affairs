@@ -137,7 +137,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 string moa_id = Session["moa_detail_id"].ToString();
                 string mou_id = Session["mou_detail_id"].ToString();
-                List<CollaborationScope> data = moa.GetScopesExMOA(int.Parse(moa_id),int.Parse(mou_id),partner_id);
+                List<CollaborationScope> data = moa.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id), partner_id);
                 return Json(data);
             }
             catch (Exception ex)

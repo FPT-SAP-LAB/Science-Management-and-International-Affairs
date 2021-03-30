@@ -179,7 +179,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public List<CollaborationScope> GetScopesExMOA(int moa_id, int mou_id,int partner_id)
+        public List<CollaborationScope> GetScopesExMOA(int moa_id, int mou_id, int partner_id)
         {
             try
             {

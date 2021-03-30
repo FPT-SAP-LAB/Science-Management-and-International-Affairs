@@ -64,7 +64,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<CollaborationScope> getMOAScope(int moa_id,int partner_id,int mou_id)
+        public List<CollaborationScope> getMOAScope(int moa_id, int partner_id, int mou_id)
         {
             try
             {
@@ -220,7 +220,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         //decrese refer_count in PartnerScope
                         objPS.reference_count -= 1;
                         db.Entry(objPS).State = EntityState.Modified;
-                        
+
                     }
                     db.SaveChanges();
 
