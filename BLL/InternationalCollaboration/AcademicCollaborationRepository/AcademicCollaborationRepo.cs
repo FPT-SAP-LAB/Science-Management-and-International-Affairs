@@ -436,7 +436,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 
         public Person updatePerson(SaveAcadCollab_Person obj_person)
         {
-            Person person = new Person();
+            Person person;
             try
             {
                 person = db.People.Find(obj_person.person_id);
