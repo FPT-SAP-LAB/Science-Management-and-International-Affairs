@@ -38,7 +38,7 @@
             <!--begin: Pic-->
             <div class="flex-shrink-0 mr-7 mt-lg-0 mt-3">
                 <div class="symbol symbol-50 symbol-lg-120">
-                    <img src="~/Content/assets/media/users/blank.png" alt="image" />
+                    <img src="@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar)" alt="image" />
                 </div>
 
                 <div class="symbol symbol-50 symbol-lg-120 symbol-primary d-none">
