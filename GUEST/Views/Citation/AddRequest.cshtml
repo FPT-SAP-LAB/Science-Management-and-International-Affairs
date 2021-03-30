@@ -110,6 +110,7 @@
         }
 
         $("#btn-submit").click(function () {
+            $("#loading").show();
             addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
@@ -132,6 +133,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit").val(response.id);
                         $("#ckEdit").val("3");
                         $("#CitationForm").submit();

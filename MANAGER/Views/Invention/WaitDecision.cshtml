@@ -151,6 +151,7 @@
         var uppy1;
         var formdata;
         $("#btn_submit").click(function () {
+            $("#loading").show();
             formData = new FormData();
             if (uppy1.getFiles()[0] == undefined) {
                 toastr.error("Thiếu file quyết định");
@@ -168,7 +169,9 @@
                 complete: function (data) {
                     var mess = data.responseJSON.mess;
                     if (mess == "ss") {
-                        alert(mess);
+                        $("#loading").hide();
+                        location.reload();
+                        //alert(mess);
                     }
                 },
                 error: function () {

@@ -2135,6 +2135,8 @@
     <Content Include="Content\Custom JS\ListAllPaper.js" />
     <Content Include="Content\Custom_CSS\MOU\MOU.css" />
     <Content Include="Content\Custom_CSS\MOU\MOUDetail.css" />
+    <Content Include="Content\Custom_CSS\Preloader\Eclipse-1s-200px.gif" />
+    <Content Include="Content\Custom_CSS\Preloader\preloader.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

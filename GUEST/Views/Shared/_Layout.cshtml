@@ -32,13 +32,13 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+    <link href="~/Content/Custom CSS/preloader.css" rel="stylesheet" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
 <body id="kt_body" style="background-image: url(../Content/assets/media/bg/bg-10.jpg)" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
-
+    <div id="loading"></div>
     <!--begin::Main-->
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile ">
@@ -166,13 +166,13 @@
                                         </li>
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
                                         <!--@if (@user != null && (user.account.role_id == 1 || true))
-    {
-        <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
-            <a href="/SettingDrive" class="menu-link">
-                <span class="menu-text">SETUP DRIVE</span><span class="menu-desc"></span><i class="menu-arrow"></i>
-            </a>
-        </li>
-    }-->
+                                        {
+                                            <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="/SettingDrive" class="menu-link">
+                                                    <span class="menu-text">SETUP DRIVE</span><span class="menu-desc"></span><i class="menu-arrow"></i>
+                                                </a>
+                                            </li>
+                                        }-->
                                     </ul>
                                     <!--end::Header Nav-->
                                 </div>

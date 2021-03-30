@@ -148,6 +148,7 @@
         }
 
         $("#btn_submit").click(function () {
+            $("#loading").show();
             var temp = $("#patent_date").val();
             var arr = temp.split('/');
             var dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
@@ -175,6 +176,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit2").val(response.id);
                         $("#ckEdit2").val(3);
                         $("#InvenForm").submit();
@@ -208,6 +210,7 @@
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
+            $("#loading").show();
             $.ajax({
                 url: "@Url.Action("listAuthor", "Invention")",
                 type: "POST",
@@ -253,6 +256,7 @@
                         }
                         people.push(AddAuthor);
                     }
+                    $("#loading").hide();
                 },
                 error: function () {
                     //alert("fail");
