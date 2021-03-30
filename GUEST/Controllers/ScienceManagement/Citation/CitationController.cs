@@ -124,7 +124,7 @@ namespace User.Controllers
             List<Citation> oldcitation = cr.getCitation(request_id);
             AuthorInfo author = cr.addAuthor(people);
             string mess = cr.editCitation(oldcitation, citation, request_id, author);
-            return Json(new { mess = mess,  id = request_id}, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
         }
     }
 }
