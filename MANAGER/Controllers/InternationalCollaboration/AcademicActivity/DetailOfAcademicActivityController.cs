@@ -159,15 +159,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [HttpPost]
-        public JsonResult addParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole,List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice,string check,string quantity,int phase_id)
+        public JsonResult addParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.addParticipantRole(baseParticipantRole,arrOffice,check,quantity,phase_id);
+            bool res = phaseRepo.addParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
             if (res)
             {
                 return Json("Thêm tư cách tham gia thành công");
-            }else
-            return Json(String.Empty);
+            }
+            else
+                return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult editParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
@@ -177,8 +178,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             if (res)
             {
                 return Json("Chỉnh sửa tư cách tham gia thành công");
-            }else
-            return Json(String.Empty);
+            }
+            else
+                return Json(String.Empty);
         }
         public JsonResult deleteParticipantRole(int participant_role_id)
         {

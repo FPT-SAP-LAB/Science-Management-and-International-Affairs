@@ -202,7 +202,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<baseOffice>();
             }
         }
-        public bool addParticipantRole(baseParticipantRole baseParticipant,List<basePlanParticipant> arrOffice,string check,string quantity,int phase_id)
+        public bool addParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -222,7 +222,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     if (check.Equals("True"))
                     {
-                        foreach(basePlanParticipant pp in arrOffice)
+                        foreach (basePlanParticipant pp in arrOffice)
                         {
                             db.PlanParticipants.Add(new PlanParticipant
                             {
@@ -243,7 +243,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
@@ -258,8 +259,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     ParticipantRole pr = db.ParticipantRoles.Find(baseParticipant.participant_role_id);
                     pr.participant_role_name = baseParticipant.participant_role_name;
-                    pr.need_payed = int.Parse(baseParticipant.price) == -1 ? false : true; 
-                    if(pr.need_payed == true)
+                    pr.need_payed = int.Parse(baseParticipant.price) == -1 ? false : true;
+                    if (pr.need_payed == true)
                     {
                         pr.price = double.Parse(baseParticipant.price);
                     }
@@ -343,7 +344,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
