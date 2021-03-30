@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="FPTProcedure" xml:space="preserve">
+    <value>FPT Procedure</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -368,6 +371,9 @@
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
+  </data>
+  <data name="PartnerProcedure" xml:space="preserve">
+    <value>Partner Procedure</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Patent license date</value>
