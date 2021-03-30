@@ -126,8 +126,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<subContent> obj = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language", language),
                     new SqlParameter("id", id)).ToList();
                 return obj;
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<subContent>();
             }
