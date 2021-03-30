@@ -114,7 +114,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 else
                 {
-                    if (item.mou_bonus_id.Equals(previousItem.mou_bonus_id))
+                    if (item.mou_bonus_id.Equals(previousItem.mou_bonus_id) && item.partner_name.Equals(previousItem.partner_name))
                     {
                         if (!previousItem.scope_abbreviation.Contains(item.scope_abbreviation))
                         {
@@ -283,6 +283,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         //checkpoint 2
                         db.SaveChanges();
+
+                        //clear PartnerScope with ref_count = 0.
+                        db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                        db.SaveChanges();
                     }
                     transaction.Commit();
                 }
@@ -357,6 +361,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     //checkpoint 2
                     db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -381,6 +389,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     MOUBonu m = db.MOUBonus.Find(mou_bonus_id);
                     db.MOUBonus.Remove(m);
 
+                    db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
                     db.SaveChanges();
                     transaction.Commit();
                 }

@@ -87,7 +87,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public CustomPartnerMOA CheckPartner(int mou_id, string partner_name)
+        public CustomPartnerMOA CheckPartner(int mou_id, int partner_id)
         {
             try
             {
@@ -103,16 +103,43 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     t4.mou_partner_id = t1.mou_partner_id
                     left join General.Specialization t5 on
                     t5.specialization_id = t4.specialization_id
-                    where t1.mou_id = @mou_id and t2.partner_name like @partner_name";
-                CustomPartnerMOA p = db.Database.SqlQuery<CustomPartnerMOA>(sql,
+					where t1.partner_id = @partner_id and t1.mou_id = @mou_id";
+                List<CustomPartnerMOA> pList = db.Database.SqlQuery<CustomPartnerMOA>(sql,
                     new SqlParameter("mou_id", mou_id),
-                    new SqlParameter("partner_name", '%' + partner_name + '%')).FirstOrDefault();
-                return p;
+                    new SqlParameter("partner_id", partner_id)).ToList();
+                handlingMOAPartnerData(pList);
+                return pList[0];
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+        public void handlingMOAPartnerData(List<CustomPartnerMOA> pList)
+        {
+            CustomPartnerMOA previousItem = null;
+            foreach (CustomPartnerMOA item in pList.ToList())
+            {
+                if (previousItem == null) //first record
+                {
+                    previousItem = item;
+                    previousItem.specializations = item.specialization_name;
+                }
+                else
+                {
+                    if (item.partner_name.Equals(previousItem.partner_name))
+                    {
+                        previousItem.specializations += ',' + item.specialization_name;
+                        //then remove current object
+                        pList.Remove(item);
+                    }
+                    else
+                    {
+                        previousItem = item;
+                    }
+                }
+            }
+            return;
         }
         public void addMOA(MOAAdd input, int mou_id)
         {
@@ -168,9 +195,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         datetime = DateTime.Now,
                         reason = input.MOABasicInfo.reason,
                         moa_id = m.moa_id,
-                        mou_status_id = 2
+                        mou_status_id = input.MOABasicInfo.mou_status_id
                     });
                     //checkpoint 3
+                    db.SaveChanges();
+
+                    //clear PartnerScope with ref_count = 0.
+                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
                     db.SaveChanges();
                     transaction.Commit();
                 }
