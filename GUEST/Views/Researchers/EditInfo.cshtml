@@ -3,6 +3,8 @@
     ViewBag.Title = "Chỉnh sửa thông tin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES.CustomModels.ScienceManagement.Researcher;
+@using System.Globalization;
 <style>
     .nav-link {
         font-size: 17px;
@@ -35,7 +37,10 @@
                             <div class="card-toolbar">
                                 <div id="edit-control-area">
                                     <button type="reset" id="save-btn" class="btn btn-success mr-2">Lưu</button>
-                                    <a href="/Researchers/ViewInfo" id="cancel-btn" class="btn btn-secondary">Huỷ</a>
+                                    <button type="reset" id="cancel-btn" class="btn btn-secondary">Huỷ</button>
+                                </div>
+                                <div id="edit-enable-area">
+                                    <button type="reset" id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</button>
                                 </div>
                             </div>
                         </div>
@@ -51,60 +56,63 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh cá nhân</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="        background-image: url(https://2.pik.vn/2021cd188198-38f1-43f1-ad94-9874818439c9.jpg)">
-                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
-
-                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="profile_avatar_remove" />
-                                            </label>
-
-                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
-
-                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
-                                        </div>
-                                        <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Bùi Ngọc Anh" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="14/10/1999" />
-                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_name" disabled type="text" value="@ViewBag.profile.name" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Việt Nam" />
-                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                        <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+                                            <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
+                                            <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                                                <span class="input-group-text">
+                                                    <i class="ki ki-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- <span class="form-text text-muted pt-2">Use locals from <a href="https://momentjs.com/">https://momentjs.com/</a></span> -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <select class="form-control select2  researcher_infomation" disabled id="country_select" name="param">
+                                            @foreach (SelectField a in ViewBag.profile.countries_fields)
+                                            {
+                                                <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Giảng viên" />
-                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                            <select class="form-control select2  researcher_infomation" disabled id="title_select" name="param" multiple="multiple">
+                                                @foreach (SelectField a in ViewBag.profile.title_fields)
+                                                {
+                                                    <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation"  type="text" value="Chức vụ" />
-                                        @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                            <select class="form-control select2  researcher_infomation" disabled id="position_select" name="param" multiple="multiple">
+                                                @foreach (SelectField a in ViewBag.profile.position_fields)
+                                                {
+                                                    <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -118,7 +126,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="0943169051" placeholder="Phone" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_phone" disabled value="@ViewBag.profile.phone" placeholder="Phone" />
                                         </div>
                                         @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
                                     </div>
@@ -128,7 +136,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_email" disabled value="@ViewBag.profile.email" placeholder="Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -137,16 +145,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="abc.com" placeholder="Email" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="input-group input-group-lg input-group-solid">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-location-arrow"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="sonnt69@fe.edu.vn" placeholder="Email" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_website" disabled value="@ViewBag.profile.website" placeholder="Google scholar" />
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +154,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-google"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="https://scholar.google.com.vn/citations?user=HUFV96EAAAAJ&hl=en" placeholder="Google Scholar" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_gscholar" disabled value="@ViewBag.profile.gscholar" placeholder="CV" />
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +163,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="far fa-address-card"></i></span></div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation"  value="...." placeholder="CV" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_cv" disabled value="@ViewBag.profile.cv" placeholder="CV" />
                                         </div>
                                     </div>
                                 </div>
@@ -173,11 +172,11 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
-                                            <select class="form-control select2  researcher_infomation"  id="kt_select2_3" name="param" multiple="multiple">
-                                                <option value="AK" selected>Toán học</option>
-                                                <option value="AK" selected>Khoa học máy tính</option>
-                                                <option value="AK">Toán học</option>
-                                                <option value="AK">Kinh tế</option>
+                                            <select class="form-control select2  researcher_infomation" disabled id="interested_fields_select" name="param" multiple="multiple">
+                                                @foreach (SelectField a in ViewBag.profile.interested_fields)
+                                                {
+                                                    <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -235,5 +234,74 @@
                 $(".researcher_infomation").attr('disabled', false)
             })
         })
+            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+        $(".research-info-link").each(function () {
+            if ($(this).attr('href').trim() == window.location.pathname) {
+                $(this).addClass('active')
+            }
+        })
+        // Class definition
+        var KTSelect2 = function () {
+            // Private functions
+            var demos = function () {
+                // multi select
+                $('#title_select').select2({
+                    placeholder: 'Chọn chức danh',
+                    tags: true
+                });
+                $('#country_select').select2({
+                    placeholder: 'Chọn quốc tịch',
+                    tags: true
+                });
+                $('#position_select').select2({
+                    placeholder: 'Chọn chức vụ',
+                    tags: true
+                });
+                $('#interested_fields_select').select2({
+                    placeholder: 'Chọn lĩnh vực quan tâm',
+                    tags: true
+                });
+            }
+            // Public functions
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function () {
+            KTSelect2.init();
+        });
+
+
+        function enableEdit() {
+            $("#edit-control-area").show()
+            $("#edit-enable-area").hide()
+            $(".researcher_infomation").attr('disabled', false)
+        }
+
+
+        var KTBootstrapDatetimepicker = function () {
+            // Private functions
+            var baseDemos = function () {
+                $('#kt_datetimepicker_2').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+            }
+            return {
+                // Public functions
+                init: function () {
+                    baseDemos();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTBootstrapDatetimepicker.init();
+        });
     </script>
-    }
+    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
+    <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
+}
