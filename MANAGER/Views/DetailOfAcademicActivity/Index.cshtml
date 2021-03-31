@@ -1984,6 +1984,22 @@
             }
         }
 
+        function objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+            contact_point_name, contact_point_email, contact_point_phone) {
+            let obj_activity_scope = {};
+            obj_activity_scope.activity_partner_id = activity_partner_id;
+            obj_activity_scope.activity_id = activity_id;
+            obj_activity_scope.partner_id = partner_id;
+            obj_activity_scope.scope_id = scope_id;
+            if (!isEmptyOrNullOrUndefined(sponsor)) obj_activity_scope.sponsor = sponsor;
+            if (!isEmptyOrNullOrUndefined(cooperation_date_start)) obj_activity_scope.cooperation_date_start = formatDatePicker(cooperation_date_start);
+            if (!isEmptyOrNullOrUndefined(cooperation_date_end)) obj_activity_scope.cooperation_date_end = formatDatePicker(cooperation_date_end);
+            if (!isEmptyOrNullOrUndefined(contact_point_name)) obj_activity_scope.contact_point_name = contact_point_name;
+            if (!isEmptyOrNullOrUndefined(contact_point_email)) obj_activity_scope.contact_point_email = contact_point_email;
+            if (!isEmptyOrNullOrUndefined(contact_point_phone)) obj_activity_scope.contact_point_phone = contact_point_phone;
+            return obj_activity_scope;
+        }
+
         function clearActivityPartnerContentAddModal() {
             $('#add_donvi_DongToChuc').val(null).trigger('change');
             $('#add_phamvihoptac_DongToChuc').val(null).trigger('change');
@@ -2004,6 +2020,7 @@
 
             let activity_id = $('#activity_id').val();
             let partner_id = $('#add_donvi_DongToChuc').val();
+            let partner_name = $('#add_donvi_DongToChuc option:selected').text();
             let scope_id = $('#add_phamvihoptac_DongToChuc').val();
             let sponsor = $('#add_taitro_DongToChuc').val();
             let cooperation_date_start = $('#add_from_DongToChuc').val();
@@ -2014,16 +2031,17 @@
             let contact_point_email = $('#add_email_DongToChuc').val();
             let contact_point_phone = $('#add_phone_DongToChuc').val();
 
-            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(collab_scope_id)) {
+            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id)) {
                 return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
             } else {
-                if (!datePickerFromToValidate(date_start, date_end)) {
+                if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
                     return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
                 } else {
                     let obj_activity_partner = objActivityPartner(0, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
                         contact_point_name, contact_point_email, contact_point_phone);
                     let formData = new FormData();
                     formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
+                    formData.append("folder_name", partner_name);
                     formData.append("obj_activity_partner_stringify", JSON.stringify(obj_activity_partner));
 
                     //Save actually
@@ -2055,21 +2073,45 @@
             }
         });
 
-        function objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
-            contact_point_name, contact_point_email, contact_point_phone) {
-            let obj_activity_scope = {};
-            obj_activity_scope.activity_partner_id = activity_partner_id;
-            obj_activity_scope.activity_id = activity_id;
-            obj_activity_scope.partner_id = partner_id;
-            obj_activity_scope.scope_id = scope_id;
-            if (!isEmptyOrNullOrUndefined(sponsor)) obj_activity_scope.sponsor = sponsor;
-            if (!isEmptyOrNullOrUndefined(cooperation_date_start)) obj_activity_scope.cooperation_date_start = formatDatePicker(cooperation_date_start);
-            if (!isEmptyOrNullOrUndefined(cooperation_date_end)) obj_activity_scope.cooperation_date_end = formatDatePicker(cooperation_date_end);
-            if (!isEmptyOrNullOrUndefined(contact_point_name)) obj_activity_scope.contact_point_name = contact_point_name;
-            if (!isEmptyOrNullOrUndefined(contact_point_email)) obj_activity_scope.contact_point_email = contact_point_email;
-            if (!isEmptyOrNullOrUndefined(contact_point_phone)) obj_activity_scope.contact_point_phone = contact_point_phone;
-            return obj_activity_scope;
-        }
+        $('#editModal_DongToChuc').on('show.bs.modal', function (e) {
+            let activity_partner_id = $(e.relatedTarget).data('id');
+            $.ajax({
+                url: "/DetailOfAcademicActivity/getActivityPartner",
+                type: "GET",
+                data: {
+                    activity_partner_id: activity_partner_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.obj != null) {
+                        if (data.success) {
+                            let objData = data.obj;
+                            $('#edit_donvi_DongToChuc').val(new Option(objData.partner_id, objData.partner_name, false, true)).trigger('change');
+                            $('#edit_phamvihoptac_DongToChuc').val(new Option(objData.scope_id, objData.scope_abbreviation + " - " + objData.scope_name, false, true)).trigger('change');
+                            $('#edit_taitro_DongToChuc').val(objData.sponsor);
+                            $('#edit_from_DongToChuc').val(moment(objData.cooperation_date_start).format("DD/MM/YYYY"));
+                            $('#edit_to_DongToChuc').val(moment(objData.cooperation_date_end).format("DD/MM/YYYY"));
+                            if (acadCollab.file_id != null) {
+                                uppy2.addFile({
+                                    name: acadCollab.file_name, // file name
+                                    type: '', // file type
+                                    data: new Blob(), // file blob
+                                });
+                            }
+                            $('#edit_name_DongToChuc').val(objData.contact_point_name);
+                            $('#edit_email_DongToChuc').val(objData.contact_point_email);
+                            $('#edit_phone_DongToChuc').val(objData.contact_point_phone);
+                        }
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra.");
+                }
+            });
+        });
 
         $('#btn_edit_giaidoan').click(function () {
             var data = {
@@ -2102,6 +2144,7 @@
                 }
             });
         });
+
         $('#btn_edit_save_DongToChuc').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
         });

@@ -574,6 +574,18 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
+        public void decreaseReferenceCountOfPartnerScope(PartnerScope partner_scope)
+        {
+            try
+            {
+                partner_scope.reference_count -= 1;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public AcademicCollaboration saveAcademicCollaboration(int direction_id, int collab_type_id, int person_id, int partner_scope_id,
             SaveAcadCollab_AcademicCollaboration obj_academic_collab)
         {
@@ -841,8 +853,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
                     if (partnerScope != null)
                     {
-                        partnerScope.reference_count -= 1;
-                        db.SaveChanges();
+                        decreaseReferenceCountOfPartnerScope(partnerScope);
                     }
                     //delete AcademicCollab
                     db.AcademicCollaborations.Remove(academicCollaboration);
