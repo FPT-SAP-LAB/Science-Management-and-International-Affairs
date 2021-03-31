@@ -23,7 +23,7 @@ namespace ENTITIES
         public Nullable<System.DateTime> cooperation_date_start { get; set; }
         public Nullable<System.DateTime> cooperation_date_end { get; set; }
         public int activity_id { get; set; }
-        public Nullable<int> partner_scope_id { get; set; }
+        public int partner_scope_id { get; set; }
     
         public virtual PartnerScope PartnerScope { get; set; }
         public virtual AcademicActivity AcademicActivity { get; set; }
