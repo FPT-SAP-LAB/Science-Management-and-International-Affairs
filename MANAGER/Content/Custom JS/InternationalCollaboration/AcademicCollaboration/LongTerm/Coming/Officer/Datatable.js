@@ -1,5 +1,5 @@
 ﻿//TABLE 2 - ACADEMIC COLLAB - COMING
-var exchange_coming_table = $('#exchange_coming_table').DataTable({
+var collab_coming_table = $('#collab_coming_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -14,7 +14,7 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
         datatype: "json",
         data: {
             direction: 2, /*coming*/
-            collab_type_id: 1 /*short-term*/,
+            collab_type_id: 2 /*long-term*/,
             obj_searching: {
                 country_name: () => { return $("#search_nation_tab_1_table_2").val() },
                 year: () => { return $("#search_year_tab_1_table_2").val() },
@@ -155,11 +155,11 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
     ],
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
-        $(this).parent().removeClass();
+        $(this).parent().css('padding', '0');
     }
 });
 
 //Search
 $("#collab_coming_search").click(function () {
-    exchange_coming_table.ajax.reload();
+    collab_coming_table.ajax.reload();
 });

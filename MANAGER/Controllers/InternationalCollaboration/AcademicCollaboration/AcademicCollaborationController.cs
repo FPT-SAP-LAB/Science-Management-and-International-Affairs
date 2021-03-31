@@ -427,6 +427,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";
+            ViewBag.languages = AcademicActivityTypeRepo.getLanguages().obj;
             return View();
         }
 
