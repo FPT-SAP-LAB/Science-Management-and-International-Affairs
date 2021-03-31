@@ -1,15 +1,4 @@
 ﻿
-function dataURItoBlob(dataURI) {
-    var blobBin = atob(dataURI.split(',')[1]);
-    var array = [];
-    for (var i = 0; i < blobBin.length; i++) {
-        array.push(blobBin.charCodeAt(i));
-    }
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    var file = new Blob([new Uint8Array(array)], { type: mimeString });
-    return file;
-}
-
 var save_loader = new LoaderBtn($(".load-btn"))
 $('#save_edit_procedure').click(function () {
     var form_data = new FormData();

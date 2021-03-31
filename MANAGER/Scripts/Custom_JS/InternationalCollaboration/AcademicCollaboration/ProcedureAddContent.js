@@ -10,15 +10,17 @@ function dataURItoBlob(dataURI) {
 }
 
 var save_loader = new LoaderBtn($(".load-btn"))
-
 var direction = 1;
 $("#add_procedure_coming").click(function() {
     direction = 2;
     $('#add_procedure input').val('');
     $('#add_procedure .summernote').summernote('code', '');
 })
+
 $("#add_procedure_going").click(function() {
     direction = 1;
+    $('#add_procedure input').val('');
+    $('#add_procedure .summernote').summernote('code', '');
 })
 
 $('#save_procedure').click(function() {

@@ -1,4 +1,7 @@
-﻿//delete procedure======================================================================
+﻿
+var procedure_id_load;
+
+//delete procedure======================================================================
 function confirm_delete_procedure(article_id) {
     var id = { article_id: article_id }
     Swal.fire({
@@ -31,11 +34,10 @@ function confirm_delete_procedure(article_id) {
             })
         }
     })
-};
+}
 //delete procedure======================================================================
 
 //load edit procedure===================================================================
-var procedure_id_load;
 function load_procedure_detail(procedure_id) {
     procedure_id_load = procedure_id
     var id = { procedure_id: procedure_id }
