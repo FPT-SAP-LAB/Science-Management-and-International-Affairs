@@ -3,7 +3,12 @@
     ViewBag.Title = "Đề nghị hỗ trợ hội nghị của tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/JavaScript.js"></script>
+<script type="module">
+    import { cube } from "/Scripts/JavaScript.js";
+    $(document).on("click", "span", function () {
+        alert(cube(3))
+    })
+</script>
 <div class="card card-custom">
     <div class="card-body">
         <div class="row">
