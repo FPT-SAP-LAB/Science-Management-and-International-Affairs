@@ -307,7 +307,7 @@ $('#going_add_officer_status').select2({
         dataType: 'json',
         data: function () {
             return {
-                status_type_specific: 2 //long-term
+                status_type_specific: 1 //short-term
             };
         },
         processResults: function (data) {
@@ -348,7 +348,6 @@ $('#going_add_officer_save').on('click', function () {
     let actual_start_date = $('#going_add_officer_start_date').val();
     let actual_end_date = $('#going_add_officer_end_date').val();
     let evidence = uppy1.getFiles();
-    let support = $('#going_add_officer_support').prop('checked');
     let note = $('#going_add_officer_note').val();
     //check empty
     if (isEmptyOrNullOrUndefined(person) || isEmptyOrNullOrUndefined(person_email)
@@ -366,7 +365,7 @@ $('#going_add_officer_save').on('click', function () {
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
+        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
@@ -380,7 +379,7 @@ $('#going_add_officer_save').on('click', function () {
             formData.append("folder_name", person_name + " - " + partner_name);
 
             formData.append("direction_id", 1); //going case
-            formData.append("collab_type_id", 2); //long-term
+            formData.append("collab_type_id", 1); //short-term
 
             let obj_person_stringify = JSON.stringify(obj_person);
             let obj_partner_stringify = JSON.stringify(obj_partner);
@@ -402,7 +401,7 @@ $('#going_add_officer_save').on('click', function () {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.content);
-                        collab_going_table.ajax.reload();
+                        exchange_going_table.ajax.reload();
                         going_add_officer_save.stopLoading();
                         $("#going_add_officer_close").click();
                         clearContentAddModal();
@@ -508,6 +507,5 @@ function clearContentAddModal() {
 
     $('#going_add_officer_start_date').val('');
     $('#going_add_officer_end_date').val('');
-    $('#going_add_officer_support').prop('checked', false);
     $('#going_add_officer_note').val('');
 }

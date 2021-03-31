@@ -1,5 +1,5 @@
-﻿//TABLE 1 - ACADEMIC COLLAB - GOING
-var exchange_going_table = $('#exchange_going_table').DataTable({
+﻿//TABLE 2 - ACADEMIC COLLAB - COMING
+var collab_coming_table = $('#collab_coming_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -13,13 +13,13 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
         type: "POST",
         datatype: "json",
         data: {
-            direction: 1, /*going*/
-            collab_type_id: 1 /*short-term*/,
+            direction: 2, /*coming*/
+            collab_type_id: 2 /*long-term*/,
             obj_searching: {
-                country_name: () => { return $("#search_nation_tab_1_table_1").val() },
-                year: () => { return $("#search_year_tab_1_table_1").val() },
-                partner_name: () => { return $("#search_training_facility_tab_1_table_1").val() },
-                office_name: () => { return $("#search_working_facility_tab_1_table_1").val() }
+                country_name: () => { return $("#search_nation_tab_1_table_2").val() },
+                year: () => { return $("#search_year_tab_1_table_2").val() },
+                partner_name: () => { return $("#search_training_facility_tab_1_table_2").val() },
+                office_name: () => { return $("#search_working_facility_tab_1_table_2").val() }
             }
         },
         cache: "false"
@@ -43,12 +43,12 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
             name: 'email'
         },
         {
-            data: 'office_name',
-            name: 'office_name'
-        },
-        {
             data: 'partner_name',
             name: 'partner_name'
+        },
+        {
+            data: 'office_name',
+            name: 'office_name'
         },
         {
             data: 'country_name',
@@ -94,7 +94,7 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
             data: 'collab_id',
             className: 'text-nowrap',
             render: function (data) {
-                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-acad_collab_id=` + data + ` data-toggle="modal" href="#going_edit_officer">Sửa</a>
+                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=` + data + ` data-toggle="modal" href="#coming_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
             },
             orderable: false
@@ -155,11 +155,11 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
     ],
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
-        $(this).parent().removeClass();
+        $(this).parent().css('padding', '0');
     }
 });
 
 //Search
-$("#collab_going_search").click(function () {
-    exchange_going_table.ajax.reload();
+$("#collab_coming_search").click(function () {
+    collab_coming_table.ajax.reload();
 });

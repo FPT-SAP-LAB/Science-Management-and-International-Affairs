@@ -362,7 +362,6 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
 
                     collab_id = acadCollab.collab_id;
 
-                    $("#going_edit_officer_support").prop("checked", acadCollab.is_supported);
                     $("#going_edit_officer_note").val(acadCollab.note);
                 } else {
                     toastr.error(data.content);
@@ -404,7 +403,6 @@ $('#going_edit_officer_save').on('click', function () {
 
     let evidence = uppy2.getFiles();
 
-    let support = $('#going_edit_officer_support').prop('checked');
     let note = $('#going_edit_officer_note').val();
 
     //check empty
@@ -425,7 +423,7 @@ $('#going_edit_officer_save').on('click', function () {
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
+        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
@@ -463,7 +461,7 @@ $('#going_edit_officer_save').on('click', function () {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.content);
-                        collab_going_table.ajax.reload();
+                        exchange_going_table.ajax.reload();
                         going_edit_officer_save.stopLoading();
                         $("#going_edit_officer_close").click();
                         clearContentEditModal();
@@ -515,7 +513,6 @@ function clearContentEditModal() {
 
     $('#going_edit_officer_start_date').val('');
     $('#going_edit_officer_end_date').val('');
-    $('#going_edit_officer_support').prop('checked', false);
     $('#going_edit_officer_note').val('');
 }
 
