@@ -242,6 +242,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProcedureInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProcedureInfoManager.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramDescription.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramInfoManager.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\ProgramInfo.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_AcademicCollaboration.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_File.cs" />
