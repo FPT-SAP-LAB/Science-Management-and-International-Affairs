@@ -86,20 +86,36 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     Conference conference = @object["Conference"].ToObject<Conference>();
                     Conference temp = db.Conferences.Find(conference.conference_id);
+                    int conference_id = 0;
+                    string conference_name;
                     if (temp != null)
                     {
-                        conference = temp;
+                        if (!temp.is_verified)
+                        {
+                            temp.website = conference.website;
+                            temp.keynote_speaker = conference.keynote_speaker;
+                            temp.qs_university = conference.qs_university;
+                            temp.country_id = conference.country_id;
+                            temp.time_start = conference.time_start;
+                            temp.time_end = conference.time_end;
+                            temp.formality_id = conference.formality_id;
+                            temp.co_organized_unit = conference.co_organized_unit;
+                        }
+                        conference_id = temp.conference_id;
+                        conference_name = temp.conference_name;
                     }
                     else
                     {
                         conference.is_verified = false;
                         db.Conferences.Add(conference);
                         db.SaveChanges();
+                        conference_id = conference.conference_id;
+                        conference_name = conference.conference_name;
                     }
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -142,7 +158,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     RequestConference support = new RequestConference()
                     {
                         request_id = @base.request_id,
-                        conference_id = conference.conference_id,
+                        conference_id = conference_id,
                         status_id = 1,
                         policy_id = policy.policy_id,
                         editable = false,
@@ -167,37 +183,30 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     db.Costs.AddRange(costs);
 
-                    List<ConferenceParticipant> participants = @object["ConferenceParticipant"].ToObject<List<ConferenceParticipant>>();
-                    List<Person> Persons = @object["Persons"].ToObject<List<Person>>();
-                    participants.ForEach(x => x.request_id = support.request_id);
-                    List<string> codes = participants.Select(x => x.current_mssv_msnv).ToList();
-                    List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
-                    Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
-                        .ToDictionary(x => x.title_id, x => x);
-                    Dictionary<string, int> CodeIDPairs = db.Profiles.Where(x => codes.Contains(x.mssv_msnv))
-                        .ToDictionary(x => x.mssv_msnv, x => x.people_id);
-                    for (int i = 0; i < participants.Count; i++)
+                    ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
+                    participant.request_id = @base.request_id;
+                    Person person = @object["Persons"].ToObject<Person>();
+                    Profile profile = db.Profiles.Where(x => x.mssv_msnv == participant.current_mssv_msnv).FirstOrDefault();
+                    if (profile == null)
                     {
-                        var item = participants[i];
-                        if (CodeIDPairs.ContainsKey(item.current_mssv_msnv))
-                            item.people_id = CodeIDPairs[item.current_mssv_msnv];
-                        else
-                        {
-                            db.People.Add(Persons[i]);
-                            db.SaveChanges();
+                        db.People.Add(person);
+                        db.SaveChanges();
 
-                            Profile profile = new Profile()
-                            {
-                                mssv_msnv = item.current_mssv_msnv,
-                                title_id = item.title_id,
-                                people_id = Persons[i].people_id,
-                            };
-                            db.Profiles.Add(profile);
-                            db.SaveChanges();
-                            item.people_id = Persons[i].people_id;
-                        }
+                        profile = new Profile()
+                        {
+                            mssv_msnv = participant.current_mssv_msnv,
+                            title_id = participant.title_id,
+                            people_id = person.people_id,
+                        };
+                        db.Profiles.Add(profile);
                     }
-                    db.ConferenceParticipants.AddRange(participants);
+                    else
+                    {
+                        participant.people_id = profile.people_id;
+                        participant.title_id = profile.title_id;
+                        participant.office_id = profile.Person.office_id.Value;
+                    }
+                    db.ConferenceParticipants.Add(participant);
                     db.SaveChanges();
 
                     int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);

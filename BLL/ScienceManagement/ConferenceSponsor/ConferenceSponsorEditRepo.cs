@@ -86,6 +86,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     db.Costs.AddRange(costs);
 
+                    db.ConferenceParticipants.RemoveRange(request.ConferenceParticipants);
+
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = request_id;
                     Person person = @object["Persons"].ToObject<Person>();
@@ -109,8 +111,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         participant.title_id = profile.title_id;
                         participant.office_id = profile.Person.office_id.Value;
                     }
-
-                    db.ConferenceParticipants.RemoveRange(request.ConferenceParticipants);
                     db.ConferenceParticipants.Add(participant);
 
                     foreach (var item in request.EligibilityCriterias)
