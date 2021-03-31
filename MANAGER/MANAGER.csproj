@@ -2195,7 +2195,16 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Add.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Edit.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Search.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\Add.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\Datatable.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\Edit.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\Search.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureContentProcessing.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ChangeCollabStatus.js" />
@@ -2371,7 +2380,6 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\" />
     <Folder Include="Views\Biography\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
