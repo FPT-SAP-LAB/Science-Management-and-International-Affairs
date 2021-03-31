@@ -2363,10 +2363,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Add_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Edit_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Add_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Edit_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Description.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Description.cshtml" />
+    <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

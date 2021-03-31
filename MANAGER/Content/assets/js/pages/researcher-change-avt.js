@@ -55,7 +55,16 @@ var KTImageInputDemo = function () {
                         });
                         window.location.reload()
                     }
-                    else window.location.reload()
+                    else {
+                        swal.fire({
+                            title: 'Lỗi!',
+                            type: 'error',
+                            buttonsStyling: false,
+                            confirmButtonText: 'OK',
+                            confirmButtonClass: 'btn btn-primary font-weight-bold'
+                        });
+                        window.location.reload()
+                    }
                 },
                 error: function () {
                     //alert("fail");
