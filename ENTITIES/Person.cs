@@ -21,6 +21,7 @@ namespace ENTITIES
             this.AuthorInventions = new HashSet<AuthorInvention>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
             this.RequestCitations = new HashSet<RequestCitation>();
+            this.RequestPapers = new HashSet<RequestPaper>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
         }
     
@@ -40,6 +41,8 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         public virtual Profile Profile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestPaper> RequestPapers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
     }

@@ -270,6 +270,9 @@
   <data name="Invention" xml:space="preserve">
     <value>Bằng sáng chế</value>
   </data>
+  <data name="isReseacher" xml:space="preserve">
+    <value>Nghiên cứu viên</value>
+  </data>
   <data name="Jan" xml:space="preserve">
     <value>Tháng 1</value>
   </data>
