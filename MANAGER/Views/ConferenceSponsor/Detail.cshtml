@@ -257,12 +257,40 @@
                             </div>
                         </div>
                     </div>
-                    @if (ConferenceDetail.StatusID == 1)
+                    @if (ConferenceDetail.StatusID == 1 && !ConferenceDetail.EditAble)
                     {
-                        <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success" onclick="SubmitCriteria()">Xét duyệt</button>
-                                <button class="btn btn-danger" onclick="createAndSubmitForm('/ConferenceSponsor/RequestEdit', '')">Yêu cầu chỉnh sửa</button>
+                        <div class="col-lg-12 col-xl-12 mt-2" style="text-align: right;">
+                            <div class="dropdown dropdown-inline">
+                                <!-- Button trigger modal-->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    Xét duyệt
+                                </button>
+                                <button class="btn btn-danger" onclick="createAndSubmitForm('/ConferenceSponsor/RequestEdit')">Yêu cầu chỉnh sửa</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal-->
+                        <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Xét duyệt điều kiện tham dự</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Bình luận: </label>
+                                            <input type="text" class="form-control" id="comment" placeholder="Bình luận trên quy trình phê duyệt" />
+                                            <span class="form-text text-muted">Không bắt buộc</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy</button>
+                                        <button type="button" onclick="SubmitCriteria()" class="btn btn-primary font-weight-bold">Xác nhận</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
@@ -513,86 +541,89 @@
             format: "dd/mm/yyyy"
         });
 
-        const Tus = Uppy.Tus;
-        const StatusBar = Uppy.StatusBar;
-        const FileInput = Uppy.FileInput;
-        const Informer = Uppy.Informer;
         const save_loader = new LoaderBtn($("#SubmitPolicyButton"));
 
-        // Uppy variables
-        // For more info refer: https://uppy.io/
-        var elemId = 'kt_uppy_1';
-        var id = '#' + elemId;
-        var $statusBar = $(id + ' .uppy-status');
-        var $uploadedList = $(id + ' .uppy-list');
-        var timeout;
+        if ($("#kt_uppy_1").length != 0) {
+            const Tus = Uppy.Tus;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
 
-        var uppy1 = Uppy.Core({
-            debug: true,
-            autoProceed: false,
-            showProgressDetails: true,
-            restrictions: {
-                maxFileSize: 5242880, // 5mb
-                maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf']
-            }
-        });
+            // Uppy variables
+            // For more info refer: https://uppy.io/
+            var elemId = 'kt_uppy_1';
+            var id = '#' + elemId;
+            var $statusBar = $(id + ' .uppy-status');
+            var $uploadedList = $(id + ' .uppy-list');
+            var timeout;
 
-        uppy1.use(FileInput, {
-            target: id + ' .uppy-wrapper',
-            pretty: false
-        });
-        uppy1.use(Informer, {
-            target: id + ' .uppy-informer'
-        });
+            var uppy1 = Uppy.Core({
+                debug: true,
+                autoProceed: false,
+                showProgressDetails: true,
+                restrictions: {
+                    maxFileSize: 5242880, // 5mb
+                    maxNumberOfFiles: 1,
+                    minNumberOfFiles: 1,
+                    allowedFileTypes: ['.pdf']
+                }
+            });
 
-        // demo file upload server
-        uppy1.use(Tus, {
-            endpoint: 'https://master.tus.io/files/'
-        });
-        uppy1.use(StatusBar, {
-            target: id + ' .uppy-status',
-            hideUploadButton: true,
-            hideAfterFinish: false
-        });
+            uppy1.use(FileInput, {
+                target: id + ' .uppy-wrapper',
+                pretty: false
+            });
+            uppy1.use(Informer, {
+                target: id + ' .uppy-informer'
+            });
 
-        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+            // demo file upload server
+            uppy1.use(Tus, {
+                endpoint: 'https://master.tus.io/files/'
+            });
+            uppy1.use(StatusBar, {
+                target: id + ' .uppy-status',
+                hideUploadButton: true,
+                hideAfterFinish: false
+            });
 
-        var $fileLabel = $(id + ' .uppy-input-label');
+            $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+            $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
 
-        uppy1.on('upload', function (data) {
-            $fileLabel.text("Uploading...");
-            $statusBar.addClass('uppy-status-ongoing');
-            $statusBar.removeClass('uppy-status-hidden');
-            clearTimeout(timeout);
-        });
+            var $fileLabel = $(id + ' .uppy-input-label');
 
-        uppy1.on('file-added', function (file) {
-            var sizeLabel = "bytes";
-            var filesize = file.size;
-            if (filesize > 1024) {
-                filesize = filesize / 1024;
-                sizeLabel = "kb";
+            uppy1.on('upload', function (data) {
+                $fileLabel.text("Uploading...");
+                $statusBar.addClass('uppy-status-ongoing');
+                $statusBar.removeClass('uppy-status-hidden');
+                clearTimeout(timeout);
+            });
 
+            uppy1.on('file-added', function (file) {
+                var sizeLabel = "bytes";
+                var filesize = file.size;
                 if (filesize > 1024) {
                     filesize = filesize / 1024;
-                    sizeLabel = "MB";
+                    sizeLabel = "kb";
+
+                    if (filesize > 1024) {
+                        filesize = filesize / 1024;
+                        sizeLabel = "MB";
+                    }
                 }
-            }
-            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-            $uploadedList.append(uploadListHtml);
+                var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                $uploadedList.append(uploadListHtml);
 
-            $statusBar.addClass('uppy-status-hidden');
-            $statusBar.removeClass('uppy-status-ongoing');
-        });
+                $statusBar.addClass('uppy-status-hidden');
+                $statusBar.removeClass('uppy-status-ongoing');
+            });
 
-        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-            var itemId = $(this).attr('data-id');
-            uppy1.removeFile(itemId);
-            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-        });
+            $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                var itemId = $(this).attr('data-id');
+                uppy1.removeFile(itemId);
+                $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+            });
+        }
 
         function SubmitPolicy() {
             let decision_number = $("#decision_number").val().trim();
@@ -641,11 +672,16 @@
 
         function SubmitCriteria() {
             var criterias = []
-            for (var i = 0; i < $("#criterias").find("input").length; i++) {
-                if ($("#criterias").find("input")[i].checked)
-                    criterias.push($("#criterias").find("input")[i].dataset.id);
+            let inputs = $("#criterias").find("input:not(:disabled)");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].checked)
+                    criterias.push(inputs[i].dataset.id);
             }
-            createAndSubmitForm("/ConferenceSponsor/UpdateCriterias", JSON.stringify(criterias))
+            if (criterias.length == 0) {
+                toastr.error("Bạn chưa chọn tiêu chí nào");
+                return false;
+            }
+            createAndSubmitForm("/ConferenceSponsor/UpdateCriterias", JSON.stringify(criterias), $("#comment").val())
         }
 
         function SubmitCost() {
@@ -661,13 +697,17 @@
             createAndSubmitForm("/ConferenceSponsor/UpdateReimbursement", $("#ReimbursementInput").val())
         }
 
-        function createAndSubmitForm(url, data) {
+        function createAndSubmitForm(url, data, comment) {
             var newForm = jQuery('<form>', {
                 'action': url,
                 'method': 'post'
             }).append(jQuery('<input>', {
                 'name': 'data',
                 'value': data,
+                'type': 'hidden'
+            })).append(jQuery('<input>', {
+                'name': 'comment',
+                'value': comment,
                 'type': 'hidden'
             })).append(jQuery('<input>', {
                 'name': 'request_id',

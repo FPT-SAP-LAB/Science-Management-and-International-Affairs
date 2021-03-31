@@ -19,11 +19,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
-                string sql = @"SELECT q.question_id, q.title, at.answer_type_id,cast(q.is_compulsory as int) as is_compulsory
+                string sql = @"SELECT q.question_id, q.title, at.answer_type_id,cast(q.is_compulsory as int) as is_compulsory,cast(q.is_changeable as int) as is_changeable 
                                     FROM SMIA_AcademicActivity.Form f
                                     INNER JOIN SMIA_AcademicActivity.Question q ON q.form_id = f.form_id
                                     INNER JOIN SMIA_AcademicActivity.AnswerType at ON at.answer_type_id = q.answer_type_id
-                                    where f.phase_id = @phase_id";
+                                    where f.phase_id = @phase_id order by q.is_changeable";
                 List<DetailOfAcademicActivityRepo.Ques> ques = db.Database.SqlQuery<DetailOfAcademicActivityRepo.Ques>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 string ques_id = "";
                 List<int> type = new List<int> { 3, 5 };
@@ -55,7 +55,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new DetailOfAcademicActivityRepo.baseForm();
             }
         }
-        public bool updateForm(DetailOfAcademicActivityRepo.baseForm data)
+        public bool updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -81,6 +81,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Entry(f).State = EntityState.Modified;
                     }
                     updateQuestion(data, f, quess_id);
+                    foreach (DetailOfAcademicActivityRepo.CustomQuestion cq in data_unchange)
+                    {
+                        db.Questions.Add(new Question
+                        {
+                            form_id = f.form_id,
+                            title = cq.title == null ? String.Empty : cq.title,
+                            answer_type_id = 1,
+                            is_compulsory = cq.is_compulsory == 1 ? true : false,
+                            is_changeable = false
+                        });
+                    }
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -155,7 +166,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 form_id = f.form_id,
                 answer_type_id = q.answer_type_id,
                 title = q.title == null ? String.Empty : q.title,
-                is_compulsory = q.is_compulsory == 1 ? true : false
+                is_compulsory = q.is_compulsory == 1 ? true : false,
+                is_changeable = true
             });
             db.SaveChanges();
             if (q.answer_type_id == 3 || q.answer_type_id == 5)
@@ -188,6 +200,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                 }
                 db.Questions.Remove(q);
+            }
+        }
+        public bool deleteForm(int phase_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
+                    db.Forms.Remove(f);
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
     }

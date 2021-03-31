@@ -98,6 +98,116 @@
             </div>
         </div>
     </div>
+    <div>
+        <div class="card custom-card custom-card-after">
+            <div class="row">
+                <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-fullname" value="Họ và tên" />
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <span class="switch switch-sm">
+                                <label>
+                                    <input type="checkbox" id="compulsory-fullname" />
+                                    <span></span>
+                                </label>
+                                <span class="pl-2">Bắt buộc</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card custom-card custom-card-after">
+            <div class="row">
+                <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-email" value="Email" />
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <span class="switch switch-sm">
+                                <label>
+                                    <input type="checkbox" id="compulsory-email" />
+                                    <span></span>
+                                </label>
+                                <span class="pl-2">Bắt buộc</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card custom-card custom-card-after">
+            <div class="row">
+                <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-phone" value="Số điện thoại" />
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <span class="switch switch-sm">
+                                <label>
+                                    <input type="checkbox" id="compulsory-phone" />
+                                    <span></span>
+                                </label>
+                                <span class="pl-2">Bắt buộc</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card custom-card custom-card-after">
+            <div class="row">
+                <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-role" value="Tư cách tham dự" />
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <span class="switch switch-sm">
+                                <label>
+                                    <input type="checkbox" id="compulsory-role" />
+                                    <span></span>
+                                </label>
+                                <span class="pl-2">Bắt buộc</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card custom-card custom-card-after">
+            <div class="row">
+                <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <input type="text" class="form-control" placeholder="Câu hỏi" id="question-title-office" value="Đơn vị - Cơ sở" />
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 card-bottom">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 pt-2">
+                            <span class="switch switch-sm">
+                                <label>
+                                    <input type="checkbox" id="compulsory-office" />
+                                    <span></span>
+                                </label>
+                                <span class="pl-2">Bắt buộc</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="control-0">
         <div class="card custom-card custom-card-after">
             <div class="row">
@@ -142,7 +252,8 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-        <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right" id="btn_save_form">Xác nhận</button>
+        <button type="button" class="btn btn-light-danger px-6 font-weight-bold float-right" id="btn_delete_form">Xóa</button>
+        <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right mr-5" id="btn_save_form">Xác nhận</button>
     </div>
 </div>
 <input type="text" hidden value="@ViewBag.phaseID" id="phase_id" />
@@ -484,6 +595,23 @@
                 }
             };
         }();
+        var map = {
+            0: {
+                'id': 'fullname'
+            },
+            1: {
+                'id': 'email'
+            },
+            2: {
+                'id': 'phone'
+            },
+            3: {
+                'id': 'role'
+            },
+            4: {
+                'id': 'office'
+            },
+        };
         function init() {
             var object = {
                 phase_id: document.getElementById('phase_id').value
@@ -497,54 +625,60 @@
                     form_id = data.form.form_id;
                     document.getElementById('form_title_description').value = data.form.title_description;
                     document.getElementById('form_title').value = data.form.title;
-                    data.ques.forEach(function (x) {
-                        arrMapping.push(indexDiv-1);
-                        arrReal.push(x.question_id);
-                        document.getElementById('answer-type-' + (indexDiv-1)).value = x.answer_type_id;
-                        changeAnswerType(indexDiv-1);
-                        document.getElementById('question-title-' + (indexDiv - 1)).value = x.title;
-                        if (x.is_compulsory == 1)
-                            $('#compulsory-' + (indexDiv - 1)).attr('checked', true);
-                        data.quesOption.forEach(function (y) {
-                            if (x.question_id == y.question_id) {
-                                str = y.option_title.split("$^");
-                                for (let i = 0; i < str.length; i++) {
-                                    if (x.answer_type_id == 3) {
-                                        temp_option = 0
-                                        for (let i = 0; i < 100; i++) {
-                                            if (typeof arrM_content[(indexDiv - 1)][i] == 'undefined') {
-                                                i = 999;
-                                            } else {
-                                                temp_option = temp_option + 1;
+                    data.ques.forEach(function (x,index) {
+                        if (x.is_changeable == 0) {
+                            $('#question-title-' + map[index].id).val(x.title);
+                            if (x.is_compulsory == 1)
+                                $('#compulsory-' + map[index].id).attr('checked', true);
+                        } else {
+                            arrMapping.push(indexDiv - 1);
+                            arrReal.push(x.question_id);
+                            document.getElementById('answer-type-' + (indexDiv - 1)).value = x.answer_type_id;
+                            changeAnswerType(indexDiv - 1);
+                            document.getElementById('question-title-' + (indexDiv - 1)).value = x.title;
+                            if (x.is_compulsory == 1)
+                                $('#compulsory-' + (indexDiv - 1)).attr('checked', true);
+                            data.quesOption.forEach(function (y) {
+                                if (x.question_id == y.question_id) {
+                                    str = y.option_title.split("$^");
+                                    for (let i = 0; i < str.length; i++) {
+                                        if (x.answer_type_id == 3) {
+                                            temp_option = 0
+                                            for (let i = 0; i < 100; i++) {
+                                                if (typeof arrM_content[(indexDiv - 1)][i] == 'undefined') {
+                                                    i = 999;
+                                                } else {
+                                                    temp_option = temp_option + 1;
+                                                }
                                             }
-                                        }
-                                        arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
-                                        document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
-                                        $('#content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
-                                        if (i < (str.length - 1)) {
-                                            AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
-                                        }
-                                    } else if (x.answer_type_id == 5) {
-                                        temp_option = 0
-                                        for (let i = 0; i < 100; i++) {
-                                            if (typeof arrC_content[(indexDiv - 1)][i] == 'undefined') {
-                                                i = 999;
-                                            } else {
-                                                temp_option = temp_option + 1;
+                                            arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                            document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                            $('#content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
+                                            if (i < (str.length - 1)) {
+                                                AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
                                             }
-                                        }
-                                        arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
-                                        document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
-                                        $('#content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
-                                        if (i < (str.length - 1)) {
-                                            AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                        } else if (x.answer_type_id == 5) {
+                                            temp_option = 0
+                                            for (let i = 0; i < 100; i++) {
+                                                if (typeof arrC_content[(indexDiv - 1)][i] == 'undefined') {
+                                                    i = 999;
+                                                } else {
+                                                    temp_option = temp_option + 1;
+                                                }
+                                            }
+                                            arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                            document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                            $('#content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
+                                            if (i < (str.length - 1)) {
+                                                AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
-                        if (x !== data.ques[data.ques.length -1])
-                            addQues('#control-' + (indexDiv-1));
+                            });
+                            if (x !== data.ques[data.ques.length - 1])
+                                addQues('#control-' + (indexDiv - 1));
+                        }
                     });
                 },
                 error: function (data) {
@@ -574,7 +708,8 @@
                             question_id: ques_id,
                             title: ques_title,
                             answer_type_id: answer_type,
-                            is_compulsory: is_compulsory
+                            is_compulsory: is_compulsory,
+                            is_changeable: 0
                         }
                         arrQues.push(object);
                         let quesOp_title = '';
@@ -606,17 +741,59 @@
                         title: $('#form_title').val(),
                         title_description: $('#form_title_description').val()
                     };
-                    console.log(arrQues);
-                    console.log(arrQuesOp);
-                    console.log(form);
+                    arrUnchange = [];
+                    list_id = ['fullname', 'email', 'phone', 'role', 'office'];
+                    list_id.forEach(function (x) {
+                        var unchange = {
+                            title: $('#question-title-'+x).val(),
+                            is_compulsory: $('#compulsory-'+x).is(':checked') == true ? 1 : 0
+                        };
+                        arrUnchange.push(unchange);
+                    });
                     var object = {
                         form: form,
                         ques: arrQues,
                         quesOption: arrQuesOp
                     };
+                    var final_object = {
+                        data: object,
+                        data_unchange: arrUnchange
+                    };
                     $.ajax({
                         url: "@Url.Action("updateForm", "DetailOfAcademicActivity")",
-                        data: JSON.stringify(object),
+                        data: JSON.stringify(final_object),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
+                            } else {
+                                toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            });
+        });
+        $('#btn_delete_form').click(function () {
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn xóa đơn đăng kí này không ?",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: "@Url.Action("deleteForm", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ phase_id: $('#phase_id').val()}),
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         success: function (data) {

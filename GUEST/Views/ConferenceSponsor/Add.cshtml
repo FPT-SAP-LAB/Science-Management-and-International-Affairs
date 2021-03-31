@@ -713,30 +713,24 @@
                 attendance_start: attendance_start,
                 attendance_end: attendance_end,
                 specialization_id: $("#specialization").val(),
-                ConferenceParticipant: [],
+                ConferenceParticipant: {},
                 Cost: [],
-                Persons: [],
+                Persons: {},
                 paper_name: $("#paper_name").val()
             }
-            $("#tableParticipant tr").each((idx, ele) => {
-                let ms = $(ele).find(".selectPeople").select2('data')[0].id;
-                let name = $(ele).find(".inputName").val();
-                if (ms == "" || name == "")
-                    return;
-                let info = {
-                    current_mssv_msnv: ms,
-                    office_id: $(ele).find(".selectOffice").val(),
-                    title_id: $(ele).find(".selectTitle").val(),
-                }
-                this.data.ConferenceParticipant.push(info);
-                let person = {
-                    name: name,
-                    office_id: $(ele).find(".selectOffice").val(),
-                    email: $(ele).find(".inputEmail").val(),
-                    mssv_msnv: ms
-                }
-                this.data.Persons.push(person);
-            })
+            let ms = $(".selectPeople").select2('data')[0].id;
+            let name = $(".inputName").val();
+            if (ms == "" || name == "")
+                return;
+            this.data.ConferenceParticipant = {
+                current_mssv_msnv: ms,
+                office_id: $(".selectOffice").val(),
+                title_id: $(".selectTitle").val(),
+            };
+            this.data.Persons = {
+                name: name,
+                email: $(".inputEmail").val(),
+            };
             $("#tableCost tr:not(:last-child)").each((idx, ele) => {
                 let listTD = $(ele).find("td");
                 let content = $(listTD[0]).find("input").val();

@@ -40,7 +40,7 @@
         <div class="row justify-content-left bgi-size-cover bgi-no-repeat py-8 px-8" style="background-image: url(../Content/assets/media/bg/event_banner.jpg);">
             <div class="col-md-12">
                 <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <h1 class="display-4 text-white text-uppercase" id="form-title" onkeyup=""></h1>
+                    <h1 class="display-4 text-white text-uppercase" id="form-title"></h1>
                 </div>
             </div>
         </div>
@@ -49,6 +49,51 @@
             <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
                 <div class="col-md-12 col-sm-12">
                     <div class="row" id="main-control">
+
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b id="question-title-fullname"></b><label style="color:red" id="compulsory-fullname">*</label>:</label>
+                                <input type="text" id="ques-answer-fullname" class="form-control form-control-lg" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b id="question-title-email"></b><label style="color:red" id="compulsory-email">*</label>:</label>
+                                <input type="text" id="ques-answer-email" class="form-control form-control-lg" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b id="question-title-phone"></b><label style="color:red" id="compulsory-phone">*</label>:</label>
+                                <input type="text" id="ques-answer-phone" class="form-control form-control-lg" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b id="question-title-role"></b><label style="color:red" id="compulsory-role">*</label>:</label>
+                                <select class="form-control form-control-lg" id="ques-answer-role">
+                                    @{
+                                        foreach (var item in ViewBag.role)
+                                        {
+                                            <option value="@item.participant_role_id">@item.participant_role_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b id="question-title-office"></b><label style="color:red" id="compulsory-office">*</label>:</label>
+                                <select class="form-control form-control-lg" id="ques-answer-office">
+                                    @{
+                                        foreach (var item in ViewBag.office)
+                                        {
+                                            <option value="@item.office_id">@item.office_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -67,6 +112,23 @@
         let arrQues = [];
         let fid = 0;
         let stt_ck = 0;
+        var map = {
+            0: {
+                'id': 'fullname'
+            },
+            1: {
+                'id': 'email'
+            },
+            2: {
+                'id': 'phone'
+            },
+            3: {
+                'id': 'role'
+            },
+            4: {
+                'id': 'office'
+            },
+        };
         function textAreaAdjust(element) {
             element.style.height = "1px";
             element.style.height = (25 + element.scrollHeight) + "px";
@@ -85,93 +147,117 @@
                 success: function (data) {
                     fid = data.question[0].form_id;
                     document.getElementById('form-title').innerHTML = data.question[0].f_title;
-                    data.question.forEach(function (x) {
-                        var object = {
-                            question_id: x.question_id,
-                            answer_type: x.answer_type_id,
-                            is_compulsory: x.is_compulsory
-                        }
-                        arrQues.push(object);
-                        let ques_html = '';
-                        switch (x.answer_type_id){
-                            case 1:
-                                ques_html += '<div class="col-md-12 col-sm-12">'+
-                                            '<div class="form-group fv-plugins-icon-container">'+
-                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') +' >*</label></b>:</label> '+
-                                    '<input type="text" id="ques-answer-' + x.question_id+'" class="form-control form-control-lg" placeholder="'+x.title+'" autocomplete="off"> '+
-                                            '</div>'+
+                    data.question.forEach(function (x,index) {
+                        if (x.is_changeable == 0) {
+                            document.getElementById('question-title-' + map[index].id).innerHTML = x.title + ' ';
+                            if (x.is_compulsory == 0) {
+                                $('#compulsory-' + map[index].id).attr('hidden', true);
+                            }
+                        } else {
+                            var object = {
+                                question_id: x.question_id,
+                                answer_type: x.answer_type_id,
+                                is_compulsory: x.is_compulsory
+                            }
+                            arrQues.push(object);
+                            let ques_html = '';
+                            switch (x.answer_type_id) {
+                                case 1:
+                                    ques_html += '<div class="col-md-12 col-sm-12">' +
+                                        '<div class="form-group fv-plugins-icon-container">' +
+                                        '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + ' >*</label></b>:</label> ' +
+                                        '<input type="text" id="ques-answer-' + x.question_id + '" class="form-control form-control-lg" placeholder="' + x.title + '" autocomplete="off"> ' +
+                                        '</div>' +
                                         '</div>';
-                                break;
-                            case 2:
-                                ques_html += '<div class="col-md-12 col-sm-12">' +
-                                    '<div class="form-group fv-plugins-icon-container">' +
-                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label> ' +
-                                    '<textarea type="text" id="ques-answer-' + x.question_id + '" class="form-control  form-control-lg" placeholder="' + x.title +'" onkeyup="textAreaAdjust(this)"></textarea> ' +
-                                    '</div>'+
-                                '</div>';
-                                break;
-                            case 3:
-                                ques_html += '<div class="col-md-12 col-sm-12" id="ques-answer-' + x.question_id+'">' +
-                                    '<div class="form-group fv-plugins-icon-container">' +
-                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
-                                data.optins.forEach(function (y) {
-                                    if (y.question_id == x.question_id) {
-                                        let str = y.option_title.split('$^');
-                                        ques_html += '<div class="checkbox-outline">';
-                                        str.forEach(function (z) {
-                                            ques_html += '<label class="checkbox checkbox-lg">' +
-                                                '<input type="checkbox" value="' + z + '" id="ques-option-' + y.question_id + stt_ck+'"/>' +
-                                                '<span class="custom-span"></span>' +
-                                                '' + z + '' +
-                                                '</label>';
-                                            stt_ck += 1;
-                                        });
-                                        ques_html += '</div>';
-                                    }
-                                });
-                                ques_html += '</div></div>';
-                                break;
-                            case 5:
-                                ques_html += '<div class="col-md-12 col-sm-12">' +
-                                    '<div class="form-group fv-plugins-icon-container">' +
-                                    '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
-                                data.optins.forEach(function (y) {
-                                    if (y.question_id == x.question_id) {
-                                        let str = y.option_title.split('$^');
-                                        ques_html += '<div class="radio-outline">';
-                                        str.forEach(function (z) {
-                                            ques_html += '<label class="radio">' +
-                                                '<input type="radio" value="'+z+'" name="question-option-' + y.question_id + '"/>' +
-                                                '<span class="custom-radio"></span>' +
-                                                '' + z + '' +
-                                                '</label>';
-                                        });
-                                        ques_html += '</div>';
-                                    }
-                                });
-                                ques_html += '</div></div>';
-                                break;
-                            case 6:
-                                ques_html += '<div class="input-group date kt_datetimepicker_3" id="ques-date-' + x.question_id+'" data-target-input="nearest">'+
-                                    '<input type="text" class="form-control datetimepicker-input" placeholder="" data-target="#ques-date-' + x.question_id + '" autocomplete="off" id="ques-answer-' + x.question_id +'" /> '+
-                                    '<div class="input-group-append" data-target="#ques-date-' + x.question_id+'" data-toggle="datetimepicker" > '+
-                                    '<span class="input-group-text"> '+
-                                    '<i class="ki ki-calendar"></i> '+
-                                            '</span> '+
-                                        '</div> '+
-                                '</div>';
-                                break;
+                                    break;
+                                case 2:
+                                    ques_html += '<div class="col-md-12 col-sm-12">' +
+                                        '<div class="form-group fv-plugins-icon-container">' +
+                                        '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label> ' +
+                                        '<textarea type="text" id="ques-answer-' + x.question_id + '" class="form-control  form-control-lg" placeholder="' + x.title + '" onkeyup="textAreaAdjust(this)"></textarea> ' +
+                                        '</div>' +
+                                        '</div>';
+                                    break;
+                                case 3:
+                                    ques_html += '<div class="col-md-12 col-sm-12" id="ques-answer-' + x.question_id + '">' +
+                                        '<div class="form-group fv-plugins-icon-container">' +
+                                        '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
+                                    data.optins.forEach(function (y) {
+                                        if (y.question_id == x.question_id) {
+                                            let str = y.option_title.split('$^');
+                                            ques_html += '<div class="checkbox-outline">';
+                                            str.forEach(function (z) {
+                                                ques_html += '<label class="checkbox checkbox-lg">' +
+                                                    '<input type="checkbox" value="' + z + '" id="ques-option-' + y.question_id + stt_ck + '"/>' +
+                                                    '<span class="custom-span"></span>' +
+                                                    '' + z + '' +
+                                                    '</label>';
+                                                stt_ck += 1;
+                                            });
+                                            ques_html += '</div>';
+                                        }
+                                    });
+                                    ques_html += '</div></div>';
+                                    break;
+                                case 5:
+                                    ques_html += '<div class="col-md-12 col-sm-12">' +
+                                        '<div class="form-group fv-plugins-icon-container">' +
+                                        '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
+                                    data.optins.forEach(function (y) {
+                                        if (y.question_id == x.question_id) {
+                                            let str = y.option_title.split('$^');
+                                            ques_html += '<div class="radio-outline">';
+                                            str.forEach(function (z) {
+                                                ques_html += '<label class="radio">' +
+                                                    '<input type="radio" value="' + z + '" name="question-option-' + y.question_id + '"/>' +
+                                                    '<span class="custom-radio"></span>' +
+                                                    '' + z + '' +
+                                                    '</label>';
+                                            });
+                                            ques_html += '</div>';
+                                        }
+                                    });
+                                    ques_html += '</div></div>';
+                                    break;
+                                case 6:
+                                    ques_html += '<div class="col-md-12 col-sm-12">' +
+                                        '<div class="form-group fv-plugins-icon-container">' +
+                                        '<label><b>' + x.title + ' <label style="color:red" ' + (x.is_compulsory == 0 ? 'hidden' : '') + '>*</label></b>:</label>';
+                                    ques_html += '<div class="input-group date kt_datetimepicker_3" id="ques-date-' + x.question_id + '" data-target-input="nearest">' +
+                                        '<input type="text" class="form-control datetimepicker-input" placeholder="" data-target="#ques-date-' + x.question_id + '" autocomplete="off" id="ques-answer-' + x.question_id + '" /> ' +
+                                        '<div class="input-group-append" data-target="#ques-date-' + x.question_id + '" data-toggle="datetimepicker" > ' +
+                                        '<span class="input-group-text"> ' +
+                                        '<i class="ki ki-calendar"></i> ' +
+                                        '</span> ' +
+                                        '</div> ' +
+                                        '</div>';
+                                    ques_html += '</div></div>';
+                                    break;
+                            }
+                            $('#main-control').append(ques_html);
+                            KTBootstrapDatetimepicker.init();
                         }
-                        $('#main-control').append(ques_html);
                     });
-                },
-                error: function () {
                 }
             });
         }
         function sendForm() {
             let arrAnswer = [];
             let req = false;
+            let fullname = $('#ques-answer-fullname').val();
+            let email = $('#ques-answer-email').val();
+            let phone = $('#ques-answer-phone').val();
+            let role = $('#ques-answer-role').val();
+            let office = $('#ques-answer-office').val();
+            if (fullname == '' || email == '' || phone == '' || role == '' || office == '')
+                req = true;
+            var unchange = {
+                participant_role_id: role,
+                participant_name: fullname,
+                email: email,
+                participant_number: phone,
+                office_id: office
+            };
             arrQues.forEach(function (x) {
                 if (!req) {
                     switch (x.answer_type) {
@@ -228,7 +314,8 @@
             }
             var object = {
                 fid: fid,
-                answer: arrAnswer.join('<$>')
+                answer: arrAnswer.join('<$>'),
+                unchange: unchange
             };
             $.ajax({
                 url: "@Url.Action("sendForm", "AcademicActivity")",
@@ -237,7 +324,19 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     if (data != '') {
-                        toastr.success(data);
+                        Swal.fire({
+                            title: "Đăng ký thành công", 
+                            text: "Cảm ơn bạn đã đăng ký tham dự hoạt động.",
+                            icon: "success",
+                            showCancelButton: true,
+                            confirmButtonText: "Rời trang",
+                            cancelButtonText: "Ở lại",
+                            reverseButtons: true
+                        }).then(function (result) {
+                            if (result.value) {
+                                window.close();
+                            }
+                        });
                     } else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
@@ -257,9 +356,7 @@
             };
         }();
         $(document).ready(function () {
-            KTBootstrapDatetimepicker.init();
             init();
-
         });
     </script>
 }
