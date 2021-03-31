@@ -424,13 +424,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 
         /*--------------------------------------------------------SHORT TERM---------------------------------------------------------*/
         AcademicCollaborationShortRepo acShortRepo;
+        AcademicCollaborationProgramRepo acProgramRepo;
         public ActionResult Shortterm_List()
         {
             ViewBag.title = "DANH SÁCH TRAO ĐỔI CÁN BỘ GIẢNG VIÊN";
             ViewBag.languages = AcademicActivityTypeRepo.getLanguages().obj;
             return View();
         }
-
+        //---------------------------------------------------------procedure----------------------------------------------------------
         [HttpPost]
         public ActionResult GetProcedureList(int direction, string title)
         {
@@ -579,6 +580,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 });
             }
         }
+
         [HttpPost]
         public ActionResult DeleteProcedure(int procedure_id)
         {
@@ -593,6 +595,32 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 Console.WriteLine(e.Message);
                 AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
                 return Json(new { json.success, json.content });
+            }
+        }
+
+        //---------------------------------------------------------program----------------------------------------------------------
+        [HttpPost]
+        public ActionResult GetProgramList(int direction, string title, int duration, int collab_type_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<ProgramInfoManager> baseServerSideData =
+                    acProgramRepo.GetListProgram(baseDatatable, title, duration, direction, collab_type_id);
+                return Json(new
+                {
+                    success = true,
+                    data = baseServerSideData.Data,
+                    draw = Request["draw"],
+                    recordsTotal = baseServerSideData.RecordsTotal,
+                    recordsFiltered = baseServerSideData.RecordsTotal
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { data = "" });
             }
         }
 

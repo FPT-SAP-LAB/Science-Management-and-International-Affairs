@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using User.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
+using GUEST.Support;
 
 namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -13,6 +14,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         private AcademicActivityGuestRepo guestRepo;
         private readonly System.Resources.ResourceManager rm = Models.LanguageResource.GetResourceManager();
         // GET: AcademicActivity
+        [Auther(RightID = "2,3,6")]
         public ActionResult Index()
         {
             guestRepo = new AcademicActivityGuestRepo();
@@ -28,6 +30,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        [Auther(RightID = "2,3,6")]
         public ActionResult Detail(int id)
         {
             int language = Models.LanguageResource.GetCurrentLanguageID();
@@ -46,6 +49,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         }
 
         [HttpPost]
+        [Auther(RightID = "2,3,6")]
         public ActionResult DetailContent(int content_id)
         {
             guestRepo = new AcademicActivityGuestRepo();
@@ -63,6 +67,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [HttpPost]
+        [Auther(RightID = "2,3,6")]
         public ActionResult LoadMoreList(int count, List<int> type, string search)
         {
             guestRepo = new AcademicActivityGuestRepo();
@@ -70,6 +75,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search);
             return Json(data);
         }
+        [Auther(RightID = "2,3,6")]
         public ActionResult loadForm(int pid)
         {
             guestRepo = new AcademicActivityGuestRepo();
@@ -81,9 +87,12 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             };
             ViewBag.pagesTree = pagesTree;
             ViewBag.pid = pid;
+            ViewBag.role = guestRepo.GetParticipantRoleByPhase(pid);
+            ViewBag.office = guestRepo.getOffices();
             return View();
         }
         [HttpPost]
+        [Auther(RightID = "2,3,6")]
         public JsonResult getForm(int phase_id)
         {
             guestRepo = new AcademicActivityGuestRepo();
@@ -91,10 +100,11 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [HttpPost]
-        public JsonResult sendForm(int fid, string answer)
+        [Auther(RightID = "2,3,6")]
+        public JsonResult sendForm(int fid, string answer, AcademicActivityGuestRepo.AnswerUnchange unchange)
         {
             guestRepo = new AcademicActivityGuestRepo();
-            bool res = guestRepo.sendForm(fid, answer);
+            bool res = guestRepo.sendForm(fid, answer, unchange);
             if (res)
             {
                 return Json("Gửi đơn đăng kí thành công");
