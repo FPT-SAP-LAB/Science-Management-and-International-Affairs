@@ -34,7 +34,7 @@
     <!--USED BY THIS PAGE-->
     <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+    <link href="~/Content/Custom_CSS/Preloader/preloader.css" rel="stylesheet" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -43,6 +43,7 @@
       class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
     <!--begin::Main-->
     <!--begin::Header Mobile-->
+    <div id="loading"></div>
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <!--begin::Logo-->
         <a href="#">
@@ -699,7 +700,7 @@
             });
         }
         $(document).ready(function () {
-            
+
         });
     </script>
     @RenderSection("scripts")

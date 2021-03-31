@@ -61,11 +61,12 @@
             <div class="col-9">
                 @foreach (var item in ViewBag.SubContent)
                 {
-                    <p id="p-@item.id" class="event-content" hidden>@item.content</p>
-                    if (@item == @ViewBag.SubContent[0])
+                    <p id="p-@item.id" class="event-content" hidden>@item.content<br />
+                    @if (@item == @ViewBag.SubContent[0])
                     {
-                        <p><a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">Link đăng ký tham dự</a></p>
+                        <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">Link đăng ký tham dự</a>
                     }
+                </p>
                 }
             </div>
         </div>
