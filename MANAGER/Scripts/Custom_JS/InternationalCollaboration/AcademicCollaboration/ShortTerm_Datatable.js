@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     //$('#exchange_going_table').DataTable({
     //    oLanguage: {
     //        oPaginate: {
@@ -184,8 +184,8 @@
                 data: "procedure_id",
                 name: "procedure_id",
                 render: function (data) {
-                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" onclick="load_procedure_detail(' + data + ')">Sửa</a> ' +
-                        '<a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
+                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=' + data + ' data-toggle="modal" href="#edit_procedure">Sửa</a> ' +
+                        '<a id="delete_procedure" class="btn btn-sm btn-light-danger px-6" data-id=' + data + '>Xóa</a>'
                 }
             }
             ],
@@ -250,8 +250,8 @@
                 data: "procedure_id",
                 name: "procedure_id",
                 render: function (data) {
-                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" onclick="load_procedure_detail(' + data +
-                        ')">Sửa</a><a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
+                    return '<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=' + data + ' data-toggle="modal" href="#edit_procedure">Sửa</a> ' +
+                        +'<a class="btn btn-sm btn-light-danger px-6" onclick="confirm_delete_procedure(' + data + ')">Xóa</a>'
                 }
             }
             ],

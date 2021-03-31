@@ -2195,9 +2195,11 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureEditContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\RUDProcedure.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\UpdateContent.js" />
-    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureContentProcessing.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureAddContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ChangeCollabStatus.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\Delete.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Edit.js" />
