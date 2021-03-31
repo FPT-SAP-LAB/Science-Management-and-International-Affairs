@@ -289,7 +289,7 @@
                                         if (result.value) {
                                             location.reload();
                                         }
-                                    });
+                                });
                             }
                         },
                         error: function (data) {
@@ -1150,6 +1150,14 @@
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
+            else if (compareDate($('#sign_date_mou').val(), $('#mou_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
+                toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
+                return;
+            }
+            else if (compareDate($('#end_date_mou').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
+                return;
+            }
             else {
                 var ExBasicInfo = {
                 ex_mou_code: $('#ex_mou_id_add').val() ,
@@ -1452,6 +1460,7 @@
     });
 
     function searchMOUPartner() {
+        rowIdxMOUPartner = 1;
         mou_partner_table.ajax.reload();
     }
 
@@ -1489,8 +1498,8 @@
         });*@
     }
 
+    var rowIdxMOUPartner = 1;
     function loadListPartnerMOU() {
-        var rowIdx = 1;
         mou_partner_table = $("#partner_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -1516,7 +1525,7 @@
             columns: [
                 {
                     render: function () {
-                        return rowIdx++;
+                        return rowIdxMOUPartner++;
                     }
                 },
                 { data: "partner_name" },
@@ -1967,15 +1976,15 @@
     var listPartnersMOA = [];
 
     function searchMOA() {
-        moa_table.ajax.reload();
+        reloadMOATable();
     }
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
 
+    var rowIdxMOA = 1;
     function loadMOAList() {
-        var rowIdx = 1;
         moa_table = $("#moa_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -2005,7 +2014,7 @@
             columns: [
                 {
                     render: function () {
-                        return rowIdx++;
+                        return rowIdxMOA++;
                     }
                 },
                 { data: "moa_code" },
@@ -2026,7 +2035,7 @@
                 { data: "scope_abbreviation" },
                 {
                     data: "mou_status_id",
-                    width: '150px',
+                    width: '50px',
                     render: function (data) {
                         var status = {
                             2: {
@@ -2118,7 +2127,7 @@
                 $('#add_moa_modal').modal('hide');
                 toastr.success('Thêm thành công');
                 listTempPartnerMOAAdd = [];
-                moa_table.ajax.reload();
+                reloadMOATable();
             },
             error: function () {
                 //alert("fail");
@@ -2127,6 +2136,11 @@
 
         //collect Partner data.
         //Send to controller.
+    }
+
+    function reloadMOATable() {
+        rowIdxMOA = 1;
+        moa_table.ajax.reload();
     }
 
     function updateMOAStartDateAndMainScope() {
@@ -2351,11 +2365,15 @@
             toastr.error('Phạm vi hợp tác chưa được chọn');
             return;
         }
+        else if (compareDate($('#sign_date_mou').val(), $('#moa_sign_date_partner_add').val())) { //compare = true <=> sign_date > end_date
+            toastr.error('Ngày ký kết đối tác trong biên bản thỏa thuận phải sau ngày kí kết trong biên bản ghi nhớ');
+            return;
+        }
         else {
             var objCheck = listTempPartnerMOAAdd.find(x => x.partnername_add == $('#moa_partner_name_add').val());
             if (objCheck == null) {
                 var TempObj = {
-                    partnername_add: document.getElementById("moa_partner_name_add").value,
+                    partnername_add: $("#moa_partner_name_add option:selected").text(),
                     represent_add: document.getElementById("moa_partner_represent_add").value,
                     specialization_add: $("#moa_partner_specialization_add").val(),
                     nation_add: document.getElementById("moa_partner_nation_add").value,
@@ -2390,7 +2408,7 @@
         }
         else {
             var index = $("#idx_moa_edit").val();
-            listTempPartnerMOAAdd[index].partnername_add = $('#moa_partner_name_edit').val();
+            listTempPartnerMOAAdd[index].partnername_add = $("#moa_partner_name_add option:selected").text(),
             listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_partner_represent_edit").value;
             listTempPartnerMOAAdd[index].specialization_add = $("#moa_partner_specialization_edit").val();
             listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_partner_nation_edit").value;
@@ -2503,8 +2521,8 @@
     }
 
     function checkPartnerAddMOA() {
-        var partner_name = document.getElementById("moa_partner_name_add").value;
-        var em = { partner_name: partner_name };
+        var partner_id= document.getElementById("moa_partner_name_add").value;
+        var em = { partner_id: partner_id };
         $.ajax({
             url: "@Url.Action("GetMOAScopesByPartner", "MOA")",
             type: "POST",
@@ -2536,7 +2554,7 @@
                     document.getElementById("moa_partner_nation_add").value = data.country_name == null ? "" : data.country_name;
                     document.getElementById("moa_partner_phone_add").value = data.contact_point_phone == null ? "" : data.contact_point_phone;
                     document.getElementById("moa_partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
-                    document.getElementById("moa_partner_specialization_add").value = data.specialization_name == null ? "" : data.specialization_name;
+                    document.getElementById("moa_partner_specialization_add").value = data.specializations == null ? "" : data.specializations;
                 }
                 document.getElementById("add_moa_partner_button").removeAttribute('disabled');
             },
@@ -2594,7 +2612,7 @@
                             if (data = "") {
                                 Swal.fire("Good job!", "You clicked the button!", "error");
                             } else {
-                                moa_table.ajax.reload();
+                                reloadMOATable();
                                 Swal.fire("Thành công!", "Biên bản thỏa thuận đã được xóa thành công.", "success")
                             }
                         },

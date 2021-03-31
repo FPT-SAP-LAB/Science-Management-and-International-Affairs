@@ -285,8 +285,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         db.SaveChanges();
 
                         //clear PartnerScope with ref_count = 0.
-                        db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                        db.SaveChanges();
+                        //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                        //db.SaveChanges();
                     }
                     transaction.Commit();
                 }
@@ -363,8 +363,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -392,8 +392,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
