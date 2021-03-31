@@ -79,14 +79,6 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
             name: 'collab_status_id',
         },
         {
-            data: 'is_supported', //bool true || false
-            name: 'is_supported',
-            render: function (data) {
-                if (data == true) return `<input type="checkbox" disabled checked/>`
-                return `<input type="checkbox" disabled/>`
-            }
-        },
-        {
             data: 'note',
             name: 'note'
         },
@@ -155,7 +147,7 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
     ],
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
-        $(this).parent().removeClass();
+        $(this).parent().css('padding', '0');
     }
 });
 

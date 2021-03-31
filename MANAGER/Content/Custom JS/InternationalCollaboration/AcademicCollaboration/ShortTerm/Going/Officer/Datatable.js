@@ -1,5 +1,5 @@
 ﻿//TABLE 1 - ACADEMIC COLLAB - GOING
-var collab_going_table = $('#collab_going_table').DataTable({
+var exchange_going_table = $('#exchange_going_table').DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -14,7 +14,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
         datatype: "json",
         data: {
             direction: 1, /*going*/
-            collab_type_id: 2 /*long-term*/,
+            collab_type_id: 1 /*short-term*/,
             obj_searching: {
                 country_name: () => { return $("#search_nation_tab_1_table_1").val() },
                 year: () => { return $("#search_year_tab_1_table_1").val() },
@@ -77,14 +77,6 @@ var collab_going_table = $('#collab_going_table').DataTable({
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
-        },
-        {
-            data: 'is_supported', //bool true || false
-            name: 'is_supported',
-            render: function (data) {
-                if (data == true) return `<input type="checkbox" disabled checked/>`
-                return `<input type="checkbox" disabled/>`
-            }
         },
         {
             data: 'note',
@@ -155,11 +147,11 @@ var collab_going_table = $('#collab_going_table').DataTable({
     ],
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
-        $(this).parent().removeClass();
+        $(this).parent().css('padding', '0');
     }
 });
 
 //Search
 $("#collab_going_search").click(function () {
-    collab_going_table.ajax.reload();
+    exchange_going_table.ajax.reload();
 });

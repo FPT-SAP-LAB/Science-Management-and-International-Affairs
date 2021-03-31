@@ -2436,6 +2436,7 @@
     <Content Include="Views\CommentRequest\Index.cshtml" />
     <Content Include="Views\AcademicActivity\loadForm.cshtml" />
     <Content Include="Views\ConferenceSponsor\Edit.cshtml" />
+    <Content Include="Views\Shared\_LoaderPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
