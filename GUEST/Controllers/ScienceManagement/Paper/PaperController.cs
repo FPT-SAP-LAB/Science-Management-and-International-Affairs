@@ -53,7 +53,7 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddRequest(RequestPaper item)
+        public JsonResult AddRequest(RequestPaper request, string daidien)
         {
             LoginRepo.User u = new LoginRepo.User();
             Account acc = new Account();
@@ -63,7 +63,7 @@ namespace GUEST.Controllers
                 acc = u.account;
             }
             BaseRequest b = pr.addBaseRequest(acc.account_id);
-            string mess = pr.addRequestPaper(b.request_id, item);
+            string mess = pr.addRequestPaper(b.request_id, request, daidien);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -150,7 +150,9 @@ namespace GUEST.Controllers
         public JsonResult listAuthor(string id)
         {
             List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
-            return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
+            string ms = pr.getAuthorReceived(id);
+            if (ms == null) ms = "";
+            return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
         }
     }
 }

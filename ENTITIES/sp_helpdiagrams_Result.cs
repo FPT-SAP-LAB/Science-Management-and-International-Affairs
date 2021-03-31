@@ -10,17 +10,13 @@
 namespace ENTITIES
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class AuthorPaper
+    public partial class sp_helpdiagrams_Result
     {
-        public int people_id { get; set; }
-        public int paper_id { get; set; }
-        public string current_mssv_msnv { get; set; }
-        public Nullable<int> money_reward { get; set; }
-        public Nullable<int> money_reward_in_decision { get; set; }
-    
-        public virtual Person Person { get; set; }
-        public virtual Paper Paper { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
