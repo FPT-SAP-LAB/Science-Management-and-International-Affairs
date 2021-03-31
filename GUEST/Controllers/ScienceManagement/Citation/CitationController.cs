@@ -81,50 +81,50 @@
 //            ViewBag.pagesTree = pagesTree;
 //            ViewBag.ckEdit = editable;
 
-            //            AuthorInfo author = cr.getAuthor(id);
-            //            ViewBag.author = author;
+//            AuthorInfo author = cr.getAuthor(id);
+//            ViewBag.author = author;
 
-            //            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
-            //            ViewBag.citation = listCitation;
+//            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
+//            ViewBag.citation = listCitation;
 
-            //            List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
-            //            ViewBag.cmt = listCmt;
+//            List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
+//            ViewBag.cmt = listCmt;
 
-            //            ViewBag.request_id = id;
+//            ViewBag.request_id = id;
 
-            //            return View();
-            //        }
+//            return View();
+//        }
 
-            //        [HttpPost]
-            //        public JsonResult addCitation(List<Citation> citation, List<AddAuthor> people)
-            //        {
-            //            LoginRepo.User u = new LoginRepo.User();
-            //            Account acc = new Account();
-            //            if (Session["User"] != null)
-            //            {
-            //                u = (LoginRepo.User)Session["User"];
-            //                acc = u.account;
-            //            }
-            //            BaseRequest b = pr.addBaseRequest(acc.account_id);
+//        [HttpPost]
+//        public JsonResult addCitation(List<Citation> citation, List<AddAuthor> people)
+//        {
+//            LoginRepo.User u = new LoginRepo.User();
+//            Account acc = new Account();
+//            if (Session["User"] != null)
+//            {
+//                u = (LoginRepo.User)Session["User"];
+//                acc = u.account;
+//            }
+//            BaseRequest b = pr.addBaseRequest(acc.account_id);
 
-            //            AuthorInfo author = cr.addAuthor(people);
+//            AuthorInfo author = cr.addAuthor(people);
 
-            //            cr.addCitationRequest(b, author);
+//            cr.addCitationRequest(b, author);
 
-            //            cr.addCitaion(citation);
+//            cr.addCitaion(citation);
 
-            //            string mess = cr.addRequestHasCitation(citation, b);
-            //            return Json(new { mess = mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
-            //        }
+//            string mess = cr.addRequestHasCitation(citation, b);
+//            return Json(new { mess = mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
+//        }
 
-    //        [HttpPost]
-    //        public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
-    //        {
-    //            cr.addAuthor(people);
-    //            List<Citation> oldcitation = cr.getCitation(request_id);
-    //            AuthorInfo author = cr.addAuthor(people);
-    //            string mess = cr.editCitation(oldcitation, citation, request_id, author);
-    //            return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
-    //        }
-    //    }
-    //}
+//        [HttpPost]
+//        public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+//        {
+//            cr.addAuthor(people);
+//            List<Citation> oldcitation = cr.getCitation(request_id);
+//            AuthorInfo author = cr.addAuthor(people);
+//            string mess = cr.editCitation(oldcitation, citation, request_id, author);
+//            return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
+//        }
+//    }
+//}
