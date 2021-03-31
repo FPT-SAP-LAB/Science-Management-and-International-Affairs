@@ -241,165 +241,24 @@
     @*-------------------datatable check this file-------------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ShortTerm_Datatable.js"></script>
     @*-------------------datatable check this file-------------*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ProcedureContentProcessing.js"></script>
+
     @*--------------init datepicker and rangepicker-----------*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
     @*--------------init datepicker and rangepicker-----------------*@
-
+    @* -----------------------add procedure-------------- *@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ProcedureAddContent.js"></script>
     <script>
-        //delete procedure======================================================================
-        function confirm_delete_procedure(article_id) {
-            var id = { article_id: article_id }
-            Swal.fire({
-                title: "Xác nhận xóa",
-                text: "Có muốn xóa bản ghi này",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: '/AcademicCollaboration/DeleteProcedure',
-                        type: "POST",
-                        dataType: 'json',
-                        data: id,
-                        success: function (data) {
-                            if (data.success) {
-                                $('#procedure_going_table').DataTable().ajax.reload()
-                                $('#procedure_coming_table').DataTable().ajax.reload()
-                                Swal.fire("Thành công", "Xóa thành công", "success");
-                            } else {
-                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
-                            }
-                        },
-                        error: function () {
-                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
-                        },
-                    })
-                }
-            })
-        };
-        //delete procedure======================================================================
-    </script>
-    <script>
-        //load edit procedure===================================================================
-        var procedure_id_load_language;
-        function load_procedure_detail(procedure_id) {
-            procedure_id_load_language = procedure_id
-            var id = { procedure_id: procedure_id }
-            $.ajax({
-                url: '/AcademicCollaboration/LoadEdit',
-                type: 'post',
-                dataType: 'json',
-                data: id,
-                success: function (data) {
-                    $('#edit_procedure_title').val(data.json.procedure_name)
-                    $('#edit_summernote').summernote('code', data.json.content)
-                    $('#edit_procedure_language').val(data.json.language_id).trigger('change')
-                    $("#edit_procedure").modal("show")
-                }
-            })
-        }
-        //load edit procedure===================================================================
-        //change select 2 load language=========================================================
-        $('#edit_procedure_language').select2({
+        $('#add_procedure_language').select2({
             placeholder: 'Ngôn ngữ',
-        }).on('select2:select', function () {
-            $.ajax({
-                url: '@Url.Action("LoadContentDetailLanguage", "AcademicCollaboration")',
-                type: "POST",
-                data:{
-                "procedure_id": procedure_id_load_language,
-                "language_id": $('#edit_procedure_language').val()
-                },
-                success: function (data) {
-                    $('#edit_summernote').summernote('code', data.content)
-                },
-                error: function () {
-                }
-            })
         })
-        //change select 2 load language=========================================================
-        //save edit=============================================================================
-
-        function dataURItoBlob(dataURI) {
-            var blobBin = atob(dataURI.split(',')[1]);
-            var array = [];
-            for (var i = 0; i < blobBin.length; i++) {
-                array.push(blobBin.charCodeAt(i));
-            }
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            var file = new Blob([new Uint8Array(array)], { type: mimeString });
-            return file;
-        }
-
-        var save_loader = new LoaderBtn($(".load-btn"))
-        $('#submit').click(function () {
-            var id = @ViewBag.partnerArticle.partner_id;
-            var form_data = new FormData();
-
-            var edit_procedure_title = $('#edit_procedure_title').val()
-            var edit_procedure_language = $('#edit_procedure_language').val()
-
-            if (edit_procedure_title == "") {
-                toastr.warning("Vui lòng nhập tiêu đề")
-                return;
-            }
-            var content = $('#edit_summernote').summernote('code') + "";
-
-            var list_image = $('.note-editor').find('img')
-            var count_upload = 0;
-            if (list_image.length != 0) {
-                for (i = 0; i < list_image.length; i++) {
-                    var temp = list_image[i];
-                    var temp_src = $(temp).attr('src') + "";
-                    if (temp_src.includes('data:')) {
-                        count_upload++
-                        content = content.replace(temp_src, 'image_' + i)
-                        form_data.append('image_' + i, dataURItoBlob(temp_src))
-                    }
-                }
-            }
-
-            form_data.append("numberOfImage", count_upload)
-            form_data.append('edit_procedure_title', edit_procedure_title)
-            form_data.append('edit_procedure_language', edit_procedure_language)
-            form_data.append('content', content)
-
-            save_loader.startLoading();
-            $.ajax({
-                url: "/Partner/Save_Edit",
-                method: "post",
-                dataType: "json",
-                data: form_data,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.success) {
-                        toastr.options.onHidden = function () {
-                            window.location.href = '@Url.Action("List", "Partner")';
-                        }
-                        toastr.clear()
-                        toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
-                        save_loader.stopLoading()
-                    } else {
-                        toastr.clear()
-                        toastr.warning(data.content);
-                        save_loader.stopLoading()
-                    }
-                },
-                error: function () {
-                    toastr.clear();
-                    toastr.error('Có lỗi xảy ra khi thêm');
-                    save_loader.stopLoading()
-                }
-            });
-        })
-        //save edit=============================================================================
     </script>
+    @* -----------------delete, load detail, change language----------- *@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
+    @*---------------------save edit----------------*@
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ProcedureEditContent.js"></script>
+
     <script>
+     
         $('#edit_content_short_term').click(function () {
             $('#describe_content').find("textarea").val('').end()
             $('#describe_content').modal('show');
@@ -620,9 +479,8 @@
     </script>
 
     @*upload*@
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
+    @*<script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>*@
 }
 
 
