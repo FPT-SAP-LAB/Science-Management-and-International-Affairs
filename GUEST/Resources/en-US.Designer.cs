@@ -439,6 +439,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FPT Procedure.
+        /// </summary>
+        public static string FPTProcedure {
+            get {
+                return ResourceManager.GetString("FPTProcedure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string homepage {
@@ -813,6 +822,15 @@ namespace GUEST.Resources {
         public static string PartnerName {
             get {
                 return ResourceManager.GetString("PartnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Procedure.
+        /// </summary>
+        public static string PartnerProcedure {
+            get {
+                return ResourceManager.GetString("PartnerProcedure", resourceCulture);
             }
         }
         

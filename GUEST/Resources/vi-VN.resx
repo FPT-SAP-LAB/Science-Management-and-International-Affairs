@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
   </data>
+  <data name="FPTProcedure" xml:space="preserve">
+    <value>Thủ tục với FPT</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
@@ -368,6 +371,9 @@
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Tên đối tác</value>
+  </data>
+  <data name="PartnerProcedure" xml:space="preserve">
+    <value>Thủ tục với đối tác</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Ngày cấp</value>

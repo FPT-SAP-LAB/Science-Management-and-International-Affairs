@@ -186,5 +186,72 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 throw e;
             }
         }
+
+        public AlertModal<string> SaveEditProcedure(List<HttpPostedFileBase> files_request,
+            ProcedureInfoManager procedureInfoManager, int number_of_image, int account_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    List<string> image_drive_id = new List<string>();
+                    List<string> image_drive_data_link = new List<string>();
+                    List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+                    if (files_request.Count != 0)
+                    {
+                        if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
+                        {
+                            return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
+                        }
+                        else
+                        {
+                            files_upload = GoogleDriveService.UploadIAFile(files_request, procedureInfoManager.procedure_name, 4, false);
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                image_drive_id.Add(files_upload[i].Id);
+                                image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            }
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                procedureInfoManager.content = procedureInfoManager.content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            }
+                        }
+                    }
+                    Procedure procedure = db.Procedures.Find(procedureInfoManager.procedure_id);
+
+                    Article article = db.Articles.Find(procedure.article_id);
+                    if (article != null)
+                    {
+                        article.account_id = account_id;
+                    }
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == procedure.article_id && x.language_id == procedureInfoManager.language_id).FirstOrDefault();
+                    if (articleVersion != null)
+                    {
+                        articleVersion.article_content = procedureInfoManager.content;
+                        articleVersion.version_title = procedureInfoManager.procedure_name;
+                    }
+                    else
+                    {
+                        articleVersion = new ArticleVersion
+                        {
+                            article_id = article.article_id,
+                            article_content = procedureInfoManager.content,
+                            language_id = procedureInfoManager.language_id,
+                            publish_time = DateTime.Today,
+                            version_title = procedureInfoManager.procedure_name,
+                        };
+                        db.ArticleVersions.Add(articleVersion);
+                    }
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
+            }
+        }
     }
 }

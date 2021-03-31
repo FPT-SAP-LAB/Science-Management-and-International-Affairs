@@ -527,6 +527,57 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 });
             }
         }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult SaveEdit(int procedure_id, string content, int numberOfImage, string procedure_name, int language_id)
+        {
+            try
+            {
+                acShortRepo = new AcademicCollaborationShortRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+
+                ProcedureInfoManager procedureInfoManager = new ProcedureInfoManager
+                {
+                    procedure_id = procedure_id,
+                    procedure_name = procedure_name,
+                    content = content,
+                    language_id = language_id,
+                };
+
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+                else
+                {
+                    AlertModal<string> json = acShortRepo.SaveEditProcedure(files_request, procedureInfoManager, numberOfImage, acc.account_id);
+                    return Json(new { json.success, json.content });
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
         [HttpPost]
         public ActionResult DeleteProcedure(int procedure_id)
         {
