@@ -29,19 +29,19 @@ namespace BLL.ScienceManagement.Invention
             return item;
         }
 
-//        public List<Country> getCountry()
-//        {
-//            List<Country> list = new List<Country>();
-//            //string sql = "select * from [General].Country";
-//            list = db.Countries.ToList();
-//            return list;
-//        }
+        //        public List<Country> getCountry()
+        //        {
+        //            List<Country> list = new List<Country>();
+        //            //string sql = "select * from [General].Country";
+        //            list = db.Countries.ToList();
+        //            return list;
+        //        }
 
-//        public List<InventionType> getType()
-//        {
-//            List<InventionType> list = db.InventionTypes.ToList();
-//            return list;
-//        }
+        //        public List<InventionType> getType()
+        //        {
+        //            List<InventionType> list = db.InventionTypes.ToList();
+        //            return list;
+        //        }
 
         public List<AuthorInfoWithNull> getAuthor(string id)
         {
@@ -62,120 +62,120 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
-//        public string changeStatus(DetailInvention inven)
-//        {
-//            DbContextTransaction dbc = db.Database.BeginTransaction();
-//            try
-//            {
-//                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
-//                ri.status_id = 5;
-//                db.SaveChanges();
-//                dbc.Commit();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                dbc.Rollback();
-//                return "ff";
-//            }
-//        }
+        //        public string changeStatus(DetailInvention inven)
+        //        {
+        //            DbContextTransaction dbc = db.Database.BeginTransaction();
+        //            try
+        //            {
+        //                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+        //                ri.status_id = 5;
+        //                db.SaveChanges();
+        //                dbc.Commit();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                dbc.Rollback();
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
-//        {
-//            DbContextTransaction dbc = db.Database.BeginTransaction();
-//            try
-//            {
-//                Decision decision = new Decision
-//                {
-//                    valid_date = date_format,
-//                    file_id = file_id,
-//                    decision_number = number
-//                };
-//                db.Decisions.Add(decision);
+        //        public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
+        //        {
+        //            DbContextTransaction dbc = db.Database.BeginTransaction();
+        //            try
+        //            {
+        //                Decision decision = new Decision
+        //                {
+        //                    valid_date = date_format,
+        //                    file_id = file_id,
+        //                    decision_number = number
+        //                };
+        //                db.Decisions.Add(decision);
 
-//                List<WaitDecisionInven> wait = getListWaitDecision();
-//                foreach (var item in wait)
-//                {
-//                    RequestDecision request = new RequestDecision
-//                    {
-//                        request_id = item.request_id,
-//                        decision_id = decision.decision_id
-//                    };
-//                    db.RequestDecisions.Add(request);
-//                    RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
-//                    rc.status_id = 2;
-//                }
+        //                List<WaitDecisionInven> wait = getListWaitDecision();
+        //                foreach (var item in wait)
+        //                {
+        //                    RequestDecision request = new RequestDecision
+        //                    {
+        //                        request_id = item.request_id,
+        //                        decision_id = decision.decision_id
+        //                    };
+        //                    db.RequestDecisions.Add(request);
+        //                    RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+        //                    rc.status_id = 2;
+        //                }
 
-//                db.SaveChanges();
-//                dbc.Commit();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                dbc.Rollback();
-//                GoogleDriveService.DeleteFile(file_drive_id);
-//                return "ff";
-//            }
-//        }
+        //                db.SaveChanges();
+        //                dbc.Commit();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                dbc.Rollback();
+        //                GoogleDriveService.DeleteFile(file_drive_id);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string addFile(File f)
-//        {
-//            try
-//            {
-//                db.Files.Add(f);
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string addFile(File f)
+        //        {
+        //            try
+        //            {
+        //                db.Files.Add(f);
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public InventionType addInvenType(string name)
-//        {
-//            try
-//            {
-//                InventionType ck = db.InventionTypes.Where(x => x.name == name).FirstOrDefault();
-//                if (ck == null)
-//                {
-//                    InventionType ip = new InventionType
-//                    {
-//                        name = name
-//                    };
-//                    db.InventionTypes.Add(ip);
-//                    db.SaveChanges();
-//                    return ip;
-//                }
-//                else
-//                {
-//                    db.SaveChanges();
-//                    return ck;
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return null;
-//            }
-//        }
+        //        public InventionType addInvenType(string name)
+        //        {
+        //            try
+        //            {
+        //                InventionType ck = db.InventionTypes.Where(x => x.name == name).FirstOrDefault();
+        //                if (ck == null)
+        //                {
+        //                    InventionType ip = new InventionType
+        //                    {
+        //                        name = name
+        //                    };
+        //                    db.InventionTypes.Add(ip);
+        //                    db.SaveChanges();
+        //                    return ip;
+        //                }
+        //                else
+        //                {
+        //                    db.SaveChanges();
+        //                    return ck;
+        //                }
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return null;
+        //            }
+        //        }
 
-//        public ENTITIES.Invention addInven(ENTITIES.Invention inven)
-//        {
-//            try
-//            {
-//                db.Inventions.Add(inven);
-//                db.SaveChanges();
-//                return inven;
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return null;
-//            }
-//        }
+        //        public ENTITIES.Invention addInven(ENTITIES.Invention inven)
+        //        {
+        //            try
+        //            {
+        //                db.Inventions.Add(inven);
+        //                db.SaveChanges();
+        //                return inven;
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return null;
+        //            }
+        //        }
 
         public string addAuthor(List<AddAuthor> list, int invention_id)
         {
@@ -216,9 +216,9 @@ namespace BLL.ScienceManagement.Invention
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
 
-//                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
-//                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
-//                            listParam1.Add(tempParam1);
+                            //                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
+                            //                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
+                            //                            listParam1.Add(tempParam1);
 
                             //    tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
                             //    SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
@@ -270,83 +270,83 @@ namespace BLL.ScienceManagement.Invention
             }
         }
 
-//        public string addInvenRequest(BaseRequest br, ENTITIES.Invention inven, string type)
-//        {
-//            try
-//            {
-//                RequestInvention ri = new RequestInvention
-//                {
-//                    request_id = br.request_id,
-//                    status_id = 3,
-//                    invention_id = inven.invention_id,
-//                    reward_type = type
-//                };
-//                db.RequestInventions.Add(ri);
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string addInvenRequest(BaseRequest br, ENTITIES.Invention inven, string type)
+        //        {
+        //            try
+        //            {
+        //                RequestInvention ri = new RequestInvention
+        //                {
+        //                    request_id = br.request_id,
+        //                    status_id = 3,
+        //                    invention_id = inven.invention_id,
+        //                    reward_type = type
+        //                };
+        //                db.RequestInventions.Add(ri);
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string editInven(ENTITIES.Invention inven)
-//        {
-//            try
-//            {
-//                ENTITIES.Invention i = db.Inventions.Where(x => x.invention_id == inven.invention_id).FirstOrDefault();
-//                i.name = inven.name;
-//                i.no = inven.no;
-//                i.type_id = inven.type_id;
-//                i.date = inven.date;
-//                i.country_id = inven.country_id;
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string editInven(ENTITIES.Invention inven)
+        //        {
+        //            try
+        //            {
+        //                ENTITIES.Invention i = db.Inventions.Where(x => x.invention_id == inven.invention_id).FirstOrDefault();
+        //                i.name = inven.name;
+        //                i.no = inven.no;
+        //                i.type_id = inven.type_id;
+        //                i.date = inven.date;
+        //                i.country_id = inven.country_id;
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string editRequest(string id, string type)
-//        {
-//            try
-//            {
-//                int request_id = Int32.Parse(id);
-//                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == request_id).FirstOrDefault();
-//                ri.reward_type = type;
-//                ri.status_id = 3;
-//                //db.Entry(ri).State = EntityState.Modified;
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string editRequest(string id, string type)
+        //        {
+        //            try
+        //            {
+        //                int request_id = Int32.Parse(id);
+        //                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == request_id).FirstOrDefault();
+        //                ri.reward_type = type;
+        //                ri.status_id = 3;
+        //                //db.Entry(ri).State = EntityState.Modified;
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string updateAuthor(int id, List<AddAuthor> people)
-//        {
-//            try
-//            {
-//                string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
-//                db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
-//                addAuthor(people, id);
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string updateAuthor(int id, List<AddAuthor> people)
+        //        {
+        //            try
+        //            {
+        //                string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
+        //                db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
+        //                addAuthor(people, id);
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
         public List<PendingInvention_Manager> getListPending()
         {
@@ -359,44 +359,44 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
-//        public string updateRewardInven(DetailInvention item)
-//        {
-//            try
-//            {
-//                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
-//                ri.total_reward = item.total_reward;
-//                ri.status_id = 4;
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string updateRewardInven(DetailInvention item)
+        //        {
+        //            try
+        //            {
+        //                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+        //                ri.total_reward = item.total_reward;
+        //                ri.status_id = 4;
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string updateAuthorReward(DetailInvention inven, List<AuthorInfoWithNull> people)
-//        {
-//            try
-//            {
-//                foreach (var item in people)
-//                {
-//                    AuthorInvention ai = db.AuthorInventions
-//                                            .Where(x => x.invention_id == inven.invention_id)
-//                                            .Where(x => x.people_id == item.people_id)
-//                                            .FirstOrDefault();
-//                    ai.money_reward = item.money_reward;
-//                }
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string updateAuthorReward(DetailInvention inven, List<AuthorInfoWithNull> people)
+        //        {
+        //            try
+        //            {
+        //                foreach (var item in people)
+        //                {
+        //                    AuthorInvention ai = db.AuthorInventions
+        //                                            .Where(x => x.invention_id == inven.invention_id)
+        //                                            .Where(x => x.people_id == item.people_id)
+        //                                            .FirstOrDefault();
+        //                    ai.money_reward = item.money_reward;
+        //                }
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
         public List<WaitDecisionInven> getListWaitDecision()
         {

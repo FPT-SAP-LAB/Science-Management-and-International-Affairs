@@ -50,25 +50,25 @@ namespace BLL.ScienceManagement.Citation
             return item;
         }
 
-//        public string changeStatus(string request_id)
-//        {
-//            DbContextTransaction dbc = db.Database.BeginTransaction();
-//            try
-//            {
-//                int id = Int32.Parse(request_id);
-//                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
-//                rc.status_id = 5;
-//                db.SaveChanges();
-//                dbc.Commit();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                dbc.Rollback();
-//                return "ff";
-//            }
-//        }
+        //        public string changeStatus(string request_id)
+        //        {
+        //            DbContextTransaction dbc = db.Database.BeginTransaction();
+        //            try
+        //            {
+        //                int id = Int32.Parse(request_id);
+        //                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
+        //                rc.status_id = 5;
+        //                db.SaveChanges();
+        //                dbc.Commit();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                dbc.Rollback();
+        //                return "ff";
+        //            }
+        //        }
 
         public List<ENTITIES.Citation> getCitation(string id)
         {
@@ -120,9 +120,9 @@ namespace BLL.ScienceManagement.Citation
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
 
-//                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
-//                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
-//                            listParam1.Add(tempParam1);
+                            //                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
+                            //                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
+                            //                            listParam1.Add(tempParam1);
 
                             //    tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
                             //    SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
@@ -160,69 +160,69 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-//        public string addCitationRequest(BaseRequest br, AuthorInfo author)
-//        {
-//            try
-//            {
-//                RequestCitation rc = new RequestCitation
-//                {
-//                    request_id = br.request_id,
-//                    status_id = 3,
-//                    people_id = author.people_id,
-//                    current_mssv_msnv = author.mssv_msnv
-//                };
-//                db.RequestCitations.Add(rc);
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string addCitationRequest(BaseRequest br, AuthorInfo author)
+        //        {
+        //            try
+        //            {
+        //                RequestCitation rc = new RequestCitation
+        //                {
+        //                    request_id = br.request_id,
+        //                    status_id = 3,
+        //                    people_id = author.people_id,
+        //                    current_mssv_msnv = author.mssv_msnv
+        //                };
+        //                db.RequestCitations.Add(rc);
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string addCitaion(List<ENTITIES.Citation> citation)
-//        {
-//            try
-//            {
-//                foreach (var item in citation)
-//                {
-//                    db.Citations.Add(item);
-//                }
-//                db.SaveChanges();
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string addCitaion(List<ENTITIES.Citation> citation)
+        //        {
+        //            try
+        //            {
+        //                foreach (var item in citation)
+        //                {
+        //                    db.Citations.Add(item);
+        //                }
+        //                db.SaveChanges();
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
-//        public string addRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
-//        {
-//            try
-//            {
-//                string sql = "";
-//                List<SqlParameter> listParam = new List<SqlParameter>();
-//                for (int i = 0; i < citation.Count; i++)
-//                {
-//                    sql += "insert into [SM_Citation].RequestHasCitation values (@request, @citation" + i + ") \n";
-//                    SqlParameter param = new SqlParameter("@citation" + i, citation[i].citation_id);
-//                    listParam.Add(param);
-//                }
-//                SqlParameter param2 = new SqlParameter("@request", br.request_id);
-//                listParam.Add(param2);
-//                db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                return "ff";
-//            }
-//        }
+        //        public string addRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
+        //        {
+        //            try
+        //            {
+        //                string sql = "";
+        //                List<SqlParameter> listParam = new List<SqlParameter>();
+        //                for (int i = 0; i < citation.Count; i++)
+        //                {
+        //                    sql += "insert into [SM_Citation].RequestHasCitation values (@request, @citation" + i + ") \n";
+        //                    SqlParameter param = new SqlParameter("@citation" + i, citation[i].citation_id);
+        //                    listParam.Add(param);
+        //                }
+        //                SqlParameter param2 = new SqlParameter("@request", br.request_id);
+        //                listParam.Add(param2);
+        //                db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                return "ff";
+        //            }
+        //        }
 
         public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, AuthorInfo author)
         {
@@ -271,36 +271,36 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-//        public Nullable<int> getTotalReward(string id)
-//        {
-//            int request_id = Int32.Parse(id);
-//            RequestCitation item = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-//            return item.total_reward;
-//        }
+        //        public Nullable<int> getTotalReward(string id)
+        //        {
+        //            int request_id = Int32.Parse(id);
+        //            RequestCitation item = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+        //            return item.total_reward;
+        //        }
 
-//        public string updateReward(string id, string total)
-//        {
-//            DbContextTransaction dbc = db.Database.BeginTransaction();
-//            try
-//            {
-//                int request_id = Int32.Parse(id);
-//                string temp = total.Replace(",", "");
-//                int reward = Int32.Parse(temp);
-//                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-//                rc.total_reward = reward;
-//                rc.status_id = 4;
-//                db.SaveChanges();
-//                dbc.Commit();
+        //        public string updateReward(string id, string total)
+        //        {
+        //            DbContextTransaction dbc = db.Database.BeginTransaction();
+        //            try
+        //            {
+        //                int request_id = Int32.Parse(id);
+        //                string temp = total.Replace(",", "");
+        //                int reward = Int32.Parse(temp);
+        //                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+        //                rc.total_reward = reward;
+        //                rc.status_id = 4;
+        //                db.SaveChanges();
+        //                dbc.Commit();
 
-//                return "ss";
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e.Message);
-//                dbc.Rollback();
-//                return "ff";
-//            }
-//        }
+        //                return "ss";
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e.Message);
+        //                dbc.Rollback();
+        //                return "ff";
+        //            }
+        //        }
 
         public List<WaitDecisionCitation> getListWait()
         {
