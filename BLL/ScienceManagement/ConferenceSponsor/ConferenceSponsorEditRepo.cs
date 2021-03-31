@@ -41,6 +41,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     else
                     {
+                        conference.is_verified = false;
                         db.Conferences.Add(conference);
                         db.SaveChanges();
                         request.conference_id = conference.conference_id;
@@ -86,17 +87,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         profile = new Profile()
                         {
                             mssv_msnv = participant.current_mssv_msnv,
-                            office_id = participant.office_id,
+                            title_id = participant.title_id,
                             people_id = person.people_id,
                         };
-                        profile.Titles.Add(db.Titles.Find(participant.title_id));
                         db.Profiles.Add(profile);
                     }
                     else
                     {
-                        participant.office_id = profile.office_id;
                         participant.people_id = profile.people_id;
-                        participant.title_id = profile.Titles.First().title_id;
+                        participant.title_id = profile.title_id;
+                        participant.office_id = profile.Person.office_id.Value;
                     }
 
                     db.ConferenceParticipants.RemoveRange(request.ConferenceParticipants);

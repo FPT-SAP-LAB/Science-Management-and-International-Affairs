@@ -20,12 +20,11 @@ namespace ENTITIES
             this.Awards = new HashSet<Award>();
             this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.CustomProfiles = new HashSet<CustomProfile>();
+            this.PeoplePositions = new HashSet<PeoplePosition>();
             this.ProfileAcademicDegrees = new HashSet<ProfileAcademicDegree>();
             this.WorkingProcesses = new HashSet<WorkingProcess>();
             this.ResearchAreas = new HashSet<ResearchArea>();
             this.ContractTypes = new HashSet<ContractType>();
-            this.Positions = new HashSet<Position>();
-            this.Titles = new HashSet<Title>();
         }
     
         public int people_id { get; set; }
@@ -43,17 +42,17 @@ namespace ENTITIES
         public Nullable<long> tax_code { get; set; }
         public string identification_number { get; set; }
         public Nullable<int> identification_file_id { get; set; }
-        public int office_id { get; set; }
         public string mssv_msnv { get; set; }
         public Nullable<int> account_id { get; set; }
         public bool profile_page_active { get; set; }
-        public Nullable<bool> is_reseacher { get; set; }
+        public bool is_reseacher { get; set; }
+        public int title_id { get; set; }
+        public Nullable<int> position_smia_id { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Country Country { get; set; }
         public virtual File File { get; set; }
         public virtual File File1 { get; set; }
-        public virtual Office Office { get; set; }
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Award> Awards { get; set; }
@@ -61,7 +60,11 @@ namespace ENTITIES
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomProfile> CustomProfiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PeoplePosition> PeoplePositions { get; set; }
         public virtual AcademicDegree AcademicDegree { get; set; }
+        public virtual Position Position { get; set; }
+        public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -70,9 +73,5 @@ namespace ENTITIES
         public virtual ICollection<ResearchArea> ResearchAreas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContractType> ContractTypes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Position> Positions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Title> Titles { get; set; }
     }
 }

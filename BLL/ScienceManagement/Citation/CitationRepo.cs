@@ -21,11 +21,11 @@ namespace BLL.ScienceManagement.Citation
         public List<ListOnePerson_Citation> GetList(int id)
         {
             string sql = @"select STRING_AGG(c.source, ',') AS 'source',SUM(c.count) as 'count', br.created_date, rc.status_id, rc.request_id
-                            from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
+                           from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [SM_Request].BaseRequest br on br.request_id = rc.request_id
-                            where br.account_id = @id
-                            group by br.created_date, rc.status_id,  rc.request_id";
+                           where br.account_id = @id
+                           group by br.created_date, rc.status_id,  rc.request_id";
             List<ListOnePerson_Citation> list = new List<ListOnePerson_Citation>();
             list = db.Database.SqlQuery<ListOnePerson_Citation>(sql, new SqlParameter("id", id)).ToList();
             return list;
@@ -39,7 +39,7 @@ namespace BLL.ScienceManagement.Citation
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [General].People po on rc.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [General].Area a on o.area_id = a.area_id
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
@@ -74,9 +74,9 @@ namespace BLL.ScienceManagement.Citation
         {
             List<ENTITIES.Citation> list = new List<ENTITIES.Citation>();
             string sql = @"select c.*
-                            from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
+                           from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
-                            where rc.request_id = @id";
+                           where rc.request_id = @id";
             list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
@@ -107,6 +107,7 @@ namespace BLL.ScienceManagement.Citation
                         Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
                         p.name = item.name;
                         p.phone_number = item.phone_number;
+                        p.office_id = item.office_id;
                         if (item.office_abbreviation != "Khác")
                         {
                             Profile pro = (from a in db.Profiles
@@ -117,16 +118,15 @@ namespace BLL.ScienceManagement.Citation
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
-                            pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            listParam1.Add(tempParam2);
+                            //    tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            //    SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            //    listParam1.Add(tempParam2);
 
                             SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
@@ -148,8 +148,8 @@ namespace BLL.ScienceManagement.Citation
                 }
                 strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
                 string sql = @"select po.people_id, pro.mssv_msnv
-                            from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
-                            where po.email in (" + strAppend + ")";
+                           from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
+                           where po.email in (" + strAppend + ")";
                 AuthorInfo Author = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).FirstOrDefault();
                 return Author;
             }
@@ -224,7 +224,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id)
+        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, AuthorInfo author)
         {
             try
             {
@@ -249,6 +249,7 @@ namespace BLL.ScienceManagement.Citation
                 addCitaion(newcitation);
                 addRequestHasCitation(newcitation, br);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
+                rc.people_id = author.people_id;
                 rc.status_id = 3;
                 db.SaveChanges();
                 return "ss";
@@ -263,9 +264,9 @@ namespace BLL.ScienceManagement.Citation
         public List<PendingCitation_manager> getListPending()
         {
             string sql = @"select acc.email, br.created_date, br.request_id
-                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
+                           from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on br.account_id = acc.account_id
-                            where rc.status_id = 3";
+                           where rc.status_id = 3";
             List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
             return list;
         }
@@ -308,7 +309,7 @@ namespace BLL.ScienceManagement.Citation
 	                            join [General].Account acc on acc.account_id = br.account_id
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_Citation].RequestHasCitation rhc on rc.request_id = rhc.request_id
 	                            join [SM_Citation].Citation c on rhc.citation_id = c.citation_id
                             where rc.status_id = 4

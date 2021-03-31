@@ -204,7 +204,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             return View();
         }
 
-        public ActionResult Procedure_Detail(int id, string type_procedure)
+        public ActionResult Procedure_Detail(int id)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
             var pagesTree = new List<PageTree>();
@@ -218,22 +218,23 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                     content = rm.GetString("EmptyContentDetail")
                 };
             }
+            int type_procedure = pi.direction_id;
             ViewBag.Procedure = pi;
             switch (type_procedure)
             {
-                case "1":
+                case 1:
                     pagesTree = new List<PageTree>
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
-                new PageTree("Thủ tục với đối tác", "/AcademicCollaboration/Procedure_Detail"),
+                new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
+                new PageTree(rm.GetString("PartnerProcedure"), "/AcademicCollaboration/Procedure_Detail"),
                 //new PageTree("Đào tạo của đối tác", "/AcademicCollaboration/Procedure_Detail?id=" + id),
             };
                     break;
-                case "2":
+                case 2:
                     pagesTree = new List<PageTree>
             {
-                new PageTree("Trao đổi cán bộ giảng viên", "/AcademicCollaboration/Short_Term"),
-                new PageTree("Thủ tục với FPT", "/AcademicCollaboration/Procedure_Detail"),
+                new PageTree(rm.GetString("ShortTerm"), "/AcademicCollaboration/Short_Term"),
+                new PageTree(rm.GetString("FPTProcedure"), "/AcademicCollaboration/Procedure_Detail"),
                 //new PageTree("Đào tạo của FPT", "/AcademicCollaboration/Procedure_Detail?id=" + id),
             };
                     break;

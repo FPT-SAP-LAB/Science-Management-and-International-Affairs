@@ -1,16 +1,18 @@
-﻿//3.EDIT MODAL
-var uppy2; //init uppy2
-
-//3.1.Init select2 for select element in edit modal
-///3.2.1.THÔNG TIN CÁ NHÂN
-$('#going_edit_officer_name').select2({
+﻿///////////////////////////////////////////TABLE 1: LONG-TERM GOING//////////////////////////////////////////
+//2.ADD MODAL
+var uppy1; //init for uppy.js
+//init loader save button
+var going_add_officer_save = new LoaderBtn($("#going_add_officer_save"));
+//2.1.SHOW BUTTON
+///2.1.1.THÔNG TIN CÁ NHÂN
+$('#going_add_officer_name').select2({
     placeholder: 'Họ và tên',
     allowClear: true,
     tags: true,
     ajax: {
         url: '/AcademicCollaboration/getPeople',
-        delay: 250,
         cache: true,
+        delay: 250,
         dataType: 'json',
         data: function (params) {
             return {
@@ -31,19 +33,33 @@ $('#going_edit_officer_name').select2({
     },
     templateResult: formatPersonInfo
 }).on("select2:select", function () { //after select option
-    checkPersonEdit();
+    checkPersonAdd();
 }).on("select2:unselecting", function () {
     //after clear tag
     //clear email & office
-    $('#going_edit_officer_email').val("");
-    $('#going_edit_officer_facility').val(null).trigger('change');
+    $('#going_add_officer_email').val("");
+    $('#going_add_officer_facility').val(null).trigger('change');
     //enable email & office
-    $('#going_edit_officer_email').prop('disabled', false);
-    $('#going_edit_officer_facility').prop('disabled', false);
+    $('#going_add_officer_email').prop('disabled', false);
+    $('#going_add_officer_facility').prop('disabled', false);
 });
 
-function checkPersonEdit() {
-    person = $('#going_edit_officer_name').val();
+function formatPersonInfo(person) {
+    if (person.id) {
+        let mssv_msnv = person.mssv_msnv;
+        let name = person.name;
+        if (isEmptyOrNullOrUndefined(mssv_msnv) && isEmptyOrNullOrUndefined(name)) {
+            return 'Dữ liệu mới về người.';
+        } else if (isEmptyOrNullOrUndefined(mssv_msnv)) {
+            return name;
+        } else {
+            return mssv_msnv + " - " + name;
+        }
+    }
+}
+
+function checkPersonAdd() {
+    person = $('#going_add_officer_name').val();
     person_name = person.split('/')[0] === undefined ? '' : person.split('/')[0];
     person_id = person.split('/')[1] === undefined ? 0 : person.split('/')[1];
 
@@ -59,19 +75,19 @@ function checkPersonEdit() {
         success: function (data) {
             if (data != null) {
                 //clear content
-                $('#going_edit_officer_email').val("");
-                $('#going_edit_officer_facility').val(null).trigger('change');
+                $('#going_add_officer_email').val("");
+                $('#going_add_officer_facility').val(null).trigger('change');
                 if (data.obj != null) {
                     //avaiable person data in DB
                     available_person = true; //using for Add||Edit
                     if (data.success) {
                         //auto fill data
                         let p = data.obj;
-                        $('#going_edit_officer_email').val(p.email);
-                        $('#going_edit_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
+                        $('#going_add_officer_email').val(p.email);
+                        $('#going_add_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
                         //disable email & office
-                        $('#going_edit_officer_email').prop('disabled', true);
-                        $('#going_edit_officer_facility').prop('disabled', true);
+                        $('#going_add_officer_email').prop('disabled', true);
+                        $('#going_add_officer_facility').prop('disabled', true);
                     } else {
                         toastr.error(data.content);
                     }
@@ -79,8 +95,8 @@ function checkPersonEdit() {
                     //new person case
                     available_person = false;
                     ///enable email and office select
-                    $('#going_edit_officer_email').prop('disabled', false);
-                    $('#going_edit_officer_facility').prop('disabled', false);
+                    $('#going_add_officer_email').prop('disabled', false);
+                    $('#going_add_officer_facility').prop('disabled', false);
                 }
             } else {
                 toastr.error("Kiểm tra cán bộ giảng viên có lỗi xảy ra.");
@@ -92,7 +108,7 @@ function checkPersonEdit() {
     });
 }
 
-$('#going_edit_officer_facility').select2({
+$('#going_add_officer_facility').select2({
     placeholder: 'Đơn vị công tác',
     allowClear: true,
     ajax: {
@@ -120,8 +136,8 @@ $('#going_edit_officer_facility').select2({
     templateResult: formatOfficeInfo
 });
 
-//3.2.2.ĐƠN VỊ ĐÀO TẠO
-$('#going_edit_officer_traning').select2({
+///2.1.2.ĐƠN VỊ ĐÀO TẠO
+$('#going_add_officer_traning').select2({
     placeholder: 'Đơn vị đào tạo',
     allowClear: true,
     tags: true,
@@ -150,18 +166,29 @@ $('#going_edit_officer_traning').select2({
     templateResult: formatPartnerInfo
 }).on("select2:select", function () { //after select partner
     //check partner
-    checkPartnerEdit();
+    checkPartnerAdd();
 }).on("select2:unselecting", function () {
     //after clear tag
     //clear country select
-    $('#going_edit_officer_nation').val(null).trigger('change');
+    $('#going_add_officer_nation').val(null).trigger('change');
     ///enable country
-    $('#going_edit_officer_nation').prop('disabled', false);
+    $('#going_add_officer_nation').prop('disabled', false);
 });
 
-function checkPartnerEdit() {
+function formatPartnerInfo(partner) {
+    if (partner.id) {
+        let partner_name = partner.partner_name;
+        if (isEmptyOrNullOrUndefined(partner_name)) {
+            return "Dữ liệu đơn vị đào tạo mới."
+        } else {
+            return partner.partner_name;
+        }
+    }
+}
+
+function checkPartnerAdd() {
     //process partner_name
-    partner = $('#going_edit_officer_traning').val();
+    partner = $('#going_add_officer_traning').val();
     partner_name = partner.split('/')[0] === undefined ? '' : partner.split('/')[0];
     partner_id = partner.split('/')[1] === undefined ? 0 : partner.split('/')[1];
 
@@ -177,16 +204,16 @@ function checkPartnerEdit() {
         success: function (data) {
             if (data != null) {
                 //clear content
-                $('#going_edit_officer_nation').val(null).trigger('change');
+                $('#going_add_officer_nation').val(null).trigger('change');
                 if (data.obj != null) {
                     //available partner data in DB
                     available_partner = true; //using for Add||Edit
                     if (data.success) {
                         //auto fill data
                         let p = data.obj;
-                        $('#going_edit_officer_nation').append(new Option(p.country_name, p.country_id, false, true)).trigger('change');
+                        $('#going_add_officer_nation').append(new Option(p.country_name, p.country_id, false, true)).trigger('change');
                         //disable country
-                        $('#going_edit_officer_nation').prop('disabled', true);
+                        $('#going_add_officer_nation').prop('disabled', true);
                     } else {
                         toastr.error(data.content);
                     }
@@ -194,7 +221,7 @@ function checkPartnerEdit() {
                     //new partner case
                     available_partner = false;
                     ///enable country
-                    $('#going_edit_officer_nation').prop('disabled', false);
+                    $('#going_add_officer_nation').prop('disabled', false);
                 }
             } else {
                 toastr.error("Kiểm tra đối tác có lỗi xảy ra.");
@@ -206,7 +233,7 @@ function checkPartnerEdit() {
     });
 }
 
-$('#going_edit_officer_nation').select2({
+$('#going_add_officer_nation').select2({
     placeholder: 'Quốc gia',
     allowClear: true,
     ajax: {
@@ -234,7 +261,7 @@ $('#going_edit_officer_nation').select2({
     templateResult: formatCountryInfo
 });
 
-$('#going_edit_officer_coop_scope').select2({
+$('#going_add_officer_coop_scope').select2({
     placeholder: 'Phạm vi hợp tác',
     allowClear: true,
     minimumResultsForSearch: -1, //hide search box
@@ -267,8 +294,8 @@ function formatCollabScope(scope) {
     return scope.scope_abbreviation + " - " + scope.scope_name;
 }
 
-///3.2.3.CHI TIẾT
-$('#going_edit_officer_status').select2({
+///2.1.3.CHI TIẾT
+$('#going_add_officer_status').select2({
     placeholder: 'Trạng thái',
     allowClear: true,
     minimumResultsForSearch: -1, //hide search box
@@ -280,7 +307,7 @@ $('#going_edit_officer_status').select2({
         dataType: 'json',
         data: function () {
             return {
-                status_type_specific: 2 //long-term
+                status_type_specific: 1 //short-term
             };
         },
         processResults: function (data) {
@@ -298,114 +325,30 @@ $('#going_edit_officer_status').select2({
     templateResult: formatAcadCollabStatus
 });
 
-//3.2.GET CORESSPONDING DATA
-$('#going_edit_officer').on('show.bs.modal', function (e) {
-    let acad_collab_id = $(e.relatedTarget).data('id');
-    $.ajax({
-        url: "/AcademicCollaboration/getAcademicCollaboration",
-        type: "GET",
-        data: {
-            direction: 1, /*going*/
-            collab_type_id: 2 /*long-term*/,
-            acad_collab_id: acad_collab_id
-        },
-        cache: false,
-        dataType: "json",
-        success: function (data) {
-            if (data != null) {
-                if (data.success) {
-                    let acadCollab = data.obj;
-                    console.log(acadCollab);
-                    //fill data to correspoding select, input
-                    available_person = true; //person had data in db
-                    $("#going_edit_officer_name").append(new Option(acadCollab.people_name, acadCollab.people_name + '/' + acadCollab.people_id, false, true)).trigger('change');
-                    $("#going_edit_officer_email").val(acadCollab.email);
-                    $("#going_edit_officer_email").prop("disabled", true);
-                    if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) $("#going_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
-                    $("#going_edit_officer_facility").prop("disabled", true);
-
-                    available_partner = true; //partner had data in db
-                    $("#going_edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_name + '/' + acadCollab.partner_id, false, true)).trigger('change');
-                    $("#going_edit_officer_nation").append(new Option(acadCollab.country_name, acadCollab.country_id, false, true)).trigger('change');
-                    $("#going_edit_officer_nation").prop("disabled", true);
-                    $("#going_edit_officer_coop_scope").append(new Option(acadCollab.scope_name, acadCollab.scope_id, false, true)).trigger('change');
-
-                    $("#going_edit_officer_status").append(new Option(acadCollab.collab_status_name, acadCollab.collab_status_id, false, true)).trigger('change');
-                    $("#going_edit_officer_start_plan_date").val(moment(acadCollab.plan_study_start_date).format("DD/MM/YYYY"));
-                    $("#going_edit_officer_end_plan_date").val(moment(acadCollab.plan_study_end_date).format("DD/MM/YYYY"));
-
-                    $("#going_edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
-                    $("#going_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
-
-                    if (acadCollab.file_id != null) {
-                        uppy2.addFile({
-                            name: acadCollab.file_name, // file name
-                            type: '*', // file type
-                            data: new Blob(), // file blob
-                        });
-                    }
-
-                    //console.log(acadCollab.file_id);
-                    //console.log(acadCollab.file_name);
-                    //console.log(acadCollab.file_link);
-                    //console.log(acadCollab.file_drive_id);
-
-                    file = {
-                        file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,
-                        name: acadCollab.file_name === null ? null : acadCollab.file_name,
-                        link: acadCollab.file_link === null ? "" : acadCollab.file_link,
-                        file_drive_id: acadCollab.file_drive_id === null ? "" : acadCollab.file_drive_id
-                    }
-
-                    console.log(file);
-
-                    collab_id = acadCollab.collab_id;
-
-                    $("#going_edit_officer_support").prop("checked", acadCollab.is_supported);
-                    $("#going_edit_officer_note").val(acadCollab.note);
-                } else {
-                    toastr.error(data.content);
-                }
-            }
-        },
-        error: function () {
-            toastr.error("Có lỗi xảy ra.");
-        }
-    })
-});
+function formatAcadCollabStatus(acs) {
+    return acs.collab_status_name;
+}
 
 var available_person;
 var available_partner;
-//3.3.EDIT SAVE BUTTON
-var going_edit_officer_save = new LoaderBtn($('#going_edit_officer_save'));
-$('#going_edit_officer_save').on('click', function () {
+//2.2. SAVE BUTTON
+$('#going_add_officer_save').on('click', function () {
     //person
-    let person = $('#going_edit_officer_name').val();
-
-    let person_email = $('#going_edit_officer_email').val();
-    let person_profile_office_id = $('#going_edit_officer_facility').val();
-
+    let person = $('#going_add_officer_name').val();
+    let person_email = $('#going_add_officer_email').val();
+    let person_profile_office_id = $('#going_add_officer_facility').val();
     //partner
-    let partner = $('#going_edit_officer_traning').val();
-
-    let partner_country_id = $('#going_edit_officer_nation').val();
-
-    let collab_scope_id = $('#going_edit_officer_coop_scope').val();
-
+    let partner = $('#going_add_officer_traning').val();
+    let partner_country_id = $('#going_add_officer_nation').val();
+    let collab_scope_id = $('#going_add_officer_coop_scope').val();
     //detail
-    let status_id = $('#going_edit_officer_status').val();
-
-    let plan_start_date = $('#going_edit_officer_start_plan_date').val();
-    let plan_end_date = $('#going_edit_officer_end_plan_date').val();
-
-    let actual_start_date = $('#going_edit_officer_start_date').val();
-    let actual_end_date = $('#going_edit_officer_end_date').val();
-
-    let evidence = uppy2.getFiles();
-
-    let support = $('#going_edit_officer_support').prop('checked');
-    let note = $('#going_edit_officer_note').val();
-
+    let status_id = $('#going_add_officer_status').val();
+    let plan_start_date = $('#going_add_officer_start_plan_date').val();
+    let plan_end_date = $('#going_add_officer_end_plan_date').val();
+    let actual_start_date = $('#going_add_officer_start_date').val();
+    let actual_end_date = $('#going_add_officer_end_date').val();
+    let evidence = uppy1.getFiles();
+    let note = $('#going_add_officer_note').val();
     //check empty
     if (isEmptyOrNullOrUndefined(person) || isEmptyOrNullOrUndefined(person_email)
         || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
@@ -414,7 +357,7 @@ $('#going_edit_officer_save').on('click', function () {
         return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
         let person_name = person.split('/')[0];
-        let person_id = person.split('/')[1]
+        let person_id = person.split('/')[1];
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
@@ -422,23 +365,21 @@ $('#going_edit_officer_save').on('click', function () {
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
+        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
             return toastr.error("`TG đi học` không được vượt quá `TG kết thúc`.")
         } else {
             //start load
-            going_edit_officer_save.startLoading();
+            going_add_officer_save.startLoading();
 
             let formData = new FormData();
-            let file_stringify = JSON.stringify(file);
-            formData.append("old_evidence_stringify", file_stringify);
-            formData.append("new_evidence", evidence.length == 0 ? null : evidence[0].data);
+            formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
             formData.append("folder_name", person_name + " - " + partner_name);
 
             formData.append("direction_id", 1); //going case
-            formData.append("collab_type_id", 2); //long-term
+            formData.append("collab_type_id", 1); //short-term
 
             let obj_person_stringify = JSON.stringify(obj_person);
             let obj_partner_stringify = JSON.stringify(obj_partner);
@@ -450,7 +391,7 @@ $('#going_edit_officer_save').on('click', function () {
 
             //Save actually
             $.ajax({
-                url: "/AcademicCollaboration/updateAcademicCollaboration",
+                url: "/AcademicCollaboration/saveAcademicCollaboration",
                 type: "POST",
                 data: formData,
                 cache: false,
@@ -460,59 +401,111 @@ $('#going_edit_officer_save').on('click', function () {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.content);
-                        collab_going_table.ajax.reload();
-                        going_edit_officer_save.stopLoading();
-                        $("#going_edit_officer_close").click();
-                        clearContentEditModal();
+                        exchange_going_table.ajax.reload();
+                        going_add_officer_save.stopLoading();
+                        $("#going_add_officer_close").click();
+                        clearContentAddModal();
                     } else {
                         toastr.warning(data.content);
-                        going_edit_officer_save.stopLoading();
+                        going_add_officer_save.stopLoading();
                     }
                 },
                 error: function () {
-                    toastr.error("Có lỗi xảy ra khi upload file.");
-                    going_edit_officer_save.stopLoading();
+                    toastr.error("Có lỗi xảy ra.");
+                    going_add_officer_save.stopLoading();
                 }
             });
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
         }
     }
 });
 
-$('#going_edit_officer').on('hide.bs.modal', function () {
-    clearContentEditModal();
-});
+function objPerson(available_person, person_name,
+    person_id, person_email, person_profile_office_id) {
+    let obj_person = {};
+    if (!isEmptyOrNullOrUndefined(available_person)) obj_person.available_person = available_person;
+    if (!isEmptyOrNullOrUndefined(person_name)) obj_person.person_name = person_name;
+    if (!isEmptyOrNullOrUndefined(person_id)) obj_person.person_id = person_id;
+    if (!isEmptyOrNullOrUndefined(person_email)) obj_person.person_email = person_email;
+    if (!isEmptyOrNullOrUndefined(person_profile_office_id)) obj_person.person_profile_office_id = person_profile_office_id;
+    return obj_person;
+}
 
-function clearContentEditModal() {
+function objPartner(available_partner, partner_name, partner_id,
+    partner_country_id, collab_scope_id) {
+    let obj_partner = {}
+    if (!isEmptyOrNullOrUndefined(available_partner)) obj_partner.available_partner = available_partner;
+    if (!isEmptyOrNullOrUndefined(partner_name)) obj_partner.partner_name = partner_name;
+    if (!isEmptyOrNullOrUndefined(partner_id)) obj_partner.partner_id = partner_id;
+    if (!isEmptyOrNullOrUndefined(partner_country_id)) obj_partner.partner_country_id = partner_country_id;
+    if (!isEmptyOrNullOrUndefined(collab_scope_id)) obj_partner.collab_scope_id = collab_scope_id;
+    return obj_partner;
+}
+
+function objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date,
+    actual_start_date, actual_end_date, support, note) {
+    let obj_academic_collab = {};
+    obj_academic_collab.collab_id = collab_id;
+    if (!isEmptyOrNullOrUndefined(status_id)) obj_academic_collab.status_id = status_id;
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_start_date))) obj_academic_collab.plan_start_date = formatDatePicker(plan_start_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(plan_end_date))) obj_academic_collab.plan_end_date = formatDatePicker(plan_end_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_start_date))) obj_academic_collab.actual_start_date = formatDatePicker(actual_start_date);
+    if (!isEmptyOrNullOrUndefined(formatDatePicker(actual_end_date))) obj_academic_collab.actual_end_date = formatDatePicker(actual_end_date);
+    if (!isEmptyOrNullOrUndefined(support)) obj_academic_collab.support = support;
+    if (!isEmptyOrNullOrUndefined(note)) obj_academic_collab.note = note;
+    return obj_academic_collab;
+}
+
+function isEmptyOrNullOrUndefined(value) {
+    if (value === null || value === undefined || value === "") {
+        return true;
+    }
+    return false;
+}
+
+function datePickerFromToValidate(from, to) {
+    if (!(from === "" || to === "")) {
+        let date_from = Date.parse(formatDatePicker(from));
+        let date_to = Date.parse(formatDatePicker(to));
+        if (date_from > date_to) {
+            return false;
+        }
+        return true;
+    }
+    return true;
+}
+
+function formatDatePicker(date) {
+    if (date != '') {
+        return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
+    }
+}
+
+function clearContentAddModal() {
     //enable input and select
-    $('#going_edit_officer_email').prop('disabled', false);
-    $("#going_edit_officer_facility").prop('disabled', false);
-    $('#going_edit_officer_nation').prop('disabled', false);
-    $('#going_edit_officer_coop_scope').prop('disabled', false);
+    $('#going_add_officer_email').prop('disabled', false);
+    $("#going_add_officer_facility").prop('disabled', false);
+    $('#going_add_officer_nation').prop('disabled', false);
+    $('#going_add_officer_coop_scope').prop('disabled', false);
 
     //clear data
     ///THÔNG TIN CÁ NHÂN
-    $('#going_edit_officer_name').val(null).trigger('change');
-    $('#going_edit_officer_email').val('');
-    $('#going_edit_officer_facility').val(null).trigger('change');
+    $('#going_add_officer_name').val(null).trigger('change');
+    $('#going_add_officer_email').val('');
+    $('#going_add_officer_facility').val(null).trigger('change');
     ///ĐƠN VỊ ĐÀO TẠO
-    $('#going_edit_officer_traning').val(null).trigger('change');
-    $('#going_edit_officer_nation').val(null).trigger('change');
-    $('#going_edit_officer_coop_scope').val(null).trigger('change');
+    $('#going_add_officer_traning').val(null).trigger('change');
+    $('#going_add_officer_nation').val(null).trigger('change');
+    $('#going_add_officer_coop_scope').val(null).trigger('change');
     ///CHI TIẾT
-    $('#going_edit_officer_status').val(null).trigger('change');
-    $('#going_edit_officer_start_plan_date').val('');
-    $('#going_edit_officer_end_plan_date').val('');
+    $('#going_add_officer_status').val(null).trigger('change');
+    $('#going_add_officer_start_plan_date').val('');
+    $('#going_add_officer_end_plan_date').val('');
 
     //clear upload file
-    $('#going_edit_officer_upload .uppy-list').html('');
-    uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
+    $('.uppy-list').html('');
+    uppy1.removeFile(uppy1.getFiles().length == 0 ? '' : uppy1.getFiles()[0].id);
 
-    $('#going_edit_officer_start_date').val('');
-    $('#going_edit_officer_end_date').val('');
-    $('#going_edit_officer_support').prop('checked', false);
-    $('#going_edit_officer_note').val('');
+    $('#going_add_officer_start_date').val('');
+    $('#going_add_officer_end_date').val('');
+    $('#going_add_officer_note').val('');
 }
-

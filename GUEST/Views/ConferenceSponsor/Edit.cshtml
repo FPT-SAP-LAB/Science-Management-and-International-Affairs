@@ -577,19 +577,17 @@
             return markup;
         }
 
+        toastr.options = {
+            "preventDuplicates": true,
+        }
+
         function formatInfoSelection(repo) {
             if (repo.id) {
                 if (repo.Name) {
-                    $(currentRow).find(".selectTitle").prop("disabled", true);
-                    $(currentRow).find(".selectOffice").prop("disabled", true);
-                    $(currentRow).find(".inputEmail").prop("disabled", true);
-                    $(currentRow).find(".inputName").prop("disabled", true);
+                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", true);
                 }
                 else {
-                    $(currentRow).find(".inputName").prop("disabled", false);
-                    $(currentRow).find(".inputEmail").prop("disabled", false);
-                    $(currentRow).find(".selectOffice").prop("disabled", false);
-                    $(currentRow).find(".selectTitle").prop("disabled", false);
+                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", false);
                 }
                 $(currentRow).find(".inputEmail").val(repo.Email);
                 $(currentRow).find(".inputName").val(repo.Name);
@@ -607,6 +605,12 @@
 
         function formatRepoSelection(repo) {
             if (repo.id && repo.website != undefined) {
+                if (repo.is_verified) {
+                    toastr.warning("Hội nghị này đã được thông qua tại một đề nghị khác");
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", true);
+                } else {
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", false);
+                }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
                 document.getElementById("qs_university").value = repo.qs_university;

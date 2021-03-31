@@ -208,6 +208,7 @@
         });
 
         $("#editconfirm").click(function () {
+            $("#loading").show();
             var inven_id = "@ViewBag.item.invention_id";
                     var request_id = "@ViewBag.item.request_id";
             var inven = {
@@ -223,8 +224,10 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
+                        window.location.href = "/Invention/Pending";
                         //editRequest();
-                        alert(response.mess);
+                        //alert(response.mess);
                     }
                     else alert('loi');
                 },
@@ -235,8 +238,10 @@
         });
 
         $("#confirmbtn").click(function () {
+            $("#loading").show();
             var temp = $("#totalreward").val();
             if (temp == "") {
+                $("#loading").hide();
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
                 check = false;
             } else {
@@ -247,6 +252,7 @@
                         var value = $(this).text();
                         //console.log(value);
                         if (value == "") {
+                            $("#loading").hide();
                             toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                             check = false;
                             return false;
@@ -299,8 +305,10 @@
                         cache: false,
                         success: function (response) {
                             if (response.mess == "ss") {
+                                $("#loading").hide();
+                                window.location.href = "/Invention/Pending";
                                 //editRequest();
-                                alert(response.mess);
+                                //alert(response.mess);
                             }
                             else alert('loi');
                         },

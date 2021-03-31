@@ -21,7 +21,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         {
             var Profile = (from a in db.Profiles
                            join b in db.Accounts on a.account_id equals b.account_id
-                           join c in db.Offices on a.office_id equals c.office_id
                            join d in db.People on a.people_id equals d.people_id
                            where b.account_id == account_id
                            select new ProfileResearcher
@@ -29,8 +28,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                ID = a.mssv_msnv,
                                FullName = d.name,
                                Email = b.email,
-                               OfficeID = c.office_id,
-                               TitleID = a.Titles.FirstOrDefault().title_id
+                               OfficeID = d.office_id.Value,
+                               TitleID = a.title_id
                            }).FirstOrDefault();
             return JsonConvert.SerializeObject(new { Profile });
         }
@@ -38,8 +37,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         {
             var infos = (from a in db.Profiles
                          join b in db.People on a.people_id equals b.people_id
-                         join c in db.Offices on a.office_id equals c.office_id
-                         join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
+                         join c in db.Offices on b.office_id equals c.office_id
+                         join d in db.TitleLanguages on a.title_id equals d.title_id
                          where a.mssv_msnv.Contains(id) && d.language_id == language_id
                          select new Info
                          {
@@ -48,7 +47,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                              Name = b.name,
                              OfficeID = c.office_id,
                              OfficeName = c.office_name,
-                             TitleID = a.Titles.FirstOrDefault().title_id,
+                             TitleID = a.title_id,
                              TitleString = d.name,
                          }).Take(10).ToList();
             if (infos.Count == 0)
@@ -93,6 +92,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     else
                     {
+                        conference.is_verified = false;
                         db.Conferences.Add(conference);
                         db.SaveChanges();
                     }
@@ -189,10 +189,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Profile profile = new Profile()
                             {
                                 mssv_msnv = item.current_mssv_msnv,
-                                office_id = item.office_id,
+                                title_id = item.title_id,
                                 people_id = Persons[i].people_id,
                             };
-                            profile.Titles.Add(IDTitlePairs[item.title_id]);
                             db.Profiles.Add(profile);
                             db.SaveChanges();
                             item.people_id = Persons[i].people_id;

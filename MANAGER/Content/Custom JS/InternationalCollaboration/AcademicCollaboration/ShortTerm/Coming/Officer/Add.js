@@ -278,7 +278,7 @@ $('#coming_add_officer_status').select2({
         dataType: 'json',
         data: function () {
             return {
-                status_type_specific: 2 //long-term
+                status_type_specific: 1 //short-term
             };
         },
         processResults: function (data) {
@@ -322,7 +322,6 @@ $('#coming_add_officer_save').on('click', function () {
 
     let evidence = uppy4.getFiles();
 
-    let support = $('#coming_add_officer_support').prop('checked');
     let note = $('#coming_add_officer_note').val();
 
     //check empty
@@ -337,11 +336,12 @@ $('#coming_add_officer_save').on('click', function () {
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
-        let obj_person = (available_person, person_name, person_id, person_email, person_profile_office_id);
+        let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
+        console.log(obj_person);
 
-        let obj_partner = (available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
+        let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(0, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note); 
+        let obj_academic_collab = objAcadCollab(0, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note); 
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
@@ -355,7 +355,7 @@ $('#coming_add_officer_save').on('click', function () {
             formData.append("folder_name", person_name + " - " + partner_name);
 
             formData.append("direction_id", 2); //coming case
-            formData.append("collab_type_id", 2); //long-term
+            formData.append("collab_type_id", 1); //short-term
 
             let obj_person_stringify = JSON.stringify(obj_person);
             let obj_partner_stringify = JSON.stringify(obj_partner);
@@ -377,7 +377,7 @@ $('#coming_add_officer_save').on('click', function () {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.content);
-                        collab_coming_table.ajax.reload();
+                        exchange_coming_table.ajax.reload();
                         coming_add_officer_save.stopLoading();
                         $("#coming_add_officer_close").click();
                         clearContentComingAddModal();
@@ -422,6 +422,5 @@ function clearContentComingAddModal() {
 
     $('#coming_add_officer_start_date').val('');
     $('#coming_add_officer_end_date').val('');
-    $('#coming_add_officer_support').prop('checked', false);
     $('#coming_add_officer_note').val('');
 }

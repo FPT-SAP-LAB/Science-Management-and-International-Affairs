@@ -38,7 +38,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 t4.specialization_id = t3.specialization_id 
 		                        left join General.Country t5 on 
 		                        t1.country_id = t5.country_id 
-                                where t1.is_deleted = {0} and t4.language_id = {1} or t4.language_id is null) as a
+                                where ( t1.is_deleted = {0}) and (t4.language_id = {1} or t4.language_id is null)) as a
 								group by a.partner_name, a.partner_id, 
 		                        a.is_deleted, a.website, a.address, a.partner_id,
 		                        a.country_name, a.is_collab

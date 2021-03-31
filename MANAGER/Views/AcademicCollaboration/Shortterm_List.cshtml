@@ -32,13 +32,17 @@
     }
 
     .label-lg {
-        width: 77% !important;
+        width: 80% !important;
     }
 </style>
 <div class="row mb-5">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <a href="javascript:;" class="" id="edit_content_short_term">Chỉnh sửa nội dung miêu tả</a>
+        <a href="#st_describe_content" class="" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
     </div>
+    @*modal description*@
+    @{
+        Html.RenderPartial("PartialView/Short_Term_Modal_Description");
+    }
 </div>
 <div class="card card-custom mb-1 collapse-title" id="collapse-title">
     <div class="card-body p-0 collapse-div">
@@ -72,8 +76,12 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a href="javascript:;" class="nav-link" id="edit_content_going">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="#stg_describe_content" class="nav-link" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
                             </li>
+                            @*modal going description*@
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Going_Modal_Description");
+                            }
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -145,8 +153,12 @@
                         </ul>
                         <ul class="nav nav-tabs nav-tabs-line col-4 justify-content-end" style="padding-right: 0">
                             <li class="nav-item">
-                                <a href="javascript:;" class="nav-link" id="edit_content_coming">Chỉnh sửa nội dung miêu tả</a>
+                                <a href="#stc_describe_content" class="nav-link" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
                             </li>
+                            @*modal coming content*@
+                            @{
+                                Html.RenderPartial("PartialView/Short_Term_Coming_Modal_Description");
+                            }
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -187,31 +199,14 @@
     </div>
 </div>
 
-@*modal description*@
-@{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Description");
-}
-
 @*modal add status*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Status_History");
+    Html.RenderPartial("PartialView/Long_Term_Modal_Add_Status_History");
 }
-
 @*modal status hisory*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_View_Status_History");
+    Html.RenderPartial("PartialView/Long_Term_Modal_View_Status_History");
 }
-
-@*modal add officer*@
-@{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Officer");
-}
-
-@*modal edit officer*@
-@{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Officer");
-}
-
 @*modal add procedure*@
 @{
     Html.RenderPartial("PartialView/Short_Term_Modal_Add_Procedure");
@@ -232,163 +227,72 @@
     Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Program");
 }
 
-
-
+@*SHORT-TERM MODAL*@
+@*modal add officer going*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Going_Modal_Add_Officer");
+}
+@*modal edit officer going*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Going_Modal_Edit_Officer");
+}
+@*modal add officer coming*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Coming_Modal_Add_Officer");
+}
+@*modal edit officer coming*@
+@{
+    Html.RenderPartial("PartialView/Short_Term_Coming_Modal_Edit_Officer");
+}
 @section scripts{
-    <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
-    <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-
-    @*-------------------datatable check this file-------------*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ShortTerm_Datatable.js"></script>
-    @*-------------------datatable check this file-------------*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/ProcedureContentProcessing.js"></script>
     @*--------------init datepicker and rangepicker-----------*@
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
-    @*--------------init datepicker and rangepicker-----------------*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    @**@
+    @*//////////////////////////////////////////////////UPDATE SHORT-TERM CONTENT//////////////////////////////////////////////////*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/UpdateContent.js"></script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Coming/UpdateContent.js"></script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Going/UpdateContent.js"></script>
+    @*///////////////////////////////////////////TABLE1: SHORT-TERM GOING OFFICER//////////////////////////////////////////*@
+    @**datatable*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Going/Officer/Datatable.js"></script>
+    @*search*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Going/Officer/Search.js"></script>
+    @*add modal*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Going/Officer/Add.js"></script>
+    @*edit modal*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Going/Officer/Edit.js"></script>
+    @*///////////////////////////////////////////TABLE 2: SHORT-TERM COMING OFFICER/////////////////////////////////////////*@
+    @**datatable*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Coming/Officer/Datatable.js"></script>
+    @*search*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Coming/Officer/Search.js"></script>
+    @*add modal*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Coming/Officer/Add.js"></script>
+    @*edit modal*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm/Coming/Officer/Edit.js"></script>
+    @*/////////////////////////////////////////////////////////GENERAL FUNCTION////////////////////////////////////////////////////*@
+    @*delete*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Delete.js"></script>
+    @*status history*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/StatusHistory.js"></script>
+    @*change status*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ChangeCollabStatus.js"></script>
 
+    @*-------------------datatable check this file-----Hiện tại file này chỉ chứa DataTable của Procedure--------*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ShortTerm_Datatable.js"></script>
+    @*-------------------datatable check this file-------------*@
+    @* -----------------------add procedure-------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ProcedureAddContent.js"></script>
     <script>
-        //delete procedure======================================================================
-        function confirm_delete_procedure(article_id) {
-            var id = { article_id: article_id }
-            Swal.fire({
-                title: "Xác nhận xóa",
-                text: "Có muốn xóa bản ghi này",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: '/AcademicCollaboration/DeleteProcedure',
-                        type: "POST",
-                        dataType: 'json',
-                        data: id,
-                        success: function (data) {
-                            if (data.success) {
-
-                                $('#procedure_going_table').DataTable().ajax.reload()
-                                $('#procedure_coming_table').DataTable().ajax.reload()
-                                Swal.fire("Thành công", "Xóa thành công", "success");
-                            } else {
-                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
-                            }
-                        },
-                        error: function () {
-                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
-                        },
-                    })
-                }
-            })
-        };
-    //delete procedure======================================================================
-    </script>
-    <script>
-
-        $('#edit_content_short_term').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
-        $('#edit_content_going').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
-        $('#edit_content_coming').click(function () {
-            $('#describe_content').find("textarea").val('').end()
-            $('#describe_content').modal('show');
-        })
-
-    </script>
-    <script>
-        //select2 officer going
-        $('#search_nation_tab_1_table_1').select2({
-            placeholder: 'Quốc gia',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_year_tab_1_table_1').select2({
-            placeholder: 'Năm đi học',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_training_facility_tab_1_table_1').select2({
-            placeholder: 'Đơn vị đào tạo',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_working_facility_tab_1_table_1').select2({
-            placeholder: 'Đơn vị công tác',
-            allowClear: true,
-            tags: true,
-        })
-
-        //select modal table 1
-        $('#add_officer_name').select2({
-            placeholder: 'Họ và tên',
-            allowClear: true,
-            tags: true,
-        })
-        $('#add_officer_facility').select2({
-            placeholder: 'Đơn vị - Cơ sở',
-            allowClear: true,
-            tags: true,
-        })
-        $('#add_officer_traning').select2({
-            placeholder: 'Đơn vị đào tạo',
-            allowClear: true,
-            tags: true,
-        })
-        $('#add_officer_coop_scope').select2({
-            placeholder: 'Phạm vi hợp tác',
-            allowClear: true,
-            tags: true,
-        })
-        $('#add_officer_status').select2({
-            placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
-        })
-    </script>
-    <script>
-        //select2 officer coming
-
-        $('#search_nation_tab_1_table_2').select2({
-            placeholder: 'Quốc gia',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_year_tab_1_table_2').select2({
-            placeholder: 'Năm đi học',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_training_facility_tab_1_table_2').select2({
-            placeholder: 'Đơn vị đào tạo',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#search_working_facility_tab_1_table_2').select2({
-            placeholder: 'Đơn vị công tác',
-            allowClear: true,
-            tags: true,
-        })
-    </script>
-    <script>
-        //select2 procedure going
-        $('.procedure_language').select2({
+        $('#add_procedure_language').select2({
             placeholder: 'Ngôn ngữ',
         })
-
     </script>
+    @* -----------------delete, load detail, change language----------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
+    @*---------------------save edit----------------*@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ProcedureEditContent.js"></script>
+
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({
@@ -442,47 +346,6 @@
             //$('.collaboration_table thead tr th').css('font-weight', 'bold');
             $('.header-modify').css('padding', '13px');
         });
-
-        //load status history table
-        function show_status_history(id){
-            $.ajax({
-                url: '@Url.Action("Get_Status_History", "AcademicCollaboration")',
-                data: { 'id': id },
-                success: function (data) {
-                    if (data = "") {
-                        toastr.error("Có lỗi xảy ra");
-                    } else {
-                        var status = {
-                            1: {
-                                'title': 'Không hoàn thành',
-                                'class': 'label-secondary'
-                            },
-                            2: {
-                                'title': 'Đã hoàn thành',
-                                'class': 'label-success'
-                            },
-                            3: {
-                                'title': 'Đang thực hiện',
-                                'class': 'label-danger'
-                            }
-                        };
-                        var temp = '';
-                        for (i = 0; i < 3; i++) {
-                            temp += '<tr><td  class="text-center">' + eval(i+1) + '</td> ' +
-                                '<td class="text-center">01/01/2021 12:10:11</td> ' +
-                                '<td class="text-center"> ' +
-                                '<span class="label label-lg label-pill font-weight-bold ' + status[eval(i+1)].class +
-                                ' label-inline">' + status[eval(i + 1)].title + '</span></td> ' +
-                                '<td class="text-center">Lê Phương Anh</td> ' +
-                                '<td class="text-center">abc.pdf</td>' +
-                                '<td class="text-center">Đã học xong</td></tr>';
-                        }
-                        $('#status_history_table').html(temp);
-                    }
-                },
-            });
-        };
-
     </script>
 
     @*text editor*@
@@ -512,8 +375,7 @@
 
     @*upload*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/uppy.js"></script>
 }
 
 

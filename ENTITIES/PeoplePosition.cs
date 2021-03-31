@@ -10,10 +10,15 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class PeoplePosition
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int profile_position_id { get; set; }
+        public int people_id { get; set; }
+        public int position_id { get; set; }
+    
+        public virtual Profile Profile { get; set; }
+        public virtual Position Position { get; set; }
     }
 }
