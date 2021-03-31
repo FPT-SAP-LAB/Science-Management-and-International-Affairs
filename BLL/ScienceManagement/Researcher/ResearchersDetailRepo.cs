@@ -32,7 +32,7 @@ namespace BLL.ScienceManagement.Researcher
                               select ff.link
                                       ).FirstOrDefault(),
                     website = b.website,
-                    office =(from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
+                    office = (from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
                     gscholar = b.google_scholar,
                     cv = b.cv
                 }).FirstOrDefault();
@@ -70,7 +70,7 @@ namespace BLL.ScienceManagement.Researcher
                                          join h in db.TitleLanguages on g.title_id equals h.title_id
                                          where !((from m in db.Profiles
                                                   from n in db.Titles
-                                                  where m.title_id==n.title_id && m.people_id == id
+                                                  where m.title_id == n.title_id && m.people_id == id
                                                   select n.title_id).Contains(h.title_id)) && h.language_id == 1
                                          select new SelectField
                                          {

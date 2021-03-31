@@ -39,7 +39,7 @@ namespace BLL.ScienceManagement.Researcher
                     }
                     List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList();
                     List<PeoplePosition> currentPositions = db.PeoplePositions.Where(x => x.people_id == id).ToList();
-                    foreach(PeoplePosition p in currentPositions)
+                    foreach (PeoplePosition p in currentPositions)
                     {
                         db.PeoplePositions.Remove(p);
                     }
