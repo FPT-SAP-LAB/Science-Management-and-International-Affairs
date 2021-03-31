@@ -214,7 +214,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
         [Auther(RightID = "2,3,6")]
         public ActionResult Procedure_Detail(int id)
         {
-            
+
             guestRepo = new AcademicCollaborationGuestRepo();
             var pagesTree = new List<PageTree>();
             int language = Models.LanguageResource.GetCurrentLanguageID();
