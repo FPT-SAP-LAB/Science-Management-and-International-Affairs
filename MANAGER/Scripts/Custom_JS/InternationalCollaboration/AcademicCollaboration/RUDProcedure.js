@@ -43,8 +43,8 @@ function confirm_delete_procedure(procedure_id) {
 //delete procedure======================================================================
 
 //load edit procedure===================================================================
-$("#edit_procedure").on('show.bs.modal', function (e) {
-    let id = $(e.relatedTarget).data('id');
+$(document).on('click', '#load_edit_procedure', function (e) {
+    let id = $(this).data('id');
     load_procedure_detail(id);
 });
 
@@ -60,6 +60,7 @@ function load_procedure_detail(procedure_id) {
             $('#edit_procedure_title').val(data.json.procedure_name)
             $('#edit_summernote').summernote('code', data.json.content)
             $('#edit_procedure_language').val(data.json.language_id).trigger('change')
+            $('#edit_procedure').modal('show')
         }
     })
 }
