@@ -14,16 +14,17 @@ namespace BLL.ScienceManagement.Researcher
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public BaseServerSideData<ResearcherCandidate> GetList(BaseDatatable baseDatatable, int account_id = 0, int language_id = 1)
         {
-            var data = (from b in db.People 
+            var data = (from b in db.People
                         join c in db.Profiles on b.people_id equals c.people_id
                         join d in db.Titles on c.title_id equals d.title_id
                         join e in db.TitleLanguages on d.title_id equals e.title_id
-                        where e.language_id == 1 && (d.title_id == 1 || d.title_id == 2) && c.profile_page_active==false
-                        select new ResearcherCandidate {
-                            people_id=b.people_id,
-                            name=b.name,
-                            title=e.name,
-                            paperNumber=(from m in db.AuthorPapers where m.people_id==b.people_id select m).Count()
+                        where e.language_id == 1 && (d.title_id == 1 || d.title_id == 2) && c.profile_page_active == false
+                        select new ResearcherCandidate
+                        {
+                            people_id = b.people_id,
+                            name = b.name,
+                            title = e.name,
+                            paperNumber = (from m in db.AuthorPapers where m.people_id == b.people_id select m).Count()
                         });
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
