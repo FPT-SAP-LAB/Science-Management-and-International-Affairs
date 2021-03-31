@@ -2195,6 +2195,7 @@
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\UpdateContent.js" />
+    <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\Datatable.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\UpdateContent.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ProcedureContentProcessing.js" />
     <Content Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ChangeCollabStatus.js" />
@@ -2287,8 +2288,8 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Procedure_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Coming_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Going_Table.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Edit_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Add_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Procedure.cshtml" />
@@ -2350,6 +2351,10 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Add_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Coming_Modal_Edit_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Add_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Edit_Officer.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Description.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Description.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2366,12 +2371,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Officer\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Procedure\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Coming\Program\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Officer\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Procedure\" />
-    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\Program\" />
+    <Folder Include="Scripts\Custom_JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Going\" />
     <Folder Include="Views\Biography\" />
     <Folder Include="Views\ErrorPage\" />
     <Folder Include="Views\Specialization\" />
