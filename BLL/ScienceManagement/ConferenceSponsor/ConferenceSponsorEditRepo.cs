@@ -18,6 +18,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public string EditRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
+            ConferenceParticipantRepo participantRepo = new ConferenceParticipantRepo();
 
             RequestConference request = db.RequestConferences.Where(x => x.request_id == request_id && x.BaseRequest.account_id == account_id).FirstOrDefault();
             if (request == null)
@@ -37,7 +38,18 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     if (temp != null)
                     {
-                        conference.conference_id = temp.conference_id;
+                        request.conference_id = temp.conference_id;
+                        if (!temp.is_verified)
+                        {
+                            temp.website = conference.website;
+                            temp.keynote_speaker = conference.keynote_speaker;
+                            temp.qs_university = conference.qs_university;
+                            temp.country_id = conference.country_id;
+                            temp.time_start = conference.time_start;
+                            temp.time_end = conference.time_end;
+                            temp.formality_id = conference.formality_id;
+                            temp.co_organized_unit = conference.co_organized_unit;
+                        }
                     }
                     else
                     {
@@ -75,32 +87,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     db.Costs.AddRange(costs);
 
+                    db.ConferenceParticipants.RemoveRange(request.ConferenceParticipants);
+
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = request_id;
                     Person person = @object["Persons"].ToObject<Person>();
-                    Profile profile = db.Profiles.Where(x => x.mssv_msnv == participant.current_mssv_msnv).FirstOrDefault();
-                    if (profile == null)
-                    {
-                        db.People.Add(person);
-                        db.SaveChanges();
-
-                        profile = new Profile()
-                        {
-                            mssv_msnv = participant.current_mssv_msnv,
-                            title_id = participant.title_id,
-                            people_id = person.people_id,
-                        };
-                        db.Profiles.Add(profile);
-                    }
-                    else
-                    {
-                        participant.people_id = profile.people_id;
-                        participant.title_id = profile.title_id;
-                        participant.office_id = profile.Person.office_id.Value;
-                    }
-
-                    db.ConferenceParticipants.RemoveRange(request.ConferenceParticipants);
-                    db.ConferenceParticipants.Add(participant);
+                    participantRepo.AddWithTempData(db, participant, person);
 
                     foreach (var item in request.EligibilityCriterias)
                     {
