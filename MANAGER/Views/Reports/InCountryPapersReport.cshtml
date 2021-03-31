@@ -164,7 +164,9 @@
             </thead>
         </table>
         <!--end: Datatable-->
-
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
     </div></div>
     @section scripts{
         <script>
@@ -204,8 +206,15 @@
                             { data: "author_name", name: "author_name", orderable: false },
                             { data: "paper_name", name: "paper_name", orderable: false },
                             { data: "journal_name", name: "journal_name", orderable: false },
-                            { data: "total_reward", name: "total_reward", orderable: false },
+                            {
+                                data: "total_reward", name: "total_reward", render: function (data) {
+                                    return AddComma(data)
+                                }
+                            },
                         ],
+                        initComplete: function (settings, json) {
+                            $("#loader_panel").hide()
+                        }
                     });
 
                     table.on('change', '.group-checkable', function () {

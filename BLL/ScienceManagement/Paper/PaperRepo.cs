@@ -162,7 +162,7 @@ namespace BLL.ScienceManagement.Paper
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
-                            pro.is_reseacher = item.is_reseacher;
+                            //pro.is_reseacher = item.is_reseacher;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);

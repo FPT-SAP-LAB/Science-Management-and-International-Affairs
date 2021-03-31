@@ -2219,6 +2219,7 @@
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\UpdateContent.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\StatusHistory.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\Program_Datatable.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\LongTerm_Program_Datatable.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Search.js" />
     <Content Include="Scripts\datetime-moment.js" />
     <Content Include="Scripts\moment.js" />
@@ -2229,7 +2230,7 @@
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
-    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm_Datatable.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\ShortTerm_Datatable.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\kt_datetimepicker_3_and_range.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\Partner\Preview.js" />
     <Content Include="Scripts\inputFilter.js" />
@@ -2371,6 +2372,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Status_History.cshtml" />
+    <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2382,6 +2384,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
+    <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />

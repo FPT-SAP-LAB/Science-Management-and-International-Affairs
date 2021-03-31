@@ -41,10 +41,10 @@ namespace MANAGER.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateCriterias(string data, int request_id)
+        public ActionResult UpdateCriterias(string data, int request_id, string comment)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            DetailRepos.UpdateCriterias(data, request_id, CurrentAccount.AccountID(Session));
+            DetailRepos.UpdateCriterias(data, request_id, CurrentAccount.AccountID(Session), comment);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
@@ -55,10 +55,10 @@ namespace MANAGER.Controllers
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
-        public ActionResult UpdateCosts(string data, int request_id)
+        public ActionResult UpdateCosts(string data, int request_id, string comment)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            DetailRepos.UpdateCosts(data, request_id, CurrentAccount.AccountID(Session));
+            DetailRepos.UpdateCosts(data, request_id, CurrentAccount.AccountID(Session), comment);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
