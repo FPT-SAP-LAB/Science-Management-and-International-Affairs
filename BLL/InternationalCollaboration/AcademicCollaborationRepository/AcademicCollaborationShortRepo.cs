@@ -31,7 +31,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         where pr.direction_id = @direction	
                         group by pr.procedure_id, ac.full_name,  pr.article_id) as a 
                         join IA_Article.ArticleVersion atv on a.article_id = atv.article_id 
-                        and a.language_id = atv.language_id ";
+                        and a.language_id = atv.language_id";
                 if (!String.IsNullOrEmpty(title))
                 {
                     sql += " where atv.version_title LIKE @title";
@@ -41,10 +41,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging, new SqlParameter("language", language),
+                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging,
                     new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).ToList();
 
-                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql, new SqlParameter("language", language),
+                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql,
                     new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).Count();
 
                 return new BaseServerSideData<ProcedureInfoManager>(obj, totalRecord);
