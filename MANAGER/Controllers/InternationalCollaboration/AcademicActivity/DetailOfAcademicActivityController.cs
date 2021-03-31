@@ -15,7 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         DetailOfAcademicActivityRepo repo;
         FormRepo formRepo;
         AcademicActivityPhaseRepo phaseRepo;
-        [Auther(RightID = "3")]
+        //[Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
             repo = new DetailOfAcademicActivityRepo();
@@ -224,11 +224,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
             return Json(data);
-        }
-        public class QuantityByUnit
-        {
-            public string name { get; set; }
-            public int quantity { get; set; }
         }
     }
 }
