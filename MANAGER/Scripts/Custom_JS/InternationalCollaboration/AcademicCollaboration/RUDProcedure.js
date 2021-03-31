@@ -2,8 +2,13 @@
 var procedure_id_load;
 
 //delete procedure======================================================================
-function confirm_delete_procedure(article_id) {
-    var id = { article_id: article_id }
+$(document).on('click', '#delete_procedure', function () {
+    let id = $(this).data('id');
+    confirm_delete_procedure(id);
+});
+
+function confirm_delete_procedure(procedure_id) {
+    var id = { procedure_id: procedure_id }
     Swal.fire({
         title: "Xác nhận xóa",
         text: "Có muốn xóa bản ghi này",
@@ -38,6 +43,11 @@ function confirm_delete_procedure(article_id) {
 //delete procedure======================================================================
 
 //load edit procedure===================================================================
+$("#edit_procedure").on('show.bs.modal', function (e) {
+    let id = $(e.relatedTarget).data('id');
+    load_procedure_detail(id);
+});
+
 function load_procedure_detail(procedure_id) {
     procedure_id_load = procedure_id
     var id = { procedure_id: procedure_id }
@@ -50,7 +60,6 @@ function load_procedure_detail(procedure_id) {
             $('#edit_procedure_title').val(data.json.procedure_name)
             $('#edit_summernote').summernote('code', data.json.content)
             $('#edit_procedure_language').val(data.json.language_id).trigger('change')
-            $("#edit_procedure").modal("show")
         }
     })
 }
