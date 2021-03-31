@@ -29,18 +29,8 @@ namespace BLL.ScienceManagement.Researcher
                     profile.country_id = nationality;
                     db.SaveChanges();
                     ///////////////////////////////////////////////////////
-                    List<int> title_ids = new List<int>();
-                    foreach (var i in editInfo["info"]["title"])
-                    {
-                        title_ids.Add((int)i["id"]);
-                    }
-                    List<Title> titles = db.Titles.Where(x => title_ids.Contains(x.title_id)).ToList<Title>();
-                    //profile.Titles.Clear();
-                    //foreach (Title t in titles)
-                    //{
-                    //    profile.Titles.Add(t);
-                    //}
-                    //db.SaveChanges();
+                    profile.title_id = (int)editInfo["info"]["title"][0]["id"];
+                    db.SaveChanges();
                     ///////////////////////////////////////////////////////
                     List<int> position_ids = new List<int>();
                     foreach (var i in editInfo["info"]["position"])
@@ -48,12 +38,23 @@ namespace BLL.ScienceManagement.Researcher
                         position_ids.Add((int)i["id"]);
                     }
                     List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList();
-                    //profile.Positions.Clear();
-                    //foreach (Position p in positions)
-                    //{
-                    //    profile.Positions.Add(p);
-                    //}
-                    //db.SaveChanges();
+                    List<PeoplePosition> currentPositions = db.PeoplePositions.Where(x => x.people_id == id).ToList();
+                    foreach(PeoplePosition p in currentPositions)
+                    {
+                        db.PeoplePositions.Remove(p);
+                    }
+                    db.SaveChanges();
+                    foreach (Position p in positions)
+                    {
+                        profile.PeoplePositions.Add(new PeoplePosition()
+                        {
+                            people_id = id,
+                            position_id = p.position_id,
+                            Position = p,
+                            Profile = profile
+                        });
+                    }
+                    db.SaveChanges();
                     //////////////////////////////////////////////////////
                     string birthdate = (string)editInfo["info"]["dob"];
                     string phone = (string)editInfo["info"]["phone"];
