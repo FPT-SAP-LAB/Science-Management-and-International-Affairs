@@ -263,7 +263,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 repo = new DetailOfAcademicActivityRepo();
                 AlertModal<ActivityPartner_Ext> alertModal = repo.getActivityPartner(activity_partner_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
