@@ -32,7 +32,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         left join General.Country c on c.country_id = pn.country_id
                         join General.People pp on collab.people_id = pp.people_id
                         left join General.[Profile] pf on pf.people_id = pp.people_id
-                        left join General.Office offi on pf.office_id = offi.office_id
+                        left join General.Office offi on pp.office_id = offi.office_id
                         join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
 		                        from
 		                        (select csh1.collab_id, MAX(csh1.change_date) 'change_date'
@@ -71,7 +71,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 left join General.Country c on c.country_id = pn.country_id
                                                                 join General.People pp on collab.people_id = pp.people_id
                                                                 left join General.[Profile] pf on pf.people_id = pp.people_id
-                                                                left join General.Office offi on pf.office_id = offi.office_id
+                                                                left join General.Office offi on pp.office_id = offi.office_id
                                                                 join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
 		                                                                from
 		                                                                (select csh1.collab_id, MAX(csh1.change_date) 'change_date'
@@ -664,7 +664,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             left join General.Country c on c.country_id = pn.country_id
                             join General.People pp on collab.people_id = pp.people_id 
                             left join General.[Profile] pf on pf.people_id = pp.people_id
-                            left join General.Office offi on pf.office_id = offi.office_id
+                            left join General.Office offi on pp.office_id = offi.office_id
                             join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date, csh2.file_id, csh2.file_name, csh2.file_link, csh2.file_drive_id
 		                            from 
 		                            (select csh1.collab_id, MAX(csh1.change_date) 'change_date' 
