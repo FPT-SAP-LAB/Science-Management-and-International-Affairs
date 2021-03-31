@@ -1,6 +1,7 @@
 ﻿using ENTITIES;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -151,10 +152,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select f.title as 'f_title',f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id from SMIA_AcademicActivity.AcademicActivityPhase aap
+                string sql = @"select f.title as 'f_title',f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id,cast(q.is_changeable as int) as 'is_changeable' from SMIA_AcademicActivity.AcademicActivityPhase aap
                                 inner join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
                                 inner join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
-                                where f.phase_id = @phase_id";
+                                where f.phase_id = @phase_id order by q.is_changeable";
                 List<baseFrom> data = db.Database.SqlQuery<baseFrom>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 List<int> quesOp = data.Where(x => x.answer_type_id == 3 || x.answer_type_id == 5).Select(y => y.question_id).ToList();
                 string list_option = "";
@@ -162,7 +163,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     list_option += i + ",";
                 }
-                list_option = list_option.Remove(list_option.Length - 1);
+                if(!String.IsNullOrEmpty(list_option))
+                    list_option = list_option.Remove(list_option.Length - 1);
                 List<QuesOption> quesOptions = new List<QuesOption>();
                 if (!String.IsNullOrEmpty(list_option))
                 {
@@ -181,21 +183,60 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new fullForm();
             }
         }
-        public bool sendForm(int fid, string answer)
+        public bool sendForm(int fid, string answer, AnswerUnchange unchange)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Participants.Add(new Participant
+                    {
+                        participant_role_id = unchange.participant_role_id,
+                        participant_name = unchange.participant_name,
+                        email = unchange.email,
+                        participant_number = unchange.participant_number,
+                        office_id = unchange.office_id
+                    });
+                    db.Responses.Add(new Response
+                    {
+                        form_id = fid,
+                        answer = answer
+                    });
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        public List<ParticipantRole> GetParticipantRoleByPhase(int phase_id)
         {
             try
             {
-                db.Responses.Add(new Response
-                {
-                    form_id = fid,
-                    answer = answer
-                });
-                db.SaveChanges();
-                return true;
+                string sql = @"select pr.* from SMIA_AcademicActivity.AcademicActivityPhase aap
+                                    inner join SMIA_AcademicActivity.ParticipantRole pr on pr.phase_id = aap.phase_id
+                                    where aap.phase_id = @phase_id";
+                List<ParticipantRole> data = db.Database.SqlQuery<ParticipantRole>(sql, new SqlParameter("phase_id", phase_id)).ToList();
+                return data;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                return false;
+                return new List<ParticipantRole>();
+            }
+        }
+        public List<Office> getOffices()
+        {
+            try
+            {
+                List<Office> data = db.Offices.ToList();
+                return data;
+            }catch(Exception e)
+            {
+                return new List<Office>();
             }
         }
         public class activityType
@@ -222,6 +263,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string title { get; set; }
             public int is_compulsory { get; set; }
             public int answer_type_id { get; set; }
+            public int is_changeable { get; set; }
         }
         public class QuesOption
         {
@@ -239,6 +281,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int id { get; set; }
             public string name { get; set; }
             public string content { get; set; }
+        }
+        public class AnswerUnchange
+        {
+            public int participant_role_id { get; set; }
+            public string participant_name { get; set; }
+            public string email { get; set; }
+            public string participant_number { get; set; }
+            public int office_id { get; set; }
         }
     }
 }

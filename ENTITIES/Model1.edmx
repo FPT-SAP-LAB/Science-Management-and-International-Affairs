@@ -1231,6 +1231,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="answer_type_id" Type="int" Nullable="false" />
           <Property Name="is_compulsory" Type="bit" Nullable="false" />
+          <Property Name="is_changeable" Type="bit" />
         </EntityType>
         <EntityType Name="QuestionOption">
           <Key>
@@ -3032,7 +3033,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionO__quest__24134F1B">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="QuestionOption" Type="Self.QuestionOption" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -6112,6 +6115,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="answer_type_id" Type="Int32" Nullable="false" />
           <Property Name="is_compulsory" Type="Boolean" Nullable="false" />
+          <Property Name="is_changeable" Type="Boolean" />
           <NavigationProperty Name="AnswerType" Relationship="Self.FK__Question__answer__5772F790" FromRole="Question" ToRole="AnswerType" />
           <NavigationProperty Name="Form" Relationship="Self.FK__Question__form_i__345EC57D" FromRole="Question" ToRole="Form" />
           <NavigationProperty Name="QuestionOption" Relationship="Self.FK__QuestionO__quest__24134F1B" FromRole="Question" ToRole="QuestionOption" />
@@ -8382,7 +8386,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionO__quest__24134F1B">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="QuestionOption" Type="Self.QuestionOption" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -10575,6 +10581,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="answer_type_id" ColumnName="answer_type_id" />
                 <ScalarProperty Name="is_compulsory" ColumnName="is_compulsory" />
+                <ScalarProperty Name="is_changeable" ColumnName="is_changeable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
