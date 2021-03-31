@@ -61,9 +61,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [HttpPost]
-        public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to)
+        public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to,HttpPostedFileBase img)
         {
-            bool res = repo.updateBaseAA(id, activity_type_id, activity_name, location, from, to, 1);
+            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, 1, img);
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);

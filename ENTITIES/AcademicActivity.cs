@@ -27,9 +27,10 @@ namespace ENTITIES
         public int activity_id { get; set; }
         public Nullable<System.DateTime> activity_date_start { get; set; }
         public Nullable<System.DateTime> activity_date_end { get; set; }
+        public Nullable<int> file_id { get; set; }
         public int activity_type_id { get; set; }
-        public string image { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
