@@ -220,16 +220,17 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     Procedure procedure = db.Procedures.Find(procedureInfoManager.procedure_id);
 
                     Article article = db.Articles.Find(procedure.article_id);
-                    if(article != null)
+                    if (article != null)
                     {
                         article.account_id = account_id;
                     }
                     ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == procedure.article_id && x.language_id == procedureInfoManager.language_id).FirstOrDefault();
-                    if(articleVersion != null)
+                    if (articleVersion != null)
                     {
                         articleVersion.article_content = procedureInfoManager.content;
                         articleVersion.version_title = procedureInfoManager.procedure_name;
-                    }else
+                    }
+                    else
                     {
                         articleVersion = new ArticleVersion
                         {
