@@ -417,6 +417,9 @@
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
   </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Đăng ký tham dự</value>
+  </data>
   <data name="RegistrationDeadline" xml:space="preserve">
     <value>Thời hạn đăng ký</value>
   </data>
