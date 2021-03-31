@@ -580,7 +580,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 });
             }
         }
-        
+
         [HttpPost]
         public ActionResult DeleteProcedure(int procedure_id)
         {

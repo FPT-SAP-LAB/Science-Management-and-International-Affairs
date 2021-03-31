@@ -41,10 +41,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging, 
+                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging,
                     new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).ToList();
 
-                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql, 
+                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql,
                     new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).Count();
 
                 return new BaseServerSideData<ProcedureInfoManager>(obj, totalRecord);

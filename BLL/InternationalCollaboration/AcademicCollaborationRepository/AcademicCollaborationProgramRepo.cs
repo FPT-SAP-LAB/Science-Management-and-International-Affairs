@@ -48,7 +48,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 List<ProgramInfoManager> obj = db.Database.SqlQuery<ProgramInfoManager>(sql + paging, direction,
                     collab_type_id, duration, title == null ? "%%" : "%" + title + "%").ToList();
 
-                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql, direction, collab_type_id, duration, 
+                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql, direction, collab_type_id, duration,
                     title == null ? "%%" : "%" + title + "%").Count();
 
                 return new BaseServerSideData<ProgramInfoManager>(obj, totalRecord);
