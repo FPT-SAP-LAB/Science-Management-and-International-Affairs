@@ -159,7 +159,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
                     av.version_title = activity_name;
                     db.SaveChanges();
-                    if(aa.file_id == null)
+                    if (aa.file_id == null)
                     {
                         Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
                         File file = new File();
@@ -173,7 +173,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     else
                     {
-                        Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream,img.ContentType,aa.File.file_drive_id);
+                        Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aa.File.file_drive_id);
                         File f = db.Files.Find(aa.file_id);
                         f.name = img.FileName;
                         db.Entry(f).State = EntityState.Modified;
