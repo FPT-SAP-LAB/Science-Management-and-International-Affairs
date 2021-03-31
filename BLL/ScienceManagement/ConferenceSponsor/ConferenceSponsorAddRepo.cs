@@ -202,7 +202,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
 
-                    ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id);
+                    ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id, "Người đề nghị");
 
                     foreach (var item in policy.Criteria)
                     {

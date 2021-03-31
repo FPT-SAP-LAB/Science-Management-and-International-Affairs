@@ -37,7 +37,18 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     if (temp != null)
                     {
-                        conference.conference_id = temp.conference_id;
+                        request.conference_id = temp.conference_id;
+                        if (!temp.is_verified)
+                        {
+                            temp.website = conference.website;
+                            temp.keynote_speaker = conference.keynote_speaker;
+                            temp.qs_university = conference.qs_university;
+                            temp.country_id = conference.country_id;
+                            temp.time_start = conference.time_start;
+                            temp.time_end = conference.time_end;
+                            temp.formality_id = conference.formality_id;
+                            temp.co_organized_unit = conference.co_organized_unit;
+                        }
                     }
                     else
                     {
