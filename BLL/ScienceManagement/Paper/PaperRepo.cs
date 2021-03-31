@@ -35,25 +35,34 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
+        public Person getAuthorReceived_all(string id)
+        {
+            int paper_id = Int32.Parse(id);
+            Person p = (from a in db.RequestPapers
+                        join b in db.People on a.author_received_rewward equals b.people_id
+                        where a.paper_id == paper_id
+                        select b).FirstOrDefault();
+            return p;
+        }
+
         public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, pro.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
-	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-	                            left join [SM_MasterData].Title t on pt.title_id = t.title_id
+	                            left join [General].Profile pro on po.people_id = pro.people_id
+	                            left join [SM_MasterData].Title t on pro.title_id = t.title_id
 	                            left join [Localization].TitleLanguage tl on t.title_id = tl.title_id
 	                            left join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            left join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            left join [General].Profile pro on po.people_id = pro.people_id
 	                            left join [General].Office o on po.office_id = o.office_id
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
             List<AuthorInfoWithNull> list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             foreach (var item in list)
             {
-                item.title_strring = item.title_name;
-                if (item.is_reseacher == true) item.title_strring += ", Nghiên cứu viên";
+                item.title_string = item.title_name;
+                if (item.is_reseacher == true) item.title_string += ", Nghiên cứu viên";
             }
             return list;
         }
@@ -108,12 +117,20 @@ namespace BLL.ScienceManagement.Paper
             return ba;
         }
 
-        public string addRequestPaper(int request_id, RequestPaper r)
+        public string addRequestPaper(int request_id, RequestPaper r, string daidien)
         {
             try
             {
                 r.request_id = request_id;
                 r.status_id = 3;
+                if (r.reward_type == "Canhan")
+                {
+                    Person p = (from a in db.People
+                                join b in db.Profiles on a.people_id equals b.people_id
+                                where b.mssv_msnv == daidien
+                                select a).FirstOrDefault();
+                    r.author_received_rewward = p.people_id;
+                }
                 db.RequestPapers.Add(r);
                 db.SaveChanges();
                 return "ss";
@@ -123,6 +140,16 @@ namespace BLL.ScienceManagement.Paper
                 Console.WriteLine(e.Message);
                 return null;
             }
+        }
+
+        public string getAuthorReceived(string id)
+        {
+            int paper_id = Int32.Parse(id);
+            string ms = (from a in db.RequestPapers
+                         join b in db.Profiles on a.author_received_rewward equals b.people_id
+                         where a.paper_id == paper_id
+                         select b.mssv_msnv).FirstOrDefault();
+            return ms;
         }
 
         public string addAuthor(List<AddAuthor> list, string paper_id)
@@ -163,6 +190,7 @@ namespace BLL.ScienceManagement.Paper
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
                             pro.is_reseacher = item.is_reseacher;
+                            pro.title_id = item.title_id;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
@@ -513,7 +541,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people)
+        public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             try
             {
@@ -524,7 +552,18 @@ namespace BLL.ScienceManagement.Paper
                                         .Where(x => x.people_id == item.people_id)
                                         .FirstOrDefault();
                     ap.money_reward = item.money_reward;
+                    ap.money_reward_in_decision = item.money_reward;
                 }
+                if (paper.reward_type == "Canhan")
+                {
+                    int people_id = Int32.Parse(id);
+                    AuthorPaper ap = db.AuthorPapers
+                                       .Where(x => x.paper_id == paper.paper_id)
+                                       .Where(x => x.people_id == people_id)
+                                       .FirstOrDefault();
+                    ap.money_reward_in_decision = paper.total_reward;
+                }
+
                 db.SaveChanges();
                 return "ss";
             }
@@ -537,7 +576,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<WaitDecisionPaper> getListWwaitDecision(string type)
         {
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -546,7 +585,7 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on o.office_id = po.office_id
                             where rp.status_id = 4 and rp.type = @type
-                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id";
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
             return list;
         }
@@ -574,7 +613,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Apendix_3> getListAppendix3_4(string type)
         {
-            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, sum(ap.money_reward) as 'sum_money'
+            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, sum(ap.money_reward_in_decision) as 'sum_money'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id

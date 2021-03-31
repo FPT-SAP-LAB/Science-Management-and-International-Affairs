@@ -208,13 +208,25 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [HttpPost]
-        public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data)
+        public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             formRepo = new FormRepo();
-            bool res = formRepo.updateForm(data);
+            bool res = formRepo.updateForm(data, data_unchange);
             if (res)
             {
                 return Json("Lưu mẫu đăng ký thành công");
+            }
+            else
+                return Json(String.Empty);
+        }
+        [HttpPost]
+        public JsonResult deleteForm(int phase_id)
+        {
+            formRepo = new FormRepo();
+            bool res = formRepo.deleteForm(phase_id);
+            if (res)
+            {
+                return Json("Xóa mẫu đăng ký thành công");
             }
             else
                 return Json(String.Empty);
@@ -224,11 +236,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
             return Json(data);
-        }
-        public class QuantityByUnit
-        {
-            public string name { get; set; }
-            public int quantity { get; set; }
         }
     }
 }
