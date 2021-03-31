@@ -36,9 +36,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                MOUBasicInfo data = mou.getBasicInfoMOU(int.Parse(id));
-                return Json(data, JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    MOUBasicInfo data = mou.getBasicInfoMOU(int.Parse(id));
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -50,9 +57,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                List<ExtraMOU> listExMOU = mou.listAllExtraMOU(int.Parse(id));
-                return Json(new { success = true, data = listExMOU }, JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    List<ExtraMOU> listExMOU = mou.listAllExtraMOU(int.Parse(id));
+                    return Json(new { success = true, data = listExMOU }, JsonRequestBehavior.AllowGet);
+                } 
             }
             catch (Exception ex)
             {
@@ -77,9 +91,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.editMOUBasicInfo(int.Parse(id), input);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.editMOUBasicInfo(int.Parse(id), input);
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -104,9 +125,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string mou_id = Session["mou_detail_id"].ToString();
-                ExMOUAdd mouObj = mou.getExtraMOUDetail(mou_bonus_id, int.Parse(mou_id));
-                return Json(mouObj, JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                } 
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    ExMOUAdd mouObj = mou.getExtraMOUDetail(mou_bonus_id, int.Parse(mou_id));
+                    return Json(mouObj, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -118,9 +146,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                string ExMOUCode = mou.getNewExtraMOUCode(int.Parse(id));
-                return Json(ExMOUCode);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    string ExMOUCode = mou.getNewExtraMOUCode(int.Parse(id));
+                    return Json(ExMOUCode);
+                }
             }
             catch (Exception ex)
             {
@@ -132,9 +167,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.addExtraMOU(input, int.Parse(id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.addExtraMOU(input, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
