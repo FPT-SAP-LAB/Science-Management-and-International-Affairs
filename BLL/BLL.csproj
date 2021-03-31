@@ -105,6 +105,7 @@
     <Compile Include="Admin\RightRepo.cs" />
     <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\LoginRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExpenseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityPhaseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\FormRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
+    <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
     <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
+    <Compile Include="ScienceManagement\Researcher\ResearcherCandidateRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersDetailRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />

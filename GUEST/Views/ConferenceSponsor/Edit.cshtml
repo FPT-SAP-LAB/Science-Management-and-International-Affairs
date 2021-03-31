@@ -746,10 +746,6 @@
             });
             fd.append("request_id", @ConferenceDetail.RequestID)
 
-            fd.append("input", JSON.stringify(this.data));
-            for (var pair of fd.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
             save_loader.startLoading();
             $.ajax({
                 url: "/ConferenceSponsor/Edit",

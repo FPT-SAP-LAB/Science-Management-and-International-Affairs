@@ -420,6 +420,9 @@
   <data name="Record" xml:space="preserve">
     <value>record</value>
   </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
   <data name="RegistrationDeadline" xml:space="preserve">
     <value>Registration Deadline</value>
   </data>
