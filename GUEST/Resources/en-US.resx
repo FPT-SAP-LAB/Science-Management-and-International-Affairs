@@ -270,6 +270,9 @@
   <data name="Invention" xml:space="preserve">
     <value>Invention patent</value>
   </data>
+  <data name="isReseacher" xml:space="preserve">
+    <value>Is reseacher</value>
+  </data>
   <data name="Jan" xml:space="preserve">
     <value>January</value>
   </data>

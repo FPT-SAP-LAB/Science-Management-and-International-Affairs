@@ -17,6 +17,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         ResearchersDetailRepo researcherDetailRepo;
         ResearchersBiographyRepo researcherBiographyRepo;
         EditResearcherInfoRepo researcherEditResearcherInfo;
+        ResearcherCandidateRepo researcherCandidate;
         // GET: Researchers
 
         public ActionResult List()
@@ -30,6 +31,24 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
                 BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable);
+                for (int i = 0; i < output.Data.Count; i++)
+                {
+                    output.Data[i].rowNum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = e.Message });
+            }
+        }
+        public JsonResult GetListCandidate()
+        {
+            try
+            {
+                researcherCandidate = new ResearcherCandidateRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
