@@ -1,10 +1,12 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
@@ -238,7 +240,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT p.partner_id ,p.partner_name, cast(FORMAT(ap.cooperation_date_start, 'dd/MM/yyyy') as nvarchar) as 'from',cast(FORMAT(ap.cooperation_date_end, 'dd/MM/yyyy') as nvarchar) as 'to',
+                string sql = @"SELECT ap.activity_partner_id, p.partner_id ,p.partner_name, cast(FORMAT(ap.cooperation_date_start, 'dd/MM/yyyy') as nvarchar) as 'from',cast(FORMAT(ap.cooperation_date_end, 'dd/MM/yyyy') as nvarchar) as 'to',
                                     CONCAT(ap.activity_partner_id,'$',ap.contact_point_name) as 'contact_point' ,ap.sponsor
                                     FROM SMIA_AcademicActivity.ActivityPartner ap inner join IA_Collaboration.PartnerScope mps
                                     on ap.partner_scope_id = mps.partner_scope_id inner join IA_Collaboration.[Partner] p
@@ -281,6 +283,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
+
+        //public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, ActivityPartner activityPartner)
+        //{
+        //    try
+        //    {
+        //        //
+        //    } catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
+
         public class baseDetail
         {
             public string activity_name { get; set; }
@@ -316,6 +330,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public class basePartner
         {
+            public int activity_partner_id { get; set; }
             public int partner_id { get; set; }
             public string partner_name { get; set; }
             public string from { get; set; }

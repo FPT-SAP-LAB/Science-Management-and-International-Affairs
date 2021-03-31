@@ -2132,6 +2132,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom JS\Citation.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicActivity\uppy.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\ChangeCollabStatus.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\Delete.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\StatusHistory.js" />

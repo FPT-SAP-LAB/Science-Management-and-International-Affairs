@@ -214,10 +214,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"-----1.7.1. Check person
-                    select peo.*, pro.office_id, offi.office_name, pro.mssv_msnv
+                    select peo.people_id, peo.name, peo.email, peo.phone_number, peo.office_id, offi.office_name, pro.mssv_msnv
                     from General.People peo
                     left join General.Profile pro on peo.people_id = pro.people_id
-                    left join General.Office offi on offi.office_id = pro.office_id
+                    left join General.Office offi on offi.office_id = peo.office_id
                     where peo.name = @people_name or peo.people_id = @people_id";
                 AcademicCollaborationPerson_Ext person = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
                     new SqlParameter("people_name", people_name),
@@ -839,10 +839,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
                     //decrease reference_count in PartnerScope
                     PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
-                    partnerScope.reference_count -= 1;
+                    if (partnerScope != null) { 
+                        partnerScope.reference_count -= 1;
+                        db.SaveChanges();
+                    }
                     //delete AcademicCollab
                     db.AcademicCollaborations.Remove(academicCollaboration);
                     db.SaveChanges();
+
                     //delete partner_scope records with reference_count = 0
                     if (partnerScope.reference_count <= 0)
                     {
