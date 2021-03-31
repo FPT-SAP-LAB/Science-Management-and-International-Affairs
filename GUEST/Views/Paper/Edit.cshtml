@@ -284,6 +284,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit").val(response.id);
                         $("#ckEdit").val(3);
                         $("#PaperForm").submit();
@@ -297,6 +298,7 @@
         }
 
         $("#edit_submit").click(function () {
+            $("#loading").show();
             var temp = $("#paper_publish_date").val();
             var arr = temp.split('/');
             var dateFormat
@@ -385,7 +387,7 @@
                         add_author_workplace = response.author[i].office_abbreviation;
                         add_author_msnv = response.author[i].mssv_msnv;
                         add_author_name = response.author[i].name;
-                        add_author_title = response.author[i].title_name;
+                        add_author_title = response.author[i].title_strring;
                         add_author_contractType = response.author[i].contract_name;
                         add_author_cmnd = response.author[i].identification_number;
                         add_author_tax = response.author[i].tax_code;
@@ -393,7 +395,8 @@
                         add_author_accno = response.author[i].bank_number;
 
                         var temp_money = response.author[i].money_reward;
-                        add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if (response.author[i].money_reward != null) add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        else add_author_reward = temp_money;
 
                         add_author_note = '';
                         add_author_email = response.author[i].email;
@@ -416,10 +419,11 @@
                             people_id: response.author[i].people_id,
                             temp_id: id,
                             office_abbreviation: response.author[i].office_abbreviation,
+                            is_reseacher: response.author[i].is_reseacher
                         }
                         people.push(AddAuthor);
                     }
-                    if (ck != "4") $(".edit").prop("disabled", true);
+                    if (ck != "5") $(".edit").prop("disabled", true);
                 },
                 error: function () {
                     //alert("fail");

@@ -264,6 +264,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit").val(paper_id);
                         $("#ckEdit").val(3);
                         $("#PaperForm").submit();
@@ -277,10 +278,12 @@
 
         var files_data = [];
         $("#submitPaper").click(function () {
+            $("#loading").show();
             //let fd = new FormData();
             var ck = true;
             $(".notnull").each(function () {
                 if ($(this).val() == "") {
+                    $("#loading").hide();
                     toastr.error("Cần nhập đầy đủ các trường có dấu *");
                     ck = false;
                     return false;
@@ -288,6 +291,7 @@
             });
             if (people.length == 0) {
                 ck = false;
+                $("#loading").hide();
                 toastr.error("Chưa có tác giả");
             }
             if (ck) {
@@ -300,7 +304,8 @@
                     journal_name: $("#paper_journal").val(),
                     vol: $("#paper_vol").val(),
                     page: $("#paper_page").val(),
-                    company: $("#paper_publish_name").val()
+                    company: $("#paper_publish_name").val(),
+                    index: $("#paper_index").val()
                 };
                 var inputs = $(".tieuchiname");
                 var inputs2 = $(".tieuchilink");

@@ -183,6 +183,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit2").val(response.id);
                         $("#ckEdit2").val(3);
                         $("#InvenForm").submit();
@@ -195,15 +196,18 @@
         };
 
         $("#btn-submit").click(function () {
+            $("#loading").show();
             var ck = true;
             $(".notnull").each(function () {
                 if ($(this).val() == "") {
+                    $("#loading").hide();
                     toastr.error("Cần nhập đầy đủ các trường có dấu *");
                     ck = false;
                     return false;
                 }
             });
             if (people.length == 0) {
+                $("#loading").hide();
                 ck = false;
                 toastr.error("Chưa có tác giả");
             }
@@ -211,6 +215,7 @@
                 var name = $("#inven_name").val();
                 formData = new FormData();
                 if (uppy1.getFiles()[0] == undefined) {
+                    $("#loading").hide();
                     toastr.error("Thiếu file bằng sáng chế");
                     return false;
                 }

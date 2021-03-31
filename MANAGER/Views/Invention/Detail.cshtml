@@ -135,7 +135,7 @@
         <hr />
         <div class="row justify-content-center">
             <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="">Yêu cầu chỉnh sửa</button>
+            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
         </div>
     </div>
 </div>
@@ -206,9 +206,42 @@
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
+
+        $("#editconfirm").click(function () {
+            $("#loading").show();
+            var inven_id = "@ViewBag.item.invention_id";
+                    var request_id = "@ViewBag.item.request_id";
+            var inven = {
+                invention_id: inven_id,
+                request_id: request_id
+            };
+            $.ajax({
+                url: "@Url.Action("changeStatus", "Invention")",
+                type: "POST",
+                data: JSON.stringify({ 'inven': inven }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#loading").hide();
+                        window.location.href = "/Invention/Pending";
+                        //editRequest();
+                        //alert(response.mess);
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $("#confirmbtn").click(function () {
+            $("#loading").show();
             var temp = $("#totalreward").val();
             if (temp == "") {
+                $("#loading").hide();
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
                 check = false;
             } else {
@@ -219,6 +252,7 @@
                         var value = $(this).text();
                         //console.log(value);
                         if (value == "") {
+                            $("#loading").hide();
                             toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                             check = false;
                             return false;
@@ -271,8 +305,10 @@
                         cache: false,
                         success: function (response) {
                             if (response.mess == "ss") {
+                                $("#loading").hide();
+                                window.location.href = "/Invention/Pending";
                                 //editRequest();
-                                alert(response.mess);
+                                //alert(response.mess);
                             }
                             else alert('loi');
                         },

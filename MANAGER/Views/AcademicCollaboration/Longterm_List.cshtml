@@ -136,7 +136,7 @@
                             <li class="nav-item">
                                 <a href="#ltc_describe_content" class="nav-link" data-toggle="modal">Chỉnh sửa nội dung miêu tả</a>
                             </li>
-                            @*modal going content*@
+                            @*modal coming content*@
                             @{
                                 Html.RenderPartial("PartialView/Long_Term_Coming_Modal_Description");
                             }
@@ -198,6 +198,7 @@
 @section scripts{
     @*datepicker and range*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
+    @**@
     @*//////////////////////////////////////////////////UPDATE LONG-TERM CONTENT//////////////////////////////////////////////////*@
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/UpdateContent.js"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/AcademicCollaboration/LongTerm/Coming/UpdateContent.js"></script>
@@ -230,6 +231,13 @@
     @*upload file*@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Scripts/Custom_JS/InternationalCollaboration/uppy.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
+        });
+    </script>
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({

@@ -9,27 +9,26 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8 mb-4">
                         <label class="font-weight-bolder">Tiêu đề</label>
-                        <input value="Thủ tục hỗ trợ cán bộ đi" class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_procedure_title" />
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_procedure_title" />
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">Ngôn ngữ</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control text-center procedure_language" id="edit_procedure_language" name="param" style="width:100% !important">
-                                <option label="Label"></option>
-                                <option value="1" selected>Tiếng Việt</option>
+                                <option value="1">Tiếng Việt</option>
                                 <option value="2">English</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Nội dung</label>
-                        <div class="summernote"></div>
+                        <div id="edit_summernote" class="summernote"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-sm btn-light-success px-6">Lưu</button>
+                <button type="button" class="load-btn btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="load-btn btn btn-sm btn-light-success " id="save_edit_procedure">Lưu</button>
             </div>
         </div>
     </div>

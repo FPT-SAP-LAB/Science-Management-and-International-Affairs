@@ -18,6 +18,7 @@
                 success: function (data) {
                     if (data.success) {
                         collab_going_table.ajax.reload();
+                        collab_coming_table.ajax.reload();
                         Swal.fire(data.title, data.content, "success");
                     } else {
                         Swal.fire(data.title, data.content, "error");

@@ -21,10 +21,10 @@ namespace BLL.ScienceManagement.Invention
         {
             DetailInvention item = new DetailInvention();
             string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file'
-                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
+                           from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [General].[File] f on f.file_id = i.file_id
-                            where i.invention_id = @id";
+                           where i.invention_id = @id";
             item = db.Database.SqlQuery<DetailInvention>(sql, new SqlParameter("id", id)).FirstOrDefault();
             return item;
         }
@@ -46,7 +46,7 @@ namespace BLL.ScienceManagement.Invention
         public List<AuthorInfoWithNull> getAuthor(string id)
         {
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ai.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
 	                            join [General].People po on ai.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -55,11 +55,29 @@ namespace BLL.ScienceManagement.Invention
 	                            left join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            left join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
 	                            left join [General].Profile pro on pro.people_id = po.people_id
-	                            left join [General].Office o on pro.office_id = o.office_id
+	                            left join [General].Office o on po.office_id = o.office_id
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where i.invention_id = @id";
             list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             return list;
+        }
+
+        public string changeStatus(DetailInvention inven)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                ri.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                dbc.Rollback();
+                return "ff";
+            }
         }
 
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
@@ -185,6 +203,7 @@ namespace BLL.ScienceManagement.Invention
                         Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
                         p.name = item.name;
                         p.phone_number = item.phone_number;
+                        p.office_id = item.office_id;
                         if (item.office_abbreviation != "Khác")
                         {
                             Profile pro = (from a in db.Profiles
@@ -195,18 +214,17 @@ namespace BLL.ScienceManagement.Invention
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
-                            pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " update [SM_Researcher].PeopleTitle set title_id = @title" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.contract_id);
-                            listParam1.Add(tempParam2);
+                            //    tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            //    SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            //    listParam1.Add(tempParam2);
 
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, item.people_id);
+                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
                         }
                     }
@@ -228,8 +246,8 @@ namespace BLL.ScienceManagement.Invention
                 }
                 strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
                 string sql = @"select po.people_id, pro.mssv_msnv
-                            from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
-                            where po.email in (" + strAppend + ")";
+                           from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
+                           where po.email in (" + strAppend + ")";
                 List<AuthorInfo> listAuthor = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).ToList();
                 foreach (var item in listAuthor)
                 {
@@ -333,10 +351,10 @@ namespace BLL.ScienceManagement.Invention
         public List<PendingInvention_Manager> getListPending()
         {
             string sql = @"select i.name, acc.email, br.created_date, i.invention_id
-                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
+                           from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
 	                            join [General].Account acc on acc.account_id = br.account_id
-                            where ri.status_id = 3";
+                           where ri.status_id = 3";
             List<PendingInvention_Manager> list = db.Database.SqlQuery<PendingInvention_Manager>(sql).ToList();
             return list;
         }
@@ -389,7 +407,7 @@ namespace BLL.ScienceManagement.Invention
 	                            join [General].Account acc on br.account_id = acc.account_id
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
                             where ri.status_id = 4
                             group by i.name, it.name, po.name, pro.mssv_msnv, o.office_abbreviation, ri.request_id";

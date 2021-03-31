@@ -226,6 +226,7 @@
         var uppy1, uppy2;
         var formdata;
         $("#btn_submit").click(function () {
+            $("#loading").show();
             formData = new FormData();
 
             var number = $("#decisionNo").val();
@@ -260,8 +261,10 @@
                 method: "post",
                 complete: function (data) {
                     var mess = data.responseJSON.mess;
-                    alert(mess);
+                    //alert(mess);
                     if (mess == "ss") {
+                        $("#loading").hide();
+                        location.reload();
                     }
                 },
                 error: function () {
