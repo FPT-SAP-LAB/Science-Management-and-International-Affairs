@@ -35,25 +35,25 @@ namespace BLL.ScienceManagement.Researcher
                         title_ids.Add((int)i["id"]);
                     }
                     List<Title> titles = db.Titles.Where(x => title_ids.Contains(x.title_id)).ToList<Title>();
-                    profile.Titles.Clear();
-                    foreach (Title t in titles)
-                    {
-                        profile.Titles.Add(t);
-                    }
-                    db.SaveChanges();
+                    //profile.Titles.Clear();
+                    //foreach (Title t in titles)
+                    //{
+                    //    profile.Titles.Add(t);
+                    //}
+                    //db.SaveChanges();
                     ///////////////////////////////////////////////////////
                     List<int> position_ids = new List<int>();
                     foreach (var i in editInfo["info"]["position"])
                     {
                         position_ids.Add((int)i["id"]);
                     }
-                    List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList<Position>();
-                    profile.Positions.Clear();
-                    foreach (Position p in positions)
-                    {
-                        profile.Positions.Add(p);
-                    }
-                    db.SaveChanges();
+                    List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList();
+                    //profile.Positions.Clear();
+                    //foreach (Position p in positions)
+                    //{
+                    //    profile.Positions.Add(p);
+                    //}
+                    //db.SaveChanges();
                     //////////////////////////////////////////////////////
                     string birthdate = (string)editInfo["info"]["dob"];
                     string phone = (string)editInfo["info"]["phone"];
@@ -115,6 +115,7 @@ namespace BLL.ScienceManagement.Researcher
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     return 0;
                 }
             }
