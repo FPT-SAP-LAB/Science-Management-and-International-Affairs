@@ -55,7 +55,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new DetailOfAcademicActivityRepo.baseForm();
             }
         }
-        public bool updateForm(DetailOfAcademicActivityRepo.baseForm data,List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
+        public bool updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -81,7 +81,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Entry(f).State = EntityState.Modified;
                     }
                     updateQuestion(data, f, quess_id);
-                    foreach(DetailOfAcademicActivityRepo.CustomQuestion cq in data_unchange)
+                    foreach (DetailOfAcademicActivityRepo.CustomQuestion cq in data_unchange)
                     {
                         db.Questions.Add(new Question
                         {
@@ -213,7 +213,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;

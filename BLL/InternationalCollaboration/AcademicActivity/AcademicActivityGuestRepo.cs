@@ -163,7 +163,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     list_option += i + ",";
                 }
-                if(!String.IsNullOrEmpty(list_option))
+                if (!String.IsNullOrEmpty(list_option))
                     list_option = list_option.Remove(list_option.Length - 1);
                 List<QuesOption> quesOptions = new List<QuesOption>();
                 if (!String.IsNullOrEmpty(list_option))
@@ -223,7 +223,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 List<ParticipantRole> data = db.Database.SqlQuery<ParticipantRole>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 return data;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new List<ParticipantRole>();
             }
@@ -234,7 +234,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 List<Office> data = db.Offices.ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<Office>();
             }

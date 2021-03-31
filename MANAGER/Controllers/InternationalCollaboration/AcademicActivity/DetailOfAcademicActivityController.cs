@@ -211,7 +211,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             formRepo = new FormRepo();
-            bool res = formRepo.updateForm(data,data_unchange);
+            bool res = formRepo.updateForm(data, data_unchange);
             if (res)
             {
                 return Json("Lưu mẫu đăng ký thành công");
