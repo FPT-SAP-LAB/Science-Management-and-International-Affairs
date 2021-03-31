@@ -134,6 +134,7 @@
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
+    <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
