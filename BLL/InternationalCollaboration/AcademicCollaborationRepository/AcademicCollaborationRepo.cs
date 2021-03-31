@@ -839,7 +839,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
                     //decrease reference_count in PartnerScope
                     PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
-                    if (partnerScope != null) { 
+                    if (partnerScope != null)
+                    {
                         partnerScope.reference_count -= 1;
                         db.SaveChanges();
                     }

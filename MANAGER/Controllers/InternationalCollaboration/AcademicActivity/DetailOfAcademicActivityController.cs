@@ -237,7 +237,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 //AlertModal<string> alertModal = repo.saveActivityPartner(evidence_file, activityPartner);
                 //return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 return null;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
