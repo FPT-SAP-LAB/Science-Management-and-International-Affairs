@@ -1,93 +1,93 @@
-﻿//using BLL.ScienceManagement.Citation;
-//using BLL.ScienceManagement.MasterData;
-//using ENTITIES.CustomModels;
-//using ENTITIES.CustomModels.ScienceManagement.Citation;
-//using ENTITIES.CustomModels.ScienceManagement.MasterData;
-//using ENTITIES.CustomModels.ScienceManagement.Paper;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-//using System.Web.Mvc;
+﻿using BLL.ScienceManagement.Citation;
+using BLL.ScienceManagement.MasterData;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.Citation;
+using ENTITIES.CustomModels.ScienceManagement.MasterData;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-//namespace MANAGER.Controllers
-//{
-//    public class CitationController : Controller
-//    {
-//        CitationRepo cr = new CitationRepo();
-//        MasterDataRepo mrd = new MasterDataRepo();
-//        // GET: Citation
-//        public ActionResult Pending()
-//        {
-//            ViewBag.title = "Danh sách trích dẫn đang chờ xét duyệt";
-//            List<PendingCitation_manager> listPending = cr.getListPending();
-//            ViewBag.pending = listPending;
+namespace MANAGER.Controllers
+{
+    public class CitationController : Controller
+    {
+        CitationRepo cr = new CitationRepo();
+        MasterDataRepo mrd = new MasterDataRepo();
+        // GET: Citation
+        public ActionResult Pending()
+        {
+            ViewBag.title = "Danh sách trích dẫn đang chờ xét duyệt";
+            List<PendingCitation_manager> listPending = cr.getListPending();
+            ViewBag.pending = listPending;
 
-//            return View();
-//        }
+            return View();
+        }
 
-//        [HttpPost]
-//        public ActionResult Detail(string id)
-//        {
-//            ViewBag.title = "Chi tiết trích dẫn";
-//            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
-//            ViewBag.citation = listCitation;
+        [HttpPost]
+        public ActionResult Detail(string id)
+        {
+            ViewBag.title = "Chi tiết trích dẫn";
+            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
+            ViewBag.citation = listCitation;
 
-//            AuthorInfo author = cr.getAuthor(id);
-//            ViewBag.author = author;
+            AuthorInfo author = cr.getAuthor(id);
+            ViewBag.author = author;
 
-//            List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
-//            ViewBag.title = listTitle;
+            List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
+            ViewBag.title = listTitle;
 
-//            ViewBag.request_id = id;
+            ViewBag.request_id = id;
 
-//            return View();
-//        }
+            return View();
+        }
 
-//        public ActionResult WaitDecision()
-//        {
-//            ViewBag.title = "Các trích dẫn đang chờ quyết định";
-//            List<WaitDecisionCitation> list = cr.getListWait();
-//            ViewBag.wait = list;
+        public ActionResult WaitDecision()
+        {
+            ViewBag.title = "Các trích dẫn đang chờ quyết định";
+            List<WaitDecisionCitation> list = cr.getListWait();
+            ViewBag.wait = list;
 
-//            return View();
-//        }
+            return View();
+        }
 
-//        [HttpPost]
-//        public JsonResult editCitation(string request_id, string total)
-//        {
-//            string mess = cr.updateReward(request_id, total);
-//            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
-//        }
+        [HttpPost]
+        public JsonResult editCitation(string request_id, string total)
+        {
+            string mess = cr.updateReward(request_id, total);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
 
-//        [HttpPost]
-//        public JsonResult uploadDecision(HttpPostedFileBase file, string number, string date)
-//        {
-//            string[] arr = date.Split('/');
-//            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
-//            DateTime date_format = DateTime.Parse(format);
+        [HttpPost]
+        public JsonResult uploadDecision(HttpPostedFileBase file, string number, string date)
+        {
+            string[] arr = date.Split('/');
+            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
+            DateTime date_format = DateTime.Parse(format);
 
-//            string name = "QD_" + number + "_" + date;
+            string name = "QD_" + number + "_" + date;
 
-//            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 4, null);
-//            ENTITIES.File fl = new ENTITIES.File
-//            {
-//                link = f.WebViewLink,
-//                file_drive_id = f.Id,
-//                name = name
-//            };
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 4, null);
+            ENTITIES.File fl = new ENTITIES.File
+            {
+                link = f.WebViewLink,
+                file_drive_id = f.Id,
+                name = name
+            };
 
-//            ENTITIES.File myFile = mrd.addFile(fl);
-//            string mess = cr.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
+            ENTITIES.File myFile = mrd.addFile(fl);
+            string mess = cr.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
-//            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
-//        }
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
 
-//        [HttpPost]
-//        public JsonResult changeStatus(string request_id)
-//        {
-//            string mess = cr.changeStatus(request_id);
-//            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
-//        }
-//    }
-//}
+        [HttpPost]
+        public JsonResult changeStatus(string request_id)
+        {
+            string mess = cr.changeStatus(request_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+    }
+}
