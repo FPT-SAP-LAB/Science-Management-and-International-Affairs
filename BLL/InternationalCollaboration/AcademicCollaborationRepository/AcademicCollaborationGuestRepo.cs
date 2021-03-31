@@ -154,9 +154,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
                 List<ProgramInfo> obj = db.Database.SqlQuery<ProgramInfo>(sql + paging, new SqlParameter("language", language),
-                    new SqlParameter("type", type)).ToList();
+                    new SqlParameter("type", type), new SqlParameter("year", year)).ToList();
                 int totalRecord = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
-                    new SqlParameter("type", type)).Count();
+                    new SqlParameter("type", type), new SqlParameter("year", year)).Count();
                 return new BaseServerSideData<ProgramInfo>(obj, totalRecord);
             }
             catch (Exception e)

@@ -1,13 +1,21 @@
-﻿<div class="modal fade" id="describe_content" tabindex="-1" role="dialog" aria-hidden="true">
+﻿<div class="modal fade" id="st_describe_content" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">NỘI DUNG MIÊU TẢ</h3>
+                <h3 class="modal-title">NỘI DUNG MIÊU TẢ TRAO ĐỔI CBGV</h3>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
+                    <div class="col-xl-12 col-lg-12 mb-3">
+                        <select class="form-control text-center" id="st_describe_content_language" name="param" style="width:100% !important">
+                            @foreach (var language in ViewBag.languages)
+                            {
+                                <option value="@language.language_id">@language.language_name</option>
+                            }
+                        </select>
+                    </div>
                     <div class="col-xl-12 col-lg-12">
-                        <textarea id="note" class="form-control" rows="6"></textarea>
+                        <textarea id="st_describe_content_description" class="form-control" rows="6"></textarea>
                     </div>
                 </div>
             </div>

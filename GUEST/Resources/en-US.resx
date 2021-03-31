@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="FPTProcedure" xml:space="preserve">
+    <value>FPT Procedure</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -258,11 +261,17 @@
   <data name="International" xml:space="preserve">
     <value>International</value>
   </data>
+  <data name="InternationalAffair" xml:space="preserve">
+    <value>International Affair</value>
+  </data>
   <data name="InvenName" xml:space="preserve">
     <value>Invention's name</value>
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Invention patent</value>
+  </data>
+  <data name="isReseacher" xml:space="preserve">
+    <value>Is reseacher</value>
   </data>
   <data name="Jan" xml:space="preserve">
     <value>January</value>
@@ -297,6 +306,9 @@
   <data name="Location" xml:space="preserve">
     <value>Location</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="LongTerm" xml:space="preserve">
     <value>Postgraduate Education</value>
   </data>
@@ -320,6 +332,9 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>News</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -352,13 +367,16 @@
     <value>Partner</value>
   </data>
   <data name="PartnerDetail" xml:space="preserve">
-    <value>Partner detail</value>
+    <value>Partner Detail</value>
   </data>
   <data name="PartnerList" xml:space="preserve">
-    <value>Partner list</value>
+    <value>Partner List</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
+  </data>
+  <data name="PartnerProcedure" xml:space="preserve">
+    <value>Partner Procedure</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Patent license date</value>
@@ -401,6 +419,9 @@
   </data>
   <data name="Record" xml:space="preserve">
     <value>record</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registration</value>
   </data>
   <data name="RegistrationDeadline" xml:space="preserve">
     <value>Registration Deadline</value>
@@ -445,13 +466,13 @@
     <value>September</value>
   </data>
   <data name="ShortTerm" xml:space="preserve">
-    <value>Exchange Program</value>
+    <value>Faculty Exchange Program</value>
   </data>
   <data name="ShortTermFPTProgram" xml:space="preserve">
-    <value>FPT Exchange Program</value>
+    <value>FPT Faculty Exchange Program</value>
   </data>
   <data name="ShortTermPartnerProgram" xml:space="preserve">
-    <value>Partner Exchange Program</value>
+    <value>Partner Faculty Exchange Program</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>

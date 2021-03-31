@@ -171,6 +171,8 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
         let phase = 0;
+        let ckin = false;
+        let ckout = false;
         function addModal(id) {
             phase = id;
             $.ajax({
@@ -246,44 +248,54 @@
             });
         });
         function checkIn(id) {
-            $.ajax({
-                url: '/CheckIn/Checkin',
-                data: JSON.stringify({ participant_id: id }),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
-                        $("#main-control table").each(function () {
-                            eval("datatable" + this.id + ".ajax.reload();");
-                        });
-                    } else {
-                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+            if (!ckout) {
+                ckin = true;
+                $.ajax({
+                    url: '/CheckIn/Checkin',
+                    data: JSON.stringify({ participant_id: id }),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        if (data != '') {
+                            toastr.success(data);
+                            $("#main-control table").each(function () {
+                                eval("datatable" + this.id + ".ajax.reload();");
+                            });
+                            ckin = false;
+                        } else {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            ckin = false;
+                        }
+                    },
+                    error: function (data) {
                     }
-                },
-                error: function (data) {
-                }
-            });
+                });
+            }
         }
         function checkOut(id) {
-            $.ajax({
-                url: '/CheckIn/Checkout',
-                data: JSON.stringify({ participant_id: id }),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
-                        $("#main-control table").each(function () {
-                            eval("datatable" + this.id + ".ajax.reload();");
-                        });
-                    } else {
-                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+            if (!ckin) {
+                ckout = true;
+                $.ajax({
+                    url: '/CheckIn/Checkout',
+                    data: JSON.stringify({ participant_id: id }),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        if (data != '') {
+                            toastr.success(data);
+                            $("#main-control table").each(function () {
+                                eval("datatable" + this.id + ".ajax.reload();");
+                            });
+                            ckout = false;
+                        } else {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                            ckout = false;
+                        }
+                    },
+                    error: function (data) {
                     }
-                },
-                error: function (data) {
-                }
-            });
+                });
+            }
         }
         function clearModal(id) {
             $(id).find('input:text, input:password, select')

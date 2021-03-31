@@ -112,12 +112,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            <label>Tên bài báo <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo" value="@ConferenceDetail.PaperName">
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Hình thức <span style='color:red'>*</span>:</label>
@@ -204,7 +198,7 @@
                             </div>
                         </div>
                         <div class="pb-5">
-                            <h3 class="mb-10 font-weight-bold text-dark">Danh sách tham dự</h3>
+                            <h3 class="mb-10 font-weight-bold text-dark">Thay đổi danh sách tham dự</h3>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
@@ -224,13 +218,13 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
+                                                <input disabled type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
                                             </td>
                                             <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
+                                                <input disabled type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
                                             </td>
                                             <td>
-                                                <select class="form-control selectOffice">
+                                                <select disabled class="form-control selectOffice">
                                                     @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
                                                         <option @(item.office_id == Participants[0].OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
@@ -238,7 +232,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-control selectTitle">
+                                                <select disabled class="form-control selectTitle">
                                                     @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
                                                         <option @(item.title_id == Participants[0].TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
@@ -254,21 +248,21 @@
                             <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
                             @*<div class="row">
-                                <div class="col-md-3">
-                                    <label>Mệnh giá chi phí</label>
-                                    <select class="form-control selectTitle">
-                                        <option value="VND">VND</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Mệnh giá tổng cộng</label>
-                                    <select class="form-control selectTitle">
-                                        <option value="VND">VND</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                </div>
-                            </div>*@
+                                    <div class="col-md-3">
+                                        <label>Mệnh giá chi phí</label>
+                                        <select class="form-control selectTitle">
+                                            <option value="VND">VND</option>
+                                            <option value="USD">USD</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Mệnh giá tổng cộng</label>
+                                        <select class="form-control selectTitle">
+                                            <option value="VND">VND</option>
+                                            <option value="USD">USD</option>
+                                        </select>
+                                    </div>
+                                </div>*@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
@@ -453,6 +447,9 @@
                                 sizeLabel = "MB";
                             }
                         }
+                        // Chỉ dùng khi thay thế file
+                        $($uploadedList).find(".uppy-list-item:not([data-id])").remove();
+
                         var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                         $uploadedList.append(uploadListHtml);
 
@@ -463,7 +460,7 @@
                     $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                         var itemId = $(this).attr('data-id');
                         uppy1.removeFile(itemId);
-                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        $(this).closest(".uppy-list-item").remove();
                     });
                 }
 
@@ -530,6 +527,9 @@
                                 sizeLabel = "MB";
                             }
                         }
+                        // Chỉ dùng khi thay thế file
+                        $($uploadedList).find(".uppy-list-item:not([data-id])").remove();
+
                         var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                         $uploadedList.append(uploadListHtml);
 
@@ -540,7 +540,7 @@
                     $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                         var itemId = $(this).attr('data-id');
                         uppy2.removeFile(itemId);
-                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        $(this).closest(".uppy-list-item").remove();
                     });
                 }
 
@@ -577,10 +577,20 @@
             return markup;
         }
 
+        toastr.options = {
+            "preventDuplicates": true,
+        }
+
         function formatInfoSelection(repo) {
             if (repo.id) {
-                $(currentRow).find(".inputName").val(repo.Name);
+                if (repo.Name) {
+                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", true);
+                }
+                else {
+                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", false);
+                }
                 $(currentRow).find(".inputEmail").val(repo.Email);
+                $(currentRow).find(".inputName").val(repo.Name);
                 $(currentRow).find(".selectOffice").val(repo.OfficeID).trigger('change');;
                 $(currentRow).find(".selectTitle").val(repo.TitleID).trigger('change');;
             }
@@ -595,6 +605,12 @@
 
         function formatRepoSelection(repo) {
             if (repo.id && repo.website != undefined) {
+                if (repo.is_verified) {
+                    toastr.warning("Hội nghị này đã được thông qua tại một đề nghị khác");
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", true);
+                } else {
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", false);
+                }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
                 document.getElementById("qs_university").value = repo.qs_university;
@@ -668,16 +684,12 @@
 
         function submitData() {
             let fd = new FormData();
-            if (uppy1.getFiles()[0] == undefined) {
-                toastr.error("Thiếu file bài báo");
-                return false;
+            if (uppy1.getFiles()[0] != undefined) {
+                fd.append('paper', uppy1.getFiles()[0].data)
             }
-            if (uppy2.getFiles()[0] == undefined) {
-                toastr.error("Thiếu thư xác nhận");
-                return false;
+            if (uppy2.getFiles()[0] != undefined) {
+                fd.append('invite', uppy2.getFiles()[0].data)
             }
-            fd.append('paper', uppy1.getFiles()[0].data)
-            fd.append('invite', uppy2.getFiles()[0].data)
 
             let conferenceSelect = $('#selectConference').select2('data')[0];
             if (conferenceSelect == undefined)
@@ -702,30 +714,24 @@
                 attendance_start: attendance_start,
                 attendance_end: attendance_end,
                 specialization_id: $("#specialization").val(),
-                ConferenceParticipant: [],
+                ConferenceParticipant: {},
                 Cost: [],
-                Persons: [],
-                paper_name: $("#paper_name").val()
+                Persons: {},
+                //paper_name: $("#paper_name").val()
             }
-            $("#tableParticipant tr").each((idx, ele) => {
-                let ms = $(ele).find(".selectPeople").select2('data')[0].id;
-                let name = $(ele).find(".inputName").val();
-                if (ms == "" || name == "")
-                    return;
-                let info = {
-                    current_mssv_msnv: ms,
-                    office_id: $(ele).find(".selectOffice").val(),
-                    title_id: $(ele).find(".selectTitle").val(),
-                }
-                this.data.ConferenceParticipant.push(info);
-                let person = {
-                    name: name,
-                    office_id: $(ele).find(".selectOffice").val(),
-                    email: $(ele).find(".inputEmail").val(),
-                    mssv_msnv: ms
-                }
-                this.data.Persons.push(person);
-            })
+            let ms = $(".selectPeople").select2('data')[0].id;
+            let name = $(".inputName").val();
+            if (ms == "" || name == "")
+                return;
+            this.data.ConferenceParticipant = {
+                current_mssv_msnv: ms,
+                office_id: $(".selectOffice").val(),
+                title_id: $(".selectTitle").val(),
+            };
+            this.data.Persons = {
+                name: name,
+                email: $(".inputEmail").val(),
+            };
             $("#tableCost tr:not(:last-child)").each((idx, ele) => {
                 let listTD = $(ele).find("td");
                 let content = $(listTD[0]).find("input").val();
@@ -737,9 +743,9 @@
                     detail: detail,
                 }
                 this.data.Cost.push(cost)
-            })
+            });
+            fd.append("request_id", @ConferenceDetail.RequestID)
 
-            fd.append("input", JSON.stringify(this.data));
             save_loader.startLoading();
             $.ajax({
                 url: "/ConferenceSponsor/Edit",

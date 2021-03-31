@@ -35,6 +35,14 @@ namespace BLL.ScienceManagement.MasterData
             return list;
         }
 
+        public AuthorPaper getMonry(AddAuthor item, int paper_id)
+        {
+            AuthorPaper ap = db.AuthorPapers
+                .Where(x => x.paper_id == paper_id)
+                .Where(x => x.people_id == item.people_id).FirstOrDefault();
+            return ap;
+        }
+
         public List<Office> getOffice()
         {
             List<Office> list = db.Offices.ToList();
@@ -73,7 +81,7 @@ namespace BLL.ScienceManagement.MasterData
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].[File] f on pro.identification_file_id = f.file_id
-	                            join [General].Office ofi on pro.office_id = ofi.office_id";
+	                            join [General].Office ofi on po.office_id = ofi.office_id";
             list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;
         }
@@ -81,11 +89,10 @@ namespace BLL.ScienceManagement.MasterData
         public AddAuthor getAuthor(string ms)
         {
             AddAuthor item = new AddAuthor();
-            string sql = @"select po.*, pc.contract_id, pt.title_id, o.office_abbreviation, pro.mssv_msnv, pro.bank_branch, pro.bank_number, pro.tax_code, pro.identification_number
+            string sql = @"select po.*, pc.contract_id, pro.title_id, o.office_abbreviation, pro.mssv_msnv, pro.bank_branch, pro.bank_number, pro.tax_code, pro.identification_number, pro.is_reseacher
                             from [General].People po join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
                             where pro.mssv_msnv = @ms";
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;

@@ -51,6 +51,10 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = paper.request_id;
 
+            Person p = pr.getAuthorReceived_all(id);
+            if (p == null) p = new Person();
+            ViewBag.p = p;
+
             return View();
         }
 
@@ -67,16 +71,17 @@ namespace MANAGER.Controllers
             return View();
         }
 
-        public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people)
+        public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             foreach (var item in people)
             {
                 string temp = item.money_string;
-                temp = temp.Replace(",", "");
+                if (temp == null) temp = "0";
+                else temp = temp.Replace(",", "");
                 item.money_reward = Int32.Parse(temp);
             }
             string mess = pr.updateRewardPaper(paper);
-            if (mess == "ss") mess = pr.updateAuthorReward(paper, people);
+            if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -214,6 +219,13 @@ namespace MANAGER.Controllers
             string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id,
                                             date_format2, myFile2.file_id, number2, myFile2.file_drive_id);
 
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult changeStatus(DetailPaper paper)
+        {
+            string mess = pr.changeStatus(paper);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

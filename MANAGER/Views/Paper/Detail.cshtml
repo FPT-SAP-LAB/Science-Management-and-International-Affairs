@@ -95,6 +95,10 @@
                 <label>Tổng thưởng</label>
                 <input id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
             </div>
+            <div class="col-xl-6 form-group">
+                <label>Đại diện nhận thưởng</label>
+                <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled/>
+            </div>
 
             @{
                 foreach (var item in ViewBag.crite)
@@ -142,7 +146,7 @@
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
-                                                <a href="#" class="text-muted text-hover-primary">@item.title_name</a>
+                                                <a href="#" class="text-muted text-hover-primary">@item.title_string</a>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
@@ -186,7 +190,7 @@
         <hr />
         <div class="row justify-content-center">
             <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="">Yêu cầu chỉnh sửa</button>
+            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
         </div>
     </div>
 </div>
@@ -211,7 +215,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thưởng chó tác giả</h3>
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thưởng cho tác giả</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -251,6 +255,11 @@
                 $(".thuongqt").hide();
             }
 
+            if ($("#typereward").val() == "Quydinh") $("#daidien").hide();
+            else {
+                $(".edit-author-reward").prop('disabled', true);
+            }
+
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
@@ -269,19 +278,52 @@
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
+        $("#editconfirm").click(function () {
+            $("#loading").show();
+            var paper_id = "@ViewBag.paper.paper_id";
+            var request_id = "@ViewBag.paper.request_id";
+            var paper = {
+                paper_id: paper_id,
+                request_id: request_id
+            };
+            $.ajax({
+                url: "@Url.Action("changeStatus", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'paper': paper }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#loading").hide();
+                        //editRequest();
+                        //alert(response.mess);
+                        window.location.href = "/Paper/Pending";
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $("#confirmbtn").click(function () {
+            $("#loading").show();
+            var ck = $("#typereward").val();
             var temp = $("#totalreward").val();
             if (temp == "") {
+                $("#loading").hide();
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
                 check = false;
             } else {
                 check = true;
-                var ck = $("#typereward").val()
                 if (ck == "Quydinh") {
                     $(".onereward_text").each(function () {
                         var value = $(this).text();
                         //console.log(value);
                         if (value == "") {
+                            $("#loading").hide();
                             toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                             check = false;
                             return false;
@@ -312,29 +354,32 @@
                     var temp = data.split(",").join("");
                     sum = parseInt(sum) + parseInt(temp);
                 }
-                if (sum > parseInt(total)) {
+                if (sum > parseInt(total) && ck == "Quydinh") {
                     toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
-                } else if (sum < parseInt(total)) {
+                } else if (sum < parseInt(total) && ck == "Quydinh") {
                     toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
                 } else {
                     var paper_id = "@ViewBag.paper.paper_id";
                     var request_id = "@ViewBag.paper.request_id";
+                    var people_id = "@ViewBag.p.people_id";
                     var paper = {
                         paper_id: paper_id,
                         request_id: request_id,
-                        total_reward: total
+                        total_reward: total,
+                        reward_type: $("#typereward").val()
                     };
                     $.ajax({
                         url: "@Url.Action("editPaper", "Paper")",
                         type: "POST",
-                        data: JSON.stringify({ 'paper': paper, 'people': people }),
+                        data: JSON.stringify({ 'paper': paper, 'people': people, 'id': people_id }),
                         contentType: "application/json;charset=utf-8",
                         datatype: "json",
                         cache: false,
                         success: function (response) {
                             if (response.mess == "ss") {
                                 //editRequest();
-                                alert(response.mess);
+                                $("#loading").hide();
+                                window.location.href = "/Paper/Pending";
                             }
                             else alert('loi');
                         },

@@ -21,7 +21,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         {
             var Profile = (from a in db.Profiles
                            join b in db.Accounts on a.account_id equals b.account_id
-                           join c in db.Offices on a.office_id equals c.office_id
                            join d in db.People on a.people_id equals d.people_id
                            where b.account_id == account_id
                            select new ProfileResearcher
@@ -29,8 +28,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                ID = a.mssv_msnv,
                                FullName = d.name,
                                Email = b.email,
-                               OfficeID = c.office_id,
-                               TitleID = a.Titles.FirstOrDefault().title_id
+                               OfficeID = d.office_id.Value,
+                               TitleID = a.title_id
                            }).FirstOrDefault();
             return JsonConvert.SerializeObject(new { Profile });
         }
@@ -38,8 +37,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         {
             var infos = (from a in db.Profiles
                          join b in db.People on a.people_id equals b.people_id
-                         join c in db.Offices on a.office_id equals c.office_id
-                         join d in db.TitleLanguages on a.Titles.FirstOrDefault().title_id equals d.title_id
+                         join c in db.Offices on b.office_id equals c.office_id
+                         join d in db.TitleLanguages on a.title_id equals d.title_id
                          where a.mssv_msnv.Contains(id) && d.language_id == language_id
                          select new Info
                          {
@@ -48,7 +47,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                              Name = b.name,
                              OfficeID = c.office_id,
                              OfficeName = c.office_name,
-                             TitleID = a.Titles.FirstOrDefault().title_id,
+                             TitleID = a.title_id,
                              TitleString = d.name,
                          }).Take(10).ToList();
             if (infos.Count == 0)
@@ -76,6 +75,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             List<string> FileIDs = new List<string>();
+            ConferenceParticipantRepo participantRepo = new ConferenceParticipantRepo();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -87,19 +87,36 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     Conference conference = @object["Conference"].ToObject<Conference>();
                     Conference temp = db.Conferences.Find(conference.conference_id);
+                    int conference_id = 0;
+                    string conference_name;
                     if (temp != null)
                     {
-                        conference = temp;
+                        if (!temp.is_verified)
+                        {
+                            temp.website = conference.website;
+                            temp.keynote_speaker = conference.keynote_speaker;
+                            temp.qs_university = conference.qs_university;
+                            temp.country_id = conference.country_id;
+                            temp.time_start = conference.time_start;
+                            temp.time_end = conference.time_end;
+                            temp.formality_id = conference.formality_id;
+                            temp.co_organized_unit = conference.co_organized_unit;
+                        }
+                        conference_id = temp.conference_id;
+                        conference_name = temp.conference_name;
                     }
                     else
                     {
+                        conference.is_verified = false;
                         db.Conferences.Add(conference);
                         db.SaveChanges();
+                        conference_id = conference.conference_id;
+                        conference_name = conference.conference_name;
                     }
 
                     List<HttpPostedFileBase> InputFiles = new List<HttpPostedFileBase> { paper, invite };
 
-                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference.conference_name, 1, "doanvanthang4271@gmail.com");
+                    List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference_name, 1, "doanvanthang4271@gmail.com");
 
                     RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
 
@@ -142,7 +159,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     RequestConference support = new RequestConference()
                     {
                         request_id = @base.request_id,
-                        conference_id = conference.conference_id,
+                        conference_id = conference_id,
                         status_id = 1,
                         policy_id = policy.policy_id,
                         editable = false,
@@ -167,43 +184,14 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     }
                     db.Costs.AddRange(costs);
 
-                    List<ConferenceParticipant> participants = @object["ConferenceParticipant"].ToObject<List<ConferenceParticipant>>();
-                    List<Person> Persons = @object["Persons"].ToObject<List<Person>>();
-                    participants.ForEach(x => x.request_id = support.request_id);
-                    List<string> codes = participants.Select(x => x.current_mssv_msnv).ToList();
-                    List<int> title_ids = participants.Select(x => x.title_id).Distinct().ToList();
-                    Dictionary<int, Title> IDTitlePairs = db.Titles.Where(x => title_ids.Contains(x.title_id))
-                        .ToDictionary(x => x.title_id, x => x);
-                    Dictionary<string, int> CodeIDPairs = db.Profiles.Where(x => codes.Contains(x.mssv_msnv))
-                        .ToDictionary(x => x.mssv_msnv, x => x.people_id);
-                    for (int i = 0; i < participants.Count; i++)
-                    {
-                        var item = participants[i];
-                        if (CodeIDPairs.ContainsKey(item.current_mssv_msnv))
-                            item.people_id = CodeIDPairs[item.current_mssv_msnv];
-                        else
-                        {
-                            db.People.Add(Persons[i]);
-                            db.SaveChanges();
-
-                            Profile profile = new Profile()
-                            {
-                                mssv_msnv = item.current_mssv_msnv,
-                                office_id = item.office_id,
-                                people_id = Persons[i].people_id,
-                            };
-                            profile.Titles.Add(IDTitlePairs[item.title_id]);
-                            db.Profiles.Add(profile);
-                            db.SaveChanges();
-                            item.people_id = Persons[i].people_id;
-                        }
-                    }
-                    db.ConferenceParticipants.AddRange(participants);
-                    db.SaveChanges();
+                    ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
+                    participant.request_id = @base.request_id;
+                    Person person = @object["Persons"].ToObject<Person>();
+                    participantRepo.AddWithTempData(db, participant, person);
 
                     int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
 
-                    ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id);
+                    ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id, "Người đề nghị");
 
                     foreach (var item in policy.Criteria)
                     {

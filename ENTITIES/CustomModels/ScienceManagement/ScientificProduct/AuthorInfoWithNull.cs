@@ -14,10 +14,10 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public string office_abbreviation { get; set; }
         public string link { get; set; }
         public Nullable<int> contract_id { get; set; }
-        public Nullable<int> title_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public Nullable<int> office_id_string { get; set; }
         public string money_string { get; set; }
+        public string title_string { get; set; }
     }
 }

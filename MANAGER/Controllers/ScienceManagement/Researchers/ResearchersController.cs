@@ -3,9 +3,11 @@ using BLL.ScienceManagement.ResearcherListRepo;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using MANAGER.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 namespace MANAGER.Controllers.ScienceManagement.Researchers
 {
@@ -15,6 +17,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         ResearchersDetailRepo researcherDetailRepo;
         ResearchersBiographyRepo researcherBiographyRepo;
         EditResearcherInfoRepo researcherEditResearcherInfo;
+        ResearcherCandidateRepo researcherCandidate;
         // GET: Researchers
 
         public ActionResult List()
@@ -28,6 +31,24 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
                 BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable);
+                for (int i = 0; i < output.Data.Count; i++)
+                {
+                    output.Data[i].rowNum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = e.Message });
+            }
+        }
+        public JsonResult GetListCandidate()
+        {
+            try
+            {
+                researcherCandidate = new ResearcherCandidateRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
@@ -95,6 +116,16 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             return View();
         }
 
+        public ActionResult EditProfilePhoto()
+        {
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            var uploadfile = Request.Files["imageInput"];
+            int people_id = Int32.Parse(Request.Form["people_id"]);
+            Account account = CurrentAccount.Account(Session);
+            var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
+            int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
+            return Json(new { res = res });
+        }
         public ActionResult EditResearcher()
         {
             researcherEditResearcherInfo = new EditResearcherInfoRepo();

@@ -152,7 +152,7 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/Scripts/Custom_JS/InternationalCollaboration/Partner/Preview.js"></script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/Partner/Preview.js"></script>
     <script>
 
         function readURL(input) {
@@ -298,10 +298,6 @@
         $('#partner_language_type').select2({
             placeholder: 'Ngôn ngữ',
         }).on('select2:select', function () {
-            var partnerArticle = {
-                "partner_id": @ViewBag.partnerArticle.partner_id,
-                "partner_language_type": $('#partner_language_type').val()
-            }
             $.ajax({
                 url: '@Url.Action("LoadContentDetailLanguage", "Partner")',
                 type: "POST",

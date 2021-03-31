@@ -111,6 +111,11 @@
                                 <option value="Canhan">@rm.GetString("Repre")</option>
                             </select>
                         </div>
+                        <div class="col-xl-6 form-group" id="block_daidien">
+                            <label class="required-field">Chọn đại diện nhận thưởng</label>
+                            <select id="daidien" class="form-control form-control-lg edit">
+                            </select>
+                        </div>
                         @{
                             foreach (var item in ViewBag.listCriteriaOne)
                             {
@@ -136,6 +141,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold edit ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
                     <div>
@@ -217,6 +223,9 @@
         $('#paper_type').select2({
             allowClear: true
         });
+        $('#daidien').select2({
+            allowClear: true
+        });
 
         function editRequest() {
             var RequestPaper = {
@@ -284,6 +293,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit").val(response.id);
                         $("#ckEdit").val(3);
                         $("#PaperForm").submit();
@@ -296,7 +306,33 @@
             });
         }
 
+        $("#edit_submit_reward").click(function () {
+            var sum = 0;
+            var total = $("#totalreward").val();
+            total = total.split(",").join("");
+
+            for (var i = 0; i < people.length; i++) {
+                var data = people[i].money_string;
+                var temp = data.split(",").join("");
+                sum = parseInt(sum) + parseInt(temp);
+            }
+            if (sum > parseInt(total)) {
+                toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
+                $("#loading").hide();
+                return false;
+            } else if (sum < parseInt(total)) {
+                toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
+                $("#loading").hide();
+                return false;
+            } else {
+                
+            }
+
+        });
+
         $("#edit_submit").click(function () {
+            $("#loading").show();
+
             var temp = $("#paper_publish_date").val();
             var arr = temp.split('/');
             var dateFormat
@@ -375,6 +411,7 @@
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
+
             $.ajax({
                 url: "@Url.Action("listAuthor", "Paper")",
                 type: "POST",
@@ -391,16 +428,18 @@
                         add_author_tax = response.author[i].tax_code;
                         add_author_bank = response.author[i].bank_branch;
                         add_author_accno = response.author[i].bank_number;
+                        add_author_isReseacher = response.author[i].is_reseacher;
 
                         var temp_money = response.author[i].money_reward;
-                        add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if (response.author[i].money_reward != null) add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        else add_author_reward = temp_money;
 
                         add_author_note = '';
                         add_author_email = response.author[i].email;
                         id = new Date().getTime();
                         au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
                             add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id);
+                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id);
                         $("#authors-info-container").append(au.getHTML());
                         var AddAuthor = {
                             name: add_author_name,
@@ -416,10 +455,19 @@
                             people_id: response.author[i].people_id,
                             temp_id: id,
                             office_abbreviation: response.author[i].office_abbreviation,
+                            is_reseacher: response.author[i].is_reseacher,
+                            money_string: add_author_reward
                         }
                         people.push(AddAuthor);
                     }
-                    if (ck != "4") $(".edit").prop("disabled", true);
+                    addOption();
+                    if (ck != "5") $(".edit").prop("disabled", true);
+                    $(".edit-author").prop("disabled", false);
+                    $("#daidien").val(response.ms);
+                    if (response.ms != "" && $("#kieuthuong").val() == "Canhan") {
+                        $(".add_author_reward_edit").prop("disabled", false);
+                        $("#edit_submit_reward").prop("disabled", false);
+                    }
                 },
                 error: function () {
                     //alert("fail");

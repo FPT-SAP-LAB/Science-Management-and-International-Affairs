@@ -29,17 +29,7 @@ namespace BLL.ScienceManagement.Researcher
                     profile.country_id = nationality;
                     db.SaveChanges();
                     ///////////////////////////////////////////////////////
-                    List<int> title_ids = new List<int>();
-                    foreach (var i in editInfo["info"]["title"])
-                    {
-                        title_ids.Add((int)i["id"]);
-                    }
-                    List<Title> titles = db.Titles.Where(x => title_ids.Contains(x.title_id)).ToList<Title>();
-                    profile.Titles.Clear();
-                    foreach (Title t in titles)
-                    {
-                        profile.Titles.Add(t);
-                    }
+                    profile.title_id = (int)editInfo["info"]["title"][0]["id"];
                     db.SaveChanges();
                     ///////////////////////////////////////////////////////
                     List<int> position_ids = new List<int>();
@@ -47,11 +37,22 @@ namespace BLL.ScienceManagement.Researcher
                     {
                         position_ids.Add((int)i["id"]);
                     }
-                    List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList<Position>();
-                    profile.Positions.Clear();
+                    List<Position> positions = db.Positions.Where(x => position_ids.Contains(x.position_id)).ToList();
+                    List<PeoplePosition> currentPositions = db.PeoplePositions.Where(x => x.people_id == id).ToList();
+                    foreach (PeoplePosition p in currentPositions)
+                    {
+                        db.PeoplePositions.Remove(p);
+                    }
+                    db.SaveChanges();
                     foreach (Position p in positions)
                     {
-                        profile.Positions.Add(p);
+                        profile.PeoplePositions.Add(new PeoplePosition()
+                        {
+                            people_id = id,
+                            position_id = p.position_id,
+                            Position = p,
+                            Profile = profile
+                        });
                     }
                     db.SaveChanges();
                     //////////////////////////////////////////////////////
@@ -91,6 +92,34 @@ namespace BLL.ScienceManagement.Researcher
                 }
             }
             return 1;
+        }
+
+        public int EditResearcherProfilePicture(Google.Apis.Drive.v3.Data.File file, int people_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Profile profile = db.Profiles.Find(people_id);
+                    File avt = new File()
+                    {
+                        name = "avatar-" + people_id,
+                        file_drive_id = file.Id,
+                        link = "https://drive.google.com/uc?export=view&id=" + file.Id
+                    };
+                    db.Files.Add(avt);
+                    db.SaveChanges();
+                    profile.avatar_id = avt.file_id;
+                    db.SaveChanges();
+                    trans.Commit();
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    return 0;
+                }
+            }
         }
     }
 }

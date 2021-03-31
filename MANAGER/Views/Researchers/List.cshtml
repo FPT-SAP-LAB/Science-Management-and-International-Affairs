@@ -57,7 +57,7 @@
                     <div class="dropdown dropdown-inline mr-2">
                         <button type="button"
                                 class="btn btn-light-success font-weight-bolder"
-                                data-toggle="modal" data-target="#list-researcher-candidates">
+                                data-toggle="modal" id="viewCandidates" data-target="#list-researcher-candidates">
                             Đăng thông tin nghiên cứu viên
                         </button>
                     </div>
@@ -80,13 +80,9 @@
             </thead>
         </table>
         <!--end: Datatable-->
-        <div class="mb-7">
-            <div class="row align-items-center">
-                <div class="col-lg-12 col-xl-12">
-                    <div id="table-loader" class="spinner spinner-primary mr-15 spinner-center spinner-lg mr-15" ></div>
-                </div>
-            </div>
-        </div>
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
     </div>
 </div>
 <!-- Modal-->
@@ -154,18 +150,17 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered table-checkable" id="kt_datatable">
-                    <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tên</th><th>chức vụ</th><th>số bài báo</th><th>Đăng hồ sơ</th></tr></thead>
+                <table class="table table-bordered table-checkable" id="table_candidates">
+                    <thead>
+                        <tr class="tableizer-firstrow">
+                            <th>STT</th>
+                            <th>Tên</th>
+                            <th>chức vụ</th>
+                            <th>số bài báo</th>
+                            <th>Đăng hồ sơ</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr><td>1</td><td>Nguyên Trân</td><td>Giảng viên</td><td>22</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>2</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>3</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>3</td><td>Sơn Bá</td><td>Giảng viên</td><td>6</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>4</td><td>Dũng Power</td><td>Giảng viên</td><td>9</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>5</td><td>Nguyên Trân</td><td>Giảng viên</td><td>8</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>6</td><td>Thắng Đoàn</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>7</td><td>Sơn Bá</td><td>Giảng viên</td><td>16</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>8</td><td>Dũng Power</td><td>Giảng viên</td><td>13</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
-                        <tr><td>9</td><td>Nguyên Trân</td><td>Giảng viên</td><td>11</td><td>   <a href="/Researchers/AddResearcher" class="btn btn-sm btn-clean btn-icon" title="Edit"> <i class="far fa-edit"></i> </a></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -177,6 +172,7 @@
 </div>
 @section scripts{
     <script>
+        var viewCandidate = false;
         var KTDatatablesBasicBasic = function () {
 
             var initTable1 = function () {
@@ -222,7 +218,7 @@
                         },
                     ],
                     initComplete: function (settings, json) {
-                        $("#table-loader").hide()
+                        $("#loader_panel").hide()
                     }
                 });
                 table.on('change', 'tbody tr .checkbox', function () {
@@ -230,58 +226,60 @@
                 });
             };
             var initTable2 = function () {
-                var table = $('#kt_datatable_2');
-
+                var table = $('#table_candidates');
                 // begin first table
                 table.DataTable({
                     responsive: true,
 
                     // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>
-                                                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
+                    dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     lengthMenu: [5, 10, 25, 50],
-
                     pageLength: 10,
-
                     language: {
                         'lengthMenu': 'Display _MENU_',
                     },
-
                     // Order settings
-                    // order: [[0, 'desc']],
-
-                    columnDefs: [
-
+                    order: [[1, 'desc']],
+                    serverSide: true,
+                    ajax: {
+                        url: "/Researchers/GetListCandidate",
+                        datatype: "json",
+                        cache: true
+                    },
+                    columns: [
+                        { data: "rowNum", name: "rowNum", orderable: false },
+                        {
+                            data: {}, name: "name", render: function (data) {
+                                return data.name
+                            }
+                        },
+                        {
+                            data: "title", name: "title", render: function (data) {
+                                return data
+                            }
+                        },
+                        { data: "paperNumber", name: "paperNumber" },
+                        {
+                            data: "people_id", name: "people_id", render: function (data) {
+                                return "<a href='/Researchers/AddResearcher?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i></a>"
+                            }
+                        },
                     ],
+                    initComplete: function (settings, json) {
+                        $("#loader_panel").hide()
+                    }
                 });
-
-                table.on('change', '.group-checkable', function () {
-                    var set = $(this).closest('table').find('td:first-child .checkable');
-                    var checked = $(this).is(':checked');
-
-                    $(set).each(function () {
-                        if (checked) {
-                            $(this).prop('checked', true);
-                            $(this).closest('tr').addClass('active');
-                        }
-                        else {
-                            $(this).prop('checked', false);
-                            $(this).closest('tr').removeClass('active');
-                        }
-                    });
-                });
-
                 table.on('change', 'tbody tr .checkbox', function () {
                     $(this).parents('tr').toggleClass('active');
                 });
             };
             return {
-
                 //main function to initiate the module
+                initCandidates: function () {
+                    initTable2()
+                },
                 init: function () {
                     initTable1();
-                    initTable2();
                 }
             };
         }();
@@ -301,7 +299,12 @@
             });
         }
         //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-
+        $("#viewCandidates").click(function () {
+            if (viewCandidate == false) {
+                KTDatatablesBasicBasic.initCandidates();
+                viewCandidate = true;
+            }
+        })
     </script>
     <script>
         $('#search_nganh').select2({

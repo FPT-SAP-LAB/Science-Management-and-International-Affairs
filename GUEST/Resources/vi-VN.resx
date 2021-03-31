@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
   </data>
+  <data name="FPTProcedure" xml:space="preserve">
+    <value>Thủ tục với FPT</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
@@ -258,11 +261,17 @@
   <data name="International" xml:space="preserve">
     <value>Quốc tế</value>
   </data>
+  <data name="InternationalAffair" xml:space="preserve">
+    <value>Hợp tác quốc tế</value>
+  </data>
   <data name="InvenName" xml:space="preserve">
     <value>Tên sản phẩm</value>
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Bằng sáng chế</value>
+  </data>
+  <data name="isReseacher" xml:space="preserve">
+    <value>Nghiên cứu viên</value>
   </data>
   <data name="Jan" xml:space="preserve">
     <value>Tháng 1</value>
@@ -297,6 +306,9 @@
   <data name="Location" xml:space="preserve">
     <value>Địa điểm</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
   <data name="LongTerm" xml:space="preserve">
     <value>Đào tạo sau đại học</value>
   </data>
@@ -320,6 +332,9 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Tên tác giả</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Tin tức</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Trang sau</value>
@@ -359,6 +374,9 @@
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Tên đối tác</value>
+  </data>
+  <data name="PartnerProcedure" xml:space="preserve">
+    <value>Thủ tục với đối tác</value>
   </data>
   <data name="PatentDate" xml:space="preserve">
     <value>Ngày cấp</value>
@@ -401,6 +419,9 @@
   </data>
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Đăng ký tham dự</value>
   </data>
   <data name="RegistrationDeadline" xml:space="preserve">
     <value>Thời hạn đăng ký</value>
@@ -445,7 +466,7 @@
     <value>Tháng 9</value>
   </data>
   <data name="ShortTerm" xml:space="preserve">
-    <value>Chương trình trao đổi CBGV</value>
+    <value>Trao đổi giảng viên ngắn hạn</value>
   </data>
   <data name="ShortTermFPTProgram" xml:space="preserve">
     <value>Trao đổi với FPT</value>
