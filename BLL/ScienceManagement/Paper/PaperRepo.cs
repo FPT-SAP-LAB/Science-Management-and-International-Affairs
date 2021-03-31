@@ -27,19 +27,17 @@ namespace BLL.ScienceManagement.Paper
 
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
-            List<ListCriteriaOfOnePaper> list = new List<ListCriteriaOfOnePaper>();
             string sql = @"select pc.name, pwc.*
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].PaperWithCriteria pwc on p.paper_id = pwc.paper_id
 	                            join [SM_ScientificProduct].PaperCriteria pc on pwc.criteria_id = pc.criteria_id
                             where p.paper_id = @id";
-            list = db.Database.SqlQuery<ListCriteriaOfOnePaper>(sql, new SqlParameter("id", id)).ToList();
+            List<ListCriteriaOfOnePaper> list = db.Database.SqlQuery<ListCriteriaOfOnePaper>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
 
         public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
-            List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, pro.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, t.title_id, pro.is_reseacher
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            left join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
@@ -48,10 +46,10 @@ namespace BLL.ScienceManagement.Paper
 	                            left join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            left join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
 	                            left join [General].Profile pro on po.people_id = pro.people_id
-	                            left join [General].Office o on pro.office_id = o.office_id
+	                            left join [General].Office o on po.office_id = o.office_id
 	                            left join [General].[File] f on pro.identification_file_id = f.file_id
                             where p.paper_id = @id";
-            list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
+            List<AuthorInfoWithNull> list = db.Database.SqlQuery<AuthorInfoWithNull>(sql, new SqlParameter("id", id)).ToList();
             foreach (var item in list)
             {
                 item.title_strring = item.title_name;
@@ -152,6 +150,7 @@ namespace BLL.ScienceManagement.Paper
                         Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
                         p.name = item.name;
                         p.phone_number = item.phone_number;
+                        p.office_id = item.office_id;
                         if (item.office_abbreviation != "Khác")
                         {
                             Profile pro = (from a in db.Profiles
@@ -162,17 +161,16 @@ namespace BLL.ScienceManagement.Paper
                             pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
-                            pro.office_id = item.office_id;
                             pro.mssv_msnv = item.mssv_msnv;
-                            pro.is_reseacher = item.is_reseacher;
+                            pro.is_reseacher = item.is_reseacher != null && item.is_reseacher.Value;
 
                             tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
                             SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
                             listParam1.Add(tempParam1);
 
-                            tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            listParam1.Add(tempParam2);
+                            //tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                            //SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                            //listParam1.Add(tempParam2);
 
                             SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
                             listParam1.Add(tempParam3);
@@ -341,7 +339,7 @@ namespace BLL.ScienceManagement.Paper
                 bank_branch = a.bank_branch,
                 tax_code = a.tax_code,
                 identification_number = a.identification_number,
-                office_id = a.office_id,
+                //office_id = a.office_id,
                 mssv_msnv = a.mssv_msnv
             };
             db.Profiles.Add(pro);
@@ -546,7 +544,7 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].Account acc on br.account_id = acc.account_id
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on o.office_id = pro.office_id
+	                            join [General].Office o on o.office_id = po.office_id
                             where rp.status_id = 4 and rp.type = @type
                             group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id";
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
@@ -559,7 +557,7 @@ namespace BLL.ScienceManagement.Paper
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join (select p.paper_id, count(ap.people_id) as 'sum'
 			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -580,7 +578,7 @@ namespace BLL.ScienceManagement.Paper
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on pro.office_id = o.office_id
+	                            join [General].Office o on po.office_id = o.office_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where rp.status_id = 4 and rp.type = @type
                             group by po.name, pro.mssv_msnv, o.office_abbreviation

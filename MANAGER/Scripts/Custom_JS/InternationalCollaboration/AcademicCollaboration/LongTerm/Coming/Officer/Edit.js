@@ -320,8 +320,10 @@ $('#coming_edit_officer').on('show.bs.modal', function (e) {
                     $("#coming_edit_officer_name").append(new Option(acadCollab.people_name, acadCollab.people_name + '/' + acadCollab.people_id, false, true)).trigger('change');
                     $("#coming_edit_officer_email").val(acadCollab.email);
                     $("#coming_edit_officer_email").prop("disabled", true);
-                    $("#coming_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
-                    $("#coming_edit_officer_facility").prop("disabled", true);
+                    if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) {
+                        $("#coming_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
+                        $("#coming_edit_officer_facility").prop("disabled", true);
+                    }
 
                     available_partner = true; //partner had data in db
                     $("#coming_edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_name + '/' + acadCollab.partner_id, false, true)).trigger('change');
@@ -406,7 +408,10 @@ $('#coming_edit_officer_save').on('click', function () {
     let note = $('#coming_edit_officer_note').val();
 
     //check empty
-    if (isEmpty(person) || isEmpty(partner) || isEmpty(collab_scope_id) || isEmpty(status_id) || isEmpty(plan_start_date) || isEmpty(plan_end_date)) {
+    if (isEmptyOrNullOrUndefined(person) || isEmptyOrNullOrUndefined(person_email)
+        || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
+        || isEmptyOrNullOrUndefined(collab_scope_id) || isEmptyOrNullOrUndefined(status_id)
+        || isEmptyOrNullOrUndefined(plan_start_date) || isEmptyOrNullOrUndefined(plan_end_date)) {
         return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
         let person_name = person.split('/')[0];

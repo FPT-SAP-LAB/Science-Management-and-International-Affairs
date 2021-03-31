@@ -337,9 +337,10 @@ $('#coming_add_officer_save').on('click', function () {
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
-        let obj_person = (available_person, person_name, person_id, person_email, person_profile_office_id);
+        let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
+        console.log(obj_person);
 
-        let obj_partner = (available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
+        let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
         let obj_academic_collab = objAcadCollab(0, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note); 
 

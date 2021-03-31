@@ -133,6 +133,7 @@
             $(this).blur();
         });
         $("#editconfirm").click(function () {
+            $("#loading").show();
             var request_id = "@ViewBag.request_id";
             $.ajax({
                 url: "@Url.Action("changeStatus", "Citation")",
@@ -143,8 +144,10 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
+                        window.location.href = "/Citation/Pending";
                         //editRequest();
-                        alert(response.mess);
+                        //alert(response.mess);
                     }
                     else alert('loi');
                 },
@@ -154,6 +157,7 @@
             });
         });
         $("#confirmbtn").click(function () {
+            $("#loading").show();
             var temp = $("#totalreward").val();
             if (temp == "") {
                 toastr.error("Chưa điền thông tin tổng thưởng cho trích dẫn ", "Lỗi");
@@ -168,8 +172,8 @@
                     cache: false,
                     success: function (response) {
                         if (response.mess == "ss") {
-                            //editRequest();
-                            alert(response.mess);
+                            $("#loading").hide();
+                            window.location.href = "/Ctation/WaitDecision";
                         }
                         else alert('loi');
                     },

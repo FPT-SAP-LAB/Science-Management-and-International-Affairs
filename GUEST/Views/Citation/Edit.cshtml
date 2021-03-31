@@ -62,6 +62,10 @@
         </div>
     </div>
 </div>
+<form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
+    <input name="id" id="nameEdit" />
+    <input name="editable" id="ckEdit" />
+</form>
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
@@ -142,6 +146,7 @@
         }
 
         $("#btn-submit").click(function () {
+            $("#loading").show();
             addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
@@ -164,6 +169,10 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
+                        $("#nameEdit").val(response.id);
+                        $("#ckEdit").val("3");
+                        $("#CitationForm").submit();
                     }
                     else alert('loi');
                 },

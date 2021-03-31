@@ -284,6 +284,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
+                        $("#loading").hide();
                         $("#nameEdit").val(response.id);
                         $("#ckEdit").val(3);
                         $("#PaperForm").submit();
@@ -297,6 +298,7 @@
         }
 
         $("#edit_submit").click(function () {
+            $("#loading").show();
             var temp = $("#paper_publish_date").val();
             var arr = temp.split('/');
             var dateFormat

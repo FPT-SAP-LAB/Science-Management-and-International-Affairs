@@ -300,7 +300,7 @@ $('#going_edit_officer_status').select2({
 
 //3.2.GET CORESSPONDING DATA
 $('#going_edit_officer').on('show.bs.modal', function (e) {
-    let acad_collab_id = $(e.relatedTarget).data('id');
+    let acad_collab_id = $(e.relatedTarget).data('acad_collab_id');
     $.ajax({
         url: "/AcademicCollaboration/getAcademicCollaboration",
         type: "GET",
@@ -315,14 +315,15 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
             if (data != null) {
                 if (data.success) {
                     let acadCollab = data.obj;
-                    console.log(acadCollab);
                     //fill data to correspoding select, input
                     available_person = true; //person had data in db
                     $("#going_edit_officer_name").append(new Option(acadCollab.people_name, acadCollab.people_name + '/' + acadCollab.people_id, false, true)).trigger('change');
                     $("#going_edit_officer_email").val(acadCollab.email);
                     $("#going_edit_officer_email").prop("disabled", true);
-                    if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) $("#going_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
-                    $("#going_edit_officer_facility").prop("disabled", true);
+                    if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) {
+                        $("#going_edit_officer_facility").append(new Option(acadCollab.office_name, acadCollab.office_id, false, true)).trigger('change');
+                        $("#going_edit_officer_facility").prop("disabled", true);
+                    }
 
                     available_partner = true; //partner had data in db
                     $("#going_edit_officer_traning").append(new Option(acadCollab.partner_name, acadCollab.partner_name + '/' + acadCollab.partner_id, false, true)).trigger('change');
@@ -419,6 +420,8 @@ $('#going_edit_officer_save').on('click', function () {
         let partner_id = partner.split('/')[1];
 
         let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
+
+        console.log(obj_person);
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 

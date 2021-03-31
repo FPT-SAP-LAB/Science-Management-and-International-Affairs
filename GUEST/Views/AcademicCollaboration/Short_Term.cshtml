@@ -175,10 +175,6 @@
 
         $(document).ready(function () {
             let count = 0;
-            let partnerIndex = 1;
-            let fptIndex = 1;
-            let comingProcIndex = 1;
-            let goingProcIndex = 1;
             var partner;
             var countrystr;
             var yearstr;
@@ -312,8 +308,13 @@
                         name: 'no'
                     },
                     {
-                        data: 'procedure_name',
-                        name: 'procedure_name'
+                        data: null,
+                        render: function (data, type, row) {
+                            // Combine the first and last names into a single table field
+                            return '<a onclick="load_detail.load_procedure_detail(' + data.procedure_id + ')" class="link-load-detail">' + data.procedure_name + '</a>';
+                        },
+                        editField: ['procedure_id', 'procedure_name'],
+                        name: ['procedure_name']
                     },
                     {
                         data: 'publish_time',
@@ -365,8 +366,13 @@
                         name: 'no'
                     },
                     {
-                        data: 'procedure_name',
-                        name: 'procedure_name'
+                        data: null,
+                        render: function (data, type, row) {
+                            // Combine the first and last names into a single table field
+                            return '<a onclick="load_detail.load_procedure_detail(' + data.procedure_id + ')" class="link-load-detail">' + data.procedure_name + '</a>';
+                        },
+                        editField: ['procedure_id', 'procedure_name'],
+                        name: ['procedure_name']
                     },
                     {
                         data: 'publish_time',
