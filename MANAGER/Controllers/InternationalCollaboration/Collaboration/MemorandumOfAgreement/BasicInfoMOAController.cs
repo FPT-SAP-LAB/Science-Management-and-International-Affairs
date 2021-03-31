@@ -38,9 +38,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                MOABasicInfo data = moa.getBasicInfoMOA(int.Parse(id));
-                return Json(data, JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    MOABasicInfo data = moa.getBasicInfoMOA(int.Parse(id));
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -52,9 +59,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                List<ExtraMOA> listExMOA = moa.listAllExtraMOA(int.Parse(id));
-                return Json(new { success = true, data = listExMOA }, JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    List<ExtraMOA> listExMOA = moa.listAllExtraMOA(int.Parse(id));
+                    return Json(new { success = true, data = listExMOA }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -66,9 +80,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.editMOABasicInfo(int.Parse(id), input);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    moa.editMOABasicInfo(int.Parse(id), input);
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -94,9 +115,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string moa_id = Session["moa_detail_id"].ToString();
-                ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id);
-                return Json(mouObj, JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string moa_id = Session["moa_detail_id"].ToString();
+                    ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id);
+                    return Json(mouObj, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -108,9 +136,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.addExtraMOA(input, int.Parse(id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    moa.addExtraMOA(input, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -135,10 +170,17 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string moa_id = Session["moa_detail_id"].ToString();
-                string mou_id = Session["mou_detail_id"].ToString();
-                List<CollaborationScope> data = moa.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id), partner_id);
-                return Json(data);
+                if (Session["mou_detail_id"] is null || Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string moa_id = Session["moa_detail_id"].ToString();
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    List<CollaborationScope> data = moa.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id), partner_id);
+                    return Json(data);
+                }
             }
             catch (Exception ex)
             {
