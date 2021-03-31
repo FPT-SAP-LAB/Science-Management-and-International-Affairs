@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["moa_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string id = Session["moa_detail_id"].ToString();
@@ -144,7 +144,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["moa_detail_id"] is null || Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string moa_id = Session["moa_detail_id"].ToString();
@@ -159,7 +159,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult CheckMOAPartner(int partner_id,string start_date_string)
+        public ActionResult CheckMOAPartner(int partner_id, string start_date_string)
         {
             try
             {

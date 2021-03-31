@@ -52,7 +52,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                     string mou_id = Session["mou_detail_id"].ToString();
                     List<ListMOA> listMOA = moa.listAllMOA(partner_name, moa_code, mou_id);
                     return Json(new { success = true, data = listMOA }, JsonRequestBehavior.AllowGet);
-                } 
+                }
             }
             catch (Exception ex)
             {

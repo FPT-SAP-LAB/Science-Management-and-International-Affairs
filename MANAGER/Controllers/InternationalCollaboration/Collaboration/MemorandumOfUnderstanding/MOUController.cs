@@ -171,7 +171,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
@@ -189,7 +189,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
                     ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
                     return View();
-                } 
+                }
             }
             catch (Exception ex)
             {

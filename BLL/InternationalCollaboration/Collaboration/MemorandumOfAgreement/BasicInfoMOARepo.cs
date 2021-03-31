@@ -354,7 +354,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                             }
                         }
                     }
-                    
+
                     //checkpoint 2
                     db.SaveChanges();
                     //clear PartnerScope with ref_count = 0.

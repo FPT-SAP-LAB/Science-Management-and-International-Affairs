@@ -55,7 +55,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
@@ -77,7 +77,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();

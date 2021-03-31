@@ -463,7 +463,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return list[0];
         }
-        public bool MOAPartnerDateIsInvalid(int mou_id,int partner_id, string start_date_string)
+        public bool MOAPartnerDateIsInvalid(int mou_id, int partner_id, string start_date_string)
         {
             try
             {
@@ -490,7 +490,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     where moa_partner_id = @moa_partner_id";
                 List<MOABonu> exMOAList = db.Database.SqlQuery<MOABonu>(sql_check,
                     new SqlParameter("moa_partner_id", moa_partner_id)).ToList();
-                return exMOAList.Count == 0 ? false: true;
+                return exMOAList.Count == 0 ? false : true;
             }
             catch (Exception ex)
             {

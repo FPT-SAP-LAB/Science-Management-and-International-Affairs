@@ -66,7 +66,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     string id = Session["mou_detail_id"].ToString();
                     List<ExtraMOU> listExMOU = mou.listAllExtraMOU(int.Parse(id));
                     return Json(new { success = true, data = listExMOU }, JsonRequestBehavior.AllowGet);
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
-                } 
+                }
                 else
                 {
                     string mou_id = Session["mou_detail_id"].ToString();
