@@ -95,7 +95,7 @@
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
-                                            <select class="form-control select2  researcher_infomation" disabled id="title_select" name="param" multiple="multiple">
+                                            <select class="form-control select2  researcher_infomation" disabled id="title_select" name="param">
                                                 @foreach (SelectField a in ViewBag.profile.title_fields)
                                                 {
                                                     <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
