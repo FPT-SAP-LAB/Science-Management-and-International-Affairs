@@ -43,7 +43,7 @@ function confirm_delete_procedure(procedure_id) {
 //delete procedure======================================================================
 
 //load edit procedure===================================================================
-$(document).on('click', '#load_edit_procedure', function (e) {
+$(document).on('click', '#load_edit_procedure', function () {
     let id = $(this).data('id');
     load_procedure_detail(id);
 });
