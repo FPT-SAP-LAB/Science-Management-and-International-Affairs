@@ -7,6 +7,9 @@ using MANAGER.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
 using MANAGER.Support;
 using ENTITIES;
+using Newtonsoft.Json;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.AcademicActivity;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -14,7 +17,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
     {
         DetailOfAcademicActivityRepo repo;
         FormRepo formRepo;
+        AcademicActivityExpenseRepo expenseRepo;
         AcademicActivityPhaseRepo phaseRepo;
+        AcademicActivityPartnerRepo partnerRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
@@ -24,6 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.activity_id = id;
             ViewBag.types = repo.getType(1);
             ViewBag.unit = repo.getUnits();
+            ViewBag.office = phaseRepo.getOffices();
             return View();
         }
         [HttpPost]
@@ -236,6 +242,104 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
             return Json(data);
+        }
+        //[HttpPost]
+        //public ActionResult getDatatableKP(int activity_id)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.getDatatableKP(activity_id);
+        //    return Json(new { success = true, data = data });
+        //}
+        //[HttpPost]
+        //public JsonResult addExpense(AcademicActivityExpenseRepo.baseExpense data)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    bool res = expenseRepo.addExpense(data);
+        //    if (res)
+        //    {
+        //        return Json("Thêm mục kinh phí thành công");
+        //    }
+        //    else return Json(String.Empty);
+        //}
+        //[HttpPost]
+        //public JsonResult deleteExpense(int expense_category_id)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    bool res = expenseRepo.deleteExpense(expense_category_id);
+        //    if (res)
+        //    {
+        //        return Json("Xóa mục kinh phí thành công");
+        //    }
+        //    else return Json(String.Empty);
+        //}
+        //[HttpPost]
+        //public ActionResult getDatatableExpenseEstimate(int expense_category_id)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    List<AcademicActivityExpenseRepo.baseExpense> data = expenseRepo.getDatatableExpenseEstimate(expense_category_id);
+        //    return Json(new { success = true, data = data });
+        //}
+        public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
+        {
+            try
+            {
+                partnerRepo = new AcademicActivityPartnerRepo();
+                SaveActivityPartner activityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
+                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpGet]
+        public JsonResult getActivityPartner(int activity_partner_id)
+        {
+            try
+            {
+                partnerRepo = new AcademicActivityPartnerRepo();
+                AlertModal<ActivityPartner_Ext> alertModal = partnerRepo.getActivityPartner(activity_partner_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpPost]
+        public JsonResult updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
+        {
+            try
+            {
+                partnerRepo = new AcademicActivityPartnerRepo();
+                SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
+                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpPost]
+        public JsonResult deleteActivityPartner(int activity_partner_id)
+        {
+            try
+            {
+                partnerRepo = new AcademicActivityPartnerRepo();
+                AlertModal<string> alertModal = partnerRepo.deleteActivityPartner(activity_partner_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public class QuantityByUnit
+        {
+            public string name { get; set; }
+            public int quantity { get; set; }
         }
     }
 }

@@ -92,18 +92,17 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                   }).ToList();
             List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
                                                               join c in db.TitleLanguages on b.title_id equals c.title_id
-                                                              join d in db.People on b.people_id equals d.people_id
                                                               join e in db.Offices on b.office_id equals e.office_id
                                                               where b.request_id == request_id
                                                               select new ConferenceParticipantExtend
                                                               {
-                                                                  ID = b.current_mssv_msnv,
-                                                                  FullName = d.name,
+                                                                  ID = b.mssv_msnv,
+                                                                  FullName = b.name,
                                                                   OfficeName = e.office_name,
                                                                   OfficeID = e.office_id,
                                                                   TitleName = c.name,
                                                                   TitleID = c.title_id,
-                                                                  Email = d.email
+                                                                  Email = b.email
                                                               }).ToList();
             for (int i = 0; i < Participants.Count; i++)
             {
@@ -302,6 +301,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         {
             reimbursement_string = reimbursement_string.Replace(",", "");
             if (!int.TryParse(reimbursement_string, out int reimbursement))
+                return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
+            if (reimbursement <= 0)
                 return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
             RequestConference request = db.RequestConferences.Find(request_id);
             if (request == null)
