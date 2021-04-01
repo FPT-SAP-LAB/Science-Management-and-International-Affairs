@@ -159,7 +159,8 @@ namespace BLL.ScienceManagement.Paper
                 db.SaveChanges();
                 dbc.Commit();
                 return "ss";
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
