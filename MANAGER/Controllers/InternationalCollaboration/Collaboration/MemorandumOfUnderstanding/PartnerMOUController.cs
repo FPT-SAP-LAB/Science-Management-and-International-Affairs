@@ -133,6 +133,27 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        public ActionResult isLastPartnerMOU()
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    bool isLastPartner = mou.checkLastPartner(int.Parse(id));
+                    return Json(isLastPartner);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
         public ActionResult CheckPartnerExistedInMOU(string partner_name)
         {
             try
@@ -164,6 +185,40 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOAPartnerExistedInMOU(int mou_partner_id)
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    bool isExisted = mou.CheckMOAPartnerExistedInMOU(mou_partner_id);
+                    return Json(isExisted);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOUBonusExisted(int mou_partner_id)
+        {
+            try
+            {
+                bool isInvalid = mou.IsMOUBonusExisted(mou_partner_id);
+                return Json(isInvalid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }
