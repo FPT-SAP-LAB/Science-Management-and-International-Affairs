@@ -284,7 +284,7 @@
                                 @if (item.editable)
                                 {
                                     <td class="align-middle">
-                                        <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
+                                        <input data-id="@item.cost_id" onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
                                     </td>
                                     <td>
                                         <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -401,4 +401,8 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/CostTableConferenceRequest.js"></script>
+    <script>
+
+    </script>
 }
