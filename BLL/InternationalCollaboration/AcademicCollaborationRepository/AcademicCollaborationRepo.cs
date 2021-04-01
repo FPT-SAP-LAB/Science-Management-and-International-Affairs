@@ -214,10 +214,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"-----1.7.1. Check person
-                    select peo.*, pro.office_id, offi.office_name, pro.mssv_msnv
+                    select peo.people_id, peo.name, peo.email, peo.phone_number, peo.office_id, offi.office_name, pro.mssv_msnv
                     from General.People peo
                     left join General.Profile pro on peo.people_id = pro.people_id
-                    left join General.Office offi on offi.office_id = pro.office_id
+                    left join General.Office offi on offi.office_id = peo.office_id
                     where peo.name = @people_name or peo.people_id = @people_id";
                 AcademicCollaborationPerson_Ext person = db.Database.SqlQuery<AcademicCollaborationPerson_Ext>(sql,
                     new SqlParameter("people_name", people_name),
@@ -341,7 +341,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             //get corresponsing partner_id value
                             partner_id = partner.partner_id;
                             //add partner_id & scope_id to PartnerScope
-                            partner_scope = savePartnerScope(partner_id, obj_partner);
+                            partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
                         }
@@ -357,7 +357,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             else
                             {
                                 //add partner_id & scope_id to PartnerScope
-                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                                partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                             }
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
@@ -541,7 +541,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             return partner;
         }
 
-        public PartnerScope savePartnerScope(int partner_id, SaveAcadCollab_Partner obj_partner)
+        public PartnerScope savePartnerScope(int partner_id, int scope_id)
         {
             PartnerScope partner_scope;
             try
@@ -549,7 +549,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 partner_scope = new PartnerScope()
                 {
                     partner_id = partner_id,
-                    scope_id = obj_partner.collab_scope_id,
+                    scope_id = scope_id,
                     reference_count = 1 //init first count for new PartnerScope
                 };
                 db.PartnerScopes.Add(partner_scope);
@@ -567,6 +567,18 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 partner_scope.reference_count += 1;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void decreaseReferenceCountOfPartnerScope(PartnerScope partner_scope)
+        {
+            try
+            {
+                partner_scope.reference_count -= 1;
             }
             catch (Exception e)
             {
@@ -769,7 +781,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 //get corresponsing partner_id value
                                 partner_id = partner.partner_id;
                                 //add partner_id & scope_id to PartnerScope
-                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                                partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                                 //get corresponding partner_scope_id
                                 partner_scope_id = partner_scope.partner_scope_id;
                             }
@@ -780,13 +792,34 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
                             if (partner_scope != null)
                             {
-                                //incease 1 to referecen count
-                                increaseReferenceCountOfPartnerScope(partner_scope);
+                                AcademicCollaboration ac = db.AcademicCollaborations.Find(obj_academic_collab.collab_id);
+                                if (ac.partner_scope_id != partner_scope.partner_scope_id)
+                                {
+                                    //incease 1 to new referecen_count PartnerScope
+                                    increaseReferenceCountOfPartnerScope(partner_scope);
+                                    //decrease ref_coou of old partner_scope
+                                    PartnerScope old_partner_scope = db.PartnerScopes.Find(ac.partner_scope_id);
+                                    decreaseReferenceCountOfPartnerScope(old_partner_scope);
+                                    if (old_partner_scope.reference_count <= 0)
+                                    {
+                                        db.PartnerScopes.Remove(old_partner_scope);
+                                    }
+                                    db.SaveChanges();
+                                }
                             }
                             else
                             {
                                 //add partner_id & scope_id to PartnerScope
-                                partner_scope = savePartnerScope(partner_id, obj_partner);
+                                partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
+                                //decrease ref_coou of old partner_scope
+                                AcademicCollaboration ac = db.AcademicCollaborations.Find(obj_academic_collab.collab_id);
+                                PartnerScope old_partner_scope = db.PartnerScopes.Find(ac.partner_scope_id);
+                                decreaseReferenceCountOfPartnerScope(old_partner_scope);
+                                if (old_partner_scope.reference_count <= 0)
+                                {
+                                    db.PartnerScopes.Remove(old_partner_scope);
+                                }
+                                db.SaveChanges();
                             }
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
@@ -839,10 +872,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
                     //decrease reference_count in PartnerScope
                     PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
-                    partnerScope.reference_count -= 1;
+                    if (partnerScope != null)
+                    {
+                        decreaseReferenceCountOfPartnerScope(partnerScope);
+                    }
                     //delete AcademicCollab
                     db.AcademicCollaborations.Remove(academicCollaboration);
                     db.SaveChanges();
+
                     //delete partner_scope records with reference_count = 0
                     if (partnerScope.reference_count <= 0)
                     {
