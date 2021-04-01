@@ -241,7 +241,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         article.account_id = account_id;
                     }
-                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == 
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id ==
                     academicProgram.article_id && x.language_id == program_language).FirstOrDefault();
                     if (articleVersion != null)
                     {
