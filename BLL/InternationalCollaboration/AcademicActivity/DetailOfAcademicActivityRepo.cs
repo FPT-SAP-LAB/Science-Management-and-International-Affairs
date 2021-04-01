@@ -469,9 +469,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-
-
-
+        
         public File removeFile(File file)
         {
             try
@@ -584,7 +582,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 else
                 {
-
                     if (activityPartner.activity_partner_id == 0)
                     {
                         ActivityPartner ap = db.ActivityPartners.Where<ActivityPartner>(x => x.partner_scope_id == partnerScope.partner_scope_id && x.activity_id == activityPartner.activity_id).FirstOrDefault();
