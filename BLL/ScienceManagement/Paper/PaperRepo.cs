@@ -146,7 +146,8 @@ namespace BLL.ScienceManagement.Paper
         public string addRequestPaper(int request_id, RequestPaper r, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
                     r.request_id = request_id;
@@ -276,7 +277,7 @@ namespace BLL.ScienceManagement.Paper
                         count++;
                     }
                     db.SaveChanges();
-                    if(check)db.Database.ExecuteSqlCommand(tempSql, listParam1.ToArray());
+                    if (check) db.Database.ExecuteSqlCommand(tempSql, listParam1.ToArray());
                     listmail = listmail.Substring(1);
                     string[] mail = listmail.Split(',');
                     String strAppend = "";
@@ -424,7 +425,8 @@ namespace BLL.ScienceManagement.Paper
         public int addPeople(string name, string mail, Nullable<int> office_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
                     Person p = new Person
@@ -456,7 +458,8 @@ namespace BLL.ScienceManagement.Paper
         public void addProfile(AddAuthor a)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
                     Profile pro = new Profile
@@ -493,7 +496,8 @@ namespace BLL.ScienceManagement.Paper
         public string addCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
                     if (criteria == null) return "ss";
