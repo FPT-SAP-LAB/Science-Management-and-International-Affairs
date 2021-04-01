@@ -102,7 +102,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public double expense_price { get; set; }
             public double expense_quantity { get; set; }
             public string note { get; set; }
-
         }
     }
 }
