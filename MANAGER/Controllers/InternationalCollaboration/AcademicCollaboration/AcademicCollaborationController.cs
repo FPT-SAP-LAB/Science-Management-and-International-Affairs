@@ -277,7 +277,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, new_evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }

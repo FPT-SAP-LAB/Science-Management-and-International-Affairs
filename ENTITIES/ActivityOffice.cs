@@ -12,20 +12,19 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ActivityExpenseCategory
+    public partial class ActivityOffice
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ActivityExpenseCategory()
+        public ActivityOffice()
         {
-            this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
+            this.ActivityExpenseCategories = new HashSet<ActivityExpenseCategory>();
         }
     
-        public int expense_category_id { get; set; }
-        public string expense_category_name { get; set; }
-        public Nullable<int> activity_office_id { get; set; }
+        public int activity_office_id { get; set; }
+        public Nullable<int> activity_id { get; set; }
+        public Nullable<int> office_id { get; set; }
     
-        public virtual ActivityOffice ActivityOffice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
+        public virtual ICollection<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
     }
 }

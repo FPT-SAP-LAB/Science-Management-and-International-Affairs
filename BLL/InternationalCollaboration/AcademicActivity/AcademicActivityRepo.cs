@@ -315,30 +315,30 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             if (start)
             {
-                List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
-                foreach (ActivityExpenseCategory arc in activityExpenses_old)
-                {
-                    ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
-                    {
-                        activity_id = activity_id,
-                        office_id = arc.office_id,
-                        expense_category_name = arc.expense_category_name
-                    });
-                    db.SaveChanges();
-                    List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
-                    foreach (ActivityExpenseDetail ard in expenseDetails_old)
-                    {
-                        db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
-                        {
-                            expense_category_id = activityExpense_new.expense_category_id,
-                            expense_price = ard.expense_price,
-                            expense_quantity = ard.expense_quantity,
-                            expense_type_id = ard.expense_type_id,
-                            note = ard.note
-                        });
-                    }
-                    db.SaveChanges();
-                }
+                //List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
+                //foreach (ActivityExpenseCategory arc in activityExpenses_old)
+                //{
+                //    ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
+                //    {
+                //        //activity_id = activity_id,
+                //        //office_id = arc.office_id,
+                //        expense_category_name = arc.expense_category_name
+                //    });
+                //    db.SaveChanges();
+                //    List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
+                //    foreach (ActivityExpenseDetail ard in expenseDetails_old)
+                //    {
+                //        db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
+                //        {
+                //            expense_category_id = activityExpense_new.expense_category_id,
+                //            expense_price = ard.expense_price,
+                //            expense_quantity = ard.expense_quantity,
+                //            expense_type_id = ard.expense_type_id,
+                //            note = ard.note
+                //        });
+                //    }
+                //    db.SaveChanges();
+                //}
             }
         }
         public void cloneTD(cloneBase obj, bool start, int activity_id)
