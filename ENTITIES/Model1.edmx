@@ -1133,8 +1133,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="expense_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="expense_category_name" Type="nvarchar" MaxLength="150" />
-          <Property Name="activity_id" Type="int" />
-          <Property Name="office_id" Type="int" />
+          <Property Name="activity_office_id" Type="int" />
         </EntityType>
         <EntityType Name="ActivityExpenseDetail">
           <Key>
@@ -1162,6 +1161,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="article_id" Type="int" Nullable="false" />
           <Property Name="activity_id" Type="int" />
           <Property Name="main_article" Type="bit" />
+        </EntityType>
+        <EntityType Name="ActivityOffice">
+          <Key>
+            <PropertyRef Name="activity_office_id" />
+          </Key>
+          <Property Name="activity_office_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activity_id" Type="int" />
+          <Property Name="office_id" Type="int" />
         </EntityType>
         <EntityType Name="ActivityPartner">
           <Key>
@@ -1528,30 +1535,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="AccountRight">
               <PropertyRef Name="right_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__activ__1E05700A">
-          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicActivity">
-              <PropertyRef Name="activity_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="activity_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__offic__1EF99443">
-          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3024,7 +3007,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionO__quest__24134F1B">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="QuestionOption" Type="Self.QuestionOption" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -3531,6 +3516,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityOffice">
+              <PropertyRef Name="activity_office_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseCategory">
+              <PropertyRef Name="activity_office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ActivityExpenseDetail_ActivityExpenseCategory">
           <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -3788,6 +3785,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySet Name="ActivityExpenseDetail" EntityType="Self.ActivityExpenseDetail" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityExpenseType" EntityType="Self.ActivityExpenseType" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityInfo" EntityType="Self.ActivityInfo" Schema="SMIA_AcademicActivity" store:Type="Tables" />
+          <EntitySet Name="ActivityOffice" EntityType="Self.ActivityOffice" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityPartner" EntityType="Self.ActivityPartner" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AnswerType" EntityType="Self.AnswerType" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="Form" EntityType="Self.Form" Schema="SMIA_AcademicActivity" store:Type="Tables" />
@@ -3895,14 +3893,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__AccountRi__right__28ED12D1" Association="Self.FK__AccountRi__right__28ED12D1">
             <End Role="Right" EntitySet="Right" />
             <End Role="AccountRight" EntitySet="AccountRight" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__activ__1E05700A" Association="Self.FK__ActivityE__activ__1E05700A">
-            <End Role="AcademicActivity" EntitySet="AcademicActivity" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__offic__1EF99443" Association="Self.FK__ActivityE__offic__1EF99443">
-            <End Role="Office" EntitySet="Office" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
           </AssociationSet>
           <AssociationSet Name="FK__ActivityI__activ__4924D839" Association="Self.FK__ActivityI__activ__4924D839">
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
@@ -4556,6 +4546,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Direction" EntitySet="Direction" />
             <End Role="AcademicProgram" EntitySet="AcademicProgram" />
           </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseCategory_ActivityOffice" Association="Self.FK_ActivityExpenseCategory_ActivityOffice">
+            <End Role="ActivityOffice" EntitySet="ActivityOffice" />
+            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_ActivityExpenseDetail_ActivityExpenseCategory" Association="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory">
             <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
             <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
@@ -4731,7 +4725,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="office_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Area" Relationship="Self.FK__Office__area_id__72910220" FromRole="Office" ToRole="Area" />
           <NavigationProperty Name="InternalUnit" Relationship="Self.FK__Office__unit_id__73852659" FromRole="Office" ToRole="InternalUnit" />
-          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK__ActivityE__offic__1EF99443" FromRole="Office" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="Office" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="Office" ToRole="MOU" />
           <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__offic__278EDA44" FromRole="Office" ToRole="Participant" />
@@ -5966,7 +5959,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__activ__2610A626" FromRole="AcademicActivity" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="AcademicActivityLanguages" Relationship="Self.FK__AcademicA__activ__408F9238" FromRole="AcademicActivity" ToRole="AcademicActivityLanguage" />
           <NavigationProperty Name="AcademicActivityType" Relationship="Self.FK__AcademicA__activ__4277DAAA" FromRole="AcademicActivity" ToRole="AcademicActivityType" />
-          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK__ActivityE__activ__1E05700A" FromRole="AcademicActivity" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ActivityInfoes" Relationship="Self.FK__ActivityI__activ__4924D839" FromRole="AcademicActivity" ToRole="ActivityInfo" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK__ActivityP__activ__58671BC9" FromRole="AcademicActivity" ToRole="ActivityPartner" />
         </EntityType>
@@ -6032,10 +6024,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="expense_category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="expense_category_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="activity_id" Type="Int32" />
-          <Property Name="office_id" Type="Int32" />
-          <NavigationProperty Name="Office" Relationship="Self.FK__ActivityE__offic__1EF99443" FromRole="ActivityExpenseCategory" ToRole="Office" />
-          <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityE__activ__1E05700A" FromRole="ActivityExpenseCategory" ToRole="AcademicActivity" />
+          <Property Name="activity_office_id" Type="Int32" />
+          <NavigationProperty Name="ActivityOffice" Relationship="Self.FK_ActivityExpenseCategory_ActivityOffice" FromRole="ActivityExpenseCategory" ToRole="ActivityOffice" />
           <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory" FromRole="ActivityExpenseCategory" ToRole="ActivityExpenseDetail" />
         </EntityType>
         <EntityType Name="ActivityExpenseDetail">
@@ -6069,6 +6059,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="main_article" Type="Boolean" />
           <NavigationProperty Name="Article" Relationship="Self.FK__ActivityI__artic__4CF5691D" FromRole="ActivityInfo" ToRole="Article" />
           <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityI__activ__4924D839" FromRole="ActivityInfo" ToRole="AcademicActivity" />
+        </EntityType>
+        <EntityType Name="ActivityOffice">
+          <Key>
+            <PropertyRef Name="activity_office_id" />
+          </Key>
+          <Property Name="activity_office_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activity_id" Type="Int32" />
+          <Property Name="office_id" Type="Int32" />
+          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK_ActivityExpenseCategory_ActivityOffice" FromRole="ActivityOffice" ToRole="ActivityExpenseCategory" />
         </EntityType>
         <EntityType Name="ActivityPartner">
           <Key>
@@ -6558,18 +6557,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="Right">
               <PropertyRef Name="module_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__offic__1EF99443">
-          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8265,18 +8252,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ActivityE__activ__1E05700A">
-          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicActivity">
-              <PropertyRef Name="activity_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="activity_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ActivityI__activ__4924D839">
           <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -8356,6 +8331,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="AcademicActivityTypeLanguage">
               <PropertyRef Name="activity_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityOffice">
+              <PropertyRef Name="activity_office_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseCategory">
+              <PropertyRef Name="activity_office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8450,7 +8437,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionO__quest__24134F1B">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="QuestionOption" Type="Self.QuestionOption" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -8600,6 +8589,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySet Name="ActivityExpenseDetails" EntityType="Self.ActivityExpenseDetail" />
           <EntitySet Name="ActivityExpenseTypes" EntityType="Self.ActivityExpenseType" />
           <EntitySet Name="ActivityInfoes" EntityType="Self.ActivityInfo" />
+          <EntitySet Name="ActivityOffices" EntityType="Self.ActivityOffice" />
           <EntitySet Name="ActivityPartners" EntityType="Self.ActivityPartner" />
           <EntitySet Name="AnswerTypes" EntityType="Self.AnswerType" />
           <EntitySet Name="Forms" EntityType="Self.Form" />
@@ -8733,10 +8723,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Right__module_id__2EA5EC27" Association="Self.FK__Right__module_id__2EA5EC27">
             <End Role="Module" EntitySet="Modules" />
             <End Role="Right" EntitySet="Rights" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__offic__1EF99443" Association="Self.FK__ActivityE__offic__1EF99443">
-            <End Role="Office" EntitySet="Offices" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__offic__5B78929E" Association="Self.FK__Conferenc__offic__5B78929E">
             <End Role="Office" EntitySet="Offices" />
@@ -9298,10 +9284,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="AcademicActivityType" EntitySet="AcademicActivityTypes" />
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
           </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__activ__1E05700A" Association="Self.FK__ActivityE__activ__1E05700A">
-            <End Role="AcademicActivity" EntitySet="AcademicActivities" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK__ActivityI__activ__4924D839" Association="Self.FK__ActivityI__activ__4924D839">
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
             <End Role="ActivityInfo" EntitySet="ActivityInfoes" />
@@ -9325,6 +9307,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__AcademicA__activ__381A47C8" Association="Self.FK__AcademicA__activ__381A47C8">
             <End Role="AcademicActivityType" EntitySet="AcademicActivityTypes" />
             <End Role="AcademicActivityTypeLanguage" EntitySet="AcademicActivityTypeLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseCategory_ActivityOffice" Association="Self.FK_ActivityExpenseCategory_ActivityOffice">
+            <End Role="ActivityOffice" EntitySet="ActivityOffices" />
+            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_ActivityExpenseDetail_ActivityExpenseCategory" Association="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory">
             <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
@@ -10544,8 +10530,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <MappingFragment StoreEntitySet="ActivityExpenseCategory">
                 <ScalarProperty Name="expense_category_id" ColumnName="expense_category_id" />
                 <ScalarProperty Name="expense_category_name" ColumnName="expense_category_name" />
-                <ScalarProperty Name="activity_id" ColumnName="activity_id" />
-                <ScalarProperty Name="office_id" ColumnName="office_id" />
+                <ScalarProperty Name="activity_office_id" ColumnName="activity_office_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10576,6 +10561,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="activity_id" ColumnName="activity_id" />
                 <ScalarProperty Name="main_article" ColumnName="main_article" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityOffices">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ActivityOffice">
+              <MappingFragment StoreEntitySet="ActivityOffice">
+                <ScalarProperty Name="activity_office_id" ColumnName="activity_office_id" />
+                <ScalarProperty Name="activity_id" ColumnName="activity_id" />
+                <ScalarProperty Name="office_id" ColumnName="office_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
