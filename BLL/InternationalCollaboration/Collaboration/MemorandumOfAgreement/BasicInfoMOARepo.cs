@@ -21,7 +21,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 string sql_moaBasicInfo =
                     @"select 
                         moa.moa_id, moa.moa_code, mou.office_abbreviation, moap.moa_start_date, moa.moa_end_date,
-                        moah.mou_status_name, moah.reason, moaps.scope_abbreviation, moa.evidence, moa.moa_note
+                        moah.mou_status_id as moa_status_id, moah.reason, moaps.scope_abbreviation, moa.evidence, moa.moa_note
                         from IA_Collaboration.MOA moa
                         inner join
 	                        (select moa_id, max(moa_start_date) 'moa_start_date'
@@ -29,7 +29,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 	                        where moa_id = @moa_id
 	                        group by moa_id) as moap on moap.moa_id = moa.moa_id
                         inner join
-	                        (select moah1.moa_id, cs.mou_status_name, moah2.reason, moah1.[datetime]  
+	                        (select moah1.moa_id, cs.mou_status_id, moah2.reason, moah1.[datetime]  
 	                        from
 	                        (select moa_id, max([datetime]) 'datetime'
 	                        from IA_Collaboration.MOAStatusHistory
@@ -68,10 +68,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         moab.moa_bonus_id, moab.moa_bonus_code, moab.moa_bonus_decision_date, moab.moa_bonus_end_date,
                         pa.partner_name, cs.scope_abbreviation
                         from IA_Collaboration.MOABonus moab
-                        inner join IA_Collaboration.MOAPartnerScope moaps on moab.moa_bonus_id = moaps.moa_bonus_id and moab.moa_id = moaps.moa_id
-                        inner join IA_Collaboration.PartnerScope ps on ps.partner_scope_id = moaps.partner_scope_id
-                        inner join IA_Collaboration.[Partner] pa on pa.partner_id = ps.partner_id
-                        inner join IA_Collaboration.CollaborationScope cs on cs.[scope_id] = ps.[scope_id]
+                        left join IA_Collaboration.MOAPartnerScope moaps on moab.moa_bonus_id = moaps.moa_bonus_id and moab.moa_id = moaps.moa_id
+                        left join IA_Collaboration.PartnerScope ps on ps.partner_scope_id = moaps.partner_scope_id
+                        left join IA_Collaboration.[Partner] pa on pa.partner_id = ps.partner_id
+                        left join IA_Collaboration.CollaborationScope cs on cs.[scope_id] = ps.[scope_id]
                         where moab.moa_id = @moa_id";
                 List<ExtraMOA> moaExList = db.Database.SqlQuery<ExtraMOA>(sql_moaExList,
                     new SqlParameter("moa_id", moa_id)).ToList();
@@ -277,8 +277,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -318,44 +318,48 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 
                     //Check partnerScope existed and handle it.
                     //add data to MOUPartnerScope.
-                    foreach (PartnerScopeInfoMOA psi in input.PartnerScopeInfoMOA.ToList())
+                    //check PartnerScope is null or not
+                    if (input.PartnerScopeInfoMOA != null)
                     {
-                        foreach (int scope in psi.scopes_id.ToList())
+                        foreach (PartnerScopeInfoMOA psi in input.PartnerScopeInfoMOA.ToList())
                         {
-                            PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
-                            if (psCheck is null)
+                            foreach (int scope in psi.scopes_id.ToList())
                             {
-                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
+                                if (psCheck is null)
                                 {
-                                    partner_id = psi.partner_id,
-                                    scope_id = scope,
-                                    reference_count = 1
-                                });
-                                db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                    {
+                                        partner_id = psi.partner_id,
+                                        scope_id = scope,
+                                        reference_count = 1
+                                    });
+                                    db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                    {
+                                        partner_scope_id = psAdded.partner_scope_id,
+                                        moa_id = mb.moa_id,
+                                        moa_bonus_id = input.moa_bonus_id
+                                    });
+                                }
+                                else
                                 {
-                                    partner_scope_id = psAdded.partner_scope_id,
-                                    moa_id = mb.moa_id,
-                                    moa_bonus_id = input.moa_bonus_id
-                                });
-                            }
-                            else
-                            {
-                                psCheck.reference_count += 1;
-                                db.MOAPartnerScopes.Add(new MOAPartnerScope
-                                {
-                                    partner_scope_id = psCheck.partner_scope_id,
-                                    moa_id = mb.moa_id,
-                                    moa_bonus_id = input.moa_bonus_id
-                                });
+                                    psCheck.reference_count += 1;
+                                    db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                    {
+                                        partner_scope_id = psCheck.partner_scope_id,
+                                        moa_id = mb.moa_id,
+                                        moa_bonus_id = input.moa_bonus_id
+                                    });
+                                }
                             }
                         }
                     }
+
                     //checkpoint 2
                     db.SaveChanges();
-
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -421,15 +425,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 string sql_moaEx =
                     @"select t1.moa_bonus_code, t1.moa_bonus_decision_date,t1.moa_bonus_end_date,
                         t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.moa_id,t1.moa_bonus_id,
-                        t5.scope_id,t4.partner_id
+                        isnull(t5.scope_id,0) as scope_id ,isnull(t4.partner_id,0) as partner_id
                         from IA_Collaboration.MOABonus t1 left join 
                         IA_Collaboration.MOAPartnerScope t2 on 
-                        t1.moa_bonus_id = t2.moa_bonus_id inner join 
+                        t1.moa_bonus_id = t2.moa_bonus_id left join 
                         IA_Collaboration.PartnerScope t3 on
                         t3.partner_scope_id = t2.partner_scope_id
-                        inner join 
+                        left join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
-                        inner join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
+                        left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.moa_id = @moa_id and t1.moa_bonus_id = @moa_bonus_id order by partner_id";
                 List<ExtraMOA> moaExList = db.Database.SqlQuery<ExtraMOA>(sql_moaEx
                     , new SqlParameter("moa_id", moa_id)
@@ -468,6 +472,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 {
                     p.scopes_id.Add(item.scope_id);
                     p.scopes_name += "," + item.scope_abbreviation;
+                }
+            }
+            //Case: remove PartnerScopeInfoMOA if null
+            if (newObj.PartnerScopeInfoMOA.Count == 1)
+            {
+                if (newObj.PartnerScopeInfoMOA[0].partner_id == 0)
+                {
+                    newObj.PartnerScopeInfoMOA.RemoveAt(0);
                 }
             }
             return newObj;
