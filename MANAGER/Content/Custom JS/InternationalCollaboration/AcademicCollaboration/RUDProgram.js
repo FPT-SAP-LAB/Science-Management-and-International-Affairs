@@ -57,15 +57,14 @@ function confirm_delete_program(article_id) {
 
 //load edit program===================================================================
 $(document).on('click', '#load_edit_program', function() {
-    let id = $(this).data('id');
+    program_id = $(this).data('id');
     let direction_temp = $(this).data('direction');
     if (direction_temp == 1) {
-        load_program_detail_going(id);
+        load_program_detail_going(program_id);
     }
     if (direction_temp == 2) {
-        load_program_detail_coming(id);
+        load_program_detail_coming(program_id);
     }
-    program_id = $(this).data('id');
     direction = $(this).data('direction');
     collab_type = $(this).data('collab');
 });
