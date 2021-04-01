@@ -142,6 +142,31 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
+        public string updateRewardAuthorAfterDecision(List<AddAuthor> people, int paper_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                foreach (var item in people)
+                {
+                    string temp = item.money_string.Replace(",", "");
+                    int money = Int32.Parse(temp);
+                    AuthorPaper ap = db.AuthorPapers.Where(x => x.people_id == item.people_id)
+                                                    .Where(x => x.paper_id == paper_id)
+                                                    .FirstOrDefault();
+                    ap.money_reward = money;
+                }
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string getAuthorReceived(string id)
         {
             int paper_id = Int32.Parse(id);

@@ -245,6 +245,18 @@ $("#authors-info-container").on('click', '.edit-author', function () {
             if ($("#totalreward").val() != "" && people[i].money_string == "0") $("#add_author_reward_edit").prop("disabled", false);
             else $("#add_author_reward_edit").prop('disabled', true);
 
+            var sum = 0;
+            var total = $("#totalreward").val();
+            total = total.split(",").join("");
+
+            for (var j = 0; j < people.length; j++) {
+                var data = people[j].money_string;
+                var temp = data.split(",").join("");
+                sum = parseInt(sum) + parseInt(temp);
+            }
+            if (sum != parseInt(total)) $("#add_author_reward_edit").prop("disabled", false);
+            else $("#add_author_reward_edit").prop('disabled', true);
+
             $("#edit_author_btn").click();
             temp_index_edit = i;
             break;
