@@ -223,13 +223,13 @@
 }
 
 @*modal add program coming*@
-@{ 
+@{
     Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
 }
 
 @*modal edit program*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Program");
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Going");
 }
 
 @*SHORT-TERM MODAL*@
@@ -292,14 +292,19 @@
         $('#add_procedure_language').select2({
             placeholder: 'Ngôn ngữ',
         })
+        $('#edit_program_language_going').select2({
+            placeholder: 'Ngôn ngữ',
+        })
     </script>
     @* -----------------delete, load detail, change language procedure----------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
     @*---------------------save edit procedure----------------*@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ProcedureEditContent.js"></script>
 
-    @* -----------------delete, load detail, change language program----------- *@
+    @* -----------------add program--------------------------------------------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
+    @* -----------------delete, load detail, change language program----------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProgram.js"></script>
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({

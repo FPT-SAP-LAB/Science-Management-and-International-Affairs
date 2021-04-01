@@ -494,7 +494,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult LoadEdit(int procedure_id)
+        public ActionResult LoadEditProcedure(int procedure_id)
         {
             try
             {
@@ -661,6 +661,22 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [HttpPost]
+        public ActionResult LoadEditProgram(int program_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                ProgramInfoManager programInfoManager = acProgramRepo.LoadEditProgram(program_id);
+                return Json(new { json = programInfoManager });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
+        }
         public ActionResult Get_Status_History(string id)
         {
             try

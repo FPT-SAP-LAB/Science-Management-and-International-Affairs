@@ -139,5 +139,37 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
             }
         }
+
+        public ProgramInfoManager LoadEditProgram(int program_id)
+        {
+            try
+            {
+                AcademicProgram academicProgram = db.AcademicPrograms.Find(program_id);
+
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x => x.article_id == academicProgram.article_id).OrderBy(x => x.language_id).FirstOrDefault();
+                if (articleVersion != null)
+                {
+                    ProgramInfoManager programInfoManager = new ProgramInfoManager
+                    {
+                        program_name = articleVersion.version_title,
+                        language_id = articleVersion.language_id,
+                        partner_id = academicProgram.partner_id,
+                        content = articleVersion.article_content,
+                        note = academicProgram.note,
+                        registration_deadline = academicProgram.program_start_date.ToString("dd/MM/yyyy") + " - " + academicProgram.program_end_date.ToString("dd/MM/yyyy")
+                    };
+                    return programInfoManager;
+                }
+                else
+                {
+                    return new ProgramInfoManager();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

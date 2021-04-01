@@ -1,5 +1,5 @@
 ﻿//load partner into select2 in modal program going
-$('#add_program_partner').select2({
+$('.program_partner').select2({
     placeholder: 'Đối tác',
     allowClear: true,
     tags: true,
@@ -76,16 +76,16 @@ $('.add_program_btn').click(function () {
         add_program_language = $('#add_program_language_going').val()
         add_program_partner = $('#add_program_partner').val()
         add_program_range_date = $('#add_program_range_date_going').val()
-        note = $('#note_going').val()
-        content = $('#summernote_going').summernote('code') + "";
+        note = $('#add_note_going').val()
+        content = $('#add_summernote_going').summernote('code') + "";
     }
     if (direction == 2) {
         add_program_title = $('#add_program_title_coming').val()
         add_program_language = $('#add_program_language_coming').val()
         add_program_partner = ""
         add_program_range_date = $('#add_program_range_date_coming').val()
-        note = $('#note_coming').val()
-        content = $('#summernote_coming').summernote('code') + "";
+        note = $('#add_note_coming').val()
+        content = $('#add_summernote_coming').summernote('code') + "";
     }
 
     if (add_program_title == "") {

@@ -2133,6 +2133,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom JS\Citation.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\Program_Add.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\RUDProgram.js" />
     <Content Include="Content\Custom JS\ListAllPaper.js" />
     <Content Include="Content\Custom_CSS\MOU\MOU.css" />
     <Content Include="Content\Custom_CSS\MOU\MOUDetail.css" />
@@ -2306,7 +2307,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Edit_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Add_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Add_Program_Going.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Going.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Procedure.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Procedure.cshtml" />
     <Content Include="Views\Partner\Add.cshtml" />

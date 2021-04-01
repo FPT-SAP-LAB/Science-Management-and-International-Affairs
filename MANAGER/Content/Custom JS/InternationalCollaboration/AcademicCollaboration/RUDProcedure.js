@@ -52,7 +52,7 @@ function load_procedure_detail(procedure_id) {
     procedure_id_load = procedure_id
     var id = { procedure_id: procedure_id }
     $.ajax({
-        url: '/AcademicCollaboration/LoadEdit',
+        url: '/AcademicCollaboration/LoadEditProcedure',
         type: 'post',
         dataType: 'json',
         data: id,
