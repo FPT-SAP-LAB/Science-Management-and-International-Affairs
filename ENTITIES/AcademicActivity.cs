@@ -19,7 +19,6 @@ namespace ENTITIES
         {
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
-            this.ActivityExpenseCategories = new HashSet<ActivityExpenseCategory>();
             this.ActivityInfoes = new HashSet<ActivityInfo>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
         }
@@ -36,8 +35,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         public virtual AcademicActivityType AcademicActivityType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityInfo> ActivityInfoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
