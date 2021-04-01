@@ -35,72 +35,96 @@
         margin-bottom: 12px !important;
     }
 </style>
-<div class="row justify-content-left bg-gray-100 py-8 px-8 py-md-10">
-    <div class="col-md-12">
-        <div class="row justify-content-left bgi-size-cover bgi-no-repeat py-8 px-8" style="background-image: url(../Content/assets/media/bg/event_banner.jpg);">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <h1 class="display-4 text-white text-uppercase" id="form-title"></h1>
-                </div>
-            </div>
-        </div>
-        <hr />
+<div class="card card-custom overflow-hidden">
+    <div class="card-body p-0">
         <div class="col-md-12">
-            <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
-                <div class="col-md-12 col-sm-12">
-                    <div class="row" id="main-control">
+            @{
+                if (@ViewBag.file_drive_id.Length <= 42)
+                {
+                    <div class="row justify-content-left bgi-size-cover bgi-no-repeat bgi-position-center py-8 px-8" style="background-image: url(../Content/assets/media/bg/event_banner.jpg);">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between flex-column flex-md-row">
+                                <h1 class="display-4 text-white text-uppercase" id="form-title"></h1>
+                            </div>
+                            <div class="d-flex justify-content-between flex-column flex-md-row mt-8">
+                                <h4 class="text-white" id="form-description"></h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row justify-content-left bgi-size-cover bgi-no-repeat bgi-position-center py-8 px-8" style="background-image: url('@ViewBag.file_drive_id');">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between flex-column flex-md-row">
+                                <h1 class="display-4 text-white text-uppercase" id="form-title"></h1>
+                            </div>
+                            <div class="d-flex justify-content-between flex-column flex-md-row mt-5">
+                                <h4 class="text-white" id="form-description"></h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
 
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b id="question-title-fullname"></b><label style="color:red" id="compulsory-fullname">*</label>:</label>
-                                <input type="text" id="ques-answer-fullname" class="form-control form-control-lg" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b id="question-title-email"></b><label style="color:red" id="compulsory-email">*</label>:</label>
-                                <input type="text" id="ques-answer-email" class="form-control form-control-lg" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b id="question-title-phone"></b><label style="color:red" id="compulsory-phone">*</label>:</label>
-                                <input type="text" id="ques-answer-phone" class="form-control form-control-lg" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b id="question-title-role"></b><label style="color:red" id="compulsory-role">*</label>:</label>
-                                <select class="form-control form-control-lg" id="ques-answer-role">
-                                    @{
-                                        foreach (var item in ViewBag.role)
-                                        {
-                                            <option value="@item.participant_role_id">@item.participant_role_name</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b id="question-title-office"></b><label style="color:red" id="compulsory-office">*</label>:</label>
-                                <select class="form-control form-control-lg" id="ques-answer-office">
-                                    @{
-                                        foreach (var item in ViewBag.office)
-                                        {
-                                            <option value="@item.office_id">@item.office_name</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
+            <hr />
+            <div class="col-md-12">
+                <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row" id="main-control">
 
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b id="question-title-fullname"></b><label style="color:red" id="compulsory-fullname">*</label>:</label>
+                                    <input type="text" id="ques-answer-fullname" class="form-control form-control-lg" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b id="question-title-email"></b><label style="color:red" id="compulsory-email">*</label>:</label>
+                                    <input type="text" id="ques-answer-email" class="form-control form-control-lg" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b id="question-title-phone"></b><label style="color:red" id="compulsory-phone">*</label>:</label>
+                                    <input type="text" id="ques-answer-phone" class="form-control form-control-lg" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b id="question-title-role"></b><label style="color:red" id="compulsory-role">*</label>:</label>
+                                    <select class="form-control form-control-lg" id="ques-answer-role">
+                                        @{
+                                            foreach (var item in ViewBag.role)
+                                            {
+                                                <option value="@item.participant_role_id">@item.participant_role_name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b id="question-title-office"></b><label style="color:red" id="compulsory-office">*</label>:</label>
+                                    <select class="form-control form-control-lg" id="ques-answer-office">
+                                        @{
+                                            foreach (var item in ViewBag.office)
+                                            {
+                                                <option value="@item.office_id">@item.office_name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center bg-gray-100 py-8 px-8">
-                <div class="col-12" style=" text-align: center;">
-                    <a href="javascript:;" class="btn btn-light-success px-6 font-weight-bold" onclick="sendForm()">Gửi đơn</a>
+                <div class="row justify-content-center bg-gray-100 py-8 px-8">
+                    <div class="col-12" style=" text-align: center;">
+                        <a href="javascript:;" class="btn btn-light-success px-6 font-weight-bold" onclick="sendForm()">Gửi đơn</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,6 +171,7 @@
                 success: function (data) {
                     fid = data.question[0].form_id;
                     document.getElementById('form-title').innerHTML = data.question[0].f_title;
+                    document.getElementById('form-description').innerHTML = data.question[0].title_description;
                     data.question.forEach(function (x,index) {
                         if (x.is_changeable == 0) {
                             document.getElementById('question-title-' + map[index].id).innerHTML = x.title + ' ';
@@ -325,7 +350,7 @@
                 success: function (data) {
                     if (data != '') {
                         Swal.fire({
-                            title: "Đăng ký thành công", 
+                            title: "Đăng ký thành công",
                             text: "Cảm ơn bạn đã đăng ký tham dự hoạt động.",
                             icon: "success",
                             showCancelButton: true,

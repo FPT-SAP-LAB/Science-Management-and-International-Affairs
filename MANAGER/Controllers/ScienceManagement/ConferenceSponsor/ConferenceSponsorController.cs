@@ -82,6 +82,16 @@ namespace MANAGER.Controllers
             DetailRepos.EndRequest(request_id);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
+        [HttpGet]
+        public ActionResult ExportRequest(int request_id)
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ExportAppointment(int request_id)
+        {
+            return View();
+        }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)
         {
