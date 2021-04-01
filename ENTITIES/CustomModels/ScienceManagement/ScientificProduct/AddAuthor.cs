@@ -21,5 +21,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public int paper_id { get; set; }
         public bool is_reseacher { get; set; }
         public string title_strring { get; set; }
+        public string money_string { get; set; }
     }
 }

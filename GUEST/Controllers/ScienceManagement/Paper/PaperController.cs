@@ -154,5 +154,12 @@ namespace GUEST.Controllers
             if (ms == null) ms = "";
             return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult editPaperAuthorReward(List<AddAuthor> people, int paper_id)
+        {
+            string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

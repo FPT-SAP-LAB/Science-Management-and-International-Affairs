@@ -142,6 +142,32 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
+        public string updateRewardAuthorAfterDecision(List<AddAuthor> people, int paper_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                foreach (var item in people)
+                {
+                    string temp = item.money_string.Replace(",", "");
+                    int money = Int32.Parse(temp);
+                    AuthorPaper ap = db.AuthorPapers.Where(x => x.people_id == item.people_id)
+                                                    .Where(x => x.paper_id == paper_id)
+                                                    .FirstOrDefault();
+                    ap.money_reward = money;
+                }
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string getAuthorReceived(string id)
         {
             int paper_id = Int32.Parse(id);
@@ -613,7 +639,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Apendix_3> getListAppendix3_4(string type)
         {
-            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, sum(ap.money_reward_in_decision) as 'sum_money'
+            string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
@@ -621,6 +647,7 @@ namespace BLL.ScienceManagement.Paper
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where rp.status_id = 4 and rp.type = @type
                             group by po.name, pro.mssv_msnv, o.office_abbreviation
+							having sum(ap.money_reward_in_decision) > 0
                             order by po.name";
             List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type)).ToList();
             return list;
