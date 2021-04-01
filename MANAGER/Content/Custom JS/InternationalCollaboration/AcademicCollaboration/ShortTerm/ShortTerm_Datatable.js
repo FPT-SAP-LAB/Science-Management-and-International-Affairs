@@ -132,7 +132,7 @@ $(document).ready(function () {
         procedure_coming_table.ajax.reload();
     })
     //procedure coming======================================================================
-    $("#program_going_table").DataTable({
+    var program_going_table = $("#program_going_table").DataTable({
         oLanguage: {
             oPaginate: {
                 sPrevious: "Trang trước",
@@ -196,9 +196,9 @@ $(document).ready(function () {
                 data: "program_id",
                 name: "program_id",
                 className: 'text-center text-nowrap',
-                render: function (data) {
-                    return '<a id="load_edit_program" data-id=' + data + ' class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
-                        '<a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                render: function (data, type, row) {
+                    return '<a id="load_edit_program" data-id=' + data + ' data-direction=1 data-collab=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                        '<a id="delete_program" data-id=' + row.article_id + ' data-collab=1 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
                 }
             },
         ],
@@ -210,7 +210,11 @@ $(document).ready(function () {
         }]
     });
 
-    $("#program_coming_table").DataTable({
+    $('#program_going_search_btn').click(function () {
+        program_going_table.ajax.reload();
+    })
+
+    var program_coming_table = $("#program_coming_table").DataTable({
         oLanguage: {
             oPaginate: {
                 sPrevious: "Trang trước",
@@ -265,8 +269,10 @@ $(document).ready(function () {
                 data: "program_id",
                 name: "program_id",
                 className: 'text-center text-nowrap',
-                render: function () {
-                    return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                render: function (data, type, row) {
+                    return '<a id="load_edit_program" data-id=' + data + ' data-direction=2 data-collab=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                        '<a id="delete_program" data-id=' + row.article_id + ' data-collab=1 data-direction=2 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
+
                 }
             },
         ],
@@ -281,4 +287,8 @@ $(document).ready(function () {
             $(this).parent().css('padding', '0');
         },
     });
+
+    $('#program_coming_search_btn').click(function () {
+        program_coming_table.ajax.reload();
+    })
 })
