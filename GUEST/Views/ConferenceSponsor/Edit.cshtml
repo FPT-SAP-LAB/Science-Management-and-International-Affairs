@@ -218,13 +218,13 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input disabled type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
                                             </td>
                                             <td>
-                                                <input disabled type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
                                             </td>
                                             <td>
-                                                <select disabled class="form-control selectOffice">
+                                                <select class="form-control selectOffice">
                                                     @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
                                                         <option @(item.office_id == Participants[0].OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
@@ -232,7 +232,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select disabled class="form-control selectTitle">
+                                                <select class="form-control selectTitle">
                                                     @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
                                                         <option @(item.title_id == Participants[0].TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
@@ -583,12 +583,6 @@
 
         function formatInfoSelection(repo) {
             if (repo.id) {
-                if (repo.Name) {
-                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", true);
-                }
-                else {
-                    $(currentRow).find(".selectTitle, .selectOffice, .inputEmail, .inputName").prop("disabled", false);
-                }
                 $(currentRow).find(".inputEmail").val(repo.Email);
                 $(currentRow).find(".inputName").val(repo.Name);
                 $(currentRow).find(".selectOffice").val(repo.OfficeID).trigger('change');;
@@ -724,11 +718,9 @@
             if (ms == "" || name == "")
                 return;
             this.data.ConferenceParticipant = {
-                current_mssv_msnv: ms,
+                mssv_msnv: ms,
                 office_id: $(".selectOffice").val(),
                 title_id: $(".selectTitle").val(),
-            };
-            this.data.Persons = {
                 name: name,
                 email: $(".inputEmail").val(),
             };
