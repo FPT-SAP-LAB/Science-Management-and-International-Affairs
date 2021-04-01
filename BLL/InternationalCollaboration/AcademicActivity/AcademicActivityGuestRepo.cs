@@ -253,7 +253,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 string file_drive_id = db.Database.SqlQuery<string>(sql, new SqlParameter("phase_id", phase_id)).FirstOrDefault();
                 return file_drive_id;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return String.Empty;
             }
