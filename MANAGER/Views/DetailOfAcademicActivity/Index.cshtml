@@ -171,45 +171,15 @@
                             <th colspan="2">Kinh phí dự trù</th>
                             <th rowspan="2">Kinh phí thực tế</th>
                             <th rowspan="2">Chênh lệch</th>
-                            <th rowspan="2">Ghi chú</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr>
-                            <th>Ban đầu</th>
-                            <th>Điều chỉnh</th>
+                            <th class="text-center">Ban đầu</th>
+                            <th class="text-center">Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>450.000.000</td>
-                            <td>0</td>
-                            <td>368.000.000</td>
-                            <td>82.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>FPTU Đà Nẵng</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>FPTU HCM</td>
-                            <td>100.000.000</td>
-                            <td>0</td>
-                            <td>150.000.000</td>
-                            <td>-50.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+
                     </tbody>
                 </table>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -917,9 +887,12 @@
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" id="add_donvi_kinhphi">
-                            <option selected value="FPTUHN">FPTU Hà Nội</option>
-                            <option value="FPTUDN">FPTU Đà Nẵng</option>
-                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
+                            @{ 
+                                foreach(var item in ViewBag.office)
+                                {
+                                    <option value="@item.office_id">@item.office_name</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
@@ -2130,7 +2103,26 @@
             toastr.success("Đã chỉnh sửa thành công");
         });
         $('#btn_add_kinhphi').click(function () {
-            toastr.success("Đã thêm thành công");
+            var object = {
+                expense_category_name: '',
+                activity_id: $('#activity_id').val(),
+                office_id: $('#add_donvi_kinhphi').val()
+            };
+            $.ajax({
+                url: "@Url.Action("addExpense", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal_KinhPhi');
+                        datatableKP.ajax.reload();
+                    } else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+            });
         });
         $('#btn_add_kpDuTru').click(function () {
             toastr.success("Đã thêm thành công");
@@ -2357,10 +2349,7 @@
                 }
             });
         }
-        function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
-        }
-        $("#KinhPhiDatatable").DataTable({
+        var datatableKP = $("#KinhPhiDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2372,29 +2361,72 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getDatatableKP", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { activity_id: document.getElementById('activity_id').value },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<div class="dropdown">' +
-                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
-                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
-                            '</div>' +
-                            '</div>'
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 {
-                    className: "text-center",
-                    targets: [0, -1],
+                    data: "office_name"
+                },
+                {
+                    data: "cp_du_tru",
+                    render: function (data) {
+                        return data.toLocaleString('en');
+                    }
+                },
+                {
+                    data: "cp_dieu_chinh",
+                    render: function (data) {
+                        return data.toLocaleString('en');
+                    }
+                },
+                {
+                    data: "cp_thuc_te",
+                    render: function (data) {
+                        return data.toLocaleString('en');
+                    }
+                },
+                {
+                    data: "chenh_lech",
+                    render: function (data) {
+                        return data.toLocaleString('en');
+                    }
+                },
+                {
+                    data: "expense_category_id",
+                    title: "Hành động",
+                    render: function (data, type, full, meta) {
+                        return '<div class="dropdown">' +
+                                '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                                '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
+                                '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
+                                '</div>' +
+                            '</div>';
+                    }
                 }
-
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
         });
         $("#KPDuTruDatatable").DataTable({
