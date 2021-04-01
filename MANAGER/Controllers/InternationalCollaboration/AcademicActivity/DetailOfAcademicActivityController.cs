@@ -243,35 +243,35 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
             return Json(data);
         }
-        [HttpPost]
-        public ActionResult getDatatableKP(int activity_id)
-        {
-            expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.getDatatableKP(activity_id);
-            return Json(new { success = true, data = data });
-        }
-        [HttpPost]
-        public JsonResult addExpense(AcademicActivityExpenseRepo.baseExpense data)
-        {
-            expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.addExpense(data);
-            if (res)
-            {
-                return Json("Thêm mục kinh phí thành công");
-            }
-            else return Json(String.Empty);
-        }
-        [HttpPost]
-        public JsonResult deleteExpense(int expense_category_id)
-        {
-            expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.deleteExpense(expense_category_id);
-            if (res)
-            {
-                return Json("Xóa mục kinh phí thành công");
-            }
-            else return Json(String.Empty);
-        }
+        //[HttpPost]
+        //public ActionResult getDatatableKP(int activity_id)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.getDatatableKP(activity_id);
+        //    return Json(new { success = true, data = data });
+        //}
+        //[HttpPost]
+        //public JsonResult addExpense(AcademicActivityExpenseRepo.baseExpense data)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    bool res = expenseRepo.addExpense(data);
+        //    if (res)
+        //    {
+        //        return Json("Thêm mục kinh phí thành công");
+        //    }
+        //    else return Json(String.Empty);
+        //}
+        //[HttpPost]
+        //public JsonResult deleteExpense(int expense_category_id)
+        //{
+        //    expenseRepo = new AcademicActivityExpenseRepo();
+        //    bool res = expenseRepo.deleteExpense(expense_category_id);
+        //    if (res)
+        //    {
+        //        return Json("Xóa mục kinh phí thành công");
+        //    }
+        //    else return Json(String.Empty);
+        //}
         //[HttpPost]
         //public ActionResult getDatatableExpenseEstimate(int expense_category_id)
         //{
