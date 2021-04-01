@@ -31,7 +31,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 GROUP BY a.expense_category_id,a.office_id, a.office_name";
                 List<infoExpense> data = db.Database.SqlQuery<infoExpense>(sql, new SqlParameter("activity_id", activity_id)).ToList();
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new List<infoExpense>();
             }
@@ -48,7 +49,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 });
                 db.SaveChanges();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
@@ -100,7 +102,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public double expense_price { get; set; }
             public double expense_quantity { get; set; }
             public string note { get; set; }
-            
+
         }
     }
 }
