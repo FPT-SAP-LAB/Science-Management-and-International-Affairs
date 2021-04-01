@@ -316,7 +316,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             if (start)
             {
                 List<ActivityOffice> ActivityOffice_old = db.ActivityOffices.Where(x => x.activity_id == obj.id).ToList();
-                foreach(ActivityOffice ao in ActivityOffice_old)
+                foreach (ActivityOffice ao in ActivityOffice_old)
                 {
                     ActivityOffice ao_new = db.ActivityOffices.Add(new ActivityOffice
                     {
@@ -325,16 +325,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     List<ActivityExpenseCategory> aec_old = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
-                    foreach(ActivityExpenseCategory item in aec_old)
+                    foreach (ActivityExpenseCategory item in aec_old)
                     {
-                        ActivityExpenseCategory aec_new =  db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
+                        ActivityExpenseCategory aec_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
                         {
                             activity_office_id = ao_new.activity_office_id,
                             expense_category_name = item.expense_category_name
                         });
                         db.SaveChanges();
                         List<ActivityExpenseDetail> aed_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == item.expense_category_id).ToList();
-                        foreach(ActivityExpenseDetail aed in aed_old)
+                        foreach (ActivityExpenseDetail aed in aed_old)
                         {
                             db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
                             {
