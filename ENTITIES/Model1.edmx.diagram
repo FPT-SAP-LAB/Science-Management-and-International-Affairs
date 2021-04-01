@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="17268c2021aa40ac9f8e90f0c66a701e" Name="Diagram1">
+      <Diagram DiagramId="bc02041ff6b1478c8292b4a34b392c0a" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="10.5" PointY="67.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="5.75" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="4.5" PointY="48.375" IsExpanded="true" />
@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Module" Width="1.5" PointX="9" PointY="85.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Office" Width="1.5" PointX="1.5" PointY="76.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Person" Width="1.5" PointX="1.5" PointY="71.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Profile" Width="1.5" PointX="1.5" PointY="61.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Profile" Width="1.5" PointX="1.5" PointY="61.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Right" Width="1.5" PointX="11.25" PointY="85.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RightByRole" Width="1.5" PointX="13.5" PointY="48.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Role" Width="1.5" PointX="2.25" PointY="49.625" IsExpanded="true" />
@@ -73,9 +73,9 @@
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RequestCitation" Width="1.5" PointX="19" PointY="57.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ApprovalProcess" Width="1.5" PointX="14.25" PointY="30.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Conference" Width="1.5" PointX="9.75" PointY="58.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceParticipant" Width="1.5" PointX="14.25" PointY="52" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceParticipant" Width="1.5" PointX="14.25" PointY="51.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ConferenceStatu" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Cost" Width="1.5" PointX="14.25" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Cost" Width="1.5" PointX="14.25" PointY="34.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Criterion" Width="1.5" PointX="3.75" PointY="56.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.EligibilityCriteria" Width="1.5" PointX="17.25" PointY="41.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Formality" Width="1.5" PointX="0.75" PointY="24" IsExpanded="true" />
@@ -173,7 +173,6 @@
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Profile__people___3335971A" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__RequestPa__autho__529933DA" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Award__people_id__2AA05119" ManuallyRouted="false" />
-        <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Conferenc__peopl__1C5231C2" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__CustomPro__peopl__2B947552" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__PeoplePos__peopl__4356F04A" ManuallyRouted="false" />
         <AssociationConnector Association="ScienceAndInternationalAffairsModel.FK__Profile__current__297722B6" ManuallyRouted="false" />

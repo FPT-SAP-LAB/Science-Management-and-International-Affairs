@@ -718,14 +718,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="ConferenceParticipant">
           <Key>
-            <PropertyRef Name="people_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="conference_participant_id" />
           </Key>
-          <Property Name="people_id" Type="int" Nullable="false" />
+          <Property Name="conference_participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="title_id" Type="int" Nullable="false" />
           <Property Name="office_id" Type="int" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="mssv_msnv" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ConferenceStatus">
           <Key>
@@ -2049,18 +2050,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="ConferenceParticipant">
               <PropertyRef Name="office_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__peopl__1C5231C2">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
-          <End Role="ConferenceParticipant" Type="Self.ConferenceParticipant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="people_id" />
-            </Principal>
-            <Dependent Role="ConferenceParticipant">
-              <PropertyRef Name="people_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3678,37 +3667,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4108,10 +4066,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__offic__5B78929E" Association="Self.FK__Conferenc__offic__5B78929E">
             <End Role="Office" EntitySet="Office" />
-            <End Role="ConferenceParticipant" EntitySet="ConferenceParticipant" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__peopl__1C5231C2" Association="Self.FK__Conferenc__peopl__1C5231C2">
-            <End Role="Profile" EntitySet="Profile" />
             <End Role="ConferenceParticipant" EntitySet="ConferenceParticipant" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__reque__0CDAE408" Association="Self.FK__Conferenc__reque__0CDAE408">
@@ -4833,7 +4787,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="File1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="Profile" ToRole="File" />
           <NavigationProperty Name="Person" Relationship="Self.FK__Profile__people___3335971A" FromRole="Profile" ToRole="People" />
           <NavigationProperty Name="Awards" Relationship="Self.FK__Award__people_id__2AA05119" FromRole="Profile" ToRole="Award" />
-          <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__peopl__1C5231C2" FromRole="Profile" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="CustomProfiles" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="Profile" ToRole="CustomProfile" />
           <NavigationProperty Name="PeoplePositions" Relationship="Self.FK__PeoplePos__peopl__4356F04A" FromRole="Profile" ToRole="PeoplePosition" />
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
@@ -5563,16 +5516,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="ConferenceParticipant">
           <Key>
-            <PropertyRef Name="people_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="conference_participant_id" />
           </Key>
-          <Property Name="people_id" Type="Int32" Nullable="false" />
+          <Property Name="conference_participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="title_id" Type="Int32" Nullable="false" />
           <Property Name="office_id" Type="Int32" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mssv_msnv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Office" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="ConferenceParticipant" ToRole="Office" />
-          <NavigationProperty Name="Profile" Relationship="Self.FK__Conferenc__peopl__1C5231C2" FromRole="ConferenceParticipant" ToRole="Profile" />
           <NavigationProperty Name="RequestConference" Relationship="Self.FK__Conferenc__reque__0CDAE408" FromRole="ConferenceParticipant" ToRole="RequestConference" />
           <NavigationProperty Name="Title" Relationship="Self.FK__Conferenc__title__0EF836A4" FromRole="ConferenceParticipant" ToRole="Title" />
         </EntityType>
@@ -6760,18 +6713,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <PropertyRef Name="people_id" />
             </Principal>
             <Dependent Role="Award">
-              <PropertyRef Name="people_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__peopl__1C5231C2">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
-          <End Role="ConferenceParticipant" Type="Self.ConferenceParticipant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="people_id" />
-            </Principal>
-            <Dependent Role="ConferenceParticipant">
               <PropertyRef Name="people_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8845,10 +8786,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Award" EntitySet="Awards" />
           </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__peopl__1C5231C2" Association="Self.FK__Conferenc__peopl__1C5231C2">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="ConferenceParticipant" EntitySet="ConferenceParticipants" />
-          </AssociationSet>
           <AssociationSet Name="FK__CustomPro__peopl__2B947552" Association="Self.FK__CustomPro__peopl__2B947552">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="CustomProfile" EntitySet="CustomProfiles" />
@@ -9445,48 +9382,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10217,11 +10113,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySetMapping Name="ConferenceParticipants">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceParticipant">
               <MappingFragment StoreEntitySet="ConferenceParticipant">
-                <ScalarProperty Name="people_id" ColumnName="people_id" />
+                <ScalarProperty Name="conference_participant_id" ColumnName="conference_participant_id" />
                 <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="title_id" ColumnName="title_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
-                <ScalarProperty Name="current_mssv_msnv" ColumnName="current_mssv_msnv" />
+                <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10835,30 +10733,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -18,7 +18,7 @@ namespace BLL.ScienceManagement.Report
                         join br in db.BaseRequests on rd.request_id equals br.request_id
                         join rc in db.RequestConferences on br.request_id equals rc.request_id
                         join cp in db.ConferenceParticipants on rc.request_id equals cp.request_id
-                        join p in db.Profiles on cp.people_id equals p.people_id
+                        join p in db.Profiles on cp.mssv_msnv equals p.mssv_msnv
                         join pe in db.People on p.people_id equals pe.people_id
                         join t in db.Titles on cp.title_id equals t.title_id
                         join tl in db.TitleLanguages on t.title_id equals tl.title_id
@@ -54,7 +54,7 @@ namespace BLL.ScienceManagement.Report
                                 join br in db.BaseRequests on rd.request_id equals br.request_id
                                 join rc in db.RequestConferences on br.request_id equals rc.request_id
                                 join cp in db.ConferenceParticipants on rc.request_id equals cp.request_id
-                                join p in db.Profiles on cp.people_id equals p.people_id
+                                join p in db.Profiles on cp.mssv_msnv equals p.mssv_msnv
                                 join pe in db.People on p.people_id equals pe.people_id
                                 join t in db.Titles on cp.title_id equals t.title_id
                                 join tl in db.TitleLanguages on t.title_id equals tl.title_id

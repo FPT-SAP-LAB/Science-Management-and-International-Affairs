@@ -81,6 +81,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<activityType>();
             }
         }
@@ -96,6 +97,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return 0;
             }
         }
@@ -147,6 +149,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<subContent>();
             }
         }
@@ -182,6 +185,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new fullForm();
             }
         }
@@ -210,6 +214,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -227,6 +232,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<ParticipantRole>();
             }
         }
@@ -239,6 +245,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Office>();
             }
         }
@@ -255,6 +262,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return String.Empty;
             }
         }
