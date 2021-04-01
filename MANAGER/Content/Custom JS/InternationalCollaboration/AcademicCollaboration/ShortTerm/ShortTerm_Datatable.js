@@ -196,8 +196,9 @@ $(document).ready(function () {
                 data: "program_id",
                 name: "program_id",
                 className: 'text-center text-nowrap',
-                render: function () {
-                    return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+                render: function (data) {
+                    return '<a id="load_edit_program" data-id=' + data + ' class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                        '<a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
                 }
             },
         ],
