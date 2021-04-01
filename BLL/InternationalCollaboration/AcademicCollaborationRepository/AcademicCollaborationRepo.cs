@@ -891,6 +891,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     dbContext.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }
@@ -917,7 +918,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return null;
             }
         }
 
@@ -952,8 +954,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     dbContext.Rollback();
-                    throw e;
+                    return null;
                 }
             }
         }
@@ -969,6 +972,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<AcademicCollaborationTypeLanguage>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
         }
@@ -985,6 +989,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
         }
@@ -1008,6 +1013,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<CollaborationTypeDirectionLanguage>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
         }
@@ -1024,6 +1030,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra");
             }
         }
