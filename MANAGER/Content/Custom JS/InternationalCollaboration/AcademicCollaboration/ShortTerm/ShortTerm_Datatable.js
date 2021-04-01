@@ -132,7 +132,7 @@ $(document).ready(function () {
         procedure_coming_table.ajax.reload();
     })
     //procedure coming======================================================================
-    var program_going_table =  $("#program_going_table").DataTable({
+    $("#program_going_table").DataTable({
         oLanguage: {
             oPaginate: {
                 sPrevious: "Trang trước",

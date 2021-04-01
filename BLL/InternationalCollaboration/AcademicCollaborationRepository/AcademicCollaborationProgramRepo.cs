@@ -138,7 +138,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     throw e;
                 }
             }
-
         }
     }
 }
