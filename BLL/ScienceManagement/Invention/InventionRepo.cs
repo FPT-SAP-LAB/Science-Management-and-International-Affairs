@@ -75,6 +75,7 @@ namespace BLL.ScienceManagement.Invention
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 dbc.Rollback();
                 return "ff";
             }
