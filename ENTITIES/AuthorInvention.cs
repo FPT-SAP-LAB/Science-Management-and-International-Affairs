@@ -19,7 +19,7 @@ namespace ENTITIES
         public string current_mssv_msnv { get; set; }
         public Nullable<int> money_reward { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Author Author { get; set; }
         public virtual Invention Invention { get; set; }
     }
 }

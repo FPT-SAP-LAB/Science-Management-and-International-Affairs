@@ -235,7 +235,7 @@
                 cache: false,
                 success: function (response) {
                     //alert(response.mess);
-                    addAuthor();
+                    addCriteria();
                 },
                 error: function () {
                     //alert("fail");
@@ -252,7 +252,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    addCriteria();
+                    addRequest();
                 },
                 error: function () {
                     //alert("fail");
@@ -332,7 +332,7 @@
                     success: function (response) {
                         if (response.mess == "ss") {
                             paper_id = response.id;
-                            addRequest();
+                            addAuthor();
                         }
                         else alert('loi');
                     },

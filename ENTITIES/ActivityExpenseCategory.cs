@@ -22,11 +22,9 @@ namespace ENTITIES
     
         public int expense_category_id { get; set; }
         public string expense_category_name { get; set; }
-        public Nullable<int> activity_id { get; set; }
-        public Nullable<int> office_id { get; set; }
+        public Nullable<int> activity_office_id { get; set; }
     
-        public virtual Office Office { get; set; }
-        public virtual AcademicActivity AcademicActivity { get; set; }
+        public virtual ActivityOffice ActivityOffice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityExpenseDetail> ActivityExpenseDetails { get; set; }
     }

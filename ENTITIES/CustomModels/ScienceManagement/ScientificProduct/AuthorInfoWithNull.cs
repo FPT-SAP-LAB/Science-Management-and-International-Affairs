@@ -19,5 +19,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public Nullable<int> office_id_string { get; set; }
         public string money_string { get; set; }
         public string title_string { get; set; }
+        public Nullable<int> title_id_string { get; set; }
     }
 }

@@ -14,9 +14,9 @@ namespace BLL.ScienceManagement.Paper
 {
     public class PaperRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public DetailPaper getDetail(string id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
             string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
@@ -27,6 +27,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select pc.name, pwc.*
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].PaperWithCriteria pwc on p.paper_id = pwc.paper_id
 	                            join [SM_ScientificProduct].PaperCriteria pc on pwc.criteria_id = pc.criteria_id
@@ -37,6 +38,7 @@ namespace BLL.ScienceManagement.Paper
 
         public Person getAuthorReceived_all(string id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             int paper_id = Int32.Parse(id);
             Person p = (from a in db.RequestPapers
                         join b in db.People on a.author_received_rewward equals b.people_id
@@ -47,7 +49,8 @@ namespace BLL.ScienceManagement.Paper
 
         public List<AuthorInfoWithNull> getAuthorPaper(string id)
         {
-            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, pro.title_id, pro.is_reseacher
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select po.*, tl.name as 'title_name', ct.name as 'contract_name', ap.money_reward, o.office_abbreviation, f.link, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, po.office_id as 'office_id_string', pc.contract_id, pro.title_id as 'title_id_string', case when pro.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
 	                            left join [General].Profile pro on po.people_id = pro.people_id
@@ -63,48 +66,55 @@ namespace BLL.ScienceManagement.Paper
             {
                 item.title_string = item.title_name;
                 if (item.is_reseacher == true) item.title_string += ", Nghiên cứu viên";
+                if (item.title_id_string != null) item.title_id = item.title_id_string.Value;
             }
             return list;
         }
 
         public ENTITIES.Paper addPaper(DetailPaper item)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
             {
-                ENTITIES.Paper paper = new ENTITIES.Paper
+                try
                 {
-                    name = item.name,
-                    publish_date = item.publish_date,
-                    link_doi = item.link_doi,
-                    link_scholar = item.link_scholar,
-                    journal_name = item.journal_name,
-                    page = item.page,
-                    vol = item.vol,
-                    company = item.company,
-                    index = item.index,
-                    paper_type_id = item.paper_type_id
-                };
-                db.Papers.Add(paper);
-                db.SaveChanges();
-                string sql = @"select p.*
+                    ENTITIES.Paper paper = new ENTITIES.Paper
+                    {
+                        name = item.name,
+                        publish_date = item.publish_date,
+                        link_doi = item.link_doi,
+                        link_scholar = item.link_scholar,
+                        journal_name = item.journal_name,
+                        page = item.page,
+                        vol = item.vol,
+                        company = item.company,
+                        index = item.index,
+                        paper_type_id = item.paper_type_id
+                    };
+                    db.Papers.Add(paper);
+                    db.SaveChanges();
+                    string sql = @"select p.*
                                 from [SM_ScientificProduct].Paper p
                                 where p.name = @name and p.publish_date = @date
                                 order by p.paper_id desc";
-                ENTITIES.Paper p = db.Database.SqlQuery<ENTITIES.Paper>(sql, new SqlParameter("name", item.name), new SqlParameter("date", item.publish_date)).FirstOrDefault();
-                dbc.Commit();
-                return p;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return null;
+                    ENTITIES.Paper p = db.Database.SqlQuery<ENTITIES.Paper>(sql, new SqlParameter("name", item.name), new SqlParameter("date", item.publish_date)).FirstOrDefault();
+                    dbc.Commit();
+                    dbc.Dispose();
+                    return p;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return null;
+                }
             }
         }
 
         public BaseRequest addBaseRequest(int account_id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -121,46 +131,53 @@ namespace BLL.ScienceManagement.Paper
                             order by b.request_id desc";
                 BaseRequest ba = db.Database.SqlQuery<BaseRequest>(sql, new SqlParameter("id", account_id)).FirstOrDefault();
                 dbc.Commit();
+                dbc.Dispose();
                 return ba;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return null;
             }
         }
 
         public string addRequestPaper(int request_id, RequestPaper r, string daidien)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                r.request_id = request_id;
-                r.status_id = 3;
-                if (r.reward_type == "Canhan")
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+                try
                 {
-                    Person p = (from a in db.People
-                                join b in db.Profiles on a.people_id equals b.people_id
-                                where b.mssv_msnv == daidien
-                                select a).FirstOrDefault();
-                    r.author_received_rewward = p.people_id;
+                    r.request_id = request_id;
+                    r.status_id = 3;
+                    if (r.reward_type == "Canhan")
+                    {
+                        Person p = (from a in db.People
+                                    join b in db.Profiles on a.people_id equals b.people_id
+                                    where b.mssv_msnv == daidien
+                                    select a).FirstOrDefault();
+                        r.author_received_rewward = p.people_id;
+                    }
+                    db.RequestPapers.Add(r);
+                    db.SaveChanges();
+                    dbc.Commit();
+                    dbc.Dispose();
+                    return "ss";
                 }
-                db.RequestPapers.Add(r);
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return null;
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return null;
+                }
             }
         }
 
         public string updateRewardAuthorAfterDecision(List<AddAuthor> people, int paper_id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -175,18 +192,21 @@ namespace BLL.ScienceManagement.Paper
                 }
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public string getAuthorReceived(string id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             int paper_id = Int32.Parse(id);
             string ms = (from a in db.RequestPapers
                          join b in db.Profiles on a.author_received_rewward equals b.people_id
@@ -197,103 +217,111 @@ namespace BLL.ScienceManagement.Paper
 
         public string addAuthor(List<AddAuthor> list, string paper_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
             {
-                List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
-                string listmail = "";
-                string tempSql = "";
-                List<SqlParameter> listParam1 = new List<SqlParameter>();
-                int count = 1;
-                foreach (var item in list)
+                try
                 {
-                    if (!listMail.Contains(item.email))
+                    List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
+                    string listmail = "";
+                    string tempSql = "";
+                    List<SqlParameter> listParam1 = new List<SqlParameter>();
+                    int count = 1;
+                    bool check = false;
+                    foreach (var item in list)
                     {
-                        int peopleid = addPeople(item.name, item.email);
-                        if (item.office_abbreviation != "Khác")
+                        if (!listMail.Contains(item.email))
                         {
-                            item.people_id = peopleid;
-                            addProfile(item);
+                            int peopleid = addPeople(item.name, item.email, item.office_id);
+                            if (item.office_abbreviation != "Khác")
+                            {
+                                item.people_id = peopleid;
+                                addProfile(item);
+                            }
                         }
+                        else
+                        {
+                            check = true;
+                            Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
+                            p.name = item.name;
+                            p.phone_number = item.phone_number;
+                            p.office_id = item.office_id;
+                            if (item.office_abbreviation != "Khác" && item.office_abbreviation != null)
+                            {
+                                Profile pro = (from a in db.Profiles
+                                               join b in db.People on a.people_id equals b.people_id
+                                               where b.email == item.email
+                                               select a).FirstOrDefault();
+                                pro.bank_branch = item.bank_branch;
+                                pro.bank_number = item.bank_number;
+                                pro.tax_code = item.tax_code;
+                                pro.identification_number = item.identification_number;
+                                pro.mssv_msnv = item.mssv_msnv;
+                                pro.is_reseacher = item.is_reseacher;
+                                pro.title_id = item.title_id;
+
+                                tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
+                                SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
+                                listParam1.Add(tempParam1);
+
+                                //tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
+                                //SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
+                                //listParam1.Add(tempParam2);
+
+                                SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
+                                listParam1.Add(tempParam3);
+                            }
+                        }
+                        listmail += "," + item.email;
+                        count++;
                     }
-                    else
+                    db.SaveChanges();
+                    if(check)db.Database.ExecuteSqlCommand(tempSql, listParam1.ToArray());
+                    listmail = listmail.Substring(1);
+                    string[] mail = listmail.Split(',');
+                    String strAppend = "";
+                    List<SqlParameter> listParam = new List<SqlParameter>();
+                    for (int i = 0; i < mail.Length; i++)
                     {
-                        Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
-                        p.name = item.name;
-                        p.phone_number = item.phone_number;
-                        p.office_id = item.office_id;
-                        if (item.office_abbreviation != "Khác")
-                        {
-                            Profile pro = (from a in db.Profiles
-                                           join b in db.People on a.people_id equals b.people_id
-                                           where b.email == item.email
-                                           select a).FirstOrDefault();
-                            pro.bank_branch = item.bank_branch;
-                            pro.bank_number = item.bank_number;
-                            pro.tax_code = item.tax_code;
-                            pro.identification_number = item.identification_number;
-                            pro.mssv_msnv = item.mssv_msnv;
-                            pro.is_reseacher = item.is_reseacher;
-                            pro.title_id = item.title_id;
-
-                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
-                            listParam1.Add(tempParam1);
-
-                            //tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            //SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            //listParam1.Add(tempParam2);
-
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
-                            listParam1.Add(tempParam3);
-                        }
+                        SqlParameter param = new SqlParameter("@idParam" + i, mail[i]);
+                        listParam.Add(param);
+                        string paramName = "@idParam" + i;
+                        strAppend += paramName + ",";
                     }
-                    listmail += "," + item.email;
-                    count++;
-                }
-                db.SaveChanges();
-                db.Database.ExecuteSqlCommand(tempSql, listParam1.ToArray());
-                listmail = listmail.Substring(1);
-                string[] mail = listmail.Split(',');
-                String strAppend = "";
-                List<SqlParameter> listParam = new List<SqlParameter>();
-                for (int i = 0; i < mail.Length; i++)
-                {
-                    SqlParameter param = new SqlParameter("@idParam" + i, mail[i]);
-                    listParam.Add(param);
-                    string paramName = "@idParam" + i;
-                    strAppend += paramName + ",";
-                }
-                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
-                string sql = @"select po.people_id, pro.mssv_msnv
+                    strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
+                    string sql = @"select po.people_id, pro.mssv_msnv
                             from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
                             where po.email in (" + strAppend + ")";
-                List<AuthorInfo> listAuthor = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).ToList();
-                foreach (var item in listAuthor)
-                {
-                    AuthorPaper ap = new AuthorPaper
+                    List<AuthorInfo> listAuthor = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).ToList();
+                    foreach (var item in listAuthor)
                     {
-                        people_id = item.people_id,
-                        paper_id = Int32.Parse(paper_id),
-                        current_mssv_msnv = item.mssv_msnv,
-                        money_reward = item.money_reward
-                    };
-                    db.AuthorPapers.Add(ap);
+                        AuthorPaper ap = new AuthorPaper
+                        {
+                            people_id = item.people_id,
+                            paper_id = Int32.Parse(paper_id),
+                            current_mssv_msnv = item.mssv_msnv,
+                            money_reward = item.money_reward
+                        };
+                        db.AuthorPapers.Add(ap);
+                    }
+                    db.SaveChanges();
+                    dbc.Commit();
+                    dbc.Dispose();
+                    return "ss";
                 }
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return "ff";
+                }
             }
         }
 
         public string changeStatus(DetailPaper paper)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -301,11 +329,13 @@ namespace BLL.ScienceManagement.Paper
                 rp.status_id = 5;
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
@@ -313,6 +343,7 @@ namespace BLL.ScienceManagement.Paper
         public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1,
                                      DateTime date_format2, int file_id2, string number2, string file_drive_id2)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -376,137 +407,160 @@ namespace BLL.ScienceManagement.Paper
 
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 GoogleDriveService.DeleteFile(file_drive_id1);
                 GoogleDriveService.DeleteFile(file_drive_id2);
                 return "ff";
             }
         }
 
-        public int addPeople(string name, string mail)
+        public int addPeople(string name, string mail, Nullable<int> office_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                Person p = new Person
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+                try
                 {
-                    name = name,
-                    email = mail
-                };
-                db.People.Add(p);
-                db.SaveChanges();
-                string sql = @"select people_id
+                    Person p = new Person
+                    {
+                        name = name,
+                        email = mail
+                    };
+                    if (office_id != 0) p.office_id = office_id;
+                    db.People.Add(p);
+                    db.SaveChanges();
+                    string sql = @"select people_id
                             from [General].People
                             where email = @mail";
-                int result = db.Database.SqlQuery<int>(sql, new SqlParameter("mail", mail)).FirstOrDefault();
-                dbc.Commit();
-                return result;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return 0;
+                    int result = db.Database.SqlQuery<int>(sql, new SqlParameter("mail", mail)).FirstOrDefault();
+                    dbc.Commit();
+                    dbc.Dispose();
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return 0;
+                }
             }
         }
 
         public void addProfile(AddAuthor a)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                Profile pro = new Profile
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+                try
                 {
-                    people_id = a.people_id,
-                    bank_number = a.bank_number,
-                    bank_branch = a.bank_branch,
-                    tax_code = a.tax_code,
-                    identification_number = a.identification_number,
-                    //office_id = a.office_id,
-                    mssv_msnv = a.mssv_msnv
-                };
-                db.Profiles.Add(pro);
-                db.SaveChanges();
-                dbc.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return;
+                    Profile pro = new Profile
+                    {
+                        people_id = a.people_id,
+                        bank_number = a.bank_number,
+                        bank_branch = a.bank_branch,
+                        tax_code = a.tax_code,
+                        identification_number = a.identification_number,
+                        //office_id = a.office_id,
+                        mssv_msnv = a.mssv_msnv,
+                        title_id = a.title_id
+                    };
+                    db.Profiles.Add(pro);
+                    db.SaveChanges();
+
+                    string sql = @"insert into [SM_Researcher].PeopleContract values (@people, @contract)";
+                    db.Database.ExecuteSqlCommand(sql, new SqlParameter("people", a.people_id), new SqlParameter("contract", a.contract_id));
+
+                    db.SaveChanges();
+                    dbc.Commit();
+                    dbc.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return;
+                }
             }
         }
 
         public string addCriteria(List<CustomCriteria> criteria, string paper_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                if (criteria == null) return "ss";
-                string temp = "";
-                foreach (var item in criteria)
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction()) { 
+                try
                 {
-                    temp += "," + item.name;
-                }
-                temp = temp.Substring(1);
-                string[] listCriName = temp.Split(',');
-                String strAppend = "";
-                List<SqlParameter> listParam = new List<SqlParameter>();
-                for (int i = 0; i < listCriName.Length; i++)
-                {
-                    SqlParameter param = new SqlParameter("@idParam" + i, listCriName[i]);
-                    listParam.Add(param);
-                    string paramName = "@idParam" + i;
-                    strAppend += paramName + ",";
-                }
-                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
-                string sql = @"select pc.*
+                    if (criteria == null) return "ss";
+                    string temp = "";
+                    foreach (var item in criteria)
+                    {
+                        temp += "," + item.name;
+                    }
+                    temp = temp.Substring(1);
+                    string[] listCriName = temp.Split(',');
+                    String strAppend = "";
+                    List<SqlParameter> listParam = new List<SqlParameter>();
+                    for (int i = 0; i < listCriName.Length; i++)
+                    {
+                        SqlParameter param = new SqlParameter("@idParam" + i, listCriName[i]);
+                        listParam.Add(param);
+                        string paramName = "@idParam" + i;
+                        strAppend += paramName + ",";
+                    }
+                    strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
+                    string sql = @"select pc.*
                                 from [SM_ScientificProduct].PaperCriteria pc
                                 where pc.name in (" + strAppend + ")";
-                List<CustomCriteria> list = db.Database.SqlQuery<CustomCriteria>(sql, listParam.ToArray()).ToList();
-                int paper_id_int = Int32.Parse(paper_id);
-                ENTITIES.Paper paper = db.Papers.Where(x => x.paper_id == paper_id_int).FirstOrDefault();
-                Scimagojr sci = db.Scimagojrs.Where(x => x.Title == paper.journal_name).FirstOrDefault();
-                string quality = sci.SJR_Best_Quartile;
-                foreach (var item in list)
-                {
-                    foreach (var cri in criteria)
+                    List<CustomCriteria> list = db.Database.SqlQuery<CustomCriteria>(sql, listParam.ToArray()).ToList();
+                    int paper_id_int = Int32.Parse(paper_id);
+                    ENTITIES.Paper paper = db.Papers.Where(x => x.paper_id == paper_id_int).FirstOrDefault();
+                    Scimagojr sci = db.Scimagojrs.Where(x => x.Title == paper.journal_name).FirstOrDefault();
+                    string quality = "";
+                    if (sci != null) quality = sci.SJR_Best_Quartile;
+                    foreach (var item in list)
                     {
-                        if (cri.name == item.name)
+                        foreach (var cri in criteria)
                         {
-                            item.link = cri.link;
+                            if (cri.name == item.name)
+                            {
+                                item.link = cri.link;
+                            }
                         }
+                        if (item.name == quality) item.check = true;
+                        else item.check = false;
+                        PaperWithCriteria pwc = new PaperWithCriteria
+                        {
+                            paper_id = paper_id_int,
+                            criteria_id = item.criteria_id,
+                            link = item.link,
+                            check = item.check
+                        };
+                        db.PaperWithCriterias.Add(pwc);
                     }
-                    if (item.name == quality) item.check = true;
-                    else item.check = false;
-                    PaperWithCriteria pwc = new PaperWithCriteria
-                    {
-                        paper_id = paper_id_int,
-                        criteria_id = item.criteria_id,
-                        link = item.link,
-                        check = item.check
-                    };
-                    db.PaperWithCriterias.Add(pwc);
+                    db.SaveChanges();
+                    dbc.Commit();
+                    dbc.Dispose();
+                    return "ss";
                 }
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    dbc.Dispose();
+                    return "ff";
+                }
             }
         }
 
         public string updatePaper(string paper_id, ENTITIES.Paper paper)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -524,18 +578,21 @@ namespace BLL.ScienceManagement.Paper
                 p.paper_type_id = paper.paper_type_id;
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public string updateRequest(RequestPaper item)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -551,54 +608,63 @@ namespace BLL.ScienceManagement.Paper
 
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public string updateCriteria(List<CustomCriteria> criteria, string paper_id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].PaperWithCriteria where paper_id = @id", new SqlParameter("id", paper_id));
                 string mess = addCriteria(criteria, paper_id);
                 dbc.Commit();
+                dbc.Dispose();
                 return mess;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public string updateAuthor(List<AddAuthor> people, string paper_id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 db.Database.ExecuteSqlCommand("delete from[SM_ScientificProduct].AuthorPaper where paper_id = @id", new SqlParameter("id", paper_id));
                 string mess = addAuthor(people, paper_id);
                 dbc.Commit();
+                dbc.Dispose();
                 return mess;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public List<PendingPaper_Manager> listPending()
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
             string sql = @"select p.name, a.email, br.created_date, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
@@ -611,6 +677,7 @@ namespace BLL.ScienceManagement.Paper
 
         public string updateRewardPaper(DetailPaper paper)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -619,18 +686,21 @@ namespace BLL.ScienceManagement.Paper
                 p.status_id = 4;
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
@@ -655,18 +725,21 @@ namespace BLL.ScienceManagement.Paper
 
                 db.SaveChanges();
                 dbc.Commit();
+                dbc.Dispose();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
+                dbc.Dispose();
                 return "ff";
             }
         }
 
         public List<WaitDecisionPaper> getListWwaitDecision(string type)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
@@ -683,6 +756,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Appendix_1> getListAppendix1_2(string type)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, p.name, p.company, a.sum, b.sumFE, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id
@@ -704,6 +778,7 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Apendix_3> getListAppendix3_4(string type)
         {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select po.name, pro.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [General].People po on ap.people_id = po.people_id

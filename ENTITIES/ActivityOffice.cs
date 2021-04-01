@@ -12,21 +12,19 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ContractType
+    public partial class ActivityOffice
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ContractType()
+        public ActivityOffice()
         {
-            this.Authors = new HashSet<Author>();
-            this.Profiles = new HashSet<Profile>();
+            this.ActivityExpenseCategories = new HashSet<ActivityExpenseCategory>();
         }
     
-        public int contract_id { get; set; }
-        public string name { get; set; }
+        public int activity_office_id { get; set; }
+        public Nullable<int> activity_id { get; set; }
+        public Nullable<int> office_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Author> Authors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
     }
 }

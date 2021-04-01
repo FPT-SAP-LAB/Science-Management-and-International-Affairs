@@ -191,7 +191,7 @@ namespace BLL.ScienceManagement.Invention
                 {
                     if (!listMail.Contains(item.email))
                     {
-                        int peopleid = pr.addPeople(item.name, item.email);
+                        int peopleid = pr.addPeople(item.name, item.email, item.office_id);
                         if (item.office_abbreviation != "Khác")
                         {
                             item.people_id = peopleid;

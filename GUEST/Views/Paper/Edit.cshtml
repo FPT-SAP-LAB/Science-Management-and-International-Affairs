@@ -242,7 +242,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    editCriteria();
+                    $("#loading").hide();
+                    $("#nameEdit").val(response.id);
+                    $("#ckEdit").val(3);
+                    $("#PaperForm").submit();
                 },
                 error: function () {
                     //alert("fail");
@@ -293,10 +296,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        $("#loading").hide();
-                        $("#nameEdit").val(response.id);
-                        $("#ckEdit").val(3);
-                        $("#PaperForm").submit();
+                        editRequest();
                     }
                     //addCriteria();
                 },
@@ -377,7 +377,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        editRequest();
+                        editCriteria();
                     }
                     else alert('loi');
                 },
@@ -412,7 +412,10 @@
             $("#loaithuong").trigger('change');
 
             var kieuthuong = "@ViewBag.Paper.reward_type";
-            if (kieuthuong == "Quydinh") $("#kieuthuong").val("Quydinh");
+            if (kieuthuong == "Quydinh") {
+                $("#kieuthuong").val("Quydinh");
+                $("#block_daidien").hide();
+            }
             if (kieuthuong == "Canhan") $("#kieuthuong").val("Canhan");
             $("#kieuthuong").trigger('change');
 
@@ -491,7 +494,7 @@
                             $(".add_author_reward_edit").prop("disabled", true);
                             $("#edit_submit_reward").prop("disabled", true);
                         } else {
-                            $(".add_author_reward_edit").prop("disabled", false);
+                            //$(".add_author_reward_edit").prop("disabled", false);
                             $("#edit_submit_reward").prop("disabled", false);
                             return false;
                         }
