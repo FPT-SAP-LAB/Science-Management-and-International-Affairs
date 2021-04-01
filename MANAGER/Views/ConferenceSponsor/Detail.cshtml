@@ -363,9 +363,9 @@
             </div>
         </div>
         <div id="ExpectedCostChild1" class="collapse show" data-parent="#ExpectedCost">
-            <div class="card-body table-responsive">
-                <div class="row">
-                    <table class="col-12 table table-bordered">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Nội dung</th>
@@ -407,7 +407,7 @@
                                 <td>
                                     @if (ConferenceDetail.StatusID == 4)
                                     {
-                                        <input oninput="numberWithCommas(this)" type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="0">
+                                        <input oninput="numberWithCommas(this)" type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="@String.Format("{0:n0}", ConferenceDetail.Reimbursement)">
                                     }
                                     else
                                     {
@@ -418,6 +418,8 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="row">
                     @if (ConferenceDetail.StatusID == 2)
                     {
                         <div class="col-lg-12 col-xl-12" style="text-align: right;">
@@ -430,7 +432,8 @@
                     {
                         <div class="col-lg-12 col-xl-12" style="text-align: right;">
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success" onclick="SubmitReimbursement()">Lưu và kết thúc</button>
+                                <button class="btn btn-success mr-2" onclick="SubmitReimbursement()">Lưu</button>
+                                <button class="btn btn-danger" onclick="createAndSubmitForm('/ConferenceSponsor/EndRequest')">Kết thúc đề nghị</button>
                             </div>
                         </div>
                         <script>
