@@ -180,7 +180,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 Procedure procedure = db.Procedures.Where(x => x.procedure_id == procedure_id).FirstOrDefault();
                 ArticleVersion articleVersion = db.ArticleVersions.
                     Where(x => x.article_id == procedure.article_id && x.language_id == partner_language_type).FirstOrDefault();
-                return articleVersion?? new ArticleVersion();
+                return articleVersion ?? new ArticleVersion();
             }
             catch (Exception e)
             {

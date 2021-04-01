@@ -745,7 +745,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acProgramRepo = new AcademicCollaborationProgramRepo();
-                ArticleVersion articleVersion  = acProgramRepo.LoadProgramDetailLanguage(Int32.Parse(program_id), language_id);
+                ArticleVersion articleVersion = acProgramRepo.LoadProgramDetailLanguage(Int32.Parse(program_id), language_id);
                 return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
             }
             catch (Exception e)
