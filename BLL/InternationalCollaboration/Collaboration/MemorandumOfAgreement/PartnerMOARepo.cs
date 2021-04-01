@@ -175,8 +175,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -259,8 +259,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //List <PartnerScope> partnerScopes  = db.PartnerScopes.Where(x => x.reference_count == 0).ToList();
+                    //foreach (PartnerScope p in partnerScopes)
+                    //{
+                    //    db.PartnerScopes.Remove(p);
+                    //    db.SaveChanges();
+                    //}
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -280,7 +286,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     int partner_id_item = db.MOAPartners.Find(moa_partner_id).partner_id;
 
                     //get all scopes of partner in MOU.
-                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id from IA_Collaboration.PartnerScope t1 inner join 
+                    string sql_old_partnerScope = @"select t1.partner_scope_id,partner_id,scope_id,reference_count from IA_Collaboration.PartnerScope t1 inner join 
                         IA_Collaboration.MOAPartnerScope t2 on
                         t1.partner_scope_id = t2.partner_scope_id
                         where moa_id = @moa_id and partner_id = @partner_id";
@@ -303,8 +309,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -406,17 +412,85 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         IA_Collaboration.MOAPartner c 
                         on c.moa_id = b.moa_id and c.partner_id = a.partner_id
                         where c.moa_partner_id = @moa_partner_id and b.moa_bonus_id is null";
-                CustomPartnerMOA obj1 = db.Database.SqlQuery<CustomPartnerMOA>(sql_partnerList_1,
-                    new SqlParameter("moa_partner_id", moa_partner_id)).First();
+                List<CustomPartnerMOA> obj1 = db.Database.SqlQuery<CustomPartnerMOA>(sql_partnerList_1,
+                    new SqlParameter("moa_partner_id", moa_partner_id)).ToList();
                 List<ScopeAndStartDate> obj2 = db.Database.SqlQuery<ScopeAndStartDate>(sql_partnerList_2,
                     new SqlParameter("moa_partner_id", moa_partner_id)).ToList();
-                obj1.scopes = new List<int>();
+
+                CustomPartnerMOA MOAPartnerDetail = handlingMOAPartnerDetailData(obj1);
+                MOAPartnerDetail.scopes = new List<int>();
                 foreach (ScopeAndStartDate item in obj2.ToList())
                 {
-                    obj1.scopes.Add(item.scope_id);
+                    MOAPartnerDetail.scopes.Add(item.scope_id);
                 }
-                obj1.moa_start_date_string = obj2[0].moa_start_date.ToString("dd'/'MM'/'yyyy");
-                return obj1;
+                MOAPartnerDetail.moa_start_date_string = obj2[0].moa_start_date.ToString("dd'/'MM'/'yyyy");
+                return MOAPartnerDetail;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public CustomPartnerMOA handlingMOAPartnerDetailData(List<CustomPartnerMOA> list)
+        {
+            //spe_name
+            //sco_abbre
+            CustomPartnerMOA previousItem = null;
+            foreach (CustomPartnerMOA item in list.ToList())
+            {
+                if (previousItem == null) //first record
+                {
+                    previousItem = item;
+                    previousItem.moa_start_date_string = item.moa_start_date.ToString("dd'/'MM'/'yyyy");
+                }
+                else
+                {
+                    if (item.partner_id.Equals(previousItem.partner_id))
+                    {
+                        if (!previousItem.specialization_name.Contains(item.specialization_name))
+                        {
+                            previousItem.specialization_name = previousItem.specialization_name + "," + item.specialization_name;
+                        }
+                        //then remove current object
+                        list.Remove(item);
+                    }
+                    else
+                    {
+                        previousItem = item;
+                        previousItem.moa_start_date_string = item.moa_start_date.ToString("dd'/'MM'/'yyyy");
+                    }
+                }
+            }
+            return list[0];
+        }
+        public bool MOAPartnerDateIsInvalid(int mou_id, int partner_id, string start_date_string)
+        {
+            try
+            {
+                DateTime start_date = DateTime.ParseExact(start_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                MOUPartner obj = db.MOUPartners.Where(x => x.mou_id == mou_id && x.partner_id == partner_id && x.mou_start_date < start_date).FirstOrDefault();
+                return obj is null ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool IsMOABonusExisted(int moa_partner_id)
+        {
+            try
+            {
+                string sql_check = @"select t1.* from IA_Collaboration.MOABonus t1
+                    inner join IA_Collaboration.MOAPartner t2
+                    on t2.moa_id = t1.moa_id
+                    inner join IA_Collaboration.MOAPartnerScope t3
+                    on t3.moa_id = t1.moa_id and t3.moa_bonus_id = t1.moa_bonus_id
+                    inner join IA_Collaboration.PartnerScope t4
+                    on t4.partner_scope_id = t3.partner_scope_id and t4.partner_id = t2.partner_id
+                    where moa_partner_id = @moa_partner_id";
+                List<MOABonu> exMOAList = db.Database.SqlQuery<MOABonu>(sql_check,
+                    new SqlParameter("moa_partner_id", moa_partner_id)).ToList();
+                return exMOAList.Count == 0 ? false : true;
             }
             catch (Exception ex)
             {

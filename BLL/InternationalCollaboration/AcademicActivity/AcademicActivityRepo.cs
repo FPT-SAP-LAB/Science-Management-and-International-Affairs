@@ -1,10 +1,12 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
@@ -136,6 +138,56 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
+        }
+        public bool updateBaseAAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
+                    aa.activity_date_start = DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    aa.activity_date_end = DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    aa.activity_type_id = activity_type_id;
+                    db.Entry(aa).State = EntityState.Modified;
+                    db.SaveChanges();
+                    AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
+                    al.location = location;
+                    db.Entry(al).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
+                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
+                    av.version_title = activity_name;
+                    db.SaveChanges();
+                    if (aa.file_id == null)
+                    {
+                        Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
+                        File file = new File();
+                        file.name = img.FileName;
+                        file.link = f.WebViewLink;
+                        file.file_drive_id = f.Id;
+                        File ff = db.Files.Add(file);
+                        db.SaveChanges();
+                        aa.file_id = ff.file_id;
+                        db.Entry(aa).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aa.File.file_drive_id);
+                        File f = db.Files.Find(aa.file_id);
+                        f.name = img.FileName;
+                        db.Entry(f).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
         }
         public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
         {

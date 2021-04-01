@@ -75,6 +75,13 @@ namespace MANAGER.Controllers
             DetailRepos.SubmitReimbursement(data, request_id);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
+        [HttpPost]
+        public ActionResult EndRequest(int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            DetailRepos.EndRequest(request_id);
+            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
+        }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)
         {
