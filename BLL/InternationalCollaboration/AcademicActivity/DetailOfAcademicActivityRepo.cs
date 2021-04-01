@@ -456,7 +456,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         updateActivityPartner(activityPartner, saveActivityPartner, new_file);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
-                    } else
+                    }
+                    else
                     {
                         return new AlertModal<string>(null, false, "Lỗi", "Đối tác đã được thêm vào danh sách trước đó.");
                     }
@@ -492,7 +493,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                 //update PartnerScope
                 PartnerScope partnerScope = updatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
-               
+
                 ActivityPartner ap = new ActivityPartner();
                 ap.sponsor = saveActivityPartner.sponsor;
                 if (saveActivityPartner.contact_point_name != null) ap.contact_point_name = saveActivityPartner.contact_point_name;
@@ -583,17 +584,20 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 else
                 {
-                  
-                    if (activityPartner.activity_partner_id == 0) {
+
+                    if (activityPartner.activity_partner_id == 0)
+                    {
                         ActivityPartner ap = db.ActivityPartners.Where<ActivityPartner>(x => x.partner_scope_id == partnerScope.partner_scope_id && x.activity_id == activityPartner.activity_id).FirstOrDefault();
                         if (ap == null)
                         {
                             return true;
-                        } else
+                        }
+                        else
                         {
                             return false;
                         }
-                    } else
+                    }
+                    else
                     {
                         ActivityPartner ap = db.ActivityPartners.Where<ActivityPartner>(x => x.activity_partner_id == activityPartner.activity_partner_id).FirstOrDefault();
                         if (ap.partner_scope_id != partnerScope.partner_scope_id)
@@ -607,7 +611,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             {
                                 return false;
                             }
-                        } else
+                        }
+                        else
                         {
                             return true;
                         }

@@ -278,7 +278,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
                 AlertModal<string> alertModal = repo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -291,7 +292,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 repo = new DetailOfAcademicActivityRepo();
                 AlertModal<string> alertModal = repo.deleteActivityPartner(activity_partner_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
