@@ -9,7 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.config
+ADMIN/Web.config
+GUEST/Web.config
+MANAGER/Web.config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

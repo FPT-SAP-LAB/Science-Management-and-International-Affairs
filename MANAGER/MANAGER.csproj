@@ -2227,6 +2227,8 @@
     <Content Include="Excel_template\Paper.xlsx" />
     <Content Include="Excel_template\Download\Paper.xlsx" />
     <Content Include="Web.config" />
+    <Content Include="Word_Template\ConferenceSponsor\AppointmentForm.doc" />
+    <Content Include="Word_Template\ConferenceSponsor\RequestForm.docx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />

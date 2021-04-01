@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.12.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.12.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -135,8 +138,10 @@
     <Compile Include="InternationalCollaboration\MasterData\InternalUnitRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
+    <Compile Include="ModelDAL\BaseRequestRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
     <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
+    <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
@@ -152,6 +157,7 @@
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorEditRepo.cs" />
+    <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorExportRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorIndexRepo.cs" />
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />

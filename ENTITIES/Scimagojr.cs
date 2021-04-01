@@ -14,7 +14,7 @@ namespace ENTITIES
     
     public partial class Scimagojr
     {
-        public string Rank { get; set; }
+        public Nullable<int> Rank { get; set; }
         public double Sourceid { get; set; }
         public string Title { get; set; }
         public string Type { get; set; }
