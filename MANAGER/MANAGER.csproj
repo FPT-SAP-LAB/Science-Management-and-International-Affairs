@@ -2132,6 +2132,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom JS\Citation.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\Program_Add.js" />
     <Content Include="Content\Custom JS\ListAllPaper.js" />
     <Content Include="Content\Custom_CSS\MOU\MOU.css" />
     <Content Include="Content\Custom_CSS\MOU\MOUDetail.css" />
@@ -2302,7 +2303,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Program_Going_Table.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Edit_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Going_Modal_Add_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Modal_Add_Program_Going.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Procedure.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Edit_Procedure.cshtml" />
@@ -2321,7 +2322,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_View_Status_History.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Going_Modal_Add_Officer.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Going_Modal_Edit_Officer.cshtml" />
-    <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Add_Program.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Modal_Add_Program_Coming.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Edit_Program.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Long_Term_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Description.cshtml" />

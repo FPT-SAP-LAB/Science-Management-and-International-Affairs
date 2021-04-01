@@ -217,9 +217,14 @@
     Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Procedure");
 }
 
-@*modal add program*@
+@*modal add program gong*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Program");
+    Html.RenderPartial("PartialView/Modal_Add_Program_Going");
+}
+
+@*modal add program coming*@
+@{ 
+    Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
 }
 
 @*modal edit program*@
@@ -288,11 +293,13 @@
             placeholder: 'Ngôn ngữ',
         })
     </script>
-    @* -----------------delete, load detail, change language----------- *@
+    @* -----------------delete, load detail, change language procedure----------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
-    @*---------------------save edit----------------*@
+    @*---------------------save edit procedure----------------*@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ProcedureEditContent.js"></script>
 
+    @* -----------------delete, load detail, change language program----------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({
@@ -300,19 +307,6 @@
             allowClear: true,
             tags: true,
         })
-
-        $('#add_program_partner').select2({
-            placeholder: 'Đối tác',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#add_program_language').select2({
-            placeholder: 'Ngôn ngữ',
-            allowClear: true,
-            tags: true,
-        })
-
     </script>
     <script>
         //table 4

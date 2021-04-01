@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////TABLE 2 - PROGRAM - GOING///////////////////////////////////////////////////////////
 //table 3
-$("#collab_program_going_table").DataTable({
+var program_going_table = $("#collab_program_going_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -34,7 +34,11 @@ $("#collab_program_going_table").DataTable({
             data: "partner_name",
             name: "partner_name"
         },
-        { data: "program_name", name: "program_name" },
+        {
+            data: "program_name",
+            name: "program_name",
+            className: 'text-center text-nowrap'
+        },
         {
             data: "full_name",
             name: "full_name",

@@ -195,6 +195,14 @@
 @{
     Html.RenderPartial("PartialView/Long_Term_Coming_Modal_Edit_Officer");
 }
+@*modal add program going*@
+@{
+    Html.RenderPartial("PartialView/Modal_Add_Program_Going");
+}
+@*modal add program coming*@
+@{
+    Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
+}
 @section scripts{
     @*datepicker and range*@
     <script src="~/Content/Custom JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
@@ -234,6 +242,20 @@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Content/Custom JS/InternationalCollaboration/uppy.js"></script>
     <script>
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+    </script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
+
+    <script>
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
@@ -247,19 +269,6 @@
             allowClear: true,
             tags: true,
         })
-
-        $('#add_program_partner').select2({
-            placeholder: 'Đối tác',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#add_program_language').select2({
-            placeholder: 'Ngôn ngữ',
-            allowClear: true,
-            tags: true,
-        })
-
     </script>
 
     <script>
