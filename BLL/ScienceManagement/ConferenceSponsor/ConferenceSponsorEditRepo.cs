@@ -91,7 +91,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = request_id;
-                    Person person = @object["Persons"].ToObject<Person>();
                     participantRepo.AddWithTempData(db, participant);
 
                     foreach (var item in request.EligibilityCriterias)
