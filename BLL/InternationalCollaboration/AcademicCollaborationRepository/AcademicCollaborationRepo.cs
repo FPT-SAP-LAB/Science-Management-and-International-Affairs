@@ -731,7 +731,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             SaveAcadCollab_Person obj_person,
             SaveAcadCollab_Partner obj_partner,
             SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            Google.Apis.Drive.v3.Data.File f, File old_evidence, HttpPostedFileBase new_evidence, int account_id)
+            Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase new_evidence, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
