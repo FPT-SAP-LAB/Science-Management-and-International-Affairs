@@ -133,18 +133,18 @@
         });
 
         uppy2.on('file-added', function (file) {
-            var sizeLabel = "bytes";
-            var filesize = file.size;
-            if (filesize > 1024) {
-                filesize = filesize / 1024;
-                sizeLabel = "kb";
+            //var sizeLabel = "bytes";
+            //var filesize = file.size;
+            //if (filesize > 1024) {
+            //    filesize = filesize / 1024;
+            //    sizeLabel = "kb";
 
-                if (filesize > 1024) {
-                    filesize = filesize / 1024;
-                    sizeLabel = "MB";
-                }
-            }
-            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            //    if (filesize > 1024) {
+            //        filesize = filesize / 1024;
+            //        sizeLabel = "MB";
+            //    }
+            //}
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
             $uploadedList.append(uploadListHtml);
 
             $statusBar.addClass('uppy-status-hidden');
