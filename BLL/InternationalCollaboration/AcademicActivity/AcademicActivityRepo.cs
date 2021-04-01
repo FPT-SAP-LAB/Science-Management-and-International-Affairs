@@ -1,10 +1,12 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
@@ -103,6 +105,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<AcademicActivityTypeLanguage>();
             }
         }
@@ -136,6 +139,56 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
+        }
+        public bool updateBaseAAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
+                    aa.activity_date_start = DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    aa.activity_date_end = DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    aa.activity_type_id = activity_type_id;
+                    db.Entry(aa).State = EntityState.Modified;
+                    db.SaveChanges();
+                    AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
+                    al.location = location;
+                    db.Entry(al).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
+                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
+                    av.version_title = activity_name;
+                    db.SaveChanges();
+                    if (aa.file_id == null)
+                    {
+                        Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
+                        File file = new File();
+                        file.name = img.FileName;
+                        file.link = f.WebViewLink;
+                        file.file_drive_id = f.Id;
+                        File ff = db.Files.Add(file);
+                        db.SaveChanges();
+                        aa.file_id = ff.file_id;
+                        db.Entry(aa).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aa.File.file_drive_id);
+                        File f = db.Files.Find(aa.file_id);
+                        f.name = img.FileName;
+                        db.Entry(f).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
         }
         public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
         {
@@ -262,29 +315,37 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             if (start)
             {
-                List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
-                foreach (ActivityExpenseCategory arc in activityExpenses_old)
+                List<ActivityOffice> ActivityOffice_old = db.ActivityOffices.Where(x => x.activity_id == obj.id).ToList();
+                foreach (ActivityOffice ao in ActivityOffice_old)
                 {
-                    ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
+                    ActivityOffice ao_new = db.ActivityOffices.Add(new ActivityOffice
                     {
                         activity_id = activity_id,
-                        office_id = arc.office_id,
-                        expense_category_name = arc.expense_category_name
+                        office_id = ao.office_id
                     });
                     db.SaveChanges();
-                    List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
-                    foreach (ActivityExpenseDetail ard in expenseDetails_old)
+                    List<ActivityExpenseCategory> aec_old = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                    foreach (ActivityExpenseCategory item in aec_old)
                     {
-                        db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
+                        ActivityExpenseCategory aec_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
                         {
-                            expense_category_id = activityExpense_new.expense_category_id,
-                            expense_price = ard.expense_price,
-                            expense_quantity = ard.expense_quantity,
-                            expense_type_id = ard.expense_type_id,
-                            note = ard.note
+                            activity_office_id = ao_new.activity_office_id,
+                            expense_category_name = item.expense_category_name
                         });
+                        db.SaveChanges();
+                        List<ActivityExpenseDetail> aed_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == item.expense_category_id).ToList();
+                        foreach (ActivityExpenseDetail aed in aed_old)
+                        {
+                            db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
+                            {
+                                expense_category_id = aec_new.expense_category_id,
+                                expense_price = aed.expense_price,
+                                expense_quantity = aed.expense_quantity,
+                                expense_type_id = aed.expense_type_id,
+                                note = aed.note,
+                            });
+                        }
                     }
-                    db.SaveChanges();
                 }
             }
         }

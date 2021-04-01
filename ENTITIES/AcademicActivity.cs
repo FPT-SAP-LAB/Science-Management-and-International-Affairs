@@ -19,7 +19,6 @@ namespace ENTITIES
         {
             this.AcademicActivityPhases = new HashSet<AcademicActivityPhase>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
-            this.ActivityExpenseCategories = new HashSet<ActivityExpenseCategory>();
             this.ActivityInfoes = new HashSet<ActivityInfo>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
         }
@@ -28,15 +27,14 @@ namespace ENTITIES
         public Nullable<System.DateTime> activity_date_start { get; set; }
         public Nullable<System.DateTime> activity_date_end { get; set; }
         public int activity_type_id { get; set; }
-        public string image { get; set; }
+        public Nullable<int> file_id { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         public virtual AcademicActivityType AcademicActivityType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityInfo> ActivityInfoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

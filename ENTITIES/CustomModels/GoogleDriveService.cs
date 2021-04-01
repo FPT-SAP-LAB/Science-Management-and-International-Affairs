@@ -278,6 +278,9 @@ namespace ENTITIES.CustomModels
                 case 4:
                     SubFolderName = "Academic Collaboration";
                     break;
+                case 5:
+                    SubFolderName = "Academic Activity";
+                    break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
             }

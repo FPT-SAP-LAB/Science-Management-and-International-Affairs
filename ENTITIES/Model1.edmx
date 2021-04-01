@@ -718,14 +718,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="ConferenceParticipant">
           <Key>
-            <PropertyRef Name="people_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="conference_participant_id" />
           </Key>
-          <Property Name="people_id" Type="int" Nullable="false" />
+          <Property Name="conference_participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="title_id" Type="int" Nullable="false" />
           <Property Name="office_id" Type="int" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="mssv_msnv" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ConferenceStatus">
           <Key>
@@ -1052,7 +1053,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Key>
             <PropertyRef Name="Sourceid" />
           </Key>
-          <Property Name="Rank" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Rank" Type="int" />
           <Property Name="Sourceid" Type="float" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1081,7 +1082,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_date_start" Type="date" />
           <Property Name="activity_date_end" Type="date" />
           <Property Name="activity_type_id" Type="int" Nullable="false" />
-          <Property Name="image" Type="nvarchar" MaxLength="150" />
+          <Property Name="file_id" Type="int" />
         </EntityType>
         <EntityType Name="AcademicActivityLanguage">
           <Key>
@@ -1132,8 +1133,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="expense_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="expense_category_name" Type="nvarchar" MaxLength="150" />
-          <Property Name="activity_id" Type="int" />
-          <Property Name="office_id" Type="int" />
+          <Property Name="activity_office_id" Type="int" />
         </EntityType>
         <EntityType Name="ActivityExpenseDetail">
           <Key>
@@ -1162,6 +1162,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_id" Type="int" />
           <Property Name="main_article" Type="bit" />
         </EntityType>
+        <EntityType Name="ActivityOffice">
+          <Key>
+            <PropertyRef Name="activity_office_id" />
+          </Key>
+          <Property Name="activity_office_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activity_id" Type="int" />
+          <Property Name="office_id" Type="int" />
+        </EntityType>
         <EntityType Name="ActivityPartner">
           <Key>
             <PropertyRef Name="activity_partner_id" />
@@ -1171,11 +1179,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="contact_point_name" Type="nvarchar" MaxLength="150" />
           <Property Name="contact_point_email" Type="nvarchar" MaxLength="150" />
           <Property Name="contact_point_phone" Type="nvarchar" MaxLength="150" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
           <Property Name="cooperation_date_start" Type="date" />
           <Property Name="cooperation_date_end" Type="date" />
           <Property Name="activity_id" Type="int" Nullable="false" />
           <Property Name="partner_scope_id" Type="int" Nullable="false" />
+          <Property Name="file_id" Type="int" />
         </EntityType>
         <EntityType Name="AnswerType">
           <Key>
@@ -1527,30 +1535,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="AccountRight">
               <PropertyRef Name="right_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__activ__1E05700A">
-          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicActivity">
-              <PropertyRef Name="activity_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="activity_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__offic__1EF99443">
-          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2049,18 +2033,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="ConferenceParticipant">
               <PropertyRef Name="office_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__peopl__1C5231C2">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
-          <End Role="ConferenceParticipant" Type="Self.ConferenceParticipant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="people_id" />
-            </Principal>
-            <Dependent Role="ConferenceParticipant">
-              <PropertyRef Name="people_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3482,6 +3454,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AcademicActivity_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="AcademicActivity">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AcademicActivityPhaseLanguage_AcademicActivityPhase">
           <End Role="AcademicActivityPhase" Type="Self.AcademicActivityPhase" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3532,6 +3516,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityOffice">
+              <PropertyRef Name="activity_office_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseCategory">
+              <PropertyRef Name="activity_office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ActivityExpenseDetail_ActivityExpenseCategory">
           <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -3555,6 +3551,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="ActivityExpenseDetail">
               <PropertyRef Name="expense_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityPartner_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="ActivityPartner" Type="Self.ActivityPartner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ActivityPartner">
+              <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3656,37 +3664,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -3808,6 +3785,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySet Name="ActivityExpenseDetail" EntityType="Self.ActivityExpenseDetail" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityExpenseType" EntityType="Self.ActivityExpenseType" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityInfo" EntityType="Self.ActivityInfo" Schema="SMIA_AcademicActivity" store:Type="Tables" />
+          <EntitySet Name="ActivityOffice" EntityType="Self.ActivityOffice" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="ActivityPartner" EntityType="Self.ActivityPartner" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AnswerType" EntityType="Self.AnswerType" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="Form" EntityType="Self.Form" Schema="SMIA_AcademicActivity" store:Type="Tables" />
@@ -3915,14 +3893,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__AccountRi__right__28ED12D1" Association="Self.FK__AccountRi__right__28ED12D1">
             <End Role="Right" EntitySet="Right" />
             <End Role="AccountRight" EntitySet="AccountRight" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__activ__1E05700A" Association="Self.FK__ActivityE__activ__1E05700A">
-            <End Role="AcademicActivity" EntitySet="AcademicActivity" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__offic__1EF99443" Association="Self.FK__ActivityE__offic__1EF99443">
-            <End Role="Office" EntitySet="Office" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
           </AssociationSet>
           <AssociationSet Name="FK__ActivityI__activ__4924D839" Association="Self.FK__ActivityI__activ__4924D839">
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
@@ -4086,10 +4056,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__offic__5B78929E" Association="Self.FK__Conferenc__offic__5B78929E">
             <End Role="Office" EntitySet="Office" />
-            <End Role="ConferenceParticipant" EntitySet="ConferenceParticipant" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__peopl__1C5231C2" Association="Self.FK__Conferenc__peopl__1C5231C2">
-            <End Role="Profile" EntitySet="Profile" />
             <End Role="ConferenceParticipant" EntitySet="ConferenceParticipant" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__reque__0CDAE408" Association="Self.FK__Conferenc__reque__0CDAE408">
@@ -4560,6 +4526,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Profile" EntitySet="Profile" />
             <End Role="WorkingProcess" EntitySet="WorkingProcess" />
           </AssociationSet>
+          <AssociationSet Name="FK_AcademicActivity_File" Association="Self.FK_AcademicActivity_File">
+            <End Role="File" EntitySet="File" />
+            <End Role="AcademicActivity" EntitySet="AcademicActivity" />
+          </AssociationSet>
           <AssociationSet Name="FK_AcademicActivityPhaseLanguage_AcademicActivityPhase" Association="Self.FK_AcademicActivityPhaseLanguage_AcademicActivityPhase">
             <End Role="AcademicActivityPhase" EntitySet="AcademicActivityPhase" />
             <End Role="AcademicActivityPhaseLanguage" EntitySet="AcademicActivityPhaseLanguage" />
@@ -4576,6 +4546,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="Direction" EntitySet="Direction" />
             <End Role="AcademicProgram" EntitySet="AcademicProgram" />
           </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseCategory_ActivityOffice" Association="Self.FK_ActivityExpenseCategory_ActivityOffice">
+            <End Role="ActivityOffice" EntitySet="ActivityOffice" />
+            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_ActivityExpenseDetail_ActivityExpenseCategory" Association="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory">
             <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategory" />
             <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
@@ -4583,6 +4557,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK_ActivityExpenseDetail_ActivityExpenseType" Association="Self.FK_ActivityExpenseDetail_ActivityExpenseType">
             <End Role="ActivityExpenseType" EntitySet="ActivityExpenseType" />
             <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityPartner_File" Association="Self.FK_ActivityPartner_File">
+            <End Role="File" EntitySet="File" />
+            <End Role="ActivityPartner" EntitySet="ActivityPartner" />
           </AssociationSet>
           <AssociationSet Name="FK_ArticleVersion_Article" Association="Self.FK_ArticleVersion_Article">
             <End Role="Article" EntitySet="Article" />
@@ -4715,6 +4693,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="Profiles1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="RequestConferencePolicies" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="File" ToRole="RequestConferencePolicy" />
+          <NavigationProperty Name="AcademicActivities" Relationship="Self.FK_AcademicActivity_File" FromRole="File" ToRole="AcademicActivity" />
+          <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_File" FromRole="File" ToRole="ActivityPartner" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK_CollaborationStatusHistory_File" FromRole="File" ToRole="CollaborationStatusHistory" />
         </EntityType>
         <EntityType Name="InternalUnit">
@@ -4745,7 +4725,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="office_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Area" Relationship="Self.FK__Office__area_id__72910220" FromRole="Office" ToRole="Area" />
           <NavigationProperty Name="InternalUnit" Relationship="Self.FK__Office__unit_id__73852659" FromRole="Office" ToRole="InternalUnit" />
-          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK__ActivityE__offic__1EF99443" FromRole="Office" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="Office" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="Office" ToRole="MOU" />
           <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__offic__278EDA44" FromRole="Office" ToRole="Participant" />
@@ -4801,7 +4780,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="File1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="Profile" ToRole="File" />
           <NavigationProperty Name="Person" Relationship="Self.FK__Profile__people___3335971A" FromRole="Profile" ToRole="People" />
           <NavigationProperty Name="Awards" Relationship="Self.FK__Award__people_id__2AA05119" FromRole="Profile" ToRole="Award" />
-          <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__peopl__1C5231C2" FromRole="Profile" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="CustomProfiles" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="Profile" ToRole="CustomProfile" />
           <NavigationProperty Name="PeoplePositions" Relationship="Self.FK__PeoplePos__peopl__4356F04A" FromRole="Profile" ToRole="PeoplePosition" />
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
@@ -5531,16 +5509,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
         </EntityType>
         <EntityType Name="ConferenceParticipant">
           <Key>
-            <PropertyRef Name="people_id" />
-            <PropertyRef Name="request_id" />
+            <PropertyRef Name="conference_participant_id" />
           </Key>
-          <Property Name="people_id" Type="Int32" Nullable="false" />
+          <Property Name="conference_participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="title_id" Type="Int32" Nullable="false" />
           <Property Name="office_id" Type="Int32" Nullable="false" />
-          <Property Name="current_mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mssv_msnv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Office" Relationship="Self.FK__Conferenc__offic__5B78929E" FromRole="ConferenceParticipant" ToRole="Office" />
-          <NavigationProperty Name="Profile" Relationship="Self.FK__Conferenc__peopl__1C5231C2" FromRole="ConferenceParticipant" ToRole="Profile" />
           <NavigationProperty Name="RequestConference" Relationship="Self.FK__Conferenc__reque__0CDAE408" FromRole="ConferenceParticipant" ToRole="RequestConference" />
           <NavigationProperty Name="Title" Relationship="Self.FK__Conferenc__title__0EF836A4" FromRole="ConferenceParticipant" ToRole="Title" />
         </EntityType>
@@ -5947,7 +5925,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Key>
             <PropertyRef Name="Sourceid" />
           </Key>
-          <Property Name="Rank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rank" Type="Int32" />
           <Property Name="Sourceid" Type="Double" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
@@ -5976,11 +5954,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_date_start" Type="DateTime" Precision="0" />
           <Property Name="activity_date_end" Type="DateTime" Precision="0" />
           <Property Name="activity_type_id" Type="Int32" Nullable="false" />
-          <Property Name="image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="file_id" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="Self.FK_AcademicActivity_File" FromRole="AcademicActivity" ToRole="File" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__activ__2610A626" FromRole="AcademicActivity" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="AcademicActivityLanguages" Relationship="Self.FK__AcademicA__activ__408F9238" FromRole="AcademicActivity" ToRole="AcademicActivityLanguage" />
           <NavigationProperty Name="AcademicActivityType" Relationship="Self.FK__AcademicA__activ__4277DAAA" FromRole="AcademicActivity" ToRole="AcademicActivityType" />
-          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK__ActivityE__activ__1E05700A" FromRole="AcademicActivity" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ActivityInfoes" Relationship="Self.FK__ActivityI__activ__4924D839" FromRole="AcademicActivity" ToRole="ActivityInfo" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK__ActivityP__activ__58671BC9" FromRole="AcademicActivity" ToRole="ActivityPartner" />
         </EntityType>
@@ -6046,10 +6024,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </Key>
           <Property Name="expense_category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="expense_category_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="activity_id" Type="Int32" />
-          <Property Name="office_id" Type="Int32" />
-          <NavigationProperty Name="Office" Relationship="Self.FK__ActivityE__offic__1EF99443" FromRole="ActivityExpenseCategory" ToRole="Office" />
-          <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityE__activ__1E05700A" FromRole="ActivityExpenseCategory" ToRole="AcademicActivity" />
+          <Property Name="activity_office_id" Type="Int32" />
+          <NavigationProperty Name="ActivityOffice" Relationship="Self.FK_ActivityExpenseCategory_ActivityOffice" FromRole="ActivityExpenseCategory" ToRole="ActivityOffice" />
           <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory" FromRole="ActivityExpenseCategory" ToRole="ActivityExpenseDetail" />
         </EntityType>
         <EntityType Name="ActivityExpenseDetail">
@@ -6084,6 +6060,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="Article" Relationship="Self.FK__ActivityI__artic__4CF5691D" FromRole="ActivityInfo" ToRole="Article" />
           <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityI__activ__4924D839" FromRole="ActivityInfo" ToRole="AcademicActivity" />
         </EntityType>
+        <EntityType Name="ActivityOffice">
+          <Key>
+            <PropertyRef Name="activity_office_id" />
+          </Key>
+          <Property Name="activity_office_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activity_id" Type="Int32" />
+          <Property Name="office_id" Type="Int32" />
+          <NavigationProperty Name="ActivityExpenseCategories" Relationship="Self.FK_ActivityExpenseCategory_ActivityOffice" FromRole="ActivityOffice" ToRole="ActivityExpenseCategory" />
+        </EntityType>
         <EntityType Name="ActivityPartner">
           <Key>
             <PropertyRef Name="activity_partner_id" />
@@ -6093,11 +6078,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="contact_point_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="contact_point_email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="contact_point_phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="cooperation_date_start" Type="DateTime" Precision="0" />
           <Property Name="cooperation_date_end" Type="DateTime" Precision="0" />
           <Property Name="activity_id" Type="Int32" Nullable="false" />
           <Property Name="partner_scope_id" Type="Int32" Nullable="false" />
+          <Property Name="file_id" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="Self.FK_ActivityPartner_File" FromRole="ActivityPartner" ToRole="File" />
           <NavigationProperty Name="PartnerScope" Relationship="Self.FK__ActivityP__mou_p__595B4002" FromRole="ActivityPartner" ToRole="PartnerScope" />
           <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityP__activ__58671BC9" FromRole="ActivityPartner" ToRole="AcademicActivity" />
         </EntityType>
@@ -6514,6 +6500,30 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AcademicActivity_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="AcademicActivity">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityPartner_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="ActivityPartner" Type="Self.ActivityPartner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ActivityPartner">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CollaborationStatusHistory_File">
           <End Role="File" Type="Self.File" Multiplicity="0..1" />
           <End Role="CollaborationStatusHistory" Type="Self.CollaborationStatusHistory" Multiplicity="*" />
@@ -6547,18 +6557,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="Right">
               <PropertyRef Name="module_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ActivityE__offic__1EF99443">
-          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Office">
-              <PropertyRef Name="office_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6702,18 +6700,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <PropertyRef Name="people_id" />
             </Principal>
             <Dependent Role="Award">
-              <PropertyRef Name="people_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__peopl__1C5231C2">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
-          <End Role="ConferenceParticipant" Type="Self.ConferenceParticipant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="people_id" />
-            </Principal>
-            <Dependent Role="ConferenceParticipant">
               <PropertyRef Name="people_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8266,18 +8252,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ActivityE__activ__1E05700A">
-          <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1" />
-          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcademicActivity">
-              <PropertyRef Name="activity_id" />
-            </Principal>
-            <Dependent Role="ActivityExpenseCategory">
-              <PropertyRef Name="activity_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ActivityI__activ__4924D839">
           <End Role="AcademicActivity" Type="Self.AcademicActivity" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -8357,6 +8331,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="AcademicActivityTypeLanguage">
               <PropertyRef Name="activity_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityOffice">
+              <PropertyRef Name="activity_office_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseCategory">
+              <PropertyRef Name="activity_office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8603,6 +8589,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySet Name="ActivityExpenseDetails" EntityType="Self.ActivityExpenseDetail" />
           <EntitySet Name="ActivityExpenseTypes" EntityType="Self.ActivityExpenseType" />
           <EntitySet Name="ActivityInfoes" EntityType="Self.ActivityInfo" />
+          <EntitySet Name="ActivityOffices" EntityType="Self.ActivityOffice" />
           <EntitySet Name="ActivityPartners" EntityType="Self.ActivityPartner" />
           <EntitySet Name="AnswerTypes" EntityType="Self.AnswerType" />
           <EntitySet Name="Forms" EntityType="Self.Form" />
@@ -8717,6 +8704,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="File" EntitySet="Files" />
             <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicies" />
           </AssociationSet>
+          <AssociationSet Name="FK_AcademicActivity_File" Association="Self.FK_AcademicActivity_File">
+            <End Role="File" EntitySet="Files" />
+            <End Role="AcademicActivity" EntitySet="AcademicActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityPartner_File" Association="Self.FK_ActivityPartner_File">
+            <End Role="File" EntitySet="Files" />
+            <End Role="ActivityPartner" EntitySet="ActivityPartners" />
+          </AssociationSet>
           <AssociationSet Name="FK_CollaborationStatusHistory_File" Association="Self.FK_CollaborationStatusHistory_File">
             <End Role="File" EntitySet="Files" />
             <End Role="CollaborationStatusHistory" EntitySet="CollaborationStatusHistories" />
@@ -8728,10 +8723,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Right__module_id__2EA5EC27" Association="Self.FK__Right__module_id__2EA5EC27">
             <End Role="Module" EntitySet="Modules" />
             <End Role="Right" EntitySet="Rights" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__offic__1EF99443" Association="Self.FK__ActivityE__offic__1EF99443">
-            <End Role="Office" EntitySet="Offices" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__offic__5B78929E" Association="Self.FK__Conferenc__offic__5B78929E">
             <End Role="Office" EntitySet="Offices" />
@@ -8780,10 +8771,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Award__people_id__2AA05119" Association="Self.FK__Award__people_id__2AA05119">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Award" EntitySet="Awards" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__peopl__1C5231C2" Association="Self.FK__Conferenc__peopl__1C5231C2">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="ConferenceParticipant" EntitySet="ConferenceParticipants" />
           </AssociationSet>
           <AssociationSet Name="FK__CustomPro__peopl__2B947552" Association="Self.FK__CustomPro__peopl__2B947552">
             <End Role="Profile" EntitySet="Profiles" />
@@ -9297,10 +9284,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="AcademicActivityType" EntitySet="AcademicActivityTypes" />
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
           </AssociationSet>
-          <AssociationSet Name="FK__ActivityE__activ__1E05700A" Association="Self.FK__ActivityE__activ__1E05700A">
-            <End Role="AcademicActivity" EntitySet="AcademicActivities" />
-            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK__ActivityI__activ__4924D839" Association="Self.FK__ActivityI__activ__4924D839">
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
             <End Role="ActivityInfo" EntitySet="ActivityInfoes" />
@@ -9324,6 +9307,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__AcademicA__activ__381A47C8" Association="Self.FK__AcademicA__activ__381A47C8">
             <End Role="AcademicActivityType" EntitySet="AcademicActivityTypes" />
             <End Role="AcademicActivityTypeLanguage" EntitySet="AcademicActivityTypeLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseCategory_ActivityOffice" Association="Self.FK_ActivityExpenseCategory_ActivityOffice">
+            <End Role="ActivityOffice" EntitySet="ActivityOffices" />
+            <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_ActivityExpenseDetail_ActivityExpenseCategory" Association="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory">
             <End Role="ActivityExpenseCategory" EntitySet="ActivityExpenseCategories" />
@@ -9381,48 +9368,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10153,11 +10099,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <EntitySetMapping Name="ConferenceParticipants">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceParticipant">
               <MappingFragment StoreEntitySet="ConferenceParticipant">
-                <ScalarProperty Name="people_id" ColumnName="people_id" />
+                <ScalarProperty Name="conference_participant_id" ColumnName="conference_participant_id" />
                 <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="title_id" ColumnName="title_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
-                <ScalarProperty Name="current_mssv_msnv" ColumnName="current_mssv_msnv" />
+                <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10528,7 +10476,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="activity_date_start" ColumnName="activity_date_start" />
                 <ScalarProperty Name="activity_date_end" ColumnName="activity_date_end" />
                 <ScalarProperty Name="activity_type_id" ColumnName="activity_type_id" />
-                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10582,8 +10530,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <MappingFragment StoreEntitySet="ActivityExpenseCategory">
                 <ScalarProperty Name="expense_category_id" ColumnName="expense_category_id" />
                 <ScalarProperty Name="expense_category_name" ColumnName="expense_category_name" />
-                <ScalarProperty Name="activity_id" ColumnName="activity_id" />
-                <ScalarProperty Name="office_id" ColumnName="office_id" />
+                <ScalarProperty Name="activity_office_id" ColumnName="activity_office_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10617,6 +10564,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ActivityOffices">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ActivityOffice">
+              <MappingFragment StoreEntitySet="ActivityOffice">
+                <ScalarProperty Name="activity_office_id" ColumnName="activity_office_id" />
+                <ScalarProperty Name="activity_id" ColumnName="activity_id" />
+                <ScalarProperty Name="office_id" ColumnName="office_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ActivityPartners">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ActivityPartner">
               <MappingFragment StoreEntitySet="ActivityPartner">
@@ -10625,11 +10581,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="contact_point_name" ColumnName="contact_point_name" />
                 <ScalarProperty Name="contact_point_email" ColumnName="contact_point_email" />
                 <ScalarProperty Name="contact_point_phone" ColumnName="contact_point_phone" />
-                <ScalarProperty Name="evidence" ColumnName="evidence" />
                 <ScalarProperty Name="cooperation_date_start" ColumnName="cooperation_date_start" />
                 <ScalarProperty Name="cooperation_date_end" ColumnName="cooperation_date_end" />
                 <ScalarProperty Name="activity_id" ColumnName="activity_id" />
                 <ScalarProperty Name="partner_scope_id" ColumnName="partner_scope_id" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10771,30 +10727,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -32,12 +32,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     typestr.Remove(typestr.Length - 1, 1);
                     typestr.Append(")");
                 }
-                string sql = @"SELECT aa.activity_id, av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to'
+                string sql = @"SELECT aa.activity_id, av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to',concat('http://drive.google.com/uc?export=view&id=',f.file_drive_id) as 'file_drive_id'
                         FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
-                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        on av.article_id = ai.article_id left join General.[File] f
+						on f.[file_id] = aa.[file_id] and al.language_id = av.language_id
                         WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
                 if (search is null)
                 {
@@ -80,6 +81,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<activityType>();
             }
         }
@@ -95,6 +97,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return 0;
             }
         }
@@ -109,12 +112,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to', al.language_id
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to', al.language_id,concat('http://drive.google.com/uc?export=view&id=',f.file_drive_id) as 'file_drive_id'
                         FROM SMIA_AcademicActivity.AcademicActivity aa left join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id left join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 left join IA_Article.Article ar
                         on ar.article_id = ai.article_id left join IA_Article.ArticleVersion av
-                        on av.article_id = ai.article_id and (al.language_id = av.language_id or al.language_id is null or av.language_id is null)
+                        on av.article_id = ai.article_id left join General.[File] f
+						on f.[file_id] = aa.[file_id] and (al.language_id = av.language_id or al.language_id is null or av.language_id is null)
                         WHERE (al.language_id = @language or av.language_id = @language) AND [aa].activity_id = @id and ai.main_article = 1";
                 baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id),
                     new SqlParameter("language", language)).FirstOrDefault();
@@ -145,6 +149,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<subContent>();
             }
         }
@@ -152,7 +157,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select f.title as 'f_title',f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id,cast(q.is_changeable as int) as 'is_changeable' from SMIA_AcademicActivity.AcademicActivityPhase aap
+                string sql = @"select f.title as 'f_title',f.title_description,f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id,cast(q.is_changeable as int) as 'is_changeable' from SMIA_AcademicActivity.AcademicActivityPhase aap
                                 inner join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
                                 inner join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
                                 where f.phase_id = @phase_id order by q.is_changeable";
@@ -180,6 +185,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new fullForm();
             }
         }
@@ -208,6 +214,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -225,6 +232,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<ParticipantRole>();
             }
         }
@@ -237,7 +245,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Office>();
+            }
+        }
+        public string getImageActivity(int phase_id)
+        {
+            try
+            {
+                string sql = @"select CONCAT('http://drive.google.com/uc?export=view&id=',f.file_drive_id) as 'file_drive_id' from SMIA_AcademicActivity.AcademicActivity aa left join General.[File] f
+                                    on f.[file_id] = aa.[file_id] inner join SMIA_AcademicActivity.AcademicActivityPhase aap
+                                    on aap.activity_id = aa.activity_id
+                                    where aap.phase_id = @phase_id";
+                string file_drive_id = db.Database.SqlQuery<string>(sql, new SqlParameter("phase_id", phase_id)).FirstOrDefault();
+                return file_drive_id;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return String.Empty;
             }
         }
         public class activityType
@@ -254,10 +280,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string from { get; set; }
             public string to { get; set; }
             public string content { get; set; }
+            public string file_drive_id { get; set; }
         }
         public class baseFrom
         {
             public string f_title { get; set; }
+            public string title_description { get; set; }
             public int form_id { get; set; }
             public int phase_id { get; set; }
             public int question_id { get; set; }

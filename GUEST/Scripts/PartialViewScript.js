@@ -145,6 +145,12 @@ class AuthorInfoView {
 }
 //////////////////////////////////////////////////////////////////
 $("#add_author_save").click(function () {
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].email == $("#add_author_mail").val()) {
+            toastr.error("Đã có tác giả này");
+            return false;
+        }
+    }
     ckfe = $("#ckfe").val()
     add_author_workplace = $("#ckfe").val()
     add_author_msnv = $("#add_author_msnv").val()
@@ -243,6 +249,18 @@ $("#authors-info-container").on('click', '.edit-author', function () {
 
             //console.log(people[i].money_string);
             if ($("#totalreward").val() != "" && people[i].money_string == "0") $("#add_author_reward_edit").prop("disabled", false);
+            else $("#add_author_reward_edit").prop('disabled', true);
+
+            var sum = 0;
+            var total = $("#totalreward").val();
+            total = total.split(",").join("");
+
+            for (var j = 0; j < people.length; j++) {
+                var data = people[j].money_string;
+                var temp = data.split(",").join("");
+                sum = parseInt(sum) + parseInt(temp);
+            }
+            if (sum != parseInt(total)) $("#add_author_reward_edit").prop("disabled", false);
             else $("#add_author_reward_edit").prop('disabled', true);
 
             $("#edit_author_btn").click();

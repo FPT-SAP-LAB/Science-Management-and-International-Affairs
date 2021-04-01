@@ -95,7 +95,7 @@
                 <label>Tổng thưởng</label>
                 <input id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
             </div>
-            <div class="col-xl-6 form-group">
+            <div class="col-xl-6 form-group" id="daidien_block">
                 <label>Đại diện nhận thưởng</label>
                 <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled/>
             </div>
@@ -103,11 +103,19 @@
             @{
                 foreach (var item in ViewBag.crite)
                 {
-                    <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
-                        <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
-                        <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
-                        <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
-                    </div>
+                        <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
+                            <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
+                            <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
+                            @if (item.check == true)
+                            {
+                                <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
+                            }
+                            else
+                            {
+                                <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
+                            }
+
+                        </div>
                 }
             }
         </div>
@@ -255,7 +263,7 @@
                 $(".thuongqt").hide();
             }
 
-            if ($("#typereward").val() == "Quydinh") $("#daidien").hide();
+            if ($("#typereward").val() == "Quydinh") $("#daidien_block").hide();
             else {
                 $(".edit-author-reward").prop('disabled', true);
             }
