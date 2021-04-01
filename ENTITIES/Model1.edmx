@@ -1052,7 +1052,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Key>
             <PropertyRef Name="Sourceid" />
           </Key>
-          <Property Name="Rank" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Rank" Type="int" />
           <Property Name="Sourceid" Type="float" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1080,8 +1080,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="activity_date_start" Type="date" />
           <Property Name="activity_date_end" Type="date" />
-          <Property Name="file_id" Type="int" />
           <Property Name="activity_type_id" Type="int" Nullable="false" />
+          <Property Name="file_id" Type="int" />
         </EntityType>
         <EntityType Name="AcademicActivityLanguage">
           <Key>
@@ -5979,7 +5979,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Key>
             <PropertyRef Name="Sourceid" />
           </Key>
-          <Property Name="Rank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rank" Type="Int32" />
           <Property Name="Sourceid" Type="Double" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
@@ -6007,8 +6007,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="activity_date_start" Type="DateTime" Precision="0" />
           <Property Name="activity_date_end" Type="DateTime" Precision="0" />
-          <Property Name="file_id" Type="Int32" />
           <Property Name="activity_type_id" Type="Int32" Nullable="false" />
+          <Property Name="file_id" Type="Int32" />
           <NavigationProperty Name="File" Relationship="Self.FK_AcademicActivity_File" FromRole="AcademicActivity" ToRole="File" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__activ__2610A626" FromRole="AcademicActivity" ToRole="AcademicActivityPhase" />
           <NavigationProperty Name="AcademicActivityLanguages" Relationship="Self.FK__AcademicA__activ__408F9238" FromRole="AcademicActivity" ToRole="AcademicActivityLanguage" />
@@ -10591,8 +10591,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="activity_id" ColumnName="activity_id" />
                 <ScalarProperty Name="activity_date_start" ColumnName="activity_date_start" />
                 <ScalarProperty Name="activity_date_end" ColumnName="activity_date_end" />
-                <ScalarProperty Name="file_id" ColumnName="file_id" />
                 <ScalarProperty Name="activity_type_id" ColumnName="activity_type_id" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

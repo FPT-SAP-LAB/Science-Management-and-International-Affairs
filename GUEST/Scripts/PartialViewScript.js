@@ -145,6 +145,12 @@ class AuthorInfoView {
 }
 //////////////////////////////////////////////////////////////////
 $("#add_author_save").click(function () {
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].email == $("#add_author_mail").val()) {
+            toastr.error("Đã có tác giả này");
+            return false;
+        }
+    }
     ckfe = $("#ckfe").val()
     add_author_workplace = $("#ckfe").val()
     add_author_msnv = $("#add_author_msnv").val()
