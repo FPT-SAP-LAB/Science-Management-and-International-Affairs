@@ -34,7 +34,11 @@ $("#collab_program_going_table").DataTable({
             data: "partner_name",
             name: "partner_name"
         },
-        { data: "program_name", name: "program_name" },
+        {
+            data: "program_name",
+            name: "program_name",
+            className: 'text-center text-nowrap'
+        },
         {
             data: "full_name",
             name: "full_name",

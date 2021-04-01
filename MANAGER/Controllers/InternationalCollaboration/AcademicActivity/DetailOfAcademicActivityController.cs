@@ -7,6 +7,9 @@ using MANAGER.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
 using MANAGER.Support;
 using ENTITIES;
+using Newtonsoft.Json;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.AcademicActivity;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -275,5 +278,67 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         //    List<AcademicActivityExpenseRepo.baseExpense> data = expenseRepo.getDatatableExpenseEstimate(expense_category_id);
         //    return Json(new { success = true, data = data });
         //}
+        public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
+        {
+            try
+            {
+                repo = new DetailOfAcademicActivityRepo();
+                SaveActivityPartner activityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
+                AlertModal<string> alertModal = repo.saveActivityPartner(evidence_file, folder_name, activityPartner);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpGet]
+        public JsonResult getActivityPartner(int activity_partner_id)
+        {
+            try
+            {
+                repo = new DetailOfAcademicActivityRepo();
+                AlertModal<ActivityPartner_Ext> alertModal = repo.getActivityPartner(activity_partner_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpPost]
+        public JsonResult updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
+        {
+            try
+            {
+                repo = new DetailOfAcademicActivityRepo();
+                SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
+                AlertModal<string> alertModal = repo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpPost]
+        public JsonResult deleteActivityPartner(int activity_partner_id)
+        {
+            try
+            {
+                repo = new DetailOfAcademicActivityRepo();
+                AlertModal<string> alertModal = repo.deleteActivityPartner(activity_partner_id);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public class QuantityByUnit
+        {
+            public string name { get; set; }
+            public int quantity { get; set; }
+        }
     }
 }

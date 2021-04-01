@@ -1,9 +1,9 @@
 ﻿<div class="row">
     <div class="col-xl-10 col-9">
-        <input class="form-control" type="text" value="" id="content" />
+        <input @(ViewBag.IsEnded ? "disabled" : "") class="form-control" type="text" value="" id="content" />
     </div>
     <div class="col-xl-2 col-3">
-        <button type="button" onclick="AddComment()" class="btn btn-block btn-success">Gửi</button>
+        <button @(ViewBag.IsEnded ? "disabled" : "") type="button" onclick="AddComment()" class="btn btn-block btn-success">Gửi</button>
     </div>
 </div>
 <br />
