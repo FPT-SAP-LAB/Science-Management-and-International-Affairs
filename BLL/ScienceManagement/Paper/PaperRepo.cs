@@ -335,6 +335,7 @@ namespace BLL.ScienceManagement.Paper
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 dbc.Rollback();
                 dbc.Dispose();
                 return "ff";

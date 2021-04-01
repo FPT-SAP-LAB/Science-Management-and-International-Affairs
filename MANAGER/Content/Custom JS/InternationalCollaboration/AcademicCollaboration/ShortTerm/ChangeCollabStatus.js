@@ -25,7 +25,7 @@ $('#change_status').select2({
         dataType: 'json',
         data: function () {
             return {
-                status_type_specific: 2 //long-term
+                status_type_specific: 1 //short-term
             };
         },
         processResults: function (data) {
@@ -70,7 +70,8 @@ $("#change_status_save").on("click", function () {
         success: function (data) {
             if (data.success) {
                 toastr.success(data.content);
-                collab_going_table.ajax.reload();
+                exchange_coming_table.ajax.reload();
+                exchange_going_table.ajax.reload();
                 change_status_save.stopLoading();
                 $("#change_status_close").click();
                 clearContentChangeStatus();
