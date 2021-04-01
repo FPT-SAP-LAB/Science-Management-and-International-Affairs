@@ -8,13 +8,13 @@ $('.program_partner').select2({
         delay: 250,
         cache: true,
         dataType: 'json',
-        data: function (params) {
+        data: function(params) {
             return {
                 partner_name: params.term
             };
         },
-        processResults: function (data) {
-            data.obj.map(function (obj) {
+        processResults: function(data) {
+            data.obj.map(function(obj) {
                 obj.id = obj.partner_name + '/' + obj.partner_id;
                 obj.text = obj.partner_name;
                 return data.obj;
@@ -27,6 +27,7 @@ $('.program_partner').select2({
     },
     templateResult: formatPartnerInfo
 })
+
 function formatPartnerInfo(partner) {
     if (partner.id) {
         let partner_name = partner.partner_name;
@@ -48,20 +49,20 @@ $('#add_program_language_coming').select2({
 
 var direction = 0
 var collab_type = 0
-//show going modal
-$('.add-program-going').click(function () {
-    $('#add_program_going').modal('show')
-    direction = $(this).data('direction')
-    collab_type = $(this).data('collab')
-})
-//show coming modal
-$('.add-program-coming').click(function () {
+    //show going modal
+$('.add-program-going').click(function() {
+        $('#add_program_going').modal('show')
+        direction = $(this).data('direction')
+        collab_type = $(this).data('collab')
+    })
+    //show coming modal
+$('.add-program-coming').click(function() {
     $('#add_program_coming').modal('show')
     direction = $(this).data('direction')
     collab_type = $(this).data('collab')
 })
 
-$('.add_program_btn').click(function () {
+$('.add_program_btn').click(function() {
     var add_program_title
     var add_program_language
     var add_program_partner
@@ -126,7 +127,7 @@ $('.add_program_btn').click(function () {
         data: form_data,
         processData: false,
         contentType: false,
-        success: function (data) {
+        success: function(data) {
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -168,14 +169,13 @@ $('.add_program_btn').click(function () {
                 if (direction == 2 && collab_type == 2) {
                     $('#collab_program_coming_table').DataTable().ajax.reload()
                 }
-            }
-            else {
+            } else {
                 toastr.clear()
                 toastr.warning(data.content);
                 save_loader.stopLoading()
             }
         },
-        error: function (data) {
+        error: function(data) {
             toastr.clear();
             toastr.error(data.content);
             save_loader.stopLoading()
