@@ -1,5 +1,4 @@
-﻿var program_id_load;
-var direction = 0;
+﻿var direction = 0;
 var collab_type = 0;
 var program_id = 0;
 //delete program======================================================================
@@ -70,7 +69,6 @@ $(document).on('click', '#load_edit_program', function() {
 });
 
 function load_program_detail_going(program_id) {
-    program_id_load = program_id
     var id = { program_id: program_id }
     $.ajax({
         url: '/AcademicCollaboration/LoadEditProgram',
@@ -90,7 +88,6 @@ function load_program_detail_going(program_id) {
 }
 
 function load_program_detail_coming(program_id) {
-    program_id_load = program_id
     var id = { program_id: program_id }
     $.ajax({
         url: '/AcademicCollaboration/LoadEditProgram',
@@ -109,18 +106,36 @@ function load_program_detail_coming(program_id) {
 }
 //load edit program===================================================================
 //change select 2 load language=========================================================
-$('#edit_program_language').select2({
+$('#edit_program_language_going').select2({
         placeholder: 'Ngôn ngữ',
     }).on('select2:select', function() {
         $.ajax({
-            url: '/AcademicCollaboration/LoadContentDetailLanguage',
+            url: '/AcademicCollaboration/LoadProgramDetailLanguage',
             type: "POST",
             data: {
-                "program_id": program_id_load,
-                "language_id": $('#edit_program_language').val()
+                "program_id": program_id,
+                "language_id": $('#edit_program_language_going').val()
             },
-            success: function(data) {
-                $('#edit_summernote').summernote('code', data.content)
+            success: function (data) {
+                $('#edit_program_title_going').val(data.articleVersion.version_title)
+                $('#edit_summernote_going').summernote('code', data.articleVersion.article_content)
+            },
+            error: function() {}
+        })
+    })
+$('#edit_program_language_coming').select2({
+        placeholder: 'Ngôn ngữ',
+    }).on('select2:select', function() {
+        $.ajax({
+            url: '/AcademicCollaboration/LoadProgramDetailLanguage',
+            type: "POST",
+            data: {
+                "program_id": program_id,
+                "language_id": $('#edit_program_language_coming').val()
+            },
+            success: function (data) {
+                $('#edit_program_title_coming').val(data.articleVersion.version_title)
+                $('#edit_summernote_coming').summernote('code', data.articleVersion.article_content)
             },
             error: function() {}
         })

@@ -517,8 +517,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acShortRepo = new AcademicCollaborationShortRepo();
-                string content = acShortRepo.GetContentLanguage(procedure_id, language_id);
-                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), content });
+                ArticleVersion articleVersion = acShortRepo.GetContentLanguage(procedure_id, language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
             }
             catch (Exception e)
             {
@@ -728,6 +728,25 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         program_partner, program_range_date, note, Int32.Parse(direction), acc.account_id);
                     return Json(new { json.success, json.content });
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadProgramDetailLanguage(string program_id, int language_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                ArticleVersion articleVersion  = acProgramRepo.LoadProgramDetailLanguage(Int32.Parse(program_id), language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
             }
             catch (Exception e)
             {

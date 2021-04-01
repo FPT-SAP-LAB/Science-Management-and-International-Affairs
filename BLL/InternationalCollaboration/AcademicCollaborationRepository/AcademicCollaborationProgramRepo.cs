@@ -271,5 +271,21 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 }
             }
         }
+
+        public ArticleVersion LoadProgramDetailLanguage(int program_id, int language_id)
+        {
+            try
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                AcademicProgram academicProgram = db.AcademicPrograms.Where(x => x.program_id == program_id).FirstOrDefault();
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x => x.article_id == academicProgram.article_id && x.language_id == language_id).FirstOrDefault();
+                return articleVersion ?? new ArticleVersion();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
