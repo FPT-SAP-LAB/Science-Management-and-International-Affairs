@@ -482,9 +482,19 @@
                     if (ck != "5") $(".edit").prop("disabled", true);
                     $(".edit-author").prop("disabled", false);
                     $("#daidien").val(response.ms);
-                    if (response.ms != "" && $("#kieuthuong").val() == "Canhan") {
+                    if (response.ms != "" && $("#kieuthuong").val() == "Canhan" && $("#totalreward").val() != "") {
                         $(".add_author_reward_edit").prop("disabled", false);
                         $("#edit_submit_reward").prop("disabled", false);
+                    }
+                    for (var i = 0; i < people.length; i++) {
+                        if (people.money_string != "0") {
+                            $(".add_author_reward_edit").prop("disabled", true);
+                            $("#edit_submit_reward").prop("disabled", true);
+                        } else {
+                            $(".add_author_reward_edit").prop("disabled", false);
+                            $("#edit_submit_reward").prop("disabled", false);
+                            return false;
+                        }
                     }
                 },
                 error: function () {
