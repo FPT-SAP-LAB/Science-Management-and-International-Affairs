@@ -315,30 +315,38 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             if (start)
             {
-                //List<ActivityExpenseCategory> activityExpenses_old = db.ActivityExpenseCategories.Where(x => x.activity_id == obj.id).ToList();
-                //foreach (ActivityExpenseCategory arc in activityExpenses_old)
-                //{
-                //    ActivityExpenseCategory activityExpense_new = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
-                //    {
-                //        //activity_id = activity_id,
-                //        //office_id = arc.office_id,
-                //        expense_category_name = arc.expense_category_name
-                //    });
-                //    db.SaveChanges();
-                //    List<ActivityExpenseDetail> expenseDetails_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == arc.expense_category_id).ToList();
-                //    foreach (ActivityExpenseDetail ard in expenseDetails_old)
-                //    {
-                //        db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
-                //        {
-                //            expense_category_id = activityExpense_new.expense_category_id,
-                //            expense_price = ard.expense_price,
-                //            expense_quantity = ard.expense_quantity,
-                //            expense_type_id = ard.expense_type_id,
-                //            note = ard.note
-                //        });
-                //    }
-                //    db.SaveChanges();
-                //}
+                List<ActivityOffice> ActivityOffice_old = db.ActivityOffices.Where(x => x.activity_id == obj.id).ToList();
+                foreach(ActivityOffice ao in ActivityOffice_old)
+                {
+                    ActivityOffice ao_new = db.ActivityOffices.Add(new ActivityOffice
+                    {
+                        activity_id = activity_id,
+                        office_id = ao.office_id
+                    });
+                    db.SaveChanges();
+                    List<ActivityExpenseCategory> aec_old = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                    foreach(ActivityExpenseCategory item in aec_old)
+                    {
+                        ActivityExpenseCategory aec_new =  db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
+                        {
+                            activity_office_id = ao_new.activity_office_id,
+                            expense_category_name = item.expense_category_name
+                        });
+                        db.SaveChanges();
+                        List<ActivityExpenseDetail> aed_old = db.ActivityExpenseDetails.Where(x => x.expense_category_id == item.expense_category_id).ToList();
+                        foreach(ActivityExpenseDetail aed in aed_old)
+                        {
+                            db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
+                            {
+                                expense_category_id = aec_new.expense_category_id,
+                                expense_price = aed.expense_price,
+                                expense_quantity = aed.expense_quantity,
+                                expense_type_id = aed.expense_type_id,
+                                note = aed.note,
+                            });
+                        }
+                    }
+                }
             }
         }
         public void cloneTD(cloneBase obj, bool start, int activity_id)
