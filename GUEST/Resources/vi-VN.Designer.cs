@@ -520,6 +520,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nghiên cứu viên.
+        /// </summary>
+        public static string isReseacher {
+            get {
+                return ResourceManager.GetString("isReseacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 1.
         /// </summary>
         public static string Jan {

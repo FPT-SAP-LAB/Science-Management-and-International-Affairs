@@ -40,7 +40,16 @@ namespace GUEST.Controllers.ScienceManagement
             return PartialView();
         }
 
-        public JsonResult fillData(AddAuthor item)
+        [HttpPost]
+        public JsonResult fillData(AddAuthor item, int paper_id)
+        {
+            AddAuthor result = md.getAuthor(item.mssv_msnv);
+            AuthorPaper ap = md.getMonry(item, paper_id);
+            return Json(new { author = result, money = ap.money_reward }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult fillDataAdd(AddAuthor item)
         {
             AddAuthor result = md.getAuthor(item.mssv_msnv);
             return Json(new { author = result }, JsonRequestBehavior.AllowGet);

@@ -304,26 +304,42 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             if (!int.TryParse(reimbursement_string, out int reimbursement))
                 return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
             RequestConference request = db.RequestConferences.Find(request_id);
+            if (request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
             if (request.status_id != 4)
                 return new AlertModal<string>(false, "Đề nghị không được nhập hoàn ứng");
 
-            using (var trans = db.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    request.reimbursement = reimbursement;
-                    request.status_id = 5;
-                    request.BaseRequest.finished_date = DateTime.Now;
-                    db.SaveChanges();
-                    trans.Commit();
-                    return new AlertModal<string>(true, "Cập nhật thành công");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                    trans.Rollback();
-                    return new AlertModal<string>(false, "Có lỗi xảy ra");
-                }
+                request.reimbursement = reimbursement;
+                db.SaveChanges();
+                return new AlertModal<string>(true, "Cập nhật thành công");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
+        }
+        public AlertModal<string> EndRequest(int request_id)
+        {
+            RequestConference request = db.RequestConferences.Find(request_id);
+            if (request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (request.status_id != 4)
+                return new AlertModal<string>(false, "Đề nghị không được phép kết thúc");
+
+            try
+            {
+                request.status_id = 5;
+                request.BaseRequest.finished_date = DateTime.Now;
+                db.SaveChanges();
+                return new AlertModal<string>(true, "Cập nhật thành công");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new AlertModal<string>(false, "Có lỗi xảy ra");
             }
         }
     }

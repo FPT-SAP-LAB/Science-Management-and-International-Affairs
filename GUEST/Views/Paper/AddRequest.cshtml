@@ -139,6 +139,11 @@
                                 <option value="Canhan">@rm.GetString("Repre")</option>
                             </select>
                         </div>
+                        <div class="col-xl-6 form-group" id="block_daidien">
+                            <label class="required-field">Chọn đại diện nhận thưởng</label>
+                            <select id="daidien" class="form-control form-control-lg">
+                            </select>
+                        </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                     <div class="row" id="authors-info-container">
@@ -218,12 +223,13 @@
                 specialization_id: $("#chuyennganh").val(),
                 type: $("#loaithuong").val(),
                 reward_type: $("#kieuthuong").val(),
-                paper_id: paper_id
+                paper_id: paper_id,
             }
+            var daidien = $("#daidien").val();
             $.ajax({
                 url: "@Url.Action("AddRequest", "Paper")",
                 type: "POST",
-                data: JSON.stringify(RequestPaper),
+                data: JSON.stringify({ 'request': RequestPaper, 'daidien': daidien }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
@@ -343,9 +349,31 @@
             window.location.href = "google.comhttps://www.google.com.vn/?hl=vi";
         });
         $(document).ready(function () {
+            $("#block_daidien").hide();
             $("#add_author_reward").prop('disabled', true);
             //$("#uppy-FileInput-input").prop('disabled', true);
             $("#upCM").hide();
+
+            $("#kieuthuong").on("select2:select", function (e) {
+                var temp = $("#kieuthuong").val();
+                if (temp == "Quydinh") $("#block_daidien").hide();
+                else $("#block_daidien").show();
+            });
+
+            $("#loaithuong").on("select2:select", function (e) {
+                var temp = $(this).val();
+                //console.log(temp);
+                if (temp == "Quocte") {
+                    $(".thuongqt").show();
+                    $(".thuongtn").hide();
+                } else {
+                    $(".thuongqt").hide();
+                    $(".thuongtn").show();
+                    $(".deletetieuchi").each(function () {
+                        $(this).click();
+                    });
+                }
+            });
         });
         $('#chuyennganh').select2({
             allowClear: true
@@ -362,19 +390,8 @@
         $('#paper_type').select2({
             allowClear: true
         });
-        $("#loaithuong").change(function () {
-            var temp = $(this).val();
-            console.log(temp);
-            if (temp == 1) {
-                $(".thuongqt").show();
-                $(".thuongtn").hide();
-            } else {
-                $(".thuongqt").hide();
-                $(".thuongtn").show();
-                $(".deletetieuchi").each(function () {
-                    $(this).click();
-                });
-            }
+        $('#daidien').select2({
+            allowClear: true
         });
 
         $("#tieuchi").change(function () {

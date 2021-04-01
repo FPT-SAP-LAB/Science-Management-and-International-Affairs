@@ -293,6 +293,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
@@ -557,6 +558,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecializationLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

@@ -746,6 +746,7 @@
             });
             fd.append("request_id", @ConferenceDetail.RequestID)
 
+            fd.append("input", JSON.stringify(this.data));
             save_loader.startLoading();
             $.ajax({
                 url: "/ConferenceSponsor/Edit",
