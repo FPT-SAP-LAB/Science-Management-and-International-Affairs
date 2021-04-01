@@ -121,7 +121,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         program_end_date = DateTime.ParseExact(program_range_date.Split('-')[1].Trim(), "dd/MM/yyyy", null)
                     };
 
-                    if(direction == 1)
+                    if (direction == 1)
                     {
                         int partner_id = Int32.Parse(program_partner.Split('/').LastOrDefault());
                         academicProgram.partner_id = partner_id;
