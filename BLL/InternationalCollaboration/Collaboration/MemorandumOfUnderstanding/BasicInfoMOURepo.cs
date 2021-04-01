@@ -90,7 +90,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
                         left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
                         where t1.mou_id = @mou_id
-                        order by mou_bonus_id";
+                        order by mou_bonus_id, partner_name";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
                     new SqlParameter("mou_id", mou_id)).ToList();
                 handlingExMOUListData(mouExList);
@@ -220,6 +220,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     p.scopes_id.Add(item.scope_id);
                 }
+                //Case: remove PartnerScopeInfo if null
+                if (newObj.PartnerScopeInfo.Count == 1)
+                {
+                    if (newObj.PartnerScopeInfo[0].partner_id == 0)
+                    {
+                        newObj.PartnerScopeInfo.RemoveAt(0);
+                    }
+                }
             }
             return newObj;
         }
@@ -280,6 +288,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     });
                                 }
                             }
+                            db.SaveChanges();
                         }
                         //checkpoint 2
                         db.SaveChanges();
@@ -313,6 +322,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     mb.mou_bonus_end_date = end_date;
                     db.Entry(mb).State = EntityState.Modified;
 
+                    //get old 
                     List<MOUPartnerScope> mouPSList = db.MOUPartnerScopes.Where(x => x.mou_bonus_id == input.mou_bonus_id).ToList();
                     foreach (MOUPartnerScope mouPSItem in mouPSList.ToList())
                     {
@@ -327,44 +337,45 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
                     //Check partnerScope existed and handle it.
                     //add data to MOUPartnerScope.
-                    foreach (PartnerScopeInfo psi in input.PartnerScopeInfo.ToList())
+                    if (input.PartnerScopeInfo != null)
                     {
-                        foreach (int scope in psi.scopes_id.ToList())
+                        foreach (PartnerScopeInfo psi in input.PartnerScopeInfo.ToList())
                         {
-                            PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
-                            if (psCheck is null)
+                            foreach (int scope in psi.scopes_id.ToList())
                             {
-                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psi.partner_id && x.scope_id == scope).FirstOrDefault();
+                                if (psCheck is null)
                                 {
-                                    partner_id = psi.partner_id,
-                                    scope_id = scope,
-                                    reference_count = 1
-                                });
-                                db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                    {
+                                        partner_id = psi.partner_id,
+                                        scope_id = scope,
+                                        reference_count = 1
+                                    });
+                                    db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    {
+                                        partner_scope_id = psAdded.partner_scope_id,
+                                        mou_id = mb.mou_id,
+                                        mou_bonus_id = input.mou_bonus_id
+                                    });
+                                }
+                                else
                                 {
-                                    partner_scope_id = psAdded.partner_scope_id,
-                                    mou_id = mb.mou_id,
-                                    mou_bonus_id = input.mou_bonus_id
-                                });
-                            }
-                            else
-                            {
-                                psCheck.reference_count += 1;
-                                db.MOUPartnerScopes.Add(new MOUPartnerScope
-                                {
-                                    partner_scope_id = psCheck.partner_scope_id,
-                                    mou_id = mb.mou_id,
-                                    mou_bonus_id = input.mou_bonus_id
-                                });
+                                    psCheck.reference_count += 1;
+                                    db.MOUPartnerScopes.Add(new MOUPartnerScope
+                                    {
+                                        partner_scope_id = psCheck.partner_scope_id,
+                                        mou_id = mb.mou_id,
+                                        mou_bonus_id = input.mou_bonus_id
+                                    });
+                                }
+                                db.SaveChanges();
                             }
                         }
                     }
                     //checkpoint 2
                     db.SaveChanges();
 
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)

@@ -75,7 +75,7 @@
                                 <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
                                     <label class="font-weight-bolder">Trạng thái</label>
                                     <label style="color:red">*</label>
-                                    <select class="form-control" required id="status">
+                                    <select class="form-control" required id="status" style="width:100% !important">
                                     </select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-8 col-sm-8">
@@ -95,7 +95,7 @@
                             <div class="row mb-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Bản mềm</label>&nbsp;
-                                    <label style="font-style: italic;">(Tối đa 1MB và 5 tệp tin)</label>
+                                    <label style="font-style: italic;">(Tối đa 5MB và 1 tệp tin)</label>
                                     <div class="uppy row" id="mou_detail_upload">
                                         <div class="uppy-wrapper col-3"></div>
                                         <div class="uppy-list col-7"></div>
@@ -314,6 +314,38 @@
     @*dropdown list*@
     <script>
         //jquery for dropdown
+        $('#office').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        });
+        $('#moa_partner_name_add').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        }).on("select2:select", function () { //after select
+            checkPartnerAddMOA();
+        }).on("select2:unselecting", function () {
+
+        });
+        $('#partner_name_ex_mou_add').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        }); 
+        $('#partner_name_ex_mou_add_for_edit').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        }); 
+        $('#partner_name_ex_mou_edit').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        });
+        $('#partner_name_ex_mou_edit_for_edit').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: true,
+        });
+        $('#status').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        });
         $('#coop_scope_ex_mou_add').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
@@ -861,12 +893,23 @@
         }
 
         function clearInputAddExMOUPartner() {
+            $('#partner_name_ex_mou_add').val('');
             $('#coop_scope_ex_mou_add').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
                 HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
             }
             $('#coop_scope_ex_mou_add').append(HTMLScopedata);
+        }
+
+        function clearInputAddExMOUPartnerForEdit() {
+            $('#partner_name_ex_mou_add_for_edit').val('');
+            $('#coop_scope_ex_mou_add_for_edit').empty();
+            var HTMLScopedata = '';
+            for (j = 0; j < listScopes.length; j++) {
+                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+            }
+            $('#coop_scope_ex_mou_add_for_edit').append(HTMLScopedata);
         }
 
         function initAndRefreshTableExMOUAdd() {
@@ -994,6 +1037,75 @@
                 error: function () {
                     //alert("fail");
                 }
+            });
+        }
+
+        function checkLastPartner(id) {
+            $.ajax({
+                url: "@Url.Action("isLastPartnerMOU", "PartnerMOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (isLast) {
+                    if (isLast) {
+                        toastr.error('Một biên bản ghi nhớ phải có ít nhất 1 đối tác');
+                    } else {
+                        MOUBonusIsExisted(id);
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        function MOUBonusIsExisted(mou_partner_id) {
+            var obj = {
+                mou_partner_id: mou_partner_id
+            }
+            $.ajax({
+                    url: "@Url.Action("CheckMOUBonusExisted", "PartnerMOU")",
+                    type: "POST",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (isExisted) {
+                        if (isExisted) {
+                            toastr.error('Không thể xóa đối tác đã có trong biên bản ghi nhớ bổ sung');
+                        } else {
+                            checkMOAPartnerExistedInMOU(mou_partner_id);
+                            //showSwalDelMOAPartner(moa_partner_id);
+                        }
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+            });
+        }
+
+        function checkMOAPartnerExistedInMOU(mou_partner_id) {
+            var obj = {
+                mou_partner_id: mou_partner_id
+            }
+            $.ajax({
+                    url: "@Url.Action("CheckMOAPartnerExistedInMOU", "PartnerMOU")",
+                    type: "POST",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (isExisted) {
+                        if (isExisted) {
+                            toastr.error('Không thể xóa đối tác đã có trong biên bản thỏa thuận');
+                        } else {
+                            showSwalDelMOUPartner(mou_partner_id);
+                        }
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
             });
         }
 
@@ -1213,8 +1325,8 @@
         }
 
         function addToPartnerScopeListEdit(data) {
+            resetExMOUEditTable();
             listTempExMOUPartnerScopeEdit = [];
-            
             for (i = 0; i < data.PartnerScopeInfo.length; i++){
                 var partner_id = data.PartnerScopeInfo[i].partner_id;
                 var scopes = data.PartnerScopeInfo[i].scopes_id;
@@ -1383,7 +1495,7 @@
                     scopes_name: scopes_name,
                 }
                 listTempExMOUPartnerScopeEdit.push(temp);
-                clearInputAddExMOUPartner();
+                clearInputAddExMOUPartnerForEdit();
                 $('#add-partner-scope-edit').modal('hide');
                 initAndRefreshTableExMOUEdit();
             }
@@ -1760,6 +1872,7 @@
                 $('#mou_partner_name_edit').val(data.partner_name);
                 $('#mou_partner_id_edit').val(mou_partner_id);
                 loadDataMOUPartnerForEdit(data);
+                checkPartnerEdit();
             },
             error: function () {
                 //alert("fail");
@@ -1894,6 +2007,11 @@
     }
 
     function confirm_delete_partner_mou(id) {
+        checkLastPartner(id);
+    }
+
+
+    function showSwalDelMOUPartner(id) {
             var link = '@Url.Action("deletePartnerMOU", "PartnerMOU")'
             Swal.fire({
                 title: "Cảnh báo",
@@ -2597,7 +2715,7 @@
         var link = '@Url.Action("Delete_Moa", "MOA")'
             Swal.fire({
                 title: "Cảnh báo",
-                text: "Dữ liệu sẽ bị xóa và không thể khôi phục",
+                text: "Toàn bộ dữ liệu trong biên bản thỏa thuận sẽ bị xóa và không thể khôi phục",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Đồng ý",
