@@ -469,7 +469,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        
+
         public File removeFile(File file)
         {
             try

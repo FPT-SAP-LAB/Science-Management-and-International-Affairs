@@ -860,7 +860,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 academicCollaboration.note = obj_academic_collab.note;
                 db.SaveChanges();
                 return academicCollaboration;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
