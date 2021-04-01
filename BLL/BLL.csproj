@@ -110,6 +110,7 @@
     <Compile Include="Authen\LoginRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExpenseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityPartnerRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityPhaseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
