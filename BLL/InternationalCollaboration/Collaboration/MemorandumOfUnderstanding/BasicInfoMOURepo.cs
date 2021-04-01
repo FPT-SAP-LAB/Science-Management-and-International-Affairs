@@ -372,7 +372,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 db.SaveChanges();
                             }
                         }
-                    }        
+                    }
                     //checkpoint 2
                     db.SaveChanges();
 
