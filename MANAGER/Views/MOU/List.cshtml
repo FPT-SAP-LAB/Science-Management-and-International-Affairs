@@ -568,6 +568,33 @@
                     if (isDuplicated) {
                         toastr.error("Đã có mã hiệu " + $('#mou_code_add').val()+ " trong hệ thống");
                     } else {
+                        checkIntersectPeriodMOUDate();
+                    }
+                },
+                error: function () {
+
+                }
+            });
+    }
+
+    function checkIntersectPeriodMOUDate(){
+            var obj =
+            {
+                PartnerInfo: listTempPartnerMOUAdd,
+                start_date: $('#sign_date_mou').val(),
+                end_date: $('#end_date_mou').val()
+            };
+            $.ajax({
+                url: "@Url.Action("checkIntersectPeriodMOUDate", "MOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(obj),
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    if (data.mou_id != 0) {
+                        toastr.error("Các đối tác trên đã ký kết từ ngày " + data.mou_start_date_string + " đến ngày " + data.mou_end_date_string + " ở biên bản " + data.mou_code);
+                    } else {
                         addMOU();
                     }
                 },
@@ -641,7 +668,8 @@
         }
         else if (MOUCodeIsInvalid($('#mou_code_add').val().trim())) {
             toastr.error('Số hiệu không hợp lệ');
-        } else {
+        }
+        else {
             checkMOUCodeDuplicated();
         }
     }

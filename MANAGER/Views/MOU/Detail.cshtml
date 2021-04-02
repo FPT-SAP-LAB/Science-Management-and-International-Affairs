@@ -2707,8 +2707,33 @@
             toastr.error('Số hiệu không hợp lệ');
         }
         else {
-            addMOA();
+            checkMOACodeDuplicated();
         }
+    }
+
+    function checkMOACodeDuplicated(){
+            var obj =
+            {
+                moa_code: $('#moa_code').val()
+            };
+            $.ajax({
+                url: "@Url.Action("CheckDuplicatedMOACode", "MOA")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(obj),
+                datatype: "json",
+                cache: false,
+                success: function (isDuplicated) {
+                    if (isDuplicated) {
+                        toastr.error("Đã có mã hiệu " + $('#moa_code').val()+ " trong hệ thống");
+                    } else {
+                        addMOA();
+                    }
+                },
+                error: function () {
+
+                }
+            });
     }
 
     function confirm_delete_moa(id){
