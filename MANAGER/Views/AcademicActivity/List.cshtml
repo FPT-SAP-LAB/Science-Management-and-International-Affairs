@@ -195,11 +195,21 @@
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
                         <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
                     </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label">Ảnh đại diện hoạt động</label>
+                        <div class="uppy" id="kt_uppy_1">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                        <span class="form-text text-muted">Dung lượng tối đa cho ảnh là 15MB và tối đa 1 ảnh</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+                <button type="button" class="load-btn btn btn-light-primary font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -305,11 +315,23 @@
         let id_edit = "";
         let id_clone = "";
         let stt = 1;
+        var save_loader = new LoaderBtn($(".load-btn"));
+
         document.getElementById('search_year').value = new Date().getFullYear();
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
                 myDate = new Date(correctFormat);
             return myDate;
+        }
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
         }
         function saveTempIdDelete(id) {
             Swal.fire({
@@ -426,6 +448,7 @@
                 });
         }
         $('#btn_edit').click(function () {
+            save_loader.startLoading();
             let activity_name = document.getElementById('edit_title').value;
             let activity_type_id = document.getElementById('edit_category').value;
             let from = document.getElementById('edit_from').value;
@@ -439,33 +462,76 @@
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }
-            let object = {
-                id: id_edit,
-                activity_type_id: activity_type_id,
-                activity_name: activity_name,
-                location: location,
-                from: from,
-                to: to
-            }
-            $.ajax({
-                url: '/AcademicActivity/edit_AcademicActivity',
-                data: JSON.stringify(object),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
-                        clearModal('#editModal');
-                        stt = 1;
-                        datatable.ajax.reload();
-                    } else {
-                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
-                    }
-                },
-                error: function (data) {
-                    alert(data)
+            
+            let files = uppy1.getFiles();
+            if (files.length == 0) {
+                toastr.warning('Vui lòng chọn ảnh cho hoạt động');
+                return false;
+            } else {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        var URL = canvas.toDataURL('image/jpeg');
+                        var newfile = dataURItoBlob(URL);
+                        var img = new FormData();
+
+                        if (newfile.size > uppy1.getFiles()[0].size) {
+                            img.append('img', uppy1.getFiles()[0].data);
+                        } else {
+                            img.append('img', newfile);
+                        }
+                        
+                        img.append('id', id_edit);
+                        img.append('activity_type_id', activity_type_id);
+                        img.append('activity_name', activity_name);
+                        img.append('location', location);
+                        img.append('from', from);
+                        img.append('to', to);
+
+                        $.ajax({
+                            url: '/AcademicActivity/edit_AcademicActivity',
+                            data: img,
+                            type: "POST",
+                            success: function (data) {
+                                if (data != '') {
+                                    toastr.success(data);
+                                    var itemId = files[0].id;
+                                    uppy1.removeFile(itemId);
+                                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                                    clearModal('#editModal');
+                                    $('#editModal').modal('hide');
+                                    stt = 1;
+                                    datatable.ajax.reload();
+                                } else {
+                                    var itemId = files[0].id;
+                                    uppy1.removeFile(itemId);
+                                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                                }
+                                save_loader.stopLoading();
+                            },
+                            error: function (data) {
+                                var itemId = files[0].id;
+                                uppy1.removeFile(itemId);
+                                $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                                save_loader.stopLoading();
+                            },
+                            dataType: "json",
+                            processData: false,
+                            contentType: false
+                        });
+                    };
                 }
-            });
+                reader.readAsDataURL(files[0].data);
+            }
         });
 
         $("#kt_datetimepicker_3_year").on("change.datetimepicker", ({ date, oldDate }) => {
@@ -640,6 +706,86 @@
                 }
             };
         }();
+
+
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
+
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+
         $(document).ready(function () {
             KTBootstrapDatetimepicker.init();
             KTBootstrapDateYeartimepicker.init();

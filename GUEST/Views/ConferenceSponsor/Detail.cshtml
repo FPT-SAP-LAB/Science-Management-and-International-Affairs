@@ -284,7 +284,7 @@
                                 @if (item.editable)
                                 {
                                     <td class="align-middle">
-                                        <input onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
+                                        <input data-id="@item.cost_id" onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
                                     </td>
                                     <td>
                                         <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -323,7 +323,7 @@
                 </table>
                 @if (Costs.Any(x => x.editable))
                 {
-                    <button type="button" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
+                    <button type="button" id="submitCost" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
                 }
                 @{
                     //Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
@@ -401,4 +401,42 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Scripts/CostTableConferenceRequest.js"></script>
+    <script>
+        var save_loader = new LoaderBtn($("#submitCost"))
+
+        function submitCost() {
+            let costs = []
+            $("#ExpectedCostChild1 table input[type='text']").map((idx, ele) => {
+                costs.push({
+                    cost_id: ele.dataset.id,
+                    detail: ele.value,
+                    total: 0
+                })
+            })
+            save_loader.startLoading();
+            $.ajax({
+                url: "/ConferenceSponsor/UpdateCost",
+                method: "post",
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: {
+                    costs: costs,
+                    request_id: '@ConferenceDetail.RequestID'
+                }
+            });
+        }
+    </script>
 }

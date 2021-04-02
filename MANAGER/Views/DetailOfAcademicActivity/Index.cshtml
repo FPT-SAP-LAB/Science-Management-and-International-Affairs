@@ -168,48 +168,18 @@
                         <tr class="text-center">
                             <th rowspan="2">STT</th>
                             <th rowspan="2">Đơn vị</th>
-                            <th colspan="2">Kinh phí dự trù</th>
-                            <th rowspan="2">Kinh phí thực tế</th>
-                            <th rowspan="2">Chênh lệch</th>
-                            <th rowspan="2">Ghi chú</th>
+                            <th colspan="2">Kinh phí dự trù (VNĐ)</th>
+                            <th rowspan="2">Kinh phí thực tế (VNĐ)</th>
+                            <th rowspan="2">Chênh lệch (VNĐ)</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr>
-                            <th>Ban đầu</th>
-                            <th>Điều chỉnh</th>
+                            <th class="text-center">Ban đầu</th>
+                            <th class="text-center">Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>450.000.000</td>
-                            <td>0</td>
-                            <td>368.000.000</td>
-                            <td>82.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>FPTU Đà Nẵng</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>FPTU HCM</td>
-                            <td>100.000.000</td>
-                            <td>0</td>
-                            <td>150.000.000</td>
-                            <td>-50.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+
                     </tbody>
                 </table>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -316,18 +286,11 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Tên đơn vị</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="javascript:;" onclick="checkPartnerAdd()">Kiểm tra</a>
-                        </label>
+                        <label class="col-form-label font-weight-bolder">Đơn vị đối tác</label>
+                        <label style="color:red">*</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="add_donvi_DongToChuc" style="width: 100% !important">
-                                @{
-                                    foreach (var i in ViewBag.unit)
-                                    {
-                                        <option value="@i.unit_id">@i.unit_name</option>
-                                    }
-                                }
+                                <option selected></option>
                             </select>
                         </div>
                     </div>
@@ -337,68 +300,65 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Phạm vi hợp tác</label>
+                        <label style="color:red">*</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="add_phamvihoptac_DongToChuc" style="width: 100% !important">
-                                @{
-                                    foreach (var i in ViewBag.unit)
-                                    {
-                                        <option value="@i.unit_id">@i.unit_name</option>
-                                    }
-                                }
+                                <option selected></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_DongToChuc" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_DongToChuc" autocomplete="off" id="add_from_DongToChuc" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_add_from_DongToChuc" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_DongToChuc" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_DongToChuc" autocomplete="off" id="add_to_DongToChuc" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_add_to_DongToChuc" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <label style="font-style: italic;">(Tối đa 5MB và 1 tệp tin)</label>
                         <div class="uppy" id="add_banmem_DongToChuc">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <div class="form-group row">
-                            <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from_DongToChuc" autocomplete="off" id="add_from_DongToChuc" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_from_DongToChuc" data-toggle="datetimepicker">
-                                        <span class="input-group-text">
-                                            <i class="ki ki-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">đến</label>
-                        <div class="form-group row">
-                            <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to_DongToChuc" autocomplete="off" id="add_to_DongToChuc" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_add_to_DongToChuc" data-toggle="datetimepicker">
-                                        <span class="input-group-text">
-                                            <i class="ki ki-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+
+                    <div class="col-md-12 col-xl-12 col-lg-12">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="add_name_DongToChuc" />
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="add_email_DongToChuc" />
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="add_phone_DongToChuc" />
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Họ và tên" autocomplete="off" id="add_name_DongToChuc" />
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="add_email_DongToChuc" />
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" id="add_phone_DongToChuc" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_DongToChuc">Xác nhận</button>
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal" id="btn_add_close_DongToChuc">Đóng</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="btn_add_save_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -417,88 +377,76 @@
                 <div class="form-group row">
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Tên đơn vị</label>
-                        <label style="color:blue" class="float-right">
-                            <a href="MOU/List#" onclick="checkPartnerAdd()">Kiểm tra</a>
-                        </label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="edit_donvi_DongToChuc" style="width: 100% !important">
-                                @{
-                                    foreach (var i in ViewBag.unit)
-                                    {
-                                        <option value="@i.unit_id">@i.unit_name</option>
-                                    }
-                                }
+                                <option selected></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Nguồn tài trợ (VNĐ)</label>
-                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" required id="edit_taitro_DongToChuc" />
+                        <input class="form-control" type="number" placeholder="Nguồn tài trợ" autocomplete="off" id="edit_taitro_DongToChuc" />
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Phạm vi hợp tác</label>
                         <div class="d-flex align-items-center">
                             <select class="form-control" id="edit_phamvihoptac_DongToChuc" style="width: 100% !important">
-                                @{
-                                    foreach (var i in ViewBag.unit)
-                                    {
-                                        <option value="@i.unit_id">@i.unit_name</option>
-                                    }
-                                }
+                                <option selected></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_DongToChuc" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_DongToChuc" autocomplete="off" id="edit_from_DongToChuc" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_DongToChuc" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_DongToChuc" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_DongToChuc" autocomplete="off" id="edit_to_DongToChuc" />
+                            <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_DongToChuc" data-toggle="datetimepicker">
+                                <span class="input-group-text">
+                                    <i class="ki ki-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <label style="font-style: italic;">(Tối đa 5MB và 1 tệp tin)</label>
                         <div class="uppy" id="edit_banmem_DongToChuc">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
-                        <div class="form-group row">
-                            <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from_DongToChuc" autocomplete="off" id="edit_from_DongToChuc" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_from_DongToChuc" data-toggle="datetimepicker">
-                                        <span class="input-group-text">
-                                            <i class="ki ki-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">đến</label>
-                        <div class="form-group row">
-                            <div class="col-lg-12 col-md-9 col-sm-12">
-                                <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to_DongToChuc" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_edit_to_DongToChuc" autocomplete="off" id="edit_to_DongToChuc" />
-                                    <div class="input-group-append" data-target="#kt_datetimepicker_edit_to_DongToChuc" data-toggle="datetimepicker">
-                                        <span class="input-group-text">
-                                            <i class="ki ki-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+
+                    <div class="col-md-12 col-xl-12 col-lg-12">
                         <label class="font-weight-bolder">Đầu mối liên hệ</label>
-                        <input class="form-control mb-2" type="text" placeholder="Họ và tên" autocomplete="off" required id="edit_name_DongToChuc" />
-                        <input class="form-control mb-2" type="text" placeholder="Email" autocomplete="off" required id="edit_email_DongToChuc" />
-                        <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" required id="edit_phone_DongToChuc" />
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Họ và tên" autocomplete="off" id="edit_name_DongToChuc" />
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Email" autocomplete="off" id="edit_email_DongToChuc" />
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" type="text" placeholder="Số điện thoại" autocomplete="off" id="edit_phone_DongToChuc" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_DongToChuc">Xác nhận</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" data-dismiss="modal" id="btn_edit_save_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -580,7 +528,7 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="checkbox pt-15 ">
-                            <input type="checkbox" id="add_donvi_tucach" onchange="clickDonviTucachAdd()"/>
+                            <input type="checkbox" id="add_donvi_tucach" onchange="clickDonviTucachAdd()" />
                             <span class="mr-3"></span>
                             Đơn vị cơ sở
                         </label>
@@ -656,7 +604,7 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="checkbox pt-15 ">
-                            <input type="checkbox" id="edit_donvi_tucach" onchange="clickDonviTucachEdit()"/>
+                            <input type="checkbox" id="edit_donvi_tucach" onchange="clickDonviTucachEdit()" />
                             <span class="mr-3"></span>
                             Đơn vị cơ sở
                         </label>
@@ -696,7 +644,7 @@
                     <div class="col-md-4 col-xl-4 col-lg-4">
                         <div id="edit_control_price">
                             <label class="col-form-label font-weight-bolder">Mức giá</label>
-                            <input type="number" class="form-control" placeholder="Mức giá"  autocomplete="off" id="edit_cost_tucach" />
+                            <input type="number" class="form-control" placeholder="Mức giá" autocomplete="off" id="edit_cost_tucach" />
                         </div>
                     </div>
                 </div>
@@ -917,14 +865,13 @@
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" id="add_donvi_kinhphi">
-                            <option selected value="FPTUHN">FPTU Hà Nội</option>
-                            <option value="FPTUDN">FPTU Đà Nẵng</option>
-                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
+                            @{ 
+                                foreach(var item in ViewBag.office)
+                                {
+                                    <option value="@item.office_id">@item.office_name</option>
+                                }
+                            }
                         </select>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="add_ghichu_kinhphi" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -952,36 +899,36 @@
                         <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
-                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="add_dongia_kpDuTru" />
+                        <label class="col-form-label font-weight-bolder">Đơn giá (VNĐ)</label>
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_dongia_kpDuTru" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="add_soluong_kpDuTru" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_soluong_kpDuTru" />
                     </div>
                     <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="number" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDuTru" />
+                        <label class="col-form-label font-weight-bolder">Thành tiền (VNĐ)</label>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDuTru" readonly/>
                     </div>
-                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <div class="col-sm-8 col-md-8 col-xl-8 col-lg-8">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
                         <textarea id="add_ghichu_kpDuTru" class="form-control"></textarea>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="add_banmem_kpDuTru">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                        <label class="col-form-label">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_1">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_kpDuTru">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success px-6 font-weight-bold" id="btn_add_kpDuTru">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1395,6 +1342,11 @@
         let id_edit_tu_cach = 0;
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
+        var datatableKPDuTru;
+        var save_loader = new LoaderBtn($(".load-btn"));
+        function calcuaTotal(id1, id2, id3) {
+            $(id3).val((parseFloat($(id1).val()) * parseFloat($(id2).val())).toLocaleString('en'));
+        }
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
                 myDate = new Date(correctFormat);
@@ -1741,12 +1693,9 @@
                 }
             });
         }
-        function editDongToChuc(id) {
-            id_edit_dong_to_chuc = id;
-            $('#editModal_DongToChuc').modal('show');
-        }
-        function deleteDongToChuc(id) {
-            id_delete_dong_to_chuc = id;
+
+        $(document).on('click', '#btn_delete_DongToChuc', function () {
+            let activity_partner_id = $(this).data('id');
             Swal.fire({
                 title: "Bạn có muốn xóa đơn vị này không ?",
                 text: "",
@@ -1757,26 +1706,28 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: '/DetailOfAcademicActivity/deleteActivityPartner',
+                        type: "POST",
+                        data: { activity_partner_id: activity_partner_id },
+                        success: function (data) {
+                            if (data.success) {
+                                DongTochucDatatable.ajax.reload();
+                                Swal.fire(data.title, data.content, "success");
+                            } else {
+                                Swal.fire(data.title, data.content, "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                        }
+                    });
                 }
             });
-        }
-        function KPDuTru(id) {
-            id_edit_KP = id;
-            $('#KPDuTruModal').modal('show');
-        }
-        function editKinhPhi(id) {
-            id_edit_KP = id;
-            $('#editModal_KinhPhi').modal('show');
-        }
+        });
         function deleteKinhPhi(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa kinh phí đơn vị này không ?",
+                title: "Bạn có muốn xóa mục kinh phí này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1785,13 +1736,30 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpense", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_office_id: id }),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatableKP.ajax.reload();
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        }
+                    });
                 }
             });
+        }
+        function KPDuTru(id) {
+            id_edit_KP = id;
+            if (typeof datatableKPDuTru != 'undefined') {
+                datatabledKPDuTru.ajax.reload();
+            } else
+                initDatatableKPDuTru();
+            $('#KPDuTruModal').modal('show');
         }
         function deleteKinhPhiDuTru(id) {
             id_delete_KP = id;
@@ -1906,25 +1874,315 @@
             });
         });
 
-        $('#btn_add_DongToChuc').click(function () {
-            toastr.success("Thêm thành công");
-            //let object = {
-            //    name: document.getElementById('add_name_giaidoan').value,
-            //    from: document.getElementById('add_from_giaidoan').value,
-            //    to: document.getElementById('add_to_giaidoan').value
-            //}
-            //$.ajax({
-            //    url: '/DetailOfAcademicActivity/add_Phase',
-            //    data: object,
-            //    success: function (data) {
-            //        if (data.code = 1) {
-            //            toastr.success(data.err_content);
-            //        } else {
-            //            toastr.error(data.err_content);
-            //        }
-            //    },
-            //});
+        //best of DuaHau
+        @*DONG TO CHUC*@
+        @*ADD MODAL*@
+        $('#add_donvi_DongToChuc').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            ajax: {
+                url: '/AcademicCollaboration/getPartners',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        partner_name: params.term
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.partner_id;
+                        obj.text = obj.partner_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatPartnerInfo
         });
+
+        function formatPartnerInfo(partner) {
+            if (partner.id) {
+                let partner_name = partner.partner_name;
+                if (isEmptyOrNullOrUndefined(partner_name)) {
+                    return "Dữ liệu đơn vị đào tạo mới."
+                } else {
+                    return partner.partner_name;
+                }
+            }
+        }
+
+        $('#add_phamvihoptac_DongToChuc').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+            minimumResultsForSearch: -1, //hide search box
+            ajax: {
+                url: '/AcademicCollaboration/getCollabScopes',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function () {
+                    return {
+                        collab_abbreviation_name: 'JC' //Joint conference, workshop, seminar, ...
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.scope_id;
+                        obj.text = obj.scope_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatCollabScope
+        });
+
+        function formatCollabScope(scope) {
+            return scope.scope_abbreviation + " - " + scope.scope_name;
+        }
+
+        var uppy1;
+
+        function isEmptyOrNullOrUndefined(value) {
+            if (value === null || value === undefined || value === "") {
+                return true;
+            }
+            return false;
+        }
+
+        function datePickerFromToValidate(from, to) {
+            if (!(from === "" || to === "")) {
+                let date_from = Date.parse(formatDatePicker(from));
+                let date_to = Date.parse(formatDatePicker(to));
+                if (date_from > date_to) {
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+
+        function formatDatePicker(date) {
+            if (date != '') {
+                return date.split('/')[2] + '/' + date.split('/')[1] + '/' + date.split('/')[0];
+            }
+        }
+
+        function objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+            contact_point_name, contact_point_email, contact_point_phone) {
+            let obj_activity_scope = {};
+            obj_activity_scope.activity_partner_id = activity_partner_id;
+            obj_activity_scope.activity_id = activity_id;
+            obj_activity_scope.partner_id = partner_id;
+            obj_activity_scope.scope_id = scope_id;
+            if (!isEmptyOrNullOrUndefined(sponsor)) obj_activity_scope.sponsor = sponsor;
+            if (!isEmptyOrNullOrUndefined(cooperation_date_start)) obj_activity_scope.cooperation_date_start = formatDatePicker(cooperation_date_start);
+            if (!isEmptyOrNullOrUndefined(cooperation_date_end)) obj_activity_scope.cooperation_date_end = formatDatePicker(cooperation_date_end);
+            if (!isEmptyOrNullOrUndefined(contact_point_name)) obj_activity_scope.contact_point_name = contact_point_name;
+            if (!isEmptyOrNullOrUndefined(contact_point_email)) obj_activity_scope.contact_point_email = contact_point_email;
+            if (!isEmptyOrNullOrUndefined(contact_point_phone)) obj_activity_scope.contact_point_phone = contact_point_phone;
+            return obj_activity_scope;
+        }
+
+        function clearActivityPartnerContentAddModal() {
+            $('#add_donvi_DongToChuc').val(null).trigger('change');
+            $('#add_phamvihoptac_DongToChuc').val(null).trigger('change');
+            $('#add_taitro_DongToChuc').val('');
+            $('#add_from_DongToChuc').val('');
+            $('#add_to_DongToChuc').val('');
+            $('.uppy-list').html('');
+            uppy1.removeFile(uppy1.getFiles().length == 0 ? '' : uppy1.getFiles()[0].id);
+            $('#add_name_DongToChuc').val('');
+            $('#add_email_DongToChuc').val('');
+            $('#add_phone_DongToChuc').val('');
+        }
+
+        let btn_add_save_DongToChuc = new LoaderBtn($("#btn_add_save_DongToChuc"));
+        //ADD MODAL SAVE EVENT
+        $('#btn_add_save_DongToChuc').click(function () {
+
+            let activity_id = $('#activity_id').val();
+            let partner_id = $('#add_donvi_DongToChuc').val();
+            let partner_name = $('#add_donvi_DongToChuc option:selected').text();
+            let scope_id = $('#add_phamvihoptac_DongToChuc').val();
+            let sponsor = $('#add_taitro_DongToChuc').val();
+            let cooperation_date_start = $('#add_from_DongToChuc').val();
+            let cooperation_date_end = $('#add_to_DongToChuc').val();
+
+            let evidence_file = uppy1.getFiles();
+            let contact_point_name = $('#add_name_DongToChuc').val();
+            let contact_point_email = $('#add_email_DongToChuc').val();
+            let contact_point_phone = $('#add_phone_DongToChuc').val();
+
+            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id)) {
+                return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+            } else {
+                if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
+                    return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
+                } else {
+                    let obj_activity_partner = objActivityPartner(0, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+                        contact_point_name, contact_point_email, contact_point_phone);
+                    let formData = new FormData();
+                    formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
+                    formData.append("folder_name", partner_name);
+                    formData.append("obj_activity_partner_stringify", JSON.stringify(obj_activity_partner));
+
+                    btn_add_save_DongToChuc.startLoading();
+                    //Save actually
+                    $.ajax({
+                        url: "/DetailOfAcademicActivity/saveActivityPartner",
+                        type: "POST",
+                        data: formData,
+                        cache: false,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.content);
+                                DongTochucDatatable.ajax.reload();
+                                $("#btn_add_close_DongToChuc").click();
+                                clearActivityPartnerContentAddModal();
+                            } else {
+                                toastr.warning(data.content);
+                                btn_add_save_DongToChuc.stopLoading();
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra.");
+                            btn_add_save_DongToChuc.stopLoading();
+                        }
+                    });
+                }
+            }
+        });
+
+        @*EDIT MODAL*@
+        $('#edit_donvi_DongToChuc').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            ajax: {
+                url: '/AcademicCollaboration/getPartners',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        partner_name: params.term
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.partner_id;
+                        obj.text = obj.partner_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatPartnerInfo
+        });
+
+        $('#edit_phamvihoptac_DongToChuc').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+            minimumResultsForSearch: -1, //hide search box
+            ajax: {
+                url: '/AcademicCollaboration/getCollabScopes',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function () {
+                    return {
+                        collab_abbreviation_name: 'JC' //Joint conference, workshop, seminar, ...
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.scope_id;
+                        obj.text = obj.scope_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatCollabScope
+        });
+
+        var activity_partner_id;
+        var uppy2;
+        $('#editModal_DongToChuc').on('show.bs.modal', function (e) {
+            activity_partner_id = $(e.relatedTarget).data('id');
+            console.log(activity_partner_id);
+            $.ajax({
+                url: "/DetailOfAcademicActivity/getActivityPartner",
+                type: "GET",
+                data: {
+                    activity_partner_id: activity_partner_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.obj != null) {
+                        if (data.success) {
+                            let objData = data.obj;
+                            $('#edit_donvi_DongToChuc').append(new Option(objData.partner_name, objData.partner_id, false, true)).trigger('change');
+                            $('#edit_phamvihoptac_DongToChuc').append(new Option(objData.scope_abbreviation + " - " + objData.scope_name, objData.scope_id, false, true)).trigger('change');
+                            $('#edit_taitro_DongToChuc').val(objData.sponsor);
+                            if (!isEmptyOrNullOrUndefined(objData.cooperation_date_start)) $('#edit_from_DongToChuc').val(moment(objData.cooperation_date_start).format("DD/MM/YYYY"));
+                            if (!isEmptyOrNullOrUndefined(objData.cooperation_date_end)) $('#edit_to_DongToChuc').val(moment(objData.cooperation_date_end).format("DD/MM/YYYY"));
+                            if (objData.file_id != null) {
+                                uppy2.addFile({
+                                    name: objData.file_name, // file name
+                                    type: '', // file type
+                                    data: new Blob(), // file blob
+                                });
+                            }
+                            $('#edit_name_DongToChuc').val(objData.contact_point_name);
+                            $('#edit_email_DongToChuc').val(objData.contact_point_email);
+                            $('#edit_phone_DongToChuc').val(objData.contact_point_phone);
+                        }
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra.");
+                }
+            });
+        });
+
+        $('#editModal_DongToChuc').on('hide.bs.modal', function () {
+            clearContentCollabPartnerModalEdit();
+        });
+
+        function clearContentCollabPartnerModalEdit() {
+            $('#edit_donvi_DongToChuc').val(null).trigger('change');
+            $('#edit_phamvihoptac_DongToChuc').val(null).trigger('change');
+            $('#edit_taitro_DongToChuc').val('');
+            $('#edit_from_DongToChuc').val('');
+            $('#edit_to_DongToChuc').val('');
+            //clear upload file
+            $('#edit_banmem_DongToChuc .uppy-list').html('');
+            uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
+            $('#edit_name_DongToChuc').val('');
+            $('#edit_email_DongToChuc').val('');
+            $('#edit_phone_DongToChuc').val('');
+        }
 
         $('#btn_edit_giaidoan').click(function () {
             var data = {
@@ -1957,8 +2215,62 @@
                 }
             });
         });
-        $('#btn_edit_DongToChuc').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+
+        let btn_edit_save_DongToChuc = new LoaderBtn($('#btn_edit_save_DongToChuc'));
+        $('#btn_edit_save_DongToChuc').click(function () {
+            let activity_id = $('#activity_id').val();
+            let partner_id = $('#edit_donvi_DongToChuc').val();
+            let partner_name = $('#edit_donvi_DongToChuc option:selected').text();
+            let scope_id = $('#edit_phamvihoptac_DongToChuc').val();
+            let sponsor = $('#edit_taitro_DongToChuc').val();
+            let cooperation_date_start = $('#edit_from_DongToChuc').val();
+            let cooperation_date_end = $('#edit_to_DongToChuc').val();
+
+            let evidence_file = uppy2.getFiles();
+            let contact_point_name = $('#edit_name_DongToChuc').val();
+            let contact_point_email = $('#edit_email_DongToChuc').val();
+            let contact_point_phone = $('#edit_phone_DongToChuc').val();
+
+            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id)) {
+                return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+            } else {
+                if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
+                    return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
+                } else {
+                    let obj_activity_partner = objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+                        contact_point_name, contact_point_email, contact_point_phone);
+                    let formData = new FormData();
+                    formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
+                    formData.append("folder_name", partner_name);
+                    formData.append("obj_activity_partner_stringify", JSON.stringify(obj_activity_partner));
+
+                    btn_edit_save_DongToChuc.startLoading();
+                    //Save actually
+                    $.ajax({
+                        url: "/DetailOfAcademicActivity/updateActivityPartner",
+                        type: "POST",
+                        data: formData,
+                        cache: false,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.content);
+                                DongTochucDatatable.ajax.reload();
+                                btn_edit_save_DongToChuc.stopLoading();
+                            } else {
+                                toastr.warning(data.content);
+                                btn_edit_save_DongToChuc.stopLoading();
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra.");
+                            btn_edit_save_DongToChuc.stopLoading();
+                        }
+                    });
+                }
+            }
         });
 
         $('#btn_delete_giaidoan').click(function () {
@@ -2130,10 +2442,88 @@
             toastr.success("Đã chỉnh sửa thành công");
         });
         $('#btn_add_kinhphi').click(function () {
-            toastr.success("Đã thêm thành công");
+            var object = {
+                activity_id: $('#activity_id').val(),
+                office_id: $('#add_donvi_kinhphi').val()
+            };
+            $.ajax({
+                url: "@Url.Action("addExpense", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data == 'Thêm mục kinh phí thành công.') {
+                        toastr.success(data);
+                        clearModal('#addModal_KinhPhi');
+                        datatableKP.ajax.reload();
+                    } else if (data == 'Không thể thêm đơn vị đã tồn tại.'){
+                        toastr.warning(data);
+                    }else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+            });
         });
+        //aaa
         $('#btn_add_kpDuTru').click(function () {
-            toastr.success("Đã thêm thành công");
+            save_loader.startLoading();
+            var object = {
+                expense_category_id : 0,
+                expense_category_name: $('#add_noidung_kpDuTru').val(),
+                expense_price: $('#add_dongia_kpDuTru').val(),
+                expense_quantity: $('#add_soluong_kpDuTru').val(),
+                total : 0,
+                note: $('#add_ghichu_kpDuTru').val()
+            };
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                save_loader.stopLoading();
+                return false;
+            }
+            var obj = new FormData();
+            obj.append('activity_office_id', id_edit_KP);
+            obj.append('activity_name', $('#detail_name').val());
+            obj.append('data', JSON.stringify(object));
+            let file = uppy1.getFiles();
+            if (file.length != 0) {
+                obj.append('img', uppy1.getFiles()[0].data)
+            } else {
+                obj.append('img', null);
+            }
+            $.ajax({
+                url: "@Url.Action("addExpenseDuTru", "DetailOfAcademicActivity")",
+                data: obj,
+                type: "POST",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        clearModal('#addModal_KPDuTru');
+                        $('#addModal_KPDuTru').modal('hide');
+                        var itemId = files[0].id;
+                        uppy1.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        if (typeof datatableKPDuTru != 'undefined') {
+                            datatableKPDuTru.ajax.reload();
+                        } else
+                            initDatatableKPDuTru();
+                    } else {
+                        var itemId = files[0].id;
+                        uppy1.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function (data) {
+                    var itemId = files[0].id;
+                    uppy1.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false
+            });
         });
         $('#btn_edit_kpDuTru').click(function () {
             toastr.success("Đã chỉnh sửa thành công");
@@ -2266,7 +2656,7 @@
             ]
             });
         }
-        $("#DongTochucDatatable").DataTable({
+        var DongTochucDatatable = $("#DongTochucDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2315,14 +2705,14 @@
                 {
                     data: "sponsor",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        return data != null ? data.toLocaleString('en') : null;
                     }
                 },
                 {
-                    data: "partner_id",
                     title : "Hành động",
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editDongToChuc(' + data +')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteDongToChuc('+data+')">Xóa</a>';
+                    render: function (data, type, row) {
+                        return `<a href="#editModal_DongToChuc" class="btn btn-sm px-6 mr-3 btn-light-primary" data-id=`+ row.activity_partner_id +` data-toggle="modal">Sửa</a>
+                                <a id="btn_delete_DongToChuc" class="btn btn-sm btn-light-danger px-6" data-id=`+ row.activity_partner_id+`>Xóa</a>`;
                     }
                 },
             ],
@@ -2357,10 +2747,7 @@
                 }
             });
         }
-        function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
-        }
-        $("#KinhPhiDatatable").DataTable({
+        var datatableKP = $("#KinhPhiDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2372,32 +2759,92 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+            ajax: {
+                url: "@Url.Action("getDatatableKP", "DetailOfAcademicActivity")",
+                type: "POST",
+                datatype: "json",
+                data: { activity_id: document.getElementById('activity_id').value },
+                cache: "false"
+            },
+            columns: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "office_name"
+                },
+                {
+                    data: "cp_du_tru",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "cp_dieu_chinh",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "cp_thuc_te",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "chenh_lech",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "activity_office_id",
+                    title: "Hành động",
                     render: function (data, type, full, meta) {
                         return '<div class="dropdown">' +
                             '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
                             '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
+                            //'<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi('+data+')">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(' + data + ')">KP dự trù</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(' + data + ')">KP điều chỉnh</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(' + data + ')">KP thực tế</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(' + data + ')">Xóa</a>' +
                             '</div>' +
-                            '</div>'
+                            '</div>';
                     }
-                },
+                }
+            ],
+            columnDefs: [
                 {
                     className: "text-center",
-                    targets: [0, -1],
-                }
-
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
         });
-        $("#KPDuTruDatatable").DataTable({
+        function initDatatableKPDuTru() {
+            datatableKPDuTru = $("#KPDuTruDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2409,18 +2856,68 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getDatatableKPDuTru", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { activity_office_id: id_edit_KP },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    className: "text-nowrap text-center",
-                    title: 'Hành động',
-                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "expense_category_name"
+                },
+                {
+                    data: "expense_price",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "expense_quantity"
+                },
+                {
+                    data: "total",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "note",
+                },
+                {
+                    data: "expense_category_id",
+                    title: "Hành động",
                     render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
                     }
                 }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
-        });
+            });
+        }
         $("#KPDieuChinhDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -2517,95 +3014,6 @@
             placeholder: 'Đơn vị tiền tệ',
             allowClear: true
         });
-        //var KTUppy = function () {
-        //    const Tus = Uppy.Tus;
-        //    const ProgressBar = Uppy.ProgressBar;
-        //    const StatusBar = Uppy.StatusBar;
-        //    const FileInput = Uppy.FileInput;
-        //    const Informer = Uppy.Informer;
-
-        //    const Dashboard = Uppy.Dashboard;
-        //    const Dropbox = Uppy.Dropbox;
-        //    const GoogleDrive = Uppy.GoogleDrive;
-        //    const Instagram = Uppy.Instagram;
-        //    const Webcam = Uppy.Webcam;
-
-        //    var initUppy5 = function (id) {
-        //        var elemId = id;
-        //        var id = '#' + elemId;
-        //        var $statusBar = $(id + ' .uppy-status');
-        //        var $uploadedList = $(id + ' .uppy-list');
-        //        var timeout;
-        //        var uppyMin = Uppy.Core({
-        //            debug: true,
-        //            autoProceed: false,
-        //            showProgressDetails: true,
-        //            restrictions: {
-        //                maxFileSize: 1000000, // 1mb
-        //                maxNumberOfFiles: 5,
-        //                minNumberOfFiles: 1
-        //            }
-        //        });
-        //        uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-        //        uppyMin.use(Informer, { target: id + ' .uppy-informer' });
-        //        // demo file upload server
-        //        uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-        //        uppyMin.use(StatusBar, {
-        //            target: id + ' .uppy-status',
-        //            hideUploadButton: true,
-        //            hideAfterFinish: false
-        //        });
-        //        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-        //        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
-        //        var $fileLabel = $(id + ' .uppy-input-label');
-        //        uppyMin.on('upload', function (data) {
-        //            $fileLabel.text("Uploading...");
-        //            $statusBar.addClass('uppy-status-ongoing');
-        //            $statusBar.removeClass('uppy-status-hidden');
-        //            clearTimeout(timeout);
-        //        });
-        //        uppyMin.on('complete', function (file) {
-        //            $.each(file.successful, function (index, value) {
-        //                var sizeLabel = "bytes";
-        //                var filesize = value.size;
-        //                if (filesize > 1024) {
-        //                    filesize = filesize / 1024;
-        //                    sizeLabel = "kb";
-        //                    if (filesize > 1024) {
-        //                        filesize = filesize / 1024;
-        //                        sizeLabel = "MB";
-        //                    }
-        //                }
-        //                var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-        //                $uploadedList.append(uploadListHtml);
-        //            });
-        //            $fileLabel.text("Add more files");
-        //            $statusBar.addClass('uppy-status-hidden');
-        //            $statusBar.removeClass('uppy-status-ongoing');
-        //        });
-        //        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-        //            var itemId = $(this).attr('data-id');
-        //            uppyMin.removeFile(itemId);
-        //            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-        //        });
-        //    }
-        //    return {
-        //        // public functions
-        //        init: function () {
-        //            initUppy5('edit_banmem_DongToChuc');
-        //            initUppy5('add_banmem_DongToChuc');
-        //            initUppy5('add_banmem_kpDuTru');
-        //            initUppy5('edit_banmem_kpDuTru');
-        //            initUppy5('add_banmem_kpDieuChinh');
-        //            initUppy5('edit_banmem_kpDieuChinh');
-        //            setTimeout(function () {
-        //            }, 2000);
-        //        }
-        //    };
-        //}();
-        //KTUtil.ready(function () {
-        //    KTUppy.init();
-        //});
         function initDetail() {
             arrIndexContent.forEach(function (x) {
                 $('#row-ckeditor-' + x).remove();
@@ -2733,6 +3141,82 @@
             });
             $(id).append(html);
         }
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
+
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 3145728, // 3mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.xlsx', '.xls', '.csv' ,'.pdf', 'image/*']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
@@ -2745,4 +3229,7 @@
             getOffice();
         });
     </script>
+    @*upload*@
+    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicActivity/uppy.js"></script>
 }

@@ -687,6 +687,10 @@
                 toastr.error("Thiếu thư xác nhận");
                 return false;
             }
+            if ($("#paper_name").val().trim() == "") {
+                toastr.error("Thiếu tên bài báo");
+                return false;
+            }
             fd.append('paper', uppy1.getFiles()[0].data)
             fd.append('invite', uppy2.getFiles()[0].data)
 
@@ -715,7 +719,6 @@
                 specialization_id: $("#specialization").val(),
                 ConferenceParticipant: {},
                 Cost: [],
-                Persons: {},
                 paper_name: $("#paper_name").val()
             }
             let ms = $(".selectPeople").select2('data')[0].id;
@@ -723,11 +726,9 @@
             if (ms == "" || name == "")
                 return;
             this.data.ConferenceParticipant = {
-                current_mssv_msnv: ms,
+                mssv_msnv: ms,
                 office_id: $(".selectOffice").val(),
                 title_id: $(".selectTitle").val(),
-            };
-            this.data.Persons = {
                 name: name,
                 email: $(".inputEmail").val(),
             };

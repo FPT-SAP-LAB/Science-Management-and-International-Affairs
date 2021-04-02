@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////TABLE 2 - PROGRAM - GOING///////////////////////////////////////////////////////////
 //table 3
-$("#collab_program_going_table").DataTable({
+var collab_program_going_table = $("#collab_program_going_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -34,7 +34,11 @@ $("#collab_program_going_table").DataTable({
             data: "partner_name",
             name: "partner_name"
         },
-        { data: "program_name", name: "program_name" },
+        {
+            data: "program_name",
+            name: "program_name",
+            className: 'text-center text-nowrap'
+        },
         {
             data: "full_name",
             name: "full_name",
@@ -60,8 +64,9 @@ $("#collab_program_going_table").DataTable({
             data: "program_id",
             name: "program_id",
             className: 'text-center text-nowrap',
-            render: function () {
-                return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+            render: function (data, type, row) {
+                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
             }
         },
     ],
@@ -77,8 +82,11 @@ $("#collab_program_going_table").DataTable({
     },
 });
 
+$('#collab_program_going_search_btn').click(function () {
+    collab_program_going_table.ajax.reload();
+})
 //table 4
-$("#collab_program_coming_table").DataTable({
+var collab_program_coming_table = $("#collab_program_coming_table").DataTable({
     oLanguage: {
         oPaginate: {
             sPrevious: "Trang trước",
@@ -136,8 +144,9 @@ $("#collab_program_coming_table").DataTable({
             data: "program_id",
             name: "program_id",
             className: 'text-center text-nowrap',
-            render: function () {
-                return '<a href="#edit_program" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 ck-init" style="margin-right: 10px;">Sửa</a><a href="#delete" onclick="parse_id(12)" class="btn btn-sm btn-light-danger px-6" data-toggle="modal">Xóa</a>'
+            render: function (data, type, row) {
+                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=2 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=2 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
             }
         },
     ],
@@ -152,3 +161,7 @@ $("#collab_program_coming_table").DataTable({
         $(this).parent().css('padding', '0');
     },
 });
+
+$('#collab_program_coming_search_btn').click(function () {
+    collab_program_coming_table.ajax.reload();
+})

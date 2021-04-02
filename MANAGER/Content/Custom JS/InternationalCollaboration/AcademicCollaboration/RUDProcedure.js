@@ -52,7 +52,7 @@ function load_procedure_detail(procedure_id) {
     procedure_id_load = procedure_id
     var id = { procedure_id: procedure_id }
     $.ajax({
-        url: '/AcademicCollaboration/LoadEdit',
+        url: '/AcademicCollaboration/LoadEditProcedure',
         type: 'post',
         dataType: 'json',
         data: id,
@@ -77,7 +77,8 @@ $('#edit_procedure_language').select2({
             "language_id": $('#edit_procedure_language').val()
         },
         success: function (data) {
-            $('#edit_summernote').summernote('code', data.content)
+            $('#edit_procedure_title').val(data.articleVersion.version_title)
+            $('#edit_summernote').summernote('code', data.articleVersion.article_content)
         },
         error: function () {
         }

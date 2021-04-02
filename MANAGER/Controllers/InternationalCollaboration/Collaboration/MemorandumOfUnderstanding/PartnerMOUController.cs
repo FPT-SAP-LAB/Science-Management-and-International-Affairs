@@ -52,11 +52,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                string nation_name = nation is null ? "" : nation;
-                string specialization_name = specialization is null ? "" : specialization;
-                List<ListMOUPartner> mouList = mou.listAllMOUPartner(partner_name, nation_name, specialization_name, int.Parse(id));
-                return Json(new { success = true, data = mouList }, JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    string nation_name = nation is null ? "" : nation;
+                    string specialization_name = specialization is null ? "" : specialization;
+                    List<ListMOUPartner> mouList = mou.listAllMOUPartner(partner_name, nation_name, specialization_name, int.Parse(id));
+                    return Json(new { success = true, data = mouList }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception)
             {
@@ -67,9 +74,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.addMOUPartner(input, int.Parse(id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.addMOUPartner(input, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -81,9 +95,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id);
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -95,9 +116,37 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                mou.deleteMOUPartner(int.Parse(id), mou_bonus_id);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.deleteMOUPartner(int.Parse(id), mou_bonus_id);
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult isLastPartnerMOU()
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    bool isLastPartner = mou.checkLastPartner(int.Parse(id));
+                    return Json(isLastPartner);
+                }
             }
             catch (Exception ex)
             {
@@ -109,9 +158,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["mou_detail_id"].ToString();
-                string partner = mou.CheckPartnerExistedInMOU(int.Parse(id), partner_name);
-                return Json(partner);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    string partner = mou.CheckPartnerExistedInMOU(int.Parse(id), partner_name);
+                    return Json(partner);
+                }
             }
             catch (Exception ex)
             {
@@ -129,6 +185,40 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOAPartnerExistedInMOU(int mou_partner_id)
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    bool isExisted = mou.CheckMOAPartnerExistedInMOU(mou_partner_id);
+                    return Json(isExisted);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOUBonusExisted(int mou_partner_id)
+        {
+            try
+            {
+                bool isInvalid = mou.IsMOUBonusExisted(mou_partner_id);
+                return Json(isInvalid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }

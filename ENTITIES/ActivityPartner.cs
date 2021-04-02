@@ -19,12 +19,16 @@ namespace ENTITIES
         public string contact_point_name { get; set; }
         public string contact_point_email { get; set; }
         public string contact_point_phone { get; set; }
-        public string evidence { get; set; }
         public Nullable<System.DateTime> cooperation_date_start { get; set; }
         public Nullable<System.DateTime> cooperation_date_end { get; set; }
         public int activity_id { get; set; }
-        public Nullable<int> partner_scope_id { get; set; }
+        public int partner_scope_id { get; set; }
+        public Nullable<int> file_id { get; set; }
+        public int account_id { get; set; }
+        public System.DateTime add_time { get; set; }
     
+        public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
         public virtual PartnerScope PartnerScope { get; set; }
         public virtual AcademicActivity AcademicActivity { get; set; }
     }

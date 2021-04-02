@@ -46,10 +46,14 @@ namespace MANAGER.Controllers
             List<PaperType> listType = mdr.getPaperType();
             ViewBag.type = listType;
 
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
+            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, "vi-VN");
             ViewBag.author = listAuthor;
 
             ViewBag.request_id = paper.request_id;
+
+            Author p = pr.getAuthorReceived_all(id);
+            if (p == null) p = new Author();
+            ViewBag.p = p;
 
             return View();
         }
@@ -67,16 +71,17 @@ namespace MANAGER.Controllers
             return View();
         }
 
-        public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people)
+        public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             foreach (var item in people)
             {
                 string temp = item.money_string;
-                temp = temp.Replace(",", "");
+                if (temp == null) temp = "0";
+                else temp = temp.Replace(",", "");
                 item.money_reward = Int32.Parse(temp);
             }
             string mess = pr.updateRewardPaper(paper);
-            if (mess == "ss") mess = pr.updateAuthorReward(paper, people);
+            if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -97,7 +102,7 @@ namespace MANAGER.Controllers
             Paper_Appendix_1 temp = new Paper_Appendix_1();
             foreach (var item in list1)
             {
-                if (item.author_name != temp.author_name)
+                if (item.author_name != temp.author_name && item.mssv_msnv != temp.mssv_msnv)
                 {
                     excelWorksheet1.Cells[i, 1].Value = count;
                     excelWorksheet1.Cells[i, 2].Value = item.author_name;
@@ -120,7 +125,7 @@ namespace MANAGER.Controllers
             Paper_Appendix_1 temp2 = new Paper_Appendix_1();
             foreach (var item in list2)
             {
-                if (item.author_name != temp2.author_name)
+                if (item.author_name != temp2.author_name && item.mssv_msnv != temp.mssv_msnv)
                 {
                     excelWorksheet2.Cells[i, 1].Value = count;
                     excelWorksheet2.Cells[i, 2].Value = item.author_name;

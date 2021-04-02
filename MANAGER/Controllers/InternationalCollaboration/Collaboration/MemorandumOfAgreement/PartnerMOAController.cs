@@ -26,11 +26,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                string nation_name = nation is null ? "" : nation;
-                string specialization_name = specialization is null ? "" : specialization;
-                List<ListMOAPartner> moaList = moa.listAllMOAPartner(partner_name, nation_name, specialization_name, int.Parse(id));
-                return Json(new { success = true, data = moaList }, JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    string nation_name = nation is null ? "" : nation;
+                    string specialization_name = specialization is null ? "" : specialization;
+                    List<ListMOAPartner> moaList = moa.listAllMOAPartner(partner_name, nation_name, specialization_name, int.Parse(id));
+                    return Json(new { success = true, data = moaList }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception)
             {
@@ -55,9 +62,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.deleteMOAPartner(int.Parse(id), moa_partner_id);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    moa.deleteMOAPartner(int.Parse(id), moa_partner_id);
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -69,9 +83,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.addMOAPartner(input, int.Parse(id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    moa.addMOAPartner(input, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -84,9 +105,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string id = Session["moa_detail_id"].ToString();
-                moa.editMOAPartner(input, int.Parse(id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    moa.editMOAPartner(input, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -113,14 +141,57 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string moa_id = Session["moa_detail_id"].ToString();
-                string mou_id = Session["mou_detail_id"].ToString();
-                List<CollaborationScope> scopeList = moa.getMOAScope(int.Parse(moa_id), partner_id, int.Parse(mou_id));
-                return Json(scopeList);
+                if (Session["moa_detail_id"] is null || Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string moa_id = Session["moa_detail_id"].ToString();
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    List<CollaborationScope> scopeList = moa.getMOAScope(int.Parse(moa_id), partner_id, int.Parse(mou_id));
+                    return Json(scopeList);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOAPartner(int partner_id, string start_date_string)
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    bool isInvalid = moa.MOAPartnerDateIsInvalid(int.Parse(mou_id), partner_id, start_date_string);
+                    return Json(isInvalid);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                //return Json("", JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckMOABonusExisted(int moa_partner_id)
+        {
+            try
+            {
+                bool isInvalid = moa.IsMOABonusExisted(moa_partner_id);
+                return Json(isInvalid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }

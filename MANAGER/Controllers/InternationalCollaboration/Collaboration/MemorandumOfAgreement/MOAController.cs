@@ -21,24 +21,38 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
-            string moa_id = Session["moa_detail_id"].ToString();
-            string mou_id = Session["mou_detail_id"].ToString();
-            //ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
-            ViewBag.partnerList = moa_detail.getPartnerExMOA(int.Parse(moa_id));
-            ViewBag.newExMOACode = moa_detail.getNewExMOACode(int.Parse(moa_id));
+            if (Session["mou_detail_id"] is null || Session["moa_detail_id"] is null)
+            {
+                return Redirect("../MOU/List");
+            }
+            else
+            {
+                string moa_id = Session["moa_detail_id"].ToString();
+                string mou_id = Session["mou_detail_id"].ToString();
+                //ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
+                ViewBag.partnerList = moa_detail.getPartnerExMOA(int.Parse(moa_id));
+                ViewBag.newExMOACode = moa_detail.getNewExMOACode(int.Parse(moa_id));
 
-            ////MOA Partner
-            ViewBag.listScopesMOAPartner = moa_partner.getPartnerMOAScope(int.Parse(moa_id), int.Parse(mou_id));
-            ViewBag.listPartnerMOAPartner = moa_partner.getPartnerMOA(int.Parse(mou_id));
-            return View();
+                ////MOA Partner
+                ViewBag.listScopesMOAPartner = moa_partner.getPartnerMOAScope(int.Parse(moa_id), int.Parse(mou_id));
+                ViewBag.listPartnerMOAPartner = moa_partner.getPartnerMOA(int.Parse(mou_id));
+                return View();
+            }
         }
         public ActionResult ViewMOA(string partner_name, string moa_code)
         {
             try
             {
-                string mou_id = Session["mou_detail_id"].ToString();
-                List<ListMOA> listMOA = moa.listAllMOA(partner_name, moa_code, mou_id);
-                return Json(new { success = true, data = listMOA }, JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    List<ListMOA> listMOA = moa.listAllMOA(partner_name, moa_code, mou_id);
+                    return Json(new { success = true, data = listMOA }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -50,22 +64,36 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         {
             try
             {
-                string mou_id = Session["mou_detail_id"].ToString();
-                CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_id);
-                return partner is null ? Json("") : Json(partner);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    CustomPartnerMOA partner = moa.CheckPartner(int.Parse(mou_id), partner_id);
+                    return partner is null ? Json("") : Json(partner);
+                }
             }
             catch (Exception)
             {
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult GetMOAScopesByPartner(string partner_name)
+        public ActionResult GetMOAScopesByPartner(int partner_id)
         {
             try
             {
-                string mou_id = Session["mou_detail_id"].ToString();
-                List<CustomScopesMOA> scopeList = moa.getMOAScope(int.Parse(mou_id), partner_name);
-                return Json(scopeList);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    List<CustomScopesMOA> scopeList = moa.getMOAScope(int.Parse(mou_id), partner_id);
+                    return Json(scopeList);
+                }
             }
             catch (Exception ex)
             {
@@ -89,14 +117,34 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         {
             try
             {
-                string mou_id = Session["mou_detail_id"].ToString();
-                moa.addMOA(input, int.Parse(mou_id));
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    moa.addMOA(input, int.Parse(mou_id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult CheckDuplicatedMOACode(string moa_code)
+        {
+            try
+            {
+                bool isDup = moa.getMOACodeCheck(moa_code);
+                return Json(isDup);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
             }
         }
     }

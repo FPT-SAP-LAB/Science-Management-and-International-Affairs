@@ -18,7 +18,6 @@ namespace ENTITIES
         public Profile()
         {
             this.Awards = new HashSet<Award>();
-            this.ConferenceParticipants = new HashSet<ConferenceParticipant>();
             this.CustomProfiles = new HashSet<CustomProfile>();
             this.PeoplePositions = new HashSet<PeoplePosition>();
             this.ProfileAcademicDegrees = new HashSet<ProfileAcademicDegree>();
@@ -56,8 +55,6 @@ namespace ENTITIES
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Award> Awards { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomProfile> CustomProfiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

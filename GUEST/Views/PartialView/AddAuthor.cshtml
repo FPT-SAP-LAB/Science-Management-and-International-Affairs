@@ -48,6 +48,13 @@
         </select>
     </div>
     <div class="col-xl-6 form-group">
+        <label class="required-field">@rm.GetString("isReseacher")</label>
+        <label class="checkbox">
+            <input class="form-control" type="checkbox" name="Checkboxes1" id="add_author_isReseacher" />
+            <span></span>
+        </label>
+    </div>
+    <div class="col-xl-6 form-group">
         <label class="required-field">@rm.GetString("ContractType")</label>
         <select class="form-control select-custom edit input_fe" id="add_author_contractType" name="param" style="width: 100% !important">
             <option disabled selected></option>
@@ -65,8 +72,8 @@
     </div>
     <!--<div class="col-xl-6 form-group" id="upCM">
         <label class="required-field">@rm.GetString("CMND") File</label>-->
-        @*<button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>*@
-        <!--<div class="col-lg-6">
+    @*<button class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control editfe edit">Upload</button>*@
+    <!--<div class="col-lg-6">
             <div class="uppy" id="kt_uppy_5">
                 <div class="uppy-wrapper"></div>
                 <div class="uppy-list"></div>
@@ -113,10 +120,11 @@
         });
         $("#add_author_msnv").on("select2:select", function (e) {
             var AddAuthor = {
-            mssv_msnv: $("#add_author_msnv").val()
-            }
+                mssv_msnv: $("#add_author_msnv").val()
+            };
+            console.log(AddAuthor);
             $.ajax({
-                url: "@Url.Action("fillData", "PartialView")",
+                url: "@Url.Action("fillDataAdd", "PartialView")",
                 type: "POST",
                 data: JSON.stringify(AddAuthor),
                 contentType: "application/json;charset=utf-8",
@@ -136,6 +144,7 @@
                     $("#add_author_bank").val(author.bank_branch);
                     $("#add_author_accno").val(author.bank_number);
                     $("#add_author_mail").val(author.email);
+                    $("#add_author_isReseacher").prop("checked", author.is_reseacher);
                     $("#add_author_reward").prop('disabled', true);
                 },
                 error: function () {

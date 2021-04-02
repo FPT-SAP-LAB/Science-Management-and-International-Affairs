@@ -168,21 +168,28 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN GHI NHỚ";
-                string id = Session["mou_detail_id"].ToString();
-                List<ENTITIES.Partner> partnerList = mou_detail.getPartnerExMOU(int.Parse(id));
-                List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
-                ViewBag.scopeList = scopeList;
-                ViewBag.partnerList = partnerList;
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    List<ENTITIES.Partner> partnerList = mou_detail.getPartnerExMOU(int.Parse(id));
+                    List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
+                    ViewBag.scopeList = scopeList;
+                    ViewBag.partnerList = partnerList;
 
-                //MOU Partner
-                ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
-                ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
-                ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+                    //MOU Partner
+                    ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
+                    ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
+                    ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
 
-                //MOA
-                ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
-                ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
-                return View();
+                    //MOA
+                    ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
+                    ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
+                    return View();
+                }
             }
             catch (Exception ex)
             {
@@ -209,6 +216,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 bool isDup = mou.getMOUCodeCheck(mou_code);
                 return Json(isDup);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date)
+        {
+            try
+            {
+                IntersectPeriodMOUDate obj = mou.checkIntersectPeriodMOUDate(PartnerInfo, start_date, end_date);
+                return Json(obj);
             }
             catch (Exception ex)
             {

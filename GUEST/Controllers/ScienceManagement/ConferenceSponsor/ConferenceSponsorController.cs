@@ -114,6 +114,16 @@ namespace GUEST.Controllers
             ViewBag.output = output;
             return View();
         }
+        [AjaxOnly]
+        public JsonResult UpdateCost(int request_id, List<Cost> costs)
+        {
+            CostRepo costRepo = new CostRepo();
+            int Times = costRepo.Update(request_id, CurrentAccount.AccountID(Session), costs);
+            if (Times == 0)
+                return Json(new { success = false, message = "Có lỗi xảy ra" });
+            else
+                return Json(new { success = true });
+        }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)
         {

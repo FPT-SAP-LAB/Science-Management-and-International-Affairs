@@ -8,7 +8,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaboration
 {
     public class AcademicCollaborationPerson_Ext : Person
     {
-        public int office_id { get; set; }
         public string office_name { get; set; }
         public string mssv_msnv { get; set; }
     }
