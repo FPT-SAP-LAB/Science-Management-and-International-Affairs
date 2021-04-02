@@ -434,8 +434,36 @@
                     @if (ConferenceDetail.StatusID == 2)
                     {
                         <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success" onclick="SubmitCost()">Xét duyệt</button>
+                            <div class="dropdown dropdown-inline">
+                                <!-- Button trigger modal-->
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#costModal">
+                                    Xét duyệt
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal-->
+                        <div class="modal fade" id="costModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Xét duyệt chi phí</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Bình luận: </label>
+                                            <input type="text" class="form-control" id="commentCost" placeholder="Bình luận trên quy trình phê duyệt" />
+                                            <span class="form-text text-muted">Không bắt buộc</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy</button>
+                                        <button type="button" onclick="SubmitCost()" class="btn btn-primary font-weight-bold">Xác nhận</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
@@ -527,6 +555,32 @@
         </div>
     </div>
 </div>
+
+<!--begin::Sticky Toolbar-->
+<ul class="sticky-toolbar nav flex-column pl-2 pr-2 pt-3 pb-3 mt-4">
+    <!--begin::Item-->
+    <li class="nav-item mb-2" id="kt_demo_panel_toggle" data-toggle="tooltip" title="In trang này" data-placement="right">
+        <a class="btn btn-sm btn-icon btn-bg-light btn-icon-success btn-hover-success" onclick="window.print()">
+            <i class="flaticon2-printer"></i>
+        </a>
+    </li>
+    <!--end::Item-->
+    <!--begin::Item-->
+    <li class="nav-item mb-2" data-toggle="tooltip" title="Layout Builder" data-placement="left">
+        <a class="btn btn-sm btn-icon btn-bg-light btn-icon-primary btn-hover-primary" href="https://preview.keenthemes.com/metronic/preview/demo2/builder.html" target="_blank">
+            <i class="flaticon2-gear"></i>
+        </a>
+    </li>
+    <!--end::Item-->
+    <!--begin::Item-->
+    <li class="nav-item mb-2" data-toggle="tooltip" title="Documentation" data-placement="left">
+        <a class="btn btn-sm btn-icon btn-bg-light btn-icon-warning btn-hover-warning" href="https://keenthemes.com/metronic/?page=docs" target="_blank">
+            <i class="flaticon2-telegram-logo"></i>
+        </a>
+    </li>
+    <!--end::Item-->
+</ul>
+<!--end::Sticky Toolbar-->
 
 @section scripts {
     @*cập nhật quyết định*@
@@ -704,7 +758,7 @@
                 if ($("#ExpectedCostChild1 input[type='checkbox']")[i].checked)
                     costs.push($("#ExpectedCostChild1 input[type='checkbox']")[i].dataset.id);
             }
-            createAndSubmitForm("/ConferenceSponsor/UpdateCosts", JSON.stringify(costs))
+            createAndSubmitForm("/ConferenceSponsor/UpdateCosts", JSON.stringify(costs), $("#commentCost").val())
         }
 
         function SubmitReimbursement() {

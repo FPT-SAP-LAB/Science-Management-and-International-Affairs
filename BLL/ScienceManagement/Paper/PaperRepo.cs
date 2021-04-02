@@ -259,7 +259,7 @@ namespace BLL.ScienceManagement.Paper
                             name = item.name,
                             email = item.email
                         };
-                        if(item.office_id != 0)
+                        if (item.office_id != 0)
                         {
                             author.office_id = item.office_id;
                             author.bank_number = item.bank_number;
