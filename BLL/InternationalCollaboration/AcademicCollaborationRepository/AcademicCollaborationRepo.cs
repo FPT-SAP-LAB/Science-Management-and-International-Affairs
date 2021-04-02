@@ -404,7 +404,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 ||
                                                                 (x.plan_study_start_date <= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
                                                                 ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date))).FirstOrDefault();
+                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                                ||
+                                                                (x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
                     if (academicCollaboration != null)
                     {
                         return false;
