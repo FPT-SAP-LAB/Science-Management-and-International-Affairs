@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ENTITIES.CustomModels;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
@@ -90,6 +93,53 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 return new List<infoExpenseEstimate>();
+            }
+        }
+        public bool addExpenseDuTru(int activity_office_id, string activity_name, infoExpenseEstimate data, HttpPostedFileBase img)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ActivityExpenseCategory aec = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
+                    {
+                        activity_office_id = activity_office_id,
+                        expense_category_name = data.expense_category_name
+                    });
+                    db.SaveChanges();
+                    ActivityExpenseDetail aed = db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
+                    {
+                        expense_type_id = 1,
+                        note = data.note,
+                        expense_price = data.expense_price,
+                        expense_quantity = data.expense_quantity,
+                        expense_category_id = aec.expense_category_id
+                    });
+                    db.SaveChanges();
+                    string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
+                                    inner join SMIA_AcademicActivity.ActivityOffice ao on aa.activity_id = ao.activity_id
+                                    where ao.activity_office_id = @activity_office_id";
+                    int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
+                    if (img != null)
+                    {
+                        Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trụ - " + data.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
+                        File file = new File();
+                        file.name = img.FileName;
+                        file.link = f.WebViewLink;
+                        file.file_drive_id = f.Id;
+                        File ff = db.Files.Add(file);
+                        db.SaveChanges();
+                        aed.file_id = ff.file_id;
+                        db.Entry(aed).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }catch(Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
             }
         }
         public class infoExpense

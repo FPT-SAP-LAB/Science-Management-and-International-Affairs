@@ -234,6 +234,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     db.SaveChanges();
                     ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
+                    File f = db.Files.Find(aa.file_id);
+                    if(f != null)
+                    {
+                        GoogleDriveService.DeleteFile(f.file_drive_id);
+                    }
+                    db.SaveChanges();
                     db.AcademicActivities.Remove(aa);
                     db.SaveChanges();
                     transaction.Commit();
