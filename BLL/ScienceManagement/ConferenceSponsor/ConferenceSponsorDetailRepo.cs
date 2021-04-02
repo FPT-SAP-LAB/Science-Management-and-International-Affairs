@@ -184,8 +184,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 try
                 {
                     var CostIDs = JsonConvert.DeserializeObject<List<int>>(costs);
-                    if (CostIDs.Count == 0)
-                        return new AlertModal<string>(true);
 
                     var Request = db.RequestConferences.Find(request_id);
                     if (Request == null)
