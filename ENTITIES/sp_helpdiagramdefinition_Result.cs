@@ -10,15 +10,10 @@
 namespace ENTITIES
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class AuthorInvention
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int people_id { get; set; }
-        public int invention_id { get; set; }
-        public Nullable<int> money_reward { get; set; }
-    
-        public virtual Author Author { get; set; }
-        public virtual Invention Invention { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

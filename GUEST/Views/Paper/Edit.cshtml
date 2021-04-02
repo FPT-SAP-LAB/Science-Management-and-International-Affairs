@@ -142,6 +142,7 @@
                     <div class="row justify-content-center">
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
                         <button class="btn btn-light-success px-6 font-weight-bold edit ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
+                        <a target="_blank" class="btn btn-light-success px-6 font-weight-bold ml-1" id="view_decision">Xem quyết định thưởng của bài báo</a>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
                     <div>
@@ -242,7 +243,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    editCriteria();
+                    $("#loading").hide();
+                    $("#nameEdit").val(response.id);
+                    $("#ckEdit").val(3);
+                    $("#PaperForm").submit();
                 },
                 error: function () {
                     //alert("fail");
@@ -293,10 +297,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        $("#loading").hide();
-                        $("#nameEdit").val(response.id);
-                        $("#ckEdit").val(3);
-                        $("#PaperForm").submit();
+                        editRequest();
                     }
                     //addCriteria();
                 },
@@ -377,7 +378,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        editRequest();
+                        editCriteria();
                     }
                     else alert('loi');
                 },
@@ -393,6 +394,25 @@
                 $("#add_author_btn").prop("disabled", true);
             }
             else $(".edit").prop("disabled", false);
+
+            if (ck == "2" || ck == "6") {
+                $("#view_decision").show();
+                $.ajax({
+                    url: "@Url.Action("getDecision", "Paper")",
+                    type: "post",
+                    data: { 'id': paper_id },
+                    cache: false,
+                    success: function (data) {
+                        var a = document.getElementById('view_decision');
+                        a.href = data.link;
+                        //$("#view_decision").href("")
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+            else $("#view_decision").hide();
 
             var paper_type = "@ViewBag.Paper.paper_type_id";
             $("#paper_type").val(paper_type);
@@ -412,7 +432,10 @@
             $("#loaithuong").trigger('change');
 
             var kieuthuong = "@ViewBag.Paper.reward_type";
-            if (kieuthuong == "Quydinh") $("#kieuthuong").val("Quydinh");
+            if (kieuthuong == "Quydinh") {
+                $("#kieuthuong").val("Quydinh");
+                $("#block_daidien").hide();
+            }
             if (kieuthuong == "Canhan") $("#kieuthuong").val("Canhan");
             $("#kieuthuong").trigger('change');
 
@@ -487,11 +510,11 @@
                         $("#edit_submit_reward").prop("disabled", false);
                     }
                     for (var i = 0; i < people.length; i++) {
-                        if (people.money_string != "0") {
+                        if (people[i].money_string != "0") {
                             $(".add_author_reward_edit").prop("disabled", true);
                             $("#edit_submit_reward").prop("disabled", true);
                         } else {
-                            $(".add_author_reward_edit").prop("disabled", false);
+                            //$(".add_author_reward_edit").prop("disabled", false);
                             $("#edit_submit_reward").prop("disabled", false);
                             return false;
                         }

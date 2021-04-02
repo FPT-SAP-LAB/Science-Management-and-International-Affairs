@@ -36,5 +36,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public int Reimbursement { get; set; }
         public int SpecializationID { get; set; }
         public string SpecializationName { get; set; }
+        public int AccountID { get; set; }
     }
 }
