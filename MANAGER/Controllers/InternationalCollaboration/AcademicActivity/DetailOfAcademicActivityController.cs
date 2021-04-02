@@ -280,10 +280,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(new { success = true, data = data });
         }
         [HttpPost]
-        public JsonResult addExpenseDuTru(int activity_office_id,string activity_name,AcademicActivityExpenseRepo.infoExpenseEstimate data, HttpPostedFileBase img)
+        public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, AcademicActivityExpenseRepo.infoExpenseEstimate data, HttpPostedFileBase img)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.addExpenseDuTru(activity_office_id,activity_name, data,img);
+            bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
             if (res)
                 return Json("Thêm mục kinh phí dự trù thành công");
             return Json(String.Empty);

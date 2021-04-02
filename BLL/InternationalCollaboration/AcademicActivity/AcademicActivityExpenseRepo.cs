@@ -135,7 +135,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
