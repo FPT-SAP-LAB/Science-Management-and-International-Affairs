@@ -537,7 +537,6 @@
         });
     }
     return {
-        // public functions
         init: function () {
             initUppy1();
             initUppy2();
