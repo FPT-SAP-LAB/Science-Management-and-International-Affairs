@@ -166,5 +166,12 @@ namespace GUEST.Controllers
             string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult getDecision(int id)
+        {
+            string link = pr.getDecisionLink(id);
+            return Json(new { link = link }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
