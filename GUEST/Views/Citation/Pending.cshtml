@@ -74,7 +74,7 @@
                 language: {
                     'lengthMenu': 'Display _MENU_',
                 },
-                order: [[3, 'asc'], [2, 'desc']],
+                order: [[2, 'desc']],
                 columns: [
                     { width: "30%" },
                     { width: "25%" },
@@ -106,6 +106,10 @@
                                 5: {
                                     'title': 'Cần chỉnh sửa',
                                     'class': 'label label-warning label-pill label-inline mr-2'
+                                },
+                                6: {
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
