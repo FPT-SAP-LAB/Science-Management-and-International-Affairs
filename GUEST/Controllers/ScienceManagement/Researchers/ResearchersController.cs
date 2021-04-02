@@ -54,7 +54,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             datatable.Start = (int)requestJson["request"]["length"];
             BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable);
             ViewBag.list = list;
-            return Json(new { list = list });
+            return Json(new { list });
         }
         public ActionResult ViewInfo()
         {
