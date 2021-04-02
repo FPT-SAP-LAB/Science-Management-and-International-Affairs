@@ -129,7 +129,7 @@ namespace GUEST.Controllers
         public JsonResult editRequest(RequestPaper item)
         {
             string mess = pr.updateRequest(item);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id  = item.paper_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
