@@ -1,14 +1,7 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.ConferenceSponsor;
-using ENTITIES;
+﻿using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -85,7 +78,12 @@ namespace MANAGER.Controllers
         [HttpGet]
         public ActionResult ExportRequest(int request_id)
         {
-            return View();
+            ConferenceSponsorExportRepo exportRepo = new ConferenceSponsorExportRepo();
+            byte[] Word = exportRepo.ExportRequest(request_id);
+            if (Word == null)
+                return Redirect("/ConferenceSponsor");
+            else
+                return File(Word, "application/vnd.ms-word", "Đơn-đề-nghị-hỗ-trợ-HNKH.docx");
         }
         [HttpGet]
         public ActionResult ExportAppointment(int request_id)
