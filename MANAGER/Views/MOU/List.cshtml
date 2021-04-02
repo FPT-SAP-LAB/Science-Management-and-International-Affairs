@@ -335,7 +335,11 @@
 <script>
         $('#search_office').select2({
             placeholder: 'Chọn cơ sở',
-            allowClear: true,
+            allowClear: false,
+        });
+        $('#status_mou').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
         });
         $('#partner_name_add').select2({
             placeholder: 'Chọn đối tác',
@@ -1156,7 +1160,7 @@
             var link = '@Url.Action("Delete_MOU", "MOU")'
             Swal.fire({
                 title: "Xác nhận xóa?",
-                text: "Dữ liệu sẽ bị xóa và không thể khôi phục!",
+                text: "Toàn bộ dữ liệu trong biên bản ghi nhớ sẽ bị xóa và không thể khôi phục!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Đồng ý",

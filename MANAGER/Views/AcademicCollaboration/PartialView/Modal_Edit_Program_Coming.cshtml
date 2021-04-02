@@ -1,5 +1,5 @@
 ﻿
-<div class="modal fade in modal-add-program" id="add_program_coming" aria-hidden="true">
+<div class="modal fade in modal-edit-program" id="edit_program_coming" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
@@ -10,7 +10,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                         <label class="font-weight-bolder">Tiêu đề</label>
                         <label style="color: red">*</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_program_title_coming" />
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_program_title_coming" />
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 mb-4">
                         <label class="font-weight-bolder">Thời hạn đăng ký</label>
@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <input type='text' class="form-control kt_daterangepicker_1"
-                                       id="add_program_range_date_coming" readonly
+                                       id="edit_program_range_date_coming" readonly
                                        placeholder="Từ ngày - Đến ngày" />
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                         <label class="font-weight-bolder">Ngôn ngữ</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center program_language" id="add_program_language_coming" name="param" style="width:100% !important">
+                            <select class="form-control text-center program_language" id="edit_program_language_coming" name="param" style="width:100% !important">
                                 <option value="1" selected>Tiếng Việt</option>
                                 <option value="2">English</option>
                             </select>
@@ -34,17 +34,17 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                         <label class="font-weight-bolder">Ghi chú</label>
-                        <textarea class="form-control" autocomplete="off" id="add_note_coming"></textarea>
+                        <textarea class="form-control" autocomplete="off" id="edit_note_coming"></textarea>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <label class="font-weight-bolder">Nội dung</label>
-                        <div class="summernote" id="add_summernote_coming"></div>
+                        <div class="summernote" id="edit_summernote_coming"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="load-btn btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" class="load-btn btn btn-sm btn-light-success add_program_btn">Lưu</button>
+                <button type="button" class="load-btn btn btn-sm btn-light-success edit_program_btn">Lưu</button>
             </div>
         </div>
     </div>

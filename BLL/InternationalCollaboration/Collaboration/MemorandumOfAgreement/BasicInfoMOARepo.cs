@@ -418,7 +418,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public ExMOAAdd getExtraMOADetail(int moa_id, int moa_bonus_id)
+        public ExMOAAdd getExtraMOADetail(int moa_id, int moa_bonus_id, int mou_id)
         {
             try
             {
@@ -439,6 +439,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     , new SqlParameter("moa_id", moa_id)
                     , new SqlParameter("moa_bonus_id", moa_bonus_id)).ToList();
                 ExMOAAdd moaEx = handlingExMOADetailData(moaExList);
+                if (moaEx.PartnerScopeInfoMOA != null)
+                {
+                    foreach (PartnerScopeInfoMOA item in moaEx.PartnerScopeInfoMOA.ToList())
+                    {
+                        item.total_scopes = new List<CollaborationScope>();
+                        item.total_scopes = GetScopesExMOA(moa_id, mou_id, item.partner_id);
+                    }
+                }
                 return moaEx;
             }
             catch (Exception ex)

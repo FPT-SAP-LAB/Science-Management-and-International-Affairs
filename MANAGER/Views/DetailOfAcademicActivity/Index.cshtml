@@ -168,9 +168,9 @@
                         <tr class="text-center">
                             <th rowspan="2">STT</th>
                             <th rowspan="2">Đơn vị</th>
-                            <th colspan="2">Kinh phí dự trù</th>
-                            <th rowspan="2">Kinh phí thực tế</th>
-                            <th rowspan="2">Chênh lệch</th>
+                            <th colspan="2">Kinh phí dự trù (VNĐ)</th>
+                            <th rowspan="2">Kinh phí thực tế (VNĐ)</th>
+                            <th rowspan="2">Chênh lệch (VNĐ)</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr>
@@ -873,10 +873,6 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="add_ghichu_kinhphi" class="form-control"></textarea>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1346,6 +1342,7 @@
         let id_edit_tu_cach = 0;
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
+        var datatableKPDuTru;
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
                 myDate = new Date(correctFormat);
@@ -1724,19 +1721,9 @@
                 }
             });
         });
-
-        function KPDuTru(id) {
-            id_edit_KP = id;
-            $('#KPDuTruModal').modal('show');
-        }
-        function editKinhPhi(id) {
-            id_edit_KP = id;
-            $('#editModal_KinhPhi').modal('show');
-        }
         function deleteKinhPhi(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa kinh phí đơn vị này không ?",
+                title: "Bạn có muốn xóa mục kinh phí này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1745,13 +1732,30 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpense", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_office_id: id }),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatableKP.ajax.reload();
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        }
+                    });
                 }
             });
+        }
+        function KPDuTru(id) {
+            id_edit_KP = id;
+            if (typeof datatableKPDuTru != 'undefined') {
+                datatabledKPDuTru.ajax.reload();
+            } else
+                initDatatableKPDuTru();
+            $('#KPDuTruModal').modal('show');
         }
         function deleteKinhPhiDuTru(id) {
             id_delete_KP = id;
@@ -2435,7 +2439,6 @@
         });
         $('#btn_add_kinhphi').click(function () {
             var object = {
-                expense_category_name: '',
                 activity_id: $('#activity_id').val(),
                 office_id: $('#add_donvi_kinhphi').val()
             };
@@ -2445,11 +2448,13 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data != '') {
+                    if (data == 'Thêm mục kinh phí thành công.') {
                         toastr.success(data);
                         clearModal('#addModal_KinhPhi');
                         datatableKP.ajax.reload();
-                    } else {
+                    } else if (data == 'Không thể thêm đơn vị đã tồn tại.'){
+                        toastr.warning(data);
+                    }else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
                 },
@@ -2692,13 +2697,13 @@
             },
             "searching": false,
             "lengthChange": false,
-             ajax: {
-                 url: "@Url.Action("getDatatableKP", "DetailOfAcademicActivity")",
-                 type: "POST",
-                 datatype: "json",
-                 data: { activity_id: document.getElementById('activity_id').value },
-                 cache: "false"
-                },
+            ajax: {
+                url: "@Url.Action("getDatatableKP", "DetailOfAcademicActivity")",
+                type: "POST",
+                datatype: "json",
+                data: { activity_id: document.getElementById('activity_id').value },
+                cache: "false"
+            },
             columns: [
                 {
                     render: function (data, type, row, meta) {
@@ -2711,40 +2716,56 @@
                 {
                     data: "cp_du_tru",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
                     }
                 },
                 {
                     data: "cp_dieu_chinh",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
                     }
                 },
                 {
                     data: "cp_thuc_te",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
                     }
                 },
                 {
                     data: "chenh_lech",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
                     }
                 },
                 {
-                    data: "expense_category_id",
+                    data: "activity_office_id",
                     title: "Hành động",
                     render: function (data, type, full, meta) {
                         return '<div class="dropdown">' +
-                                '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
-                                '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                                '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
-                                '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
-                                '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
-                                '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
-                                '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
-                                '</div>' +
+                            '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            //'<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi('+data+')">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(' + data + ')">KP dự trù</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(' + data + ')">KP điều chỉnh</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(' + data + ')">KP thực tế</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(' + data + ')">Xóa</a>' +
+                            '</div>' +
                             '</div>';
                     }
                 }
@@ -2760,7 +2781,8 @@
                 },
             ]
         });
-        $("#KPDuTruDatatable").DataTable({
+        function initDatatableKPDuTru() {
+            datatableKPDuTru = $("#KPDuTruDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2772,18 +2794,68 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getDatatableKPDuTru", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { activity_office_id: id_edit_KP },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    className: "text-nowrap text-center",
-                    title: 'Hành động',
-                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "expense_category_name"
+                },
+                {
+                    data: "expense_price",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "expense_quantity"
+                },
+                {
+                    data: "total",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "note",
+                },
+                {
+                    data: "expense_category_id",
+                    title: "Hành động",
                     render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
                     }
                 }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
-        });
+            });
+        }
         $("#KPDieuChinhDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
