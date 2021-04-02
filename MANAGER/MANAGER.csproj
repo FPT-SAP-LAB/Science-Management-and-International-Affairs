@@ -2132,6 +2132,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom JS\Citation.js" />
+    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\Program_Edit.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\Program_Add.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\RUDProgram.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicActivity\uppy.js" />
@@ -2377,6 +2378,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Coming_Modal_Description.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Status_History.cshtml" />
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
+    <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2388,7 +2390,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
-    <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />

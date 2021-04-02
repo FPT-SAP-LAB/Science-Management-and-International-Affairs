@@ -328,10 +328,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                     }
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -391,6 +387,71 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
+                    //delete partner_scope_id 
+                    //delete from ExMOA => MOA => ExMOU => MOU
+                    string sql_ex_moa = @"select t3.* from IA_Collaboration.MOABonus t1
+                        inner join IA_Collaboration.MOAPartnerScope t2
+                        on t2.moa_bonus_id = t1.moa_bonus_id
+                        inner join IA_Collaboration.PartnerScope t3
+                        on t3.partner_scope_id = t2.partner_scope_id
+                        inner join IA_Collaboration.MOA t4
+                        on t4.moa_id = t1.moa_id
+                        where t4.mou_id = @mou_id";
+                    string sql_moa = @"select t2.* from IA_Collaboration.MOAPartnerScope t1
+                        inner join IA_Collaboration.PartnerScope t2 on 
+                        t1.partner_scope_id = t2.partner_scope_id
+                        inner join IA_Collaboration.MOA t3 on
+                        t3.moa_id = t1.moa_id
+                        where t3.mou_id = @mou_id";
+                    string sql_ex_mou = @"select t3.* from IA_Collaboration.MOUBonus t1
+                        inner join IA_Collaboration.MOUPartnerScope t2
+                        on t2.mou_bonus_id = t1.mou_bonus_id
+                        inner join IA_Collaboration.PartnerScope t3
+                        on t3.partner_scope_id = t2.partner_scope_id
+                        where t1.mou_id = @mou_id";
+                    string sql_mou = @"select t2.* from IA_Collaboration.MOUPartnerScope t1
+                        inner join IA_Collaboration.PartnerScope t2 on 
+                        t1.partner_scope_id = t2.partner_scope_id
+                        where t1.mou_id = @mou_id";
+                    List<PartnerScope> ex_moa_list = db.Database.SqlQuery<PartnerScope>(sql_ex_moa,
+                        new SqlParameter("mou_id", mou_id)).ToList();
+                    List<PartnerScope> moa_list = db.Database.SqlQuery<PartnerScope>(sql_moa,
+                        new SqlParameter("mou_id", mou_id)).ToList();
+                    List<PartnerScope> ex_mou_list = db.Database.SqlQuery<PartnerScope>(sql_ex_mou,
+                        new SqlParameter("mou_id", mou_id)).ToList();
+                    List<PartnerScope> mou_list = db.Database.SqlQuery<PartnerScope>(sql_mou,
+                        new SqlParameter("mou_id", mou_id)).ToList();
+
+                    if (ex_moa_list != null)
+                    {
+                        foreach (PartnerScope item in ex_moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    if (moa_list != null)
+                    {
+                        foreach (PartnerScope item in moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    if (ex_mou_list != null)
+                    {
+                        foreach (PartnerScope item in ex_mou_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    if (mou_list != null)
+                    {
+                        foreach (PartnerScope item in mou_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    db.SaveChanges();
+
                     MOU mou = db.MOUs.Find(mou_id);
                     mou.is_deleted = true;
                     db.Entry(mou).State = EntityState.Modified;
