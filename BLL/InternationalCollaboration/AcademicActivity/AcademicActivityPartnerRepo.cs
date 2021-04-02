@@ -14,7 +14,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     public class AcademicActivityPartnerRepo
     {
         ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner)
+        public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner, int account_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
@@ -38,7 +38,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         //update to PartnerScope
                         PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
-                        saveActivityPartner(file, partnerScope, activityPartner);
+                        saveActivityPartner(file, partnerScope, activityPartner, account_id);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
@@ -75,7 +75,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return partnerScope;
         }
-        public void saveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner)
+        public void saveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner, int account_id)
         {
             try
             {
@@ -88,6 +88,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 if (activityPartner.cooperation_date_end != null) ap.cooperation_date_end = activityPartner.cooperation_date_end;
                 ap.activity_id = activityPartner.activity_id;
                 ap.partner_scope_id = partnerScope.partner_scope_id;
+                ap.account_id = account_id;
+                ap.add_time = DateTime.Now;
                 if (file.file_id != 0) ap.file_id = file.file_id;
                 db.ActivityPartners.Add(ap);
                 db.SaveChanges();
@@ -132,7 +134,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner)
+        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner, int account_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
@@ -172,7 +174,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             }
                         }
                         //update file_id null in coress ActivityPartner
-                        updateActivityPartner(activityPartner, saveActivityPartner, new_file);
+                        updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                     }
@@ -201,7 +203,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file)
+        public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
         {
             try
             {
@@ -225,6 +227,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 activityPartner.cooperation_date_end = ap.cooperation_date_end;
                 activityPartner.partner_scope_id = ap.partner_scope_id;
                 activityPartner.file_id = ap.file_id;
+                ap.account_id = account_id;
+                ap.add_time = DateTime.Now;
                 db.SaveChanges();
                 //old partner_scope_id vs new partner_scope_id
                 if (activityPartner.partner_scope_id != partnerScope.partner_scope_id)
