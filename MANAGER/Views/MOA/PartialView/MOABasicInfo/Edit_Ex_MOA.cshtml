@@ -112,7 +112,8 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
-                        <select class="form-control" required id="partner_name_ex_moa_add_for_edit">
+                        <select class="form-control" required id="partner_name_ex_moa_add_for_edit" style="width:100% !important">
+                            <option value=""></option>
                             @foreach (var item in ViewBag.partnerList)
                             {
                                 <option value="@item.partner_id">@item.partner_name</option>
@@ -132,7 +133,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="addExMOATempForEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Bổ sung</button>
+                <button type="button" onclick="addExMOATempForEdit()" class="btn btn-sm btn-light-primary px-6">Bổ sung</button>
             </div>
         </div>
     </div>
@@ -162,7 +163,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="editExMOATempForEdit()" class="btn btn-sm btn-light-primary px-6" data-dismiss="modal">Sửa</button>
+                <button type="button" onclick="editExMOATempForEdit()" class="btn btn-sm btn-light-primary px-6">Sửa</button>
             </div>
         </div>
     </div>

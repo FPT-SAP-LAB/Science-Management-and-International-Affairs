@@ -20,27 +20,31 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 string sql_mouList =
                     @"select t1.moa_id,t1.moa_code,t3.partner_name,t1.evidence,t2.moa_start_date,
-                        t1.moa_end_date,t5.office_name,t8.scope_abbreviation,t9.mou_status_id,t2.moa_partner_id
+                        t1.moa_end_date,t5.office_name,t6.scope_abbreviation,t7.mou_status_id,t2.moa_partner_id
                         from IA_Collaboration.MOA t1
                         left join IA_Collaboration.MOAPartner t2 
                         on t2.moa_id = t1.moa_id 
                         left join IA_Collaboration.Partner t3
                         on t3.partner_id = t2.partner_id
                         left join IA_Collaboration.MOU t4 
-                        on t4.mou_id = t1.mou_id
+                        on t4.mou_id = t1.mou_id 
                         left join General.Office t5 
                         on t5.office_id = t4.office_id
-                        left join IA_Collaboration.MOAPartnerScope t6
-                        on t6.moa_id = t1.moa_id
-                        left join IA_Collaboration.PartnerScope t7
-                        on t7.partner_scope_id = t6.partner_scope_id
-                        left join IA_Collaboration.CollaborationScope t8 
-                        on t8.scope_id = t7.scope_id
+                        left join 
+						(select moa_id,partner_id,b.scope_id,scope_abbreviation
+						from IA_Collaboration.MOAPartnerScope a
+						inner join IA_Collaboration.PartnerScope b on
+						a.partner_scope_id = b.partner_scope_id
+						inner join IA_Collaboration.CollaborationScope c on
+						c.scope_id = b.scope_id) t6 on 
+						t6.moa_id = t1.moa_id and t6.partner_id = t2.partner_id
                         left join (
-                        select max([datetime]) as 'maxdate',mou_status_id, moa_id
-                        from IA_Collaboration.MOAStatusHistory 
-                        group by mou_status_id, moa_id) t9
-                        on t9.moa_id = t1.moa_id
+                        select a.moa_id,a.mou_status_id from IA_Collaboration.MOAStatusHistory a
+                        inner join 
+                        (select max(datetime) as max_date,moa_id from IA_Collaboration.MOAStatusHistory
+                        group by moa_id) b on
+                        a.datetime = b.max_date and a.moa_id = b.moa_id) t7
+                        on t7.moa_id = t1.moa_id
                         where t1.mou_id = @mou_id
                         and t3.partner_name like @partner_name
                         and t1.moa_code like @moa_code
@@ -82,6 +86,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     else
                     {
                         previousItem = item;
+                        previousItem.moa_start_date_string = item.moa_start_date.ToString("dd'/'MM'/'yyyy");
+                        previousItem.moa_end_date_string = item.moa_end_date.ToString("dd'/'MM'/'yyyy");
                     }
                 }
             }
@@ -201,8 +207,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -218,6 +224,39 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    //delete partner_scope_id 
+                    //delete from ExMOA => MOA
+                    string sql_moa = @"select t2.* from IA_Collaboration.MOAPartnerScope t1
+                        inner join IA_Collaboration.PartnerScope t2 on 
+                        t1.partner_scope_id = t2.partner_scope_id
+                        where t1.moa_id = @moa_id";
+                    string sql_ex_moa = @"select t3.* from IA_Collaboration.MOABonus t1
+                        inner join IA_Collaboration.MOAPartnerScope t2
+                        on t2.moa_bonus_id = t1.moa_bonus_id
+                        inner join IA_Collaboration.PartnerScope t3
+                        on t3.partner_scope_id = t2.partner_scope_id
+                        where t1.moa_id = @moa_id";
+                    List<PartnerScope> ex_moa_list = db.Database.SqlQuery<PartnerScope>(sql_ex_moa,
+                        new SqlParameter("moa_id", moa_id)).ToList();
+                    List<PartnerScope> moa_list = db.Database.SqlQuery<PartnerScope>(sql_moa,
+                        new SqlParameter("moa_id", moa_id)).ToList();
+
+                    if (ex_moa_list != null)
+                    {
+                        foreach (PartnerScope item in ex_moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    if (moa_list != null)
+                    {
+                        foreach (PartnerScope item in moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    db.SaveChanges();
+
                     MOA moa = db.MOAs.Find(moa_id);
                     moa.is_deleted = true;
                     db.Entry(moa).State = EntityState.Modified;
@@ -259,7 +298,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<CustomScopesMOA> getMOAScope(int mou_id, string partner_name)
+        public List<CustomScopesMOA> getMOAScope(int mou_id, int partner_id)
         {
             try
             {
@@ -270,11 +309,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     t3.scope_id = t2.scope_id
                     inner join IA_Collaboration.Partner t4 on
                     t4.partner_id = t2.partner_id
-                    where t1.mou_id = @mou_id and t4.partner_name like @partner_name
+                    where t1.mou_id = @mou_id and t4.partner_id = @partner_id
                     order by t3.scope_id";
                 List<CustomScopesMOA> scopeList = db.Database.SqlQuery<CustomScopesMOA>(sql_scopeList
                     , new SqlParameter("mou_id", mou_id)
-                    , new SqlParameter("partner_name", '%' + partner_name + '%')
+                    , new SqlParameter("partner_id", partner_id)
                     ).ToList();
                 return scopeList;
             }

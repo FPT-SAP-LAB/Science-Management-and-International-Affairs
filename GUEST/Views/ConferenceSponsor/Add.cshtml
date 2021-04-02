@@ -715,7 +715,6 @@
                 specialization_id: $("#specialization").val(),
                 ConferenceParticipant: {},
                 Cost: [],
-                Persons: {},
                 paper_name: $("#paper_name").val()
             }
             let ms = $(".selectPeople").select2('data')[0].id;
@@ -723,11 +722,9 @@
             if (ms == "" || name == "")
                 return;
             this.data.ConferenceParticipant = {
-                current_mssv_msnv: ms,
+                mssv_msnv: ms,
                 office_id: $(".selectOffice").val(),
                 title_id: $(".selectTitle").val(),
-            };
-            this.data.Persons = {
                 name: name,
                 email: $(".inputEmail").val(),
             };

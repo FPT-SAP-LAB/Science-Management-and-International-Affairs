@@ -98,6 +98,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -125,6 +126,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             qt.title = q.title == null ? String.Empty : q.title;
             qt.answer_type_id = q.answer_type_id;
             qt.is_compulsory = q.is_compulsory == 1 ? true : false;
+            qt.is_changeable = true;
             db.Entry(qt).State = EntityState.Modified;
             if (q.answer_type_id == 3 || q.answer_type_id == 5)
             {
@@ -216,6 +218,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }

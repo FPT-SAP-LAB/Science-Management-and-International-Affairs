@@ -1,0 +1,60 @@
+﻿
+<div class="modal fade in modal-add-program" id="add_program_going" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title">THÊM CHƯƠNG TRÌNH</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8 mb-4">
+                        <label class="font-weight-bolder">Tiêu đề</label>
+                        <label style="color: red">*</label>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_program_title_going" />
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
+                        <label class="font-weight-bolder">Ngôn ngữ</label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control text-center program_language" id="add_program_language_going" name="param" style="width:100% !important">
+                                <option value="1" selected>Tiếng Việt</option>
+                                <option value="2">English</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
+                        <label class="font-weight-bolder">Đối tác</label>
+                        <label style="color: red">*</label>
+                        <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                            <select class="form-control text-center program_partner" id="add_program_partner" name="param" style="width:100% !important">
+                                <option  label="Label"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
+                        <label class="font-weight-bolder">Thời hạn đăng ký</label>
+                        <label style="color: red">*</label>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <input type='text' class="form-control kt_daterangepicker_1"
+                                       id="add_program_range_date_going" readonly
+                                       placeholder="Từ ngày - Đến ngày" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+                        <label class="font-weight-bolder">Ghi chú</label>
+                        <textarea class="form-control" autocomplete="off" id="add_note_going"></textarea>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label class="font-weight-bolder">Nội dung</label>
+                        <div class="summernote" id="add_summernote_going"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="load-btn btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="load-btn btn btn-sm btn-light-success add_program_btn" id="">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

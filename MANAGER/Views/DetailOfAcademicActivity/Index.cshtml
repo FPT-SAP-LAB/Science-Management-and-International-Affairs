@@ -168,48 +168,18 @@
                         <tr class="text-center">
                             <th rowspan="2">STT</th>
                             <th rowspan="2">Đơn vị</th>
-                            <th colspan="2">Kinh phí dự trù</th>
-                            <th rowspan="2">Kinh phí thực tế</th>
-                            <th rowspan="2">Chênh lệch</th>
-                            <th rowspan="2">Ghi chú</th>
+                            <th colspan="2">Kinh phí dự trù (VNĐ)</th>
+                            <th rowspan="2">Kinh phí thực tế (VNĐ)</th>
+                            <th rowspan="2">Chênh lệch (VNĐ)</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr>
-                            <th>Ban đầu</th>
-                            <th>Điều chỉnh</th>
+                            <th class="text-center">Ban đầu</th>
+                            <th class="text-center">Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>FPTU Hà Nội</td>
-                            <td>450.000.000</td>
-                            <td>0</td>
-                            <td>368.000.000</td>
-                            <td>82.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>FPTU Đà Nẵng</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>FPTU HCM</td>
-                            <td>100.000.000</td>
-                            <td>0</td>
-                            <td>150.000.000</td>
-                            <td>-50.000.000</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+
                     </tbody>
                 </table>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -388,7 +358,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal" id="btn_add_close_DongToChuc">Đóng</button>
-                <button type="button" class="btn btn-light-success font-weight-bold" data-dismiss="modal" id="btn_add_save_DongToChuc">Xác nhận</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="btn_add_save_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -476,7 +446,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_save_DongToChuc">Xác nhận</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" data-dismiss="modal" id="btn_edit_save_DongToChuc">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -895,14 +865,13 @@
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" id="add_donvi_kinhphi">
-                            <option selected value="FPTUHN">FPTU Hà Nội</option>
-                            <option value="FPTUDN">FPTU Đà Nẵng</option>
-                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
+                            @{ 
+                                foreach(var item in ViewBag.office)
+                                {
+                                    <option value="@item.office_id">@item.office_name</option>
+                                }
+                            }
                         </select>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="add_ghichu_kinhphi" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -1373,6 +1342,7 @@
         let id_edit_tu_cach = 0;
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
+        var datatableKPDuTru;
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
                 myDate = new Date(correctFormat);
@@ -1732,27 +1702,28 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: '/DetailOfAcademicActivity/deleteActivityPartner',
+                        type: "POST",
+                        data: { activity_partner_id: activity_partner_id },
+                        success: function (data) {
+                            if (data.success) {
+                                DongTochucDatatable.ajax.reload();
+                                Swal.fire(data.title, data.content, "success");
+                            } else {
+                                Swal.fire(data.title, data.content, "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                        }
+                    });
                 }
             });
         });
-
-        function KPDuTru(id) {
-            id_edit_KP = id;
-            $('#KPDuTruModal').modal('show');
-        }
-        function editKinhPhi(id) {
-            id_edit_KP = id;
-            $('#editModal_KinhPhi').modal('show');
-        }
         function deleteKinhPhi(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa kinh phí đơn vị này không ?",
+                title: "Bạn có muốn xóa mục kinh phí này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1761,13 +1732,30 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpense", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_office_id: id }),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                toastr.success(data);
+                                datatableKP.ajax.reload();
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        }
+                    });
                 }
             });
+        }
+        function KPDuTru(id) {
+            id_edit_KP = id;
+            if (typeof datatableKPDuTru != 'undefined') {
+                datatabledKPDuTru.ajax.reload();
+            } else
+                initDatatableKPDuTru();
+            $('#KPDuTruModal').modal('show');
         }
         function deleteKinhPhiDuTru(id) {
             id_delete_KP = id;
@@ -1984,6 +1972,22 @@
             }
         }
 
+        function objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+            contact_point_name, contact_point_email, contact_point_phone) {
+            let obj_activity_scope = {};
+            obj_activity_scope.activity_partner_id = activity_partner_id;
+            obj_activity_scope.activity_id = activity_id;
+            obj_activity_scope.partner_id = partner_id;
+            obj_activity_scope.scope_id = scope_id;
+            if (!isEmptyOrNullOrUndefined(sponsor)) obj_activity_scope.sponsor = sponsor;
+            if (!isEmptyOrNullOrUndefined(cooperation_date_start)) obj_activity_scope.cooperation_date_start = formatDatePicker(cooperation_date_start);
+            if (!isEmptyOrNullOrUndefined(cooperation_date_end)) obj_activity_scope.cooperation_date_end = formatDatePicker(cooperation_date_end);
+            if (!isEmptyOrNullOrUndefined(contact_point_name)) obj_activity_scope.contact_point_name = contact_point_name;
+            if (!isEmptyOrNullOrUndefined(contact_point_email)) obj_activity_scope.contact_point_email = contact_point_email;
+            if (!isEmptyOrNullOrUndefined(contact_point_phone)) obj_activity_scope.contact_point_phone = contact_point_phone;
+            return obj_activity_scope;
+        }
+
         function clearActivityPartnerContentAddModal() {
             $('#add_donvi_DongToChuc').val(null).trigger('change');
             $('#add_phamvihoptac_DongToChuc').val(null).trigger('change');
@@ -2000,10 +2004,10 @@
         let btn_add_save_DongToChuc = new LoaderBtn($("#btn_add_save_DongToChuc"));
         //ADD MODAL SAVE EVENT
         $('#btn_add_save_DongToChuc').click(function () {
-            btn_add_save_DongToChuc.startLoading();
 
             let activity_id = $('#activity_id').val();
             let partner_id = $('#add_donvi_DongToChuc').val();
+            let partner_name = $('#add_donvi_DongToChuc option:selected').text();
             let scope_id = $('#add_phamvihoptac_DongToChuc').val();
             let sponsor = $('#add_taitro_DongToChuc').val();
             let cooperation_date_start = $('#add_from_DongToChuc').val();
@@ -2014,18 +2018,20 @@
             let contact_point_email = $('#add_email_DongToChuc').val();
             let contact_point_phone = $('#add_phone_DongToChuc').val();
 
-            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(collab_scope_id)) {
+            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id)) {
                 return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
             } else {
-                if (!datePickerFromToValidate(date_start, date_end)) {
+                if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
                     return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
                 } else {
                     let obj_activity_partner = objActivityPartner(0, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
                         contact_point_name, contact_point_email, contact_point_phone);
                     let formData = new FormData();
                     formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
+                    formData.append("folder_name", partner_name);
                     formData.append("obj_activity_partner_stringify", JSON.stringify(obj_activity_partner));
 
+                    btn_add_save_DongToChuc.startLoading();
                     //Save actually
                     $.ajax({
                         url: "/DetailOfAcademicActivity/saveActivityPartner",
@@ -2055,20 +2061,123 @@
             }
         });
 
-        function objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
-            contact_point_name, contact_point_email, contact_point_phone) {
-            let obj_activity_scope = {};
-            obj_activity_scope.activity_partner_id = activity_partner_id;
-            obj_activity_scope.activity_id = activity_id;
-            obj_activity_scope.partner_id = partner_id;
-            obj_activity_scope.scope_id = scope_id;
-            if (!isEmptyOrNullOrUndefined(sponsor)) obj_activity_scope.sponsor = sponsor;
-            if (!isEmptyOrNullOrUndefined(cooperation_date_start)) obj_activity_scope.cooperation_date_start = formatDatePicker(cooperation_date_start);
-            if (!isEmptyOrNullOrUndefined(cooperation_date_end)) obj_activity_scope.cooperation_date_end = formatDatePicker(cooperation_date_end);
-            if (!isEmptyOrNullOrUndefined(contact_point_name)) obj_activity_scope.contact_point_name = contact_point_name;
-            if (!isEmptyOrNullOrUndefined(contact_point_email)) obj_activity_scope.contact_point_email = contact_point_email;
-            if (!isEmptyOrNullOrUndefined(contact_point_phone)) obj_activity_scope.contact_point_phone = contact_point_phone;
-            return obj_activity_scope;
+        @*EDIT MODAL*@
+        $('#edit_donvi_DongToChuc').select2({
+            placeholder: 'Đơn vị đào tạo',
+            allowClear: true,
+            ajax: {
+                url: '/AcademicCollaboration/getPartners',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        partner_name: params.term
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.partner_id;
+                        obj.text = obj.partner_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatPartnerInfo
+        });
+
+        $('#edit_phamvihoptac_DongToChuc').select2({
+            placeholder: 'Phạm vi hợp tác',
+            allowClear: true,
+            minimumResultsForSearch: -1, //hide search box
+            ajax: {
+                url: '/AcademicCollaboration/getCollabScopes',
+                delay: 250,
+                cache: true,
+                dataType: 'json',
+                data: function () {
+                    return {
+                        collab_abbreviation_name: 'JC' //Joint conference, workshop, seminar, ...
+                    };
+                },
+                processResults: function (data) {
+                    data.obj.map(function (obj) {
+                        obj.id = obj.scope_id;
+                        obj.text = obj.scope_name;
+                        return data.obj;
+                    });
+
+                    return {
+                        results: data.obj
+                    };
+                }
+            },
+            templateResult: formatCollabScope
+        });
+
+        var activity_partner_id;
+        var uppy2;
+        $('#editModal_DongToChuc').on('show.bs.modal', function (e) {
+            activity_partner_id = $(e.relatedTarget).data('id');
+            console.log(activity_partner_id);
+            $.ajax({
+                url: "/DetailOfAcademicActivity/getActivityPartner",
+                type: "GET",
+                data: {
+                    activity_partner_id: activity_partner_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.obj != null) {
+                        if (data.success) {
+                            let objData = data.obj;
+                            $('#edit_donvi_DongToChuc').append(new Option(objData.partner_name, objData.partner_id, false, true)).trigger('change');
+                            $('#edit_phamvihoptac_DongToChuc').append(new Option(objData.scope_abbreviation + " - " + objData.scope_name, objData.scope_id, false, true)).trigger('change');
+                            $('#edit_taitro_DongToChuc').val(objData.sponsor);
+                            if (!isEmptyOrNullOrUndefined(objData.cooperation_date_start)) $('#edit_from_DongToChuc').val(moment(objData.cooperation_date_start).format("DD/MM/YYYY"));
+                            if (!isEmptyOrNullOrUndefined(objData.cooperation_date_end)) $('#edit_to_DongToChuc').val(moment(objData.cooperation_date_end).format("DD/MM/YYYY"));
+                            if (objData.file_id != null) {
+                                uppy2.addFile({
+                                    name: objData.file_name, // file name
+                                    type: '', // file type
+                                    data: new Blob(), // file blob
+                                });
+                            }
+                            $('#edit_name_DongToChuc').val(objData.contact_point_name);
+                            $('#edit_email_DongToChuc').val(objData.contact_point_email);
+                            $('#edit_phone_DongToChuc').val(objData.contact_point_phone);
+                        }
+                    } else {
+                        toastr.error(data.content);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra.");
+                }
+            });
+        });
+
+        $('#editModal_DongToChuc').on('hide.bs.modal', function () {
+            clearContentCollabPartnerModalEdit();
+        });
+
+        function clearContentCollabPartnerModalEdit() {
+            $('#edit_donvi_DongToChuc').val(null).trigger('change');
+            $('#edit_phamvihoptac_DongToChuc').val(null).trigger('change');
+            $('#edit_taitro_DongToChuc').val('');
+            $('#edit_from_DongToChuc').val('');
+            $('#edit_to_DongToChuc').val('');
+            //clear upload file
+            $('#edit_banmem_DongToChuc .uppy-list').html('');
+            uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
+            $('#edit_name_DongToChuc').val('');
+            $('#edit_email_DongToChuc').val('');
+            $('#edit_phone_DongToChuc').val('');
         }
 
         $('#btn_edit_giaidoan').click(function () {
@@ -2102,8 +2211,62 @@
                 }
             });
         });
+
+        let btn_edit_save_DongToChuc = new LoaderBtn($('#btn_edit_save_DongToChuc'));
         $('#btn_edit_save_DongToChuc').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+            let activity_id = $('#activity_id').val();
+            let partner_id = $('#edit_donvi_DongToChuc').val();
+            let partner_name = $('#edit_donvi_DongToChuc option:selected').text();
+            let scope_id = $('#edit_phamvihoptac_DongToChuc').val();
+            let sponsor = $('#edit_taitro_DongToChuc').val();
+            let cooperation_date_start = $('#edit_from_DongToChuc').val();
+            let cooperation_date_end = $('#edit_to_DongToChuc').val();
+
+            let evidence_file = uppy2.getFiles();
+            let contact_point_name = $('#edit_name_DongToChuc').val();
+            let contact_point_email = $('#edit_email_DongToChuc').val();
+            let contact_point_phone = $('#edit_phone_DongToChuc').val();
+
+            if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id)) {
+                return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+            } else {
+                if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
+                    return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
+                } else {
+                    let obj_activity_partner = objActivityPartner(activity_partner_id, activity_id, partner_id, scope_id, sponsor, cooperation_date_start, cooperation_date_end,
+                        contact_point_name, contact_point_email, contact_point_phone);
+                    let formData = new FormData();
+                    formData.append("evidence_file", evidence_file.length == 0 ? null : evidence_file[0].data);
+                    formData.append("folder_name", partner_name);
+                    formData.append("obj_activity_partner_stringify", JSON.stringify(obj_activity_partner));
+
+                    btn_edit_save_DongToChuc.startLoading();
+                    //Save actually
+                    $.ajax({
+                        url: "/DetailOfAcademicActivity/updateActivityPartner",
+                        type: "POST",
+                        data: formData,
+                        cache: false,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.content);
+                                DongTochucDatatable.ajax.reload();
+                                btn_edit_save_DongToChuc.stopLoading();
+                            } else {
+                                toastr.warning(data.content);
+                                btn_edit_save_DongToChuc.stopLoading();
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra.");
+                            btn_edit_save_DongToChuc.stopLoading();
+                        }
+                    });
+                }
+            }
         });
 
         $('#btn_delete_giaidoan').click(function () {
@@ -2275,7 +2438,27 @@
             toastr.success("Đã chỉnh sửa thành công");
         });
         $('#btn_add_kinhphi').click(function () {
-            toastr.success("Đã thêm thành công");
+            var object = {
+                activity_id: $('#activity_id').val(),
+                office_id: $('#add_donvi_kinhphi').val()
+            };
+            $.ajax({
+                url: "@Url.Action("addExpense", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data == 'Thêm mục kinh phí thành công.') {
+                        toastr.success(data);
+                        clearModal('#addModal_KinhPhi');
+                        datatableKP.ajax.reload();
+                    } else if (data == 'Không thể thêm đơn vị đã tồn tại.'){
+                        toastr.warning(data);
+                    }else {
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                },
+            });
         });
         $('#btn_add_kpDuTru').click(function () {
             toastr.success("Đã thêm thành công");
@@ -2460,14 +2643,14 @@
                 {
                     data: "sponsor",
                     render: function (data) {
-                        return data.toLocaleString('en');
+                        return data != null ? data.toLocaleString('en') : null;
                     }
                 },
                 {
                     title : "Hành động",
                     render: function (data, type, row) {
-                        return `<a href="#editModal_DongToChuc" class="btn btn-sm px-6 mr-3 btn-light-primary" data-id=`+ row.activity_partner_id +`">Sửa</a>
-                                <a id="#btn_delete_DongToChuc" class="btn btn-sm btn-light-danger px-6" data-id=`+ row.activity_partner_id+`>Xóa</a>`;
+                        return `<a href="#editModal_DongToChuc" class="btn btn-sm px-6 mr-3 btn-light-primary" data-id=`+ row.activity_partner_id +` data-toggle="modal">Sửa</a>
+                                <a id="btn_delete_DongToChuc" class="btn btn-sm btn-light-danger px-6" data-id=`+ row.activity_partner_id+`>Xóa</a>`;
                     }
                 },
             ],
@@ -2502,10 +2685,7 @@
                 }
             });
         }
-        function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
-        }
-        $("#KinhPhiDatatable").DataTable({
+        var datatableKP = $("#KinhPhiDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2517,32 +2697,92 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+            ajax: {
+                url: "@Url.Action("getDatatableKP", "DetailOfAcademicActivity")",
+                type: "POST",
+                datatype: "json",
+                data: { activity_id: document.getElementById('activity_id').value },
+                cache: "false"
+            },
+            columns: [
                 {
-                    targets: -1,
-                    title: 'Hành động',
-                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "office_name"
+                },
+                {
+                    data: "cp_du_tru",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "cp_dieu_chinh",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "cp_thuc_te",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "chenh_lech",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "activity_office_id",
+                    title: "Hành động",
                     render: function (data, type, full, meta) {
                         return '<div class="dropdown">' +
                             '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
                             '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi(1)">Sửa</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(1)">KP dự trù</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(1)">KP điều chỉnh</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(1)">KP thực tế</a>' +
-                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(1)">Xóa</a>' +
+                            //'<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi('+data+')">Sửa</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(' + data + ')">KP dự trù</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(' + data + ')">KP điều chỉnh</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(' + data + ')">KP thực tế</a>' +
+                            '<a href="javascript:;" class="dropdown-item" onclick="deleteKinhPhi(' + data + ')">Xóa</a>' +
                             '</div>' +
-                            '</div>'
+                            '</div>';
                     }
-                },
+                }
+            ],
+            columnDefs: [
                 {
                     className: "text-center",
-                    targets: [0, -1],
-                }
-
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
         });
-        $("#KPDuTruDatatable").DataTable({
+        function initDatatableKPDuTru() {
+            datatableKPDuTru = $("#KPDuTruDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -2554,18 +2794,68 @@
             },
             "searching": false,
             "lengthChange": false,
-            columnDefs: [
+             ajax: {
+                 url: "@Url.Action("getDatatableKPDuTru", "DetailOfAcademicActivity")",
+                 type: "POST",
+                 datatype: "json",
+                 data: { activity_office_id: id_edit_KP },
+                 cache: "false"
+                },
+            columns: [
                 {
-                    targets: -1,
-                    className: "text-nowrap text-center",
-                    title: 'Hành động',
-                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "expense_category_name"
+                },
+                {
+                    data: "expense_price",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "expense_quantity"
+                },
+                {
+                    data: "total",
+                    render: function (data) {
+                        if (data != null)
+                            return data.toLocaleString('en');
+                        else {
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    data: "note",
+                },
+                {
+                    data: "expense_category_id",
+                    title: "Hành động",
                     render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru(1)">Xóa</a>'
+                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
                     }
                 }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: '_all',
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [-1]
+                },
             ]
-        });
+            });
+        }
         $("#KPDieuChinhDatatable").DataTable({
             oLanguage: {
                 oPaginate: {

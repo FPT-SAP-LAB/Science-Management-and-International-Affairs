@@ -18,6 +18,7 @@ namespace ENTITIES
         public int paper_id { get; set; }
         public string current_mssv_msnv { get; set; }
         public Nullable<int> money_reward { get; set; }
+        public Nullable<int> money_reward_in_decision { get; set; }
     
         public virtual Person Person { get; set; }
         public virtual Paper Paper { get; set; }

@@ -176,6 +176,11 @@
                         login_btn.stopLoading();
                         window.location.href = this.responseURL;
                     }
+                } else {
+                    auth2.signOut().then(function () {
+                        $('#login_btn').attr('disabled', false);
+                        login_btn.stopLoading();
+                    });
                 }
             };
             xhr.send('idtoken=' + id_token);

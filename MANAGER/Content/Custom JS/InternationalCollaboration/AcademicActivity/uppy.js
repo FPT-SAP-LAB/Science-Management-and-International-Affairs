@@ -81,10 +81,87 @@
         });
     }
 
+    var initUppy2 = function () {
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        let elemId = 'edit_banmem_DongToChuc';
+        let id = '#' + elemId;
+        let $statusBar = $(id + ' .uppy-status');
+        let $uploadedList = $(id + ' .uppy-list');
+        let timeout;
+
+        uppy2 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 0,
+                allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
+            }
+        });
+
+        uppy2.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy2.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy2.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy2.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy2.on('upload', function () {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy2.on('file-added', function (file) {
+            //var sizeLabel = "bytes";
+            //var filesize = file.size;
+            //if (filesize > 1024) {
+            //    filesize = filesize / 1024;
+            //    sizeLabel = "kb";
+
+            //    if (filesize > 1024) {
+            //        filesize = filesize / 1024;
+            //        sizeLabel = "MB";
+            //    }
+            //}
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy2.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+    }
     return {
         // public functions
         init: function () {
             initUppy1();
+            initUppy2();
         }
     };
 }();

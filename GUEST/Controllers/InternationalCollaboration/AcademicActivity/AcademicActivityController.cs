@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using User.Models;
 using BLL.InternationalCollaboration.AcademicActivity;
+using GUEST.Support;
 
 namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -80,6 +81,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
                 new PageTree("Đơn đăng kí tham dự","/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
+            ViewBag.file_drive_id = guestRepo.getImageActivity(pid);
             ViewBag.pid = pid;
             ViewBag.role = guestRepo.GetParticipantRoleByPhase(pid);
             ViewBag.office = guestRepo.getOffices();

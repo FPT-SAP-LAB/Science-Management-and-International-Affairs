@@ -277,7 +277,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                         Google.Apis.Drive.v3.Data.File f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, old_evidence, new_evidence, account_id);
+                            obj_person, obj_partner, obj_academic_collab, f, new_evidence, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
@@ -494,7 +494,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         }
 
         [HttpPost]
-        public ActionResult LoadEdit(int procedure_id)
+        public ActionResult LoadEditProcedure(int procedure_id)
         {
             try
             {
@@ -517,8 +517,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acShortRepo = new AcademicCollaborationShortRepo();
-                string content = acShortRepo.GetContentLanguage(procedure_id, language_id);
-                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), content });
+                ArticleVersion articleVersion = acShortRepo.GetContentLanguage(procedure_id, language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
             }
             catch (Exception e)
             {
@@ -621,6 +621,140 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             {
                 Console.WriteLine(e.ToString());
                 return Json(new { data = "" });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AddProgram(int direction, int numberOfImage, string program_title, string collab_type,
+            string program_partner, int program_language, string program_range_date, string note, string content)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+                if (acc.account_id == 0)
+                {
+                    AlertModal<string> json_false = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài");
+                    return Json(new { json_false.success, json_false.content });
+                }
+                AlertModal<string> json = acProgramRepo.AddProgram(files_request, program_title, Int32.Parse(collab_type), direction,
+                    content, numberOfImage, program_language, acc.account_id, program_partner, program_range_date, note);
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                AlertModal<string> json_false = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json_false.success, json_false.content });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadEditProgram(int program_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                ProgramInfoManager programInfoManager = acProgramRepo.LoadEditProgram(program_id);
+                return Json(new { json = programInfoManager });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json.success, json.content });
+            }
+        }
+
+        public ActionResult DeleteProgram(string article_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                AlertModal<string> json = acProgramRepo.DeleteProgram(Int32.Parse(article_id));
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                AlertModal<string> json_false = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json_false.success, json_false.content });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult SaveEditProgram(string program_id, string content, int numberOfImage, string program_title,
+            int program_language, string program_partner, string program_range_date, string note, string direction)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+                else
+                {
+                    AlertModal<string> json = acProgramRepo.SaveEditProgram(files_request, Int32.Parse(program_id), program_title, content, numberOfImage, program_language,
+                        program_partner, program_range_date, note, Int32.Parse(direction), acc.account_id);
+                    return Json(new { json.success, json.content });
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadProgramDetailLanguage(string program_id, int language_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                ArticleVersion articleVersion = acProgramRepo.LoadProgramDetailLanguage(Int32.Parse(program_id), language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
             }
         }
 

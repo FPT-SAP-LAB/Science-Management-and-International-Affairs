@@ -10,10 +10,11 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>
+                        @*<label style="color:blue" class="float-right"><a href="#" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>*@
                         <input hidden readonly type="text" class="form-control" id="moa_partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control" id="partner_name_form" style="width:100% !important">
+                                <option selected value=""></option>
                                 @foreach (var item in ViewBag.listPartnerMOAPartner)
                                 {
                                     <option value="@item.partner_id">@item.partner_name</option>
@@ -87,7 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button> 
-                <button id="add_moa_partner_button" type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" onclick="addMOAPartner()" disabled>Thêm</button>
+                <button id="add_moa_partner_button" type="button" class="btn btn-sm btn-light-primary px-6 font-weight-bold" onclick="valMOAPartner()" disabled>Thêm</button>
             </div>
         </div>
     </div>

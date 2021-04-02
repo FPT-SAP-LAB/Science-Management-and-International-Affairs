@@ -176,10 +176,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         });
                     }
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -306,8 +302,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -352,8 +348,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //clear PartnerScope with ref_count = 0.
-                    db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    db.SaveChanges();
+                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
+                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -364,6 +360,65 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
+        public bool checkLastPartner(int mou_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    return db.MOUPartners.Where(x => x.mou_id == mou_id).Count() == 1 ? true : false;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+        public bool CheckMOAPartnerExistedInMOU(int mou_partner_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    string sql_check = @"select t3.* from IA_Collaboration.MOA t1
+                        inner join IA_Collaboration.MOAPartner t2
+                        on t2.moa_id = t1.moa_id
+                        inner join IA_Collaboration.MOUPartner t3
+                        on t3.partner_id = t2.partner_id
+                        where mou_partner_id = @mou_partner_id and t1.is_deleted = 0";
+                    List<MOUPartner> listExisted = db.Database.SqlQuery<MOUPartner>(sql_check,
+                        new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
+                    return listExisted.Count() > 0 ? true : false;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+        public bool IsMOUBonusExisted(int mou_partner_id)
+        {
+            try
+            {
+                string sql_check = @"select t1.* from IA_Collaboration.MOUBonus t1
+                    inner join IA_Collaboration.MOUPartner t2
+                    on t2.mou_id = t1.mou_id
+                    inner join IA_Collaboration.MOUPartnerScope t3
+                    on t3.mou_id = t1.mou_id and t3.mou_bonus_id = t1.mou_bonus_id
+                    inner join IA_Collaboration.PartnerScope t4
+                    on t4.partner_scope_id = t3.partner_scope_id and t4.partner_id = t2.partner_id
+                    where mou_partner_id = @mou_partner_id";
+                List<MOUBonu> exMOUList = db.Database.SqlQuery<MOUBonu>(sql_check,
+                    new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
+                return exMOUList.Count == 0 ? false : true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<PartnerHistory> listMOUPartnerHistory(int mou_partner_id)
         {
             string sql_history =

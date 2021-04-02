@@ -1,11 +1,11 @@
-﻿$("#ckfe").change(function() {
+﻿$("#ckfe").change(function () {
     var val = $("#ckfe").val();
     if (val == "Khác") {
-        $(".input_fe").each(function() {
+        $(".input_fe").each(function () {
             $(this).prop("disabled", true);
         });
     } else {
-        $(".input_fe").each(function() {
+        $(".input_fe").each(function () {
             $(this).prop("disabled", false);
         });
     }
@@ -27,7 +27,7 @@ $('#add_author_contractType').select2({
     placeholder: "Chọn loại hợp đồng"
 });
 
-$(function() {
+$(function () {
     $(".tacgia").hide()
 })
 donvife = {
@@ -40,7 +40,7 @@ donvife = {
 //var filename = [];
 
 class AuthorInfoView {
-    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id) {
+    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id) {
         if (add_author_msnv != null) this.add_author_msnv = add_author_msnv;
         else this.add_author_msnv = "";
         this.add_author_email = add_author_email;
@@ -66,6 +66,10 @@ class AuthorInfoView {
         this.add_author_info_id = id;
         if (add_author_msnv != null) this.title = this.add_author_msnv + ` - ` + this.add_author_name;
         else this.title = this.add_author_name;
+        if (add_author_isReseacher != null) this.add_author_isReseacher = add_author_isReseacher;
+        else this.add_author_isReseacher = false;
+        if (this.add_author_isReseacher == true) this.title_2 = ", Nghiên cứu viên";
+        else this.title_2 = "";
     }
     getHTML() {
         return `
@@ -95,7 +99,7 @@ class AuthorInfoView {
                                                     </div>
                                                     <div class='d-flex justify-content-between align-items-cente my-1'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_title + `</a>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_title + this.title_2 + `</a>
                                                     </div>
                                                     <div class='d-flex justify-content-between align-items-cente my-1'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
@@ -140,7 +144,13 @@ class AuthorInfoView {
     }
 }
 //////////////////////////////////////////////////////////////////
-$("#add_author_save").click(function() {
+$("#add_author_save").click(function () {
+    for (var i = 0; i < people.length; i++) {
+        if (people[i].email == $("#add_author_mail").val()) {
+            toastr.error("Đã có tác giả này");
+            return false;
+        }
+    }
     ckfe = $("#ckfe").val()
     add_author_workplace = $("#ckfe").val()
     add_author_msnv = $("#add_author_msnv").val()
@@ -154,10 +164,11 @@ $("#add_author_save").click(function() {
     add_author_reward = $("#add_author_reward").val()
     add_author_note = $("#add_author_note").val()
     add_author_email = $("#add_author_mail").val()
+    add_author_isReseacher = $('#add_author_isReseacher').is(':checked')
     id = new Date().getTime()
     au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
         add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id)
+        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id)
     $("#authors-info-container").append(au.getHTML());
     var AddAuthor = {
         name: add_author_name,
@@ -173,12 +184,18 @@ $("#add_author_save").click(function() {
         people_id: $("#add_author_msnv").attr("name"),
         temp_id: id,
         office_abbreviation: $("#ckfe option:selected").val(),
+        is_reseacher: add_author_isReseacher,
     }
     people.push(AddAuthor);
+    addOption();
     var inputs = $(".inputAuthor");
     for (var i = 0; i < inputs.length; i++) {
         $(inputs[i]).val("");
     }
+    $('#add_author_title').val(null).trigger('change');
+    $('#add_author_contractType').val(null).trigger('change');
+    $('#add_author_msnv').val(null).trigger('change');
+    $("#add_author_isReseacher").prop("checked", false);
 });
 $("#add_author_save_edit").click(function () {
     people[temp_index_edit].office_abbreviation = $("#ckfe_edit").val();
@@ -192,17 +209,22 @@ $("#add_author_save_edit").click(function () {
     people[temp_index_edit].bank_branch = $("#add_author_bank_edit").val();
     people[temp_index_edit].bank_number = $("#add_author_accno_edit").val();
     people[temp_index_edit].email = $("#add_author_mail_edit").val();
+    people[temp_index_edit].is_reseacher = $('#add_author_isReseacher_edit').is(':checked');
+    people[temp_index_edit].money_string = $("#add_author_reward_edit").val();
 
     $("#" + people[temp_index_edit].temp_id).remove();
+    var x = people[temp_index_edit].money_string;
+    people[temp_index_edit].money_string = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     au = new AuthorInfoView(people[temp_index_edit].office_abbreviation, people[temp_index_edit].mssv_msnv, people[temp_index_edit].name,
         $("#add_author_title_edit option:selected").text(), $("#add_author_contractType_edit option:selected").text(),
         people[temp_index_edit].identification_number, people[temp_index_edit].tax_code,
         people[temp_index_edit].bank_branch, people[temp_index_edit].bank_number,
-        '', '', people[temp_index_edit].email, people[temp_index_edit].temp_id);
+        people[temp_index_edit].money_string, '', people[temp_index_edit].email, people[temp_index_edit].is_reseacher, people[temp_index_edit].temp_id);
     $("#authors-info-container").append(au.getHTML());
+    addOption();
 });
-$("#authors-info-container").on('click', '.edit-author', function() {
+$("#authors-info-container").on('click', '.edit-author', function () {
     let id = $(this).data("id");
     for (var i = 0; i < people.length; i++) {
         if (people[i].temp_id == id) {
@@ -220,14 +242,34 @@ $("#authors-info-container").on('click', '.edit-author', function() {
             $("#add_author_bank_edit").val(people[i].bank_branch);
             $("#add_author_accno_edit").val(people[i].bank_number);
             $("#add_author_mail_edit").val(people[i].email);
-            $("#add_author_reward_edit").prop('disabled', true);
+
+            $("#add_author_reward_edit").val(people[i].money_string);
+
+            $("#add_author_isReseacher_edit").prop("checked", people[i].is_reseacher);
+
+            //console.log(people[i].money_string);
+            if ($("#totalreward").val() != "" && people[i].money_string == "0") $("#add_author_reward_edit").prop("disabled", false);
+            else $("#add_author_reward_edit").prop('disabled', true);
+
+            var sum = 0;
+            var total = $("#totalreward").val();
+            total = total.split(",").join("");
+
+            for (var j = 0; j < people.length; j++) {
+                var data = people[j].money_string;
+                var temp = data.split(",").join("");
+                sum = parseInt(sum) + parseInt(temp);
+            }
+            if (sum != parseInt(total)) $("#add_author_reward_edit").prop("disabled", false);
+            else $("#add_author_reward_edit").prop('disabled', true);
+
             $("#edit_author_btn").click();
             temp_index_edit = i;
             break;
         }
     }
 });
-$("#authors-info-container").on('click', '.del-author', function() {
+$("#authors-info-container").on('click', '.del-author', function () {
     let id = $(this).data("id")
     Swal.fire({
         title: "Xoá tác giả này?",
@@ -236,7 +278,7 @@ $("#authors-info-container").on('click', '.del-author', function() {
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         reverseButtons: true
-    }).then(function(result) {
+    }).then(function (result) {
         if (result.value) {
             $("#" + id).remove();
             for (var i = 0; i < people.length; i++) {
@@ -245,8 +287,14 @@ $("#authors-info-container").on('click', '.del-author', function() {
                     people.splice(i, 1);
                 }
             }
+            addOption();
         }
-        //else if (result.dismiss === "cancel") {
-        //}
     });
 });
+
+function addOption() {
+    $("#daidien").empty();
+    for (var i = 0; i < people.length; i++) {
+        if(people[i].mssv_msnv != null) $("#daidien").append(new Option(people[i].name, people[i].mssv_msnv));
+    }
+}

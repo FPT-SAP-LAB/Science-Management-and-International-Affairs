@@ -217,16 +217,24 @@
     Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Procedure");
 }
 
-@*modal add program*@
+@*modal add program going*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Add_Program");
+    Html.RenderPartial("PartialView/Modal_Add_Program_Going");
 }
 
-@*modal edit program*@
+@*modal add program coming*@
 @{
-    Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Program");
+    Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
 }
 
+@*modal edit program going*@
+@{
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Going");
+}
+@*modal edit program coming*@
+@{
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Coming");
+}
 @*SHORT-TERM MODAL*@
 @*modal add officer going*@
 @{
@@ -287,39 +295,35 @@
         $('#add_procedure_language').select2({
             placeholder: 'Ngôn ngữ',
         })
+        $('#edit_program_language_going').select2({
+            placeholder: 'Ngôn ngữ',
+        })
+        $('#edit_program_language_coming').select2({
+            placeholder: 'Ngôn ngữ',
+        })
     </script>
-    @* -----------------delete, load detail, change language----------- *@
+    @* -----------------delete, load detail, change language procedure----------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
-    @*---------------------save edit----------------*@
+    @*---------------------save edit procedure----------------*@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/ProcedureEditContent.js"></script>
 
+    @* -----------------add program--------------------------------------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
+    @* -----------------delete, load detail, change language program----------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProgram.js"></script>
+
+    @* -----------------save edit program--------------------------------------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Edit.js"></script>
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
-
-        $('#add_program_partner').select2({
-            placeholder: 'Đối tác',
-            allowClear: true,
-            tags: true,
-        })
-
-        $('#add_program_language').select2({
-            placeholder: 'Ngôn ngữ',
-            allowClear: true,
-            tags: true,
-        })
-
     </script>
     <script>
         //table 4
         $('#search_status_tab_2_table_2').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
     </script>
     <script>
