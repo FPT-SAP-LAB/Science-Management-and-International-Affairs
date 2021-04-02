@@ -380,8 +380,18 @@
                     tabsize: 2
                 });
             }
-
-
+            var add_summernote = function () {
+                $('#add_summernote').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote = function () {
+                $('#edit_summernote').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
             return {
                 // public functions
                 init: function () {
@@ -389,6 +399,8 @@
                     add_summernote_coming();
                     edit_summernote_going();
                     edit_summernote_coming();
+                    add_summernote();
+                    edit_summernote();
                 }
             };
         }();

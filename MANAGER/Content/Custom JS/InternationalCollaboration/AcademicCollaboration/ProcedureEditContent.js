@@ -47,7 +47,7 @@ $('#save_edit_procedure').click(function () {
 
                 $('#edit_procedure').modal('hide')
                 $('#edit_procedure input').val('');
-                $('#edit_procedure .summernote').summernote('code', '');
+                $('#edit_summernote').summernote('reset');
 
                 $('#procedure_going_table').DataTable().ajax.reload()
                 $('#procedure_coming_table').DataTable().ajax.reload()
