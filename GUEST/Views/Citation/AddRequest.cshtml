@@ -26,16 +26,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="trichdan_body">
-                                    <tr>
-                                        <td><input class="form-control trichdan_source" type="text" /></td>
-                                        <td><input class="form-control trichdan_count" type="number" min="0" /></td>
-                                        <td><input class="form-control trichdan_link" type="text" /></td>
-                                        <td><a onclick="" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a></td>
-                                    </tr>
                                 </tbody>
                             </table>
                             <div class="col-xl-12" style="text-align: end">
-                                <button class="btn btn-light-danger px-6 font-weight-bold deleterow">@rm.GetString("DelRow")</button>
                                 <button class="btn btn-light-primary px-6 font-weight-bold addrow">@rm.GetString("AddRow")</button>
                             </div>
                         </div>
@@ -63,18 +56,19 @@
             $('.citationE').attr('style', 'display:none !important');
         });
         $(".addrow").click(function () {
-            $("#trichdan_body tr:last").after("<tr>" +
-                "<td><input type='text' class='form-control' /></td>" +
-                "<td><input type='number' class='form-control' min='0' /></td>" +
-                "<td><input type='text' class='form-control' /></td>" +
+            var id = new Date().getTime();
+            $("#trichdan_body").append("<tr id=" + id + ">" +
+                "<td><input type='text' class='form-control trichdan_source' /></td>" +
+                "<td><input type='number' class='form-control trichdan_count' min='0' /></td>" +
+                "<td><input type='text' class='form-control trichdan_link' /></td>" +
+                "<td><a onclick='deleteRow(" + id + ")' class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a></td>" +
                 "</tr>");
         });
 
-        $(".deleterow").click(function () {
-            var rowCount = $('#trichdan_body tr').length;
-            if (rowCount > 1) $("#trichdan_body tr:last").remove();
-            else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
-        });
+        function deleteRow(id) {
+            var row = document.getElementById(id);
+            row.parentNode.removeChild(row);
+        }
 
         function addAuthor() {
             ckfe = $("#ckfe").val()
@@ -116,12 +110,25 @@
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
             for (var i = 0; i < inputSource.length; i++) {
-                var oneCitation = {
-                    source: $(inputSource[i]).val(),
-                    count: $(inputCount[i]).val(),
-                    link: $(inputLink[i]).val()
-                };
-                citation.push(oneCitation);
+                if ($(inputSource[i]).val() != "" && $(inputCount[i]).val() != "" && $(inputLink[i]).val() != "") {
+                    var oneCitation = {
+                        source: $(inputSource[i]).val(),
+                        count: $(inputCount[i]).val(),
+                        link: $(inputLink[i]).val()
+                    };
+                    citation.push(oneCitation);
+                }
+            }
+
+            if (citation.length == 0) {
+                toastr.error("Cần có ít nhất 1 trích dẫn");
+                $("#loading").hide();
+                return false;
+            }
+            if (people.length == 0) {
+                toastr.error("Nhập thông tin tác giả");
+                $("#loading").hide();
+                return false;
             }
 
             $.ajax({

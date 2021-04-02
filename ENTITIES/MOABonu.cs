@@ -26,7 +26,10 @@ namespace ENTITIES
         public System.DateTime moa_bonus_decision_date { get; set; }
         public Nullable<System.DateTime> moa_bonus_end_date { get; set; }
         public string evidence { get; set; }
+        public Nullable<int> account_id { get; set; }
+        public Nullable<System.DateTime> add_time { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual MOA MOA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOAPartnerScope> MOAPartnerScopes { get; set; }

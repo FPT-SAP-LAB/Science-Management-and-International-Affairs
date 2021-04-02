@@ -80,7 +80,6 @@ namespace BLL.ScienceManagement.MasterData
 	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
 	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
 	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].[File] f on pro.identification_file_id = f.file_id
 	                            join [General].Office ofi on po.office_id = ofi.office_id";
             list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;

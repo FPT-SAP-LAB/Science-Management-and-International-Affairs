@@ -97,25 +97,25 @@
             </div>
             <div class="col-xl-6 form-group" id="daidien_block">
                 <label>Đại diện nhận thưởng</label>
-                <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled/>
+                <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled />
             </div>
 
             @{
                 foreach (var item in ViewBag.crite)
                 {
-                        <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
-                            <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
-                            <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
-                            @if (item.check == true)
-                            {
-                                <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
-                            }
-                            else
-                            {
-                                <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
-                            }
+                    <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
+                        <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
+                        <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
+                        @if (item.check == true)
+                        {
+                            <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
+                        }
+                        else
+                        {
+                            <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
+                        }
 
-                        </div>
+                    </div>
                 }
             }
         </div>
@@ -124,9 +124,9 @@
             @{
                 foreach (var item in ViewBag.author)
                 {
-                    <div class="col-lg-4 col-sm-12 oneauthor" id="@item.people_id">
+                    <div class="col-lg-4 col-sm-12">
                         <!--begin::Card-->
-                        <div class="card card-custom gutter-b author-info-card">
+                        <div class="card card-custom gutter-b author-info-card" id="@item.people_id">
                             <div class="card-header">
                                 <div class="card-title">
                                     @if (item.mssv_msnv != null)
@@ -139,9 +139,12 @@
                                     }
                                 </div>
                                 <div class="card-toolbar">
-                                    <a data-id="@item.people_id" class="edit-author-reward btn btn-icon btn-sm btn-hover-light-danger" data-toggle="modal" data-target="#editOneReward">
-                                        <i class="far fa-edit"></i>
-                                    </a>
+                                    @if (item.mssv_msnv != null)
+                                    {
+                                        <a data-id="@item.people_id" class="edit-author-reward btn btn-icon btn-sm btn-hover-light-danger" data-toggle="modal" data-target="#editOneReward">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                    }
                                 </div>
                             </div>
                             <div class="card-body">
@@ -182,7 +185,20 @@
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Tiền thưởng: </span>
-                                                <a href="#" class="text-muted text-hover-primary onereward_text" id="tacgia_reward">@item.money_reward</a>
+                                                @{
+                                                    if (item.office_abbreviation == null)
+                                                    {
+
+                                                        <a href="#" class="text-muted text-hover-primary" id="tacgia_reward">@item.money_reward</a>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <a href="#" class="text-muted text-hover-primary onereward_text" name="@item.people_id" id="tacgia_reward">@item.money_reward</a>
+
+                                                    }
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -320,7 +336,7 @@
             $("#loading").show();
             var ck = $("#typereward").val();
             var temp = $("#totalreward").val();
-            if (temp == "") {
+            if (temp == "" || temp == "0") {
                 $("#loading").hide();
                 toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
                 check = false;
@@ -344,11 +360,10 @@
 
             if (check) {
                 people = [];
-                var authors = $(".oneauthor");
                 var authors_reward = $(".onereward_text");
-                for (var i = 0; i < authors.length; i++) {
+                for (var i = 0; i < authors_reward.length; i++) {
                     var person = {
-                        people_id: $(authors)[i].id,
+                        people_id: $(authors_reward)[i].name,
                         money_string: $(authors_reward)[i].text
                     }
                     people.push(person);
@@ -358,13 +373,18 @@
                 var total = $("#totalreward").val();
                 total = total.split(",").join("");
                 for (var i = 0; i < people.length; i++) {
-                    var data = people[i].money_string;
-                    var temp = data.split(",").join("");
-                    sum = parseInt(sum) + parseInt(temp);
+                    if (people[i].money_string != null) {
+                        var data = people[i].money_string;
+                        var temp = data.split(",").join("");
+                        sum = parseInt(sum) + parseInt(temp);
+                    }
                 }
+                //console.log(sum, parseInt(total));
                 if (sum > parseInt(total) && ck == "Quydinh") {
+                    $("#loading").hide();
                     toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
                 } else if (sum < parseInt(total) && ck == "Quydinh") {
+                    $("#loading").hide();
                     toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
                 } else {
                     var paper_id = "@ViewBag.paper.paper_id";
