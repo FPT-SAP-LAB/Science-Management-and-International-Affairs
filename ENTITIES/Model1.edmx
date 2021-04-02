@@ -1184,6 +1184,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_id" Type="int" Nullable="false" />
           <Property Name="partner_scope_id" Type="int" Nullable="false" />
           <Property Name="file_id" Type="int" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="add_time" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AnswerType">
           <Key>
@@ -1479,7 +1481,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AcademicP__artic__3BFFE745">
-          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AcademicProgram" Type="Self.AcademicProgram" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -3517,7 +3521,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
-          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ActivityOffice">
@@ -3565,6 +3571,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Principal>
             <Dependent Role="ActivityExpenseDetail">
               <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityPartner_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ActivityPartner" Type="Self.ActivityPartner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="ActivityPartner">
+              <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4576,6 +4594,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="File" EntitySet="File" />
             <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_ActivityPartner_Account" Association="Self.FK_ActivityPartner_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ActivityPartner" EntitySet="ActivityPartner" />
+          </AssociationSet>
           <AssociationSet Name="FK_ActivityPartner_File" Association="Self.FK_ActivityPartner_File">
             <End Role="File" EntitySet="File" />
             <End Role="ActivityPartner" EntitySet="ActivityPartner" />
@@ -4662,6 +4684,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="Account" ToRole="MOU" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__accou__15A53433" FromRole="Account" ToRole="Notification" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Account" ToRole="Profile" />
+          <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_Account" FromRole="Account" ToRole="ActivityPartner" />
         </EntityType>
         <EntityType Name="AccountRight">
           <Key>
@@ -6103,6 +6126,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="activity_id" Type="Int32" Nullable="false" />
           <Property Name="partner_scope_id" Type="Int32" Nullable="false" />
           <Property Name="file_id" Type="Int32" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_ActivityPartner_Account" FromRole="ActivityPartner" ToRole="Account" />
           <NavigationProperty Name="File" Relationship="Self.FK_ActivityPartner_File" FromRole="ActivityPartner" ToRole="File" />
           <NavigationProperty Name="PartnerScope" Relationship="Self.FK__ActivityP__mou_p__595B4002" FromRole="ActivityPartner" ToRole="PartnerScope" />
           <NavigationProperty Name="AcademicActivity" Relationship="Self.FK__ActivityP__activ__58671BC9" FromRole="ActivityPartner" ToRole="AcademicActivity" />
@@ -6348,6 +6374,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <PropertyRef Name="account_id" />
             </Principal>
             <Dependent Role="Profile">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityPartner_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ActivityPartner" Type="Self.ActivityPartner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="ActivityPartner">
               <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -7029,7 +7067,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AcademicP__artic__3BFFE745">
-          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AcademicProgram" Type="Self.AcademicProgram" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
@@ -8369,7 +8409,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ActivityExpenseCategory_ActivityOffice">
-          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1" />
+          <End Role="ActivityOffice" Type="Self.ActivityOffice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ActivityExpenseCategory" Type="Self.ActivityExpenseCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ActivityOffice">
@@ -8681,6 +8723,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <AssociationSet Name="FK__Profile__account__0BB1B5A5" Association="Self.FK__Profile__account__0BB1B5A5">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityPartner_Account" Association="Self.FK_ActivityPartner_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="ActivityPartner" EntitySet="ActivityPartners" />
           </AssociationSet>
           <AssociationSet Name="FK__AccountRi__right__28ED12D1" Association="Self.FK__AccountRi__right__28ED12D1">
             <End Role="Right" EntitySet="Rights" />
@@ -10624,6 +10670,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="activity_id" ColumnName="activity_id" />
                 <ScalarProperty Name="partner_scope_id" ColumnName="partner_scope_id" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="add_time" ColumnName="add_time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

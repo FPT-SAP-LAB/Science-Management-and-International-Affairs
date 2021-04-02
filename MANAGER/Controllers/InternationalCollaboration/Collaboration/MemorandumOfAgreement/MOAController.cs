@@ -134,5 +134,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult CheckDuplicatedMOACode(string moa_code)
+        {
+            try
+            {
+                bool isDup = moa.getMOACodeCheck(moa_code);
+                return Json(isDup);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
     }
 }
