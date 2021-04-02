@@ -172,14 +172,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public string GetContentLanguage(int procedure_id, int partner_language_type)
+        public ArticleVersion GetContentLanguage(int procedure_id, int partner_language_type)
         {
             try
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 Procedure procedure = db.Procedures.Where(x => x.procedure_id == procedure_id).FirstOrDefault();
                 ArticleVersion articleVersion = db.ArticleVersions.
                     Where(x => x.article_id == procedure.article_id && x.language_id == partner_language_type).FirstOrDefault();
-                return articleVersion?.article_content;
+                return articleVersion ?? new ArticleVersion();
             }
             catch (Exception e)
             {
