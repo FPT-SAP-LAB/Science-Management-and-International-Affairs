@@ -19,9 +19,10 @@ namespace ENTITIES
         public string note { get; set; }
         public int expense_type_id { get; set; }
         public int expense_detail_id { get; set; }
-        public string evidence { get; set; }
+        public Nullable<int> file_id { get; set; }
         public Nullable<int> expense_category_id { get; set; }
     
+        public virtual File File { get; set; }
         public virtual ActivityExpenseCategory ActivityExpenseCategory { get; set; }
         public virtual ActivityExpenseType ActivityExpenseType { get; set; }
     }

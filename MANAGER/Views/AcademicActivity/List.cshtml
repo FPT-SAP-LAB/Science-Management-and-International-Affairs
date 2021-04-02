@@ -519,6 +519,9 @@
                                 save_loader.stopLoading();
                             },
                             error: function (data) {
+                                var itemId = files[0].id;
+                                uppy1.removeFile(itemId);
+                                $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                                 save_loader.stopLoading();
                             },
                             dataType: "json",
