@@ -44,20 +44,15 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             docText = sr.ReadToEnd();
                         }
 
-                        Regex regexText = new Regex("@Day");
-                        docText = regexText.Replace(docText, DateTime.Now.Day.ToString());
-
-                        regexText = new Regex("@Month");
-                        docText = regexText.Replace(docText, DateTime.Now.Month.ToString());
-
-                        regexText = new Regex("@Year");
-                        docText = regexText.Replace(docText, DateTime.Now.Year.ToString());
+                        Regex regexText = new Regex("@Date");
+                        DateTime Now = DateTime.Now;
+                        docText = regexText.Replace(docText, "ngày " + Now.Day + " tháng " + Now.Month + " năm " + Now.Year);
 
                         regexText = new Regex("@Name");
                         docText = regexText.Replace(docText, Participants.FullName);
 
                         regexText = new Regex("@OfficeName");
-                        docText = regexText.Replace(docText, Participants.OfficeName);
+                        docText = regexText.Replace(docText, Conference.SpecializationName + " " + Participants.OfficeName);
 
                         regexText = new Regex("@ConferenceName");
                         docText = regexText.Replace(docText, Conference.ConferenceName);
@@ -77,8 +72,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         regexText = new Regex("@QsUniversity");
                         docText = regexText.Replace(docText, Conference.QsUniversity);
 
-                        regexText = new Regex("@Co_organizedUnit");
-                        docText = regexText.Replace(docText, Conference.Co_organizedUnit);
+                        regexText = new Regex("@CoUnit");
+                        docText = regexText.Replace(docText, Conference.Co_organizedUnit ?? "");
 
                         regexText = new Regex("@Website");
                         docText = regexText.Replace(docText, Conference.Website);
@@ -86,27 +81,15 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         regexText = new Regex("@KeynoteSpeaker");
                         docText = regexText.Replace(docText, Conference.KeynoteSpeaker);
 
-                        regexText = new Regex("@AttendanceStart");
-                        docText = regexText.Replace(docText, Conference.AttendanceStart.ToString("dd/MM/yyyy"));
+                        regexText = new Regex("@Attendance");
+                        docText = regexText.Replace(docText, Conference.AttendanceStart.ToString("dd/MM/yyyy") + " - " + Conference.AttendanceEnd.ToString("dd/MM/yyyy"));
 
-                        regexText = new Regex("@AttendanceEnd");
-                        docText = regexText.Replace(docText, Conference.AttendanceEnd.ToString("dd/MM/yyyy"));
-                        //using (var memStream = new MemoryStream())
-                        //using (var streamWriter = new StreamWriter(memStream))
-                        //{
-                        //    streamWriter.Write(docText);
-
-                        //    streamWriter.Flush();
-                        //    return memStream.ToArray();
-                        //}
                         using (StreamWriter sw = new StreamWriter(doc.MainDocumentPart.GetStream(FileMode.Create)))
                         {
                             sw.Write(docText);
                         }
-                        byte[] buf = (new UTF8Encoding()).GetBytes(docText);
-                        return buf;
+                        return stream.ToArray();
                     }
-                    return stream.ToArray();
                 }
             }
             catch (Exception e)
