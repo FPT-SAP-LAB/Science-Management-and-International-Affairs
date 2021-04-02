@@ -224,6 +224,39 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    //delete partner_scope_id 
+                    //delete from ExMOA => MOA
+                    string sql_moa = @"select t2.* from IA_Collaboration.MOAPartnerScope t1
+                        inner join IA_Collaboration.PartnerScope t2 on 
+                        t1.partner_scope_id = t2.partner_scope_id
+                        where t1.moa_id = @moa_id";
+                    string sql_ex_moa = @"select t3.* from IA_Collaboration.MOABonus t1
+                        inner join IA_Collaboration.MOAPartnerScope t2
+                        on t2.moa_bonus_id = t1.moa_bonus_id
+                        inner join IA_Collaboration.PartnerScope t3
+                        on t3.partner_scope_id = t2.partner_scope_id
+                        where t1.moa_id = @moa_id";
+                    List<PartnerScope> ex_moa_list = db.Database.SqlQuery<PartnerScope>(sql_ex_moa,
+                        new SqlParameter("moa_id", moa_id)).ToList();
+                    List<PartnerScope> moa_list = db.Database.SqlQuery<PartnerScope>(sql_moa,
+                        new SqlParameter("moa_id", moa_id)).ToList();
+
+                    if (ex_moa_list != null)
+                    {
+                        foreach (PartnerScope item in ex_moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    if (moa_list != null)
+                    {
+                        foreach (PartnerScope item in moa_list)
+                        {
+                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                        }
+                    }
+                    db.SaveChanges();
+
                     MOA moa = db.MOAs.Find(moa_id);
                     moa.is_deleted = true;
                     db.Entry(moa).State = EntityState.Modified;
@@ -301,6 +334,18 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
                     new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool getMOACodeCheck(string moa_code)
+        {
+            try
+            {
+                MOA obj = db.MOAs.Where(x => x.moa_code == moa_code).FirstOrDefault();
+                return obj == null ? false : true;
             }
             catch (Exception ex)
             {

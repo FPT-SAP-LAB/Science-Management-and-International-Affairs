@@ -115,14 +115,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                if (Session["moa_detail_id"] is null)
+                if (Session["moa_detail_id"] is null || Session["mou_detail_id"] is null)
                 {
                     return Redirect("../MOU/List");
                 }
                 else
                 {
                     string moa_id = Session["moa_detail_id"].ToString();
-                    ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id);
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id, int.Parse(mou_id));
                     return Json(mouObj, JsonRequestBehavior.AllowGet);
                 }
             }

@@ -302,6 +302,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             reimbursement_string = reimbursement_string.Replace(",", "");
             if (!int.TryParse(reimbursement_string, out int reimbursement))
                 return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
+            if (reimbursement <= 0)
+                return new AlertModal<string>(false, "Tiền hoàn ứng không hợp lệ");
             RequestConference request = db.RequestConferences.Find(request_id);
             if (request == null)
                 return new AlertModal<string>(false, "Đề nghị không tồn tại");

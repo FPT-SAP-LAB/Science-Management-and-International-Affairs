@@ -68,7 +68,9 @@ function checkPersonEdit() {
                         //auto fill data
                         let p = data.obj;
                         $('#going_edit_officer_email').val(p.email);
-                        $('#going_edit_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
+                        if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) {
+                            $('#going_edit_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
+                        }
                         //disable email & office
                         $('#going_edit_officer_email').prop('disabled', true);
                         $('#going_edit_officer_facility').prop('disabled', true);
