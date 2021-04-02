@@ -283,9 +283,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             try
             {
+                int account_id = CurrentAccount.AccountID(Session);
                 partnerRepo = new AcademicActivityPartnerRepo();
                 SaveActivityPartner activityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner);
+                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -313,8 +314,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             try
             {
                 partnerRepo = new AcademicActivityPartnerRepo();
+                int account_id = CurrentAccount.AccountID(Session);
                 SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner);
+                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
