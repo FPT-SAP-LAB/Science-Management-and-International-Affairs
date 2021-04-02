@@ -149,7 +149,12 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult listAuthor(string id)
         {
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, lang);
             string ms = pr.getAuthorReceived(id);
             if (ms == null) ms = "";
             return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
