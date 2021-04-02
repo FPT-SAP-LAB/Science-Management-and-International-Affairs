@@ -279,6 +279,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpenseEstimate> data = expenseRepo.getDatatableKPDuTru(activity_office_id);
             return Json(new { success = true, data = data });
         }
+        [HttpPost]
+        public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, AcademicActivityExpenseRepo.infoExpenseEstimate data, HttpPostedFileBase img)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
+            if (res)
+                return Json("Thêm mục kinh phí dự trù thành công");
+            return Json(String.Empty);
+        }
         public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
         {
             try
@@ -335,11 +344,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 throw e;
             }
-        }
-        public class QuantityByUnit
-        {
-            public string name { get; set; }
-            public int quantity { get; set; }
         }
     }
 }

@@ -1144,7 +1144,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="note" Type="nvarchar" MaxLength="150" />
           <Property Name="expense_type_id" Type="int" Nullable="false" />
           <Property Name="expense_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
+          <Property Name="file_id" Type="int" />
           <Property Name="expense_category_id" Type="int" />
         </EntityType>
         <EntityType Name="ActivityExpenseType">
@@ -3554,6 +3554,20 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ActivityExpenseDetail_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActivityExpenseDetail" Type="Self.ActivityExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseDetail">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ActivityPartner_File">
           <End Role="File" Type="Self.File" Multiplicity="0..1" />
           <End Role="ActivityPartner" Type="Self.ActivityPartner" Multiplicity="*" />
@@ -4558,6 +4572,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="ActivityExpenseType" EntitySet="ActivityExpenseType" />
             <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseDetail_File" Association="Self.FK_ActivityExpenseDetail_File">
+            <End Role="File" EntitySet="File" />
+            <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_ActivityPartner_File" Association="Self.FK_ActivityPartner_File">
             <End Role="File" EntitySet="File" />
             <End Role="ActivityPartner" EntitySet="ActivityPartner" />
@@ -4694,6 +4712,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <NavigationProperty Name="Profiles1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="RequestConferencePolicies" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="File" ToRole="RequestConferencePolicy" />
           <NavigationProperty Name="AcademicActivities" Relationship="Self.FK_AcademicActivity_File" FromRole="File" ToRole="AcademicActivity" />
+          <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_File" FromRole="File" ToRole="ActivityExpenseDetail" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_File" FromRole="File" ToRole="ActivityPartner" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK_CollaborationStatusHistory_File" FromRole="File" ToRole="CollaborationStatusHistory" />
         </EntityType>
@@ -6037,8 +6056,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="expense_type_id" Type="Int32" Nullable="false" />
           <Property Name="expense_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="file_id" Type="Int32" />
           <Property Name="expense_category_id" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="Self.FK_ActivityExpenseDetail_File" FromRole="ActivityExpenseDetail" ToRole="File" />
           <NavigationProperty Name="ActivityExpenseCategory" Relationship="Self.FK_ActivityExpenseDetail_ActivityExpenseCategory" FromRole="ActivityExpenseDetail" ToRole="ActivityExpenseCategory" />
           <NavigationProperty Name="ActivityExpenseType" Relationship="Self.FK_ActivityExpenseDetail_ActivityExpenseType" FromRole="ActivityExpenseDetail" ToRole="ActivityExpenseType" />
         </EntityType>
@@ -6508,6 +6528,20 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
               <PropertyRef Name="file_id" />
             </Principal>
             <Dependent Role="AcademicActivity">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityExpenseDetail_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActivityExpenseDetail" Type="Self.ActivityExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ActivityExpenseDetail">
               <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8708,6 +8742,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
             <End Role="File" EntitySet="Files" />
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
           </AssociationSet>
+          <AssociationSet Name="FK_ActivityExpenseDetail_File" Association="Self.FK_ActivityExpenseDetail_File">
+            <End Role="File" EntitySet="Files" />
+            <End Role="ActivityExpenseDetail" EntitySet="ActivityExpenseDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_ActivityPartner_File" Association="Self.FK_ActivityPartner_File">
             <End Role="File" EntitySet="Files" />
             <End Role="ActivityPartner" EntitySet="ActivityPartners" />
@@ -10542,7 +10580,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="expense_type_id" ColumnName="expense_type_id" />
                 <ScalarProperty Name="expense_detail_id" ColumnName="expense_detail_id" />
-                <ScalarProperty Name="evidence" ColumnName="evidence" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
                 <ScalarProperty Name="expense_category_id" ColumnName="expense_category_id" />
               </MappingFragment>
             </EntityTypeMapping>
