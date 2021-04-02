@@ -716,5 +716,42 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
+        public IntersectPeriodMOUDate checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date)
+        {
+            string partner_id_para = "";
+            foreach (PartnerInfo item in PartnerInfo)
+            {
+                partner_id_para += (item.partner_id + ",");
+            }
+            partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
+            string query = @"select count(*) as num_check,max(mou_start_date) as mou_start_date
+                , mou_end_date, t2.mou_id, t2.mou_code
+                 from IA_Collaboration.MOUPartner t1
+                inner join IA_Collaboration.MOU t2
+                on t2.mou_id = t1.mou_id
+                where t1.partner_id in (" + partner_id_para + @")
+                group by mou_end_date, t2.mou_id, t2.mou_code
+                having count(*) = @partner_count
+                order by mou_id";
+            List<IntersectPeriodMOUDate> obj = db.Database.SqlQuery<IntersectPeriodMOUDate>(query,
+                    new SqlParameter("partner_count", PartnerInfo.Count)).ToList();
+            DateTime current_start_date = DateTime.ParseExact(start_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime current_end_date = DateTime.ParseExact(end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            foreach (IntersectPeriodMOUDate item in obj)
+            {
+                if (DateRangeisInvalid(item.mou_start_date, item.mou_end_date, current_start_date, current_end_date))
+                {
+                    item.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
+                    item.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
+                    return item;
+                }
+            }
+            return new IntersectPeriodMOUDate();
+        }
+        public bool DateRangeisInvalid(DateTime start, DateTime end, DateTime test_start, DateTime test_end)
+        {
+            return !(test_end < start || test_start > end);
+        }
     }
 }

@@ -24,8 +24,8 @@ namespace ENTITIES
             this.AcademicDegreeTypeLanguages = new HashSet<AcademicDegreeTypeLanguage>();
             this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
-            this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
+            this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
             this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.NotificationLanguages = new HashSet<NotificationLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
@@ -54,9 +54,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormalityLanguage> FormalityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AcademicActivityTypeLanguage> AcademicActivityTypeLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AcademicActivityTypeLanguage> AcademicActivityTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

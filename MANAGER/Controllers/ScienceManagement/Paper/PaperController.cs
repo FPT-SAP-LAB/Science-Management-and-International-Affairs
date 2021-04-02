@@ -46,13 +46,13 @@ namespace MANAGER.Controllers
             List<PaperType> listType = mdr.getPaperType();
             ViewBag.type = listType;
 
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
+            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, "vi-VN");
             ViewBag.author = listAuthor;
 
             ViewBag.request_id = paper.request_id;
 
-            Person p = pr.getAuthorReceived_all(id);
-            if (p == null) p = new Person();
+            Author p = pr.getAuthorReceived_all(id);
+            if (p == null) p = new Author();
             ViewBag.p = p;
 
             return View();
@@ -102,7 +102,7 @@ namespace MANAGER.Controllers
             Paper_Appendix_1 temp = new Paper_Appendix_1();
             foreach (var item in list1)
             {
-                if (item.author_name != temp.author_name)
+                if (item.author_name != temp.author_name && item.mssv_msnv != temp.mssv_msnv)
                 {
                     excelWorksheet1.Cells[i, 1].Value = count;
                     excelWorksheet1.Cells[i, 2].Value = item.author_name;
@@ -125,7 +125,7 @@ namespace MANAGER.Controllers
             Paper_Appendix_1 temp2 = new Paper_Appendix_1();
             foreach (var item in list2)
             {
-                if (item.author_name != temp2.author_name)
+                if (item.author_name != temp2.author_name && item.mssv_msnv != temp.mssv_msnv)
                 {
                     excelWorksheet2.Cells[i, 1].Value = count;
                     excelWorksheet2.Cells[i, 2].Value = item.author_name;

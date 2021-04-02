@@ -62,7 +62,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
                                                SpecializationID = k.specialization_id,
-                                               SpecializationName = k.name
+                                               SpecializationName = k.name,
+                                               AccountID = account_id
                                            }).FirstOrDefault();
             if (Conference == null)
                 return null;

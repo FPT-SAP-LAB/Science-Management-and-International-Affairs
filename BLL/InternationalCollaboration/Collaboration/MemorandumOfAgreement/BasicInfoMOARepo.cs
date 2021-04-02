@@ -242,43 +242,42 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     });
                     db.SaveChanges();
                     //check PartnerScope and add MOAPartnerScope.
-                    foreach (PartnerScopeInfoMOA psMOA in input.PartnerScopeInfoMOA.ToList())
+                    if (input.PartnerScopeInfoMOA != null)
                     {
-                        foreach (int scopeItem in psMOA.scopes_id.ToList())
+                        foreach (PartnerScopeInfoMOA psMOA in input.PartnerScopeInfoMOA.ToList())
                         {
-                            int partner_scope_id_item = 0;
-                            PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psMOA.partner_id && x.scope_id == scopeItem).First();
-                            if (psCheck == null)
+                            foreach (int scopeItem in psMOA.scopes_id.ToList())
                             {
-                                PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                int partner_scope_id_item = 0;
+                                PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == psMOA.partner_id && x.scope_id == scopeItem).First();
+                                if (psCheck == null)
                                 {
-                                    partner_id = psMOA.partner_id,
-                                    scope_id = scopeItem,
-                                    reference_count = 1
+                                    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                                    {
+                                        partner_id = psMOA.partner_id,
+                                        scope_id = scopeItem,
+                                        reference_count = 1
+                                    });
+                                    partner_scope_id_item = psAdded.partner_scope_id;
+                                }
+                                else
+                                {
+                                    partner_scope_id_item = psCheck.partner_scope_id;
+                                    psCheck.reference_count += 1;
+                                }
+                                db.SaveChanges();
+                                //add to MOAPartnerScope
+                                db.MOAPartnerScopes.Add(new MOAPartnerScope
+                                {
+                                    partner_scope_id = partner_scope_id_item,
+                                    moa_id = moa_id,
+                                    moa_bonus_id = objMOABonusAdded.moa_bonus_id
                                 });
-                                partner_scope_id_item = psAdded.partner_scope_id;
+                                db.SaveChanges();
                             }
-                            else
-                            {
-                                partner_scope_id_item = psCheck.partner_scope_id;
-                                psCheck.reference_count += 1;
-                            }
-                            db.SaveChanges();
-                            //add to MOAPartnerScope
-                            db.MOAPartnerScopes.Add(new MOAPartnerScope
-                            {
-                                partner_scope_id = partner_scope_id_item,
-                                moa_id = moa_id,
-                                moa_bonus_id = objMOABonusAdded.moa_bonus_id
-                            });
-                            db.SaveChanges();
                         }
                     }
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -377,8 +376,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 {
                     //finding old exScope of exMOU.
                     List<MOAPartnerScope> exList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == moa_bonus_id).ToList();
-                    exList.Clear();
-                    db.Entry(exList).State = EntityState.Modified;
+                    db.MOAPartnerScopes.RemoveRange(exList);
+                    db.SaveChanges();
 
                     //add new record of MOuPartnerScope
                     MOABonu m = db.MOABonus.Find(moa_bonus_id);

@@ -340,5 +340,17 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
+        public bool getMOACodeCheck(string moa_code)
+        {
+            try
+            {
+                MOA obj = db.MOAs.Where(x => x.moa_code == moa_code).FirstOrDefault();
+                return obj == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

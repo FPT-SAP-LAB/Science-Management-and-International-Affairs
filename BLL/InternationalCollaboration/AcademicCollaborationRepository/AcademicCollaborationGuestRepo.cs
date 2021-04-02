@@ -189,7 +189,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
                 join Localization.[Language] la on la.language_id = av.language_id
-                join IA_Collaboration.[Partner] pa on pa.partner_id = ap.partner_id
+                left join IA_Collaboration.[Partner] pa on pa.partner_id = ap.partner_id
                 where la.language_id = @language and ap.program_id = @id";
                 ProgramInfo obj = db.Database.SqlQuery<ProgramInfo>(sql, new SqlParameter("language", language),
                         new SqlParameter("id", id)).FirstOrDefault();

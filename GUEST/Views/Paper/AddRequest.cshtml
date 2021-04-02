@@ -234,8 +234,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    //alert(response.mess);
-                    addAuthor();
+                    $("#loading").hide();
+                    $("#nameEdit").val(paper_id);
+                    $("#ckEdit").val(3);
+                    $("#PaperForm").submit();
                 },
                 error: function () {
                     //alert("fail");
@@ -252,7 +254,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    addCriteria();
+                    addRequest();
                 },
                 error: function () {
                     //alert("fail");
@@ -270,10 +272,7 @@
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        $("#loading").hide();
-                        $("#nameEdit").val(paper_id);
-                        $("#ckEdit").val(3);
-                        $("#PaperForm").submit();
+                        addAuthor();
                     }
                 },
                 error: function () {
@@ -332,7 +331,7 @@
                     success: function (response) {
                         if (response.mess == "ss") {
                             paper_id = response.id;
-                            addRequest();
+                            addCriteria();
                         }
                         else alert('loi');
                     },
