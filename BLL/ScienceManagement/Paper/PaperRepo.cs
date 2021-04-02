@@ -50,7 +50,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfoWithNull> getAuthorPaper(string id, string lang)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher'
+            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher', ap.money_reward
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].Author ah on ah.people_id = ap.people_id
 	                            left join (select ah.people_id, tl.name
@@ -91,6 +91,26 @@ namespace BLL.ScienceManagement.Paper
                 if (item.title_id_string != null) item.title_id = item.title_id_string.Value;
             }
             return list;
+        }
+
+        public string getDecisionLink(int id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            try
+            {
+                string sql = @"select f.link
+                                from [SM_ScientificProduct].RequestPaper rp join [SM_Request].RequestDecision rd on rd.request_id = rp.request_id
+	                                join [SM_Request].Decision d on rd.decision_id = d.decision_id
+	                                join [General].[File] f on f.file_id = d.file_id
+                                where rp.paper_id = @id";
+                string link = db.Database.SqlQuery<string>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                return link;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
         }
 
         public ENTITIES.Paper addPaper(DetailPaper item)

@@ -129,7 +129,7 @@ namespace GUEST.Controllers
         public JsonResult editRequest(RequestPaper item)
         {
             string mess = pr.updateRequest(item);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = item.paper_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -165,6 +165,13 @@ namespace GUEST.Controllers
         {
             string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult getDecision(int id)
+        {
+            string link = pr.getDecisionLink(id);
+            return Json(new { link = link }, JsonRequestBehavior.AllowGet);
         }
     }
 }
