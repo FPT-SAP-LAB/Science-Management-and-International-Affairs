@@ -839,7 +839,7 @@
                     orderable: false,
                     render: function (data) {
                         return '<a href="#edit_additional_moa" onclick=editExMOA(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" data-toggle="modal" style="margin-right: 10px;">Sửa</a>' +
-                        '<a onclick="confirm_delete_moa(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
+                        '<a onclick="deleteExMOA(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 }
                 ],
@@ -854,12 +854,12 @@
 
         function deleteExMOA(id) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Cảnh báo",
+                text: "Dữ liệu trên sẽ không thể khôi phục sau khi xóa",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
@@ -870,7 +870,12 @@
                             if (data = "") {
                                 Swal.fire("Good job!", "You clicked the button!", "error");
                             } else {
-                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                                Swal.fire("Thành công",
+                                    "Đã xóa thành công.", "success").then(function (result) {
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
                             }
                         },
                         error: function (data) {
@@ -1255,10 +1260,6 @@
             }
             else if (ExMOACodeIsInvalid($('#moa_id_addition').val().trim())) {
                 toastr.error('Số hiệu không hợp lệ');
-                return;
-            }
-            else if (listTempExMOAPartnerScope.length == 0) {
-                toastr.error('Chưa có đối tác nào được thêm');
                 return;
             }
             else if (compareDate($('#sign_date_moa').val(), $('#moa_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
