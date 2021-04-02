@@ -114,7 +114,8 @@ namespace GUEST.Controllers
             ViewBag.output = output;
             return View();
         }
-        public ActionResult UpdateCost(int request_id, List<Cost> costs)
+        [AjaxOnly]
+        public JsonResult UpdateCost(int request_id, List<Cost> costs)
         {
             CostRepo costRepo = new CostRepo();
             int Times = costRepo.Update(request_id, CurrentAccount.AccountID(Session), costs);
