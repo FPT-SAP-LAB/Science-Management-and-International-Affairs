@@ -517,8 +517,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acShortRepo = new AcademicCollaborationShortRepo();
-                string content = acShortRepo.GetContentLanguage(procedure_id, language_id);
-                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), content });
+                ArticleVersion articleVersion = acShortRepo.GetContentLanguage(procedure_id, language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
             }
             catch (Exception e)
             {
@@ -677,6 +677,87 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 return Json(new { json.success, json.content });
             }
         }
+
+        public ActionResult DeleteProgram(string article_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                AlertModal<string> json = acProgramRepo.DeleteProgram(Int32.Parse(article_id));
+                return Json(new { json.success, json.content });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                AlertModal<string> json_false = new AlertModal<string>(false, "Có lỗi xảy ra");
+                return Json(new { json_false.success, json_false.content });
+            }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult SaveEditProgram(string program_id, string content, int numberOfImage, string program_title,
+            int program_language, string program_partner, string program_range_date, string note, string direction)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+
+                List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
+                for (int i = 0; i < numberOfImage; i++)
+                {
+                    string label = "image_" + i;
+                    files_request.Add(Request.Files[label]);
+                }
+                if (acc.account_id == 0)
+                {
+                    return Json(new
+                    {
+                        json = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài")
+                    });
+                }
+                else
+                {
+                    AlertModal<string> json = acProgramRepo.SaveEditProgram(files_request, Int32.Parse(program_id), program_title, content, numberOfImage, program_language,
+                        program_partner, program_range_date, note, Int32.Parse(direction), acc.account_id);
+                    return Json(new { json.success, json.content });
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadProgramDetailLanguage(string program_id, int language_id)
+        {
+            try
+            {
+                acProgramRepo = new AcademicCollaborationProgramRepo();
+                ArticleVersion articleVersion = acProgramRepo.LoadProgramDetailLanguage(Int32.Parse(program_id), language_id);
+                return Json(new { json = new AlertModal<string>(true, "Đổi ngôn ngữ thành công"), articleVersion });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return Json(new
+                {
+                    json = new AlertModal<string>(false, "Có lỗi xảy ra")
+                });
+            }
+        }
+
         public ActionResult Get_Status_History(string id)
         {
             try
