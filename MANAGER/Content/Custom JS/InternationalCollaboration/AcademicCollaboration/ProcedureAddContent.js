@@ -13,14 +13,10 @@ var save_loader = new LoaderBtn($(".load-btn"))
 var direction = 1;
 $("#add_procedure_coming").click(function() {
     direction = 2;
-    $('#add_procedure input').val('');
-    $('#add_procedure .summernote').summernote('code', '<p><br></p>');
 })
 
 $("#add_procedure_going").click(function() {
     direction = 1;
-    $('#add_procedure input').val('');
-    $('#add_procedure .summernote').summernote('code', '<p><br></p>');
 })
 
 $('#save_procedure').click(function() {
@@ -33,7 +29,7 @@ $('#save_procedure').click(function() {
         toastr.warning("Vui lòng nhập tiêu đề")
         return;
     }
-    var content = $('.summernote').summernote('code') + "";
+    var content = $('#add_summernote').summernote('code') + "";
 
     var list_image = $('.note-editor').find('img')
     if (list_image.length != 0) {
@@ -88,7 +84,7 @@ $('#save_procedure').click(function() {
 
                 $('#add_procedure').modal('hide')
                 $('#add_procedure input').val('');
-                $('#add_procedure .summernote').summernote('code', '');
+                $('#add_summernote').summernote('reset');
 
                 save_loader.stopLoading()
 

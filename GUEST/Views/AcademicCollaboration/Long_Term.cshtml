@@ -263,7 +263,7 @@
                 type: "POST",
                 datatype: "json",
                 data: {
-                    "collabtype": 1,
+                    "collabtype": 2,
                         "partner": function () { return $('#search_partner_tab_2').val() },
                         "countrystr": function () { return $('#search_nation_tab_2').val() },
                         "yearstr": function () { return $('#search_year_tab_2').val() },
@@ -289,7 +289,7 @@
                         return '<a onclick="load_detail.load_program_detail(' + data.program_id + ')" class="link-load-detail">' + data.program_name + '</a>';
                     },
                     editField: ['program_id', 'program_name'],
-                    name: ['program_name']
+                    name: 'program_name'
                 },
                 {
                     data: "registration_deadline",
