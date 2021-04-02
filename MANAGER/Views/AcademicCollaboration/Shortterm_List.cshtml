@@ -217,7 +217,7 @@
     Html.RenderPartial("PartialView/Short_Term_Modal_Edit_Procedure");
 }
 
-@*modal add program gong*@
+@*modal add program going*@
 @{
     Html.RenderPartial("PartialView/Modal_Add_Program_Going");
 }
@@ -227,11 +227,14 @@
     Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
 }
 
-@*modal edit program*@
+@*modal edit program going*@
 @{
     Html.RenderPartial("PartialView/Modal_Edit_Program_Going");
 }
-
+@*modal edit program coming*@
+@{
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Coming");
+}
 @*SHORT-TERM MODAL*@
 @*modal add officer going*@
 @{
@@ -295,6 +298,9 @@
         $('#edit_program_language_going').select2({
             placeholder: 'Ngôn ngữ',
         })
+        $('#edit_program_language_coming').select2({
+            placeholder: 'Ngôn ngữ',
+        })
     </script>
     @* -----------------delete, load detail, change language procedure----------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProcedure.js"></script>
@@ -305,20 +311,19 @@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
     @* -----------------delete, load detail, change language program----------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProgram.js"></script>
+
+    @* -----------------save edit program--------------------------------------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Edit.js"></script>
     <script>
         //table 3
         $('#search_status_tab_2_table_1').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
     </script>
     <script>
         //table 4
         $('#search_status_tab_2_table_2').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
     </script>
     <script>
@@ -351,21 +356,42 @@
     <script>
         var KTSummernoteDemo = function () {
             // Private functions
-            var demos = function () {
-                $('.summernote').summernote({
+            var add_summernote_going = function () {
+                $('#add_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var add_summernote_coming = function () {
+                $('#add_summernote_coming').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_going = function () {
+                $('#edit_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_coming = function () {
+                $('#edit_summernote_coming').summernote({
                     height: 400,
                     tabsize: 2
                 });
             }
 
+
             return {
                 // public functions
                 init: function () {
-                    demos();
+                    add_summernote_going();
+                    add_summernote_coming();
+                    edit_summernote_going();
+                    edit_summernote_coming();
                 }
             };
         }();
-
         // Initialization
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();

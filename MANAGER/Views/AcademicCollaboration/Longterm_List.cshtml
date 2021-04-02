@@ -203,6 +203,14 @@
 @{
     Html.RenderPartial("PartialView/Modal_Add_Program_Coming");
 }
+@*modal edit program going*@
+@{
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Going");
+}
+@*modal edit program coming*@
+@{
+    Html.RenderPartial("PartialView/Modal_Edit_Program_Coming");
+}
 @section scripts{
     @*datepicker and range*@
     <script src="~/Content/Custom JS/InternationalCollaboration/kt_datetimepicker_3_and_range.js"></script>
@@ -252,9 +260,20 @@
             var file = new Blob([new Uint8Array(array)], { type: mimeString });
             return file;
         }
-    </script>
-    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
 
+        $('#edit_program_language_going').select2({
+            placeholder: 'Ngôn ngữ',
+        })
+        $('#edit_program_language_coming').select2({
+            placeholder: 'Ngôn ngữ',
+        })
+    </script>
+    @*---------------------------------------- add program------------------------------------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Add.js"></script>
+    @* -----------------delete, load detail, change language program----------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/RUDProgram.js"></script>
+    @* -----------------save edit program--------------------------------------------- *@
+    <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Edit.js"></script>
     <script>
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -266,8 +285,6 @@
         //table 3
         $('#search_status_tab_2_table_1').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
     </script>
 
@@ -275,13 +292,9 @@
         //table 4
         $('#search_status_tab_2_table_2').select2({
             placeholder: 'Trạng thái',
-            allowClear: true,
-            tags: true,
         })
     </script>
-
     <script>
-
         //collapse div
         $('#collapse_btn_tab_1').click(function () {
             $('.collapse_tab_1').toggle(700)
@@ -308,21 +321,42 @@
     <script>
         var KTSummernoteDemo = function () {
             // Private functions
-            var demos = function () {
-                $('.summernote').summernote({
+            var add_summernote_going = function () {
+                $('#add_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var add_summernote_coming = function () {
+                $('#add_summernote_coming').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_going = function () {
+                $('#edit_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_coming = function () {
+                $('#edit_summernote_coming').summernote({
                     height: 400,
                     tabsize: 2
                 });
             }
 
+
             return {
                 // public functions
                 init: function () {
-                    demos();
+                    add_summernote_going();
+                    add_summernote_coming();
+                    edit_summernote_going();
+                    edit_summernote_coming();
                 }
             };
         }();
-
         // Initialization
         jQuery(document).ready(function () {
             KTSummernoteDemo.init();

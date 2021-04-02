@@ -9,13 +9,11 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <label style="color:red">*</label>
                         <label class="font-weight-bolder">Tên đối tác</label>
-                        <label style="color:blue" class="float-right"><a href="javascript:" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>
-                        @*<div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                <input type="text" class="form-control" id="partner_name_add" list="partnerList" onchange="preventAdd()" />
-                            </div>*@
+                        @*<label style="color:blue" class="float-right"><a href="javascript:" onclick="checkPartnerAddMOA()" onchange="preventAddMOA()">Kiểm tra</a></label>*@
                         <input hidden readonly type="text" class="form-control" id="moa_partner_id_add" placeholder="" name="" value="" />
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                             <select class="form-control select-search" id="moa_partner_name_add" name="param" list="officeList" style="width:100% !important">
+                                <option selected value=""></option>
                                 @foreach (var item in ViewBag.listPartnersMOA)
                                 {
                                     <option value="@item.partner_id">@item.partner_name</option>

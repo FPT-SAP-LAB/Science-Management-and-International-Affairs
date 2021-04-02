@@ -154,17 +154,133 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         program_name = articleVersion.version_title,
                         language_id = articleVersion.language_id,
-                        partner_id = academicProgram.partner_id,
                         content = articleVersion.article_content,
                         note = academicProgram.note,
                         registration_deadline = academicProgram.program_start_date.ToString("dd/MM/yyyy") + " - " + academicProgram.program_end_date.ToString("dd/MM/yyyy")
                     };
+                    if (academicProgram.partner_id != null)
+                    {
+                        programInfoManager.partner_id = academicProgram.partner_id;
+                        programInfoManager.partner_name = db.Partners.Find(academicProgram.partner_id).partner_name;
+                    }
                     return programInfoManager;
                 }
                 else
                 {
                     return new ProgramInfoManager();
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<string> DeleteProgram(int article_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Articles.Remove(db.Articles.Find(article_id));
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
+            }
+        }
+
+        public AlertModal<string> SaveEditProgram(List<HttpPostedFileBase> files_request, int program_id, string program_title,
+            string content, int number_of_image, int program_language, string program_partner, string program_range_date, string note,
+            int direction, int account_id)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    List<string> image_drive_id = new List<string>();
+                    List<string> image_drive_data_link = new List<string>();
+                    List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+                    if (files_request.Count != 0)
+                    {
+                        if (GoogleDriveService.credential == null && GoogleDriveService.driveService == null)
+                        {
+                            return new AlertModal<string>(false, "Vui lòng liên hệ với quản trị hệ thống để được cấp quyền");
+                        }
+                        else
+                        {
+                            files_upload = GoogleDriveService.UploadIAFile(files_request, program_title, 4, false);
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                image_drive_id.Add(files_upload[i].Id);
+                                image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            }
+                            for (int i = 0; i < number_of_image; i++)
+                            {
+                                content = content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            }
+                        }
+                    }
+                    AcademicProgram academicProgram = db.AcademicPrograms.Find(program_id);
+                    academicProgram.program_start_date = DateTime.ParseExact(program_range_date.Split('-')[0].Trim(), "dd/MM/yyyy", null);
+                    academicProgram.program_end_date = DateTime.ParseExact(program_range_date.Split('-')[1].Trim(), "dd/MM/yyyy", null);
+                    academicProgram.note = note;
+                    if (direction == 1)
+                    {
+                        int partner_id = Int32.Parse(program_partner.Split('/').LastOrDefault());
+                        academicProgram.partner_id = partner_id;
+                    }
+
+                    Article article = db.Articles.Find(academicProgram.article_id);
+                    if (article != null)
+                    {
+                        article.account_id = account_id;
+                    }
+                    ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id ==
+                    academicProgram.article_id && x.language_id == program_language).FirstOrDefault();
+                    if (articleVersion != null)
+                    {
+                        articleVersion.article_content = content;
+                        articleVersion.version_title = program_title;
+                    }
+                    else
+                    {
+                        articleVersion = new ArticleVersion
+                        {
+                            article_id = article.article_id,
+                            article_content = content,
+                            language_id = program_language,
+                            publish_time = DateTime.Today,
+                            version_title = program_title,
+                        };
+                        db.ArticleVersions.Add(articleVersion);
+                    }
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(true);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw e;
+                }
+            }
+        }
+
+        public ArticleVersion LoadProgramDetailLanguage(int program_id, int language_id)
+        {
+            try
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                AcademicProgram academicProgram = db.AcademicPrograms.Where(x => x.program_id == program_id).FirstOrDefault();
+                ArticleVersion articleVersion = db.ArticleVersions.
+                    Where(x => x.article_id == academicProgram.article_id && x.language_id == language_id).FirstOrDefault();
+                return articleVersion ?? new ArticleVersion();
             }
             catch (Exception e)
             {

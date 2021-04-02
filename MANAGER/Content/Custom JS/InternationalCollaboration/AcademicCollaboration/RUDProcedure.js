@@ -77,7 +77,8 @@ $('#edit_procedure_language').select2({
             "language_id": $('#edit_procedure_language').val()
         },
         success: function (data) {
-            $('#edit_summernote').summernote('code', data.content)
+            $('#edit_procedure_title').val(data.articleVersion.version_title)
+            $('#edit_summernote').summernote('code', data.articleVersion.article_content)
         },
         error: function () {
         }
