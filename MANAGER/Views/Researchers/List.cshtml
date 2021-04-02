@@ -80,13 +80,9 @@
             </thead>
         </table>
         <!--end: Datatable-->
-        <div class="mb-7">
-            <div class="row align-items-center">
-                <div class="col-lg-12 col-xl-12">
-                    <div id="table-loader" class="spinner spinner-primary mr-15 spinner-center spinner-lg mr-15" ></div>
-                </div>
-            </div>
-        </div>
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
     </div>
 </div>
 <!-- Modal-->
@@ -222,7 +218,7 @@
                         },
                     ],
                     initComplete: function (settings, json) {
-                        $("#table-loader").hide()
+                        $("#loader_panel").hide()
                     }
                 });
                 table.on('change', 'tbody tr .checkbox', function () {

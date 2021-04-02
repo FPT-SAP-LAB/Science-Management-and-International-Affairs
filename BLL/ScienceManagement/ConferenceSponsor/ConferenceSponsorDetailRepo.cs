@@ -124,7 +124,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                      }).ToList();
             return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail });
         }
-        public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id)
+        public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id, string comment)
         {
             int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
             if (position_id == null)
@@ -158,7 +158,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Request.Conference.is_verified = true;
                         }
 
-                        ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+                        ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id, comment);
 
                         db.SaveChanges();
                         trans.Commit();
@@ -173,7 +173,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
             }
         }
-        public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id)
+        public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id, string comment)
         {
             int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
             if (position_id == null)
@@ -211,7 +211,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             Request.status_id = 4;
                     }
 
-                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id);
+                    ApprovalProcessRepo.Add(db, account_id, DateTime.Now, position_id, request_id, comment);
 
                     db.SaveChanges();
                     trans.Commit();

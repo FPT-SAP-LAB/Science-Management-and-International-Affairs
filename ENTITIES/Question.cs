@@ -19,6 +19,7 @@ namespace ENTITIES
         public string title { get; set; }
         public int answer_type_id { get; set; }
         public bool is_compulsory { get; set; }
+        public Nullable<bool> is_changeable { get; set; }
     
         public virtual AnswerType AnswerType { get; set; }
         public virtual Form Form { get; set; }

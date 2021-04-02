@@ -349,6 +349,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int question_id { get; set; }
             public string title { get; set; }
             public int answer_type_id { get; set; }
+            public int? is_compulsory { get; set; }
+            public int? is_changeable { get; set; }
+        }
+        public class CustomQuestion
+        {
+            public string title { get; set; }
             public int is_compulsory { get; set; }
         }
         public class QuesOption
