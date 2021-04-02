@@ -153,7 +153,8 @@ $('.add_program_btn').click(function() {
                 $('.modal-add-program .kt_daterangepicker_1').val(moment().format('DD/MM/yyyy') + ' - ' + moment().format('DD/MM/yyyy'));
                 $('.modal-add-program select').val('').trigger('change');
                 $('.modal-add-program .program_language').val('1').trigger('change');
-                $('.modal-add-program .summernote').summernote('code', '<p><br></p>');
+                $('#add_summernote_going').summernote('reset');
+                $('#add_summernote_coming').summernote('reset');
                 $('.modal-add-program').modal('hide')
 
                 save_loader.stopLoading()

@@ -279,13 +279,23 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpenseEstimate> data = expenseRepo.getDatatableKPDuTru(activity_office_id);
             return Json(new { success = true, data = data });
         }
+        [HttpPost]
+        public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, AcademicActivityExpenseRepo.infoExpenseEstimate data, HttpPostedFileBase img)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
+            if (res)
+                return Json("Thêm mục kinh phí dự trù thành công");
+            return Json(String.Empty);
+        }
         public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
         {
             try
             {
+                int account_id = CurrentAccount.AccountID(Session);
                 partnerRepo = new AcademicActivityPartnerRepo();
                 SaveActivityPartner activityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner);
+                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -313,8 +323,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             try
             {
                 partnerRepo = new AcademicActivityPartnerRepo();
+                int account_id = CurrentAccount.AccountID(Session);
                 SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner);
+                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -335,11 +346,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             {
                 throw e;
             }
-        }
-        public class QuantityByUnit
-        {
-            public string name { get; set; }
-            public int quantity { get; set; }
         }
     }
 }

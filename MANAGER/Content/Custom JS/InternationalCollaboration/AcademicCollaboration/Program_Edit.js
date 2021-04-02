@@ -98,7 +98,8 @@ $('.edit_program_btn').click(function () {
                 $('.modal-edit-program .kt_daterangepicker_1').val(moment().format('DD/MM/yyyy') + ' - ' + moment().format('DD/MM/yyyy'));
                 $('.modal-edit-program select').val('').trigger('change');
                 $('.modal-edit-program .program_language').val('1').trigger('change');
-                $('.modal-edit-program .summernote').summernote('code', '<p><br></p>');
+                $('#edit_summernote_going').summernote('reset');
+                $('#edit_summernote_coming').summernote('reset');
                 $('.modal-edit-program').modal('hide')
 
                 save_loader.stopLoading()

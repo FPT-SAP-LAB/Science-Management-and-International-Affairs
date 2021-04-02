@@ -321,17 +321,39 @@
     <script>
         var KTSummernoteDemo = function () {
             // Private functions
-            var demos = function () {
-                $('.summernote').summernote({
+            var add_summernote_going = function () {
+                $('#add_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var add_summernote_coming = function () {
+                $('#add_summernote_coming').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_going = function () {
+                $('#edit_summernote_going').summernote({
+                    height: 400,
+                    tabsize: 2
+                });
+            }
+            var edit_summernote_coming = function () {
+                $('#edit_summernote_coming').summernote({
                     height: 400,
                     tabsize: 2
                 });
             }
 
+
             return {
                 // public functions
                 init: function () {
-                    demos();
+                    add_summernote_going();
+                    add_summernote_coming();
+                    edit_summernote_going();
+                    edit_summernote_coming();
                 }
             };
         }();
