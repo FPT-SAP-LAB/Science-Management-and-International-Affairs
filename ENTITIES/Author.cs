@@ -26,7 +26,7 @@ namespace ENTITIES
         public string name { get; set; }
         public string email { get; set; }
         public Nullable<int> office_id { get; set; }
-        public string bank_number { get; set; }
+        public Nullable<long> bank_number { get; set; }
         public string bank_branch { get; set; }
         public Nullable<long> tax_code { get; set; }
         public string identification_number { get; set; }
@@ -35,11 +35,8 @@ namespace ENTITIES
         public Nullable<int> title_id { get; set; }
         public Nullable<int> contract_id { get; set; }
     
-        public virtual Office Office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestCitation> RequestCitations { get; set; }
-        public virtual ContractType ContractType { get; set; }
-        public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorInvention> AuthorInventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

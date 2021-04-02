@@ -23,7 +23,6 @@ namespace ENTITIES
         public int request_id { get; set; }
         public int status_id { get; set; }
         public int people_id { get; set; }
-        public string current_mssv_msnv { get; set; }
         public Nullable<int> total_reward { get; set; }
     
         public virtual Author Author { get; set; }

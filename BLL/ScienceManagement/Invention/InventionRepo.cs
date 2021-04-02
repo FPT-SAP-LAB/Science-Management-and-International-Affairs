@@ -212,7 +212,7 @@ namespace BLL.ScienceManagement.Invention
                                            where b.email == item.email
                                            select a).FirstOrDefault();
                             pro.bank_branch = item.bank_branch;
-                            pro.bank_number = item.bank_number;
+                            //pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
@@ -256,7 +256,7 @@ namespace BLL.ScienceManagement.Invention
                     {
                         people_id = item.people_id,
                         invention_id = invention_id,
-                        current_mssv_msnv = item.mssv_msnv,
+                        //current_mssv_msnv = item.mssv_msnv,
                         money_reward = item.money_reward
                     };
                     db.AuthorInventions.Add(ap);

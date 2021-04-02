@@ -23,7 +23,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 			                            group by p.paper_id) as a on p.paper_id = a.paper_id
 	                            join(select p.paper_id, STRING_AGG(po.name, ',') AS 'author'
 			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
-				                            join [General].People po on ap.people_id = po.people_id
+				                            join [SM_ScientificProduct].Author po on ap.people_id = po.people_id
 			                            group by p.paper_id) as b on p.paper_id = b.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_type_id = 1 and rp.status_id = 2";
@@ -48,7 +48,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 			                            group by p.paper_id) as a on p.paper_id = a.paper_id
 	                            join(select p.paper_id, STRING_AGG(po.name, ',') AS 'author'
 			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
-				                            join [General].People po on ap.people_id = po.people_id
+				                            join [SM_ScientificProduct].Author po on ap.people_id = po.people_id
 			                            group by p.paper_id) as b on p.paper_id = b.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_type_id = 2 and rp.status_id = 2";
@@ -70,7 +70,7 @@ namespace BLL.ScienceManagement.ScientificProduct
                             from [SM_ScientificProduct].Invention i
 	                            join(select	i.invention_id, STRING_AGG(po.name, ',') AS 'author'
 			                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
-				                            join [General].People po on ai.people_id = po.people_id
+				                             join [SM_ScientificProduct].Author po on ai.people_id = po.people_id
 			                            group by i.invention_id) as a on i.invention_id = a.invention_id
 	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id

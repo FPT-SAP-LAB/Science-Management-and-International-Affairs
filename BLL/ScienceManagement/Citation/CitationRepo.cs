@@ -115,7 +115,7 @@ namespace BLL.ScienceManagement.Citation
                                            where b.email == item.email
                                            select a).FirstOrDefault();
                             pro.bank_branch = item.bank_branch;
-                            pro.bank_number = item.bank_number;
+                            //pro.bank_number = item.bank_number;
                             pro.tax_code = item.tax_code;
                             pro.identification_number = item.identification_number;
                             pro.mssv_msnv = item.mssv_msnv;
@@ -168,8 +168,8 @@ namespace BLL.ScienceManagement.Citation
                 {
                     request_id = br.request_id,
                     status_id = 3,
-                    people_id = author.people_id,
-                    current_mssv_msnv = author.mssv_msnv
+                    people_id = author.people_id
+                    //current_mssv_msnv = author.mssv_msnv
                 };
                 db.RequestCitations.Add(rc);
                 db.SaveChanges();
