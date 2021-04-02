@@ -223,11 +223,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo,string start_date,string end_date)
+        public ActionResult checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date)
         {
             try
             {
-                IntersectPeriodMOUDate obj = mou.checkIntersectPeriodMOUDate(PartnerInfo,start_date,end_date);
+                IntersectPeriodMOUDate obj = mou.checkIntersectPeriodMOUDate(PartnerInfo, start_date, end_date);
                 return Json(obj);
             }
             catch (Exception ex)

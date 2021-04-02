@@ -723,7 +723,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 partner_id_para += (item.partner_id + ",");
             }
-            partner_id_para = partner_id_para.Remove(partner_id_para.Length-1);
+            partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
             string query = @"select count(*) as num_check,max(mou_start_date) as mou_start_date
                 , mou_end_date, t2.mou_id, t2.mou_code
                  from IA_Collaboration.MOUPartner t1
@@ -740,7 +740,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
             foreach (IntersectPeriodMOUDate item in obj)
             {
-                if (DateRangeisInvalid(item.mou_start_date,item.mou_end_date,current_start_date,current_end_date))
+                if (DateRangeisInvalid(item.mou_start_date, item.mou_end_date, current_start_date, current_end_date))
                 {
                     item.mou_start_date_string = item.mou_start_date.ToString("dd'/'MM'/'yyyy");
                     item.mou_end_date_string = item.mou_end_date.ToString("dd'/'MM'/'yyyy");
@@ -749,7 +749,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return new IntersectPeriodMOUDate();
         }
-        public bool DateRangeisInvalid(DateTime start,DateTime end,DateTime test_start, DateTime test_end)
+        public bool DateRangeisInvalid(DateTime start, DateTime end, DateTime test_start, DateTime test_end)
         {
             return !(test_end < start || test_start > end);
         }
