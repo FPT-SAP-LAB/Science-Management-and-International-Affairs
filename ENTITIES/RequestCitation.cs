@@ -23,10 +23,9 @@ namespace ENTITIES
         public int request_id { get; set; }
         public int status_id { get; set; }
         public int people_id { get; set; }
-        public string current_mssv_msnv { get; set; }
         public Nullable<int> total_reward { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Author Author { get; set; }
         public virtual BaseRequest BaseRequest { get; set; }
         public virtual PaperStatu PaperStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

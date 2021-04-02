@@ -29,6 +29,8 @@ namespace ENTITIES
             this.Notifications = new HashSet<Notification>();
             this.Profiles = new HashSet<Profile>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
+            this.MOABonus = new HashSet<MOABonu>();
+            this.MOUBonus = new HashSet<MOUBonu>();
         }
     
         public int account_id { get; set; }
@@ -64,5 +66,9 @@ namespace ENTITIES
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOABonu> MOABonus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOUBonu> MOUBonus { get; set; }
     }
 }
