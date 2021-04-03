@@ -54,7 +54,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
             }
 
             result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-                .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList(); ;
+                .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
 
             int recordsTotal = data.Count();
             return new BaseServerSideData<ResearcherList>(result, recordsTotal);
