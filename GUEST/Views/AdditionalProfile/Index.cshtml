@@ -86,12 +86,12 @@
                         <label>Chức vụ nghiên cứu viên:</label>
                         <div class="radio-inline">
                             <label class="radio radio-solid">
-                                <input type="radio" name="example_2" checked="checked" value="0" />
+                                <input type="radio" name="example_2" checked="checked" value="false" />
                                 <span></span>
                                 Không
                             </label>
                             <label class="radio radio-solid">
-                                <input type="radio" name="example_2" value="1" />
+                                <input type="radio" name="example_2" value="true" />
                                 <span></span>
                                 Có
                             </label>
@@ -450,11 +450,11 @@
                 url: "/AdditionalProfile/Add",
                 method: "post",
                 complete: function (data) {
-                    if (data.responseJSON.id) {
-                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
+                    if (data.responseJSON.success) {
+                        location.href = "/Researchers/ViewInfo?id=" + data.responseJSON.obj;
                     }
                     else {
-                        toastr.error(data.responseJSON.message);
+                        toastr.error(data.responseJSON.content);
                     }
                     save_loader.stopLoading();
                 },

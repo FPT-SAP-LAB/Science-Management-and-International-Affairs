@@ -11,12 +11,13 @@ using Newtonsoft.Json;
 
 namespace BLL.ScienceManagement.Researcher
 {
-    public class AdditionalProfile
+    public class AdditionalProfileRepo
     {
         ScienceAndInternationalAffairsEntities db;
-        public AlertModal<string> Add(HttpPostedFileBase identification, string PersonString, string ProfileString, string username, int account_id)
+        public AlertModal<int> Add(HttpPostedFileBase identification, string PersonString, string ProfileString, string username, int account_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
+            string Id = "";
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -26,13 +27,13 @@ namespace BLL.ScienceManagement.Researcher
                     Profile profile = JsonConvert.DeserializeObject<Profile>(ProfileString);
 
                     if (account.Profiles.Count > 0)
-                        return new AlertModal<string>(false, "Thông tin cá nhân đã được khởi tạo");
+                        return new AlertModal<int>(false, "Thông tin cá nhân đã được khởi tạo");
                     if (username.Trim() == "")
-                        return new AlertModal<string>(false, "Trường tên tài khoản là bắt buộc");
+                        return new AlertModal<int>(false, "Trường tên tài khoản là bắt buộc");
                     if (person.name.Trim() == "")
-                        return new AlertModal<string>(false, "Trường họ và tên là bắt buộc");
+                        return new AlertModal<int>(false, "Trường họ và tên là bắt buộc");
                     if (profile.mssv_msnv.Trim() == "")
-                        return new AlertModal<string>(false, "Trường mã số là bắt buộc");
+                        return new AlertModal<int>(false, "Trường mã số là bắt buộc");
 
                     account.full_name = username.Trim();
 
@@ -46,6 +47,7 @@ namespace BLL.ScienceManagement.Researcher
                     db.SaveChanges();
 
                     Google.Apis.Drive.v3.Data.File IdentificationFile = GoogleDriveService.UploadProfileMedia(identification, account.email);
+                    Id = IdentificationFile.Id;
                     File file = new File
                     {
                         file_drive_id = IdentificationFile.Id,
@@ -58,15 +60,17 @@ namespace BLL.ScienceManagement.Researcher
 
                     db.SaveChanges();
                     trans.Commit();
-                    return new AlertModal<string>(true);
+                    return new AlertModal<int>(profile.people_id, true);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
+                    if (Id != "")
+                        GoogleDriveService.DeleteFile(Id);
                     trans.Rollback();
                 }
             }
-            return new AlertModal<string>(false);
+            return new AlertModal<int>(false);
         }
     }
 }

@@ -119,7 +119,7 @@ namespace ENTITIES.CustomModels
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
             }
-            string ResearcherFolderName = "";
+            string ResearcherFolderName;
             if (ShareWithEmail == null) ResearcherFolderName = "Phòng KH";
             else ResearcherFolderName = ShareWithEmail.Split('@')[0];
 
@@ -201,8 +201,10 @@ namespace ENTITIES.CustomModels
             GetRequest RequestGet = driveService.Files.Get(FileID);
             RequestGet.Fields = "id,webViewLink";
             RequestGet.SupportsAllDrives = true;
-            Google.Apis.Drive.v3.Data.File file = new Google.Apis.Drive.v3.Data.File();
-            file.Name = FileName;
+            Google.Apis.Drive.v3.Data.File file = new Google.Apis.Drive.v3.Data.File
+            {
+                Name = FileName
+            };
 
             UpdateMediaUpload RequestPut = driveService.Files.Update(file, FileID, InputStream, ContentType);
             RequestPut.Fields = "id,webViewLink";

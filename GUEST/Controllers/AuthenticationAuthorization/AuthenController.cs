@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Google.Apis.Auth;
+using BLL.Admin;
 
 namespace GUEST.Controllers.AuthenticationAuthorization
 {
@@ -26,11 +27,12 @@ namespace GUEST.Controllers.AuthenticationAuthorization
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
-                return Json(String.Empty);
-            }
-            if (u == null)
-            {
-                return Json("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
+                AccountRepo accountRepo = new AccountRepo();
+                accountRepo.add(new AccountRepo.baseAccount
+                {
+                    email = user.email,
+                    role_id = 2
+                });
             }
             Session["User"] = u;
             return Json(String.Empty);
