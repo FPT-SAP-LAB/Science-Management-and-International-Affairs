@@ -306,82 +306,6 @@
             $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
         });
     }
-    var initUppyDieuChinhAdd = function () {
-        // Uppy variables
-        // For more info refer: https://uppy.io/
-        let elemId = 'kt_uppy_addKPDieuChinh';
-        let id = '#' + elemId;
-        let $statusBar = $(id + ' .uppy-status');
-        let $uploadedList = $(id + ' .uppy-list');
-        let timeout;
-
-        uppyDieuChinhAdd = Uppy.Core({
-            debug: true,
-            autoProceed: false,
-            showProgressDetails: true,
-            restrictions: {
-                maxFileSize: 3145728, // 3mb
-                maxNumberOfFiles: 1,
-                minNumberOfFiles: 0,
-                allowedFileTypes: ['image/*', '.xlsx', '.xls', '.csv', '.pdf']
-            }
-        });
-
-        uppyDieuChinhAdd.use(FileInput, {
-            target: id + ' .uppy-wrapper',
-            pretty: false
-        });
-        uppyDieuChinhAdd.use(Informer, {
-            target: id + ' .uppy-informer'
-        });
-
-        // demo file upload server
-        uppyDieuChinhAdd.use(Tus, {
-            endpoint: 'https://master.tus.io/files/'
-        });
-        uppyDieuChinhAdd.use(StatusBar, {
-            target: id + ' .uppy-status',
-            hideUploadButton: true,
-            hideAfterFinish: false
-        });
-
-        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
-
-        var $fileLabel = $(id + ' .uppy-input-label');
-
-        uppyDieuChinhAdd.on('upload', function () {
-            $fileLabel.text("Uploading...");
-            $statusBar.addClass('uppy-status-ongoing');
-            $statusBar.removeClass('uppy-status-hidden');
-            clearTimeout(timeout);
-        });
-
-        uppyDieuChinhAdd.on('file-added', function (file) {
-            var sizeLabel = "bytes";
-            var filesize = file.size;
-            if (filesize > 1024) {
-                filesize = filesize / 1024;
-                sizeLabel = "kb";
-
-                if (filesize > 1024) {
-                    filesize = filesize / 1024;
-                    sizeLabel = "MB";
-                }
-            }
-            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-            $uploadedList.append(uploadListHtml);
-
-            $statusBar.addClass('uppy-status-hidden');
-            $statusBar.removeClass('uppy-status-ongoing');
-        });
-
-        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-            var itemId = $(this).attr('data-id');
-            uppyDieuChinhAdd.removeFile(itemId);
-            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-        });
-    }
 
     var initUppyDieuChinhEdit = function () {
         // Uppy variables
@@ -542,7 +466,6 @@
             initUppy2();
             initUppyDuTruAdd();
             initUppyDuTruEdit();
-            initUppyDieuChinhAdd();
             initUppyDieuChinhEdit();
             initUppyThucTeEdit();
         }
