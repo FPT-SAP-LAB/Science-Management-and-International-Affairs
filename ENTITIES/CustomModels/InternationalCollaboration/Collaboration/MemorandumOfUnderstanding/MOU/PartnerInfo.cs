@@ -11,7 +11,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public string partnername_add { get; set; }
         public string represent_add { get; set; }
         public List<int> specialization_add { get; set; }
-        public string nation_add { get; set; }
+        public int nation_add { get; set; }
         public string website_add { get; set; }
         public string address_add { get; set; }
         public string email_add { get; set; }

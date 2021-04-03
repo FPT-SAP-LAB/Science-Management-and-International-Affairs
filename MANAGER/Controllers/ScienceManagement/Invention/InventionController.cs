@@ -36,7 +36,7 @@ namespace MANAGER.Controllers
             List<Country> listCountry = ir.getCountry();
             ViewBag.country = listCountry;
 
-            List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id);
+            List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id, "vi-VN");
             ViewBag.author = listAuthor;
 
             ViewBag.request_id = item.request_id;

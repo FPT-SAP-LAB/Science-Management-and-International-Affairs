@@ -231,7 +231,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return newObj;
         }
-        public void addExtraMOU(ExMOUAdd input, int mou_id)
+        public void addExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -247,6 +247,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_bonus_decision_date = sign_date,
                         mou_bonus_end_date = end_date,
                         mou_id = mou_id,
+                        account_id = user is null ? 1 : user.account.account_id,
+                        add_time = DateTime.Now,
                         evidence = ""
                     });
                     //checkpoint 1
@@ -306,7 +308,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void editExtraMOU(ExMOUAdd input)
+        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -320,6 +322,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     mb.mou_bonus_code = input.ExBasicInfo.ex_mou_code;
                     mb.mou_bonus_decision_date = sign_date;
                     mb.mou_bonus_end_date = end_date;
+                    mb.account_id = user is null ? 1 : user.account.account_id;
+                    mb.add_time = DateTime.Now;
                     db.Entry(mb).State = EntityState.Modified;
 
                     //get old 
