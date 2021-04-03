@@ -144,7 +144,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             {
                                 partner_id = partner_id_item,
                                 scope_id = tokenScope,
-                                reference_count = 0
+                                reference_count = 1
                             });
                             //checkpoint 3
                             db.SaveChanges();
@@ -277,7 +277,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             {
                                 partner_id = partner_id_item,
                                 scope_id = tokenScope,
-                                reference_count = 0
+                                reference_count = 1
                             });
                             //checkpoint 6
                             db.SaveChanges();

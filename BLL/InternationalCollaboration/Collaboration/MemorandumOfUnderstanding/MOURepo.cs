@@ -245,25 +245,12 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         //new partner
                         if (item.partner_id == 0)
                         {
-                            Country c = db.Countries.Where(x => x.country_name == item.nation_add).First();
-                            Country added = new Country();
-                            if (c == null)
-                            {
-                                added = db.Countries.Add(new Country
-                                {
-                                    country_name = item.nation_add
-                                });
-                            }
-                            else
-                            {
-                                added.country_id = c.country_id;
-                            }
                             db.Partners.Add(new ENTITIES.Partner
                             {
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = added.country_id
+                                country_id = item.nation_add
                             });
                             //checkpoint 2
                             db.SaveChanges();
@@ -295,7 +282,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 {
                                     partner_id = partner_id_item,
                                     scope_id = tokenScope,
-                                    reference_count = 0
+                                    reference_count = 1
                                 });
                                 //checkpoint 3
                                 db.SaveChanges();
@@ -519,10 +506,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                //string sql_speList = @"select * from General.Specialization";
-                //List<Specialization> speList = db.Database.SqlQuery<Specialization>(sql_speList).ToList();
                 List<Specialization> speList = db.Specializations.ToList();
                 return speList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Country> GetCountries()
+        {
+            try
+            {
+                List<Country> countryList = db.Countries.ToList();
+                return countryList;
             }
             catch (Exception ex)
             {

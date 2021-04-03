@@ -18,7 +18,6 @@ namespace ENTITIES
         public Person()
         {
             this.AcademicCollaborations = new HashSet<AcademicCollaboration>();
-            this.RequestPapers = new HashSet<RequestPaper>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
         }
     
@@ -32,8 +31,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicCollaboration> AcademicCollaborations { get; set; }
         public virtual Profile Profile { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestPaper> RequestPapers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
     }

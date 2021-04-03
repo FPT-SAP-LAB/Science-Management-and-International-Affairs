@@ -2,6 +2,7 @@
 using BLL.ScienceManagement.ResearcherListRepo;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using BLL.ModelDAL;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using MANAGER.Models;
 using Newtonsoft.Json.Linq;
@@ -22,15 +23,24 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
 
         public ActionResult List()
         {
+            TitleLanguageRepo ra = new TitleLanguageRepo();
+            OfficeRepo o = new OfficeRepo();
+            int lang_id = 1;
+            List<TitleLanguage> listTitleLanguage = ra.GetList(lang_id);
+            List<Office> listOffices = o.GetList();
+            ViewBag.listTitleLanguage = listTitleLanguage;
+            ViewBag.listOffices = listOffices;
             return View();
         }
         public JsonResult GetList()
         {
             try
             {
+                string coso = (Request["coso"]);
+                string name = (Request["name"]);
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable);
+                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable, coso, name);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
@@ -46,9 +56,12 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             try
             {
+                string name = (Request["name"]);
+                string coso = (Request["coso"]);
+                string chucdanh = (Request["chucdanh"]);
                 researcherCandidate = new ResearcherCandidateRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable);
+                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable, name, chucdanh, coso);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;

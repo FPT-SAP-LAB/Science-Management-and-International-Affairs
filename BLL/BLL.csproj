@@ -149,6 +149,7 @@
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
+    <Compile Include="ModelDAL\ResearcherAreasRepo.cs" />
     <Compile Include="ModelDAL\SpecializationLanguageRepo.cs" />
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\TitleLanguageRepo.cs" />
