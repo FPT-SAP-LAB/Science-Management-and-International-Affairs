@@ -144,18 +144,18 @@
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 @*<select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                                    <option value="1">Việt Nam</option>
-                                                    <option value="2">USA</option>
-                                                </select>*@
+                                                        <option value="1">Việt Nam</option>
+                                                        <option value="2">USA</option>
+                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Quốc gia" id="search_nation" />
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 @*<select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
-                                                    <option value="1">IT</option>
-                                                    <option value="2">BA</option>
-                                                </select>*@
+                                                        <option value="1">IT</option>
+                                                        <option value="2">BA</option>
+                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                             </div>
                                         </div>
@@ -329,11 +329,11 @@
         $('#partner_name_ex_mou_add').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
-        }); 
+        });
         $('#partner_name_ex_mou_add_for_edit').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
-        }); 
+        });
         $('#partner_name_ex_mou_edit').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
@@ -350,6 +350,7 @@
             placeholder: 'Lĩnh vực',
             allowClear: true,
         })
+
         $('#coop_scope_ex_mou_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
@@ -407,7 +408,7 @@
         //    placeholder: 'Đơn vị - Cơ sở kí kết',
         //    allowClear: true,
         //})
-
+        $('.select2-search__field').css('width', '100%');
         //datepicker
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
@@ -659,7 +660,7 @@
     </script>
 
     @*mou_basic_info*@
-<script>
+    <script>
         var listStatus = [
             {
                 status_id: 2,
@@ -2244,8 +2245,12 @@
             success: function (data) {
                 $('#add_moa_modal').modal('hide');
                 toastr.success('Thêm thành công');
-                listTempPartnerMOAAdd = [];
+                $('#end_date_moa').val('');
+                $('#note_moa').val('');
+                $('#moa_area').val('');
+                resetTableMOA();
                 reloadMOATable();
+                listTempPartnerMOAAdd = [];
             },
             error: function () {
                 //alert("fail");
@@ -2750,6 +2755,7 @@
                 if (result.value) {
                     $.ajax({
                         url: link,
+                        type: "POST",
                         data: { moa_id : id },
                         success: function (data) {
                             if (data = "") {
@@ -2766,5 +2772,5 @@
                 }
             })
     }
-</script>
+    </script>
 }

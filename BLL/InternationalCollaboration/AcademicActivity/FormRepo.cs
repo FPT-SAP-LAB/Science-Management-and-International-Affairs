@@ -224,5 +224,38 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
+        public viewResponse getResponse(int phase_id)
+        {
+            try
+            {
+                string sql = @"select q.* from SMIA_AcademicActivity.Question q
+                                inner join SMIA_AcademicActivity.Form f on q.form_id = f.form_id
+                                where f.phase_id = @phase_id order by q.is_changeable";
+                List<Question> ques = db.Database.SqlQuery<Question>(sql, new SqlParameter("phase_id", phase_id)).ToList();
+                sql = @"select r.answer from SMIA_AcademicActivity.Form f
+                            inner join SMIA_AcademicActivity.Response r on f.form_id = r.form_id
+                            where f.phase_id = @phase_id";
+                List<Answer> res = db.Database.SqlQuery<Answer>(sql, new SqlParameter("phase_id", phase_id)).ToList();
+                viewResponse data = new viewResponse
+                {
+                    ques = ques,
+                    res = res
+                };
+                return data;
+            }
+            catch (Exception e)
+            {
+                return new viewResponse();
+            }
+        }
+        public class viewResponse
+        {
+            public List<Question> ques { get; set; }
+            public List<Answer> res { get; set; }
+        }
+        public class Answer
+        {
+            public string answer { get; set; }
+        }
     }
 }

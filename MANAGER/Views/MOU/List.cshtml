@@ -332,13 +332,21 @@
     </script>
 
     @*custom select*@
-<script>
+    <script>
         $('#search_office').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        });
+        $('#nation_add_select').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: false,
         });
         $('#status_mou').select2({
             placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        });
+        $('#nation_edit_select').select2({
+            placeholder: 'Chọn quốc gia',
             allowClear: false,
         });
         $('#partner_name_add').select2({
@@ -372,7 +380,7 @@
             //check partner
             checkPartnerAdd();
         }).on("select2:unselecting", function () {
-            
+
         });
 
         $('#partner_name_edit').select2({
@@ -419,7 +427,7 @@
                 }
             }
         }
-</script>
+    </script>
 
     @*multi select*@
     <script>
@@ -457,9 +465,14 @@
             KTSelect2.init();
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
 
     @*general*@
-<script>
+    <script>
         var listTempPartnerMOUAdd = [];
         var listScopes = [];
         var listSpe = [];
@@ -613,14 +626,14 @@
         var HTMLdata = null;
         for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
             HTMLdata += '<tr id="temp' + idx + '" "class="MOUPartnerTempList">';
-            HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].email_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + (idx + 1) + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-            HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+            HTMLdata += '<td class="text-center align-middle text-nowrap">' + buttonEdit + buttonDel + '</td>';
             HTMLdata += '</tr>';
         }
         $('#mou-partner-table').append(HTMLdata);
@@ -638,8 +651,8 @@
             text: "Dữ liệu sẽ bị xóa!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Đóng",
             reverseButtons: true
         }).then(function (result) {
             if (result.isConfirmed) {
@@ -700,6 +713,10 @@
                     mou_table.ajax.reload();
                     Swal.fire("Thành công!", "Đã thêm biên bản ghi nhớ thành công.", "success");
                     $('#add_mou_modal').modal('hide');
+                    resetTable();
+                    listTempPartnerMOUAdd = [];
+                    $('#note_mou').val('');
+                    $('#mou_area').val('');
                 },
                 error: function () {
                     Swal.fire("Lỗi!", "Đã xảy ra lỗi", "error");
@@ -740,21 +757,35 @@
                     datatype: "json",
                     success: function (data) {
                         if (data == "") {
-                            document.getElementById('nation_add').removeAttribute('disabled');
                             document.getElementById('website_add').removeAttribute('disabled');
                             document.getElementById('address_add').removeAttribute('disabled');
-                            document.getElementById("nation_add").value = "";
                             document.getElementById("website_add").value = "";
                             document.getElementById("address_add").value = "";
                             document.getElementById("partner_id_add").value = "";
+                            document.getElementById('nation_add_select').removeAttribute('hidden');
+                            $('#nation_add_select').select2({
+                                placeholder: 'Chọn quốc gia',
+                                allowClear: false,
+                            });
+                            document.getElementById('nation_add_input').setAttribute('hidden', '');
+                            $('#nation_add_input').val('');
                         } else {
-                            document.getElementById('nation_add').setAttribute('disabled', '');
+                            $("#nation_add_select").val('').trigger("change");
+                            document.getElementById('nation_add_input').removeAttribute('hidden');
+                            $('#nation_add_select').select2({
+                                placeholder: 'Chọn quốc gia',
+                                allowClear: false,
+                            });
+                            $('#nation_add_select').select2('destroy');
+                            $("#nation_add_select").attr("hidden", true);
                             document.getElementById('website_add').setAttribute('disabled', '');
                             document.getElementById('address_add').setAttribute('disabled', '');
-                            document.getElementById("nation_add").value = data.country_name == null ? "" : data.country_name;
+                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
+
                             document.getElementById("website_add").value = data.website == null ? "" : data.website;
                             document.getElementById("address_add").value = data.address == null ? "" : data.address;
                             document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
+
                         }
                         document.getElementById("add_mou_partner_button").removeAttribute('disabled');
                     },
@@ -797,7 +828,7 @@
                         partnername_add: partnername_add,
                         represent_add: document.getElementById("represent_add").value,
                         specialization_add: $("#specialization_add").val(),
-                        nation_add: document.getElementById("nation_add").value,
+                        nation_add: $('#nation_add_select').val(),
                         website_add: document.getElementById("website_add").value,
                         address_add: document.getElementById("address_add").value,
                         email_add: document.getElementById("email_add").value,
@@ -805,6 +836,8 @@
                         phone_add: document.getElementById("phone_add").value,
                         coop_scope_add: $("#coop_scope_add").val(),
                         partner_id: document.getElementById("partner_id_add").value,
+                        nation_name: $("#nation_add_select option:selected").text(),
+                        nation_name_input: $("#nation_add_input").val()
                     }
                     listTempPartnerMOUAdd.push(TempObj);
                     updateMOUStartDateAndMainScope();
@@ -847,14 +880,16 @@
                 var HTMLScopedata = '';
                 $('#specialization_add').empty();
                 $('#coop_scope_add').empty();
-                document.getElementById("partner_name_add").value = "";
-                document.getElementById("represent_add").value = "";
-                document.getElementById("nation_add").value = "";
-                document.getElementById("website_add").value = "";
-                document.getElementById("address_add").value = "";
-                document.getElementById("email_add").value = "";
-                document.getElementById("sign_date_mou_add").value = "";
-                document.getElementById("phone_add").value = "";
+                //$('#partner_name_add').val('');
+                $("#partner_name_add").val('').trigger("change");
+                $('#represent_add').val('');
+                $('#nation_add_select').val('');
+                $('#nation_add_input').val('');
+                $('#website_add').val('');
+                $('#address_add').val('');
+                $('#email_add').val('');
+                $('#sign_date_mou_add').val('');
+                $('#phone_add').val('');
 
                 for (i = 0; i < listSpe.length; i++) {
                     HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" >' + listSpe[i].spe_name + '</option>'
@@ -862,7 +897,12 @@
                 for (j = 0; j < listScopes.length; j++) {
                     HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_name + '</option>'
                 }
-                document.getElementById('nation_add').removeAttribute('disabled');
+                $('#nation_add_select').select2({
+                    placeholder: 'Chọn quốc gia',
+                    allowClear: false,
+                });
+                document.getElementById('nation_add_select').removeAttribute('disabled');
+                document.getElementById('nation_add_input').setAttribute('hidden','');
                 document.getElementById('website_add').removeAttribute('disabled');
                 document.getElementById('address_add').removeAttribute('disabled');
                 document.getElementById("add_mou_partner_button").setAttribute('disabled', '');
@@ -904,7 +944,23 @@
             $('#partner_name_edit').append(option).trigger('change');
 
             $('#represent_edit').val(listTempPartnerMOUAdd[index].represent_add);
-            $('#nation_edit').val(listTempPartnerMOUAdd[index].nation_add);
+            if (listTempPartnerMOUAdd[index].nation_add != "") {
+                document.getElementById('nation_edit_input').setAttribute('hidden', '');
+                var nation_name = listTempPartnerMOUAdd[index].nation_name;
+                var nation_id = listTempPartnerMOUAdd[index].nation_add;
+                var optionNation = new Option(nation_name, nation_id, true, true);
+                $('#nation_edit_select').append(optionNation).trigger('change');
+            } else {
+                $("#nation_edit_select").val('').trigger("change");
+                $('#nation_edit_select').select2('destroy');
+                $("#nation_edit_select").attr("hidden", true);
+                document.getElementById('nation_edit_input').setAttribute('disabled', '');
+                $("#nation_edit_input").val(listTempPartnerMOUAdd[index].nation_name_input);
+            }
+            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
+            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
+
+
             $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
             $('#address_edit').val(listTempPartnerMOUAdd[index].address_add);
             $('#email_edit').val(listTempPartnerMOUAdd[index].email_add);
@@ -913,13 +969,9 @@
             $('#partner_id_edit').val(listTempPartnerMOUAdd[index].partner_id);
 
             if (listTempPartnerMOUAdd[index].partner_id == "") {
-                document.getElementById('nation_edit').removeAttribute('disabled');
                 document.getElementById('website_edit').removeAttribute('disabled');
                 document.getElementById('address_edit').removeAttribute('disabled');
-
-
             } else {
-                document.getElementById('nation_edit').setAttribute('disabled', '');
                 document.getElementById('website_edit').setAttribute('disabled', '');
                 document.getElementById('address_edit').setAttribute('disabled', '');
 
@@ -937,18 +989,35 @@
                 dataType: "json",
                 success: function (data) {
                     if (data == "") {
-                        document.getElementById('nation_edit').removeAttribute('disabled');
+                        //document.getElementById('nation_edit').removeAttribute('disabled');
+                        document.getElementById('nation_edit_select').removeAttribute('hidden');
+                        $('#nation_edit_select').select2({
+                            placeholder: 'Chọn quốc gia',
+                            allowClear: false,
+                        });
+                        document.getElementById('nation_edit_input').setAttribute('hidden', '');
+                        $('#nation_edit_input').val('');
+
                         document.getElementById('website_edit').removeAttribute('disabled');
                         document.getElementById('address_edit').removeAttribute('disabled');
-                        document.getElementById("nation_edit").value = "";
+                        //document.getElementById("nation_edit").value = "";
                         document.getElementById("website_edit").value = "";
                         document.getElementById("address_edit").value = "";
                         document.getElementById("partner_id_edit").value = "";
                     } else {
-                        document.getElementById('nation_edit').setAttribute('disabled', '');
+                        //document.getElementById('nation_edit').setAttribute('disabled', '');
+                        $("#nation_edit_select").val('').trigger("change");
+                        document.getElementById('nation_edit_input').removeAttribute('hidden');
+                        $('#nation_edit_select').select2({
+                            placeholder: 'Chọn quốc gia',
+                            allowClear: false,
+                        });
+                        $('#nation_edit_select').select2('destroy');
+                        $("#nation_edit_select").attr("hidden", true);
+
                         document.getElementById('website_edit').setAttribute('disabled', '');
                         document.getElementById('address_edit').setAttribute('disabled', '');
-                        document.getElementById("nation_edit").value = data.country_name == null ? "" : data.country_name;
+                        //document.getElementById("nation_edit").value = data.country_name == null ? "" : data.country_name;
                         document.getElementById("website_edit").value = data.website == null ? "" : data.website;
                         document.getElementById("address_edit").value = data.address == null ? "" : data.address;
                         document.getElementById("partner_id_edit").value = data.partner_id == null ? "" : data.partner_id;
@@ -1026,7 +1095,9 @@
             listTempPartnerMOUAdd[index].partnername_add = document.getElementById("partner_name_edit").value;
             listTempPartnerMOUAdd[index].represent_add = document.getElementById("represent_edit").value;
             listTempPartnerMOUAdd[index].specialization_add = $("#specialization_edit").val();
-            listTempPartnerMOUAdd[index].nation_add = document.getElementById("nation_edit").value;
+            listTempPartnerMOUAdd[index].nation_add = $('#nation_edit_select').val();
+            listTempPartnerMOUAdd[index].nation_name = $("#nation_edit_select option:selected").text();
+            listTempPartnerMOUAdd[index].nation_name_input = $("#nation_edit_input").val();
             listTempPartnerMOUAdd[index].website_add = document.getElementById("website_edit").value;
             listTempPartnerMOUAdd[index].address_add = document.getElementById("address_edit").value;
             listTempPartnerMOUAdd[index].email_add = document.getElementById("email_edit").value;
@@ -1040,7 +1111,7 @@
 
     @*mou-list*@
     function getMOUList() {
-            mou_table = $(".mou_table").DataTable({
+        mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1050,6 +1121,7 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
+            pageLength: 5,
             lengthChange: false,
             serverSide: true,
             initComplete: function () {
@@ -1057,20 +1129,24 @@
                 $('.mou_table').parent().removeClass();
             },
             ajax: {
-                    url: "@Url.Action("ViewMOU", "MOU")",
-                    type: "POST",
-                    datatype: "json",
-                    data: {
-                        "partner_name": function () { return $('#search_partner_name').val() },
-                        "contact_point_name": function () { return $('#search_contact_point_name').val() },
-                        "mou_code": function () { return $('#search_mou_code').val() },
-                    },
-                    cache: "false"
+                url: "@Url.Action("ViewMOU", "MOU")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "partner_name": function () { return $('#search_partner_name').val() },
+                    "contact_point_name": function () { return $('#search_contact_point_name').val() },
+                    "mou_code": function () { return $('#search_mou_code').val() },
                 },
+                cache: "false"
+            },
             columns: [
-                { data: "RowNumber"},
-                { data: "mou_code", name:"mou_code"},
-                { data: "partner_name", name: "partner_name"},
+                { data: "RowNumber" },
+                { data: "mou_code", name: "mou_code" },
+                {
+                    data: "partner_name",
+                    name: "partner_name",
+                    width: '200px'
+                },
                 { data: "country_name", name: "country_name" },
                 {
                     data: "website",
@@ -1084,8 +1160,8 @@
                 },
                 { data: "specialization_name", name: "specialization_name" },
                 { data: "contact_point_name", name: "contact_point_name" },
-                { data: "contact_point_email", name: "contact_point_email"},
-                { data: "contact_point_phone", name: "contact_point_phone"},
+                { data: "contact_point_email", name: "contact_point_email" },
+                { data: "contact_point_phone", name: "contact_point_phone" },
                 {
                     data: "evidence",
                     render: function (data) {
@@ -1099,7 +1175,14 @@
                 { data: "mou_start_date_string", name: "mou_start_date" },
                 { data: "mou_end_date_string", name: "mou_end_date" },
                 { data: "office_abbreviation", name: "office_abbreviation" },
-                { data: "scope_abbreviation", name: "scope_abbreviation" },
+                {
+                    data: "scope_abbreviation",
+                    name: "scope_abbreviation",
+                    render: function (data) {
+                        data = data.replaceAll(',', ', ')
+                        return data
+                    }
+                },
                 {
                     data: "mou_status_id",
                     width: '150px',
@@ -1126,22 +1209,23 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetail(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-        ],
-        columnDefs: [
-            {
-                className: "text-center",
-                targets: [0, 4, 9, 12, 13, 14],
-            },
-            {
-                className: "text-nowrap",
-                targets: [5, 6, 8, -1]
-            },
-        ],
-    });
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: [0, 4, 9, 12, 13, 14],
+                },
+                {
+                    className: "text-nowrap",
+                    targets: [5, 6, 8, -1]
+                },
+            ],
+        });
+        $('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function searchMOU() {
@@ -1613,6 +1697,6 @@
                 }
             });
         }
-</script>
+    </script>
 }
 

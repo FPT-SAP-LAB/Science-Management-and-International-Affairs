@@ -57,8 +57,8 @@ namespace GUEST.Controllers
             ViewBag.item = item;
 
             int request_id = item.request_id;
-            List<DetailComment> listCmt = cr.GetComment(request_id);
-            ViewBag.cmt = listCmt;
+            //List<DetailComment> listCmt = cr.GetComment(request_id);
+            //ViewBag.cmt = listCmt;
             ViewBag.id = id;
 
             List<Country> listCountry = ir.getCountry();
@@ -75,7 +75,12 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult listAuthor(string id)
         {
-            List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id);
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id, lang);
             return Json(new { author = listAuthor }, JsonRequestBehavior.AllowGet);
         }
 
@@ -104,14 +109,15 @@ namespace GUEST.Controllers
                 u = (LoginRepo.User)Session["User"];
                 acc = u.account;
             }
-            BaseRequest b = pr.addBaseRequest(acc.account_id);
 
             InventionType ip = ir.addInvenType(type);
             inven.type_id = ip.invention_type_id;
             Invention i = ir.addInven(inven);
 
             string mess = ir.addAuthor(people, i.invention_id);
-            if (mess == "ss") mess = ir.addInvenRequest(b, i, kieuthuong);
+
+            BaseRequest b = pr.addBaseRequest(acc.account_id);
+            if (mess == "ss") mess = ir.addInvenRequest(b, i);
 
             return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
         }
@@ -130,6 +136,13 @@ namespace GUEST.Controllers
             }
 
             return Json(new { mess = mess, id = inven.invention_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult deleteFile(string id)
+        {
+            string mess = ir.deleteFileCM(id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

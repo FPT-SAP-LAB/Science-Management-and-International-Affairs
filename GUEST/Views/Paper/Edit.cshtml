@@ -141,7 +141,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
-                        <button class="btn btn-light-success px-6 font-weight-bold edit ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
                         <a target="_blank" class="btn btn-light-success px-6 font-weight-bold ml-1" id="view_decision">Xem quyết định thưởng của bài báo</a>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
@@ -308,6 +308,7 @@
         }
 
         $("#edit_submit_reward").click(function () {
+            $("#loading").show();
             var sum = 0;
             var total = $("#totalreward").val();
             total = total.split(",").join("");
@@ -510,6 +511,23 @@
                     if (ck == "2" || ck == "6") {
                         if ($("#totalreward").val() != "" && $("#totalreward").val() != "0" && $("#kieuthuong").val() == "Canhan") {
                             $("#edit_submit_reward").show();
+
+                            var sum = 0;
+                            var total = $("#totalreward").val();
+                            if (total != null) total = total.split(",").join("");
+
+                            for (var j = 0; j < people.length; j++) {
+                                var data = people[j].money_string;
+                                if (people[j].money_string == null) data = "0";
+                                var temp = data.split(",").join("");
+                                sum = parseInt(sum) + parseInt(temp);
+                            }
+                            console.log(sum != parseInt(total));
+
+                            if (sum != parseInt(total)) $("#add_author_reward_edit").prop("disabled", false);
+                            else $(".edit-author").prop('disabled', true);
+                        } else if ($("#kieuthuong").val() == "Quydinh") {
+                            $(".edit-author").prop('disabled', true);
                         }
                     } else {
                         $("#edit_submit_reward").hide();
