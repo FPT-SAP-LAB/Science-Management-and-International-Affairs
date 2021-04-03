@@ -143,8 +143,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["moa_detail_id"].ToString();
-                    moa.addExtraMOA(input, int.Parse(id));
+                    moa.addExtraMOA(input, int.Parse(id),user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -158,7 +159,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                moa.editExtraMOA(input);
+                BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                moa.editExtraMOA(input, user);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

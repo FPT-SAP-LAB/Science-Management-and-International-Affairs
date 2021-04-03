@@ -234,7 +234,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                             {
                                 partner_id = input.partner_id,
                                 scope_id = tokenScope,
-                                reference_count = 0
+                                reference_count = 1
                             });
                             //checkpoint 3
                             db.SaveChanges();

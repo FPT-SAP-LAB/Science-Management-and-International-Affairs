@@ -189,7 +189,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou.editExtraMOU(input);
+                BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                mou.editExtraMOU(input, user);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
