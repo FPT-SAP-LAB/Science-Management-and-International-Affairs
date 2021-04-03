@@ -280,10 +280,35 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(new { success = true, data = data });
         }
         [HttpPost]
-        public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, AcademicActivityExpenseRepo.infoExpenseEstimate data, HttpPostedFileBase img)
+        public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
             bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
+            if (res)
+                return Json("Thêm mục kinh phí dự trù thành công");
+            return Json(String.Empty);
+        }
+        [HttpPost]
+        public JsonResult deleteExpenseDuTru(int expense_category_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.deleteExpenseDuTru(expense_category_id);
+            if (res)
+                return Json("Xóa mục kinh phí dự trù thành công");
+            return Json(String.Empty);
+        }
+        [HttpPost]
+        public JsonResult getExpenseDuTru(int expense_category_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseDuTru(expense_category_id);
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult editExpenseDuTru(string data, HttpPostedFileBase img)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.editExpenseDuTru(data, img);
             if (res)
                 return Json("Thêm mục kinh phí dự trù thành công");
             return Json(String.Empty);
