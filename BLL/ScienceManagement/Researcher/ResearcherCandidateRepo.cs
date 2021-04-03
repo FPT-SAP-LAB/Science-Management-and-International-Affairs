@@ -31,16 +31,16 @@ namespace BLL.ScienceManagement.Researcher
                             paperNumber = (from m in db.AuthorPapers where m.people_id == b.people_id select m).Count()
                         });
             List<ResearcherCandidate> result = null;
-            if (name != "")
+            if (name.Trim() != "")
             {
                 data = data.Where(x => x.name.Contains(name));
             }
-            if (chucdanh != "")
+            if (chucdanh.Trim() != "")
             {
                 int chucdanhint = Int32.Parse(chucdanh);
                 data = data.Where(x => x.title_id == chucdanhint);
             }
-            if (coso != "")
+            if (coso.Trim() != "")
             {
                 int cosoint = Int32.Parse(coso);
                 data = data.Where(x => x.office_id == cosoint);

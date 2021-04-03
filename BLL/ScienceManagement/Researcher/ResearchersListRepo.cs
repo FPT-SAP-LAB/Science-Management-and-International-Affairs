@@ -43,12 +43,12 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                             googleScholar = b.google_scholar
                         });
             List<ResearcherList> result = null;
-            if (coso != "")
+            if (coso.Trim() != "")
             {
                 int cosoint = Int32.Parse(coso);
                 data = data.Where(x => x.office_id == cosoint);
             }
-            if (name != "")
+            if (name.Trim() != "")
             {
                 data = data.Where(x => x.name.Contains(name));
             }
