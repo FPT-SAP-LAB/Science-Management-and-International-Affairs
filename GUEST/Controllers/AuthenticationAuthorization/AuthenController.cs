@@ -27,11 +27,19 @@ namespace GUEST.Controllers.AuthenticationAuthorization
             LoginRepo.User u = repo.getAccount(user, roleAccept);
             if (u == null)
             {
+                string EmailDomain = user.email.Split('@').Last();
+                int role_id;
+                if (EmailDomain.Equals("fpt.edu.vn"))
+                    role_id = 5;
+                else if (EmailDomain.Equals("fe.edu.vn"))
+                    role_id = 6;
+                else
+                    return Json(string.Empty);
                 AccountRepo accountRepo = new AccountRepo();
                 accountRepo.add(new AccountRepo.baseAccount
                 {
                     email = user.email,
-                    role_id = 2
+                    role_id = role_id
                 });
             }
             Session["User"] = u;
