@@ -253,10 +253,11 @@ $("#authors-info-container").on('click', '.edit-author', function () {
 
             var sum = 0;
             var total = $("#totalreward").val();
-            total = total.split(",").join("");
+            if (total != null) total = total.split(",").join("");
 
             for (var j = 0; j < people.length; j++) {
                 var data = people[j].money_string;
+                if (people[j].money_string == null) data = "0";
                 var temp = data.split(",").join("");
                 sum = parseInt(sum) + parseInt(temp);
             }

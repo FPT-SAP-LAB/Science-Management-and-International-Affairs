@@ -179,7 +179,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -865,8 +864,8 @@
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
                         <select class="form-control" id="add_donvi_kinhphi">
-                            @{ 
-                                foreach(var item in ViewBag.office)
+                            @{
+                                foreach (var item in ViewBag.office)
                                 {
                                     <option value="@item.office_id">@item.office_name</option>
                                 }
@@ -882,9 +881,9 @@
         </div>
     </div>
 </div>
-
+@*aaa*@
 <div class="modal fade" id="addModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Thêm kinh phí dự trù ban đầu</h3>
@@ -896,27 +895,27 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDuTru" />
+                        <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="add_noidung_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Đơn giá (VNĐ)</label>
                         <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_dongia_kpDuTru" />
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
                         <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_soluong_kpDuTru" />
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Thành tiền (VNĐ)</label>
-                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDuTru" readonly/>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDuTru" readonly />
                     </div>
-                    <div class="col-sm-8 col-md-8 col-xl-8 col-lg-8">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="add_ghichu_kpDuTru" class="form-control"></textarea>
+                        <textarea id="add_ghichu_kpDuTru" class="form-control" spellcheck="false"></textarea>
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                        <label class="col-form-label">Bản mềm</label>
-                        <div class="uppy" id="kt_uppy_1">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
+                        <div class="uppy" id="kt_uppy_addKPDuTru">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -928,14 +927,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn load-btn btn-light-success px-6 font-weight-bold" id="btn_add_kpDuTru">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_add_kpDuTru">Xác nhận</button>
             </div>
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="editModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Chỉnh sửa kinh phí dự trù ban đầu</h3>
@@ -947,39 +946,43 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDuTru" value="Truyền thông" />
+                        <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="edit_noidung_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
-                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDuTru" value="30.000.000" />
+                        <label class="col-form-label font-weight-bolder">Đơn giá (VNĐ)</label>
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_dongia_kpDuTru" />
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDuTru" value="1" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_soluong_kpDuTru" />
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDuTru" value="30000000" />
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Thành tiền (VNĐ)</label>
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDuTru" />
                     </div>
-                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="edit_ghichu_kpDuTru" class="form-control">Truyền thông trong và ngoài FE</textarea>
+                        <textarea id="edit_ghichu_kpDuTru" class="form-control" spellcheck="false"></textarea>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="edit_banmem_kpDuTru">
+                        <div class="uppy" id="kt_uppy_editKPDuTru">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">   
+                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                        <a href="javascript:;" target="_blank" class="form-control" id="edit_dinhkem_kpDuTru"></a>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDuTru">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_edit_kpDuTru">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1020,30 +1023,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Truyền thông</td>
-                                    <td>30.000.000</td>
-                                    <td>1</td>
-                                    <td>30.000.000</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng</td>
-                                    <td>4.000.000</td>
-                                    <td>27</td>
-                                    <td>108.000.000</td>
-                                    <td>4.000.000</td>
-                                    <td>28</td>
-                                    <td>112.000.000</td>
-                                    <td>Thêm đội từ phía sinh viên</td>
-                                    <td></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -1088,20 +1068,19 @@
                         <textarea id="edit_ghichu_kpDieuChinh" class="form-control">Thêm đội từ phía sinh viên</textarea>
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="edit_banmem_kpDieuChinh">
+                        <div class="uppy" id="kt_uppy_editKPDieuChinh">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpDieuChinh">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_edit_kpDieuChinh">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1138,20 +1117,19 @@
                         <textarea id="add_ghichu_kpDieuChinh" class="form-control"></textarea>
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="add_banmem_kpDieuChinh">
+                        <div class="uppy" id="kt_uppy_addKPDieuChinh">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_kpDieuChinh">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_add_kpDieuChinh">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1189,42 +1167,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Truyền thông</td>
-                                    <td>30.000.000</td>
-                                    <td>1</td>
-                                    <td>30.000.000</td>
-                                    <td>30.000.000</td>
-                                    <td>1</td>
-                                    <td>30.000.000</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng</td>
-                                    <td>4.000.000</td>
-                                    <td>27</td>
-                                    <td>108.000.000</td>
-                                    <td>4.000.000</td>
-                                    <td>26</td>
-                                    <td>104.000.000</td>
-                                    <td>Thêm đội từ phía sinh viên</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Giải thưởng phụ</td>
-                                    <td>2.000.000</td>
-                                    <td>1</td>
-                                    <td>2.000.000</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -1269,14 +1212,13 @@
                         <textarea id="edit_ghichu_kpThucTe" class="form-control"></textarea>
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
-                        <div class="uppy" id="edit_banmem_kpThucTe">
+                        <div class="uppy" id="kt_uppy_editKPThucTe">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                 </div>
             </div>
@@ -1342,10 +1284,23 @@
         let id_edit_tu_cach = 0;
         let id_edit_dong_to_chuc = 0;
         let id_edit_KP = 0;
-        var datatableKPDuTru;
+        let id_edit_KPtypes = 0;
         var save_loader = new LoaderBtn($(".load-btn"));
+
+        var uppyDuTruAdd;
+        var uppyDuTruEdit;
+        var uppyDieuChinhAdd;
+        var uppyDieuChinhEdit;
+        var uppyThucTeEdit;
+
         function calcuaTotal(id1, id2, id3) {
-            $(id3).val((parseFloat($(id1).val()) * parseFloat($(id2).val())).toLocaleString('en'));
+            let val = (parseFloat($(id1).val()) * parseFloat($(id2).val())).toLocaleString('en');
+            if (val != 'NaN') {
+                $(id3).val(val);
+            } else {
+                $(id3).val('0');
+            }
+            
         }
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
@@ -1353,7 +1308,7 @@
             return myDate;
         }
         function clearModal(id) {
-            $(id).find('input:text, input:password, select')
+            $(id).find('input:text, input:password, select, a')
                 .each(function () {
                     $(this).val('');
                 });
@@ -1753,18 +1708,18 @@
                 }
             });
         }
+
         function KPDuTru(id) {
             id_edit_KP = id;
             if (typeof datatableKPDuTru != 'undefined') {
-                datatabledKPDuTru.ajax.reload();
+                datatableKPDuTru.ajax.reload();
             } else
                 initDatatableKPDuTru();
             $('#KPDuTruModal').modal('show');
         }
         function deleteKinhPhiDuTru(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                title: "Bạn có muốn xóa mục kinh phí dự trù này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1773,17 +1728,47 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpenseDuTru", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ expense_category_id: id}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                if (typeof datatableKPDuTru != 'undefined') {
+                                    datatableKPDuTru.ajax.reload();
+                                } else
+                                    initDatatableKPDuTru();
+                                datatableKP.ajax.reload();
+                                toastr.success(data);
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        },
+                    });
                 }
             });
         }
         function editKinhPhiDuTru(id) {
-            id_edit_KP = id;
-            $('#editModal_KPDuTru').modal('show');
+            id_edit_KPtypes = id;
+            $.ajax({
+                url: "@Url.Action("getExpenseDuTru", "DetailOfAcademicActivity")",
+                data: JSON.stringify({ expense_category_id : id}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    $('#edit_noidung_kpDuTru').val(data.expense_category_name);
+                    $('#edit_dongia_kpDuTru').val(data.expense_price);
+                    $('#edit_soluong_kpDuTru').val(data.expense_quantity);
+                    $('#edit_thanhtien_kpDuTru').val(data.total.toLocaleString('en'));
+                    $('#edit_ghichu_kpDuTru').val(data.note);
+                    if (data.link != null) {
+                        document.getElementById('edit_dinhkem_kpDuTru').innerHTML = data.name;
+                        $('#edit_dinhkem_kpDuTru').attr('href', data.link);
+                    }
+                    $('#editModal_KPDuTru').modal('show');
+                },
+            });
         }
         function KPDieuChinh(id) {
             id_edit_KP = id;
@@ -1915,7 +1900,7 @@
                 }
             }
         }
-
+        
         $('#add_phamvihoptac_DongToChuc').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
@@ -2464,7 +2449,7 @@
                 },
             });
         });
-        //aaa
+        //aaaa
         $('#btn_add_kpDuTru').click(function () {
             save_loader.startLoading();
             var object = {
@@ -2473,7 +2458,8 @@
                 expense_price: $('#add_dongia_kpDuTru').val(),
                 expense_quantity: $('#add_soluong_kpDuTru').val(),
                 total : 0,
-                note: $('#add_ghichu_kpDuTru').val()
+                note: $('#add_ghichu_kpDuTru').val(),
+                link : ''
             };
             if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
@@ -2484,9 +2470,10 @@
             obj.append('activity_office_id', id_edit_KP);
             obj.append('activity_name', $('#detail_name').val());
             obj.append('data', JSON.stringify(object));
-            let file = uppy1.getFiles();
-            if (file.length != 0) {
-                obj.append('img', uppy1.getFiles()[0].data)
+
+            let files = uppyDuTruAdd.getFiles();
+            if (files.length != 0) {
+                obj.append('img', uppyDuTruAdd.getFiles()[0].data)
             } else {
                 obj.append('img', null);
             }
@@ -2499,25 +2486,23 @@
                         toastr.success(data);
                         clearModal('#addModal_KPDuTru');
                         $('#addModal_KPDuTru').modal('hide');
-                        var itemId = files[0].id;
-                        uppy1.removeFile(itemId);
-                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        uppyDuTruAdd.removeFile(uppyDuTruAdd.getFiles().length == 0 ? '' : uppyDuTruAdd.getFiles()[0].id);
+                        $('#kt_uppy_addKPDuTru .uppy-list').html('');
                         if (typeof datatableKPDuTru != 'undefined') {
                             datatableKPDuTru.ajax.reload();
                         } else
                             initDatatableKPDuTru();
+                        datatableKP.ajax.reload();
                     } else {
-                        var itemId = files[0].id;
-                        uppy1.removeFile(itemId);
-                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        uppyDuTruAdd.removeFile(uppyDuTruAdd.getFiles().length == 0 ? '' : uppyDuTruAdd.getFiles()[0].id);
+                        $('#kt_uppy_addKPDuTru .uppy-list').html('');
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
                     save_loader.stopLoading();
                 },
                 error: function (data) {
-                    var itemId = files[0].id;
-                    uppy1.removeFile(itemId);
-                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    uppyDuTruAdd.removeFile(uppyDuTruAdd.getFiles().length == 0 ? '' : uppyDuTruAdd.getFiles()[0].id);
+                    $('#kt_uppy_addKPDuTru .uppy-list').html('');
                     save_loader.stopLoading();
                 },
                 dataType: "json",
@@ -2525,8 +2510,64 @@
                 contentType: false
             });
         });
+        //aa
         $('#btn_edit_kpDuTru').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+            save_loader.startLoading();
+            var object = {
+                expense_category_id: id_edit_KPtypes,
+                expense_category_name: $('#edit_noidung_kpDuTru').val(),
+                expense_price: $('#edit_dongia_kpDuTru').val(),
+                expense_quantity: $('#edit_soluong_kpDuTru').val(),
+                total : 0,
+                note: $('#edit_ghichu_kpDuTru').val(),
+                link : ''
+            };
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                save_loader.stopLoading();
+                return false;
+            }
+            var obj = new FormData();
+            obj.append('data', JSON.stringify(object));
+
+            let files = uppyDuTruEdit.getFiles();
+            if (files.length != 0) {
+                obj.append('img', uppyDuTruEdit.getFiles()[0].data)
+            } else {
+                obj.append('img', null);
+            }
+            $.ajax({
+                url: "@Url.Action("editExpenseDuTru", "DetailOfAcademicActivity")",
+                data: obj,
+                type: "POST",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                        uppyDuTruEdit.removeFile(uppyDuTruEdit.getFiles().length == 0 ? '' : uppyDuTruEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPDuTru .uppy-list').html('');
+                        clearModal('#editModal_KPDuTru');
+                        $('#editModal_KPDuTru').modal('hide');
+                        if (typeof datatableKPDuTru != 'undefined') {
+                            datatableKPDuTru.ajax.reload();
+                        } else
+                            initDatatableKPDuTru();
+                        datatableKP.ajax.reload();
+                    } else {
+                        uppyDuTruEdit.removeFile(uppyDuTruEdit.getFiles().length == 0 ? '' : uppyDuTruEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPDuTru .uppy-list').html('');
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function (data) {
+                    uppyDuTruEdit.removeFile(uppyDuTruEdit.getFiles().length == 0 ? '' : uppyDuTruEdit.getFiles()[0].id);
+                    $('#kt_uppy_editKPDuTru .uppy-list').html('');
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false
+            });
         });
         $('#btn_add_kpDieuChinh').click(function () {
             toastr.success("Đã thêm thành công");
@@ -2843,6 +2884,7 @@
                 },
             ]
         });
+        let datatableKPDuTru;
         function initDatatableKPDuTru() {
             datatableKPDuTru = $("#KPDuTruDatatable").DataTable({
             oLanguage: {
@@ -3141,82 +3183,7 @@
             });
             $(id).append(html);
         }
-        const Tus = Uppy.Tus;
-        const StatusBar = Uppy.StatusBar;
-        const FileInput = Uppy.FileInput;
-        const Informer = Uppy.Informer;
 
-        var elemId = 'kt_uppy_1';
-        var id = '#' + elemId;
-        var $statusBar = $(id + ' .uppy-status');
-        var $uploadedList = $(id + ' .uppy-list');
-        var timeout;
-
-        var uppy1 = Uppy.Core({
-            debug: true,
-            autoProceed: false,
-            showProgressDetails: true,
-            restrictions: {
-                maxFileSize: 3145728, // 3mb
-                maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['.xlsx', '.xls', '.csv' ,'.pdf', 'image/*']
-            }
-        });
-
-        uppy1.use(FileInput, {
-            target: id + ' .uppy-wrapper',
-            pretty: false
-        });
-        uppy1.use(Informer, {
-            target: id + ' .uppy-informer'
-        });
-
-        // demo file upload server
-        uppy1.use(Tus, {
-            endpoint: 'https://master.tus.io/files/'
-        });
-        uppy1.use(StatusBar, {
-            target: id + ' .uppy-status',
-            hideUploadButton: true,
-            hideAfterFinish: false
-        });
-
-        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
-
-        var $fileLabel = $(id + ' .uppy-input-label');
-
-        uppy1.on('upload', function (data) {
-            $fileLabel.text("Uploading...");
-            $statusBar.addClass('uppy-status-ongoing');
-            $statusBar.removeClass('uppy-status-hidden');
-            clearTimeout(timeout);
-        });
-
-        uppy1.on('file-added', function (file) {
-            var sizeLabel = "bytes";
-            var filesize = file.size;
-            if (filesize > 1024) {
-                filesize = filesize / 1024;
-                sizeLabel = "kb";
-
-                if (filesize > 1024) {
-                    filesize = filesize / 1024;
-                    sizeLabel = "MB";
-                }
-            }
-            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-            $uploadedList.append(uploadListHtml);
-
-            $statusBar.addClass('uppy-status-hidden');
-            $statusBar.removeClass('uppy-status-ongoing');
-        });
-        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-            var itemId = $(this).attr('data-id');
-            uppy1.removeFile(itemId);
-            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-        });
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
@@ -3229,7 +3196,5 @@
             getOffice();
         });
     </script>
-    @*upload*@
-    <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicActivity/uppy.js"></script>
 }

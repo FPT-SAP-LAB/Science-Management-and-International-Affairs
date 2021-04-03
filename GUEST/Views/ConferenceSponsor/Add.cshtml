@@ -687,6 +687,10 @@
                 toastr.error("Thiếu thư xác nhận");
                 return false;
             }
+            if ($("#paper_name").val().trim() == "") {
+                toastr.error("Thiếu tên bài báo");
+                return false;
+            }
             fd.append('paper', uppy1.getFiles()[0].data)
             fd.append('invite', uppy2.getFiles()[0].data)
 

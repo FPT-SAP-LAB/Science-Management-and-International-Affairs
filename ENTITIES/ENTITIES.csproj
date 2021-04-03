@@ -169,6 +169,9 @@
     <Compile Include="ArticleVersion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Author.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="AuthorInvention.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

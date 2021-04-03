@@ -88,7 +88,12 @@ namespace MANAGER.Controllers
         [HttpGet]
         public ActionResult ExportAppointment(int request_id)
         {
-            return View();
+            ConferenceSponsorExportRepo exportRepo = new ConferenceSponsorExportRepo();
+            byte[] Word = exportRepo.ExportAppointment(request_id);
+            if (Word == null)
+                return Redirect("/ConferenceSponsor");
+            else
+                return File(Word, "application/vnd.ms-word", "Đề-nghị-cử-bán-bộ-đi-công-tác.docx");
         }
         [ChildActionOnly]
         public ActionResult CostMenu(int id)

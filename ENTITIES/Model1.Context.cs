@@ -118,6 +118,7 @@ namespace ENTITIES
         public virtual DbSet<PeoplePosition> PeoplePositions { get; set; }
         public virtual DbSet<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }
         public virtual DbSet<WorkingProcess> WorkingProcesses { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<AuthorInvention> AuthorInventions { get; set; }
         public virtual DbSet<AuthorPaper> AuthorPapers { get; set; }
         public virtual DbSet<Invention> Inventions { get; set; }

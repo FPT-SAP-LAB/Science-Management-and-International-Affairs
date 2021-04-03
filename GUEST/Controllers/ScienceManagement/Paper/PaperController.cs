@@ -129,7 +129,7 @@ namespace GUEST.Controllers
         public JsonResult editRequest(RequestPaper item)
         {
             string mess = pr.updateRequest(item);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = item.paper_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -149,7 +149,12 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult listAuthor(string id)
         {
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id);
+            string lang = "";
+            if (Request.Cookies["language_name"] != null)
+            {
+                lang = Request.Cookies["language_name"].Value;
+            }
+            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, lang);
             string ms = pr.getAuthorReceived(id);
             if (ms == null) ms = "";
             return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
@@ -160,6 +165,13 @@ namespace GUEST.Controllers
         {
             string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult getDecision(int id)
+        {
+            string link = pr.getDecisionLink(id);
+            return Json(new { link = link }, JsonRequestBehavior.AllowGet);
         }
     }
 }
