@@ -39,7 +39,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             datatable.Length = 20;
             datatable.SortColumnName = "name";
             datatable.SortDirection = "asc";
-            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable);
+            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable,"","");
             ViewBag.list = list;
             ////////////////////////////////////////////
             return View();
@@ -52,7 +52,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             var requestJson = JObject.Parse(request);
             datatable.Start = (int)requestJson["request"]["start"];
             datatable.Start = (int)requestJson["request"]["length"];
-            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable);
+            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable,"","");
             ViewBag.list = list;
             return Json(new { list });
         }
