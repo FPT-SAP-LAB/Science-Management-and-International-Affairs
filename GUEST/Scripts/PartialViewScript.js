@@ -228,10 +228,22 @@ $("#authors-info-container").on('click', '.edit-author', function () {
     let id = $(this).data("id");
     for (var i = 0; i < people.length; i++) {
         if (people[i].temp_id == id) {
-            $("#ckfe_edit").val(people[i].office_abbreviation);
+            if (people[i].office_abbreviation == null) $("#ckfe_edit").val("Khác");
+            else $("#ckfe_edit").val(people[i].office_abbreviation);
             $("#ckfe_edit").trigger('change');
-            $("#add_author_msnv_edit").val(people[i].mssv_msnv);
-            $("#add_author_msnv_edit").trigger('change');
+
+            if ($('#add_author_msnv_edit').find("option[value='" + people[i].mssv_msnv + "']").length) {
+                $('#add_author_msnv_edit').val(people[i].mssv_msnv).trigger('change');
+            } else {
+                // Create a DOM Option and pre-select by default
+                var newOption = new Option(people[i].mssv_msnv, people[i].mssv_msnv, true, true);
+                // Append it to the select
+                $('#add_author_msnv_edit').append(newOption).trigger('change');
+            } 
+
+            //$("#add_author_msnv_edit").val(people[i].mssv_msnv);
+            //$("#add_author_msnv_edit").trigger('change');
+
             $("#add_author_name_edit").val(people[i].name);
             $("#add_author_title_edit").val(people[i].title_id);
             $("#add_author_title_edit").trigger('change');

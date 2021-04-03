@@ -135,7 +135,7 @@
             mssv_msnv: $("#add_author_msnv_edit").val()
             }
             $.ajax({
-                url: "@Url.Action("fillData", "PartialView")",
+                url: "@Url.Action("fillDataAdd", "PartialView")",
                 type: "POST",
                 data: JSON.stringify({ 'item': AddAuthor, 'paper_id': paper_id }),
                 contentType: "application/json;charset=utf-8",
