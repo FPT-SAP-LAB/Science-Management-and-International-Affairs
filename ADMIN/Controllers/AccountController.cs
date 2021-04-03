@@ -41,20 +41,27 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult delete(int account_id)
         {
-            bool res = repo.delete(account_id);
-            if (res)
+            string res = repo.delete(account_id);
+            if (res.Equals("ok"))
             {
-                return Json("Xóa thành công");
+                return Json(1);
+            }
+            else if (res.Equals("cons"))
+            {
+                return Json(2);
             }
             else return Json(String.Empty);
         }
         [HttpPost]
         public JsonResult edit(AccountRepo.infoAccount obj)
         {
-            bool res = repo.edit(obj);
-            if (res)
+            string res = repo.edit(obj);
+            if (res.Equals("ok"))
             {
-                return Json("Chỉnh sửa thành công");
+                return Json(1);
+            }else if (res.Equals("cons"))
+            {
+                return Json(2);
             }
             else return Json(String.Empty);
         }

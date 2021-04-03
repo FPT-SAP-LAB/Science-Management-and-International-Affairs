@@ -106,43 +106,59 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool edit(infoAccount obj)
+        public string edit(infoAccount obj)
         {
             try
             {
                 Account a = db.Accounts.Find(obj.account_id);
+                if (a.role_id == 1)
+                {
+                    List<Account> num = db.Accounts.Where(x => x.role_id == 1).ToList();
+                    if (num.Count == 1)
+                    {
+                        return "cons";
+                    }
+                }
                 a.email = obj.email;
                 a.role_id = obj.role_id;
                 db.Entry(a).State = EntityState.Modified;
                 db.SaveChanges();
-                return true;
+                return "ok";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return false;
+                return String.Empty;
             }
         }
-        public bool delete(int account_id)
+        public string delete(int account_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    Account a = db.Accounts.Find(account_id);
+                    if(a.role_id == 1)
+                    {
+                        List<Account> num = db.Accounts.Where(x => x.role_id == 1).ToList();
+                        if (num.Count == 1)
+                        {
+                            return "cons";
+                        }
+                    }
                     List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == account_id).ToList();
                     db.AccountRights.RemoveRange(rv);
                     db.SaveChanges();
-                    Account a = db.Accounts.Find(account_id);
                     db.Accounts.Remove(a);
                     db.SaveChanges();
                     transaction.Commit();
-                    return true;
+                    return "ok";
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
                     transaction.Rollback();
-                    return false;
+                    return String.Empty;
                 }
             }
         }

@@ -283,6 +283,11 @@
                 participant_number: phone,
                 office_id: office
             };
+            arrAnswer.push(fullname);
+            arrAnswer.push(email);
+            arrAnswer.push(phone);
+            arrAnswer.push($('#ques-answer-role option:selected').html());
+            arrAnswer.push($('#ques-answer-office option:selected').html());
             arrQues.forEach(function (x) {
                 if (!req) {
                     switch (x.answer_type) {

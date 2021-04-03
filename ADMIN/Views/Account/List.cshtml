@@ -239,10 +239,12 @@
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         success: function (data) {
-                            if (data != '') {
-                                toastr.success(data);
+                            if (data == 1) {
+                                toastr.success('Xóa thành công');
                                 stt = 1;
                                 datatable.ajax.reload();
+                            } else if (data == 2) {
+                                toastr.warning('Không thể xóa tài khoản ADMIN duy nhất trong hệ thống.');
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                             }
@@ -355,11 +357,13 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data != '') {
-                        toastr.success(data);
+                    if (data == 1) {
+                        toastr.success('Chỉnh sửa tài khoản thành công.');
                         clearModal('#editModal');
                         stt = 1;
                         datatable.ajax.reload();
+                    } else if (data == 2) {
+                        toastr.warning("Hệ thống luôn đảm bảm có ít nhất 1 tài khoản ADMIN. Vui lòng thay đổi chức danh khác");
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
