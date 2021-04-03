@@ -27,7 +27,7 @@ namespace BLL.Authen
                 {
                     return null;
                 }
-                if ((bool)!a.is_login)
+                if (!a.is_login)
                 {
                     a.full_name = user.name;
                     a.google_id = user.id;
@@ -36,12 +36,17 @@ namespace BLL.Authen
                     db.Entry(a).State = EntityState.Modified;
                     db.SaveChanges();
                 }
+                //  Tài khoản sẽ sử dụng được mọi chức năng của bên GUEST/MANAGER nếu như có profile
+                Profile profile = db.Profiles.Where(x => x.account_id == a.account_id).FirstOrDefault();
+                bool IsValid = profile != null;
                 User u = new User
                 {
                     url = r.url,
                     rights = getPermission(a),
                     account = a,
-                    role_name = r.role_name
+                    role_name = r.role_name,
+                    IsValid = IsValid,
+                    PeopleID = profile?.people_id
                 };
                 return u;
             }
@@ -102,6 +107,8 @@ namespace BLL.Authen
             public string url { get; set; }
             public Account account { get; set; }
             public string role_name { get; set; }
+            public bool IsValid { get; set; }
+            public int? PeopleID { get; set; }
         }
         public class baseRight
         {
