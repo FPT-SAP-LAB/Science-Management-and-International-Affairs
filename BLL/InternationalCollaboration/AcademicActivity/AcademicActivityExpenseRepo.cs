@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ENTITIES.CustomModels;
+using Newtonsoft.Json;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
@@ -82,11 +83,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total', aed.note
+                string sql = @"SELECT aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total', aed.note,f.link,f.[name]
                                     FROM SMIA_AcademicActivity.ActivityExpenseCategory aec INNER JOIN SMIA_AcademicActivity.ActivityExpenseDetail aed
                                     ON aec.expense_category_id = aed.expense_category_id 
+                                    left join General.[File] f on f.[file_id] = aed.[file_id]
                                     WHERE aec.activity_office_id = @activity_office_id and aed.expense_type_id = 1
-                                    group by aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity, aed.note";
+                                    group by aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity, aed.note,f.link,f.[name]";
                 List<infoExpenseEstimate> data = db.Database.SqlQuery<infoExpenseEstimate>(sql, new SqlParameter("activity_office_id", activity_office_id)).ToList();
                 return data;
             }
@@ -95,24 +97,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseEstimate>();
             }
         }
-        public bool addExpenseDuTru(int activity_office_id, string activity_name, infoExpenseEstimate data, HttpPostedFileBase img)
+        public bool addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    infoExpenseEstimate expense = JsonConvert.DeserializeObject<infoExpenseEstimate>(data);
                     ActivityExpenseCategory aec = db.ActivityExpenseCategories.Add(new ActivityExpenseCategory
                     {
                         activity_office_id = activity_office_id,
-                        expense_category_name = data.expense_category_name
+                        expense_category_name = expense.expense_category_name
                     });
                     db.SaveChanges();
                     ActivityExpenseDetail aed = db.ActivityExpenseDetails.Add(new ActivityExpenseDetail
                     {
                         expense_type_id = 1,
-                        note = data.note,
-                        expense_price = data.expense_price,
-                        expense_quantity = data.expense_quantity,
+                        note = expense.note,
+                        expense_price = expense.expense_price,
+                        expense_quantity = expense.expense_quantity,
                         expense_category_id = aec.expense_category_id
                     });
                     db.SaveChanges();
@@ -122,7 +125,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
                     if (img != null)
                     {
-                        Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trụ - " + data.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
+                        Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trù - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
                         File file = new File();
                         file.name = img.FileName;
                         file.link = f.WebViewLink;
@@ -131,6 +134,82 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.SaveChanges();
                         aed.file_id = ff.file_id;
                         db.Entry(aed).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        public bool deleteExpenseDuTru(int expense_category_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ActivityExpenseDetail aed = db.ActivityExpenseDetails.Where(x => x.expense_category_id == expense_category_id).FirstOrDefault();
+                    File f = db.Files.Find(aed.file_id);
+                    if (f != null)
+                    {
+                        GoogleDriveService.DeleteFile(f.file_drive_id);
+                    }
+                    ActivityExpenseCategory aec = db.ActivityExpenseCategories.Find(expense_category_id);
+                    db.ActivityExpenseCategories.Remove(aec);
+                    db.SaveChanges();
+                    db.Files.Remove(f);
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        public infoExpenseEstimate getExpenseDuTru(int expense_category_id)
+        {
+            try
+            {
+                string sql = @"select aed.expense_category_id,aec.expense_category_name,aed.expense_price,aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total',aed.note,f.link,f.[name]
+                            from SMIA_AcademicActivity.ActivityExpenseCategory aec
+                            inner join SMIA_AcademicActivity.ActivityExpenseDetail aed on aed.expense_category_id = aec.expense_category_id
+                            left join General.[File] f on f.[file_id] = aed.[file_id]
+                            where aed.expense_category_id = @expense_category_id";
+                infoExpenseEstimate data = db.Database.SqlQuery<infoExpenseEstimate>(sql, new SqlParameter("expense_category_id", expense_category_id)).FirstOrDefault();
+                return data;
+            }
+            catch (Exception e)
+            {
+                return new infoExpenseEstimate();
+            }
+        }
+        public bool editExpenseDuTru(string data, HttpPostedFileBase img)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    infoExpenseEstimate expense = JsonConvert.DeserializeObject<infoExpenseEstimate>(data);
+                    ActivityExpenseCategory aec = db.ActivityExpenseCategories.Find(expense.expense_category_id);
+                    aec.expense_category_name = expense.expense_category_name;
+                    db.Entry(aec).State = EntityState.Modified;
+                    ActivityExpenseDetail aed = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec.expense_category_id).FirstOrDefault();
+                    aed.expense_price = expense.expense_price;
+                    aed.expense_quantity = expense.expense_quantity;
+                    aed.note = expense.note;
+                    if (img != null)
+                    {
+                        Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
+                        File f = db.Files.Find(aed.file_id);
+                        f.name = img.FileName;
+                        db.Entry(f).State = EntityState.Modified;
                     }
                     db.SaveChanges();
                     transaction.Commit();
@@ -165,6 +244,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int expense_quantity { get; set; }
             public double total { get; set; }
             public string note { get; set; }
+            public string link { get; set; }
+            public string name { get; set; }
         }
     }
 }
