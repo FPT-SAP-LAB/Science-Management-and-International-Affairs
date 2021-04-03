@@ -141,7 +141,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
-                        <button class="btn btn-light-success px-6 font-weight-bold edit ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
                         <a target="_blank" class="btn btn-light-success px-6 font-weight-bold ml-1" id="view_decision">Xem quyết định thưởng của bài báo</a>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
@@ -308,6 +308,7 @@
         }
 
         $("#edit_submit_reward").click(function () {
+            $("#loading").show();
             var sum = 0;
             var total = $("#totalreward").val();
             total = total.split(",").join("");
