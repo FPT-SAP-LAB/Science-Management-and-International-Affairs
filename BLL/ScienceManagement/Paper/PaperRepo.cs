@@ -638,9 +638,10 @@ namespace BLL.ScienceManagement.Paper
             try
             {
                 db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].PaperWithCriteria where paper_id = @id", new SqlParameter("id", paper_id));
-                string mess = addCriteria(criteria, paper_id);
+                db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
+                string mess = addCriteria(criteria, paper_id);
                 return mess;
             }
             catch (Exception e)
@@ -658,11 +659,31 @@ namespace BLL.ScienceManagement.Paper
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                db.Database.ExecuteSqlCommand("delete from[SM_ScientificProduct].AuthorPaper where paper_id = @id", new SqlParameter("id", paper_id));
-                string mess = addAuthor(people, paper_id);
+                //db.Database.ExecuteSqlCommand("delete from[SM_ScientificProduct].AuthorPaper where paper_id = @id", new SqlParameter("id", paper_id));
+                //string mess = addAuthor(people, paper_id);
+                foreach (var item in people)
+                {
+                    Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
+                    author.name = item.name;
+                    author.email = item.email;
+                    if (item.office_id != 0)
+                    {
+                        author.office_id = item.office_id;
+                        author.bank_number = item.bank_number;
+                        author.bank_branch = item.bank_branch;
+                        author.tax_code = item.tax_code;
+                        author.identification_number = item.identification_number;
+                        author.mssv_msnv = item.mssv_msnv;
+                        author.is_reseacher = item.is_reseacher;
+                        author.title_id = item.title_id;
+                        author.contract_id = item.contract_id;
+                    }
+                    db.Entry(author).State = EntityState.Modified;
+                }
+                db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
-                return mess;
+                return "ss";
             }
             catch (Exception e)
             {
