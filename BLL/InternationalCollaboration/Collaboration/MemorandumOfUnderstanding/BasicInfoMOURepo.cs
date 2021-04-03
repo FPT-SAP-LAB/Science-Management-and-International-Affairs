@@ -250,7 +250,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,
                         evidence = ""
-                    }) ;
+                    });
                     //checkpoint 1
                     db.SaveChanges();
 

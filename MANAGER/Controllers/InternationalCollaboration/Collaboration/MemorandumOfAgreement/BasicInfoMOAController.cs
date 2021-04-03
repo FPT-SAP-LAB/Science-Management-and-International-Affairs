@@ -145,7 +145,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 {
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["moa_detail_id"].ToString();
-                    moa.addExtraMOA(input, int.Parse(id),user);
+                    moa.addExtraMOA(input, int.Parse(id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
