@@ -195,5 +195,39 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        public ActionResult CheckPartnerExistedInMOA(string partner_name)
+        {
+            try
+            {
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    string partner = moa.CheckPartnerExistedInMOA(int.Parse(id), partner_name);
+                    return Json(partner);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult CheckPartnerExistedInEditMOA(string partner_name, int moa_partner_id)
+        {
+            try
+            {
+                string partner = moa.CheckPartnerExistedInMOA(moa_partner_id, partner_name);
+                return Json(partner);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
     }
 }

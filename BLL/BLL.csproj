@@ -149,6 +149,7 @@
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
+    <Compile Include="ModelDAL\ResearcherAreasRepo.cs" />
     <Compile Include="ModelDAL\SpecializationLanguageRepo.cs" />
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\TitleLanguageRepo.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
     <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
+    <Compile Include="ScienceManagement\Researcher\AdditionalProfile.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearcherCandidateRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />

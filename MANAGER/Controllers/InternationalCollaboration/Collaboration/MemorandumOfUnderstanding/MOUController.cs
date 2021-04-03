@@ -31,6 +31,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 ViewBag.newMOUCode = mou.getSuggestedMOUCode();
                 ViewBag.listScopes = mou.GetCollaborationScopes();
                 ViewBag.listSpe = mou.GetSpecializations();
+                ViewBag.listCountry = mou.GetCountries();
                 ViewBag.noti = mou.getNoti();
                 return View();
             }

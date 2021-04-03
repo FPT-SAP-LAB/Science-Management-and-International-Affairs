@@ -28,24 +28,20 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         join IA_Article.Article ar on ar.article_id = pr.article_id
                         join IA_Article.ArticleVersion av on av.article_id = pr.article_id
                         join General.Account ac on ar.account_id = ac.account_id
-                        where pr.direction_id = @direction	
+                        where pr.direction_id = {0}	
                         group by pr.procedure_id, ac.full_name,  pr.article_id) as a 
                         join IA_Article.ArticleVersion atv on a.article_id = atv.article_id 
-                        and a.language_id = atv.language_id";
-                if (!String.IsNullOrEmpty(title))
-                {
-                    sql += " where atv.version_title LIKE @title";
-                }
+                        and a.language_id = atv.language_id where atv.version_title LIKE {1}";
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
                             + baseDatatable.Length + " ROWS ONLY";
 
-                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging,
-                    new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).ToList();
+                List<ProcedureInfoManager> obj = db.Database.SqlQuery<ProcedureInfoManager>(sql + paging, direction,
+                    title == null ? "%%" : "%" + title + "%").ToList();
 
-                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql,
-                    new SqlParameter("direction", direction), new SqlParameter("title", "%" + title + "%")).Count();
+                int totalRecord = db.Database.SqlQuery<ProcedureInfoManager>(sql, direction,
+                    title == null ? "%%" : "%" + title + "%").Count();
 
                 return new BaseServerSideData<ProcedureInfoManager>(obj, totalRecord);
             }

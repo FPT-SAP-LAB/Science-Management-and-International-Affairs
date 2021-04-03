@@ -16,16 +16,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 {
     public class ConferenceSponsorExportRepo
     {
-        //private ScienceAndInternationalAffairsEntities db;
         public byte[] ExportRequest(int request_id, int account_id = 0)
         {
-            //db = new ScienceAndInternationalAffairsEntities();
             CostRepo costRepo = new CostRepo();
 
             List<Cost> Costs = costRepo.GetList(request_id);
             ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
             JObject @object = JObject.Parse(DetailRepos.GetDetailPageGuest(request_id, 1, account_id));
-            //Person person = db.Profiles.Where(x => x.account_id == account_id).Select(x => x.Person).FirstOrDefault();
             ConferenceDetail Conference = @object["Conference"].ToObject<ConferenceDetail>();
             ConferenceParticipantExtend Participants = @object["Participants"].ToObject<List<ConferenceParticipantExtend>>()[0];
             try
@@ -67,7 +64,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         docText = regexText.Replace(docText, Conference.CountryName);
 
                         regexText = new Regex("@Total");
-                        docText = regexText.Replace(docText, String.Format("{0:n0}", Costs.Sum(x => x.total)));
+                        docText = regexText.Replace(docText, string.Format("{0:n0}", Costs.Sum(x => x.total)));
 
                         regexText = new Regex("@QsUniversity");
                         docText = regexText.Replace(docText, Conference.QsUniversity);
@@ -98,9 +95,16 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 return null;
             }
         }
-        public byte[] ExportAppointment(int request_id, int account_id)
+        public byte[] ExportAppointment(int request_id, int account_id = 0)
         {
             CostRepo costRepo = new CostRepo();
+
+            List<Cost> Costs = costRepo.GetList(request_id);
+            ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
+            JObject @object = JObject.Parse(DetailRepos.GetDetailPageGuest(request_id, 1, account_id));
+            ConferenceDetail Conference = @object["Conference"].ToObject<ConferenceDetail>();
+            ConferenceParticipantExtend Participants = @object["Participants"].ToObject<List<ConferenceParticipantExtend>>()[0];
+            List<ConferenceApprovalProcess> ApprovalProcesses = @object["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
             try
             {
                 string fileName = HostingEnvironment.MapPath("/Word_Template/ConferenceSponsor/AppointmentForm.docx");
@@ -108,63 +112,91 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 using (var stream = new MemoryStream())
                 {
                     stream.Write(byteArray, 0, byteArray.Length);
-                    using (var doc = WordprocessingDocument.Open(stream, false))
+                    using (var doc = WordprocessingDocument.Open(stream, true))
                     {
-                        ////////////////////////////////////replace/////////////////////////////////
+                        //  Cost table
+                        Table CostTable = doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(1);
+                        TableRow TemplateCost = CostTable.Elements<TableRow>().ElementAt(1);
+
+                        for (int i = 0; i < Costs.Count; i++)
+                        {
+                            Cost cost = Costs[i];
+                            TableRow tr = TemplateCost.Clone() as TableRow;
+
+                            tr.ChildElements[0].InnerXml = tr.ChildElements[0].InnerXml.Replace("@Content", (i + 1) + "- " + cost.content);
+                            tr.ChildElements[1].InnerXml = tr.ChildElements[1].InnerXml.Replace("@Sponsore", cost.sponsoring_organization);
+                            tr.ChildElements[2].InnerXml = tr.ChildElements[2].InnerXml.Replace("@Detail", cost.detail);
+                            tr.ChildElements[3].InnerXml = tr.ChildElements[3].InnerXml.Replace("@SubTotal", string.Format("{0:n0}", cost.total));
+
+                            CostTable.InsertAfter(tr, CostTable.Elements<TableRow>().ElementAt(i));
+                        }
+                        CostTable.RemoveChild(TemplateCost);
+                        //  Approval process table
+                        Table ApprovalTable = doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(2);
+                        TableRow TemplateApproval = ApprovalTable.Elements<TableRow>().ElementAt(1);
+
+                        for (int i = 0; i < ApprovalProcesses.Count; i++)
+                        {
+                            ConferenceApprovalProcess process = ApprovalProcesses[i];
+                            TableRow tr = TemplateApproval.Clone() as TableRow;
+
+                            tr.ChildElements[0].InnerXml = tr.ChildElements[0].InnerXml.Replace("@Time", process.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
+                            tr.ChildElements[1].InnerXml = tr.ChildElements[1].InnerXml.Replace("@Position", process.PositionName);
+                            tr.ChildElements[2].InnerXml = tr.ChildElements[2].InnerXml.Replace("@FullName", process.FullName);
+                            tr.ChildElements[3].InnerXml = tr.ChildElements[3].InnerXml.Replace("@Comment", process.Comment);
+
+                            ApprovalTable.InsertAfter(tr, ApprovalTable.Elements<TableRow>().ElementAt(i));
+                        }
+                        ApprovalTable.RemoveChild(TemplateApproval);
+                        doc.MainDocumentPart.Document.Save();
                         string docText = null;
                         using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
                         {
                             docText = sr.ReadToEnd();
                         }
 
-                        Regex regexText = new Regex("@Day");
-                        docText = regexText.Replace(docText, DateTime.Now.Day.ToString());
+                        Regex regexText = new Regex("@Date");
+                        DateTime Now = DateTime.Now;
+                        docText = regexText.Replace(docText, "ngày " + Now.Day + " tháng " + Now.Month + " năm " + Now.Year);
 
-                        regexText = new Regex("@Month");
-                        docText = regexText.Replace(docText, DateTime.Now.Month.ToString());
+                        regexText = new Regex("@Name");
+                        docText = regexText.Replace(docText, Participants.FullName);
 
-                        regexText = new Regex("@Year");
-                        docText = regexText.Replace(docText, DateTime.Now.Year.ToString());
+                        string PositionName = PositionRepo.GetPositionNameByProfileCode(Participants.ID, 1);
+                        if (PositionName == null)
+                        {
+                            if (Participants.TitleID == 1 || Participants.TitleID == 2)
+                                docText = docText.Replace("@PositionName", "Chức vụ: " + Participants.TitleName);
+                            else
+                                docText = docText.Replace("@PositionName", "");
+                        }
+                        else
+                            docText = docText.Replace("@PositionName", "Chức vụ: " + PositionName);
+
+                        regexText = new Regex("@OfficeName");
+                        docText = regexText.Replace(docText, Conference.SpecializationName + " " + Participants.OfficeName);
+
+                        regexText = new Regex("@ConferenceName");
+                        docText = regexText.Replace(docText, Conference.ConferenceName);
+
+                        regexText = new Regex("@CountryName");
+                        docText = regexText.Replace(docText, Conference.CountryName);
+
+                        regexText = new Regex("@AttendanceStart");
+                        docText = regexText.Replace(docText, Conference.AttendanceStart.ToString("dd/MM/yyyy"));
+
+                        regexText = new Regex("@AttendanceEnd");
+                        docText = regexText.Replace(docText, Conference.AttendanceEnd.ToString("dd/MM/yyyy"));
+
+                        regexText = new Regex("@Total");
+                        docText = regexText.Replace(docText, string.Format("{0:n0}", Costs.Sum(x => x.total)));
 
                         using (StreamWriter sw = new StreamWriter(doc.MainDocumentPart.GetStream(FileMode.Create)))
                         {
                             sw.Write(docText);
                         }
-                        /////////////////////////////////////////////////////////////////////
-                        Table table =
-                        doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(1);
-
-                        List<Cost> Costs = costRepo.GetList(request_id);
-
-                        for (int i = 0; i < Costs.Count; i++)
-                        {
-                            Cost cost = Costs[i];
-                            TableRow tr = new TableRow();
-
-                            TableCell tc1 = new TableCell();
-                            tc1.Append(new Paragraph(new Run(new Text((i + 1) + " - " + cost.content))));
-                            tr.Append(tc1);
-
-                            TableCell tc2 = new TableCell();
-                            tc2.Append(new Paragraph(new Run(new Text(cost.sponsoring_organization))));
-                            tr.Append(tc2);
-
-                            TableCell tc3 = new TableCell();
-                            tc3.Append(new Paragraph(new Run(new Text(cost.detail))));
-                            tr.Append(tc3);
-
-                            TableCell tc4 = new TableCell();
-                            tc4.Append(new Paragraph(new Run(new Text(cost.total.ToString()))));
-                            tr.Append(tc4);
-
-                            table.Append(tr);
-                        }
-                        stream.Position = 0;
-                        string handle = Guid.NewGuid().ToString();
                         return stream.ToArray();
-                        //    return new File(output, "application/vnd.ms-word", "Đơn-đề-nghị-hỗ-trợ-HNKH-Le-Dinh-Duy.docx");
                     }
-
                 }
             }
             catch (Exception e)

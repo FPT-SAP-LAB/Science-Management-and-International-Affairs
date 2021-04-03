@@ -418,12 +418,12 @@
             $.ajax({
                 url: "/ConferenceSponsor/UpdateCost",
                 method: "post",
-                complete: function (data) {
-                    if (data.responseText.success) {
+                success: function (data) {
+                    if (data.success) {
                         location.reload();
                     }
                     else {
-                        toastr.error(data.responseText.message);
+                        toastr.error(data.message);
                     }
                     save_loader.stopLoading();
                 },

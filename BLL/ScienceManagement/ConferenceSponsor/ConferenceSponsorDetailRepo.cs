@@ -62,7 +62,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                FormalityName = j.name,
                                                Reimbursement = a.reimbursement,
                                                SpecializationID = k.specialization_id,
-                                               SpecializationName = k.name
+                                               SpecializationName = k.name,
+                                               AccountID = account_id
                                            }).FirstOrDefault();
             if (Conference == null)
                 return null;
@@ -111,6 +112,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
             var ApprovalProcesses = (from a in db.ApprovalProcesses
                                      join b in db.Accounts on a.account_id equals b.account_id
+                                     join e in db.Profiles on b.account_id equals e.account_id
                                      join c in db.PositionLanguages.Where(x => x.language_id == language_id) on a.position_id equals c.position_id into Processes
                                      from d in Processes.DefaultIfEmpty()
                                      where a.request_id == request_id
@@ -118,7 +120,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                      {
                                          CreatedDate = a.created_date,
                                          PositionName = d == null ? "Sinh viên" : d.name,
-                                         FullName = b.full_name,
+                                         FullName = e.Person.name,
                                          Comment = a.comment
                                      }).ToList();
             return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail });
@@ -183,8 +185,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 try
                 {
                     var CostIDs = JsonConvert.DeserializeObject<List<int>>(costs);
-                    if (CostIDs.Count == 0)
-                        return new AlertModal<string>(true);
 
                     var Request = db.RequestConferences.Find(request_id);
                     if (Request == null)
