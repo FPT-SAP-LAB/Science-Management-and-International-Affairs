@@ -78,7 +78,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
-            if (profile.profile_page_active==false)
+            if (profile.profile_page_active == false)
             {
                 ViewBag.profile_page_active = false;
             }
@@ -160,7 +160,8 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
             ViewBag.profile = profile;
-            if (profile.profile_page_active) {
+            if (profile.profile_page_active)
+            {
                 ViewBag.profile_page_active = true;
                 return View();
             }
@@ -195,10 +196,10 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             string data = Request["status"];
             int id = Int32.Parse(Request["id"]);
-            bool status=data=="1"?true:false;
+            bool status = data == "1" ? true : false;
             researcherCandidate = new ResearcherCandidateRepo();
             bool update = researcherCandidate.UpdateProfilePage(id, status);
-            return Json(new { success=update});
+            return Json(new { success = update });
         }
     }
 }
