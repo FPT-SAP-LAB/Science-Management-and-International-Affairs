@@ -37,8 +37,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             file = academicCollaborationRepo.saveFile(f, evidence_file);
                         }
                         //update to PartnerScope
-                        PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
-                        saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                        //PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
+                        PartnerScope partnerScope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == activityPartner.partner_id && x.scope_id == activityPartner.scope_id).FirstOrDefault();
+                        if (partnerScope != null)
+                        {
+                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                            db.SaveChanges();
+                            academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
+                            db.SaveChanges();
+                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                            db.SaveChanges();
+                        }
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
@@ -92,7 +106,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ap.add_time = DateTime.Now;
                 if (file.file_id != 0) ap.file_id = file.file_id;
                 db.ActivityPartners.Add(ap);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -173,6 +186,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 new_file = removeFile(old_file);
                             }
                         }
+                        db.SaveChanges();
                         //update file_id null in coress ActivityPartner
                         updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
                         dbContext.Commit();
@@ -195,7 +209,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             try
             {
                 db.Files.Remove(file);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -256,6 +269,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                     ActivityPartner activityPartner = db.ActivityPartners.Find(activity_partner_id);
+                    int partner_scope_id = activityPartner.partner_scope_id;
                     //delete corress file in db and gg drive
                     if (activityPartner.file_id != null)
                     {
@@ -265,11 +279,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Files.Remove(file);
                         db.SaveChanges();
                     }
-                    //decrease ref_cou
-                    PartnerScope partnerScope = db.PartnerScopes.Find(activityPartner.partner_scope_id);
-                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
                     //delete activi_partner
                     db.ActivityPartners.Remove(activityPartner);
+                    db.SaveChanges();
+                    //decrease ref_cou
+                    PartnerScope partnerScope = db.PartnerScopes.Find(partner_scope_id);
+                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
                     db.SaveChanges();
                     //delete partner_scope if ref_cou < =0
                     if (partnerScope.reference_count <= 0)

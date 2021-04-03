@@ -140,9 +140,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"-----1.3. Đơn vị đào tạo - chiều đi/chiều đến -> partner/office
-                    select par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    select distinct par.*, cou.country_name from IA_Collaboration.[Partner] par
                     inner join General.Country cou on cou.country_id = par.country_id
-                    where partner_name like @partner_name and is_deleted = 0";
+					left join IA_Collaboration.MOUPartner mp on mp.partner_id = par.partner_id
+					left join IA_Collaboration.MOU m on m.mou_id = mp.mou_id and (m.mou_id IS NULL OR m.is_deleted = 0)
+                    where par.is_deleted = 0 and partner_name like @partner_name";
                 List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
                     new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
                 return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
@@ -351,26 +353,37 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             partner_scope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == partner_id && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
                             if (partner_scope != null)
                             {
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
+                                //add Academic Collab
+                                var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
+                                db.SaveChanges();
                                 //incease 1 to referecen count
                                 increaseReferenceCountOfPartnerScope(partner_scope);
+                                //add infor to File
+                                var evidence_file = saveFile(f, evidence);
+                                db.SaveChanges();
+                                //add infor to CollaborationStatusHistory
+                                var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                                db.SaveChanges();
                             }
                             else
                             {
                                 //add partner_id & scope_id to PartnerScope
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
+                                db.SaveChanges();
+                                //get corresponding partner_scope_id
+                                partner_scope_id = partner_scope.partner_scope_id;
+                                //add Academic Collab
+                                var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
+                                //add infor to File
+                                var evidence_file = saveFile(f, evidence);
+                                db.SaveChanges();
+                                //add infor to CollaborationStatusHistory
+                                var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                                db.SaveChanges();
                             }
-                            //get corresponding partner_scope_id
-                            partner_scope_id = partner_scope.partner_scope_id;
                         }
-
-                        //add Academic Collab
-                        var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
-
-                        //add infor to File
-                        var evidence_file = saveFile(f, evidence);
-
-                        //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thêm cán bộ giảng viên thành công.");
                     }
@@ -427,7 +440,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 person.email = obj_person.person_email;
                 if (obj_person.person_profile_office_id != 0) person.office_id = obj_person.person_profile_office_id;
                 db.People.Add(person);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -451,7 +463,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 {
                     person.office_id = null;
                 }
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -496,7 +507,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     account_id = account_id
                 };
                 db.Articles.Add(article);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -534,7 +544,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 partner.partner_name = obj_partner.partner_name;
                 partner.article_id = article.article_id;
                 db.Partners.Add(partner);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -555,7 +564,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     reference_count = 1 //init first count for new PartnerScope
                 };
                 db.PartnerScopes.Add(partner_scope);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -606,7 +614,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 academic_collaboration.is_supported = obj_academic_collab.support;
                 if (obj_academic_collab.note != null) academic_collaboration.note = obj_academic_collab.note;
                 db.AcademicCollaborations.Add(academic_collaboration);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -627,7 +634,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
                     if (f.Id != null) evidence_file.file_drive_id = f.Id;
                     db.Files.Add(evidence_file);
-                    db.SaveChanges();
                 }
             }
             catch (Exception e)
@@ -650,7 +656,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (evidence != null) collab_status_hist.file_id = evidence_file.file_id;
                 collab_status_hist.account_id = account_id;
                 db.CollaborationStatusHistories.Add(collab_status_hist);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -877,16 +882,18 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 try
                 {
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
-                    //decrease reference_count in PartnerScope
-                    PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
-                    if (partnerScope != null)
-                    {
-                        decreaseReferenceCountOfPartnerScope(partnerScope);
-                    }
+                    int? partner_scope_id = academicCollaboration.partner_scope_id;
+
                     //delete AcademicCollab
                     db.AcademicCollaborations.Remove(academicCollaboration);
                     db.SaveChanges();
-
+                    //decrease reference_count in PartnerScope
+                    PartnerScope partnerScope = db.PartnerScopes.Find(partner_scope_id);
+                    if (partnerScope != null)
+                    {
+                        decreaseReferenceCountOfPartnerScope(partnerScope);
+                        db.SaveChanges();
+                    }
                     //delete partner_scope records with reference_count = 0
                     if (partnerScope.reference_count <= 0)
                     {
