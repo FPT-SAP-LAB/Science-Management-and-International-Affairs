@@ -231,7 +231,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return newObj;
         }
-        public void addExtraMOU(ExMOUAdd input, int mou_id)
+        public void addExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
