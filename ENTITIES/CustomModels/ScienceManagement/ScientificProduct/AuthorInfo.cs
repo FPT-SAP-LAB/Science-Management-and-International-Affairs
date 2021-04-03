@@ -15,7 +15,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string office_abbreviation { get; set; }
         public string link { get; set; }
         public int contract_id { get; set; }
-        public int title_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public string office_id_string { get; set; }

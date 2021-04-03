@@ -21,11 +21,11 @@ namespace ENTITIES
         public int status_id { get; set; }
         public Nullable<int> total_reward { get; set; }
         public int paper_id { get; set; }
-        public Nullable<int> author_received_rewward { get; set; }
+        public Nullable<int> author_received_reward { get; set; }
     
-        public virtual Person Person { get; set; }
         public virtual Specialization Specialization { get; set; }
         public virtual BaseRequest BaseRequest { get; set; }
+        public virtual Author Author { get; set; }
         public virtual Paper Paper { get; set; }
         public virtual PaperStatu PaperStatu { get; set; }
     }
