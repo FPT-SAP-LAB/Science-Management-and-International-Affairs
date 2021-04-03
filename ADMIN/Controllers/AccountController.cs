@@ -59,7 +59,8 @@ namespace ADMIN.Controllers
             if (res.Equals("ok"))
             {
                 return Json(1);
-            }else if (res.Equals("cons"))
+            }
+            else if (res.Equals("cons"))
             {
                 return Json(2);
             }

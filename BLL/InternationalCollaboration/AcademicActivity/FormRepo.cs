@@ -242,7 +242,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     res = res
                 };
                 return data;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new viewResponse();
             }

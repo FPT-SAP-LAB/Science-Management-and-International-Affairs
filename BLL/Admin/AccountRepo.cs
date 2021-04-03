@@ -138,7 +138,7 @@ namespace BLL.Admin
                 try
                 {
                     Account a = db.Accounts.Find(account_id);
-                    if(a.role_id == 1)
+                    if (a.role_id == 1)
                     {
                         List<Account> num = db.Accounts.Where(x => x.role_id == 1).ToList();
                         if (num.Count == 1)

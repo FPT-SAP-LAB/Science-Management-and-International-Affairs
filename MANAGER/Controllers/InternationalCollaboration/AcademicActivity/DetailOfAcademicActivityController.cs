@@ -248,7 +248,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
-            return Json(data,JsonRequestBehavior.AllowGet);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult getDatatableKP(int activity_id)
@@ -296,19 +296,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult deleteExpenseType(int expense_category_id,int type)
+        public JsonResult deleteExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.deleteExpenseType(expense_category_id,type);
+            bool res = expenseRepo.deleteExpenseType(expense_category_id, type);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult getExpenseType(int expense_category_id,int type)
+        public JsonResult getExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseType(expense_category_id,type);
+            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseType(expense_category_id, type);
             return Json(data);
         }
         [HttpPost]
