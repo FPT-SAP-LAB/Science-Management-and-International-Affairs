@@ -2243,9 +2243,13 @@
             cache: false,
             success: function (data) {
                 $('#add_moa_modal').modal('hide');
-                toastr.success('Thêm thành công');
-                listTempPartnerMOAAdd = [];
+                toastr.success('Thêm thành công');   
+                $('#end_date_moa').val('');
+                $('#note_moa').val('');
+                $('#moa_area').val('');
+                resetTableMOA();
                 reloadMOATable();
+                listTempPartnerMOAAdd = [];
             },
             error: function () {
                 //alert("fail");
@@ -2750,6 +2754,7 @@
                 if (result.value) {
                     $.ajax({
                         url: link,
+                        type: "POST",
                         data: { moa_id : id },
                         success: function (data) {
                             if (data = "") {
