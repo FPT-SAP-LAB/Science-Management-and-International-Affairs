@@ -2,96 +2,457 @@
 @{
     ViewBag.Title = "Bổ sung thông tin tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["USer"];
 }
-
-<div class="content  d-flex flex-column flex-column-fluid">
-    <div class="card card-custom">
-        <div class="card-body p-0">
-            <form class="form">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label>Full Name:</label>
-                            <input type="email" class="form-control" placeholder="Enter full name" />
-                            <span class="form-text text-muted">Please enter your full name</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Email:</label>
-                            <input type="email" class="form-control" placeholder="Enter email" />
-                            <span class="form-text text-muted">Please enter your email</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Username:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-user"></i></span></div>
-                                <input type="text" class="form-control" placeholder="" />
-                            </div>
-                            <span class="form-text text-muted">Please enter your username</span>
-                        </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Thông tin cơ bản
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label>Họ và tên <span style='color:red'>*</span>:</label>
+                        <input id="nameInput" type="text" class="form-control" placeholder="Enter full name" value="@user.account.full_name" />
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label>Contact:</label>
-                            <input type="email" class="form-control" placeholder="Enter contact number" />
-                            <span class="form-text text-muted">Please enter your contact</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Fax:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-info-circle"></i></span></div>
-                                <input type="text" class="form-control" placeholder="Fax number" />
-                            </div>
-                            <span class="form-text text-muted">Please enter fax</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Address:</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter your address" />
-                                <div class="input-group-append"><span class="input-group-text"><i class="la la-map-marker"></i></span></div>
-                            </div>
-                            <span class="form-text text-muted">Please enter your address</span>
-                        </div>
+                    <div class="col-lg-4">
+                        <label>Email <span style='color:red'>*</span>:</label>
+                        <input id="emailInput" disabled type="email" class="form-control" placeholder="Enter email" value="@user.account.email" />
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label>Postcode:</label>
-                            <div class="input-group">
-                                <div class="input-group-append"><span class="input-group-text"><i class="la la-bookmark-o"></i></span></div>
-                                <input type="text" class="form-control" placeholder="Enter your postcode" />
-                            </div>
-                            <span class="form-text text-muted">Please enter your postcode</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>User Group:</label>
-                            <div class="radio-inline">
-                                <label class="radio radio-solid">
-                                    <input type="radio" name="example_2" checked="checked" value="2" />
-                                    <span></span>
-                                    Sales Person
-                                </label>
-                                <label class="radio radio-solid">
-                                    <input type="radio" name="example_2" value="2" />
-                                    <span></span>
-                                    Customer
-                                </label>
-                            </div>
-                            <span class="form-text text-muted">Please select user group</span>
+                    <div class="col-lg-4">
+                        <label>Tên tài khoản <span style='color:red'>*</span>:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-user"></i></span></div>
+                            <input id="username" type="text" class="form-control" placeholder="" value="@user.account.full_name" />
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-8">
-                            <button type="reset" class="btn btn-primary mr-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label>Chức danh <span style='color:red'>*</span>:</label>
+                        <select id="title-select" class="form-control">
+                            @foreach (ENTITIES.TitleLanguage item in ViewBag.Titles)
+                            {
+                                <option value="@item.title_id">@item.name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Cơ sở hiện tại <span style='color:red'>*</span>:</label>
+                        <select id="office-select" class="form-control">
+                            @foreach (ENTITIES.Office item in ViewBag.Offices)
+                            {
+                                <option value="@item.office_id">@item.office_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Số điện thoại:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                            <input id="phoneInput" type="text" class="form-control" placeholder="Enter contact number" />
                         </div>
                     </div>
                 </div>
-            </form>
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label>Ngày sinh:</label>
+                        <input type="text" class="form-control" id="kt_datepicker_4_3" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Quốc tịch :</label>
+                        <div class="input-group">
+                            <select id="country-select" class="form-control">
+                                @foreach (ENTITIES.Country item in ViewBag.Countries)
+                                {
+                                    <option @(item.country_name.Equals("Viet Nam") ? "selected" : "") value="@item.country_id">@item.country_name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Chức vụ nghiên cứu viên:</label>
+                        <div class="radio-inline">
+                            <label class="radio radio-solid">
+                                <input type="radio" name="example_2" checked="checked" value="0" />
+                                <span></span>
+                                Không
+                            </label>
+                            <label class="radio radio-solid">
+                                <input type="radio" name="example_2" value="1" />
+                                <span></span>
+                                Có
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header">
+                <div class="card-title position-relative m-0">
+                    <span>
+                        Thông tin khen thưởng sản phẩm khoa học / hỗ trợ tham dự hội nghị
+                    </span>
+                    <span class="form-text text-muted position-absolute bottom-0 left" style="font-size: 1rem;">Cán bộ/ giảng viên không cần điền thông tin này</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label>Số tài khoản :</label>
+                        <input id="bank_numberInput" type="text" class="form-control" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Chi nhánh ngân hàng :</label>
+                        <input id="bank_branchInput" type="email" class="form-control" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Mã số thuế :</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>Số CMND/Hộ chiếu :</label>
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>Mặt trước CMT :</label>
+                                <div class="uppy" id="kt_uppy_1">
+                                    <div class="uppy-wrapper"></div>
+                                    <div class="uppy-list"></div>
+                                    <div class="uppy-status"></div>
+                                    <div class="uppy-informer uppy-informer-min"></div>
+                                </div>
+                                <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>Mặt sau CMT :</label>
+                                <div class="uppy" id="kt_uppy_2">
+                                    <div class="uppy-wrapper"></div>
+                                    <div class="uppy-list"></div>
+                                    <div class="uppy-status"></div>
+                                    <div class="uppy-informer uppy-informer-min"></div>
+                                </div>
+                                <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <image id="myCanvas" class="img-fluid"></image>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="button" id="submitForm" class="btn btn-primary mr-2">Cập nhật</button>
+                        <button type="reset" class="btn btn-secondary">Xóa</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @section Scripts{
+    <script>
+        $("#office-select").select2();
+        $("#title-select").select2();
+        $("#country-select").select2();
+        var save_loader = new LoaderBtn($("#submitForm"))
 
+        var arrows;
+        if (KTUtil.isRTL()) {
+            arrows = {
+                leftArrow: '<i class="la la-angle-right"></i>',
+                rightArrow: '<i class="la la-angle-left"></i>'
+            }
+        } else {
+            arrows = {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+        }
+
+        $('#kt_datepicker_4_3').datepicker({
+            rtl: KTUtil.isRTL(),
+            orientation: "bottom left",
+            todayHighlight: true,
+            templates: arrows
+        });
+
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            var initUppy1 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_1';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+
+                uppy1 = Uppy.Core({
+                    debug: true,
+                    autoProceed: false,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 5242880, // 5mb
+                        maxNumberOfFiles: 1,
+                        minNumberOfFiles: 1,
+                        allowedFileTypes: ['.jpg', '.jpeg', '.png']
+                    }
+                });
+
+                uppy1.use(FileInput, {
+                    target: id + ' .uppy-wrapper',
+                    pretty: false
+                });
+                uppy1.use(Informer, {
+                    target: id + ' .uppy-informer'
+                });
+
+                // demo file upload server
+                uppy1.use(Tus, {
+                    endpoint: 'https://master.tus.io/files/'
+                });
+                uppy1.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                uppy1.on('file-added', function (file) {
+                    var sizeLabel = "bytes";
+                    var filesize = file.size;
+                    if (filesize > 1024) {
+                        filesize = filesize / 1024;
+                        sizeLabel = "kb";
+
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "MB";
+                        }
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
+
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+
+                    if (uppy2.getFiles()[0] != undefined) {
+                        save_loader.startLoading();
+                        showPhoto();
+                    }
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppy1.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    document.getElementById("myCanvas").src = "";
+                });
+            }
+
+            var initUppy2 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_2';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+
+                uppy2 = Uppy.Core({
+                    debug: true,
+                    autoProceed: false,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 5242880, // 5mb
+                        maxNumberOfFiles: 1,
+                        minNumberOfFiles: 1,
+                        allowedFileTypes: ['.jpg', '.jpeg', '.png']
+                    }
+                });
+
+                uppy2.use(FileInput, {
+                    target: id + ' .uppy-wrapper',
+                    pretty: false
+                });
+                uppy2.use(Informer, {
+                    target: id + ' .uppy-informer'
+                });
+
+                // demo file upload server
+                uppy2.use(Tus, {
+                    endpoint: 'https://master.tus.io/files/'
+                });
+                uppy2.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                uppy2.on('file-added', function (file) {
+                    var sizeLabel = "bytes";
+                    var filesize = file.size;
+                    if (filesize > 1024) {
+                        filesize = filesize / 1024;
+                        sizeLabel = "kb";
+
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "MB";
+                        }
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
+
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+
+                    if (uppy1.getFiles()[0] != undefined) {
+                        save_loader.startLoading();
+                        showPhoto();
+                    }
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppy2.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    document.getElementById("myCanvas").src = "";
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    initUppy1();
+                    initUppy2();
+                    // initUppy6();
+                }
+            };
+        }();
+
+        function showPhoto() {
+            var reader = new FileReader();
+            var rd = new FileReader();
+
+            reader.onload = function (e) {
+                var image = new Image();
+                image.src = e.target.result;
+                image.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+                    rd.onload = function (ex) {
+                        var image2 = new Image();
+                        image2.src = ex.target.result;
+                        image2.onload = function () {
+                            canvas.width = image.width + image2.width;
+                            canvas.height = Math.max(image.height, image2.height);
+                            ctx.drawImage(image, 0, 0);
+                            ctx.drawImage(image2, image.width, 0);
+                            var URL = canvas.toDataURL('image/jpeg');
+                            document.getElementById("myCanvas").src = URL;
+                            save_loader.stopLoading();
+                        }
+                    }
+                    rd.readAsDataURL(uppy2.getFiles()[0].data);
+                };
+            }
+            reader.readAsDataURL(uppy1.getFiles()[0].data);
+        }
+
+        KTUtil.ready(function () {
+            KTUppy.init();
+        });
+
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+
+        $("#submitForm").click(function () {
+            let fd = new FormData();
+            let name = $("#nameInput").val();
+            let username = $("#username").val();
+
+            if (document.getElementById("myCanvas").src != "")
+                fd.append("identification", dataURItoBlob(document.getElementById("myCanvas").src));
+            if (name.trim() == "") {
+                toastr.error("Trường họ và tên là bắt buộc");
+                return false;
+            }
+            if (username.trim() == "") {
+                toastr.error("Trường tên tài khoản là bắt buộc");
+                return false;
+            }
+            let person = {
+                name: $("#nameInput").val(),
+                email: $("#emailInput").val(),
+                phone_number: $("#phoneInput").val(),
+                office_id: $("#office-select").val()
+            }
+            fd.append("person", JSON.stringify(person));
+            let profile = {
+                title_id: $("#title-select").val(),
+                birth_date: $("#kt_datepicker_4_3").val(),
+                country_id: $("#country-select").val(),
+                is_reseacher: $('input[name=example_2]:checked').val(),
+                bank_number: $("#bank_numberInput").val(),
+                bank_branch: $("#bank_branchInput").val(),
+            }
+            fd.append("profile", JSON.stringify(profile));
+            fd.append("username", username);
+
+            save_loader.startLoading();
+            $.ajax({
+                url: "/ConferenceSponsor/Add",
+                method: "post",
+                complete: function (data) {
+                    if (data.responseJSON.id) {
+                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
+                    }
+                    else {
+                        toastr.error(data.responseJSON.message);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: fd,
+                processData: false,
+                contentType: false
+            });
+        })
+    </script>
 }

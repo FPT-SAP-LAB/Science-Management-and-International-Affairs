@@ -3,6 +3,7 @@
     ViewBag.Title = "DANH SÁCH NGHIÊN CỨU VIÊN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES;
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <!--begin: Search Form-->
@@ -15,37 +16,40 @@
                             <div class="input-icon">
                                 <input type="text" class="form-control"
                                        placeholder="Tên..."
-                                       id="kt_datatable_search_query" />
+                                       id="search_name" />
                                 <span>
                                     <i class="flaticon2-search-1 text-muted"></i>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-3 my-2 my-md-0">
+                        @*<div class="col-md-3 my-2 my-md-0">
                             <div class="d-flex align-items-center">
-                                <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
+                                <label class="mr-3 mb-0 d-none d-md-block">Chức danh:</label>
                                 <select class="form-control"
-                                        id="search_nganh">
+                                        id="search_linhvuc">
                                     <option label="Label"></option>
-                                    <option value="">Khoa học máy tính</option>
-                                    <option value="1">Toán học</option>
-                                    <option value="2">Kinh tế</option>
+                                    @foreach (TitleLanguage a in ViewBag.listTitleLanguage)
+                                    {
+                                        <option value="@a.title_id">@a.name</option>
+                                    }
                                 </select>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-4 my-2 my-md-0">
                             <div class="d-flex align-items-center">
                                 <label style="width:5rem" class="mb-0 d-none d-md-block">Cơ sở:</label>
                                 <select class="form-control"
                                         id="search_coso">
                                     <option label="Label"></option>
-                                    <option value="">FPTU HN</option>
-                                    <option value="1">FPTU Cần Thơ</option>
+                                    @foreach (Office o in ViewBag.listOffices)
+                                    {
+                                        <option value="@o.office_id">@o.office_name</option>
+                                    }
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
-                            <a href="#"
+                            <a id="search_list"
                                class="btn btn-light-primary px-6 font-weight-bold">
                                 Tìm kiếm
                             </a>
@@ -106,22 +110,22 @@
                                     <div class="input-icon">
                                         <input type="text" class="form-control"
                                                placeholder="Tên..."
-                                               id="kt_datatable_search_query" />
+                                               id="search_name_modal" />
                                         <span>
                                             <i class="flaticon2-search-1 text-muted"></i>
                                         </span>
                                     </div>
-
                                 </div>
                                 <div class="col-md-3 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <label class="mr-3 mb-0 d-none d-md-block">Ngành:</label>
+                                        <label class="mr-3 mb-0 d-none d-md-block">Chức danh:</label>
                                         <select class="form-control"
-                                                id="search_nganh_modal">
+                                                id="search_chucdanh">
                                             <option label="Label"></option>
-                                            <option value="">Khoa học máy tính</option>
-                                            <option value="1">Toán học</option>
-                                            <option value="2">Kinh tế</option>
+                                            @foreach (TitleLanguage a in ViewBag.listTitleLanguage)
+                                            {
+                                                <option value="@a.title_id">@a.name</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -131,13 +135,15 @@
                                         <select class="form-control"
                                                 id="search_coso_modal">
                                             <option label="Label"></option>
-                                            <option value="">FPTU HN</option>
-                                            <option value="1">FPTU Cần Thơ</option>
+                                            @foreach (Office o in ViewBag.listOffices)
+                                            {
+                                                <option value="@o.office_id">@o.office_name</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
-                                    <a href="#"
+                                    <a id="search_list_modal"
                                        class="btn btn-light-primary px-6 font-weight-bold">
                                         Tìm kiếm
                                     </a>
@@ -156,6 +162,7 @@
                             <th>STT</th>
                             <th>Tên</th>
                             <th>chức vụ</th>
+                            <th>Cơ sở</th>
                             <th>số bài báo</th>
                             <th>Đăng hồ sơ</th>
                         </tr>
@@ -172,125 +179,12 @@
 </div>
 @section scripts{
     <script>
-        var viewCandidate = false;
-        var KTDatatablesBasicBasic = function () {
-
-            var initTable1 = function () {
-                var table = $('#kt_datatable');
-                // begin first table
-                table.DataTable({
-                    responsive: true,
-
-                    // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                    lengthMenu: [5, 10, 25, 50],
-                    pageLength: 10,
-                    language: {
-                        'lengthMenu': 'Display _MENU_',
-                    },
-                    // Order settings
-                    order: [[1, 'desc']],
-                    serverSide: true,
-                    ajax: {
-                        url: "/Researchers/GetList",
-                        datatype: "json",
-                        cache: true
-                    },
-                    columns: [
-                        { data: "rowNum", name: "rowNum", orderable: false },
-                        {
-                            data: {}, name: "name", render: function (data) {
-                                return "<a href='/Researchers/ViewInfo?id=" + data.peopleId + "'>" + data.name + "</a>"
-                            }
-                        },
-                        { data: "title", name: "title" },
-                        {
-                            data: "positions", name: "positions", render: function (data) {
-                                return data
-                            }
-                        },
-                        { data: "workplace", name: "workplace" },
-                        { data: "googleScholar", name: "googleScholar" },
-                        {
-                            data: {}, name: "name", render: function (data) {
-                                return "<a onclick='' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i> </a>"
-                            }
-                        },
-                    ],
-                    initComplete: function (settings, json) {
-                        $("#loader_panel").hide()
-                    }
-                });
-                table.on('change', 'tbody tr .checkbox', function () {
-                    $(this).parents('tr').toggleClass('active');
-                });
-            };
-            var initTable2 = function () {
-                var table = $('#table_candidates');
-                // begin first table
-                table.DataTable({
-                    responsive: true,
-
-                    // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                    lengthMenu: [5, 10, 25, 50],
-                    pageLength: 10,
-                    language: {
-                        'lengthMenu': 'Display _MENU_',
-                    },
-                    // Order settings
-                    order: [[1, 'desc']],
-                    serverSide: true,
-                    ajax: {
-                        url: "/Researchers/GetListCandidate",
-                        datatype: "json",
-                        cache: true
-                    },
-                    columns: [
-                        { data: "rowNum", name: "rowNum", orderable: false },
-                        {
-                            data: {}, name: "name", render: function (data) {
-                                return data.name
-                            }
-                        },
-                        {
-                            data: "title", name: "title", render: function (data) {
-                                return data
-                            }
-                        },
-                        { data: "paperNumber", name: "paperNumber" },
-                        {
-                            data: "people_id", name: "people_id", render: function (data) {
-                                return "<a href='/Researchers/AddResearcher?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i></a>"
-                            }
-                        },
-                    ],
-                    initComplete: function (settings, json) {
-                        $("#loader_panel").hide()
-                    }
-                });
-                table.on('change', 'tbody tr .checkbox', function () {
-                    $(this).parents('tr').toggleClass('active');
-                });
-            };
-            return {
-                //main function to initiate the module
-                initCandidates: function () {
-                    initTable2()
-                },
-                init: function () {
-                    initTable1();
-                }
-            };
-        }();
-
-        jQuery(document).ready(function () {
-            KTDatatablesBasicBasic.init();
-        });
         //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
         list_select = {
             "search_chucvu_modal": "Chọn chức vụ",
-            "search_coso_modal": "Chọn cơ sở"
+            "search_coso_modal": "Chọn cơ sở",
+            "search_coso": "Chọn cơ sở",
+            "search_chucdanh": "Chọn chức danh"
         }
         for (let i in list_select) {
             $('#' + i).select2({
@@ -299,21 +193,113 @@
             });
         }
         //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        $("#viewCandidates").click(function () {
-            if (viewCandidate == false) {
-                KTDatatablesBasicBasic.initCandidates();
-                viewCandidate = true;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var viewCandidate = false;
+        var table1 = $('#kt_datatable').DataTable({
+            responsive: true,
+
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            // Order settings
+            order: [[1, 'desc']],
+            serverSide: true,
+            ajax: {
+                url: "/Researchers/GetList",
+                data: function (d) {
+                    d.name = $("#search_name").val();
+                    d.coso=$("#search_coso").val()
+                },
+                datatype: "json",
+                cache: true
+            },
+            columns: [
+                { data: "rowNum", name: "rowNum", orderable: false },
+                {
+                    data: {}, name: "name", render: function (data) {
+                        return data.name
+                    }
+                },
+                { data: "title", name: "title" },
+                {
+                    data: "positions", name: "positions", render: function (data) {
+                        return data
+                    }
+                },
+                {
+                    data: "office_name", name: "office_name"
+                },
+                { data: "googleScholar", name: "googleScholar" },
+                {
+                    data: {}, name: "name", render: function (data) {
+                        return "<a  href='/Researchers/ViewInfo?id=" + data.peopleId + "' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i> </a>"
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+                $("#loader_panel").hide()
             }
+        });
+        var table2 = $('#table_candidates').DataTable({
+            responsive: true,
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            // Order settings
+            order: [[1, 'desc']],
+            serverSide: true,
+            ajax: {
+                url: "/Researchers/GetListCandidate",
+                datatype: "json",
+                data: function (d) {
+                    d.name = $("#search_name_modal").val();
+                    d.coso = $("#search_coso_modal").val();
+                    d.chucdanh = $("#search_chucdanh").val()
+                },
+                cache: true
+            },
+            columns: [
+                { data: "rowNum", name: "rowNum", orderable: false },
+                {
+                    data: {}, name: "name", render: function (data) {
+                        return data.name
+                    }
+                },
+                {
+                    data: "title", name: "title", render: function (data) {
+                        return data
+                    }
+                },
+                {
+                    data: "office_name", name: "office_name", render: function (data) {
+                        return data
+                    }
+                },
+                { data: "paperNumber", name: "paperNumber" },
+                {
+                    data: "people_id", name: "people_id", render: function (data) {
+                        return "<a href='/Researchers/AddResearcher?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i></a>"
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+                $("#loader_panel").hide()
+            }
+        });
+        $("#search_list").click(function () {
+            table1.ajax.reload();
+        })
+        $("#search_list_modal").click(function () {
+            table2.ajax.reload();
         })
     </script>
-    <script>
-        $('#search_nganh').select2({
-            placeholder: 'Chọn ngành',
-            allowClear: true
-        });
-        $('#search_coso').select2({
-            placeholder: 'Chọn cơ sở',
-            allowClear: true,
-        });
-    </script>
-}
+    }
