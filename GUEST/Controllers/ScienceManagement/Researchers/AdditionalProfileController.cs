@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.ModelDAL;
+using GUEST.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,16 @@ namespace GUEST.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            OfficeRepo officeRepo = new OfficeRepo();
+            TitleLanguageRepo titleRepo = new TitleLanguageRepo();
+            CountryRepo countryRepo = new CountryRepo();
+
+            if (CurrentAccount.Account(Session).account_id == 0)
+                return Redirect("/");
+
+            ViewBag.Titles = titleRepo.GetList(LanguageResource.GetCurrentLanguageID());
+            ViewBag.Offices = officeRepo.GetList();
+            ViewBag.Countries = countryRepo.GetCountries();
             ViewBag.pagesTree = pagesTree;
             return View();
         }

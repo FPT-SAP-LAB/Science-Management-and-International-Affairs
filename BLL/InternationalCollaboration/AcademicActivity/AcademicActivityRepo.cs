@@ -242,6 +242,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.SaveChanges();
                     db.AcademicActivities.Remove(aa);
                     db.SaveChanges();
+                    db.Files.Remove(f);
+                    db.SaveChanges();
                     transaction.Commit();
                     return true;
                 }
