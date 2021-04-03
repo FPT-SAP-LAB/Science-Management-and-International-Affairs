@@ -192,7 +192,7 @@
                                 <a href="javascript:;" class="dropdown-item" onclick="excelTonghop()">Tổng hợp</a>
                             </div>
                         </div>
-                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold ml-5" data-toggle="modal" data-target="#ThongKeDKTD" style="min-width:max-content !important">Thống kê đăng kí tham dự</a>
+                        <a href="javascript:;" class="btn btn-light-primary btn-sm font-weight-bold ml-5" onclick="viewThongKeDKTD()" style="min-width:max-content !important">Thống kê đăng kí tham dự</a>
                     </div>
                 </div>
             </div>
@@ -234,7 +234,7 @@
             <div class="modal-body pt-3 pb-0">
                 <div class="row form-group">
                     <div class="col-md-6 col-xl-6 col-lg-6 col-xl-6">
-                        <a href="javascript:;" class="btn btn-light-primary px-6 font-weight-bold" onclick="excelSL()">Xuất excel</a>
+                        @*<a href="javascript:;" class="btn btn-light-primary px-6 font-weight-bold" onclick="excelSL()">Xuất excel</a>*@
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3 col-xl-3 justify-content-end pt-3 pr-0 text-right">
                         Thống kê theo:
@@ -256,11 +256,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>112</td>
-                                    <td>96</td>
-                                </tr>
+  
                             </tbody>
                         </table>
                     </div>
@@ -770,41 +766,15 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Nội dung</th>
-                                    <th>Đơn giá</th>
+                                    <th>Đơn giá (VNĐ)</th>
                                     <th>Số lượng</th>
-                                    <th>Thành tiền</th>
+                                    <th>Thành tiền (VNĐ)</th>
                                     <th>Ghi chú</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Truyền thông</td>
-                                    <td>30.000.000</td>
-                                    <td>1</td>
-                                    <td>30.000.000</td>
-                                    <td>Truyền thông trong và ngoài FE</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hỗ trợ suất ăn cho giảng viên và sinh viên</td>
-                                    <td>4.000.000</td>
-                                    <td>27</td>
-                                    <td>108.000.000</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Giải thưởng phụ</td>
-                                    <td>2.000.000</td>
-                                    <td>1</td>
-                                    <td>2.000.000</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -812,39 +782,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editModal_KinhPhi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Chỉnh sửa đơn vị</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body pt-3 pb-0">
-                <div class="row form-group">
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Đơn vị</label>
-                        <select class="form-control" id="edit_donvi_kinhphi">
-                            <option selected value="FPTUHN">FPTU Hà Nội</option>
-                            <option value="FPTUDN">FPTU Đà Nẵng</option>
-                            <option value="FPTUHCM">FPTU Hồ Chí Minh</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="edit_ghichu_kinhphi" class="form-control"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kinhphi">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -883,7 +820,7 @@
 </div>
 @*aaa*@
 <div class="modal fade" id="addModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Thêm kinh phí dự trù ban đầu</h3>
@@ -897,13 +834,13 @@
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
                         <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="add_noidung_kpDuTru" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Đơn giá (VNĐ)</label>
-                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_dongia_kpDuTru" />
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onmousewheel="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" onclick="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_dongia_kpDuTru" />
                     </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2">
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_soluong_kpDuTru" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onmousewheel="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" onclick="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" onkeyup="calcuaTotal('#add_dongia_kpDuTru','#add_soluong_kpDuTru','#add_thanhtien_kpDuTru')" id="add_soluong_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Thành tiền (VNĐ)</label>
@@ -934,7 +871,7 @@
 </div>
 
 <div class="modal fade" id="editModal_KPDuTru" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Chỉnh sửa kinh phí dự trù ban đầu</h3>
@@ -948,13 +885,13 @@
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
                         <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="edit_noidung_kpDuTru" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Đơn giá (VNĐ)</label>
-                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_dongia_kpDuTru" />
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" onclick="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_dongia_kpDuTru" />
                     </div>
-                    <div class="col-sm-2 col-md-2 col-xl-2 col-lg-2">
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_soluong_kpDuTru" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" onclick="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" onkeyup="calcuaTotal('#edit_dongia_kpDuTru','#edit_soluong_kpDuTru','#edit_thanhtien_kpDuTru')" id="edit_soluong_kpDuTru" />
                     </div>
                     <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Thành tiền (VNĐ)</label>
@@ -974,9 +911,9 @@
                         </div>
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">   
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">   
                         <label class="col-form-label font-weight-bolder">File đính kèm</label>
-                        <a href="javascript:;" target="_blank" class="form-control" id="edit_dinhkem_kpDuTru"></a>
+                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDuTru"></a>
                     </div>
                 </div>
             </div>
@@ -999,17 +936,14 @@
             </div>
             <div class="modal-body pt-3 pb-0">
                 <div class="row form-group">
-                    <div class="col-md-6 col-xl-6 col-lg-6 my-3">
-                        <a href="#" class="btn btn-light-primary btn-sm font-weight-bold" data-toggle="modal" data-target="#addModal_KPDieuChinh">Thêm nội dung</a>
-                    </div>
                     <div class="col-md-12 col-xl-12 col-lg-12">
                         <table id="KPDieuChinhDatatable" class="table table-bordered table-checkable">
                             <thead>
                                 <tr class="text-center">
                                     <th rowspan="2">STT</th>
                                     <th rowspan="2">Nội dung</th>
-                                    <th colspan="3">Kinh phí dự trù ban đầu</th>
-                                    <th colspan="3">Kinh phí dự trù điều chỉnh</th>
+                                    <th colspan="3">Kinh phí dự trù ban đầu  (VNĐ)</th>
+                                    <th colspan="3">Kinh phí dự trù điều chỉnh (VNĐ)</th>
                                     <th rowspan="2">Ghi chú</th>
                                     <th rowspan="2"></th>
                                 </tr>
@@ -1049,25 +983,26 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpDieuChinh" value="Hỗ trợ suất ăn cho sinh viên và giảng viên từ các cơ sở Hà Nội và Đà Nẵng" />
+                        <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="edit_noidung_kpDieuChinh" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpDieuChinh" value="30.000.000" />
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" onclick="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" onkeyup="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" id="edit_dongia_kpDieuChinh" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpDieuChinh" value="28" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" onclick="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" onkeyup="calcuaTotal('#edit_dongia_kpDieuChinh','#edit_soluong_kpDieuChinh','#edit_thanhtien_kpDieuChinh')" id="edit_soluong_kpDieuChinh" />
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDieuChinh" value="112.000.000" />
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpDieuChinh" />
                     </div>
-                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="edit_ghichu_kpDieuChinh" class="form-control">Thêm đội từ phía sinh viên</textarea>
+                        <textarea id="edit_ghichu_kpDieuChinh" class="form-control" spellcheck="false">Thêm đội từ phía sinh viên</textarea>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
                         <div class="uppy" id="kt_uppy_editKPDieuChinh">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
@@ -1076,60 +1011,15 @@
                         </div>
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_edit_kpDieuChinh">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="addModal_KPDieuChinh" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Thêm kinh phí điều chỉnh</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body pt-3 pb-0">
-                <div class="row form-group">
-                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                        <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="add_noidung_kpDieuChinh" />
-                    </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
-                        <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" id="add_dongia_kpDieuChinh" />
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="add_soluong_kpDieuChinh" />
-                    </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                        <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="number" class="form-control" placeholder="Thành tiền" autocomplete="off" id="add_thanhtien_kpDieuChinh" />
-                    </div>
-                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
-                        <label class="col-form-label font-weight-bolder">Ghi chú</label>
-                        <textarea id="add_ghichu_kpDieuChinh" class="form-control"></textarea>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-                        <div class="uppy" id="kt_uppy_addKPDieuChinh">
-                            <div class="uppy-wrapper"></div>
-                            <div class="uppy-list"></div>
-                            <div class="uppy-status"></div>
-                            <div class="uppy-informer uppy-informer-min"></div>
-                        </div>
-                        <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDieuChinh"></a>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_add_kpDieuChinh">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_edit_kpDieuChinh">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1152,8 +1042,8 @@
                                 <tr class="text-center">
                                     <th rowspan="2">STT</th>
                                     <th rowspan="2">Nội dung</th>
-                                    <th colspan="3">Kinh phí dự trù lần cuối</th>
-                                    <th colspan="3">Kinh phí thực tế</th>
+                                    <th colspan="3">Kinh phí dự trù lần cuối (VNĐ)</th>
+                                    <th colspan="3">Kinh phí thực tế (VNĐ)</th>
                                     <th rowspan="2">Ghi chú</th>
                                     <th rowspan="2"></th>
                                 </tr>
@@ -1193,25 +1083,26 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung" autocomplete="off" id="edit_noidung_kpThucTe" value="Truyền thông" />
+                        <input type="text" class="form-control" placeholder="Nội dung" spellcheck="false" autocomplete="off" id="edit_noidung_kpThucTe" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
                         <label class="col-form-label font-weight-bolder">Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Đơn giá" autocomplete="off" id="edit_dongia_kpThucTe" value="30.000.000" />
+                        <input type="number" class="form-control" placeholder="Đơn giá" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" onclick="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" onkeyup="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" id="edit_dongia_kpThucTe" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" id="edit_soluong_kpThucTe" value="1" />
+                        <input type="number" class="form-control" placeholder="Số lượng" autocomplete="off" onmousewheel="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" onclick="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" onkeyup="calcuaTotal('#edit_dongia_kpThucTe','#edit_soluong_kpThucTe','#edit_thanhtien_kpThucTe')" id="edit_soluong_kpThucTe" />
                     </div>
-                    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
                         <label class="col-form-label font-weight-bolder">Thành tiền</label>
-                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpThucTe" value="30.000.000" />
+                        <input type="text" class="form-control" placeholder="Thành tiền" autocomplete="off" id="edit_thanhtien_kpThucTe" />
                     </div>
-                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
                         <label class="col-form-label font-weight-bolder">Ghi chú</label>
                         <textarea id="edit_ghichu_kpThucTe" class="form-control"></textarea>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                        <label class="col-form-label font-weight-bolder">Bản mềm</label>
                         <div class="uppy" id="kt_uppy_editKPThucTe">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
@@ -1220,11 +1111,15 @@
                         </div>
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpThucTe"></a>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit_kpThucTe">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_edit_kpThucTe">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1289,7 +1184,6 @@
 
         var uppyDuTruAdd;
         var uppyDuTruEdit;
-        var uppyDieuChinhAdd;
         var uppyDieuChinhEdit;
         var uppyThucTeEdit;
 
@@ -1300,7 +1194,7 @@
             } else {
                 $(id3).val('0');
             }
-            
+
         }
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
@@ -1341,9 +1235,12 @@
             return;
         }
         function setUpForm() {
-            window.open("/DetailOfAcademicActivity/RegisterForm?id=" + id_edit_giai_doan + "&lid=" + document.getElementById('detail_language_content').value);
+            window.open("/DetailOfAcademicActivity/RegisterForm?pid=" + id_edit_giai_doan);
         }
-        let ls_data = [];
+        function viewThongKeDKTD() {
+            filterSLby();
+            $('#ThongKeDKTD').modal('show');
+        }
         function filterSLby() {
             val = document.getElementById('filterSL').value;
             switch (val) {
@@ -1353,11 +1250,18 @@
                     var head_item = tableSL.columns(0).header();
                     $(head_item).html('Cơ sở');
                     tableSL.clear().draw();
-                    ls_data = [];
-                    ls_data.push(['Hà Nội', 45, 44]);
-                    ls_data.push(['Đà Nẵng', 40, 40]);
-                    ls_data.forEach(function (x) {
-                        tableSL.row.add(x).draw();
+                    $.ajax({
+                        url: "@Url.Action("getStatisticOffice", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_id: $('#activity_id').val()}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != null) {
+                                data.forEach(function (x) {
+                                    tableSL.row.add([x.title,x.dang_ky,x.tham_du]).draw();
+                                });
+                            }
+                        },
                     });
                     break;
                 case 'DV':
@@ -1366,22 +1270,35 @@
                     var head_item = tableSL.columns(0).header();
                     $(head_item).html('Đơn vị');
                     tableSL.clear().draw();
-                    ls_data = [];
-                    ls_data.push(['FPTU', 121, 117]);
-                    ls_data.push(['FPT Poly', 75, 75]);
-                    ls_data.forEach(function (x) {
-                        tableSL.row.add(x).draw();
+                    $.ajax({
+                        url: "@Url.Action("getStatisticUnit", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_id: $('#activity_id').val()}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != null) {
+                                data.forEach(function (x) {
+                                    tableSL.row.add([x.title,x.dang_ky,x.tham_du]).draw();
+                                });
+                            }
+                        },
                     });
                     break;
                 case 'DF':
                     var tableSL = $("#ThongKeSLDatatable").DataTable();
                     tableSL.column(0).visible(false);
                     tableSL.clear().draw();
-                    ls_data = [];
-                    ls_data.push(['Hà Nội', 45, 44]);
-                    ls_data.push(['Đà Nẵng', 40, 40]);
-                    ls_data.forEach(function (x) {
-                        tableSL.row.add(x).draw();
+                    $.ajax({
+                        url: "@Url.Action("getTotal", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ activity_id: $('#activity_id').val()}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if(data != null)
+                                tableSL.row.add(['', data.dang_ky, data.tham_du]).draw();
+                            else
+                                tableSL.row.add(['', 0, 0]).draw();
+                        },
                     });
                     break;
             }
@@ -1729,8 +1646,8 @@
             }).then(function (result) {
                 if (result.value) {
                     $.ajax({
-                        url: "@Url.Action("deleteExpenseDuTru", "DetailOfAcademicActivity")",
-                        data: JSON.stringify({ expense_category_id: id}),
+                        url: "@Url.Action("deleteExpenseType", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ expense_category_id: id,type : 1}),
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         success: function (data) {
@@ -1740,7 +1657,7 @@
                                 } else
                                     initDatatableKPDuTru();
                                 datatableKP.ajax.reload();
-                                toastr.success(data);
+                                toastr.success('Xóa mục kinh phí dự trù thành công');
                             } else {
                                 toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                             }
@@ -1752,8 +1669,8 @@
         function editKinhPhiDuTru(id) {
             id_edit_KPtypes = id;
             $.ajax({
-                url: "@Url.Action("getExpenseDuTru", "DetailOfAcademicActivity")",
-                data: JSON.stringify({ expense_category_id : id}),
+                url: "@Url.Action("getExpenseType", "DetailOfAcademicActivity")",
+                data: JSON.stringify({ expense_category_id : id,type : 1}),
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
@@ -1765,6 +1682,11 @@
                     if (data.link != null) {
                         document.getElementById('edit_dinhkem_kpDuTru').innerHTML = data.name;
                         $('#edit_dinhkem_kpDuTru').attr('href', data.link);
+                        $('#edit_dinhkem_kpDuTru').attr('target','_blank');
+                    } else {
+                        document.getElementById('edit_dinhkem_kpDuTru').innerHTML = 'Chưa có file đính kèm';
+                        $('#edit_dinhkem_kpDuTru').attr('href', 'javascript:;');
+                        $('#edit_dinhkem_kpDuTru').removeAttr('target');
                     }
                     $('#editModal_KPDuTru').modal('show');
                 },
@@ -1772,16 +1694,44 @@
         }
         function KPDieuChinh(id) {
             id_edit_KP = id;
+            if (typeof datatableKPDieuChinh != 'undefined') {
+                datatableKPDieuChinh.ajax.reload();
+            } else
+                initDatatableKPDieuChinh();
             $('#KPDieuChinhModal').modal('show');
         }
         function editKinhPhiDieuChinh(id) {
-            id_edit_KP = id;
-            $('#editModal_KPDieuChinh').modal('show');
+            id_edit_KPtypes = id;
+            $.ajax({
+                url: "@Url.Action("getExpenseType", "DetailOfAcademicActivity")",
+                data: JSON.stringify({ expense_category_id : id,type : 2}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    $('#edit_noidung_kpDieuChinh').val(data.expense_category_name);
+                    $('#edit_dongia_kpDieuChinh').val(data.expense_price == null ? '' : data.expense_price);
+                    $('#edit_soluong_kpDieuChinh').val(data.expense_quantity == null ? '' : data.expense_quantity);
+                    $('#edit_thanhtien_kpDieuChinh').val(data.total == null ? '0' : data.total.toLocaleString('en'));
+                    $('#edit_ghichu_kpDieuChinh').val(data.note == null ? '' : data.note);
+                    if (data.link != null) {
+                        document.getElementById('edit_dinhkem_kpDieuChinh').innerHTML = data.name;
+                        $('#edit_dinhkem_kpDieuChinh').attr('href', data.link);
+                        $('#edit_dinhkem_kpDieuChinh').attr('target', '_blank');
+                    }
+                    else {
+                        document.getElementById('edit_dinhkem_kpDieuChinh').innerHTML = 'Chưa có file đính kèm';
+                        $('#edit_dinhkem_kpDieuChinh').attr('href', 'javascript:;');
+                        $('#edit_dinhkem_kpDieuChinh').removeAttr('target');
+                    }
+                    $('#editModal_KPDieuChinh').modal('show');
+                },
+                error: function (data) {
+                }
+            });
         }
         function deleteKinhPhiDieuChinh(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                title: "Bạn có muốn xóa mục kinh phí điều chỉnh này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1790,26 +1740,67 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpenseType", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ expense_category_id: id, type : 2}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                if (typeof datatableKPDieuChinh != 'undefined') {
+                                    datatableKPDieuChinh.ajax.reload();
+                                } else
+                                    initDatatableKPDieuChinh();
+                                datatableKP.ajax.reload();
+                                toastr.success('Xóa mục kinh phí điều chỉnh thành công');
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        },
+                    });
                 }
             });
         }
         function KPThucTe(id) {
             id_edit_KP = id;
+            if (typeof datatableKPThucTe != 'undefined') {
+                datatableKPThucTe.ajax.reload();
+            } else
+                initDatatableKPThucTe();
             $('#KPThucTeModal').modal('show');
         }
         function editKinhPhiThucTe(id) {
-            id_edit_KP = id;
-            $('#editModal_KPThucTe').modal('show');
+            id_edit_KPtypes = id;
+            $.ajax({
+                url: "@Url.Action("getExpenseType", "DetailOfAcademicActivity")",
+                data: JSON.stringify({ expense_category_id : id,type : 3}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    $('#edit_noidung_kpThucTe').val(data.expense_category_name);
+                    $('#edit_dongia_kpThucTe').val(data.expense_price == null ? '' : data.expense_price);
+                    $('#edit_soluong_kpThucTe').val(data.expense_quantity == null ? '' : data.expense_quantity);
+                    $('#edit_thanhtien_kpThucTe').val(data.total == null ? '0' : data.total.toLocaleString('en'));
+                    $('#edit_ghichu_kpThucTe').val(data.note == null ? '' : data.note);
+                    if (data.link != null) {
+                        document.getElementById('edit_dinhkem_kpThucTe').innerHTML = data.name;
+                        $('#edit_dinhkem_kpThucTe').attr('href', data.link);
+                        $('#edit_dinhkem_kpThucTe').attr('target', '_blank');
+                    }
+                    else {
+                        document.getElementById('edit_dinhkem_kpThucTe').innerHTML = 'Chưa có file đính kèm';
+                        $('#edit_dinhkem_kpThucTe').attr('href', 'javascript:;');
+                        $('#edit_dinhkem_kpThucTe').removeAttr('target');
+                    }
+                    $('#editModal_KPThucTe').modal('show');
+                },
+                error: function (data) {
+                }
+            });
         }
         function deleteKinhPhiThucTe(id) {
-            id_delete_KP = id;
             Swal.fire({
-                title: "Bạn có muốn xóa nội dung kinh phí này không ?",
+                title: "Bạn có muốn xóa mục kinh phí thực tế này không ?",
                 text: "",
                 icon: "warning",
                 showCancelButton: true,
@@ -1818,11 +1809,24 @@
                 reverseButtons: true
             }).then(function (result) {
                 if (result.value) {
-                    Swal.fire(
-                        "",
-                        "Đã xóa thành công.",
-                        "success"
-                    )
+                    $.ajax({
+                        url: "@Url.Action("deleteExpenseType", "DetailOfAcademicActivity")",
+                        data: JSON.stringify({ expense_category_id: id, type : 3}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data != '') {
+                                if (typeof datatableKPThucTe != 'undefined') {
+                                    datatableKPThucTe.ajax.reload();
+                                } else
+                                    initDatatableKPThucTe();
+                                datatableKP.ajax.reload();
+                                toastr.success('Xóa mục kinh phí thực tế thành công');
+                            } else {
+                                toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                            }
+                        },
+                    });
                 }
             });
         }
@@ -1900,7 +1904,7 @@
                 }
             }
         }
-        
+
         $('#add_phamvihoptac_DongToChuc').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
@@ -2483,7 +2487,7 @@
                 type: "POST",
                 success: function (data) {
                     if (data != '') {
-                        toastr.success(data);
+                        toastr.success('Thêm kinh phí dự trù thành công.');
                         clearModal('#addModal_KPDuTru');
                         $('#addModal_KPDuTru').modal('hide');
                         uppyDuTruAdd.removeFile(uppyDuTruAdd.getFiles().length == 0 ? '' : uppyDuTruAdd.getFiles()[0].id);
@@ -2528,6 +2532,8 @@
                 return false;
             }
             var obj = new FormData();
+            obj.append('activity_office_id', id_edit_KP);
+            obj.append('activity_name', $('#detail_name').val());
             obj.append('data', JSON.stringify(object));
 
             let files = uppyDuTruEdit.getFiles();
@@ -2542,7 +2548,7 @@
                 type: "POST",
                 success: function (data) {
                     if (data != '') {
-                        toastr.success(data);
+                        toastr.success('Chỉnh sửa kinh phí dự trù thành công.');
                         uppyDuTruEdit.removeFile(uppyDuTruEdit.getFiles().length == 0 ? '' : uppyDuTruEdit.getFiles()[0].id);
                         $('#kt_uppy_editKPDuTru .uppy-list').html('');
                         clearModal('#editModal_KPDuTru');
@@ -2569,14 +2575,125 @@
                 contentType: false
             });
         });
-        $('#btn_add_kpDieuChinh').click(function () {
-            toastr.success("Đã thêm thành công");
-        });
         $('#btn_edit_kpDieuChinh').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+            save_loader.startLoading();
+            var object = {
+                expense_category_id: id_edit_KPtypes,
+                expense_category_name: $('#edit_noidung_kpDieuChinh').val(),
+                expense_price: $('#edit_dongia_kpDieuChinh').val(),
+                expense_quantity: $('#edit_soluong_kpDieuChinh').val(),
+                total : 0,
+                note: $('#edit_ghichu_kpDieuChinh').val(),
+                link : ''
+            };
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                save_loader.stopLoading();
+                return false;
+            }
+            var obj = new FormData();
+            obj.append('activity_office_id', id_edit_KP);
+            obj.append('activity_name', $('#detail_name').val());
+            obj.append('data', JSON.stringify(object));
+
+            let files = uppyDieuChinhEdit.getFiles();
+            if (files.length != 0) {
+                obj.append('img', uppyDieuChinhEdit.getFiles()[0].data)
+            } else {
+                obj.append('img', null);
+            }
+            $.ajax({
+                url: "@Url.Action("editExpenseDieuChinh", "DetailOfAcademicActivity")",
+                data: obj,
+                type: "POST",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success('Chỉnh sửa kinh phí điều chỉnh thành công.');
+                        uppyDieuChinhEdit.removeFile(uppyDieuChinhEdit.getFiles().length == 0 ? '' : uppyDieuChinhEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPDieuChinh .uppy-list').html('');
+                        clearModal('#editModal_KPDieuChinh');
+                        $('#editModal_KPDieuChinh').modal('hide');
+                        if (typeof datatableKPDieuChinh != 'undefined') {
+                            datatableKPDieuChinh.ajax.reload();
+                        } else
+                            initDatatableKPDieuChinh();
+                        datatableKP.ajax.reload();
+                    } else {
+                        uppyDieuChinhEdit.removeFile(uppyDieuChinhEdit.getFiles().length == 0 ? '' : uppyDieuChinhEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPDieuChinh .uppy-list').html('');
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function (data) {
+                    uppyDieuChinhEdit.removeFile(uppyDieuChinhEdit.getFiles().length == 0 ? '' : uppyDieuChinhEdit.getFiles()[0].id);
+                    $('#kt_uppy_editKPDieuChinh .uppy-list').html('');
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false
+            });
         });
         $('#btn_edit_kpThucTe').click(function () {
-            toastr.success("Đã chỉnh sửa thành công");
+            save_loader.startLoading();
+            var object = {
+                expense_category_id: id_edit_KPtypes,
+                expense_category_name: $('#edit_noidung_kpThucTe').val(),
+                expense_price: $('#edit_dongia_kpThucTe').val(),
+                expense_quantity: $('#edit_soluong_kpThucTe').val(),
+                total : 0,
+                note: $('#edit_ghichu_kpThucTe').val(),
+                link : ''
+            };
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+                toastr.warning("Bạn chưa điền hết các trường thông tin.");
+                save_loader.stopLoading();
+                return false;
+            }
+            var obj = new FormData();
+            obj.append('activity_office_id', id_edit_KP);
+            obj.append('activity_name', $('#detail_name').val());
+            obj.append('data', JSON.stringify(object));
+
+            let files = uppyThucTeEdit.getFiles();
+            if (files.length != 0) {
+                obj.append('img', uppyThucTeEdit.getFiles()[0].data)
+            } else {
+                obj.append('img', null);
+            }
+            $.ajax({
+                url: "@Url.Action("editExpenseThucTe", "DetailOfAcademicActivity")",
+                data: obj,
+                type: "POST",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success('Chỉnh sửa kinh phí thực tế thành công.');
+                        uppyThucTeEdit.removeFile(uppyThucTeEdit.getFiles().length == 0 ? '' : uppyThucTeEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPThucTe .uppy-list').html('');
+                        clearModal('#editModal_KPThucTe');
+                        $('#editModal_KPThucTe').modal('hide');
+                        if (typeof datatableKPThucTe != 'undefined') {
+                            datatableKPThucTe.ajax.reload();
+                        } else
+                            initDatatableKPThucTe();
+                        datatableKP.ajax.reload();
+                    } else {
+                        uppyThucTeEdit.removeFile(uppyThucTeEdit.getFiles().length == 0 ? '' : uppyThucTeEdit.getFiles()[0].id);
+                        $('#kt_uppy_editKPThucTe .uppy-list').html('');
+                        toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function (data) {
+                    uppyThucTeEdit.removeFile(uppyThucTeEdit.getFiles().length == 0 ? '' : uppyThucTeEdit.getFiles()[0].id);
+                    $('#kt_uppy_editKPThucTe .uppy-list').html('');
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false
+            });
         });
         var datatableGD = $("#GiaiDoanDatatable").DataTable({
             oLanguage: {
@@ -2863,7 +2980,6 @@
                         return '<div class="dropdown">' +
                             '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
                             '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
-                            //'<a href="javascript:;" class="dropdown-item" onclick="editKinhPhi('+data+')">Sửa</a>' +
                             '<a href="javascript:;" class="dropdown-item" onclick="KPDuTru(' + data + ')">KP dự trù</a>' +
                             '<a href="javascript:;" class="dropdown-item" onclick="KPDieuChinh(' + data + ')">KP điều chỉnh</a>' +
                             '<a href="javascript:;" class="dropdown-item" onclick="KPThucTe(' + data + ')">KP thực tế</a>' +
@@ -2887,127 +3003,277 @@
         let datatableKPDuTru;
         function initDatatableKPDuTru() {
             datatableKPDuTru = $("#KPDuTruDatatable").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "",
+                    sSearch: ""
                 },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "",
-                sSearch: ""
-            },
-            "searching": false,
-            "lengthChange": false,
-             ajax: {
-                 url: "@Url.Action("getDatatableKPDuTru", "DetailOfAcademicActivity")",
-                 type: "POST",
-                 datatype: "json",
-                 data: { activity_office_id: id_edit_KP },
-                 cache: "false"
-                },
-            columns: [
-                {
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
-                    data: "expense_category_name"
-                },
-                {
-                    data: "expense_price",
-                    render: function (data) {
-                        if (data != null)
-                            return data.toLocaleString('en');
-                        else {
-                            return 0;
+                "searching": false,
+                "lengthChange": false,
+                 ajax: {
+                     url: "@Url.Action("getDatatableKPDuTru", "DetailOfAcademicActivity")",
+                     type: "POST",
+                     datatype: "json",
+                     data: { activity_office_id: function () { return id_edit_KP } },
+                     cache: "false"
+                    },
+                columns: [
+                    {
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: "expense_category_name"
+                    },
+                    {
+                        data: "expense_price",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "expense_quantity"
+                    },
+                    {
+                        data: "total",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "note",
+                    },
+                    {
+                        data: "expense_category_id",
+                        title: "Hành động",
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
                         }
                     }
-                },
-                {
-                    data: "expense_quantity"
-                },
-                {
-                    data: "total",
-                    render: function (data) {
-                        if (data != null)
-                            return data.toLocaleString('en');
-                        else {
-                            return 0;
-                        }
-                    }
-                },
-                {
-                    data: "note",
-                },
-                {
-                    data: "expense_category_id",
-                    title: "Hành động",
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
-                    }
-                }
-            ],
-            columnDefs: [
-                {
-                    className: "text-center",
-                    targets: '_all',
-                },
-                {
-                    className: "text-nowrap",
-                    targets: [-1]
-                },
-            ]
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                    {
+                        className: "text-nowrap",
+                        targets: [-1]
+                    },
+                ]
             });
         }
-        $("#KPDieuChinhDatatable").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
+        let datatableKPDieuChinh;
+        function initDatatableKPDieuChinh() {
+            datatableKPDieuChinh = $("#KPDieuChinhDatatable").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "",
+                    sSearch: ""
                 },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "",
-                sSearch: ""
-            },
-            "searching": false,
-            "lengthChange": false,
-            columnDefs: [
-                {
-                    targets: -1,
-                    className: "text-nowrap text-center",
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDieuChinh(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDieuChinh(1)">Xóa</a>'
+                "searching": false,
+                "lengthChange": false,
+                 ajax: {
+                     url: "@Url.Action("getDatatableKPDieuChinh", "DetailOfAcademicActivity")",
+                     type: "POST",
+                     datatype: "json",
+                     data: { activity_office_id: function () { return id_edit_KP } },
+                     cache: "false"
+                    },
+                columns: [
+                    {
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: "expense_category_name"
+                    },
+                    {
+                        data: "price_bandau",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "sl_bandau"
+                    },
+                    {
+                        data: "total_bandau",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "price_dieuchinh",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "sl_dieuchinh"
+                    },
+                    {
+                        data: "total_dieuchinh",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "note",
+                    },
+                    {
+                        data: "expense_category_id",
+                        title: "Hành động",
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDieuChinh('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDieuChinh('+data+')">Xóa</a>'
+                        }
                     }
-                }
-            ]
-        });
-        $("#KPThucTeDatatable").DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                    {
+                        className: "text-nowrap",
+                        targets: [-1]
+                    },
+                ]
+            });
+        }
+        let datatableKPThucTe;
+        function initDatatableKPThucTe() {
+            datatableKPThucTe = $("#KPThucTeDatatable").DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "",
+                    sSearch: ""
                 },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "",
-                sSearch: ""
-            },
-            "searching": false,
-            "lengthChange": false,
-            columnDefs: [
-                {
-                    targets: -1,
-                    className: "text-nowrap text-center",
-                    title: 'Hành động',
-                    orderable: false,
-                    render: function (data, type, full, meta) {
-                        return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiThucTe(1)">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiThucTe(1)">Xóa</a>'
+                "searching": false,
+                "lengthChange": false,
+                 ajax: {
+                     url: "@Url.Action("getDatatableKPThucTe", "DetailOfAcademicActivity")",
+                     type: "POST",
+                     datatype: "json",
+                     data: { activity_office_id: function () { return id_edit_KP } },
+                     cache: "false"
+                    },
+                columns: [
+                    {
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: "expense_category_name"
+                    },
+                    {
+                        data: "price_bandau",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "sl_bandau"
+                    },
+                    {
+                        data: "total_bandau",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "price_dieuchinh",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "sl_dieuchinh"
+                    },
+                    {
+                        data: "total_dieuchinh",
+                        render: function (data) {
+                            if (data != null)
+                                return data.toLocaleString('en');
+                            else {
+                                return 0;
+                            }
+                        }
+                    },
+                    {
+                        data: "note",
+                    },
+                    {
+                        data: "expense_category_id",
+                        title: "Hành động",
+                        render: function (data, type, full, meta) {
+                            return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiThucTe('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiThucTe('+data+')">Xóa</a>'
+                        }
                     }
-                }
-            ]
-        });
+                ],
+                columnDefs: [
+                    {
+                        className: "text-center",
+                        targets: '_all',
+                    },
+                    {
+                        className: "text-nowrap",
+                        targets: [-1]
+                    },
+                ]
+            });
+        }
         $("#ThongKeSLDatatable").DataTable({
             oLanguage: {
                 oPaginate: {
