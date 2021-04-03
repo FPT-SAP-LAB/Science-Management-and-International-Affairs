@@ -34,7 +34,8 @@ namespace BLL.ScienceManagement.Researcher
                     website = b.website,
                     office = (from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
                     gscholar = b.google_scholar,
-                    cv = b.cv
+                    cv = b.cv,
+                    profile_page_active = b.profile_page_active
                 }).FirstOrDefault();
             var interested_fields = (from a in db.Profiles
                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
@@ -191,8 +192,13 @@ namespace BLL.ScienceManagement.Researcher
                    website = b.website,
                    office = (from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
                    gscholar = b.google_scholar,
-                   cv = b.cv
+                   cv = b.cv,
+                   profile_page_active = b.profile_page_active
                }).FirstOrDefault();
+            if (profile.profile_page_active == false)
+            {
+                return null;
+            }
             profile.awards = researcherBiographyRepo.GetAwards(id);
             profile.acadBiography = researcherBiographyRepo.GetAcadHistory(id);
             return profile;
