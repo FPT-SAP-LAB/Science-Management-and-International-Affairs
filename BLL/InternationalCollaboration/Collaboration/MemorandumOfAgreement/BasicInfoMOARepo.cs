@@ -223,7 +223,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public void addExtraMOA(ExMOAAdd input, int moa_id)
+        public void addExtraMOA(ExMOAAdd input, int moa_id, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -238,6 +238,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         moa_bonus_decision_date = sign_date,
                         moa_bonus_end_date = end_date,
                         moa_id = moa_id,
+                        account_id = user is null ? 1 : user.account.account_id,
+                        add_time = DateTime.Now,
                         evidence = ""
                     });
                     db.SaveChanges();
@@ -287,7 +289,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void editExtraMOA(ExMOAAdd input)
+        public void editExtraMOA(ExMOAAdd input, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -301,6 +303,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     mb.moa_bonus_code = input.ExMOABasicInfo.ex_moa_code;
                     mb.moa_bonus_decision_date = sign_date;
                     mb.moa_bonus_end_date = end_date;
+                    mb.account_id = user is null ? 1 : user.account.account_id;
+                    mb.add_time = DateTime.Now;
                     db.Entry(mb).State = EntityState.Modified;
 
                     List<MOAPartnerScope> moaPSList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == input.moa_bonus_id).ToList();
