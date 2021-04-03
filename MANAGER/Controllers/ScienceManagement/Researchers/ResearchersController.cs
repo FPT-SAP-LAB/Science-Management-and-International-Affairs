@@ -40,7 +40,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 string name = (Request["name"]);
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable,coso, name);
+                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable, coso, name);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
@@ -61,7 +61,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 string chucdanh = (Request["chucdanh"]);
                 researcherCandidate = new ResearcherCandidateRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable, name,chucdanh, coso);
+                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable, name, chucdanh, coso);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
