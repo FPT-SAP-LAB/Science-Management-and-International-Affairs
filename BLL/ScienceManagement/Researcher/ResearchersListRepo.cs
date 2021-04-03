@@ -12,7 +12,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
     public class ResearchersListRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<ResearcherList> GetList(BaseDatatable baseDatatable, int account_id = 0, int language_id = 1)
+        public BaseServerSideData<ResearcherList> GetList(BaseDatatable baseDatatable, string coso, string name)
         {
             var data = (from a in db.People
                         join b in db.Profiles on a.people_id equals b.people_id
@@ -38,13 +38,26 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                                     where f.people_id == a.people_id
                                     select ff.link
                                       ).FirstOrDefault(),
-                            workplace = f.office_name,
+                            office_id = f.office_id,
+                            office_name = f.office_name,
                             googleScholar = b.google_scholar
                         });
-            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            List<ResearcherList> result = null;
+            if (coso.Trim() != "")
+            {
+                int cosoint = Int32.Parse(coso);
+                data = data.Where(x => x.office_id == cosoint);
+            }
+            if (name.Trim() != "")
+            {
+                data = data.Where(x => x.name.Contains(name));
+            }
+
+            result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+                .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+
             int recordsTotal = data.Count();
-            return new BaseServerSideData<ResearcherList>(res, recordsTotal);
+            return new BaseServerSideData<ResearcherList>(result, recordsTotal);
         }
     }
 }

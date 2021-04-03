@@ -181,20 +181,20 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <label>Ngày có hiệu lực</label>
-                        <input class="form-control form-control-lg custom-pickdate" id="valid_date" type="text" value="" />
+                        <input class="form-control form-control-lg custom-pickdate notnull" id="valid_date" type="text" value="" />
                     </div>
                     <div class="col-xl-6">
                         <label>Ngày có hiệu lực</label>
-                        <input class="form-control form-control-lg custom-pickdate" id="valid_date_2" type="text" value="" />
+                        <input class="form-control form-control-lg custom-pickdate notnull" id="valid_date_2" type="text" value="" />
                     </div>
 
                     <div class="col-xl-6 mt-5">
                         <label>Số quyết định</label>
-                        <input class="form-control form-control-lg" id="decisionNo" type="text" value="" />
+                        <input class="form-control form-control-lg notnull" id="decisionNo" type="text" value="" />
                     </div>
                     <div class="col-xl-6 mt-5">
                         <label>Số quyết định</label>
-                        <input class="form-control form-control-lg" id="decisionNo_2" type="text" value="" />
+                        <input class="form-control form-control-lg notnull" id="decisionNo_2" type="text" value="" />
                     </div>
 
                     <div class="col-xl-6 mt-5">
@@ -257,15 +257,18 @@
             var date2 = $("#valid_date_2").val();
 
             if (number == "" || date == "" || number2 == "" || date2 == "") {
+                $("#loading").hide();
                 toastr.error("Cần nhập đủ các trường");
                 return false;
             }
 
             if (uppy1.getFiles()[0] == undefined) {
+                $("#loading").hide();
                 toastr.error("Thiếu file quyết định cho nghiên cứu viên");
                 return false;
             }
             if (uppy2.getFiles()[0] == undefined) {
+                $("#loading").hide();
                 toastr.error("Thiếu file quyết định cho giảng viên/sinh viên");
                 return false;
             }

@@ -346,7 +346,7 @@
                     $(".onereward_text").each(function () {
                         var value = $(this).text();
                         //console.log(value);
-                        if (value == "") {
+                        if (value == "" || value == "0") {
                             $("#loading").hide();
                             toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
                             check = false;
@@ -439,6 +439,8 @@
             var arr = x.split(' - ');
             if (arr.length == 2) $("#name_tacgia").val(arr[1]);
             else $("#name_tacgia").val(arr[0]);
+            var y = document.getElementById(id_people_selected).querySelector("#tacgia_reward").innerHTML;
+            $("#reward_tacgia").val(y);
             //console.log(arr);
         });
 

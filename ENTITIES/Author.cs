@@ -20,6 +20,7 @@ namespace ENTITIES
             this.RequestCitations = new HashSet<RequestCitation>();
             this.AuthorInventions = new HashSet<AuthorInvention>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
+            this.RequestPapers = new HashSet<RequestPaper>();
         }
     
         public int people_id { get; set; }
@@ -34,12 +35,16 @@ namespace ENTITIES
         public Nullable<bool> is_reseacher { get; set; }
         public Nullable<int> title_id { get; set; }
         public Nullable<int> contract_id { get; set; }
+        public Nullable<int> identification_file_id { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorInvention> AuthorInventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorPaper> AuthorPapers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestPaper> RequestPapers { get; set; }
     }
 }
