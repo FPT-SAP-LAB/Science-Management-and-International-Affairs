@@ -431,9 +431,28 @@
             fd.append("profile", JSON.stringify(profile));
             fd.append("username", username);
 
-            for (var pair of fd.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
+            save_loader.startLoading();
+            $.ajax({
+                url: "/ConferenceSponsor/Add",
+                method: "post",
+                complete: function (data) {
+                    if (data.responseJSON.id) {
+                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
+                    }
+                    else {
+                        toastr.error(data.responseJSON.message);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: fd,
+                processData: false,
+                contentType: false
+            });
         })
     </script>
 }
