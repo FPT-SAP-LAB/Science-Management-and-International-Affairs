@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -50,5 +51,30 @@ namespace BLL.ScienceManagement.Researcher
             int recordsTotal = data.Count();
             return new BaseServerSideData<ResearcherCandidate>(result, recordsTotal);
         }
-    }
+
+        public bool UpdateProfilePage(int id, bool status)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    if (status)
+                    {
+                        db.Profiles.Find(id).profile_page_active = true;
+                    }
+                    else
+                    {
+                        db.Profiles.Find(id).profile_page_active = false;
+                    }
+                    db.SaveChanges();
+                    trans.Commit();
+                    return true;
+                }catch(Exception e)
+                {
+                    trans.Rollback();
+                    return false;
+                }
+        }
+        }
+    } 
 }

@@ -78,7 +78,15 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
-            ViewBag.profile = profile;
+            if (profile.profile_page_active==false)
+            {
+                ViewBag.profile_page_active = false;
+            }
+            else
+            {
+                ViewBag.profile_page_active = true;
+                ViewBag.profile = profile;
+            }
             return View();
         }
 
@@ -148,7 +156,49 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         }
         public ActionResult AddResearcher()
         {
+            researcherDetailRepo = new ResearchersDetailRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ViewBag.profile = profile;
+            if (profile.profile_page_active) {
+                ViewBag.profile_page_active = true;
+                return View();
+            }
+            else
+            {
+                ViewBag.profile_page_active = false;
+            }
+            ///////////////////////////////////////////////////////////////////
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            ///////////////////////////////////////////////////////////////
+            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+            ViewBag.acadList = acadList;
+            /////////////////////////////////////////////////////////////
+            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles();
+            ///////////////////////////////////////////////////////////////
+            List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
+            ViewBag.publications = publications;
+            ///////////////////////////////////////////////////////////////
+            List<ResearcherPublications> conferences = researcherBiographyRepo.GetConferencePublic(id);
+            ///////////////////////////////////////////////////////////////
+            List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
+            ViewBag.awards = awards;
+            ViewBag.conferences = conferences;
+            ViewBag.workList = workList;
+            ViewBag.listAcadDegree = listAcadDegree;
+            ViewBag.listWorkHistory = listWorkHistory;
             return View();
+        }
+        public JsonResult UpdateProfilePage()
+        {
+            string data = Request["status"];
+            int id = Int32.Parse(Request["id"]);
+            bool status=data=="1"?true:false;
+            researcherCandidate = new ResearcherCandidateRepo();
+            bool update = researcherCandidate.UpdateProfilePage(id, status);
+            return Json(new { success=update});
         }
     }
 }
