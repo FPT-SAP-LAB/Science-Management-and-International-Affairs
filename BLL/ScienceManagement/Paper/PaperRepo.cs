@@ -41,7 +41,7 @@ namespace BLL.ScienceManagement.Paper
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             int paper_id = Int32.Parse(id);
             Author p = (from a in db.RequestPapers
-                        join b in db.Authors on a.author_received_rewward equals b.people_id
+                        join b in db.Authors on a.author_received_reward equals b.people_id
                         where a.paper_id == paper_id
                         select b).FirstOrDefault();
             return p;
@@ -205,7 +205,7 @@ namespace BLL.ScienceManagement.Paper
                         //            join b in db.Profiles on a.people_id equals b.people_id
                         //            where b.mssv_msnv == daidien
                         //            select a).FirstOrDefault();
-                        r.author_received_rewward = author.people_id;
+                        r.author_received_reward = author.people_id;
                     }
                     db.RequestPapers.Add(r);
                     db.SaveChanges();
@@ -257,7 +257,7 @@ namespace BLL.ScienceManagement.Paper
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             int paper_id = Int32.Parse(id);
             string ms = (from a in db.RequestPapers
-                         join b in db.Authors on a.author_received_rewward equals b.people_id
+                         join b in db.Authors on a.author_received_reward equals b.people_id
                          where a.paper_id == paper_id
                          select b.mssv_msnv).FirstOrDefault();
             return ms;
