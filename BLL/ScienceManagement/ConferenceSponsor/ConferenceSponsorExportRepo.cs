@@ -104,6 +104,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             JObject @object = JObject.Parse(DetailRepos.GetDetailPageGuest(request_id, 1, account_id));
             ConferenceDetail Conference = @object["Conference"].ToObject<ConferenceDetail>();
             ConferenceParticipantExtend Participants = @object["Participants"].ToObject<List<ConferenceParticipantExtend>>()[0];
+            List<ConferenceApprovalProcess> ApprovalProcesses = @object["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
             try
             {
                 string fileName = HostingEnvironment.MapPath("/Word_Template/ConferenceSponsor/AppointmentForm.docx");
@@ -113,24 +114,40 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     stream.Write(byteArray, 0, byteArray.Length);
                     using (var doc = WordprocessingDocument.Open(stream, true))
                     {
-                        ////////////////////////////////////replace/////////////////////////////////
-                        Table table =
-                        doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(1);
-                        TableRow template = table.Elements<TableRow>().ElementAt(1);
+                        //  Cost table
+                        Table CostTable = doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(1);
+                        TableRow TemplateCost = CostTable.Elements<TableRow>().ElementAt(1);
 
                         for (int i = 0; i < Costs.Count; i++)
                         {
                             Cost cost = Costs[i];
-                            TableRow tr = template.Clone() as TableRow;
+                            TableRow tr = TemplateCost.Clone() as TableRow;
 
                             tr.ChildElements[0].InnerXml = tr.ChildElements[0].InnerXml.Replace("@Content", (i + 1) + "- " + cost.content);
                             tr.ChildElements[1].InnerXml = tr.ChildElements[1].InnerXml.Replace("@Sponsore", cost.sponsoring_organization);
                             tr.ChildElements[2].InnerXml = tr.ChildElements[2].InnerXml.Replace("@Detail", cost.detail);
                             tr.ChildElements[3].InnerXml = tr.ChildElements[3].InnerXml.Replace("@SubTotal", string.Format("{0:n0}", cost.total));
 
-                            table.InsertAfter(tr, table.Elements<TableRow>().ElementAt(i));
+                            CostTable.InsertAfter(tr, CostTable.Elements<TableRow>().ElementAt(i));
                         }
-                        table.RemoveChild(template);
+                        CostTable.RemoveChild(TemplateCost);
+                        //  Approval process table
+                        Table ApprovalTable = doc.MainDocumentPart.Document.Body.Elements<Table>().ElementAt(2);
+                        TableRow TemplateApproval = ApprovalTable.Elements<TableRow>().ElementAt(1);
+
+                        for (int i = 0; i < ApprovalProcesses.Count; i++)
+                        {
+                            ConferenceApprovalProcess process = ApprovalProcesses[i];
+                            TableRow tr = TemplateApproval.Clone() as TableRow;
+
+                            tr.ChildElements[0].InnerXml = tr.ChildElements[0].InnerXml.Replace("@Time", process.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
+                            tr.ChildElements[1].InnerXml = tr.ChildElements[1].InnerXml.Replace("@Position", process.PositionName);
+                            tr.ChildElements[2].InnerXml = tr.ChildElements[2].InnerXml.Replace("@FullName", process.FullName);
+                            tr.ChildElements[3].InnerXml = tr.ChildElements[3].InnerXml.Replace("@Comment", process.Comment);
+
+                            ApprovalTable.InsertAfter(tr, ApprovalTable.Elements<TableRow>().ElementAt(i));
+                        }
+                        ApprovalTable.RemoveChild(TemplateApproval);
                         doc.MainDocumentPart.Document.Save();
                         string docText = null;
                         using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
