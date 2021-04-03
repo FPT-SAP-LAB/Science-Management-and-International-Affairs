@@ -32,8 +32,9 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Add(string mssv_msnv, int title_id, string name, string email)
+        public ActionResult Add(HttpPostedFileBase identification, string person, string profile, string username)
         {
+
             return Redirect("/");
         }
     }
