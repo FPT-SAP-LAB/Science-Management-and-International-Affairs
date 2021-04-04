@@ -49,7 +49,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                List<PartnerHistory> historyList = moa.listMOUPartnerHistory(int.Parse(moa_partner_id));
+                List<PartnerHistory> historyList = moa.listMOAPartnerHistory(int.Parse(moa_partner_id));
                 return Json(new { success = true, data = historyList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
