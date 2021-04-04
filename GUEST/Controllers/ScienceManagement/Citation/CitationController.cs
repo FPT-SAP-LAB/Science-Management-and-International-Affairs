@@ -8,6 +8,7 @@ using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace User.Controllers
         CommentRepo crr = new CommentRepo();
         PaperRepo pr = new PaperRepo();
         // GET: Citation
+
+        [Auther(RightID = "29")]
         public ActionResult List()
         {
             ViewBag.title = "Số trích dẫn";
