@@ -44,6 +44,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             };
             return Json(data);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult updateDetail(DetailOfAcademicActivityRepo.InfoSumDetail obj)
         {
@@ -65,6 +66,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(String.Empty);
             }
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult changeStatusAA(int activity_id, int status)
         {
@@ -107,6 +109,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, phase_id);
             return Json(data);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult addPhase(int language_id, int activity_id, AcademicActivityPhaseRepo.basePhase basePhase)
         {
@@ -122,6 +125,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(String.Empty);
             }
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deletePhase(int phase_id)
         {
@@ -136,6 +140,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(String.Empty);
             }
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult editPhase(int language_id, AcademicActivityPhaseRepo.infoPhase data)
         {
@@ -164,6 +169,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityPhaseRepo.infoPlanParticipant data = phaseRepo.getParticipantPlanByRole(participant_role_id);
             return Json(data);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult addParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
@@ -176,6 +182,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult editParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
@@ -188,6 +195,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deleteParticipantRole(int participant_role_id)
         {
@@ -213,6 +221,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             DetailOfAcademicActivityRepo.baseForm data = formRepo.getFormbyPhase(phase_id);
             return Json(data);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
@@ -225,6 +234,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deleteForm(int phase_id)
         {
@@ -257,6 +267,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.getDatatableKP(activity_id);
             return Json(new { success = true, data = data });
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult addExpense(AcademicActivityExpenseRepo.baseExpense data)
         {
@@ -268,6 +279,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deleteExpense(int activity_office_id)
         {
@@ -286,6 +298,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpenseEstimate> data = expenseRepo.getDatatableKPDuTru(activity_office_id);
             return Json(new { success = true, data = data });
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
@@ -295,6 +308,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json("Thành công");
             return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deleteExpenseType(int expense_category_id, int type)
         {
@@ -311,6 +325,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseType(expense_category_id, type);
             return Json(data);
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
@@ -327,6 +342,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPDieuChinh(activity_office_id);
             return Json(new { success = true, data = data });
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
@@ -343,6 +359,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPThucTe(activity_office_id);
             return Json(new { success = true, data = data });
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
@@ -373,6 +390,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.getStatisticUnit(activity_id);
             return Json(data);
         }
+        [Auther(RightID = "3")]
         public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
         {
             try
@@ -402,6 +420,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
         {
@@ -418,6 +437,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
+        [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult deleteActivityPartner(int activity_partner_id)
         {
