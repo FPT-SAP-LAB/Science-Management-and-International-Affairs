@@ -149,28 +149,28 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == itemScope).FirstOrDefault();
                         if (psCheck != null)
                         {
-                            psCheck.reference_count += 1;
+                            //psCheck.reference_count += 1;
                             db.MOAPartnerScopes.Add(new MOAPartnerScope
                             {
                                 partner_scope_id = psCheck.partner_scope_id,
                                 moa_id = moa_id
                             });
                         }
-                        else
-                        {
-                            PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = itemScope,
-                                reference_count = 1
-                            });
-                            db.SaveChanges();
-                            db.MOAPartnerScopes.Add(new MOAPartnerScope
-                            {
-                                partner_scope_id = psAdded.partner_scope_id,
-                                moa_id = moa_id
-                            });
-                        }
+                        //else
+                        //{
+                        //    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                        //    {
+                        //        partner_id = input.partner_id,
+                        //        scope_id = itemScope,
+                        //        reference_count = 1
+                        //    });
+                        //    db.SaveChanges();
+                        //    db.MOAPartnerScopes.Add(new MOAPartnerScope
+                        //    {
+                        //        partner_scope_id = psAdded.partner_scope_id,
+                        //        moa_id = moa_id
+                        //    });
+                        //}
                     }
                     db.SaveChanges();
 
@@ -186,7 +186,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-
         public void editMOAPartner(MOAPartnerEdited input, int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -216,10 +215,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         //delete record of MOUPartnerScope.
                         db.MOAPartnerScopes.Remove(db.MOAPartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id && x.moa_id == moa_id && x.moa_bonus_id == null).First());
 
-                        PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id).First();
+                        //PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id).First();
                         //decrese refer_count in PartnerScope
-                        objPS.reference_count -= 1;
-                        db.Entry(objPS).State = EntityState.Modified;
+                        //objPS.reference_count -= 1;
+                        //db.Entry(objPS).State = EntityState.Modified;
                     }
                     db.SaveChanges();
 
@@ -230,21 +229,21 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         int partner_scope_id = 0;
                         if (objPS == null) //add new to PartnerScope
                         {
-                            db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = tokenScope,
-                                reference_count = 1
-                            });
-                            //checkpoint 3
-                            db.SaveChanges();
-                            PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
-                            partner_scope_id = newObjPS.partner_scope_id;
+                            //db.PartnerScopes.Add(new PartnerScope
+                            //{
+                            //    partner_id = input.partner_id,
+                            //    scope_id = tokenScope,
+                            //    reference_count = 1
+                            //});
+                            ////checkpoint 3
+                            //db.SaveChanges();
+                            //PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
+                            //partner_scope_id = newObjPS.partner_scope_id;
                         }
                         else
                         {
-                            objPS.reference_count += 1;
-                            db.Entry(objPS).State = EntityState.Modified;
+                            //objPS.reference_count += 1;
+                            //db.Entry(objPS).State = EntityState.Modified;
                             partner_scope_id = objPS.partner_scope_id;
                         }
                         db.SaveChanges();
@@ -257,16 +256,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     }
 
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //List <PartnerScope> partnerScopes  = db.PartnerScopes.Where(x => x.reference_count == 0).ToList();
-                    //foreach (PartnerScope p in partnerScopes)
-                    //{
-                    //    db.PartnerScopes.Remove(p);
-                    //    db.SaveChanges();
-                    //}
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -297,8 +286,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     foreach (PartnerScope partnerScope in listPS.ToList())
                     {
                         PartnerScope ps = db.PartnerScopes.Find(partnerScope.partner_scope_id);
-                        ps.reference_count -= 1;
-                        db.Entry(ps).State = EntityState.Modified;
+                        //ps.reference_count -= 1;
+                        //db.Entry(ps).State = EntityState.Modified;
                         db.MOAPartnerScopes.Remove(db.MOAPartnerScopes.Where(x => x.partner_scope_id == partnerScope.partner_scope_id && x.moa_id == moa_id).First());
                     }
                     //checkpoint 1
@@ -307,10 +296,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //checkpoint 2
                     db.MOAPartners.Remove(db.MOAPartners.Find(moa_partner_id));
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -320,29 +305,54 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public List<PartnerHistory> listMOUPartnerHistory(int mou_partner_id)
+        public List<PartnerHistory> listMOAPartnerHistory(int moa_partner_id)
         {
             string sql_history =
-                    @"select main.content,acc.full_name,main.add_time from (
-                    select 
-                    a1.mou_partner_id,a2.account_id,a2.add_time,
-                    N'Ký kết biên bản ghi nhớ' as content
-                    from IA_Collaboration.MOUPartner a1
-                    inner join IA_Collaboration.MOU a2 on a1.mou_id = a2.mou_id
-                    union all
-                    select c2.mou_partner_id,c1.account_id,c1.add_time,
-                    N'Ký kết biên bản thỏa thuận' as content from IA_Collaboration.MOA c1
-                    inner join IA_Collaboration.MOUPartner c2 on c1.mou_id = c2.mou_id
-                    ) as main
-                    left join General.Account acc on main.account_id = acc.account_id
-                    where mou_partner_id = @mou_partner_id
-                    order by add_time ";
+                    @"WITH b AS (
+                SELECT moa.moa_id, moa.moa_code, moap.moa_start_date, moa.moa_end_date, moap.moa_partner_id, ps.partner_id, ps.scope_id, ps.partner_scope_id
+                FROM IA_Collaboration.MOA moa
+                JOIN IA_Collaboration.MOAPartner moap on moap.moa_id = moa.moa_id
+                JOIN IA_Collaboration.MOAPartnerScope moaps on moaps.moa_id = moa.moa_id
+                JOIN IA_Collaboration.PartnerScope ps on ps.partner_scope_id = moaps.partner_scope_id
+                where moap.moa_partner_id = @moa_partner_id)
+                SELECT N'Tổ chức hoạt động học thuật' 'content', ac.full_name, ap.add_time
+                FROM SMIA_AcademicActivity.AcademicActivity aa 
+                INNER JOIN SMIA_AcademicActivity.ActivityPartner ap ON aa.activity_id = ap.activity_id 
+                INNER JOIN b ON b.partner_scope_id = ap.partner_scope_id
+                INNER JOIN General.Account ac on ac.account_id = ap.account_id
+                and b.moa_start_date <= aa.activity_date_start and aa.activity_date_end <= b.moa_end_date
+                UNION ALL
+                SELECT N'Hợp tác học thuật' 'content', acc.full_name, csh.change_time 'add_time'
+                FROM IA_AcademicCollaboration.AcademicCollaboration ac 
+                INNER JOIN b ON ac.partner_scope_id = b.partner_scope_id
+                INNER JOIN
+                (select csh1.collab_id, csh1.change_time, csh2.account_id
+                from
+	                (select collab_id, MAX(change_date) 'change_time'
+	                from IA_AcademicCollaboration.CollaborationStatusHistory
+	                group by collab_id) as csh1
+	                INNER JOIN
+	                (select *
+	                from IA_AcademicCollaboration.CollaborationStatusHistory) as csh2 
+	                on csh1.collab_id = csh2.collab_id and csh1.change_time = csh2.change_date) as csh on csh.collab_id = ac.collab_id
+                INNER JOIN General.Account acc on acc.account_id = csh.account_id
+                and b.moa_start_date <= ac.plan_study_start_date and ac.plan_study_end_date <= b.moa_end_date
+                UNION ALL
+                SELECT DISTINCT N'Ký kết biên bản thỏa thuận' 'content', acc.full_name, moa.add_time
+                FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id and mp.moa_partner_id = b.moa_partner_id
+                INNER JOIN IA_Collaboration.MOA moa ON moa.moa_id = mp.moa_id
+                LEFT JOIN General.Account acc on acc.account_id = moa.account_id
+                UNION ALL
+                SELECT DISTINCT N'Ký kết biên bản thỏa thuận bổ sung' 'content', acc.full_name, mb.add_time
+                FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id and mp.moa_partner_id = b.moa_partner_id
+                INNER JOIN IA_Collaboration.MOABonus mb ON mp.moa_id = mb.moa_id 
+                LEFT JOIN IA_Collaboration.MOAPartnerScope mps ON mps.moa_bonus_id = mb.moa_bonus_id
+                LEFT JOIN IA_Collaboration.MOA moa on moa.moa_id = mb.moa_id
+                LEFT JOIN General.Account acc on acc.account_id = mb.account_id
+                WHERE (mb.moa_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
+                ORDER BY add_time ASC";
             List<PartnerHistory> historyList = db.Database.SqlQuery<PartnerHistory>(sql_history,
-                new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
-            foreach (PartnerHistory p in historyList)
-            {
-                p.add_time_string = p.add_time.ToString("dd'/'MM'/'yyyy");
-            }
+                new SqlParameter("moa_partner_id", moa_partner_id)).ToList();
             return historyList;
         }
 
@@ -497,16 +507,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public string CheckPartnerExistedInMOA(int moa_id, string partner_name)
+        public string CheckPartnerExistedInMOA(int moa_id, int partner_id)
         {
             try
             {
                 string sql = @"select partner_name from IA_Collaboration.MOAPartner t1 left join
                     IA_Collaboration.Partner t2 on
                     t1.partner_id = t2.partner_id
-                    where t1.moa_id = @moa_id and t2.partner_name like @partner_name";
+                    where t1.moa_id = @moa_id and t2.partner_id = @partner_id";
                 string result = db.Database.SqlQuery<string>(sql,
-                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("partner_id", partner_id),
                     new SqlParameter("moa_id", moa_id)).FirstOrDefault();
                 return result is null ? "" : result;
             }

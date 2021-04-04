@@ -135,6 +135,13 @@
     @*@model int*@
 
     @*toast*@
+
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
+
     <script>
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
@@ -464,11 +471,6 @@
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('.select2-search__field').css('width', '100%');
-        })
     </script>
 
     @*general*@
@@ -1111,7 +1113,7 @@
 
     @*mou-list*@
     function getMOUList() {
-        mou_table = $(".mou_table").DataTable({
+            mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1121,7 +1123,6 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
-            pageLength: 5,
             lengthChange: false,
             serverSide: true,
             initComplete: function () {
@@ -1129,24 +1130,20 @@
                 $('.mou_table').parent().removeClass();
             },
             ajax: {
-                url: "@Url.Action("ViewMOU", "MOU")",
-                type: "POST",
-                datatype: "json",
-                data: {
-                    "partner_name": function () { return $('#search_partner_name').val() },
-                    "contact_point_name": function () { return $('#search_contact_point_name').val() },
-                    "mou_code": function () { return $('#search_mou_code').val() },
+                    url: "@Url.Action("ViewMOU", "MOU")",
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "partner_name": function () { return $('#search_partner_name').val() },
+                        "contact_point_name": function () { return $('#search_contact_point_name').val() },
+                        "mou_code": function () { return $('#search_mou_code').val() },
+                    },
+                    cache: "false"
                 },
-                cache: "false"
-            },
             columns: [
-                { data: "RowNumber" },
-                { data: "mou_code", name: "mou_code" },
-                {
-                    data: "partner_name",
-                    name: "partner_name",
-                    width: '200px'
-                },
+                { data: "RowNumber"},
+                { data: "mou_code", name:"mou_code"},
+                { data: "partner_name", name: "partner_name"},
                 { data: "country_name", name: "country_name" },
                 {
                     data: "website",
@@ -1160,8 +1157,8 @@
                 },
                 { data: "specialization_name", name: "specialization_name" },
                 { data: "contact_point_name", name: "contact_point_name" },
-                { data: "contact_point_email", name: "contact_point_email" },
-                { data: "contact_point_phone", name: "contact_point_phone" },
+                { data: "contact_point_email", name: "contact_point_email"},
+                { data: "contact_point_phone", name: "contact_point_phone"},
                 {
                     data: "evidence",
                     render: function (data) {
@@ -1209,21 +1206,21 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick=goDetail(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-            ],
-            columnDefs: [
-                {
-                    className: "text-center",
-                    targets: [0, 4, 9, 12, 13, 14],
-                },
-                {
-                    className: "text-nowrap",
-                    targets: [5, 6, 8, -1]
-                },
-            ],
+        ],
+        columnDefs: [
+            {
+                className: "text-center",
+                targets: [0, 4, 9, 12, 13, 14],
+            },
+            {
+                className: "text-nowrap",
+                targets: [5, 6, 8, -1]
+            },
+        ],
         });
         $('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }

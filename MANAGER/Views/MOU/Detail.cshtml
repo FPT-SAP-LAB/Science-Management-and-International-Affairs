@@ -318,6 +318,9 @@
             placeholder: 'Chọn cơ sở',
             allowClear: false,
         });
+        $('#status_moa').select2({
+            allowClear: false,
+        });
         $('#moa_partner_name_add').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: false,
@@ -350,7 +353,6 @@
             placeholder: 'Lĩnh vực',
             allowClear: true,
         })
-
         $('#coop_scope_ex_mou_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
@@ -404,11 +406,12 @@
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
         })
+        $('.select2-search__field').css('width', '100%');
         //$('#facility_moa').select2({
         //    placeholder: 'Đơn vị - Cơ sở kí kết',
         //    allowClear: true,
         //})
-        $('.select2-search__field').css('width', '100%');
+
         //datepicker
         var KTBootstrapDatetimepicker = function () {
             var baseDemos = function () {
@@ -2080,8 +2083,16 @@
                     },
                     { data: "content" },
                     { data: "full_name" },
-                    { data: "add_time_string" }
-                    ],
+                    {
+                        data: "add_time",
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format('DD-MM-YYYY hh:mm:ss A');
+                        }
+                    }
+                ],
                 initComplete: function () {
                     $('#history-table').parent().css('overflow-x', 'auto');
                 }
