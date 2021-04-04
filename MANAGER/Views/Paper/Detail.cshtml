@@ -159,10 +159,10 @@
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
                                                 <a href="#" class="text-muted text-hover-primary">@item.title_string</a>
                                             </div>
-                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                            @*<div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
                                                 <a href="#" class="text-muted text-hover-primary">@item.contract_name</a>
-                                            </div>
+                                            </div>*@
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
                                                 <a href="#" class="text-muted text-hover-primary">@item.tax_code</a>
@@ -282,6 +282,13 @@
             } else if (status == "4") {
                 $("#editconfirm").hide();
                 $("#editconfirm_manager").show();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
+            } else {
+                $("#editconfirm").hide();
+                $("#editconfirm_manager").hide();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
             }
 
             if ($("#loaithuong").val() == "Trongnuoc") {
@@ -330,6 +337,9 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
+                        $("#editconfirm").prop("disabled", true);
+                        $("#confirmbtn").prop("disabled", true);
+                        $("#totalreward").prop("disabled", true);
                         //editRequest();
                         //alert(response.mess);
                         //window.location.href = "/Paper/Pending";
@@ -359,6 +369,7 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
+                        $("#editconfirm_manager").prop("disabled", true);
                         //editRequest();
                         //alert(response.mess);
                         //window.location.href = "/Paper/Pending";
