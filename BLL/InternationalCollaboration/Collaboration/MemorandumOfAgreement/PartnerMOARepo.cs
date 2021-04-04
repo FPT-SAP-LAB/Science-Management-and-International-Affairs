@@ -156,21 +156,21 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 moa_id = moa_id
                             });
                         }
-                        else
-                        {
-                            PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = itemScope,
-                                reference_count = 1
-                            });
-                            db.SaveChanges();
-                            db.MOAPartnerScopes.Add(new MOAPartnerScope
-                            {
-                                partner_scope_id = psAdded.partner_scope_id,
-                                moa_id = moa_id
-                            });
-                        }
+                        //else
+                        //{
+                        //    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                        //    {
+                        //        partner_id = input.partner_id,
+                        //        scope_id = itemScope,
+                        //        reference_count = 1
+                        //    });
+                        //    db.SaveChanges();
+                        //    db.MOAPartnerScopes.Add(new MOAPartnerScope
+                        //    {
+                        //        partner_scope_id = psAdded.partner_scope_id,
+                        //        moa_id = moa_id
+                        //    });
+                        //}
                     }
                     db.SaveChanges();
 
@@ -229,16 +229,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         int partner_scope_id = 0;
                         if (objPS == null) //add new to PartnerScope
                         {
-                            db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = tokenScope,
-                                reference_count = 1
-                            });
-                            //checkpoint 3
-                            db.SaveChanges();
-                            PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
-                            partner_scope_id = newObjPS.partner_scope_id;
+                            //db.PartnerScopes.Add(new PartnerScope
+                            //{
+                            //    partner_id = input.partner_id,
+                            //    scope_id = tokenScope,
+                            //    reference_count = 1
+                            //});
+                            ////checkpoint 3
+                            //db.SaveChanges();
+                            //PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
+                            //partner_scope_id = newObjPS.partner_scope_id;
                         }
                         else
                         {
@@ -296,10 +296,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //checkpoint 2
                     db.MOAPartners.Remove(db.MOAPartners.Find(moa_partner_id));
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)

@@ -155,7 +155,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 {
                     //add MOA
                     //add MOAPartner => 
-                    //update PartnerScope =>
                     //add MOAPartnerScope
                     //add MOAStatusHistory
                     DateTime moa_end_date = DateTime.ParseExact(input.MOABasicInfo.moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
