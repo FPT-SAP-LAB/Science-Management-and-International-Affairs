@@ -212,7 +212,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
-                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>(); 
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
@@ -431,7 +431,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         new SqlParameter("mou_id", mou_id)).ToList();
                     List<PartnerScope> mou_list = db.Database.SqlQuery<PartnerScope>(sql_mou,
                         new SqlParameter("mou_id", mou_id)).ToList();
-                    
+
                     //if (ex_moa_list != null)
                     //{
                     //    foreach (PartnerScope item in ex_moa_list)
