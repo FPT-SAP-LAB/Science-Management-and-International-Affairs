@@ -38,7 +38,8 @@ namespace BLL.ScienceManagement.Citation
                 int request_id = Int32.Parse(id);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
                 return rc.status_id;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return 0;
