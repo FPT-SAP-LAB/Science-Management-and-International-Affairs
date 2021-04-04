@@ -380,7 +380,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         {
                             try
                             {
-                                autoActiveInactive.changeStatusMOUMOA(partner_scope_id, db);
+                                List<int> list_partner_scope_id = new List<int>();
+                                list_partner_scope_id.Add(partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                                 dbContext.Commit();
                             }
                             catch (Exception e)
@@ -849,9 +851,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             try
                             {
                                 //change status corressponding MOU/MOA
-                                autoActiveInactive.changeStatusMOUMOA(old_partner_scope.partner_scope_id, db);
+                                List<int> list_old_partner_scope_id = new List<int>();
+                                list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
                                 //change status corressponding MOU/MOA
-                                autoActiveInactive.changeStatusMOUMOA(partner_scope.partner_scope_id, db);
+                                List<int> list_new_partner_scope_id = new List<int>();
+                                list_new_partner_scope_id.Add(partner_scope.partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_new_partner_scope_id, db);
                                 dbContext.Commit();
                             }
                             catch (Exception e)
@@ -935,7 +941,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         try
                         {
-                            autoActiveInactive.changeStatusMOUMOA(partner_scope_id, db);
+                            List<int> list_partner_scope_id = new List<int>();
+                            list_partner_scope_id.Add(partner_scope_id);
+                            autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                             dbContext.Commit();
                         }
                         catch (Exception e)
