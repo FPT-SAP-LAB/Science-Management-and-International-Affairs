@@ -376,13 +376,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         }
                         trans.Commit();
                         //change status corressponding MOU/MOA
-                        using(DbContextTransaction dbContext = db.Database.BeginTransaction())
+                        using (DbContextTransaction dbContext = db.Database.BeginTransaction())
                         {
                             try
                             {
                                 autoActiveInactive.changeStatusMOUMOA(partner_scope_id, db);
                                 dbContext.Commit();
-                            } catch (Exception e)
+                            }
+                            catch (Exception e)
                             {
                                 dbContext.Rollback();
                                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
@@ -852,12 +853,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 //change status corressponding MOU/MOA
                                 autoActiveInactive.changeStatusMOUMOA(partner_scope.partner_scope_id, db);
                                 dbContext.Commit();
-                            } catch (Exception e)
+                            }
+                            catch (Exception e)
                             {
                                 dbContext.Rollback();
                                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
-                            
+
                         }
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Cập nhật cán bộ giảng viên thành công.");
                     }

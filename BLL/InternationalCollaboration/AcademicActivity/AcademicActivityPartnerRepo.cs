@@ -20,6 +20,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     if (checkDuplicatePartnerScope(activityPartner))
                     {
                         AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
@@ -42,19 +43,31 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         if (partnerScope != null)
                         {
                             saveActivityPartner(file, partnerScope, activityPartner, account_id);
-                            //db.SaveChanges();
                             academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
-                            //db.SaveChanges();
                         }
                         else
                         {
                             partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
                             db.SaveChanges();
                             saveActivityPartner(file, partnerScope, activityPartner, account_id);
-                            //db.SaveChanges();
                         }
                         db.SaveChanges();
                         dbContext.Commit();
+
+                        using (DbContextTransaction trans = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                                trans.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                trans.Rollback();
+                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
+
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
                     else
@@ -154,6 +167,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     if (checkDuplicatePartnerScope(saveActivityPartner))
                     {
                         //update file
@@ -189,8 +203,24 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         db.SaveChanges();
                         //update file_id null in coress ActivityPartner
-                        updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
+                        activityPartner = updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
                         dbContext.Commit();
+
+                        //change status MOU/MOA
+                        using (DbContextTransaction trans = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                autoActiveInactive.changeStatusMOUMOA(activityPartner.partner_scope_id, db);
+                                trans.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                trans.Rollback();
+                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
+
                         return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                     }
                     else
@@ -217,14 +247,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
+        public ActivityPartner updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
         {
+            ActivityPartner ap = new ActivityPartner();
             try
             {
                 AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                 //update PartnerScope
                 PartnerScope partnerScope = updatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
-                ActivityPartner ap = new ActivityPartner();
                 ap.sponsor = saveActivityPartner.sponsor;
                 if (saveActivityPartner.contact_point_name != null) ap.contact_point_name = saveActivityPartner.contact_point_name;
                 if (saveActivityPartner.contact_point_email != null) ap.contact_point_email = saveActivityPartner.contact_point_email;
@@ -261,6 +291,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 throw e;
             }
+            return ap;
         }
         public AlertModal<string> deleteActivityPartner(int activity_partner_id)
         {
@@ -296,6 +327,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.SaveChanges();
                     }
                     dbContext.Commit();
+
+                    using (DbContextTransaction trans = db.Database.BeginTransaction())
+                    {
+                        AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
+                        try
+                        {
+                            autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                            trans.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            trans.Rollback();
+                            return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                        }
+                    }
                     return new AlertModal<string>(null, true, "Thành công", "Xóa đối tác đồng tổ chức thành công.");
                 }
                 catch (Exception e)
