@@ -20,7 +20,7 @@ namespace BLL.ScienceManagement.Invention
         public DetailInvention getDetail(string id)
         {
             DetailInvention item = new DetailInvention();
-            string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file', it.name as 'type_name'
+            string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file', it.name as 'type_name', ri.status_id
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [General].[File] f on f.file_id = i.file_id

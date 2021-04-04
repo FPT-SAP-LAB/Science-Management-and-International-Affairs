@@ -176,7 +176,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thưởng chó tác giả</h3>
+                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thưởng cho tác giả</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -210,6 +210,22 @@
             $("#search_nam").val(country_id);
             $("#kieuthuong").val("@ViewBag.item.reward_type");
 
+            var status = "@ViewBag.item.status_id";
+            if (status == "3") {
+                $("#editconfirm").show();
+                $("#editconfirm_manager").hide();
+            } else if (status == "4") {
+                $("#editconfirm").hide();
+                $("#editconfirm_manager").show();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
+            } else {
+                $("#editconfirm").hide();
+                $("#editconfirm_manager").hide();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
+            }
+
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
@@ -242,6 +258,8 @@
                     if (response.mess == "ss") {
                         $("#loading").hide();
                         $("#editconfirm").prop("disabled", true);
+                        $("#confirmbtn").prop("disabled", true);
+                        $("#totalreward").prop("disabled", true);
                         //window.location.href = "/Invention/Pending";
                         //editRequest();
                         //alert(response.mess);

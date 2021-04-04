@@ -282,6 +282,13 @@
             } else if (status == "4") {
                 $("#editconfirm").hide();
                 $("#editconfirm_manager").show();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
+            } else {
+                $("#editconfirm").hide();
+                $("#editconfirm_manager").hide();
+                $("#confirmbtn").hide();
+                $("#totalreward").prop("disabled", true);
             }
 
             if ($("#loaithuong").val() == "Trongnuoc") {
@@ -330,6 +337,9 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
+                        $("#editconfirm").prop("disabled", true);
+                        $("#confirmbtn").prop("disabled", true);
+                        $("#totalreward").prop("disabled", true);
                         //editRequest();
                         //alert(response.mess);
                         //window.location.href = "/Paper/Pending";
@@ -359,6 +369,7 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
+                        $("#editconfirm_manager").prop("disabled", true);
                         //editRequest();
                         //alert(response.mess);
                         //window.location.href = "/Paper/Pending";

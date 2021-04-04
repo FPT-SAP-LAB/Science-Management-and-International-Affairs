@@ -31,20 +31,29 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
+        public int getStatus(string id)
+        {
+            try
+            {
+                int request_id = Int32.Parse(id);
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                return rc.status_id;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
         public AuthorInfo getAuthor(string id)
         {
             AuthorInfo item = new AuthorInfo();
-            string sql = @"select po.*, o.office_abbreviation, ct.contract_id, t.title_id, rc.total_reward, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, ct.name as 'contract_name'
+            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher'
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
-	                            join [General].People po on rc.people_id = po.people_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on po.office_id = o.office_id
-	                            join [General].Area a on o.area_id = a.area_id
-	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-	                            join [SM_MasterData].Title t on pt.title_id = t.title_id
+	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
+	                            join [General].Office o on o.office_id = ah.office_id
+	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
                             where rc.request_id = @id";
             item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).FirstOrDefault();
             return item;
@@ -233,10 +242,10 @@ namespace BLL.ScienceManagement.Citation
 
         public List<PendingCitation_manager> getListPending()
         {
-            string sql = @"select acc.email, br.created_date, br.request_id
+            string sql = @"select acc.email, br.created_date, br.request_id, rc.status_id
                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on br.account_id = acc.account_id
-                           where rc.status_id = 3";
+                           where rc.status_id = 3 or  rc.status_id = 5";
             List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
             return list;
         }
