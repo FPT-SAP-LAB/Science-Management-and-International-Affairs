@@ -101,10 +101,7 @@ class AuthorInfoView {
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Chức danh:</span>
                                                         <a href='#' class='text-muted text-hover-primary'>` + this.add_author_title + this.title_2 + `</a>
                                                     </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>Loại hợp đồng:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_contractType + `</a>
-                                                    </div>
+                                                  
                                                     <div class='d-flex justify-content-between align-items-cente my-1'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
                                                         <a href='#' class='text-muted text-hover-primary'>` + this.add_author_tax + `</a>

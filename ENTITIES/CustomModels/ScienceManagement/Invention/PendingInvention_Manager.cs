@@ -12,5 +12,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Invention
         public string email { get; set; }
         public DateTime created_date { get; set; }
         public int invention_id { get; set; }
+        public int status_id { get; set; }
     }
 }

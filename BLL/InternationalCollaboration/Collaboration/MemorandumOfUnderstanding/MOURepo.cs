@@ -245,12 +245,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         //new partner
                         if (item.partner_id == 0)
                         {
+                            //add Article.
+                            //add ArticleVersion.
+                            //add Partner.
+                            Article a = db.Articles.Add(new Article
+                            {
+                                need_approved = false,
+                                article_status_id = 2,
+                                account_id = user is null ? 1 : user.account.account_id,
+                            });
+                            ArticleVersion av = db.ArticleVersions.Add(new ArticleVersion
+                            {
+                                publish_time = DateTime.Now,
+                                version_title = "",
+                                article_id = a.article_id,
+                                language_id = 1
+                            });
                             db.Partners.Add(new ENTITIES.Partner
                             {
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = item.nation_add
+                                country_id = item.nation_add,
+                                article_id = a.article_id
                             });
                             //checkpoint 2
                             db.SaveChanges();
@@ -705,7 +722,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                MOU obj = db.MOUs.Where(x => x.mou_code == mou_code).FirstOrDefault();
+                MOU obj = db.MOUs.Where(x => x.mou_code == mou_code && !x.is_deleted).FirstOrDefault();
                 return obj == null ? false : true;
             }
             catch (Exception ex)
@@ -726,7 +743,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                  from IA_Collaboration.MOUPartner t1
                 inner join IA_Collaboration.MOU t2
                 on t2.mou_id = t1.mou_id
-                where t1.partner_id in (" + partner_id_para + @")
+                where t1.partner_id in (" + partner_id_para + @") and t2.is_deleted = 0
                 group by mou_end_date, t2.mou_id, t2.mou_code
                 having count(*) = @partner_count
                 order by mou_id";

@@ -80,8 +80,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.addMOUPartner(input, int.Parse(id));
+                    mou.addMOUPartner(input, int.Parse(id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -101,8 +102,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id);
+                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id, user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
