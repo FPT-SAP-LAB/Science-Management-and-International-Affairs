@@ -228,5 +228,12 @@ namespace MANAGER.Controllers
             string mess = pr.changeStatus(paper);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult changeStatusManager(DetailPaper paper)
+        {
+            string mess = pr.changeStatusManager(paper);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
