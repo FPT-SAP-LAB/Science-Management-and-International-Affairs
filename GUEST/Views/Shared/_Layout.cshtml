@@ -1373,15 +1373,11 @@
             location.reload();
         });
         function onLoad() {
-            return new Promise((resolve, reject) => {
-                gapi.load('auth2', function () {
-                    gapi.auth2.init();
-                });
-                resolve();
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
             });
         }
-        async function onSignIn(googleUser) {
-            await onLoad();
+        function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
             //var xhr = new XMLHttpRequest();
             //xhr.open('POST', );
@@ -1418,8 +1414,7 @@
                 cache: true
             });
         }
-        async function gp_signOut() {
-            await onLoad();
+        function gp_signOut() {
             $.ajax({
                 url: '/Authen/Logout',
                 data: {},
