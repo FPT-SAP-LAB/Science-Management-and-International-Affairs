@@ -20,6 +20,7 @@ using System.ComponentModel;
 using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
+using System.Data.Entity.Validation;
 
 namespace BLL.ScienceManagement.Paper
 {
@@ -85,6 +86,7 @@ namespace BLL.ScienceManagement.Paper
         {
             int count = 1;
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            Scimagojr sci;
             try
             {
                 string url = "https://www.scimagojr.com/journalrank.php?out=xls";
@@ -112,7 +114,7 @@ namespace BLL.ScienceManagement.Paper
                         {
                             if (csv.GetField(0) != "Rank")
                             {
-                                Scimagojr sci = new Scimagojr();
+                                sci = new Scimagojr();
                                 sci.Rank = csv.GetField(0);
                                 sci.Sourceid = csv.GetField(1);
                                 sci.Title = csv.GetField(2);
