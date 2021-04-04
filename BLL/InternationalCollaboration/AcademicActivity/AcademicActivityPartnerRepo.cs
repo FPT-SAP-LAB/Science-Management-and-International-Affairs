@@ -20,6 +20,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     if (checkDuplicatePartnerScope(activityPartner))
                     {
                         AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
@@ -37,9 +38,36 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             file = academicCollaborationRepo.saveFile(f, evidence_file);
                         }
                         //update to PartnerScope
-                        PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
-                        saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                        //PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
+                        PartnerScope partnerScope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == activityPartner.partner_id && x.scope_id == activityPartner.scope_id).FirstOrDefault();
+                        if (partnerScope != null)
+                        {
+                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                            academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
+                        }
+                        else
+                        {
+                            partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
+                            db.SaveChanges();
+                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                        }
+                        db.SaveChanges();
                         dbContext.Commit();
+
+                        using (DbContextTransaction trans = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                                trans.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                trans.Rollback();
+                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
+
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
                     else
@@ -92,7 +120,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ap.add_time = DateTime.Now;
                 if (file.file_id != 0) ap.file_id = file.file_id;
                 db.ActivityPartners.Add(ap);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -140,6 +167,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     if (checkDuplicatePartnerScope(saveActivityPartner))
                     {
                         //update file
@@ -173,9 +201,26 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 new_file = removeFile(old_file);
                             }
                         }
+                        db.SaveChanges();
                         //update file_id null in coress ActivityPartner
-                        updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
+                        activityPartner = updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
                         dbContext.Commit();
+
+                        //change status MOU/MOA
+                        using (DbContextTransaction trans = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                autoActiveInactive.changeStatusMOUMOA(activityPartner.partner_scope_id, db);
+                                trans.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                trans.Rollback();
+                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
+
                         return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                     }
                     else
@@ -195,7 +240,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             try
             {
                 db.Files.Remove(file);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -203,14 +247,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
+        public ActivityPartner updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
         {
+            ActivityPartner ap = new ActivityPartner();
             try
             {
                 AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                 //update PartnerScope
                 PartnerScope partnerScope = updatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
-                ActivityPartner ap = new ActivityPartner();
                 ap.sponsor = saveActivityPartner.sponsor;
                 if (saveActivityPartner.contact_point_name != null) ap.contact_point_name = saveActivityPartner.contact_point_name;
                 if (saveActivityPartner.contact_point_email != null) ap.contact_point_email = saveActivityPartner.contact_point_email;
@@ -247,6 +291,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 throw e;
             }
+            return ap;
         }
         public AlertModal<string> deleteActivityPartner(int activity_partner_id)
         {
@@ -256,6 +301,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                     ActivityPartner activityPartner = db.ActivityPartners.Find(activity_partner_id);
+                    int partner_scope_id = activityPartner.partner_scope_id;
                     //delete corress file in db and gg drive
                     if (activityPartner.file_id != null)
                     {
@@ -265,12 +311,15 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Files.Remove(file);
                         db.SaveChanges();
                     }
-                    //decrease ref_cou
-                    PartnerScope partnerScope = db.PartnerScopes.Find(activityPartner.partner_scope_id);
-                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
                     //delete activi_partner
                     db.ActivityPartners.Remove(activityPartner);
                     db.SaveChanges();
+
+                    //decrease ref_cou
+                    PartnerScope partnerScope = db.PartnerScopes.Find(partner_scope_id);
+                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
+                    db.SaveChanges();
+
                     //delete partner_scope if ref_cou < =0
                     if (partnerScope.reference_count <= 0)
                     {
@@ -278,6 +327,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.SaveChanges();
                     }
                     dbContext.Commit();
+
+                    using (DbContextTransaction trans = db.Database.BeginTransaction())
+                    {
+                        AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
+                        try
+                        {
+                            autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                            trans.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            trans.Rollback();
+                            return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                        }
+                    }
                     return new AlertModal<string>(null, true, "Thành công", "Xóa đối tác đồng tổ chức thành công.");
                 }
                 catch (Exception e)

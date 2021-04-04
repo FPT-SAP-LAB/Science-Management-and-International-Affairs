@@ -181,7 +181,7 @@
           <Property Name="direction_id" Type="int" Nullable="false" />
           <Property Name="people_id" Type="int" Nullable="false" />
           <Property Name="is_supported" Type="bit" />
-          <Property Name="partner_scope_id" Type="int" />
+          <Property Name="partner_scope_id" Type="int" Nullable="false" />
           <Property Name="actual_study_start_date" Type="date" />
           <Property Name="actual_study_end_date" Type="date" />
           <Property Name="collab_type_id" Type="int" />
@@ -1416,7 +1416,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AcademicC__mou_p__0B5CAFEA">
-          <End Role="PartnerScope" Type="Self.PartnerScope" Multiplicity="0..1" />
+          <End Role="PartnerScope" Type="Self.PartnerScope" Multiplicity="1" />
           <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PartnerScope">
@@ -4955,7 +4955,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           <Property Name="direction_id" Type="Int32" Nullable="false" />
           <Property Name="people_id" Type="Int32" Nullable="false" />
           <Property Name="is_supported" Type="Boolean" />
-          <Property Name="partner_scope_id" Type="Int32" />
+          <Property Name="partner_scope_id" Type="Int32" Nullable="false" />
           <Property Name="actual_study_start_date" Type="DateTime" Precision="0" />
           <Property Name="actual_study_end_date" Type="DateTime" Precision="0" />
           <Property Name="collab_type_id" Type="Int32" />
@@ -7062,7 +7062,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Confer
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AcademicC__mou_p__0B5CAFEA">
-          <End Role="PartnerScope" Type="Self.PartnerScope" Multiplicity="0..1" />
+          <End Role="PartnerScope" Type="Self.PartnerScope" Multiplicity="1" />
           <End Role="AcademicCollaboration" Type="Self.AcademicCollaboration" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PartnerScope">

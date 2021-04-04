@@ -2040,6 +2040,7 @@
                                 DongTochucDatatable.ajax.reload();
                                 $("#btn_add_close_DongToChuc").click();
                                 clearActivityPartnerContentAddModal();
+                                btn_add_save_DongToChuc.stopLoading();
                             } else {
                                 toastr.warning(data.content);
                                 btn_add_save_DongToChuc.stopLoading();
