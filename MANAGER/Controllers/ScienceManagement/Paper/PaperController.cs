@@ -71,6 +71,15 @@ namespace MANAGER.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult UpdateJournal()
+        {
+            bool mess = pr.updateJournal();
+            string content = "Cập nhật thành công";
+            if (!mess) content = "Cập nhật thất bại";
+            return Json(new { mess = mess, content = content},JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             foreach (var item in people)
