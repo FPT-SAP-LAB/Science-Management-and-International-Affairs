@@ -42,17 +42,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         if (partnerScope != null)
                         {
                             saveActivityPartner(file, partnerScope, activityPartner, account_id);
-                            db.SaveChanges();
+                            //db.SaveChanges();
                             academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
-                            db.SaveChanges();
+                            //db.SaveChanges();
                         }
                         else
                         {
                             partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
                             db.SaveChanges();
                             saveActivityPartner(file, partnerScope, activityPartner, account_id);
-                            db.SaveChanges();
+                            //db.SaveChanges();
                         }
+                        db.SaveChanges();
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
@@ -282,10 +283,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     //delete activi_partner
                     db.ActivityPartners.Remove(activityPartner);
                     db.SaveChanges();
+
                     //decrease ref_cou
                     PartnerScope partnerScope = db.PartnerScopes.Find(partner_scope_id);
                     academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
                     db.SaveChanges();
+
                     //delete partner_scope if ref_cou < =0
                     if (partnerScope.reference_count <= 0)
                     {
