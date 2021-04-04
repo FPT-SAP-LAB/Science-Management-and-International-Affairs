@@ -195,10 +195,6 @@ namespace BLL.ScienceManagement.Researcher
                    cv = b.cv,
                    profile_page_active = b.profile_page_active
                }).FirstOrDefault();
-            //if (profile.profile_page_active == false)
-            //{
-            //    return null;
-            //}
             profile.awards = researcherBiographyRepo.GetAwards(id);
             profile.acadBiography = researcherBiographyRepo.GetAcadHistory(id);
             return profile;
