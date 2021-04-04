@@ -344,7 +344,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     {
                         try
                         {
-                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).ToList();
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
                             new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
                             dbContext.Commit();
                         }
@@ -493,7 +493,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     {
                         try
                         {
-                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).ToList();
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
                             new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
                             dbContext.Commit();
                         }

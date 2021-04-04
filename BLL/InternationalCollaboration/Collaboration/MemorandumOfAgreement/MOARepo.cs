@@ -157,6 +157,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //add MOAPartner => 
                     //add MOAPartnerScope
                     //add MOAStatusHistory
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime moa_end_date = DateTime.ParseExact(input.MOABasicInfo.moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOA m = db.MOAs.Add(new MOA
                     {
@@ -185,8 +186,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         {
                             PartnerScope ps = db.PartnerScopes.Where(x => x.partner_id == p.partner_id && x.scope_id == scopeItem).First();
                             //ps.reference_count += 1;
-
                             //db.Entry(ps).State = EntityState.Modified;
+                            totalRelatedPS.Add(ps);
                             db.MOAPartnerScopes.Add(new MOAPartnerScope
                             {
                                 partner_scope_id = ps.partner_scope_id,
@@ -207,6 +208,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //checkpoint 3
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
