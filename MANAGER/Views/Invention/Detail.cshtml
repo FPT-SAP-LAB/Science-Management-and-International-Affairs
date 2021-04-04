@@ -151,6 +151,7 @@
         <div class="row justify-content-center">
             <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
         </div>
     </div>
 </div>
@@ -240,7 +241,39 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
-                        window.location.href = "/Invention/Pending";
+                        $("#editconfirm").prop("disabled", true);
+                        //window.location.href = "/Invention/Pending";
+                        //editRequest();
+                        //alert(response.mess);
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        $("#editconfirm_manager").click(function () {
+            $("#loading").show();
+            var inven_id = "@ViewBag.item.invention_id";
+                    var request_id = "@ViewBag.item.request_id";
+            var inven = {
+                invention_id: inven_id,
+                request_id: request_id
+            };
+            $.ajax({
+                url: "@Url.Action("changeStatusManager", "Invention")",
+                type: "POST",
+                data: JSON.stringify({ 'inven': inven }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#loading").hide();
+                        $("#editconfirm_manager").prop("disabled", true);
+                        //window.location.href = "/Invention/Pending";
                         //editRequest();
                         //alert(response.mess);
                     }

@@ -85,6 +85,25 @@ namespace BLL.ScienceManagement.Invention
             }
         }
 
+        public string changeStatusManager(DetailInvention inven)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                ri.status_id = 3;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -337,11 +356,11 @@ namespace BLL.ScienceManagement.Invention
 
         public List<PendingInvention_Manager> getListPending()
         {
-            string sql = @"select i.name, acc.email, br.created_date, i.invention_id
+            string sql = @"select i.name, acc.email, br.created_date, i.invention_id, ri.status_id
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
 	                            join [General].Account acc on acc.account_id = br.account_id
-                           where ri.status_id = 3";
+                           where ri.status_id = 3 or ri.status_id = 5";
             List<PendingInvention_Manager> list = db.Database.SqlQuery<PendingInvention_Manager>(sql).ToList();
             return list;
         }
