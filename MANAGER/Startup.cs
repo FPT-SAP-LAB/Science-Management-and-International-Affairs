@@ -3,8 +3,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 
-[assembly: OwinStartup(typeof(GUEST.Startup))]
-namespace GUEST
+[assembly: OwinStartup(typeof(MANAGER.Startup))]
+namespace MANAGER
 {
     public class Startup
     {
