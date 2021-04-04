@@ -105,10 +105,12 @@
 
         $("#btn-submit").click(function () {
             $("#loading").show();
+            citation = [];
             addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
+
             for (var i = 0; i < inputSource.length; i++) {
                 if ($(inputSource[i]).val() != "" && $(inputCount[i]).val() != "" && $(inputLink[i]).val() != "") {
                     var oneCitation = {
@@ -117,6 +119,10 @@
                         link: $(inputLink[i]).val()
                     };
                     citation.push(oneCitation);
+                } else {
+                    $("#loading").hide();
+                    toastr.error("Cần nhập đủ thông tin cho trích dẫn");
+                    return false;
                 }
             }
 

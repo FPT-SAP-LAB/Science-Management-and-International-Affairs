@@ -53,7 +53,7 @@
             <span></span>
         </label>
     </div>
-    <div class="col-xl-6 form-group">
+    <div class="col-xl-6 form-group" style="display:none">
         <label class="required-field">@rm.GetString("ContractType")</label>
         <select class="form-control editfe select-custom edit" id="add_author_contractType_edit" name="param" style="width: 100% !important">
             @{
@@ -135,7 +135,7 @@
             mssv_msnv: $("#add_author_msnv_edit").val()
             }
             $.ajax({
-                url: "@Url.Action("fillData", "PartialView")",
+                url: "@Url.Action("fillDataAdd", "PartialView")",
                 type: "POST",
                 data: JSON.stringify({ 'item': AddAuthor, 'paper_id': paper_id }),
                 contentType: "application/json;charset=utf-8",

@@ -15,5 +15,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Invention
         public string office_abbreviation { get; set; }
         public int note { get; set; }
         public int request_id { get; set; }
+        public int invention_id { get; set; }
     }
 }

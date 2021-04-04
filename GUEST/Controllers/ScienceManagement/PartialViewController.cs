@@ -52,7 +52,9 @@ namespace GUEST.Controllers.ScienceManagement
         public JsonResult fillDataAdd(AddAuthor item)
         {
             AddAuthor result = md.getAuthor(item.mssv_msnv);
-            return Json(new { author = result }, JsonRequestBehavior.AllowGet);
+            string mess = "ss";
+            if (result == null) mess = "ff";
+            return Json(new { author = result, mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
         [ChildActionOnly]
