@@ -1,14 +1,25 @@
-﻿using ENTITIES;
+﻿using Aspose.Cells;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using Microsoft.VisualBasic.FileIO;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.ComponentModel;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
 
 namespace BLL.ScienceManagement.Paper
 {
@@ -68,6 +79,100 @@ namespace BLL.ScienceManagement.Paper
                 if (item.title_id_string != null) item.title_id = item.title_id_string.Value;
             }
             return list;
+        }
+
+        public bool updateJournal()
+        {
+            int count = 1;
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            try
+            {
+                string url = "https://www.scimagojr.com/journalrank.php?out=xls";
+
+                string name = RandomString(10);
+                string path = @"D:\" + name;
+                Directory.CreateDirectory(path);
+
+                string savePath = path + "\\insert.csv";
+
+                WebClient client = new WebClient();
+                client.DownloadFile(url, savePath);
+
+                //List<dynamic> issues;
+                db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].Scimagojr");
+                using (var reader = new StreamReader(savePath))
+                {
+                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                    config.Delimiter = ";";
+                    config.HasHeaderRecord = true;
+                    config.BadDataFound = null;
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        while (csv.Read())
+                        {
+                            if (csv.GetField(0) != "Rank")
+                            {
+                                Scimagojr sci = new Scimagojr();
+                                sci.Rank = csv.GetField(0);
+                                sci.Sourceid = csv.GetField(1);
+                                sci.Title = csv.GetField(2);
+                                sci.Type = csv.GetField(3);
+                                sci.Issn = csv.GetField(4);
+                                sci.SJR = csv.GetField(5);
+                                sci.SJR_Best_Quartile = csv.GetField(6);
+                                sci.H_index = csv.GetField(7);
+                                sci.Total_Docs_2019 = csv.GetField(8);
+                                sci.Total_Cites_3years = csv.GetField(9);
+                                sci.Total_Refs = csv.GetField(10);
+                                sci.Total_Cites_3years = csv.GetField(11);
+                                sci.Citable_Docs_3years = csv.GetField(12);
+                                sci.Cites_Doc_2years = csv.GetField(13);
+                                sci.Ref_Doc = csv.GetField(14);
+                                sci.Country = csv.GetField(15);
+                                sci.Region = csv.GetField(16);
+                                sci.Publisher = csv.GetField(17);
+                                sci.Coverage = csv.GetField(18);
+                                sci.Categories = csv.GetField(19);
+
+                                db.Scimagojrs.Add(sci);
+                                count++;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return true;
+        }
+
+        public DataTable ToDataTable(IEnumerable<dynamic> items)
+        {
+            var data = items.ToArray();
+            if (data.Count() == 0) return null;
+
+            var dt = new DataTable();
+            foreach (var key in ((IDictionary<string, object>)data[0]).Keys)
+            {
+                dt.Columns.Add(key);
+            }
+            foreach (var d in data)
+            {
+                dt.Rows.Add(((IDictionary<string, object>)d).Values.ToArray());
+            }
+            return dt;
+        }
+
+        public string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public List<AuthorInfoWithNull> getAuthorPaper_FE(string id, string lang)
