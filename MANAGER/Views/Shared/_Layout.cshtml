@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 
@@ -676,24 +676,19 @@
                 $(this).parent().parent().parent().parent().addClass(' menu-item-here')
             }
         });
-        async function onLoad() {
-            return new Promise((resolve, reject) => {
-                gapi.load('auth2', function () {
-                    gapi.auth2.init();
-                });
-                resolve();
+        function onLoad() {
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
             });
-
         }
-        async function gp_signOut() {
-            await onLoad();
+        function gp_signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 window.location.href = '/Authen/Logout';
             });
         }
         $(document).ready(function () {
-
+            onLoad();
         });
     </script>
     @RenderSection("scripts")

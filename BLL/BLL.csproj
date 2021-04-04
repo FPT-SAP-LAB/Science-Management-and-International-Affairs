@@ -151,6 +151,7 @@
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProgramRepo.cs" />
+    <Compile Include="InternationalCollaboration\AutoActiveInactive.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOARepo.cs" />

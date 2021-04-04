@@ -97,7 +97,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public void addMOUPartner(PartnerInfo input, int mou_id)
+        public void addMOUPartner(PartnerInfo input, int mou_id, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -107,12 +107,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //new partner
                     if (input.partner_id == 0)
                     {
+                        //add Article.
+                        //add ArticleVersion.
+                        //add Partner.
+                        Article a = db.Articles.Add(new Article
+                        {
+                            need_approved = false,
+                            article_status_id = 2,
+                            account_id = user is null ? 1 : user.account.account_id,
+                        });
+                        ArticleVersion av = db.ArticleVersions.Add(new ArticleVersion
+                        {
+                            publish_time = DateTime.Now,
+                            version_title = "",
+                            article_id = a.article_id,
+                            language_id = 1
+                        });
                         db.Partners.Add(new ENTITIES.Partner
                         {
                             partner_name = input.partnername_add,
                             website = input.website_add,
                             address = input.address_add,
-                            country_id = 13
+                            country_id = input.nation_add,
+                            article_id = a.article_id
                         });
                         //checkpoint 2
                         db.SaveChanges();
@@ -186,7 +203,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public void editMOUPartner(PartnerInfo input, int mou_id, int mou_partner_id)
+        public void editMOUPartner(PartnerInfo input, int mou_id, int mou_partner_id, BLL.Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -198,12 +215,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //new partner
                     if (input.partner_id == 0)
                     {
+                        //add Article.
+                        //add ArticleVersion.
+                        //add Partner.
+                        Article a = db.Articles.Add(new Article
+                        {
+                            need_approved = false,
+                            article_status_id = 2,
+                            account_id = user is null ? 1 : user.account.account_id,
+                        });
+                        ArticleVersion av = db.ArticleVersions.Add(new ArticleVersion
+                        {
+                            publish_time = DateTime.Now,
+                            version_title = "",
+                            article_id = a.article_id,
+                            language_id = 1
+                        });
                         db.Partners.Add(new ENTITIES.Partner
                         {
                             partner_name = input.partnername_add,
                             website = input.website_add,
                             address = input.address_add,
-                            country_id = 13
+                            country_id = input.nation_add,
+                            article_id = a.article_id
                         });
                         //checkpoint 2
                         db.SaveChanges();
@@ -300,10 +334,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     //checkpoint 7
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -346,10 +376,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
                     //checkpoint 2
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)

@@ -149,7 +149,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         PartnerScope psCheck = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == itemScope).FirstOrDefault();
                         if (psCheck != null)
                         {
-                            psCheck.reference_count += 1;
+                            //psCheck.reference_count += 1;
                             db.MOAPartnerScopes.Add(new MOAPartnerScope
                             {
                                 partner_scope_id = psCheck.partner_scope_id,
@@ -186,7 +186,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-
         public void editMOAPartner(MOAPartnerEdited input, int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -216,10 +215,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         //delete record of MOUPartnerScope.
                         db.MOAPartnerScopes.Remove(db.MOAPartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id && x.moa_id == moa_id && x.moa_bonus_id == null).First());
 
-                        PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id).First();
+                        //PartnerScope objPS = db.PartnerScopes.Where(x => x.partner_scope_id == token.partner_scope_id).First();
                         //decrese refer_count in PartnerScope
-                        objPS.reference_count -= 1;
-                        db.Entry(objPS).State = EntityState.Modified;
+                        //objPS.reference_count -= 1;
+                        //db.Entry(objPS).State = EntityState.Modified;
                     }
                     db.SaveChanges();
 
@@ -243,8 +242,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         }
                         else
                         {
-                            objPS.reference_count += 1;
-                            db.Entry(objPS).State = EntityState.Modified;
+                            //objPS.reference_count += 1;
+                            //db.Entry(objPS).State = EntityState.Modified;
                             partner_scope_id = objPS.partner_scope_id;
                         }
                         db.SaveChanges();
@@ -257,16 +256,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     }
 
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //List <PartnerScope> partnerScopes  = db.PartnerScopes.Where(x => x.reference_count == 0).ToList();
-                    //foreach (PartnerScope p in partnerScopes)
-                    //{
-                    //    db.PartnerScopes.Remove(p);
-                    //    db.SaveChanges();
-                    //}
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -297,8 +286,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     foreach (PartnerScope partnerScope in listPS.ToList())
                     {
                         PartnerScope ps = db.PartnerScopes.Find(partnerScope.partner_scope_id);
-                        ps.reference_count -= 1;
-                        db.Entry(ps).State = EntityState.Modified;
+                        //ps.reference_count -= 1;
+                        //db.Entry(ps).State = EntityState.Modified;
                         db.MOAPartnerScopes.Remove(db.MOAPartnerScopes.Where(x => x.partner_scope_id == partnerScope.partner_scope_id && x.moa_id == moa_id).First());
                     }
                     //checkpoint 1
@@ -497,16 +486,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public string CheckPartnerExistedInMOA(int moa_id, string partner_name)
+        public string CheckPartnerExistedInMOA(int moa_id, int partner_id)
         {
             try
             {
                 string sql = @"select partner_name from IA_Collaboration.MOAPartner t1 left join
                     IA_Collaboration.Partner t2 on
                     t1.partner_id = t2.partner_id
-                    where t1.moa_id = @moa_id and t2.partner_name like @partner_name";
+                    where t1.moa_id = @moa_id and t2.partner_id = @partner_id";
                 string result = db.Database.SqlQuery<string>(sql,
-                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("partner_id", partner_id),
                     new SqlParameter("moa_id", moa_id)).FirstOrDefault();
                 return result is null ? "" : result;
             }
