@@ -299,6 +299,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         db.SaveChanges();
                     }
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -381,8 +397,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     //checkpoint 2
                     db.SaveChanges();
-
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -407,10 +438,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.MOUBonus.Remove(m);
 
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)

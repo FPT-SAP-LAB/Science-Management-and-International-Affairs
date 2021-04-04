@@ -135,6 +135,13 @@
     @*@model int*@
 
     @*toast*@
+
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
+
     <script>
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
@@ -332,7 +339,7 @@
     </script>
 
     @*custom select*@
-<script>
+    <script>
         $('#search_office').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: false,
@@ -344,11 +351,11 @@
         $('#status_mou').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: false,
-        }); 
+        });
         $('#nation_edit_select').select2({
             placeholder: 'Chọn quốc gia',
             allowClear: false,
-        }); 
+        });
         $('#partner_name_add').select2({
             placeholder: 'Chọn đối tác',
             allowClear: true,
@@ -380,7 +387,7 @@
             //check partner
             checkPartnerAdd();
         }).on("select2:unselecting", function () {
-            
+
         });
 
         $('#partner_name_edit').select2({
@@ -427,7 +434,7 @@
                 }
             }
         }
-</script>
+    </script>
 
     @*multi select*@
     <script>
@@ -467,7 +474,7 @@
     </script>
 
     @*general*@
-<script>
+    <script>
         var listTempPartnerMOUAdd = [];
         var listScopes = [];
         var listSpe = [];
@@ -621,14 +628,14 @@
         var HTMLdata = null;
         for (idx = 0; idx < listTempPartnerMOUAdd.length; idx++) {
             HTMLdata += '<tr id="temp' + idx + '" "class="MOUPartnerTempList">';
-            HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOUAdd[idx].email_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + (idx + 1) + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOUAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTemp(' + idx + ')" href="#edit_partner_mou" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-            HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+            HTMLdata += '<td class="text-center align-middle text-nowrap">' + buttonEdit + buttonDel + '</td>';
             HTMLdata += '</tr>';
         }
         $('#mou-partner-table').append(HTMLdata);
@@ -762,7 +769,7 @@
                                 placeholder: 'Chọn quốc gia',
                                 allowClear: false,
                             });
-                            document.getElementById('nation_add_input').setAttribute('hidden', ''); 
+                            document.getElementById('nation_add_input').setAttribute('hidden', '');
                             $('#nation_add_input').val('');
                         } else {
                             $("#nation_add_select").val('').trigger("change");
@@ -1165,7 +1172,14 @@
                 { data: "mou_start_date_string", name: "mou_start_date" },
                 { data: "mou_end_date_string", name: "mou_end_date" },
                 { data: "office_abbreviation", name: "office_abbreviation" },
-                { data: "scope_abbreviation", name: "scope_abbreviation" },
+                {
+                    data: "scope_abbreviation",
+                    name: "scope_abbreviation",
+                    render: function (data) {
+                        data = data.replaceAll(',', ', ')
+                        return data
+                    }
+                },
                 {
                     data: "mou_status_id",
                     width: '150px',
@@ -1207,7 +1221,8 @@
                 targets: [5, 6, 8, -1]
             },
         ],
-    });
+        });
+        $('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function searchMOU() {
@@ -1679,6 +1694,6 @@
                 }
             });
         }
-</script>
+    </script>
 }
 
