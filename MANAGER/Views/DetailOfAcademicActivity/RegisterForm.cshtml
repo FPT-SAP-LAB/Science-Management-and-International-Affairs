@@ -85,6 +85,32 @@
         font-size: 14px !important;
     }
 </style>
+
+<div class="modal fade" id="modal-testing" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Danh sách người đăng ký</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                        <table id="datatable-testing" class="table table-bordered table-checkable">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="main-control">
     <div id="control-title">
         <div class="card card-title">
@@ -252,12 +278,12 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+        <button type="button" class="btn btn-light-success px-6 font-weight-bold float-left" onclick="viewParticipant()">Danh sách câu trả lời</button>
         <button type="button" class="btn btn-light-danger px-6 font-weight-bold float-right" id="btn_delete_form">Xóa</button>
         <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right mr-5" id="btn_save_form">Xác nhận</button>
     </div>
 </div>
 <input type="text" hidden value="@ViewBag.phaseID" id="phase_id" />
-<input type="text" hidden value="@ViewBag.language_id" id="language_id" />
 @section scripts{
     <script>
         arrDivControl = [0]
@@ -812,6 +838,38 @@
                 }
             });
         });
+        let datatable_testing;
+        function viewParticipant() {
+            $.ajax({
+                url: "@Url.Action("getRealtimeParticipant", "DetailOfAcademicActivity")",
+                data: JSON.stringify({ phase_id: $('#phase_id').val()}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    let column = [];
+                    let dataSet = [];
+                    data.ques.forEach(function (x) {
+                        column.push({ title: x.title });
+                    });
+                    if (typeof datatable_testing != 'undefined') {
+                        datatable_testing.columns(column);
+                        datatable_testing.clear().draw();
+                        data.res.forEach(function (x) {
+                            datatable_testing.row.add(x.answer.split('<$>')).draw();
+                        });
+                    } else {
+                        data.res.forEach(function (x) {
+                            dataSet.push(x.answer.split('<$>'));
+                        });
+                        datatable_testing = $('#datatable-testing').DataTable({
+                            data: dataSet,
+                            columns: column
+                        });
+                    }
+                    $('#modal-testing').modal('show');
+                }
+            });
+        }
         $(document).ready(function () {
             $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
             arrCMD = createArrMultiDimensional(2, 100);

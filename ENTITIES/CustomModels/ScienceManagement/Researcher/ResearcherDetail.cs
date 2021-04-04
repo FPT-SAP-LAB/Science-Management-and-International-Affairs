@@ -29,5 +29,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public List<SelectField> position_fields { get; set; }
         public List<SelectField> offices_fields { get; set; }
         public List<SelectField> countries_fields { get; set; }
+        public bool profile_page_active { get; set; }
     }
 }

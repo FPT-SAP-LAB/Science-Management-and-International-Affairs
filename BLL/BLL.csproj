@@ -166,7 +166,7 @@
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
     <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
-    <Compile Include="ScienceManagement\Researcher\AdditionalProfile.cs" />
+    <Compile Include="ScienceManagement\Researcher\AdditionalProfileRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearcherCandidateRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\ResearchersBiographyRepo.cs" />

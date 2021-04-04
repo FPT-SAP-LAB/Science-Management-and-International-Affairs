@@ -18,11 +18,15 @@ namespace GUEST.Support
                 var url = Url.Action("Index", "Home");
                 filterContext.Result = new RedirectResult(url);
             }
+            else if (!u.IsValid)
+            {
+                filterContext.Result = new RedirectResult("/AdditionalProfile");
+            }
             else
             {
                 List<int> RightIDs = u.rights;
                 bool Check = false;
-                foreach (var r in RightID.Split(','))
+                foreach (var r in RightID.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (RightIDs.Contains(int.Parse(r)))
                     {

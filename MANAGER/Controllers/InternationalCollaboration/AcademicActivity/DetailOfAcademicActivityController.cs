@@ -188,6 +188,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [HttpPost]
         public JsonResult deleteParticipantRole(int participant_role_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
@@ -199,10 +200,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
-        public ActionResult RegisterForm(int id, int lid)
+        public ActionResult RegisterForm(int pid)
         {
-            ViewBag.phaseID = id;
-            ViewBag.language_id = lid;
+            ViewBag.phaseID = pid;
             ViewBag.pageTitle = "Mẫu đăng kí hoạt động học thuật";
             return View();
         }
@@ -237,11 +237,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [HttpPost]
+        public JsonResult getRealtimeParticipant(int phase_id)
+        {
+            formRepo = new FormRepo();
+            FormRepo.viewResponse data = formRepo.getResponse(phase_id);
+            return Json(data);
+        }
         public JsonResult getOffice()
         {
             phaseRepo = new AcademicActivityPhaseRepo();
             List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
-            return Json(data);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult getDatatableKP(int activity_id)
@@ -285,33 +292,86 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             expenseRepo = new AcademicActivityExpenseRepo();
             bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
             if (res)
-                return Json("Thêm mục kinh phí dự trù thành công");
+                return Json("Thành công");
             return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult deleteExpenseDuTru(int expense_category_id)
+        public JsonResult deleteExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.deleteExpenseDuTru(expense_category_id);
+            bool res = expenseRepo.deleteExpenseType(expense_category_id, type);
             if (res)
-                return Json("Xóa mục kinh phí dự trù thành công");
+                return Json("Thành công");
             return Json(String.Empty);
         }
         [HttpPost]
-        public JsonResult getExpenseDuTru(int expense_category_id)
+        public JsonResult getExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseDuTru(expense_category_id);
+            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseType(expense_category_id, type);
             return Json(data);
         }
         [HttpPost]
-        public JsonResult editExpenseDuTru(string data, HttpPostedFileBase img)
+        public JsonResult editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseDuTru(data, img);
+            bool res = expenseRepo.editExpenseDuTru(activity_office_id, activity_name, data, img);
             if (res)
-                return Json("Thêm mục kinh phí dự trù thành công");
+                return Json("Thành công");
             return Json(String.Empty);
+        }
+        [HttpPost]
+        public ActionResult getDatatableKPDieuChinh(int activity_office_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPDieuChinh(activity_office_id);
+            return Json(new { success = true, data = data });
+        }
+        [HttpPost]
+        public JsonResult editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.editExpenseDieuChinh(activity_office_id, activity_name, data, img);
+            if (res)
+                return Json("Thành công");
+            return Json(String.Empty);
+        }
+        [HttpPost]
+        public ActionResult getDatatableKPThucTe(int activity_office_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPThucTe(activity_office_id);
+            return Json(new { success = true, data = data });
+        }
+        [HttpPost]
+        public JsonResult editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            bool res = expenseRepo.editExpenseThucTe(activity_office_id, activity_name, data, img);
+            if (res)
+                return Json("Thành công");
+            return Json(String.Empty);
+        }
+        [HttpPost]
+        public JsonResult getTotal(int activity_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            AcademicActivityExpenseRepo.Statistic data = expenseRepo.getTotal(activity_id);
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult getStatisticOffice(int activity_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.getStatisticOffice(activity_id);
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult getStatisticUnit(int activity_id)
+        {
+            expenseRepo = new AcademicActivityExpenseRepo();
+            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.getStatisticUnit(activity_id);
+            return Json(data);
         }
         public JsonResult saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
         {
