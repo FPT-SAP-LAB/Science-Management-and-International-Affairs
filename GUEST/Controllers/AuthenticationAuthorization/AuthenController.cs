@@ -43,7 +43,10 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                 });
             }
             Session["User"] = u;
-            return Json(new { success = true, content = "Đăng nhập thành công, hệ thống sẽ tự động reload" });
+            if (u.IsValid)
+                return Json(new { success = true, redirect = false });
+            else
+                return Json(new { success = true, redirect = true });
         }
         public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
         {
