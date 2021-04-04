@@ -258,6 +258,10 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_Person.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusHistory.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOAPartnerScope_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOAPartnerScope_Ext_Inactive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOUPartnerScope_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOUPartnerScope_Ext_Inactive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />
@@ -567,6 +571,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecializationLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

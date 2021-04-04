@@ -68,7 +68,7 @@ function checkPersonComingEdit() {
                         //auto fill data
                         let p = data.obj;
                         $('#coming_edit_officer_email').val(p.email);
-                        if (!(isEmptyOrNullOrUndefined(acadCollab.office_id))) {
+                        if (!(isEmptyOrNullOrUndefined(p.office_id))) {
                             $('#coming_edit_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
                         }
                         //disable email & office
