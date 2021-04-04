@@ -127,6 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to'
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
+                if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
                 return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)

@@ -76,6 +76,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult editMOABasicInfo(MOABasicInfo input)
         {
             try
@@ -97,7 +98,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-
+        [Auther(RightID = "7")]
         public ActionResult deleteExMOA(int moa_bonus_id)
         {
             try
@@ -133,6 +134,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Ex_Moa(ExMOAAdd input)
         {
             try
@@ -155,6 +157,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Edit_Ex_Moa(ExMOAAdd input)
         {
             try
