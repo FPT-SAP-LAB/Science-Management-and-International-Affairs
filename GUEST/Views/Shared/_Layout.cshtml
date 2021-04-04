@@ -1383,23 +1383,40 @@
         async function onSignIn(googleUser) {
             await onLoad();
             var id_token = googleUser.getAuthResponse().id_token;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/Authen/SigninGoogleAsync');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this);
-                    if (this.response != '""') {
-                        toastr.warning(this.response);
+            //var xhr = new XMLHttpRequest();
+            //xhr.open('POST', );
+            //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //xhr.onreadystatechange = function () {
+            //    if (this.readyState == 4 && this.status == 200) {
+            //        console.log(this);
+            //    }
+            //};
+            //xhr.send();
+            let fd = new FormData();
+            fd.append("idtoken", id_token);
+            $.ajax({
+                url: '/Authen/SigninGoogleAsync',
+                data: fd,
+                type: "POST",
+                success: function (data) {
+                    if (data.success == false) {
+                        toastr.warning(data.content);
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
                         });
+                    } else if (data.redirect == true) {
+                        window.location = "/AdditionalProfile";
                     } else {
                         window.location.reload();
                     }
-                }
-            };
-            xhr.send('idtoken=' + id_token);
+                },
+                error: function (data) {
+                    toastr.error("Có lỗi xảy ra")
+                },
+                processData: false,
+                contentType: false,
+                cache: true
+            });
         }
         async function gp_signOut() {
             await onLoad();

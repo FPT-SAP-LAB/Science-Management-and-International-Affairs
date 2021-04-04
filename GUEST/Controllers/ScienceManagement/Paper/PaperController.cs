@@ -6,6 +6,7 @@ using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Support;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,6 +22,8 @@ namespace GUEST.Controllers
         PaperRepo pr = new PaperRepo();
         MasterDataRepo md = new MasterDataRepo();
         CommentRepo cr = new CommentRepo();
+
+        [Auther(RightID = "26")]
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bài báo";

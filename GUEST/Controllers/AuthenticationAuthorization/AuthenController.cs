@@ -34,7 +34,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                 else if (EmailDomain.Equals("fe.edu.vn"))
                     role_id = 6;
                 else
-                    return Json(string.Empty);
+                    return Json(new { success = false, content = "Tài khoản của bạn không được phép truy cập vào hệ thống" });
                 AccountRepo accountRepo = new AccountRepo();
                 accountRepo.add(new AccountRepo.baseAccount
                 {
@@ -43,7 +43,10 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                 });
             }
             Session["User"] = u;
-            return Json(String.Empty);
+            if (u.IsValid)
+                return Json(new { success = true, redirect = false });
+            else
+                return Json(new { success = true, redirect = true });
         }
         public async System.Threading.Tasks.Task<ENTITIES.CustomModels.Authen.Gmail> GetUserDetailsAsync(string providerToken)
         {
