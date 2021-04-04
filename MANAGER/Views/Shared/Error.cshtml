@@ -40,22 +40,22 @@
             <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">
                 @HttpContext.Current.Response.StatusCode <!--<img width="170rem" src="~/Content/assets/media/error/smile.gif" />-->
             </h1>
-                        <p class="font-size-h3 text-muted font-weight-normal">
-                            @HttpContext.Current.Response.StatusDescription
-                        </p>
-                        @if (show_error_stack)
-                        {
-                            <div>
-                                <p>
-                                    <pre>
+            <p class="font-size-h3 text-muted font-weight-normal">
+                @HttpContext.Current.Response.StatusDescription
+            </p>
+            @if (show_error_stack)
+            {
+                <div>
+                    <p>
+                        <pre>
                     @ViewBag.exception
                     </pre>
-                                </p>
-                            </div>
-                        }
-                        <!--------------------------------------------------------------------------------------------->
-                        <!--end::Content-->
-</div>
+                    </p>
+                </div>
+            }
+            <!--------------------------------------------------------------------------------------------->
+            <!--end::Content-->
+        </div>
         <!--end::Error-->
     </div>
     <!--end::Main-->
