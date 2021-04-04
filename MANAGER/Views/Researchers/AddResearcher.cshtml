@@ -3,935 +3,1048 @@
     ViewBag.Title = "Thêm hồ sơ nghiên cứu viên mới";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES.CustomModels.ScienceManagement.Researcher;
+@using ENTITIES;
+@using System.Globalization;
 <link href="~/Content/assets/css/pages/wizard/wizard-2.css?v=7.0.6" rel="stylesheet" type="text/css" />
-<div class="card card-custom card-stretch">
+@if (!ViewBag.profile_page_active)
+{
 
-    <!--end::Header-->
-    <div class="card-body">
-        <div class="tab-content mt-5" id="myTabContent">
-            <div class="row">
-                <div class="col-12 text-lg-right">
-                    <a id="create-profile-btn" class="btn btn-light-success mr-2">Đăng hồ sơ nghiên cứu viên</a>
+    <div class="card card-custom card-stretch">
+        <!--end::Header-->
+        <div class="card-body">
+            <div class="tab-content mt-5" id="myTabContent">
+                <div class="row">
+                    <div class="col-12 text-lg-right">
+                        <a id="create-profile-btn" class="btn btn-light-success mr-2">Đăng hồ sơ nghiên cứu viên</a>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="researcher_info_1-tab" data-toggle="tab" href="#researcher_info_1">
-                                @*<span class="nav-icon"><i class="flaticon2-chat-1"></i></span>*@
-                                <span class="nav-text">Thông tin cá nhân</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="researcher_info_2-tab" data-toggle="tab" href="#researcher_info_2" aria-controls="profile">
-                                @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
-                                <span class="nav-text">Thông tin tiểu sử</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="researcher_info_3-tab" data-toggle="tab" href="#researcher_info_3" aria-controls="profile">
-                                @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
-                                <span class="nav-text">Công bố khoa học</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="researcher_info_4-tab" data-toggle="tab" href="#researcher_info_4" aria-controls="profile">
-                                @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
-                                <span class="nav-text">Giải thưởng</span>
-                            </a>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="researcher_info_1-tab" data-toggle="tab" href="#researcher_info_1">
+                                    @*<span class="nav-icon"><i class="flaticon2-chat-1"></i></span>*@
+                                    <span class="nav-text">Thông tin cá nhân</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="researcher_info_2-tab" data-toggle="tab" href="#researcher_info_2" aria-controls="profile">
+                                    @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
+                                    <span class="nav-text">Thông tin tiểu sử</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="researcher_info_3-tab" data-toggle="tab" href="#researcher_info_3" aria-controls="profile">
+                                    @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
+                                    <span class="nav-text">Công bố khoa học</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="researcher_info_4-tab" data-toggle="tab" href="#researcher_info_4" aria-controls="profile">
+                                    @*<span class="nav-icon"><i class="flaticon2-layers-1"></i></span>*@
+                                    <span class="nav-text">Giải thưởng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane fade show active" id="researcher_info_1" role="tabpanel" aria-labelledby="home-tab">
-                <form class="form">
-                    <!--begin::Body-->
-                    <div class="card-body">
-                        <div class="row">
-                            <label class="col-xl-3"></label>
-                            <div class="col-lg-9 col-xl-6">
-                                @*<h5 class="font-weight-bold mb-6">Customer Info</h5>*@
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh cá nhân</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="image-input image-input-outline" id="kt_profile_avatar" style="        background-image: url(https://2.pik.vn/2021cd188198-38f1-43f1-ad94-9874818439c9.jpg)">
-                                    <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
-
-                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                        <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
-                                        <input type="hidden" name="profile_avatar_remove" />
-                                    </label>
-
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                <div class="tab-pane fade show active" id="researcher_info_1" role="tabpanel" aria-labelledby="home-tab">
+                    <form class="form">
+                        <!--begin::Body-->
+                        <div class="card-body">
+                            <div class="row" style="text-align: right;">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <span id="edit-control-area">
+                                        <a id="save-btn" class="btn btn-success mr-2">Lưu</a>
+                                        <a id="cancel-btn" class="btn btn-secondary">Huỷ</a>
                                     </span>
-
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    <span id="edit-enable-area">
+                                        <a id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</a>
                                     </span>
                                 </div>
-                                <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Bùi Ngọc Anh" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="14/10/1999" />
-                                @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Việt Nam" />
-                                @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Giảng viên" />
-                                @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <input class="form-control form-control-lg form-control-solid researcher_infomation" disabled type="text" value="Chức vụ" />
-                                @*<span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>*@
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-xl-3"></label>
-                            <div class="col-lg-9 col-xl-6">
-                                <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">SĐT</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="0943169051" placeholder="Phone" />
-                                </div>
-                                @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="sonnt69@fe.edu.vn" placeholder="Email" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Website</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="abc.com" placeholder="Email" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-location-arrow"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="sonnt69@fe.edu.vn" placeholder="Email" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Google Scholar</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-google"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="https://scholar.google.com.vn/citations?user=HUFV96EAAAAJ&hl=en" placeholder="Google Scholar" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">CV</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="far fa-address-card"></i></span></div>
-                                    <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" disabled value="...." placeholder="CV" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label text-right">Lĩnh vực quan tâm</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="input-group input-group-lg input-group-solid">
-                                    @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
-                                    <select class="form-control select2  researcher_infomation" disabled id="kt_select2_3" name="param" multiple="multiple">
-                                        <option value="AK" selected>Toán học</option>
-                                        <option value="AK" selected>Khoa học máy tính</option>
-                                        <option value="AK">Toán học</option>
-                                        <option value="AK">Kinh tế</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Body-->
-                </form>
-            </div>
-            <div class="tab-pane fade" id="researcher_info_2" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="row">
-                    <label class="col-xl-3"></label>
-                    <div class="col-lg-12 col-xl-12">
-                        <h5 class="font-weight-bold ">Quá trình học tập</h5>
-                    </div>
-                    <div class="col-lg-12 col-xl-12">
-                        <table class="custom-add-table table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Học vị</th>
-                                    <th>Nơi học tập</th>
-                                    <th>Thời gian</th>
-                                    <th>Ghi chú</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Cử nhân</td>
-                                    <td>Trường ĐH Sư Phạm HN</td>
-                                    <td>2001-2005</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh cá nhân</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
+                                        <div class="image-input-wrapper"></div>
 
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                                            <input type="hidden" name="profile_avatar_remove" />
+                                        </label>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Thạc sĩ</td>
-                                    <td>Trường ĐH Sư Phạm HN</td>
-                                    <td>2005-2007</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Tiến sĩ</td>
-                                    <td>Viện toán học</td>
-                                    <td>2010-2013</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-lg-12 col-xl-12" style="text-align: right">
-                        <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                            Thêm tiểu sử học tập
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-xl-3"></label>
-                    <div class="col-lg-12 col-xl-12">
-                        <h5 class="font-weight-bold ">Quá trình công tác</h5>
-                    </div>
-                    <div class="col-lg-12 col-xl-12">
-                        <table class="custom-add-table table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Đơn vị công tác</th>
-                                    <th>Chức danh</th>
-                                    <th>Thời gian</th>
-                                    <th>Ghi chú</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Trường ĐH Sư Phạm HN</td>
-                                    <td>Giảng viên</td>
-                                    <td>2001-2005</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Thạc sĩ</td>
-                                    <td>Trường ĐH Sư Phạm HN</td>
-                                    <td>2005-2007</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Tiến sĩ</td>
-                                    <td>Viện toán học</td>
-                                    <td>2010-2013</td>
-                                    <td>...</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
 
-                    <div class="col-lg-12 col-xl-12" style="text-align: right">
-                        <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                            Thêm tiểu sử công tác
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="researcher_info_3" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="row">
-                    <label class="col-xl-3"></label>
-                    <div class="col-lg-12 col-xl-12">
-                        <h5 class="font-weight-bold ">Tạp chí/sách</h5>
-                    </div>
-                    <div class="col-lg-12 col-xl-12">
-                        <table class="table table-bordered table-checkable" id="tapchi_list">
-                            <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Tác giả</th><th>Năm</th><th>&nbsp;</th></tr></thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>Filter regular sequence under small perturbations</td>
-                                    <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>Colength, multiplicity, and ideal closure operations, Communications in Algebra, Vol. 48 (2020), 1601-1607</td>
-                                    <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>On the index of reducibility of parameter ideals: The stable and limit values, Acta Mathematica Vietnamica, Vol.45 Issue 1 in honor of Lê Văn Thiêm (2020), 249-260</td>
-                                    <td>Nguễn Tự Cường, Phạm Hùng Quý</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td> Upper bound of multiplicity in prime characteristic, Forum Mathematicum, Vol.32 (2020), 393-398</td>
-                                    <td>Dương Thị Hương, Phạm Hùng Quý</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                    Chi
-                </button>
-            </div>*@
-                </div>
-                <div class="row">
-                    <label class="col-xl-3"></label>
-                    <div class="col-lg-12 col-xl-12">
-                        <h5 class="font-weight-bold ">Hội Nghị</h5>
-                    </div>
-                    <div class="col-lg-12 col-xl-12">
-                        <table class="table table-bordered table-checkable" id="conferences_list">
-                            <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Tác giả</th><th>Năm</th><th>&nbsp;</th></tr></thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>Filter regular sequence under small perturbations</td>
-                                    <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>Colength, multiplicity, and ideal closure operations, Communications in Algebra, Vol. 48 (2020), 1601-1607</td>
-                                    <td>Linquan Ma, Phạm Hùng Quý, Ilya Smirnov</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td>On the index of reducibility of parameter ideals: The stable and limit values, Acta Mathematica Vietnamica, Vol.45 Issue 1 in honor of Lê Văn Thiêm (2020), 249-260</td>
-                                    <td>Nguễn Tự Cường, Phạm Hùng Quý</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    <td> Upper bound of multiplicity in prime characteristic, Forum Mathematicum, Vol.32 (2020), 393-398</td>
-                                    <td>Dương Thị Hương, Phạm Hùng Quý</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                    <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                    Thêm tiểu sử công tác
-                </button>
-            </div>*@
-                </div>
-            </div>
-            <div class="tab-pane fade" id="researcher_info_4" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="row">
-                    <label class="col-xl-3"></label>
-                    <div class="col-lg-12 col-xl-12">
-                        <h5 class="font-weight-bold "></h5>
-                    </div>
-                    <div class="col-lg-12 col-xl-12">
-                        <table class="table table-bordered table-checkable" id="tapchi_list">
-                            <thead><tr class="tableizer-firstrow"><th>STT</th><th>Cuộc thi, giải thưởng</th><th>Thứ hạng</th><th>Thời gian</th><th>&nbsp;</th></tr></thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nghiên cứu khoa học cấp trường</td>
-                                    <td>Giải nhất</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Resfes</td>
-                                    <td>Giải nhì</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>...</td>
-                                    <td>...</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>...</td>
-                                    <td>...</td>
-                                    <td>2020</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
-                                            <span class="svg-icon svg-icon-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                     width="24px"
-                                                     height="24px"
-                                                     viewBox="0 0 24 24"
-                                                     version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "></path>
-                                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"></rect>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                    Chi
-                </button>
-            </div>*@
-                </div>
-            </div>
-
-        </div>
-        <!-- Modal hoc tap-->
-        <div class="modal fade" id="modal_themtieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <select type="text" class="form-control" placeholder="Học vị" id="hocvi">
-                                        <option value="" disabled selected>Học vị</option>
-                                        <option value="">Cử nhân</option>
-                                        <option value="1">Thạc sĩ</option>
-                                        <option value="2">Tiến sĩ</option>
-                                    </select>
-                                    <span><i class="far fa-bookmark"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Nơi học tập" id="kt_datatable_search_query">
-                                    <span><i class="fas fa-map-pin"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Đến" name="end">
+                                    <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                    <span><i class="far fa-sticky-note"></i></span>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_name" disabled type="text" value="@ViewBag.profile.name" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal cong tac-->
-        <div class="modal fade" id="modal_themtieusu_congtac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Đơn vị công tác" id="kt_datatable_search_query">
-                                    <span><i class="fas fa-map-pin"></i></span>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+                                        <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@(ViewBag.profile.dob==null?"":ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture));" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- <span class="form-text text-muted pt-2">Use locals from <a href="https://momentjs.com/">https://momentjs.com/</a></span> -->
                                 </div>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <select type="text" class="form-control" placeholder="Chức danh" id="hocvi">
-                                        <option value="" disabled selected></option>
-                                        <option value="">Giảng viên</option>
-                                        <option value="1">Hiệu trưởng</option>
-                                        <option value="2">...</option>
+
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <select class="form-control select2  researcher_infomation" disabled id="country_select" name="param">
+                                        @foreach (SelectField a in ViewBag.profile.countries_fields)
+                                        {
+                                            <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                        }
                                     </select>
-                                    <span><i class="far fa-bookmark"></i></span>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                        <select class="form-control select2  researcher_infomation" disabled id="title_select" name="param">
+                                            @foreach (SelectField a in ViewBag.profile.title_fields)
+                                            {
+                                                <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                        <select class="form-control select2  researcher_infomation" disabled id="position_select" name="param" multiple="multiple">
+                                            @foreach (SelectField a in ViewBag.profile.position_fields)
+                                            {
+                                                <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">SĐT</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                                        <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_phone" disabled value="@ViewBag.profile.phone" placeholder="Phone" />
+                                    </div>
+                                    @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
+                                        <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_email" disabled value="@ViewBag.profile.email" placeholder="Email" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Website</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
+                                        <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_website" disabled value="@ViewBag.profile.website" placeholder="Google scholar" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Google Scholar</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-google"></i></span></div>
+                                        <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_gscholar" disabled value="@ViewBag.profile.gscholar" placeholder="CV" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">CV</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="far fa-address-card"></i></span></div>
+                                        <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_cv" disabled value="@ViewBag.profile.cv" placeholder="CV" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Lĩnh vực quan tâm</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+                                        <select class="form-control select2  researcher_infomation" disabled id="interested_fields_select" name="param" multiple="multiple">
+                                            @foreach (SelectField a in ViewBag.profile.interested_fields)
+                                            {
+                                                <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="researcher_info_2" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-12 col-xl-12">
+                            <h5 class="font-weight-bold ">Quá trình học tập</h5>
+                        </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <table class="custom-add-table table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Học vị</th>
+                                        <th>Nơi học tập</th>
+                                        <th>Thời gian</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (AcadBiography a in ViewBag.acadList)
+                                    {
+                                        <tr>
+                                            <td>@a.rownum</td>
+                                            <td class="acad-degree" data-id="@a.acad_id">@a.degree</td>
+                                            <td class="acad-place">@a.place</td>
+                                            <td class="acad-time">@a.time</td>
+                                            <td><a data-id="@a.people_id-@a.acad_id" data-toggle="modal" data-target="#modal_suatieusu_hoctap" class="btn btn-sm btn-clean btn-icon edit-acad" title="Edit"> <i class="far fa-edit"></i> </a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-12 col-xl-12" style="text-align: right">
+                            <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                Thêm tiểu sử học tập
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-12 col-xl-12">
+                            <h5 class="font-weight-bold ">Quá trình công tác</h5>
+                        </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <table class="custom-add-table table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Đơn vị công tác</th>
+                                        <th>Chức danh</th>
+                                        <th>Thời gian</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (BaseRecord<WorkingProcess> a in ViewBag.workList)
+                                    {
+                                        <tr>
+                                            <td>@a.index</td>
+                                            <td class="work_unit">@a.records.work_unit</td>
+                                            <td class="work_title">@a.records.title</td>
+                                            <td class="work_time">@a.records.start_year-@a.records.end_year</td>
+                                            <td><a data-id="@a.records.id" class="btn btn-sm btn-clean btn-icon edit-work" data-toggle="modal" data-target="#modal_suatieusu_work" title="Edit"> <i class="far fa-edit"></i> </a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-daterange input-group" id="kt_datepicker_5">
-                                    <input type="text" class="form-control" placeholder="Từ" name="start">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Đến" name="end">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                    <span><i class="far fa-sticky-note"></i></span>
-                                </div>
-                            </div>
+                        <div class="col-lg-12 col-xl-12" style="text-align: right">
+                            <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                Thêm tiểu sử công tác
+                            </button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                </div>
+                <div class="tab-pane fade" id="researcher_info_3" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-12">
+                            <h5 class="font-weight-bold ">Tạp chí/sách</h5>
+                        </div>
+                        <div class="col-12">
+                            <table class="table table-bordered table-checkable" id="tapchi_list">
+                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Đồng tác giả</th><th>Ngày xuất bản</th></tr></thead>
+                                <tbody>
+                                    @foreach (ResearcherPublications a in ViewBag.publications)
+                                    {
+                                        <tr>
+                                            <td>@a.rownum</td>
+                                            <td>@a.paper_name</td>
+                                            <td>@a.journal_or_cfr_name</td>
+                                            <td>
+                                                @foreach (string author in a.co_author)
+                                                {
+                                                    <span>@author, </span>
+                                                }
+                                            </td>
+                                            <td>@a.publish_date.Value.Year</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        @*<div class="col-lg-12 col-xl-12" style="text-align: right">
+                                <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                    Chi
+                                </button>
+                            </div>*@
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="font-weight-bold ">Kỷ yếu hội thảo</h5>
+                        </div>
+                        <div class="col-12">
+                            <table class="table table-bordered table-checkable" id="conferences_list">
+                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Đồng Tác giả</th><th>Năm</th></tr></thead>
+                                <tbody>
+                                    @foreach (ResearcherPublications a in ViewBag.conferences)
+                                    {
+                                        <tr>
+                                            <td>@a.rownum</td>
+                                            <td>@a.paper_name</td>
+                                            <td>@a.journal_or_cfr_name</td>
+                                            <td>
+                                                @foreach (string author in a.co_author)
+                                                {
+                                                    <span>@author, </span>
+                                                }
+                                            </td>
+                                            <td>@a.publish_date.Value.Year</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        @*<div class="col-lg-12 col-xl-12" style="text-align: right">
+                                <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                    <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                    Thêm tiểu sử công tác
+                                </button>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="researcher_info_4" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-12">
+                            <table class="table table-bordered table-checkable" id="award_list">
+                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Cuộc thi, giải thưởng</th><th>Thứ hạng</th><th>Thời gian</th></tr></thead>
+                                <tbody>
+                                    @foreach (BaseRecord<Award> a in ViewBag.awards)
+                                    {
+                                        <tr>
+                                            <td>@a.index</td>
+                                            <td>@a.records.competion_name</td>
+                                            <td>@a.records.rank</td>
+                                            <td>@a.records.award_time</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@section scripts{
-    <script>
-        var KTSelect2 = function () {
-            // Private functions
-            var demos = function () {
-                // basic
+    <!-- Modal hoc tap-->
+    <div class="modal fade" id="modal_themtieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <select type="text" class="form-control" placeholder="Học vị" id="acad_hocvi">
+                                    <option value="" disabled selected>Học vị</option>
+                                    @foreach (SelectField a in ViewBag.listAcadDegree)
+                                    {
+                                        <option value="@a.id">@a.name</option>
+                                    }
+                                </select>
+                                <span><i class="far fa-bookmark"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Nơi học tập" id="acad_location">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_1" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="add_acad_start" placeholder="Start date" data-target="#kt_datetimepicker_7_1" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_1" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_2" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_acad_end" data-target="#kt_datetimepicker_7_2" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_2" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row form-group">
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_acad">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal cong tac-->
+    <div class="modal fade" id="modal_themtieusu_congtac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Đơn vị công tác" id="work_location">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Chức danh" id="work_title">
+                                <span><i class="far fa-bookmark"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_3" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="add_work_start" placeholder="Start date" data-target="#kt_datetimepicker_7_3" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_3" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_4" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_work_end" data-target="#kt_datetimepicker_7_4" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_4" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Body-->
+    <!-- Modal edit hoc tap-->
+    <div class="modal fade" id="modal_suatieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử học tập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <select type="text" class="form-control" placeholder="Học vị" id="acad_suahocvi">
+                                    <option value="" disabled selected>Học vị</option>
+                                    @foreach (SelectField a in ViewBag.listAcadDegree)
+                                    {
+                                        <option value="@a.id">@a.name</option>
+                                    }
+                                </select>
+                                <span><i class="far fa-bookmark"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Nơi học tập" id="edit_location">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_5" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="edit-acad-start" placeholder="Start date" data-target="#kt_datetimepicker_7_5" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_5" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_6" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-acad-end" data-target="#kt_datetimepicker_7_6" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_6" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row form-group">
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_acad">Lưu</button>
+                    <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_acad">Xoá</button>
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal edit work-->
+    <div class="modal fade" id="modal_suatieusu_work" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử công tác</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Đơn vị công tác" id="edit_work_location">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Chức danh" id="edit_work_title">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_7" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="edit-work-start" placeholder="Start date" data-target="#kt_datetimepicker_7_7" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_7" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group date" id="kt_datetimepicker_7_8" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-work-end" data-target="#kt_datetimepicker_7_8" />
+                                        <div class="input-group-append" data-target="#kt_datetimepicker_7_8" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row form-group">
+                            <div class="col-12">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                    <span><i class="far fa-sticky-note"></i></span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">Lưu</button>
+                    <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_work">Xoá</button>
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                // multi select
-                $('#kt_select2_3').select2({
-                    placeholder: '',
-                    tags: true
-                });
-            }
-            // Public functions
-            return {
-                init: function () {
-                    demos();
+}
+@section scripts{
+    @if (!ViewBag.profile_page_active)
+    {
+
+        <script>
+            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+            $(".research-info-link").each(function () {
+                if ($(this).attr('href').trim() == window.location.pathname) {
+                    $(this).addClass('active')
                 }
-            };
-        }();
-        jQuery(document).ready(function () {
-            KTSelect2.init();
-        });
-        var create_loader = new LoaderBtn($("#create-profile-btn"))
-        $("#create-profile-btn").click(function () {
-            create_loader.startLoading()
-            Swal.fire({
-                title: "Đăng hồ sơ cho nghiên cứu viên này?",
-                text: "!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Đồng ý",
-                cancelButtonText: "Huỷ",
-                reverseButtons: true
-            }).then(function (result) {
-                create_loader.stopLoading()
-                if (result.value) {
-                    Swal.fire(
-                        "Đăng hồ sơ thành công!",
-                        "",
-                        "success"
-                    )
-                    // result.dismiss can be "cancel", "overlay",
-                    // "close", and "timer"
-                } else if (result.dismiss === "cancel") {
-                    Swal.fire(
-                        "Cancelled",
-                        "Your imaginary file is safe :)",
-                        "error"
-                    )
+            })
+            // Class definition
+            var KTSelect2 = function () {
+                // Private functions
+                var demos = function () {
+                    // multi select
+                    $('#title_select').select2({
+                        placeholder: 'Chọn chức danh',
+                        tags: true
+                    });
+                    $('#country_select').select2({
+                        placeholder: 'Chọn quốc tịch',
+                        tags: true
+                    });
+                    $('#position_select').select2({
+                        placeholder: 'Chọn chức vụ',
+                        tags: true
+                    });
+                    $('#interested_fields_select').select2({
+                        placeholder: 'Chọn lĩnh vực quan tâm',
+                        tags: true
+                    });
                 }
+                // Public functions
+                return {
+                    init: function () {
+                        demos();
+                    }
+                };
+            }();
+
+            // Initialization
+            jQuery(document).ready(function () {
+                KTSelect2.init();
             });
-        })
-    </script>
+
+
+            function enableEdit() {
+                $("#edit-control-area").show()
+                $("#edit-enable-area").hide()
+                $(".researcher_infomation").attr('disabled', false)
+            }
+
+
+            var KTBootstrapDatetimepicker = function () {
+                // Private functions
+                var baseDemos = function () {
+                    $('#kt_datetimepicker_2').datetimepicker({
+                        format: 'DD-MM-YYYY'
+                    });
+                }
+                return {
+                    // Public functions
+                    init: function () {
+                        baseDemos();
+                    }
+                };
+            }();
+
+            jQuery(document).ready(function () {
+                KTBootstrapDatetimepicker.init();
+            });
+        </script>
+        <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
+        <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
+        <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
+        <script>
+            var create_loader = new LoaderBtn($("#create-profile-btn"))
+            $("#create-profile-btn").click(function () {
+                create_loader.startLoading()
+                Swal.fire({
+                    title: "Đăng hồ sơ cho nghiên cứu viên này?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Đồng ý",
+                    cancelButtonText: "Huỷ",
+                    reverseButtons: true
+                }).then(function (result) {
+                    if (result.value) {
+                        var url = new URL(window.location.href);
+                        people_id = url.searchParams.get("id");
+                        data = new FormData();
+                        data.append("id", people_id)
+                        data.append("status", 1)
+                        $.ajax({
+                            url: "/Researchers/UpdateProfilePage",
+                            type: "POST",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                if (response.success == true) {
+                                    Swal.fire({
+                                        title: "Cập nhật thành công",
+                                        icon: "success",
+                                        showCancelButton: false,
+                                        confirmButtonText: "OK",
+                                        cancelButtonText: "Huỷ",
+                                        reverseButtons: true
+                                    }).then(function (res) {
+                                        window.location.href = '/Researchers/ViewInfo?id=' + people_id
+                                    });
+                                }
+                                else {
+                                    Swal.fire({
+                                        title: "Lỗi! Vui lòng thử lại",
+                                        icon: "error",
+                                        showCancelButton: false,
+                                        confirmButtonText: "OK",
+                                        cancelButtonText: "Huỷ",
+                                        reverseButtons: true
+                                    })
+                                }
+                                create_loader.stopLoading()
+                            },
+                            error: function () {
+                                //alert("fail");
+                            }
+                        });
+
+                    } else if (result.dismiss === "cancel") {
+
+                    }
+                });
+            })
+            $("#cancel-btn").click(function () {
+                Swal.fire({
+                    title: "Huỷ chỉnh sửa?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Đồng ý",
+                    cancelButtonText: "Huỷ",
+                    reverseButtons: true
+                }).then(function (result) {
+                    create_loader.stopLoading()
+                    if (result.value) {
+                        $("#edit-enable-area").show();
+                        $("#edit-control-area").hide();
+                        window.location.reload()
+                    } else if (result.dismiss === "cancel") {
+
+                    }
+                });
+            })
+        </script>
+        <script>
+            var KTDatatablesBasicBasic = function () {
+                var initTable1 = function () {
+                    var table = $('#tapchi_list');
+                    // begin first table
+                    table.DataTable({
+                        responsive: true,
+
+                        // DOM Layout settings
+                        dom: `<'row'<'col-sm-12'tr>>
+                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                        lengthMenu: [5, 10, 25, 50],
+
+                        pageLength: 5,
+
+                        language: {
+                            'lengthMenu': 'Display _MENU_',
+                        },
+
+                        // Order settings
+                        order: [[0, 'asc']],
+
+                        columnDefs: [
+                            { "width": "5%", "targets": 0 },
+                            { "width": "25%", "targets": 1 },
+                            {
+                                "targets": 2,
+                                "data": "download_link",
+                                "render": function (data, type, row, meta) {
+                                    thresh = 39
+                                    if (data.length > thresh) {
+                                        reformat = generateTooltip(data, thresh)
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + reformat['tooltip'] + "'>" + reformat['trimtext'] + "</a>";
+                                    } else {
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
+                                    }
+
+                                },
+                                "width": "40%"
+                            },
+                            { "width": "20%", "targets": 3 },
+                            { "width": "10%", "targets": 4 }
+                        ],
+                    });
+
+                    table.on('change', '.group-checkable', function () {
+                        var set = $(this).closest('table').find('td:first-child .checkable');
+                        var checked = $(this).is(':checked');
+
+                        $(set).each(function () {
+                            if (checked) {
+                                $(this).prop('checked', true);
+                                $(this).closest('tr').addClass('active');
+                            }
+                            else {
+                                $(this).prop('checked', false);
+                                $(this).closest('tr').removeClass('active');
+                            }
+                        });
+                    });
+
+                    table.on('change', 'tbody tr .checkbox', function () {
+                        $(this).parents('tr').toggleClass('active');
+                    });
+                };
+
+                var initTable2 = function () {
+                    var table = $('#conferences_list');
+
+                    // begin first table
+                    table.DataTable({
+                        responsive: true,
+
+                        // DOM Layout settings
+                        dom: `<'row'<'col-sm-12'tr>>
+                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                        lengthMenu: [5, 10, 25, 50],
+
+                        pageLength: 5,
+
+                        language: {
+                            'lengthMenu': 'Display _MENU_',
+                        },
+                        order: [[0, 'asc']],
+
+                        columnDefs: [
+                            { "width": "5%", "targets": 0 },
+                            { "width": "25%", "targets": 1 },
+                            {
+                                "targets": 2,
+                                "data": "download_link",
+                                "render": function (data, type, row, meta) {
+                                    thresh = 39
+                                    if (data.length > thresh) {
+                                        reformat = generateTooltip(data, thresh)
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + reformat['tooltip'] + "'>" + reformat['trimtext'] + "</a>";
+                                    } else {
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
+                                    }
+                                },
+                                "width": "30%"
+                            },
+                            { "width": "10%", "targets": 3 },
+                            { "width": "10%", "targets": 4 }
+                        ],
+                    });
+
+                    table.on('change', '.group-checkable', function () {
+                        var set = $(this).closest('table').find('td:first-child .checkable');
+                        var checked = $(this).is(':checked');
+
+                        $(set).each(function () {
+                            if (checked) {
+                                $(this).prop('checked', true);
+                                $(this).closest('tr').addClass('active');
+                            }
+                            else {
+                                $(this).prop('checked', false);
+                                $(this).closest('tr').removeClass('active');
+                            }
+                        });
+                    });
+
+                    table.on('change', 'tbody tr .checkbox', function () {
+                        $(this).parents('tr').toggleClass('active');
+                    });
+                };
+
+                var initTable3 = function () {
+                    var table = $('#award_list');
+                    // begin first table
+                    table.DataTable({
+                        responsive: true,
+
+                        // DOM Layout settings
+                        dom: `<'row'<'col-sm-12'tr>>
+                                                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                        lengthMenu: [5, 10, 25, 50],
+
+                        pageLength: 10,
+
+                        language: {
+                            'lengthMenu': 'Display _MENU_',
+                        },
+
+                        // Order settings
+                        order: [[0, 'desc']],
+
+                        columnDefs: [
+                            {
+                                "targets": 1,
+                                "data": "download_link",
+                                "render": function (data, type, row, meta) {
+                                    thresh = 39
+                                    if (data.length > thresh) {
+                                        reformat = generateTooltip(data, thresh)
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + reformat['tooltip'] + "'>" + reformat['trimtext'] + "</a>";
+                                    } else {
+                                        return "<a href='#' data-theme='dark' data-toggle='tooltip' title='" + data + "'>" + data + "</a>";
+                                    }
+                                }
+                            }
+                        ],
+                    });
+
+                    table.on('change', '.group-checkable', function () {
+                        var set = $(this).closest('table').find('td:first-child .checkable');
+                        var checked = $(this).is(':checked');
+
+                        $(set).each(function () {
+                            if (checked) {
+                                $(this).prop('checked', true);
+                                $(this).closest('tr').addClass('active');
+                            }
+                            else {
+                                $(this).prop('checked', false);
+                                $(this).closest('tr').removeClass('active');
+                            }
+                        });
+                    });
+
+                    table.on('change', 'tbody tr .checkbox', function () {
+                        $(this).parents('tr').toggleClass('active');
+                    });
+                };
+                return {
+
+                    //main function to initiate the module
+                    init: function () {
+                        initTable1();
+                        initTable2();
+                        initTable3();
+                    }
+                };
+            }();
+
+            jQuery(document).ready(function () {
+                KTDatatablesBasicBasic.init();
+            });
+
+        </script>
+    }
+    else
+    {
+        <script>
+            $(function () {
+                swal.fire({
+                    title: 'Nghiên cứu viên này đã được kích hoạt công khai hồ sơ!',
+                    type: 'warning',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Back',
+                    confirmButtonClass: 'btn btn-primary font-weight-bold'
+                }).then(function (result) {
+                    window.history.back();
+                });
+            })
+        </script>
+    }
 }
 

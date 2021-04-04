@@ -77,8 +77,20 @@
 
             $("#ckfe").val("@ViewBag.author.office_abbreviation");
             $("#ckfe").trigger('change');
-            $("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
-            $("#add_author_msnv").trigger('change');
+
+            var temp_ms = "@ViewBag.author.mssv_msnv";
+            if ($('#add_author_msnv').find("option[value='" + temp_ms + "']").length) {
+                $('#add_author_msnv').val(temp_ms).trigger('change');
+            } else {
+                // Create a DOM Option and pre-select by default
+                var newOption = new Option(temp_ms, temp_ms, true, true);
+                // Append it to the select
+                $('#add_author_msnv').append(newOption).trigger('change');
+            }
+
+            @*$("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
+            $("#add_author_msnv").trigger('change');*@
+
             $("#add_author_mail").val("@ViewBag.author.email");
             $("#add_author_name").val("@ViewBag.author.name");
             $("#add_author_title").val("@ViewBag.author.title_id");
@@ -89,6 +101,7 @@
             $("#add_author_tax").val("@ViewBag.author.tax_code");
             $("#add_author_bank").val("@ViewBag.author.bank_branch");
             $("#add_author_accno").val("@ViewBag.author.bank_number");
+            $("#add_author_isReseacher").prop("checked", "@ViewBag.author.is_reseacher");
 
             var ck = "@ViewBag.ckEdit";
             if (ck != "5") $(".edit").prop("disabled", true);

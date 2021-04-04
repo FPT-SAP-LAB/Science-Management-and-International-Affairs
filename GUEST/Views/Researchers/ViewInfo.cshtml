@@ -54,7 +54,7 @@
                         <a href="#" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">@ViewBag.profile.name</a>
                         <a href="#"><i class="flaticon2-correct text-success font-size-h5"></i></a>
                     </div>
-                    @if (CurrentAccount.getProfile(Session)!=null&&CurrentAccount.getProfile(Session).people_id == ViewBag.profile.id)
+                    @if (CurrentAccount.getProfile(Session) != null && CurrentAccount.getProfile(Session).people_id == ViewBag.profile.id)
                     {
                         <div class="my-lg-0 my-3">
                             <a href="/Researchers/EditInfo?id=@CurrentAccount.getProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
@@ -66,15 +66,15 @@
                 <div class="d-flex flex-wrap justify-content-between mt-1">
                     <div class="d-flex flex-column flex-grow-1 pr-8">
                         <div class="d-flex flex-wrap mb-4">
-                            @if (ViewBag.profile.email.Trim() != "" && ViewBag.profile.email != null)
+                            @if (ViewBag.profile.email != null && ViewBag.profile.email.Trim() != "")
                             {
                                 <a href="#" class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2"><i class="flaticon2-new-email mr-2 font-size-lg"></i>@ViewBag.profile.email</a>
                             }
-                            @if (ViewBag.profile.website.Trim() != "" && ViewBag.profile.website != null)
+                            @if (ViewBag.profile.website != null && ViewBag.profile.website.Trim() != "")
                             {
                                 <a href="#" class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2"><i class="flaticon2-calendar-3 mr-2 font-size-lg"></i>@ViewBag.profile.website </a>
                             }
-                            @if (ViewBag.profile.office.Trim() != "" && ViewBag.profile.office != null)
+                            @if (ViewBag.profile.office != null && ViewBag.profile.office.Trim() != "")
                             {
                                 <a href="#" class="text-dark-50 text-hover-primary font-weight-bold"><i class="flaticon2-placeholder mr-2 font-size-lg"></i>@ViewBag.profile.office</a>
                             }

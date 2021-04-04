@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-11 mb-3 mt-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="padding: 0">
                         <a class="btn btn-sm btn-light-primary px-6" data-toggle="modal" href="#add-partner-scope">Thêm</a>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             <th>STT</th>
                             <th>Đối tác</th>
                             <th>Phạm vi hợp tác</th>
-                            <th></th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,16 +88,16 @@
             </div>
             <div class="modal-body">
                 <div class="row justify-content-center">
-                    <div class="col-md-3">
+                    <div class="col-lg-5 col-md-5 col-sm-5">
                         <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
-                        <select class="form-control" required id="partner_name_ex_mou_add">
+                        <select class="form-control" required id="partner_name_ex_mou_add" style="width:100% !important">
                             @foreach (var item in ViewBag.partnerList)
                             {
                                 <option value="@item.partner_id">@item.partner_name</option>
                             }
                         </select>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-lg-7 col-md-7 col-sm-7">
                         <label style="color:red">*</label><label class="font-weight-bolder">Phạm vi hợp tác</label>&nbsp;
                         <select class="form-control select2" required id="coop_scope_ex_mou_add" multiple="multiple" style="width:100% !important">
                             @foreach (var item in ViewBag.scopeList)
@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" onclick="addExMOUTemp()" class="btn btn-sm btn-light-primary px-6" >Bổ sung</button>
+                <button type="button" onclick="addExMOUTemp()" class="btn btn-sm btn-light-primary px-6">Bổ sung</button>
             </div>
         </div>
     </div>

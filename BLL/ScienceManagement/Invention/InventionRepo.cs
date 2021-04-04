@@ -20,7 +20,7 @@ namespace BLL.ScienceManagement.Invention
         public DetailInvention getDetail(string id)
         {
             DetailInvention item = new DetailInvention();
-            string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file', it.name as 'type_name'
+            string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file', it.name as 'type_name', ri.status_id
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [General].[File] f on f.file_id = i.file_id
@@ -73,6 +73,25 @@ namespace BLL.ScienceManagement.Invention
             {
                 RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
                 ri.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
+        public string changeStatusManager(DetailInvention inven)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                ri.status_id = 3;
                 db.SaveChanges();
                 dbc.Commit();
                 return "ss";
@@ -337,11 +356,11 @@ namespace BLL.ScienceManagement.Invention
 
         public List<PendingInvention_Manager> getListPending()
         {
-            string sql = @"select i.name, acc.email, br.created_date, i.invention_id
+            string sql = @"select i.name, acc.email, br.created_date, i.invention_id, ri.status_id
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
 	                            join [General].Account acc on acc.account_id = br.account_id
-                           where ri.status_id = 3";
+                           where ri.status_id = 3 or ri.status_id = 5";
             List<PendingInvention_Manager> list = db.Database.SqlQuery<PendingInvention_Manager>(sql).ToList();
             return list;
         }

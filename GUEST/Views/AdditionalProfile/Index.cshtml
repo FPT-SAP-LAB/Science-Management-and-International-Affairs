@@ -51,17 +51,19 @@
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <label>Số điện thoại:</label>
+                        <label>Số điện thoại :</label>
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                            <input id="phoneInput" type="text" class="form-control" placeholder="Enter contact number" />
+                            <input id="phoneInput" type="text" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-4">
-                        <label>Ngày sinh:</label>
-                        <input type="text" class="form-control" id="kt_datepicker_4_3" />
+                        <label>Mã số sinh viên/ mã số nhân viên <span style='color:red'>*</span>:</label>
+                        <div class="input-group">
+                            <input id="mssv_msnv" type="text" class="form-control" />
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <label>Quốc tịch :</label>
@@ -75,15 +77,21 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
+                        <label>Ngày sinh :</label>
+                        <input type="text" class="form-control" id="kt_datepicker_4_3" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
                         <label>Chức vụ nghiên cứu viên:</label>
                         <div class="radio-inline">
                             <label class="radio radio-solid">
-                                <input type="radio" name="example_2" checked="checked" value="0" />
+                                <input type="radio" name="example_2" checked="checked" value="false" />
                                 <span></span>
                                 Không
                             </label>
                             <label class="radio radio-solid">
-                                <input type="radio" name="example_2" value="1" />
+                                <input type="radio" name="example_2" value="true" />
                                 <span></span>
                                 Có
                             </label>
@@ -121,7 +129,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label>Số CMND/Hộ chiếu :</label>
-                                <input type="text" class="form-control" />
+                                <input id="identification_number" type="text" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -402,6 +410,7 @@
             let fd = new FormData();
             let name = $("#nameInput").val();
             let username = $("#username").val();
+            let mssv_msnv = $("#mssv_msnv").val()
 
             if (document.getElementById("myCanvas").src != "")
                 fd.append("identification", dataURItoBlob(document.getElementById("myCanvas").src));
@@ -413,9 +422,12 @@
                 toastr.error("Trường tên tài khoản là bắt buộc");
                 return false;
             }
+            if (mssv_msnv.trim() == "") {
+                toastr.error("Trường mã số là bắt buộc");
+                return false;
+            }
             let person = {
                 name: $("#nameInput").val(),
-                email: $("#emailInput").val(),
                 phone_number: $("#phoneInput").val(),
                 office_id: $("#office-select").val()
             }
@@ -427,20 +439,22 @@
                 is_reseacher: $('input[name=example_2]:checked').val(),
                 bank_number: $("#bank_numberInput").val(),
                 bank_branch: $("#bank_branchInput").val(),
+                mssv_msnv: mssv_msnv,
+                identification_number: $("#identification_number").val()
             }
             fd.append("profile", JSON.stringify(profile));
             fd.append("username", username);
 
             save_loader.startLoading();
             $.ajax({
-                url: "/ConferenceSponsor/Add",
+                url: "/AdditionalProfile/Add",
                 method: "post",
                 complete: function (data) {
-                    if (data.responseJSON.id) {
-                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
+                    if (data.responseJSON.success) {
+                        location.href = "/Researchers/ViewInfo?id=" + data.responseJSON.obj;
                     }
                     else {
-                        toastr.error(data.responseJSON.message);
+                        toastr.error(data.responseJSON.content);
                     }
                     save_loader.stopLoading();
                 },

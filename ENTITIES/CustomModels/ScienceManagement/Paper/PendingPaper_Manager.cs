@@ -12,5 +12,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string email { get; set; }
         public DateTime created_date { get; set; }
         public int paper_id { get; set; }
+        public int status_id { get; set; }
     }
 }

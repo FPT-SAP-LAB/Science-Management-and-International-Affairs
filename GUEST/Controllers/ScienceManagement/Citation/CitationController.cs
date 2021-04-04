@@ -105,14 +105,13 @@ namespace User.Controllers
                 u = (LoginRepo.User)Session["User"];
                 acc = u.account;
             }
-            BaseRequest b = pr.addBaseRequest(acc.account_id);
 
-            AuthorInfo author = cr.addAuthor(people);
-
-            cr.addCitationRequest(b, author);
+            Author author = cr.addAuthor(people);
 
             cr.addCitaion(citation);
 
+            BaseRequest b = pr.addBaseRequest(acc.account_id);
+            cr.addCitationRequest(b, author);
             string mess = cr.addRequestHasCitation(citation, b);
             return Json(new { mess = mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
         }
@@ -122,7 +121,7 @@ namespace User.Controllers
         {
             cr.addAuthor(people);
             List<Citation> oldcitation = cr.getCitation(request_id);
-            AuthorInfo author = cr.addAuthor(people);
+            Author author = cr.addAuthor(people);
             string mess = cr.editCitation(oldcitation, citation, request_id, author);
             return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
         }
