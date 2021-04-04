@@ -448,26 +448,67 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         public List<PartnerHistory> listMOUPartnerHistory(int mou_partner_id)
         {
             string sql_history =
-                    @"select main.content,acc.full_name,main.add_time from (
-                    select 
-                    a1.mou_partner_id,a2.account_id,a2.add_time,
-                    N'Ký kết biên bản ghi nhớ' as content
-                    from IA_Collaboration.MOUPartner a1
-                    inner join IA_Collaboration.MOU a2 on a1.mou_id = a2.mou_id
-                    union all
-                    select c2.mou_partner_id,c1.account_id,c1.add_time,
-                    N'Ký kết biên bản thỏa thuận' as content from IA_Collaboration.MOA c1
-                    inner join IA_Collaboration.MOUPartner c2 on c1.mou_id = c2.mou_id
-                    ) as main
-                    left join General.Account acc on main.account_id = acc.account_id
-                    where mou_partner_id = @mou_partner_id
-                    order by add_time ";
+                    @"WITH b AS(
+                        SELECT mou.mou_id, mou.mou_code, moup.mou_start_date, mou.mou_end_date, moup.mou_partner_id, ps.partner_id, ps.scope_id, ps.partner_scope_id
+                        FROM IA_Collaboration.MOU mou
+                        join IA_Collaboration.MOUPartner moup on mou.mou_id = moup.mou_id
+                        join IA_Collaboration.MOUPartnerScope moups on moups.mou_id = mou.mou_id
+                        join IA_Collaboration.PartnerScope ps on ps.partner_scope_id = moups.partner_scope_id 
+                        where mou.is_deleted = 0 and moup.mou_partner_id = @mou_partner_id)
+                        SELECT N'Tổ chức hoạt động học thuật' 'content', ac.full_name, ap.add_time
+                        FROM SMIA_AcademicActivity.AcademicActivity aa 
+                        INNER JOIN SMIA_AcademicActivity.ActivityPartner ap ON aa.activity_id = ap.activity_id 
+                        INNER JOIN b ON b.partner_scope_id = ap.partner_scope_id
+                        INNER JOIN General.Account ac on ac.account_id = ap.account_id
+                        and b.mou_start_date <= aa.activity_date_start and aa.activity_date_end <= b.mou_end_date
+                        UNION ALL
+                        SELECT N'Hợp tác học thuật' 'content', acc.full_name, csh.change_time 'add_time'
+                        FROM IA_AcademicCollaboration.AcademicCollaboration ac 
+                        INNER JOIN b ON ac.partner_scope_id = b.partner_scope_id
+                        INNER JOIN
+                        (select csh1.collab_id, csh1.change_time, csh2.account_id
+                        from
+	                        (select collab_id, MAX(change_date) 'change_time'
+	                        from IA_AcademicCollaboration.CollaborationStatusHistory
+	                        group by collab_id) as csh1
+	                        INNER JOIN
+	                        (select *
+	                        from IA_AcademicCollaboration.CollaborationStatusHistory) as csh2 
+	                        on csh1.collab_id = csh2.collab_id and csh1.change_time = csh2.change_date) as csh on csh.collab_id = ac.collab_id
+                        INNER JOIN General.Account acc on acc.account_id = csh.account_id
+                        and b.mou_start_date <= ac.plan_study_start_date and ac.plan_study_end_date <= b.mou_end_date
+                        UNION ALL
+                        SELECT DISTINCT N'Ký kết biên bản ghi nhớ' 'content', acc.full_name, mou.add_time
+                        FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id and mp.mou_partner_id = b.mou_partner_id
+                        INNER JOIN IA_Collaboration.MOU mou ON mou.mou_id = mp.mou_id
+                        INNER JOIN General.Account acc on acc.account_id = mou.account_id
+                        UNION ALL
+                        SELECT DISTINCT N'Ký kết biên bản thỏa thuận' 'content', acc.full_name, moa.add_time
+                        FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
+                        INNER JOIN IA_Collaboration.MOA moa ON moa.moa_id = mp.moa_id
+                        LEFT JOIN IA_Collaboration.MOU mou on mou.mou_id = moa.mou_id
+                        LEFT JOIN IA_Collaboration.MOUPartner moup on moup.mou_id = mou.mou_id and moup.mou_partner_id = b.mou_partner_id
+                        LEFT JOIN General.Account acc on acc.account_id = moa.account_id
+                        UNION ALL
+                        SELECT DISTINCT N'Ký kết biên bản ghi nhớ bổ sung' 'content', acc.full_name, mb.add_time
+                        FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id and mp.mou_partner_id = b.mou_partner_id
+                        INNER JOIN IA_Collaboration.MOUBonus mb ON mp.mou_id = mb.mou_id 
+                        LEFT JOIN IA_Collaboration.MOuPartnerScope mps ON mps.mou_bonus_id = mb.mou_bonus_id
+                        LEFT JOIN General.Account acc on acc.account_id = mb.account_id
+                        WHERE (mb.mou_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
+                        UNION ALL
+                        SELECT DISTINCT N'Ký kết biên bản thỏa thuận bổ sung' 'content', acc.full_name, mb.add_time
+                        FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
+                        INNER JOIN IA_Collaboration.MOABonus mb ON mp.moa_id = mb.moa_id 
+                        LEFT JOIN IA_Collaboration.MOAPartnerScope mps ON mps.moa_bonus_id = mb.moa_bonus_id
+                        LEFT JOIN IA_Collaboration.MOA moa on moa.moa_id = mb.moa_id
+                        LEFT JOIN IA_Collaboration.MOU mou on mou.mou_id = moa.mou_id
+                        LEFT JOIN IA_Collaboration.MOUPartner moup on moup.mou_id = mou.mou_id and moup.mou_partner_id = b.mou_partner_id
+                        LEFT JOIN General.Account acc on acc.account_id = mb.account_id
+                        WHERE (mb.moa_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
+                        ORDER BY add_time ASC";
             List<PartnerHistory> historyList = db.Database.SqlQuery<PartnerHistory>(sql_history,
                 new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
-            foreach (PartnerHistory p in historyList)
-            {
-                p.add_time_string = p.add_time.ToString("dd'/'MM'/'yyyy");
-            }
             return historyList;
         }
         public List<ENTITIES.Partner> GetPartners(int mou_id)

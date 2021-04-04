@@ -2094,7 +2094,15 @@
                 ,
                 { data: "content" },
                 { data: "full_name" },
-                { data: "add_time_string" }
+                {
+                    data: "add_time",
+                    render: function (data, type) {
+                        if (type === "sort" || type === "") {
+                            return data;
+                        }
+                        return moment(data).format('DD-MM-YYYY hh:mm:ss A');
+                    }
+                }
             ]
         });
     }
