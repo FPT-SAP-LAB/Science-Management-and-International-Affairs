@@ -18,7 +18,7 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id
+            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_id = @id";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
@@ -331,6 +331,28 @@ namespace BLL.ScienceManagement.Paper
             {
                 RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
                 rp.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                dbc.Dispose();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                dbc.Rollback();
+                dbc.Dispose();
+                return "ff";
+            }
+        }
+
+        public string changeStatusManager(DetailPaper paper)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
+                rp.status_id = 3;
                 db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
@@ -698,11 +720,11 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
-            string sql = @"select p.name, a.email, br.created_date, p.paper_id
+            string sql = @"select p.name, a.email, br.created_date, p.paper_id, rp.status_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
 	                            join [General].Account a on br.account_id = a.account_id
-                            where rp.status_id = 3";
+                            where rp.status_id = 3 or rp.status_id = 5";
             list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
             return list;
         }
