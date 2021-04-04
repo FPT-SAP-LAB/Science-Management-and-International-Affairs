@@ -1,14 +1,25 @@
-﻿using ENTITIES;
+﻿using Aspose.Cells;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using Microsoft.VisualBasic.FileIO;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.ComponentModel;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
 
 namespace BLL.ScienceManagement.Paper
 {
@@ -18,7 +29,7 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id
+            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where p.paper_id = @id";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
@@ -50,7 +61,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfoWithNull> getAuthorPaper(string id, string lang)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher', ap.money_reward
+            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ap.money_reward
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].Author ah on ah.people_id = ap.people_id
 	                            left join (select ah.people_id, tl.name
@@ -68,6 +79,100 @@ namespace BLL.ScienceManagement.Paper
                 if (item.title_id_string != null) item.title_id = item.title_id_string.Value;
             }
             return list;
+        }
+
+        public bool updateJournal()
+        {
+            int count = 1;
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            try
+            {
+                string url = "https://www.scimagojr.com/journalrank.php?out=xls";
+
+                string name = RandomString(10);
+                string path = @"D:\" + name;
+                Directory.CreateDirectory(path);
+
+                string savePath = path + "\\insert.csv";
+
+                WebClient client = new WebClient();
+                client.DownloadFile(url, savePath);
+
+                //List<dynamic> issues;
+                db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].Scimagojr");
+                using (var reader = new StreamReader(savePath))
+                {
+                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                    config.Delimiter = ";";
+                    config.HasHeaderRecord = true;
+                    config.BadDataFound = null;
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        while (csv.Read())
+                        {
+                            if (csv.GetField(0) != "Rank")
+                            {
+                                Scimagojr sci = new Scimagojr();
+                                sci.Rank = csv.GetField(0);
+                                sci.Sourceid = csv.GetField(1);
+                                sci.Title = csv.GetField(2);
+                                sci.Type = csv.GetField(3);
+                                sci.Issn = csv.GetField(4);
+                                sci.SJR = csv.GetField(5);
+                                sci.SJR_Best_Quartile = csv.GetField(6);
+                                sci.H_index = csv.GetField(7);
+                                sci.Total_Docs_2019 = csv.GetField(8);
+                                sci.Total_Cites_3years = csv.GetField(9);
+                                sci.Total_Refs = csv.GetField(10);
+                                sci.Total_Cites_3years = csv.GetField(11);
+                                sci.Citable_Docs_3years = csv.GetField(12);
+                                sci.Cites_Doc_2years = csv.GetField(13);
+                                sci.Ref_Doc = csv.GetField(14);
+                                sci.Country = csv.GetField(15);
+                                sci.Region = csv.GetField(16);
+                                sci.Publisher = csv.GetField(17);
+                                sci.Coverage = csv.GetField(18);
+                                sci.Categories = csv.GetField(19);
+
+                                db.Scimagojrs.Add(sci);
+                                count++;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return true;
+        }
+
+        public DataTable ToDataTable(IEnumerable<dynamic> items)
+        {
+            var data = items.ToArray();
+            if (data.Count() == 0) return null;
+
+            var dt = new DataTable();
+            foreach (var key in ((IDictionary<string, object>)data[0]).Keys)
+            {
+                dt.Columns.Add(key);
+            }
+            foreach (var d in data)
+            {
+                dt.Rows.Add(((IDictionary<string, object>)d).Values.ToArray());
+            }
+            return dt;
+        }
+
+        public string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public List<AuthorInfoWithNull> getAuthorPaper_FE(string id, string lang)
@@ -331,6 +436,28 @@ namespace BLL.ScienceManagement.Paper
             {
                 RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
                 rp.status_id = 5;
+                db.SaveChanges();
+                dbc.Commit();
+                dbc.Dispose();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                dbc.Rollback();
+                dbc.Dispose();
+                return "ff";
+            }
+        }
+
+        public string changeStatusManager(DetailPaper paper)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
+                rp.status_id = 3;
                 db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
@@ -698,11 +825,11 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
-            string sql = @"select p.name, a.email, br.created_date, p.paper_id
+            string sql = @"select p.name, a.email, br.created_date, p.paper_id, rp.status_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
 	                            join [General].Account a on br.account_id = a.account_id
-                            where rp.status_id = 3";
+                            where rp.status_id = 3 or rp.status_id = 5";
             list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
             return list;
         }

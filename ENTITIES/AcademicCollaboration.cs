@@ -27,7 +27,7 @@ namespace ENTITIES
         public int direction_id { get; set; }
         public int people_id { get; set; }
         public Nullable<bool> is_supported { get; set; }
-        public Nullable<int> partner_scope_id { get; set; }
+        public int partner_scope_id { get; set; }
         public Nullable<System.DateTime> actual_study_start_date { get; set; }
         public Nullable<System.DateTime> actual_study_end_date { get; set; }
         public Nullable<int> collab_type_id { get; set; }

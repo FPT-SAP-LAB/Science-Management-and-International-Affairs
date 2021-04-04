@@ -1064,79 +1064,78 @@
                                                 </div>
                                                 <div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">@user.account.full_name</div>
                                             </div>
-                                        }
-                                    }
-                                    <div class="separator separator-solid"></div>
-                                    <div class="navi navi-spacer-x-0 pt-5">
-                                        <a href="custom/apps/user/profile-1/personal-information.html" class="navi-item px-8">
-                                            <div class="navi-link">
-                                                <div class="navi-icon mr-2">
-                                                    <i class="flaticon2-calendar-3 text-success"></i>
-                                                </div>
-                                                <div class="navi-text">
-                                                    <div class="font-weight-bold">
-                                                        My Profile
+                                            <div class="separator separator-solid"></div>
+                                            <div class="navi navi-spacer-x-0 pt-5">
+                                                <a href="/Researchers/ViewInfo?id=@user.PeopleID" class="navi-item px-8">
+                                                    <div class="navi-link">
+                                                        <div class="navi-icon mr-2">
+                                                            <i class="flaticon2-calendar-3 text-success"></i>
+                                                        </div>
+                                                        <div class="navi-text">
+                                                            <div class="font-weight-bold">
+                                                                My Profile
+                                                            </div>
+                                                            <div class="text-muted">
+                                                                Account settings and more
+                                                                <span class="label label-light-danger label-inline font-weight-bold">update</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="text-muted">
-                                                        Account settings and more
-                                                        <span class="label label-light-danger label-inline font-weight-bold">update</span>
-                                                    </div>
+                                                </a>
+                                                @*<a href="custom/apps/user/profile-3.html" class="navi-item px-8">
+                                                        <div class="navi-link">
+                                                            <div class="navi-icon mr-2">
+                                                                <i class="flaticon2-mail text-warning"></i>
+                                                            </div>
+                                                            <div class="navi-text">
+                                                                <div class="font-weight-bold">
+                                                                    My Messages
+                                                                </div>
+                                                                <div class="text-muted">
+                                                                    Inbox and tasks
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a href="custom/apps/user/profile-2.html" class="navi-item px-8">
+                                                        <div class="navi-link">
+                                                            <div class="navi-icon mr-2">
+                                                                <i class="flaticon2-rocket-1 text-danger"></i>
+                                                            </div>
+                                                            <div class="navi-text">
+                                                                <div class="font-weight-bold">
+                                                                    My Activities
+                                                                </div>
+                                                                <div class="text-muted">
+                                                                    Logs and notifications
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a href="custom/apps/userprofile-1/overview.html" class="navi-item px-8">
+                                                        <div class="navi-link">
+                                                            <div class="navi-icon mr-2">
+                                                                <i class="flaticon2-hourglass text-primary"></i>
+                                                            </div>
+                                                            <div class="navi-text">
+                                                                <div class="font-weight-bold">
+                                                                    My Tasks
+                                                                </div>
+                                                                <div class="text-muted">
+                                                                    latest tasks and projects
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>*@
+                                                <div class="navi-separator mt-3"></div>
+                                                <div class="navi-footer  px-8 py-5">
+                                                    <a href="javascript:;" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
+                                                    @*<a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean font-weight-bold">Upgrade Plan</a>*@
                                                 </div>
                                             </div>
-                                        </a>
-                                        @*<a href="custom/apps/user/profile-3.html" class="navi-item px-8">
-                                                <div class="navi-link">
-                                                    <div class="navi-icon mr-2">
-                                                        <i class="flaticon2-mail text-warning"></i>
-                                                    </div>
-                                                    <div class="navi-text">
-                                                        <div class="font-weight-bold">
-                                                            My Messages
-                                                        </div>
-                                                        <div class="text-muted">
-                                                            Inbox and tasks
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="custom/apps/user/profile-2.html" class="navi-item px-8">
-                                                <div class="navi-link">
-                                                    <div class="navi-icon mr-2">
-                                                        <i class="flaticon2-rocket-1 text-danger"></i>
-                                                    </div>
-                                                    <div class="navi-text">
-                                                        <div class="font-weight-bold">
-                                                            My Activities
-                                                        </div>
-                                                        <div class="text-muted">
-                                                            Logs and notifications
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="custom/apps/userprofile-1/overview.html" class="navi-item px-8">
-                                                <div class="navi-link">
-                                                    <div class="navi-icon mr-2">
-                                                        <i class="flaticon2-hourglass text-primary"></i>
-                                                    </div>
-                                                    <div class="navi-text">
-                                                        <div class="font-weight-bold">
-                                                            My Tasks
-                                                        </div>
-                                                        <div class="text-muted">
-                                                            latest tasks and projects
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>*@
-                                        <div class="navi-separator mt-3"></div>
-                                        <div class="navi-footer  px-8 py-5">
-                                            <a href="javascript:;" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
-                                            @*<a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean font-weight-bold">Upgrade Plan</a>*@
-                                        </div>
-                                    </div>
-                                    <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
-
+                                            <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
+                                        }
+                                    }
                                 </div>
                                 <!--end::Dropdown-->
                             </div>
@@ -1374,36 +1373,48 @@
             location.reload();
         });
         function onLoad() {
-            return new Promise((resolve, reject) => {
-                gapi.load('auth2', function () {
-                    gapi.auth2.init();
-                });
-                resolve();
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
             });
         }
-        async function onSignIn(googleUser) {
-            await onLoad();
+        function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/Authen/SigninGoogleAsync');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this);
-                    if (this.response != '""') {
-                        toastr.warning(this.response);
+            //var xhr = new XMLHttpRequest();
+            //xhr.open('POST', );
+            //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //xhr.onreadystatechange = function () {
+            //    if (this.readyState == 4 && this.status == 200) {
+            //        console.log(this);
+            //    }
+            //};
+            //xhr.send();
+            let fd = new FormData();
+            fd.append("idtoken", id_token);
+            $.ajax({
+                url: '/Authen/SigninGoogleAsync',
+                data: fd,
+                type: "POST",
+                success: function (data) {
+                    if (data.success == false) {
+                        toastr.warning(data.content);
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
                         });
+                    } else if (data.redirect == true) {
+                        window.location = "/AdditionalProfile";
                     } else {
                         window.location.reload();
                     }
-                }
-            };
-            xhr.send('idtoken=' + id_token);
+                },
+                error: function (data) {
+                    toastr.error("Có lỗi xảy ra")
+                },
+                processData: false,
+                contentType: false,
+                cache: true
+            });
         }
-        async function gp_signOut() {
-            await onLoad();
+        function gp_signOut() {
             $.ajax({
                 url: '/Authen/Logout',
                 data: {},

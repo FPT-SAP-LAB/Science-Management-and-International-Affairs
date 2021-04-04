@@ -36,18 +36,18 @@
                             }
                         </select>
                     </div>
-                    <div class="col-xl-6 form-group">
+                    @*<div class="col-xl-6 form-group">
                         <label>Loại hợp đồng</label>
                         <input class="form-control form-control-lg" type="text" value="@ViewBag.author.contract_name" disabled />
-                    </div>
+                    </div>*@
                     <div class="col-xl-6 form-group">
                         <label>CMND</label>
                         <input class="form-control form-control-lg" type="text" value="@ViewBag.author.identification_number" disabled />
                     </div>
                     @*<div class="col-xl-6 form-group">
-                        <label>CMND</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author." disabled />
-                    </div>*@
+                            <label>CMND</label>
+                            <input class="form-control form-control-lg" type="text" value="@ViewBag.author." disabled />
+                        </div>*@
                     <div class="col-xl-6 form-group">
                         <label>Mã số thuế</label>
                         <input class="form-control form-control-lg" type="text" value="@ViewBag.author.tax_code" disabled />
@@ -94,10 +94,11 @@
                         <input id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
                     </div>
                 </div>
-                <hr/>
+                <hr />
                 <div class="row justify-content-center">
                     <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
                     <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
                 </div>
             </div>
         </div>
@@ -129,6 +130,23 @@
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
+
+        var status = "@ViewBag.status";
+        if (status == "3") {
+            $("#editconfirm").show();
+            $("#editconfirm_manager").hide();
+        } else if (status == "4") {
+            $("#editconfirm").hide();
+            $("#editconfirm_manager").show();
+            $("#confirmbtn").hide();
+            $("#totalreward").prop("disabled", true);
+        } else {
+            $("#editconfirm").hide();
+            $("#editconfirm_manager").hide();
+            $("#confirmbtn").hide();
+            $("#totalreward").prop("disabled", true);
+        }
+
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
@@ -145,7 +163,35 @@
                 success: function (response) {
                     if (response.mess == "ss") {
                         $("#loading").hide();
-                        window.location.href = "/Citation/Pending";
+                        $("#editconfirm").prop("disabled", true);
+                        $("#confirmbtn").prop("disabled", true);
+                        $("#totalreward").prop("disabled", true);
+                        //window.location.href = "/Citation/Pending";
+                        //editRequest();
+                        //alert(response.mess);
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+        $("#editconfirm_manager").click(function () {
+            $("#loading").show();
+            var request_id = "@ViewBag.request_id";
+            $.ajax({
+                url: "@Url.Action("changeStatusManager", "Citation")",
+                type: "POST",
+                data: JSON.stringify({ 'request_id': request_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#loading").hide();
+                        $("#editconfirm_manager").prop("disabled", true);
+                        //window.location.href = "/Citation/Pending";
                         //editRequest();
                         //alert(response.mess);
                     }
@@ -173,7 +219,7 @@
                     success: function (response) {
                         if (response.mess == "ss") {
                             $("#loading").hide();
-                            window.location.href = "/Ctation/WaitDecision";
+                            window.location.href = "/Citation/Pending";
                         }
                         else alert('loi');
                     },

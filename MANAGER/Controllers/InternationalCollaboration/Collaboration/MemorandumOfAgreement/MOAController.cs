@@ -123,8 +123,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string mou_id = Session["mou_detail_id"].ToString();
-                    moa.addMOA(input, int.Parse(mou_id));
+                    moa.addMOA(input, int.Parse(mou_id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }

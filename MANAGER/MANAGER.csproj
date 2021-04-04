@@ -2229,6 +2229,7 @@
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Add.js" />
     <Content Include="Excel_template\Paper.xlsx" />
     <Content Include="Excel_template\Download\Paper.xlsx" />
+    <Content Include="Scripts\updateJournal.js" />
     <Content Include="Web.config" />
     <Content Include="Word_Template\ConferenceSponsor\AppointmentForm.doc" />
     <Content Include="Word_Template\ConferenceSponsor\RequestForm.docx" />

@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 
@@ -441,6 +441,13 @@
                                                 <span class="menu-text">ĐƠN VỊ NỘI BỘ</span>
                                             </a>
                                         </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a id="updateJournal" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">CẬP NHẬT TẠP CHÍ JOURNAL</span>
+                                            </a>
+                                        </li>
+
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
                                         @if (user != null && (user.account.role_id == 1 || true))
                                         {
@@ -660,6 +667,7 @@
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
     <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->
+    <script src="~/Scripts/updateJournal.js"></script>
     <script>
         $(".menu-link").each(function () {
             if ($(this).attr('href').trim() == window.location.pathname) {
@@ -668,24 +676,19 @@
                 $(this).parent().parent().parent().parent().addClass(' menu-item-here')
             }
         });
-        async function onLoad() {
-            return new Promise((resolve, reject) => {
-                gapi.load('auth2', function () {
-                    gapi.auth2.init();
-                });
-                resolve();
+        function onLoad() {
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
             });
-
         }
-        async function gp_signOut() {
-            await onLoad();
+        function gp_signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 window.location.href = '/Authen/Logout';
             });
         }
         $(document).ready(function () {
-
+            onLoad();
         });
     </script>
     @RenderSection("scripts")

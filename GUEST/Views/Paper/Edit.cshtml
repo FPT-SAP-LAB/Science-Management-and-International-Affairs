@@ -511,6 +511,23 @@
                     if (ck == "2" || ck == "6") {
                         if ($("#totalreward").val() != "" && $("#totalreward").val() != "0" && $("#kieuthuong").val() == "Canhan") {
                             $("#edit_submit_reward").show();
+
+                            var sum = 0;
+                            var total = $("#totalreward").val();
+                            if (total != null) total = total.split(",").join("");
+
+                            for (var j = 0; j < people.length; j++) {
+                                var data = people[j].money_string;
+                                if (people[j].money_string == null) data = "0";
+                                var temp = data.split(",").join("");
+                                sum = parseInt(sum) + parseInt(temp);
+                            }
+                            console.log(sum != parseInt(total));
+
+                            if (sum != parseInt(total)) $("#add_author_reward_edit").prop("disabled", false);
+                            else $(".edit-author").prop('disabled', true);
+                        } else if ($("#kieuthuong").val() == "Quydinh") {
+                            $(".edit-author").prop('disabled', true);
                         }
                     } else {
                         $("#edit_submit_reward").hide();

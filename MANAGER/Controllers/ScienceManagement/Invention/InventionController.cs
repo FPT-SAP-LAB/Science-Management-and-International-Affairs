@@ -94,5 +94,12 @@ namespace MANAGER.Controllers
             string mess = ir.changeStatus(inven);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult changeStatusManager(DetailInvention inven)
+        {
+            string mess = ir.changeStatusManager(inven);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Researcher;
+using ENTITIES.CustomModels;
 using GUEST.Models;
 using System;
 using System.Collections.Generic;
@@ -32,9 +34,11 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Add(string mssv_msnv, int title_id, string name, string email)
+        public JsonResult Add(HttpPostedFileBase identification, string person, string profile, string username)
         {
-            return Redirect("/");
+            AdditionalProfileRepo additionalProfileRepo = new AdditionalProfileRepo();
+            AlertModal<int> result = additionalProfileRepo.Add(identification, person, profile, username, CurrentAccount.AccountID(Session));
+            return Json(result);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Citation
         public string office_abbreviation { get; set; }
         public string mssv_msnv { get; set; }
         public int total_reward { get; set; }
+        public string total_reward_string { get; set; }
         public int sum { get; set; }
         public int request_id { get; set; }
     }

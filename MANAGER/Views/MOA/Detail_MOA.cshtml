@@ -264,15 +264,6 @@
 
     </script>
     <script>
-        //$('#search_nation').select2({
-        //    placeholder: 'Quốc gia',
-        //    allowClear: true,
-        //})
-
-        //$('#search_specialization').select2({
-        //    placeholder: 'Lĩnh vực',
-        //    allowClear: true,
-        //})
         $('#facility_detail_mou').select2({
             placeholder: 'Đơn vị - Cơ sở kí kết',
             allowClear: true,
@@ -1818,19 +1809,15 @@
         else if (compareDate($('#sign_date').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
-        else if (checkMOAPartnerAddDuplicated()) {
-            toastr.error('Đối tác đã có trong biên bản ghi nhớ');
-            return;
-        }
         else {
-            CheckMOAPartnerDateInvalid($('#sign_date').val(), $('#partner_name_form').val());
+            checkMOAPartnerAddDuplicated();
         }
     }
 
     function checkMOAPartnerAddDuplicated(){
             var obj =
             {
-                partner_name: $('#partner_name_form').val()
+                partner_id: $('#partner_name_form').val()
             };
             $.ajax({
                 url: "@Url.Action("CheckPartnerExistedInMOA", "PartnerMOA")",
@@ -1840,10 +1827,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
-                    if (data == "") {
-                        return false;
+                    if (data != "") {
+                        toastr.error('Đối tác đã có trong biên bản ghi nhớ');
                     } else {
-                        return true;
+                        CheckMOAPartnerDateInvalid($('#sign_date').val(), $('#partner_name_form').val());
                     }
                 },
                 error: function () {
@@ -1855,7 +1842,7 @@
     function checkMOAPartnerEditDuplicated(){
             var obj =
             {
-                partner_name: $('#partner_name_form_edit').val(),
+                partner_id: $('#partner_name_form_edit').val(),
                 mou_partner_id: $('#moa_partner_id_edit').val()
             };
             $.ajax({
@@ -1866,10 +1853,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
-                    if (data == "") {
-                        return false;
+                    if (data != "") {
+                        toastr.error('Đối tác đã có trong biên bản thỏa thuận');
                     } else {
-                        return true;
+                        editMOAPartnerAction();
                     }
                 },
                 error: function () {
@@ -2133,12 +2120,13 @@
         else if (compareDate($('#sign_date_edit').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
-        else if (checkMOAPartnerEditDuplicated()) {
-            toastr.error('Đối tác đã có trong biên bản thỏa thuận');
-            return;
-        }
         else {
-            var MOAPartnerEdited = {
+            checkMOAPartnerEditDuplicated(); 
+        }
+    }
+
+    function editMOAPartnerAction() {
+        var MOAPartnerEdited = {
                 scopes: $('#coop_scope_edit').val(),
                 partner_id: $('#partner_name_form_edit').val(),
                 sign_date_string: $('#sign_date_edit').val(),
@@ -2164,7 +2152,6 @@
                     //alert("fail");
                 }
             });
-        }
     }
 
 </script>

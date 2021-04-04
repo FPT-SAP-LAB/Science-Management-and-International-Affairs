@@ -25,7 +25,7 @@
                                 @{
                                     foreach (var item in ViewBag.type)
                                     {
-                                        <option value="@item.invention_type_id">@item.name</option>
+                                        <option value="@item.name">@item.name</option>
                                     }
                                 }
                             </select>
@@ -133,6 +133,7 @@
         var people = [];
         var requestid = "@ViewBag.request_id";
         var invenID = "@ViewBag.invenID";
+        var paper_id = "@ViewBag.invenID";
         $('#search_country').select2({
             allowClear: true
         });
@@ -203,7 +204,7 @@
             $("#search_country").val(country);
             $("#search_country").trigger('change');
 
-            var typeid = "@ViewBag.item.type_id";
+            var typeid = "@ViewBag.item.type_name";
             $("#search_type").val(typeid);
             $("#search_type").trigger('change');
 
@@ -227,6 +228,7 @@
                         add_author_tax = response.author[i].tax_code;
                         add_author_bank = response.author[i].bank_branch;
                         add_author_accno = response.author[i].bank_number;
+                        add_author_isReseacher = response.author[i].is_reseacher;
 
                         var temp_money = response.author[i].money_reward;
                         if (response.author[i].money_reward != null) add_author_reward = temp_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -237,7 +239,7 @@
                         id = new Date().getTime();
                         au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
                             add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, id);
+                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id);
                         $("#authors-info-container").append(au.getHTML());
                         var AddAuthor = {
                             name: add_author_name,
@@ -252,10 +254,13 @@
                             title_id: response.author[i].title_id,
                             people_id: response.author[i].people_id,
                             temp_id: id,
-                            office_abbreviation: response.author[i].office_abbreviation
+                            office_abbreviation: response.author[i].office_abbreviation,
+                            is_reseacher: response.author[i].is_reseacher,
+                            money_string: add_author_reward
                         }
                         people.push(AddAuthor);
                     }
+                    if (ck != "5") $(".edit").prop("disabled", true);
                     $("#loading").hide();
                 },
                 error: function () {
