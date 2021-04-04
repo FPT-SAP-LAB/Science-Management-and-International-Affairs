@@ -34,6 +34,7 @@
     <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;
@@ -150,7 +151,7 @@
     <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/bundle.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
     <script>
         var login_btn;
         $(document).ready(function () {
@@ -163,7 +164,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Authen/SigninGoogleAsync');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
+            xhr.onload = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     if (this.response == '""') {
                         toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
@@ -176,11 +177,6 @@
                         login_btn.stopLoading();
                         window.location.href = this.responseURL;
                     }
-                } else {
-                    auth2.signOut().then(function () {
-                        $('#login_btn').attr('disabled', false);
-                        login_btn.stopLoading();
-                    });
                 }
             };
             xhr.send('idtoken=' + id_token);
