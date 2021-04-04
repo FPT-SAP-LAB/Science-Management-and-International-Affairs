@@ -258,6 +258,10 @@
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\SaveAcademicCollaborationEntities\SaveAcadCollab_Person.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusHistory.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\StatusType.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOAPartnerScope_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOAPartnerScope_Ext_Inactive.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOUPartnerScope_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\AutoActiveInactiveMOUMOA\MOUPartnerScope_Ext_Inactive.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\CustomScope.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOABasicInfo\ExMOAAdd.cs" />

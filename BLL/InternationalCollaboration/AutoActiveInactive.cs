@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels.InternationalCollaboration.AutoActiveInactiveMOUMOA;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -258,27 +259,5 @@ namespace BLL.InternationalCollaboration
                 throw e;
             }
         }
-    }
-
-    public class MOUPartnerScope_Ext
-    {
-        public int mou_id { get; set; }
-    }
-
-    public class MOUPartnerScope_Ext_Inactive
-    {
-        public int mou_id { get; set; }
-        public int checker { get; set; }
-    }
-
-    public class MOAPartnerScope_Ext
-    {
-        public int moa_id { get; set; }
-    }
-
-    public class MOAPartnerScope_Ext_Inactive
-    {
-        public int moa_id { get; set; }
-        public int checker { get; set; }
     }
 }

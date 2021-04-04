@@ -859,7 +859,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 dbContext.Rollback();
                                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
-
                         }
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Cập nhật cán bộ giảng viên thành công.");
                     }
