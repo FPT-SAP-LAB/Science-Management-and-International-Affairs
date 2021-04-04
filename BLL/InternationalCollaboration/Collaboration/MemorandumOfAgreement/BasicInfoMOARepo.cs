@@ -265,7 +265,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 else
                                 {
                                     partner_scope_id_item = psCheck.partner_scope_id;
-                                    psCheck.reference_count += 1;
+                                    //psCheck.reference_count += 1;
                                 }
                                 db.SaveChanges();
                                 //add to MOAPartnerScope
@@ -308,13 +308,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     db.Entry(mb).State = EntityState.Modified;
 
                     List<MOAPartnerScope> moaPSList = db.MOAPartnerScopes.Where(x => x.moa_bonus_id == input.moa_bonus_id).ToList();
-                    foreach (MOAPartnerScope moaPSItem in moaPSList.ToList())
-                    {
-                        //decrese ref_count of old PartnerScope records.
-                        PartnerScope oldPS = db.PartnerScopes.Find(moaPSItem.partner_scope_id);
-                        oldPS.reference_count -= 1;
-                        db.Entry(oldPS).State = EntityState.Modified;
-                    }
+                    //foreach (MOAPartnerScope moaPSItem in moaPSList.ToList())
+                    //{
+                    //    //decrese ref_count of old PartnerScope records.
+                    //    PartnerScope oldPS = db.PartnerScopes.Find(moaPSItem.partner_scope_id);
+                    //    oldPS.reference_count -= 1;
+                    //    db.Entry(oldPS).State = EntityState.Modified;
+                    //}
                     //del records of MOUPartnerScope.
                     db.MOAPartnerScopes.RemoveRange(moaPSList);
                     db.SaveChanges();
@@ -346,7 +346,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 }
                                 else
                                 {
-                                    psCheck.reference_count += 1;
+                                    //psCheck.reference_count += 1;
                                     db.MOAPartnerScopes.Add(new MOAPartnerScope
                                     {
                                         partner_scope_id = psCheck.partner_scope_id,
@@ -360,9 +360,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 
                     //checkpoint 2
                     db.SaveChanges();
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
