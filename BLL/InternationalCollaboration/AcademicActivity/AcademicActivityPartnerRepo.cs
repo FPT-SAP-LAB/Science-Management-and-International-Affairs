@@ -58,7 +58,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         {
                             try
                             {
-                                autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                                List<int> list_partner_scope_id = new List<int>();
+                                list_partner_scope_id.Add(partnerScope.partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                                 trans.Commit();
                             }
                             catch (Exception e)
@@ -211,7 +213,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         {
                             try
                             {
-                                autoActiveInactive.changeStatusMOUMOA(activityPartner.partner_scope_id, db);
+                                List<int> list_partner_scope_id = new List<int>();
+                                list_partner_scope_id.Add(activityPartner.partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                                 trans.Commit();
                             }
                             catch (Exception e)
@@ -333,7 +337,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                         try
                         {
-                            autoActiveInactive.changeStatusMOUMOA(partnerScope.partner_scope_id, db);
+                            List<int> list_partner_scope_id = new List<int>();
+                            list_partner_scope_id.Add(partnerScope.partner_scope_id);
+                            autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                             trans.Commit();
                         }
                         catch (Exception e)
