@@ -84,7 +84,7 @@
                     <th>Đơn vị công tác</th>
                     <th>Tổng số trích dẫn</th>
                     <th>Tổng thưởng</th>
-                    <th>Ghi chú</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -98,8 +98,8 @@
                             <td>@item.mssv_msnv</td>
                             <td>@item.office_abbreviation</td>
                             <td>@item.sum</td>
-                            <td>@item.total_reward</td>
-                            <td></td>
+                            <td>@item.total_reward_string</td>
+                            <td><button id="@item.request_id" class="btn btn-sm btn-clean btn-icon btn_submit_detail" title="View"> <i class="fas fa-eye"></i> </button></td>
                         </tr>
                     }
                     count++;
@@ -149,6 +149,28 @@
     <script>
         var uppy1;
         var formdata;
+
+        function changeMoney(temp) {
+            return temp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        $(".btn_submit_detail").click(function () {
+            var id = this.id;
+            var form = document.createElement("form");
+            var element1 = document.createElement("input");
+
+            form.method = "POST";
+            form.action = "/Citation/Detail";
+
+            element1.value = id;
+            element1.name = "id";
+            form.appendChild(element1);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        });
+
         $("#btn_submit").click(function () {
             $("#loading").show();
             formData = new FormData();

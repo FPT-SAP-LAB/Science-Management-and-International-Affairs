@@ -9,6 +9,7 @@ using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace GUEST.Controllers
         CommentRepo cr = new CommentRepo();
         MasterDataRepo md = new MasterDataRepo();
 
+        [Auther(RightID = "2")]
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bằng sáng chế";

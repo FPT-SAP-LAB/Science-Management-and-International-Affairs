@@ -31,20 +31,30 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
+        public int getStatus(string id)
+        {
+            try
+            {
+                int request_id = Int32.Parse(id);
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                return rc.status_id;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
         public AuthorInfo getAuthor(string id)
         {
             AuthorInfo item = new AuthorInfo();
-            string sql = @"select po.*, o.office_abbreviation, ct.contract_id, t.title_id, rc.total_reward, pro.bank_branch, pro.bank_number, pro.mssv_msnv, pro.tax_code, pro.identification_number, ct.name as 'contract_name'
+            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher'
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
-	                            join [General].People po on rc.people_id = po.people_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on po.office_id = o.office_id
-	                            join [General].Area a on o.area_id = a.area_id
-	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [SM_Researcher].PeopleTitle pt on po.people_id = pt.people_id
-	                            join [SM_MasterData].Title t on pt.title_id = t.title_id
+	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
+	                            join [General].Office o on o.office_id = ah.office_id
+	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
                             where rc.request_id = @id";
             item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).FirstOrDefault();
             return item;
@@ -81,87 +91,46 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public AuthorInfo addAuthor(List<AddAuthor> list)
+        public Author addAuthor(List<AddAuthor> list)
         {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                PaperRepo pr = new PaperRepo();
-                List<string> listMail = db.Database.SqlQuery<string>("select email from [General].People").ToList();
-                string listmail = "";
-                string tempSql = "";
-                List<SqlParameter> listParam1 = new List<SqlParameter>();
-                int count = 1;
+                Author author = new Author();
                 foreach (var item in list)
                 {
-                    if (!listMail.Contains(item.email))
+                    author.name = item.name;
+                    author.email = item.email;
+
+                    if (item.office_id != 0)
                     {
-                        int peopleid = pr.addPeople(item.name, item.email, item.office_id);
-                        if (item.office_abbreviation != "Khác")
-                        {
-                            item.people_id = peopleid;
-                            pr.addProfile(item);
-                        }
+                        author.office_id = item.office_id;
+                        author.bank_number = item.bank_number;
+                        author.bank_branch = item.bank_branch;
+                        author.tax_code = item.tax_code;
+                        author.identification_number = item.identification_number;
+                        author.mssv_msnv = item.mssv_msnv;
+                        author.is_reseacher = item.is_reseacher;
+                        author.title_id = item.title_id;
+                        author.contract_id = item.contract_id;
                     }
-                    else
-                    {
-                        Person p = db.People.Where(x => x.email == item.email).FirstOrDefault();
-                        p.name = item.name;
-                        p.phone_number = item.phone_number;
-                        p.office_id = item.office_id;
-                        if (item.office_abbreviation != "Khác")
-                        {
-                            Profile pro = (from a in db.Profiles
-                                           join b in db.People on a.people_id equals b.people_id
-                                           where b.email == item.email
-                                           select a).FirstOrDefault();
-                            pro.bank_branch = item.bank_branch;
-                            //pro.bank_number = item.bank_number;
-                            pro.tax_code = item.tax_code;
-                            pro.identification_number = item.identification_number;
-                            pro.mssv_msnv = item.mssv_msnv;
-
-                            tempSql += " update [SM_Researcher].PeopleContract set contract_id = @contract" + count + " where people_id = @people" + count;
-                            SqlParameter tempParam1 = new SqlParameter("@contract" + count, item.contract_id);
-                            listParam1.Add(tempParam1);
-
-                            //    tempSql += " delete from [SM_Researcher].PeopleTitle where people_id = @people" + count + " insert into [SM_Researcher].PeopleTitle values (@people" + count + ", @title" + count + ")";
-                            //    SqlParameter tempParam2 = new SqlParameter("@title" + count, item.title_id);
-                            //    listParam1.Add(tempParam2);
-
-                            SqlParameter tempParam3 = new SqlParameter("@people" + count, pro.people_id);
-                            listParam1.Add(tempParam3);
-                        }
-                    }
-                    listmail += "," + item.email;
+                    db.Authors.Add(author);
                 }
                 db.SaveChanges();
-                listmail = listmail.Substring(1);
-                string[] mail = listmail.Split(',');
-                String strAppend = "";
-                List<SqlParameter> listParam = new List<SqlParameter>();
-                for (int i = 0; i < mail.Length; i++)
-                {
-                    SqlParameter param = new SqlParameter("@idParam" + i, mail[i]);
-                    listParam.Add(param);
-                    string paramName = "@idParam" + i;
-                    strAppend += paramName + ",";
-                }
-                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
-                string sql = @"select po.people_id, pro.mssv_msnv
-                           from [General].People po left outer join [General].Profile pro on po.people_id = pro.people_id
-                           where po.email in (" + strAppend + ")";
-                AuthorInfo Author = db.Database.SqlQuery<AuthorInfo>(sql, listParam.ToArray()).FirstOrDefault();
-                return Author;
+                dbc.Commit();
+                return author;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                dbc.Rollback();
                 return null;
             }
         }
 
-        public string addCitationRequest(BaseRequest br, AuthorInfo author)
+        public string addCitationRequest(BaseRequest br, Author author)
         {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 RequestCitation rc = new RequestCitation
@@ -173,17 +142,20 @@ namespace BLL.ScienceManagement.Citation
                 };
                 db.RequestCitations.Add(rc);
                 db.SaveChanges();
+                dbc.Commit();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                dbc.Rollback();
                 return "ff";
             }
         }
 
         public string addCitaion(List<ENTITIES.Citation> citation)
         {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 foreach (var item in citation)
@@ -191,17 +163,20 @@ namespace BLL.ScienceManagement.Citation
                     db.Citations.Add(item);
                 }
                 db.SaveChanges();
+                dbc.Commit();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                dbc.Rollback();
                 return "ff";
             }
         }
 
         public string addRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
         {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 string sql = "";
@@ -215,16 +190,18 @@ namespace BLL.ScienceManagement.Citation
                 SqlParameter param2 = new SqlParameter("@request", br.request_id);
                 listParam.Add(param2);
                 db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
+                dbc.Commit();
                 return "ss";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                dbc.Rollback();
                 return "ff";
             }
         }
 
-        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, AuthorInfo author)
+        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, Author author)
         {
             try
             {
@@ -241,16 +218,19 @@ namespace BLL.ScienceManagement.Citation
                 SqlParameter param2 = new SqlParameter("@request", br.request_id);
                 listParam.Add(param2);
                 db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
+
                 foreach (var item in citation)
                 {
                     db.Citations.Remove(db.Citations.Single(s => s.citation_id == item.citation_id));
                 }
                 db.SaveChanges();
+
                 addCitaion(newcitation);
                 addRequestHasCitation(newcitation, br);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
                 rc.people_id = author.people_id;
                 rc.status_id = 3;
+
                 db.SaveChanges();
                 return "ss";
             }
@@ -263,10 +243,10 @@ namespace BLL.ScienceManagement.Citation
 
         public List<PendingCitation_manager> getListPending()
         {
-            string sql = @"select acc.email, br.created_date, br.request_id
+            string sql = @"select acc.email, br.created_date, br.request_id, rc.status_id
                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on br.account_id = acc.account_id
-                           where rc.status_id = 3";
+                           where rc.status_id = 3 or  rc.status_id = 5";
             List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
             return list;
         }

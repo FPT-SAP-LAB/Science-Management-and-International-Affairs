@@ -6,6 +6,7 @@ using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,6 +42,9 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = id;
 
+            int status = cr.getStatus(id);
+            ViewBag.status = status;
+
             return View();
         }
 
@@ -48,6 +52,11 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Các trích dẫn đang chờ quyết định";
             List<WaitDecisionCitation> list = cr.getListWait();
+            foreach (var item in list)
+            {
+                CultureInfo cul = new CultureInfo("vi-VN");
+                item.total_reward_string = item.total_reward.ToString("C0", cul.NumberFormat);
+            }
             ViewBag.wait = list;
 
             return View();

@@ -13,6 +13,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using BLL.ModelDAL;
+using GUEST.Support;
 
 namespace GUEST.Controllers
 {
@@ -34,6 +35,8 @@ namespace GUEST.Controllers
             {
                 new PageTree("Đề nghị hỗ trợ hội nghị","/ConferenceSponsor"),
             };
+
+        [Auther(RightID = "27")]
         public ActionResult Index()
         {
             ViewBag.pagesTree = pagesTree;

@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        HỆ THỐNG QUẢN LÝ KHOA HỌC & HỢP TÁC QUỐC TẾ
+        HỆ THỐNG QUẢN LÝ TÀI KHOẢN KHOA HỌC & HỢP TÁC QUỐC TẾ
     </title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -168,7 +168,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Home/SigninGoogleAsync');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
+            xhr.onload = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     if (this.response == '""') {
                         toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
