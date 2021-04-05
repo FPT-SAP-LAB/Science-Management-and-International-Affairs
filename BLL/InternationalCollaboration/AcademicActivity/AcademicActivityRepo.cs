@@ -233,16 +233,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Articles.Remove(a);
                     }
                     db.SaveChanges();
+                    deleteFileInActivity(id);
                     ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
-                    File f = db.Files.Find(aa.file_id);
-                    if (f != null)
+                    if (aa.file_id != null)
                     {
-                        GoogleDriveService.DeleteFile(f.file_drive_id);
+                        GoogleDriveService.DeleteFile(aa.File.file_drive_id);
                     }
-                    db.SaveChanges();
                     db.AcademicActivities.Remove(aa);
-                    db.SaveChanges();
-                    db.Files.Remove(f);
+                    if (aa.file_id != null)
+                    {
+                        File f = db.Files.Find(aa.file_id);
+                        db.Files.Remove(f);
+                    }
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -255,7 +257,39 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool clone(cloneBase obj)
+        public void deleteFileInActivity(int activity_id)
+        {
+            List<ActivityOffice> aos = db.ActivityOffices.Where(x => x.activity_id == activity_id).ToList();
+            foreach (ActivityOffice ao in aos)
+            {
+                List<ActivityExpenseCategory> aecs = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                foreach (ActivityExpenseCategory aec in aecs)
+                {
+                    List<ActivityExpenseDetail> aeds = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec.expense_category_id).ToList();
+                    foreach (ActivityExpenseDetail aed in aeds)
+                    {
+                        if (aed.file_id != null)
+                        {
+                            File f = db.Files.Find(aed.file_id);
+                            GoogleDriveService.DeleteFile(f.file_drive_id);
+                            db.Files.Remove(f);
+                        }
+                    }
+                }
+            }
+            List<ActivityPartner> aps = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
+            foreach (ActivityPartner ap in aps)
+            {
+                if (ap.file_id != null)
+                {
+                    File f = db.Files.Find(ap.file_id);
+                    GoogleDriveService.DeleteFile(f.file_drive_id);
+                    db.Files.Remove(f);
+                }
+            }
+            db.SaveChanges();
+        }
+        public bool clone(cloneBase obj, int account_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -297,7 +331,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     int activity_id = aa.activity_id;
-                    cloneContent(obj, av_new, activity_id);
+                    cloneContent(obj, av_new, activity_id, account_id);
                     transaction.Commit();
                     return true;
                 }
@@ -309,12 +343,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneContent(cloneBase obj, ArticleVersion av_new, int activity_id)
+        public void cloneContent(cloneBase obj, ArticleVersion av_new, int activity_id, int account_id)
         {
             if (obj.content != null)
             {
                 cloneKP(obj, obj.content.Contains("KP"), activity_id);
-                cloneDTC(obj, obj.content.Contains("DTC"), activity_id);
+                cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
                 cloneND(obj, obj.content.Contains("ND"), activity_id, av_new);
                 cloneTD(obj, obj.content.Contains("TD"), activity_id);
             }
@@ -404,17 +438,19 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneDTC(cloneBase obj, bool start, int activity_id)
+        public void cloneDTC(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
-                List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
+                List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == obj.id).ToList();
                 foreach (ActivityPartner ap in partners)
                 {
                     db.ActivityPartners.Add(new ActivityPartner
                     {
                         activity_id = activity_id,
-                        partner_scope_id = ap.partner_scope_id
+                        partner_scope_id = ap.partner_scope_id,
+                        account_id = account_id,
+                        add_time = DateTime.Now
                     });
                 }
                 db.SaveChanges();
