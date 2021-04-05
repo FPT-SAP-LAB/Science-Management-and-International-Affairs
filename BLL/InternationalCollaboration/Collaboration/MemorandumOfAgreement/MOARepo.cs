@@ -367,7 +367,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public bool checkDuplicatePartnersMOA(List<MOAPartnerInfo> PartnerInfo,int mou_id)
+        public bool checkDuplicatePartnersMOA(List<MOAPartnerInfo> PartnerInfo, int mou_id)
         {
             string partner_id_para = "";
             foreach (MOAPartnerInfo item in PartnerInfo)
