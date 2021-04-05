@@ -69,7 +69,7 @@
                                         <th>Email</th>
                                         <th>Đơn vị</th>
                                         <th>Cơ sở</th>
-                                        <th>MSNV/ MSSV</th>
+                                        <th>Số điện thoại</th>
                                         <th>Trạng thái</th>
                                         <th nowrap="nowrap"></th>
                                     </tr>
@@ -96,7 +96,7 @@
                                         <th>Email</th>
                                         <th>Đơn vị</th>
                                         <th>Cơ sở</th>
-                                        <th>MSNV/ MSSV</th>
+                                        <th>Số điện thoại</th>
                                         <th>Trạng thái</th>
                                         <th nowrap="nowrap"></th>
                                     </tr>
@@ -125,7 +125,7 @@
                 <div class="form-group row">
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Họ và tên <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" placeholder="Họ và tên" required autocomplete="off" id="add_name" />
+                        <input type="text" class="form-control" placeholder="Họ và tên" required spellcheck="false" autocomplete="off" id="add_name" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="font-weight-bolder">Tư cách <span style="color:red">*</span></label>
@@ -134,10 +134,14 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Email <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" placeholder="Email" required autocomplete="off" id="add_email" />
+                        <input type="text" class="form-control" placeholder="Email" spellcheck="false" required autocomplete="off" id="add_email" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Đơn vị</label>
+                        <label class="col-form-label font-weight-bolder">Số điện thoại <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" placeholder="Số điện thoại" spellcheck="false" autocomplete="off" id="add_msnv_mssv" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Đơn vị <span style="color:red">*</span></label>
                         <select class="form-control" required id="add_don_vi" onchange="getAreaByUnit()">
                             @{
                                 foreach (var unit in ViewBag.internalunit)
@@ -148,19 +152,15 @@
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Cơ Sở</label>
+                        <label class="col-form-label font-weight-bolder">Cơ Sở <span style="color:red">*</span></label>
                         <select class="form-control" required id="add_co_so">
                         </select>
-                    </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">MSNV / MSSV</label>
-                        <input type="text" class="form-control" placeholder="MSNV / MSSV" autocomplete="off" id="add_msnv_mssv" />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -239,6 +239,7 @@
                             eval("datatable" + this.id + ".ajax.reload();");
                         });
                         clearModal('#addModal');
+                        $('#addModal').modal('hide');
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }

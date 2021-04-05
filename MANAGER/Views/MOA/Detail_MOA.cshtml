@@ -1843,7 +1843,7 @@
             var obj =
             {
                 partner_id: $('#partner_name_form_edit').val(),
-                mou_partner_id: $('#moa_partner_id_edit').val()
+                moa_partner_id: $('#moa_partner_id_edit').val()
             };
             $.ajax({
                 url: "@Url.Action("CheckPartnerExistedInEditMOA", "PartnerMOA")",
@@ -1963,7 +1963,8 @@
                 $("#phone_edit").val(data.contact_point_phone);
                 $("#address_edit").val(data.address);
                 $("#specialization_edit").val(data.specialization_name);
-                moa_partner_id_item = moa_partner_id;
+                $("#moa_partner_id_edit").val(moa_partner_id);
+                //moa_partner_id_item = moa_partner_id;
                 loadDataMOAPartnerForEdit(data);
             },
             error: function () {
@@ -2094,7 +2095,15 @@
                 ,
                 { data: "content" },
                 { data: "full_name" },
-                { data: "add_time_string" }
+                {
+                    data: "add_time",
+                    render: function (data, type) {
+                        if (type === "sort" || type === "") {
+                            return data;
+                        }
+                        return moment(data).format('DD-MM-YYYY hh:mm:ss A');
+                    }
+                }
             ]
         });
     }
@@ -2130,7 +2139,7 @@
                 scopes: $('#coop_scope_edit').val(),
                 partner_id: $('#partner_name_form_edit').val(),
                 sign_date_string: $('#sign_date_edit').val(),
-                moa_partner_id: moa_partner_id_item
+                moa_partner_id: $("#moa_partner_id_edit").val()
             }
             $.ajax({
                 url: "@Url.Action("Edit_Moa_Partner", "PartnerMOA")",

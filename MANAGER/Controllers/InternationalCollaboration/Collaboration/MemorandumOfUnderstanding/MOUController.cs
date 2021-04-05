@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using OfficeOpenXml;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -21,6 +22,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         readonly BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
         readonly PartnerMOURepo mou_partner = new PartnerMOURepo();
         readonly MOARepo moa = new MOARepo();
+        [Auther(RightID = "5")]
         public ActionResult List()
         {
             try
@@ -81,6 +83,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult Delete_Mou(int mou_id)
         {
             try
@@ -94,6 +97,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult Add_Mou(MOUAdd input)
         {
             try
@@ -135,6 +139,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult ExportMOUExcel()
         {
             try
@@ -185,6 +190,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
                     ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
                     ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+                    ViewBag.listCountry = mou.GetCountries();
 
                     //MOA
                     ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
