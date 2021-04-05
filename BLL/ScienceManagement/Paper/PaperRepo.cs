@@ -89,6 +89,7 @@ namespace BLL.ScienceManagement.Paper
             Scimagojr sci;
             try
             {
+                //download file csv
                 string url = "https://www.scimagojr.com/journalrank.php?out=xls";
 
                 string name = RandomString(10);
@@ -100,7 +101,7 @@ namespace BLL.ScienceManagement.Paper
                 WebClient client = new WebClient();
                 client.DownloadFile(url, savePath);
 
-                //List<dynamic> issues;
+                //update db
                 db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].Scimagojr");
                 using (var reader = new StreamReader(savePath))
                 {
@@ -141,6 +142,10 @@ namespace BLL.ScienceManagement.Paper
                             }
                         }
                         db.SaveChanges();
+
+                        //delete folder
+                        System.IO.DirectoryInfo di = new DirectoryInfo(path);
+                        di.Delete(true);
                     }
                 }
             }
