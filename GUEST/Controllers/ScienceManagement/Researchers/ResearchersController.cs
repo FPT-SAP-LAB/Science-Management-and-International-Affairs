@@ -97,7 +97,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
            };
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            if(CurrentAccount.getProfile(Session).people_id != id)
+            if (CurrentAccount.getProfile(Session).people_id != id)
             {
                 Response.Redirect("/ErrorPage/Error");
             }
