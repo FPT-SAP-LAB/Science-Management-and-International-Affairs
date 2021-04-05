@@ -2221,7 +2221,6 @@
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Edit.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\ShortTerm\UpdateContent.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\StatusHistory.js" />
-    <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\Program_Datatable.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\LongTerm_Program_Datatable.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Search.js" />
     <Content Include="Scripts\datetime-moment.js" />
@@ -2231,7 +2230,6 @@
     <Content Include="Excel_template\Download\Paper.xlsx" />
     <Content Include="Scripts\updateJournal.js" />
     <Content Include="Web.config" />
-    <Content Include="Word_Template\ConferenceSponsor\AppointmentForm.doc" />
     <Content Include="Word_Template\ConferenceSponsor\RequestForm.docx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -2386,11 +2384,13 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Word_Template\ConferenceSponsor\AppointmentForm.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
+    <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\" />
     <Folder Include="Content\Custom_CSS\MOA\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\CollabScope\" />
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
