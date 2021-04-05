@@ -284,6 +284,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
+    <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
@@ -2470,6 +2471,7 @@
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\PaperCriteria\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
