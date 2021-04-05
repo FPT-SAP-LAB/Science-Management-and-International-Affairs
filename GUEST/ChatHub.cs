@@ -19,10 +19,11 @@ namespace GUEST
         {
             // Call the addNewMessageToPage method to update clients.
             AccountConnections.TryGetValue(account_id, out List<string> Connections);
-            foreach (var conn in Connections)
-            {
-                Clients.Client(conn).addNewMessageToPage(account_id, message);
-            }
+            if (Connections != null)
+                foreach (var conn in Connections)
+                {
+                    Clients.Client(conn).addNewMessageToPage(account_id, message);
+                }
         }
         public void Register(string connID, int account_id)
         {
