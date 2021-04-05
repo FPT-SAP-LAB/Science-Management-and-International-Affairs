@@ -124,7 +124,7 @@ namespace BLL.ScienceManagement.Paper
                                 sci.SJR_Best_Quartile = csv.GetField(6);
                                 sci.H_index = csv.GetField(7);
                                 sci.Total_Docs_2019 = csv.GetField(8);
-                                sci.Total_Cites_3years = csv.GetField(9);
+                                sci.Total_Docs_3years = csv.GetField(9);
                                 sci.Total_Refs = csv.GetField(10);
                                 sci.Total_Cites_3years = csv.GetField(11);
                                 sci.Citable_Docs_3years = csv.GetField(12);
