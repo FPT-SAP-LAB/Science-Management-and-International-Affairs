@@ -19,6 +19,12 @@
         background: darkgray;
         cursor: pointer;
     }
+
+    #fix_table_content img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+    }
 </style>
 <!-- begin::Card-->
 <div class="card card-custom overflow-hidden">
@@ -85,7 +91,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-9">
+            <div class="col-9" id="fix_table_content">
                 @foreach (var item in ViewBag.SubContent)
                 {
                     <div id="p-@item.id" class="event-content" hidden>
@@ -120,17 +126,9 @@
             $('.event-content').attr("hidden", true);
             $('#p-' + id).removeAttr('hidden');
         });
-                //function click_load_detail(content_id) {
-                //    var id = { content_id: content_id}
-                //    $.ajax({
-                //        url: '/AcademicActivity/DetailContent',
-                //        type: 'post',
-                //        dataType: 'json',
-                //        data: id,
-                //        success: function (data) {
-                //            $('#event-content').text(data.content)
-                //        }
-                //    })
-                //}
+
+        $(document).ready(function () {
+            $('#fix_table_content table').wrap('<div style="overflow-x: auto"></div>');
+        })
     </script>
 }
