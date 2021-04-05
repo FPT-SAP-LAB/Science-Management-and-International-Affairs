@@ -59,11 +59,11 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
                 ViewBag.list = list;
                 int initNumber = datatable.Start < list.RecordsTotal ? (list.RecordsTotal + datatable.Length) : list.RecordsTotal;
-                return Json(new { success = true, list = list , initNumber= initNumber });
+                return Json(new { success = true, list = list, initNumber = initNumber });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return Json(new { success = false});
+                return Json(new { success = false });
             }
         }
         public ActionResult ViewInfo()
