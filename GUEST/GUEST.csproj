@@ -554,6 +554,7 @@
     <Content Include="Content\assets\media\bg\bg-9.jpg" />
     <Content Include="Content\assets\media\bg\demo-7.jpg" />
     <Content Include="Content\assets\media\bg\demo4-bg-footer.jpg" />
+    <Content Include="Content\assets\media\bg\event_banner.jpg" />
     <Content Include="Content\assets\media\bg\home-2-bg.svg" />
     <Content Include="Content\assets\media\bg\home_bg_htqt.png" />
     <Content Include="Content\assets\media\bg\home_bg_qlkh.png" />
