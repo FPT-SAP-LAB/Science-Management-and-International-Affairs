@@ -46,19 +46,21 @@ namespace BLL.ScienceManagement.Researcher
                     db.Profiles.Add(profile);
                     db.SaveChanges();
 
-                    Google.Apis.Drive.v3.Data.File IdentificationFile = GoogleDriveService.UploadProfileMedia(identification, account.email);
-                    Id = IdentificationFile.Id;
-                    File file = new File
+                    if (identification != null)
                     {
-                        file_drive_id = IdentificationFile.Id,
-                        name = identification.FileName,
-                        link = IdentificationFile.WebViewLink
-                    };
-                    db.Files.Add(file);
-                    db.SaveChanges();
-                    profile.identification_file_id = file.file_id;
-
-                    db.SaveChanges();
+                        Google.Apis.Drive.v3.Data.File IdentificationFile = GoogleDriveService.UploadProfileMedia(identification, account.email);
+                        Id = IdentificationFile.Id;
+                        File file = new File
+                        {
+                            file_drive_id = IdentificationFile.Id,
+                            name = identification.FileName,
+                            link = IdentificationFile.WebViewLink
+                        };
+                        db.Files.Add(file);
+                        db.SaveChanges();
+                        profile.identification_file_id = file.file_id;
+                        db.SaveChanges();
+                    }
                     trans.Commit();
                     return new AlertModal<int>(profile.people_id, true);
                 }

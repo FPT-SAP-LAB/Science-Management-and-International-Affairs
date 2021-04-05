@@ -715,6 +715,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             mou.mou_id = id;
                             mou.mou_status_id = 2;
                             mou.datetime = DateTime.Now;
+                            mou.reason = "Quá hạn";
                             db.MOUStatusHistories.Add(mou);
                             db.SaveChanges();
                         }
