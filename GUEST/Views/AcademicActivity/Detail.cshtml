@@ -95,7 +95,7 @@
                 @foreach (var item in ViewBag.SubContent)
                 {
                     <div id="p-@item.id" class="event-content" hidden>
-                        @Html.Raw(item.content)<br/>
+                        @Html.Raw(item.content)<br />
                         @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0)
                         {
                             <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">@rm.GetString("Registration")</a>
@@ -128,7 +128,7 @@
         });
 
         $(document).ready(function () {
-            $('#fix_table_content table').wrap('<div style="overflow-x: auto"></div>');
+            $('#fix_table_content table').wrap('<div style="overflow-x: auto;"></div>');
         })
     </script>
 }
