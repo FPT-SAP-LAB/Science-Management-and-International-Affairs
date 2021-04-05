@@ -212,6 +212,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
@@ -305,12 +306,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 db.SaveChanges();
                                 PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
                                 partner_scope_id = newObjPS.partner_scope_id;
+                                //add to total PS List
+                                totalRelatedPS.Add(newObjPS);
                             }
                             else
                             {
                                 objPS.reference_count += 1;
                                 db.Entry(objPS).State = EntityState.Modified;
                                 partner_scope_id = objPS.partner_scope_id;
+                                //add to total PS List
+                                totalRelatedPS.Add(objPS);
                             }
                             db.MOUPartnerScopes.Add(new MOUPartnerScope
                             {
@@ -333,6 +338,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -391,6 +412,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     //delete partner_scope_id 
                     //delete from ExMOA => MOA => ExMOU => MOU
                     string sql_ex_moa = @"select t3.* from IA_Collaboration.MOABonus t1
@@ -426,20 +448,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     List<PartnerScope> mou_list = db.Database.SqlQuery<PartnerScope>(sql_mou,
                         new SqlParameter("mou_id", mou_id)).ToList();
 
-                    if (ex_moa_list != null)
-                    {
-                        foreach (PartnerScope item in ex_moa_list)
-                        {
-                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
-                        }
-                    }
-                    if (moa_list != null)
-                    {
-                        foreach (PartnerScope item in moa_list)
-                        {
-                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
-                        }
-                    }
+                    //if (ex_moa_list != null)
+                    //{
+                    //    foreach (PartnerScope item in ex_moa_list)
+                    //    {
+                    //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                    //    }
+                    //}
+                    //if (moa_list != null)
+                    //{
+                    //    foreach (PartnerScope item in moa_list)
+                    //    {
+                    //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                    //    }
+                    //}
                     if (ex_mou_list != null)
                     {
                         foreach (PartnerScope item in ex_mou_list)
@@ -455,12 +477,32 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                     }
                     db.SaveChanges();
+                    totalRelatedPS.AddRange(ex_moa_list);
+                    totalRelatedPS.AddRange(moa_list);
+                    totalRelatedPS.AddRange(ex_mou_list);
+                    totalRelatedPS.AddRange(mou_list);
 
                     MOU mou = db.MOUs.Find(mou_id);
                     mou.is_deleted = true;
                     db.Entry(mou).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

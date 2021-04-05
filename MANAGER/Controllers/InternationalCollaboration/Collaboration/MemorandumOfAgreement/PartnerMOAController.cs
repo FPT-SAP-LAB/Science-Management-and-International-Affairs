@@ -58,6 +58,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult deletePartnerMOA(int moa_partner_id)
         {
             try
@@ -79,6 +80,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Moa_Partner(MOAPartnerInfo input)
         {
             try
@@ -101,6 +103,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Edit_Moa_Partner(MOAPartnerEdited input)
         {
             try

@@ -133,6 +133,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime moa_start_date = DateTime.ParseExact(input.sign_date_moa_add, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //get partner_id
                     //int partner_id = db.Partners.Where(x => x.partner_name.Equals(input.partnername_add)).First().partner_id;
@@ -155,29 +156,42 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 partner_scope_id = psCheck.partner_scope_id,
                                 moa_id = moa_id
                             });
+                            totalRelatedPS.Add(psCheck);
                         }
-                        else
-                        {
-                            PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = itemScope,
-                                reference_count = 1
-                            });
-                            db.SaveChanges();
-                            db.MOAPartnerScopes.Add(new MOAPartnerScope
-                            {
-                                partner_scope_id = psAdded.partner_scope_id,
-                                moa_id = moa_id
-                            });
-                        }
+                        //else
+                        //{
+                        //    PartnerScope psAdded = db.PartnerScopes.Add(new PartnerScope
+                        //    {
+                        //        partner_id = input.partner_id,
+                        //        scope_id = itemScope,
+                        //        reference_count = 1
+                        //    });
+                        //    db.SaveChanges();
+                        //    db.MOAPartnerScopes.Add(new MOAPartnerScope
+                        //    {
+                        //        partner_scope_id = psAdded.partner_scope_id,
+                        //        moa_id = moa_id
+                        //    });
+                        //}
                     }
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -192,6 +206,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.sign_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //edit MOAPartner
                     MOAPartner mp = db.MOAPartners.Where(x => x.moa_partner_id == input.moa_partner_id).First();
@@ -208,7 +223,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     List<PartnerScope> listOldPS = db.Database.SqlQuery<PartnerScope>(sql_old_partnerScope,
                         new SqlParameter("moa_id", moa_id),
                         new SqlParameter("partner_id", input.partner_id)).ToList();
-
+                    totalRelatedPS.AddRange(listOldPS);
                     //reset old records of scopes of partner.
                     foreach (PartnerScope token in listOldPS.ToList())
                     {
@@ -229,22 +244,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         int partner_scope_id = 0;
                         if (objPS == null) //add new to PartnerScope
                         {
-                            db.PartnerScopes.Add(new PartnerScope
-                            {
-                                partner_id = input.partner_id,
-                                scope_id = tokenScope,
-                                reference_count = 1
-                            });
-                            //checkpoint 3
-                            db.SaveChanges();
-                            PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
-                            partner_scope_id = newObjPS.partner_scope_id;
+                            //db.PartnerScopes.Add(new PartnerScope
+                            //{
+                            //    partner_id = input.partner_id,
+                            //    scope_id = tokenScope,
+                            //    reference_count = 1
+                            //});
+                            ////checkpoint 3
+                            //db.SaveChanges();
+                            //PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == input.partner_id && x.scope_id == tokenScope).FirstOrDefault();
+                            //partner_scope_id = newObjPS.partner_scope_id;
                         }
                         else
                         {
                             //objPS.reference_count += 1;
                             //db.Entry(objPS).State = EntityState.Modified;
                             partner_scope_id = objPS.partner_scope_id;
+                            totalRelatedPS.Add(objPS);
                         }
                         db.SaveChanges();
                         db.MOAPartnerScopes.Add(new MOAPartnerScope
@@ -257,6 +273,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -271,6 +303,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 try
                 {
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     //get partner of moupartner deleted.
                     int partner_id_item = db.MOAPartners.Find(moa_partner_id).partner_id;
 
@@ -282,7 +315,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     List<PartnerScope> listPS = db.Database.SqlQuery<PartnerScope>(sql_old_partnerScope,
                         new SqlParameter("moa_id", moa_id),
                         new SqlParameter("partner_id", partner_id_item)).ToList();
-
+                    totalRelatedPS.AddRange(listPS);
                     foreach (PartnerScope partnerScope in listPS.ToList())
                     {
                         PartnerScope ps = db.PartnerScopes.Find(partnerScope.partner_scope_id);
@@ -296,11 +329,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //checkpoint 2
                     db.MOAPartners.Remove(db.MOAPartners.Find(moa_partner_id));
                     db.SaveChanges();
-
-                    //clear PartnerScope with ref_count = 0.
-                    //db.PartnerScopes.RemoveRange(db.PartnerScopes.Where(x => x.reference_count == 0).ToList());
-                    //db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listObjPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listObjPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
