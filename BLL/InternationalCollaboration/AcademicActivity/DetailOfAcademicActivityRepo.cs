@@ -165,27 +165,30 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             List<subContent> old = getSubContents(language_id, activity_id);
             List<int> old_id = old.Select(x => x.article_id).ToList();
-            foreach (subContent x in data)
+            if(data != null)
             {
-                if (!old_id.Contains(x.article_id))
+                foreach (subContent x in data)
                 {
-                    insertSubContent(x, activity_id, language_id, u, article_status_id);
+                    if (!old_id.Contains(x.article_id))
+                    {
+                        insertSubContent(x, activity_id, language_id, u, article_status_id);
+                    }
+                    else
+                    {
+                        updateSubContent(x, language_id);
+                    }
+                    old_id.Remove(x.article_id);
+                    foreach (int i in old_id)
+                    {
+                        ArticleVersion av = db.ArticleVersions.Where(z => z.article_id == i && z.language_id == language_id).FirstOrDefault();
+                        db.ArticleVersions.Remove(av);
+                        ActivityInfo ai = db.ActivityInfoes.Where(z => z.article_id == i && z.main_article == false).FirstOrDefault();
+                        db.ActivityInfoes.Remove(ai);
+                        Article a = db.Articles.Find(i);
+                        db.Articles.Remove(a);
+                    }
+                    db.SaveChanges();
                 }
-                else
-                {
-                    updateSubContent(x, language_id);
-                }
-                old_id.Remove(x.article_id);
-                foreach (int i in old_id)
-                {
-                    ArticleVersion av = db.ArticleVersions.Where(z => z.article_id == i && z.language_id == language_id).FirstOrDefault();
-                    db.ArticleVersions.Remove(av);
-                    ActivityInfo ai = db.ActivityInfoes.Where(z => z.article_id == i && z.main_article == false).FirstOrDefault();
-                    db.ActivityInfoes.Remove(ai);
-                    Article a = db.Articles.Find(i);
-                    db.Articles.Remove(a);
-                }
-                db.SaveChanges();
             }
         }
         public void updateSubContent(subContent data, int language_id)
