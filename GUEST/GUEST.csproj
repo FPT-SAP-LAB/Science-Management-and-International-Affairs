@@ -707,6 +707,7 @@
     <Content Include="Content\assets\media\error\bg5.jpg" />
     <Content Include="Content\assets\media\error\bg6.jpg" />
     <Content Include="Content\assets\media\error\smile.gif" />
+    <Content Include="Content\assets\media\logos\2020-FPT-Edu.png" />
     <Content Include="Content\assets\media\logos\favicon.ico" />
     <Content Include="Content\assets\media\logos\logo-1.png" />
     <Content Include="Content\assets\media\logos\logo-4.png" />
