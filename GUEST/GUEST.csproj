@@ -668,6 +668,7 @@
     <Content Include="Content\assets\media\books\9.png" />
     <Content Include="Content\assets\media\books\img-72.jpg" />
     <Content Include="Content\assets\media\custom-image\icona-partnership.png" />
+    <Content Include="Content\assets\media\custom-image\logo_partner.png" />
     <Content Include="Content\assets\media\custom-image\Placeholder.jpg" />
     <Content Include="Content\assets\media\demos\demo1.jpg" />
     <Content Include="Content\assets\media\demos\demo10.jpg" />
