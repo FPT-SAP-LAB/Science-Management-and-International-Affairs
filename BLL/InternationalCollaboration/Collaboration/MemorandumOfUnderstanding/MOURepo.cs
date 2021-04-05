@@ -652,8 +652,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         where tb1.is_deleted = 0";
                 string sql_expired
                     = @"select mou_code from IA_Collaboration.MOU
-                        where (mou_end_date < @next3Months and noti_count = 0) or 
-                        (mou_end_date < @nextMonth and noti_count = 1)";
+                        where (mou_end_date < @next3Months and mou_end_date > getdate() and noti_count = 0) or 
+                        (mou_end_date < @nextMonth and mou_end_date > getdate() and noti_count = 1)";
                 noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
                 noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
                     new SqlParameter("@next3Months", next3Months),
@@ -715,6 +715,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             mou.mou_id = id;
                             mou.mou_status_id = 2;
                             mou.datetime = DateTime.Now;
+                            mou.reason = "Quá hạn";
                             db.MOUStatusHistories.Add(mou);
                             db.SaveChanges();
                         }

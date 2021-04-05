@@ -578,8 +578,7 @@
                                                 <!--begin::Tabpane-->
                                                 <div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
                                                     <!--begin::Nav-->
-                                                    <div class="navi navi-hover scroll my-4" data-scroll="true" data-height="300" data-mobile-height="200">
-                                                        <!--begin::Item-->
+                                                    <div class="navi navi-hover scroll my-4" id="event-noti" data-scroll="true" data-height="300" data-mobile-height="200">
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -595,8 +594,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -612,8 +609,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -629,8 +624,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -646,8 +639,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -663,8 +654,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -680,8 +669,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -697,8 +684,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -714,8 +699,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -731,8 +714,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -748,8 +729,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -765,8 +744,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -782,8 +759,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -799,8 +774,6 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <a href="#" class="navi-item">
                                                             <div class="navi-link">
                                                                 <div class="navi-icon mr-2">
@@ -1439,6 +1412,55 @@
         });
     </script>
     <script src="~/Content/assets/js/sci/sci-bundle.js"></script>
+
+    @if (user != null)
+    {
+
+        <!--Script references. -->
+        <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+        <!--Reference the SignalR library. -->
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <!--Reference the autogenerated SignalR hub script. -->
+        <script src="~/signalr/hubs"></script>
+        <!--SignalR script to update the chat page and send messages.-->
+        <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            //$.connection.hub.url = 'https://localhost:44362/signalr';
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call back to display messages.
+            chat.client.addNewMessageToPage = function (name, message) {
+                let current = new Date();
+                let templateMessage = '<a href="#" class="navi-item">' +
+                    '<div class="navi-link">' +
+                        '<div class="navi-icon mr-2">' +
+                            '<i class="flaticon2-sms text-danger"></i>' +
+                        '</div>' +
+                        '<div class="navi-text">' +
+                            '<div class="font-weight-bold">' +
+                                message +
+                            '</div>' +
+                            '<div class="text-muted">' +
+                                current.toLocaleString() +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</a>';
+                $("#event-noti").append(templateMessage)
+                console.log(name + " : " + message)
+            };
+
+            $.connection.hub.start().done(function () {
+                chat.server.register($.connection.hub.id, @user.account.account_id);
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+        </script>
+    }
 </body>
 <!--end::Body-->
 

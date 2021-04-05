@@ -16,15 +16,18 @@ namespace BLL.ScienceManagement.ResearcherListRepo
         {
             var data = (from a in db.People
                         join b in db.Profiles on a.people_id equals b.people_id
-                        join c in db.AcademicDegreeLanguages.DefaultIfEmpty() on b.current_academic_degree_id equals c.academic_degree_id
                         join f in db.Offices.DefaultIfEmpty() on a.office_id equals f.office_id
-                        where c.language_id == 1 && b.profile_page_active == true
+                        where b.profile_page_active == true
                         select new ResearcherList
                         {
                             peopleId = a.people_id,
                             name = a.name,
                             email = a.email,
-                            title = c.name,
+                            title = (
+                            from c in db.AcademicDegreeLanguages.DefaultIfEmpty()
+                            where b.current_academic_degree_id == c.academic_degree_id
+                            select c.name
+                            ).FirstOrDefault(),
                             website = b.website,
                             positions = ((from m in db.People
                                           join n in db.PeoplePositions on m.people_id equals n.people_id

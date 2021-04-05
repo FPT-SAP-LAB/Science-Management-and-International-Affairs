@@ -70,6 +70,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Add_Mou_Partner(PartnerInfo input)
         {
             try
@@ -92,6 +93,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Edit_Mou_Partner(PartnerInfo input)
         {
             try
@@ -114,6 +116,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return null;
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult deletePartnerMOU(int mou_bonus_id)
         {
             try

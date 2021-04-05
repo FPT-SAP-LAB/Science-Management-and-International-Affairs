@@ -39,10 +39,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     return Json(new { success = true, data = moaList }, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
-                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult Get_MOA_History(string moa_partner_id)
@@ -52,12 +52,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 List<PartnerHistory> historyList = moa.listMOAPartnerHistory(int.Parse(moa_partner_id));
                 return Json(new { success = true, data = historyList }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
-                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult deletePartnerMOA(int moa_partner_id)
         {
             try
@@ -79,6 +80,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Moa_Partner(MOAPartnerInfo input)
         {
             try
@@ -98,9 +100,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
-                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Edit_Moa_Partner(MOAPartnerEdited input)
         {
             try
@@ -120,7 +122,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             {
                 Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
-                //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult Get_Partner_Detail(int moa_partner_id)
@@ -133,7 +134,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -177,7 +177,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }
@@ -191,7 +190,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                //return Json("", JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(400);
             }
         }

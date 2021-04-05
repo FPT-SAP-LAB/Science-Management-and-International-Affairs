@@ -31,6 +31,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo.baseAA data = repo.GetbaseAA(id);
             return Json(data);
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult delete_AcademicActivity(int id)
         {
@@ -41,6 +42,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty);
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj)
         {
@@ -60,6 +62,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json(String.Empty);
             }
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to, HttpPostedFileBase img)
         {
@@ -70,6 +73,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             else return Json(String.Empty);
         }
+        [Auther(RightID = "2")]
         public JsonResult clone(AcademicActivityRepo.cloneBase obj)
         {
             bool res = repo.clone(obj);

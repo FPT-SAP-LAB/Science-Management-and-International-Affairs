@@ -20,6 +20,7 @@ using System.ComponentModel;
 using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
+using System.Data.Entity.Validation;
 
 namespace BLL.ScienceManagement.Paper
 {
@@ -85,8 +86,10 @@ namespace BLL.ScienceManagement.Paper
         {
             int count = 1;
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            Scimagojr sci;
             try
             {
+                //download file csv
                 string url = "https://www.scimagojr.com/journalrank.php?out=xls";
 
                 string name = RandomString(10);
@@ -98,7 +101,7 @@ namespace BLL.ScienceManagement.Paper
                 WebClient client = new WebClient();
                 client.DownloadFile(url, savePath);
 
-                //List<dynamic> issues;
+                //update db
                 db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].Scimagojr");
                 using (var reader = new StreamReader(savePath))
                 {
@@ -112,7 +115,7 @@ namespace BLL.ScienceManagement.Paper
                         {
                             if (csv.GetField(0) != "Rank")
                             {
-                                Scimagojr sci = new Scimagojr();
+                                sci = new Scimagojr();
                                 sci.Rank = csv.GetField(0);
                                 sci.Sourceid = csv.GetField(1);
                                 sci.Title = csv.GetField(2);
@@ -122,7 +125,7 @@ namespace BLL.ScienceManagement.Paper
                                 sci.SJR_Best_Quartile = csv.GetField(6);
                                 sci.H_index = csv.GetField(7);
                                 sci.Total_Docs_2019 = csv.GetField(8);
-                                sci.Total_Cites_3years = csv.GetField(9);
+                                sci.Total_Docs_3years = csv.GetField(9);
                                 sci.Total_Refs = csv.GetField(10);
                                 sci.Total_Cites_3years = csv.GetField(11);
                                 sci.Citable_Docs_3years = csv.GetField(12);
@@ -139,6 +142,10 @@ namespace BLL.ScienceManagement.Paper
                             }
                         }
                         db.SaveChanges();
+
+                        //delete folder
+                        System.IO.DirectoryInfo di = new DirectoryInfo(path);
+                        di.Delete(true);
                     }
                 }
             }
