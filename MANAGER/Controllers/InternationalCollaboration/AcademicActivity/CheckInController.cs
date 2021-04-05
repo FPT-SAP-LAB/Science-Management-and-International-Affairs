@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ENTITIES;
 using BLL.InternationalCollaboration.AcademicActivity;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -24,6 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<CheckInRepo.dataParticipant> data = repo.getParticipantByPhase(phase_id);
             return Json(new { success = true, data = data });
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult Checkin(int participant_id)
         {
@@ -32,6 +34,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 return Json("Checkin thành công", JsonRequestBehavior.AllowGet);
             else return Json(String.Empty);
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult Checkout(int participant_id)
         {
@@ -51,6 +54,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             List<CheckInRepo.Area> data = repo.getAreaByUnit(unit_id);
             return Json(data);
         }
+        [Auther(RightID = "2")]
         [HttpPost]
         public JsonResult addParticipant(CheckInRepo.infoParticipant obj)
         {

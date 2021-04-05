@@ -144,18 +144,18 @@
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 @*<select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                                    <option value="1">Việt Nam</option>
-                                                    <option value="2">USA</option>
-                                                </select>*@
+                                                        <option value="1">Việt Nam</option>
+                                                        <option value="2">USA</option>
+                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Quốc gia" id="search_nation" />
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                                 @*<select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
-                                                    <option value="1">IT</option>
-                                                    <option value="2">BA</option>
-                                                </select>*@
+                                                        <option value="1">IT</option>
+                                                        <option value="2">BA</option>
+                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                             </div>
                                         </div>
@@ -332,11 +332,11 @@
         $('#partner_name_ex_mou_add').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
-        }); 
+        });
         $('#partner_name_ex_mou_add_for_edit').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
-        }); 
+        });
         $('#partner_name_ex_mou_edit').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: true,
@@ -406,6 +406,7 @@
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
         })
+        $('.select2-search__field').css('width', '100%');
         //$('#facility_moa').select2({
         //    placeholder: 'Đơn vị - Cơ sở kí kết',
         //    allowClear: true,
@@ -662,7 +663,7 @@
     </script>
 
     @*mou_basic_info*@
-<script>
+    <script>
         var listStatus = [
             {
                 status_id: 2,
@@ -2082,8 +2083,16 @@
                     },
                     { data: "content" },
                     { data: "full_name" },
-                    { data: "add_time_string" }
-                    ],
+                    {
+                        data: "add_time",
+                        render: function (data, type) {
+                            if (type === "sort" || type === "") {
+                                return data;
+                            }
+                            return moment(data).format('DD-MM-YYYY hh:mm:ss A');
+                        }
+                    }
+                ],
                 initComplete: function () {
                     $('#history-table').parent().css('overflow-x', 'auto');
                 }
@@ -2246,7 +2255,7 @@
             cache: false,
             success: function (data) {
                 $('#add_moa_modal').modal('hide');
-                toastr.success('Thêm thành công');   
+                toastr.success('Thêm thành công');
                 $('#end_date_moa').val('');
                 $('#note_moa').val('');
                 $('#moa_area').val('');
@@ -2774,5 +2783,5 @@
                 }
             })
     }
-</script>
+    </script>
 }
