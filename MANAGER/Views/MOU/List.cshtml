@@ -758,20 +758,24 @@
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (data) {
-                        if (data == "") {
-                            document.getElementById('website_add').removeAttribute('disabled');
-                            document.getElementById('address_add').removeAttribute('disabled');
+                        if (data == "") { 
+                            //set value
                             document.getElementById("website_add").value = "";
                             document.getElementById("address_add").value = "";
                             document.getElementById("partner_id_add").value = "";
+                            $('#nation_add_input').val('');
+
+                            //toggle
+                            document.getElementById('website_add').removeAttribute('disabled');
+                            document.getElementById('address_add').removeAttribute('disabled');
                             document.getElementById('nation_add_select').removeAttribute('hidden');
                             $('#nation_add_select').select2({
                                 placeholder: 'Chọn quốc gia',
                                 allowClear: false,
                             });
                             document.getElementById('nation_add_input').setAttribute('hidden', '');
-                            $('#nation_add_input').val('');
                         } else {
+                            //toggle
                             $("#nation_add_select").val('').trigger("change");
                             document.getElementById('nation_add_input').removeAttribute('hidden');
                             $('#nation_add_select').select2({
@@ -782,8 +786,9 @@
                             $("#nation_add_select").attr("hidden", true);
                             document.getElementById('website_add').setAttribute('disabled', '');
                             document.getElementById('address_add').setAttribute('disabled', '');
-                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
 
+                            //set value
+                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
                             document.getElementById("website_add").value = data.website == null ? "" : data.website;
                             document.getElementById("address_add").value = data.address == null ? "" : data.address;
                             document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;

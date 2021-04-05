@@ -314,6 +314,10 @@
     @*dropdown list*@
     <script>
         //jquery for dropdown
+        $('#nation_add_select').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        });
         $('#office').select2({
             placeholder: 'Chọn cơ sở',
             allowClear: false,
@@ -407,10 +411,6 @@
             allowClear: true,
         })
         $('.select2-search__field').css('width', '100%');
-        //$('#facility_moa').select2({
-        //    placeholder: 'Đơn vị - Cơ sở kí kết',
-        //    allowClear: true,
-        //})
 
         //datepicker
         var KTBootstrapDatetimepicker = function () {
@@ -663,7 +663,7 @@
     </script>
 
     @*mou_basic_info*@
-    <script>
+<script>
         var listStatus = [
             {
                 status_id: 2,
@@ -1598,20 +1598,6 @@
                 partner_name: $(this).val()
             });
         });
-        @*$.ajax({
-            url: "@Url.Action("Add_Mou_Partner", "PartnerMOU")",
-            type: "POST",
-            data: JSON.stringify(PartnerInfo),
-            contentType: "application/json;charset=utf-8",
-            datatype: "json",
-            cache: false,
-            success: function (data) {
-
-            },
-            error: function () {
-                //alert("fail");
-            }
-        });*@
     }
 
     var rowIdxMOUPartner = 1;
@@ -1712,17 +1698,35 @@
             datatype: "json",
             success: function (data) {
                 if (data == "") {
-                    document.getElementById('mou_partner_nation_add').removeAttribute('disabled');
+                    //change toggle
                     document.getElementById('mou_partner_website_add').removeAttribute('disabled');
                     document.getElementById('mou_partner_address_add').removeAttribute('disabled');
-                    document.getElementById("mou_partner_nation_add").value = "";
-                    document.getElementById("mou_partner_website_add").value = "";
-                    document.getElementById("mou_partner_address_add").value = "";
-                    document.getElementById("partner_id_add").value = "";
+                    document.getElementById('nation_add_select').removeAttribute('hidden');
+                    $('#nation_add_select').select2({
+                        placeholder: 'Chọn quốc gia',
+                        allowClear: false,
+                    });
+                    document.getElementById('mou_partner_nation_add').setAttribute('hidden', '');
+
+                    //change value
+                    $('#mou_partner_nation_add').val('');
+                    $('#mou_partner_website_add').val('');
+                    $('#mou_partner_address_add').val('');
+                    $('#partner_id_add').val('');
                 } else {
-                    document.getElementById('mou_partner_nation_add').setAttribute('disabled', '');
+                    //toggle
                     document.getElementById('mou_partner_website_add').setAttribute('disabled', '');
                     document.getElementById('mou_partner_address_add').setAttribute('disabled', '');
+                    $("#nation_add_select").val('').trigger("change");
+                    document.getElementById('mou_partner_nation_add').removeAttribute('hidden');
+                    $('#nation_add_select').select2({
+                        placeholder: 'Chọn quốc gia',
+                        allowClear: false,
+                    });
+                    $('#nation_add_select').select2('destroy');
+                    $("#nation_add_select").attr("hidden", true);
+
+                    //value
                     document.getElementById("mou_partner_nation_add").value = data.country_name == null ? "" : data.country_name;
                     document.getElementById("mou_partner_website_add").value = data.website == null ? "" : data.website;
                     document.getElementById("mou_partner_address_add").value = data.address == null ? "" : data.address;
@@ -1773,7 +1777,7 @@
                 partnername_add: document.getElementById("partner_name_add").value,
                 represent_add: document.getElementById("mou_partner_represent_add").value,
                 specialization_add: $("#mou_partner_specialization_add").val(),
-                nation_add: document.getElementById("mou_partner_nation_add").value,
+                nation_add: $('#nation_add_select').val(),
                 website_add: document.getElementById("mou_partner_website_add").value,
                 address_add: document.getElementById("mou_partner_address_add").value,
                 email_add: document.getElementById("mou_partner_email_add").value,
@@ -1908,10 +1912,16 @@
             //load data of partner_name
             var option = new Option(data.partner_name, data.partner_name, true, true);
             $('#mou_partner_name_edit').append(option).trigger('change');
-
-            //$('#partnerListEdit').append(HTMLPartnerdata);
             $('#mou_partner_specialization_edit').append(HTMLSpedata);
             $('#mou_partner_scope_edit').append(HTMLScopedata);
+
+            //hide select 
+            $('#nation_edit_select').select2({
+                placeholder: 'Chọn quốc gia',
+                allowClear: false,
+            });
+            $('#nation_edit_select').select2('destroy');
+            $("#nation_edit_select").attr("hidden", true);
         }
 
     function checkPartnerEdit() {
@@ -1925,17 +1935,38 @@
                 datatype: "json",
                 success: function (data) {
                     if (data == "") {
+                        //change value
+                        $('#partner_id_edit').val('');
+                        $('#mou_partner_address_edit').val('');
+                        $('#mou_partner_website_edit').val('');
+                        $('#mou_partner_nation_edit').val('');
+
+                        //change toggle
                         document.getElementById('mou_partner_nation_edit').removeAttribute('disabled');
                         document.getElementById('mou_partner_website_edit').removeAttribute('disabled');
                         document.getElementById('mou_partner_address_edit').removeAttribute('disabled');
-                        document.getElementById("mou_partner_nation_edit").value = "";
-                        document.getElementById("mou_partner_website_edit").value = "";
-                        document.getElementById("mou_partner_address_edit").value = "";
-                        document.getElementById("partner_id_edit").value = "";
+
+                        document.getElementById('nation_edit_select').removeAttribute('hidden');
+                        $('#nation_edit_select').select2({
+                            placeholder: 'Chọn quốc gia',
+                            allowClear: false,
+                        });
+                        document.getElementById('mou_partner_nation_edit').setAttribute('hidden', '');
                     } else {
+                        //change toggle
                         document.getElementById('mou_partner_nation_edit').setAttribute('disabled', '');
                         document.getElementById('mou_partner_website_edit').setAttribute('disabled', '');
                         document.getElementById('mou_partner_address_edit').setAttribute('disabled', '');
+                        $("#nation_edit_select").val('').trigger("change");
+                        document.getElementById('mou_partner_nation_edit').removeAttribute('hidden');
+                        $('#nation_edit_select').select2({
+                            placeholder: 'Chọn quốc gia',
+                            allowClear: false,
+                        });
+                        $('#nation_edit_select').select2('destroy');
+                        $("#nation_edit_select").attr("hidden", true);
+
+                        //change value
                         document.getElementById("mou_partner_nation_edit").value = data.country_name == null ? "" : data.country_name;
                         document.getElementById("mou_partner_website_edit").value = data.website == null ? "" : data.website;
                         document.getElementById("mou_partner_address_edit").value = data.address == null ? "" : data.address;
@@ -1978,7 +2009,7 @@
                 partnername_add: document.getElementById("mou_partner_name_edit").value,
                 represent_add: document.getElementById("mou_partner_represent_edit").value,
                 specialization_add: $("#mou_partner_specialization_edit").val(),
-                nation_add: document.getElementById("mou_partner_nation_edit").value,
+                nation_add: $('#nation_edit_select').val(),
                 website_add: document.getElementById("mou_partner_website_edit").value,
                 address_add: document.getElementById("mou_partner_address_edit").value,
                 email_add: document.getElementById("mou_partner_email_edit").value,
@@ -2517,7 +2548,7 @@
                     sign_date_moa_add: document.getElementById("moa_sign_date_partner_add").value,
                     phone_add: document.getElementById("moa_partner_phone_add").value,
                     coop_scope_add: $("#moa_partner_scope_add").val(),
-                    partner_id: document.getElementById("moa_partner_id_add").value,
+                    partner_id: $('#moa_partner_name_add').val(),
                     list_scope: listScopesMOA
                 }
                 listTempPartnerMOAAdd.push(TempObj);
@@ -2553,6 +2584,7 @@
             listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_partner_phone_edit").value;
             listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_partner_scope_edit").val();
             listTempPartnerMOAAdd[index].list_scope = listScopesMOA;
+            listTempPartnerMOAAdd[index].partner_id = $('#moa_partner_name_add').val();
             initAndRefreshTableMOAAdd();
             updateMOAStartDateAndMainScope();
             $('#edit_partner_moa').modal('hide');
@@ -2713,9 +2745,6 @@
         else if ($('#end_date_moa').val() == "") {
             toastr.error('Ngày hết hạn chưa được chọn');
         }
-        else if (listTempPartnerMOAAdd.length == 0) {
-            toastr.error('Chưa có đối tác nào được thêm');
-        }
         else if (compareDate($('#sign_date_moa').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
         }
@@ -2742,6 +2771,31 @@
                 success: function (isDuplicated) {
                     if (isDuplicated) {
                         toastr.error("Đã có mã hiệu " + $('#moa_code').val()+ " trong hệ thống");
+                    } else {
+                        checkDuplicatePartnersMOA();
+                    }
+                },
+                error: function () {
+
+                }
+            });
+    }
+
+    function checkDuplicatePartnersMOA(){
+            var obj =
+            {
+                MOAPartnerInfo: listTempPartnerMOAAdd
+            };
+            $.ajax({
+                url: "@Url.Action("checkDuplicatePartnersMOA", "MOA")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(obj),
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    if (data == true) {
+                        toastr.error("Các đối tác trên đã được ký kết biên bản thỏa thuận");
                     } else {
                         addMOA();
                     }
@@ -2783,5 +2837,5 @@
                 }
             })
     }
-    </script>
+</script>
 }

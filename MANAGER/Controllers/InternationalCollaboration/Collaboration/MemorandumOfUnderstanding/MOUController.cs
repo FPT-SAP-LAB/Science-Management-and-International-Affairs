@@ -185,6 +185,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
                     ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
                     ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+                    ViewBag.listCountry = mou.GetCountries();
 
                     //MOA
                     ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
