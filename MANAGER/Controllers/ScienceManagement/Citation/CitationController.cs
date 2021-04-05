@@ -4,6 +4,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,6 +19,7 @@ namespace MANAGER.Controllers
         CitationRepo cr = new CitationRepo();
         MasterDataRepo mrd = new MasterDataRepo();
         // GET: Citation
+        [Auther(RightID = "16")]
         public ActionResult Pending()
         {
             ViewBag.title = "Danh sách trích dẫn đang chờ xét duyệt";
@@ -48,6 +50,7 @@ namespace MANAGER.Controllers
             return View();
         }
 
+        [Auther(RightID = "18")]
         public ActionResult WaitDecision()
         {
             ViewBag.title = "Các trích dẫn đang chờ quyết định";

@@ -4,6 +4,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace MANAGER.Controllers
         InventionRepo ir = new InventionRepo();
         MasterDataRepo mrd = new MasterDataRepo();
         // GET: Invention
+        [Auther(RightID = "16")]
         public ActionResult Pending()
         {
             ViewBag.title = "Danh sách bằng sáng chế đang chờ xét duyệt";
@@ -44,6 +46,7 @@ namespace MANAGER.Controllers
             return View();
         }
 
+        [Auther(RightID = "18")]
         public ActionResult WaitDecision()
         {
             ViewBag.title = "Chờ quyết định khen thưởng";

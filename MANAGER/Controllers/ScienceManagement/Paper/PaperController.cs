@@ -4,6 +4,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using MANAGER.Support;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace MANAGER.Controllers
         PaperRepo pr = new PaperRepo();
         MasterDataRepo mdr = new MasterDataRepo();
         // GET: Paper
+        [Auther(RightID = "16")]
         public ActionResult Pending()
         {
             ViewBag.title = "Danh sách bài báo đang chờ xét duyệt";
@@ -71,6 +73,7 @@ namespace MANAGER.Controllers
             return View();
         }
 
+        [Auther(RightID = "18")]
         [HttpPost]
         public JsonResult UpdateJournal()
         {
