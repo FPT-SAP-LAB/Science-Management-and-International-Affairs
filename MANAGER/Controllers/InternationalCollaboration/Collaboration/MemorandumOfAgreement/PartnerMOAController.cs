@@ -49,7 +49,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                List<PartnerHistory> historyList = moa.listMOUPartnerHistory(int.Parse(moa_partner_id));
+                List<PartnerHistory> historyList = moa.listMOAPartnerHistory(int.Parse(moa_partner_id));
                 return Json(new { success = true, data = historyList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -58,6 +58,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult deletePartnerMOA(int moa_partner_id)
         {
             try
@@ -79,6 +80,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Moa_Partner(MOAPartnerInfo input)
         {
             try
@@ -101,6 +103,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 //return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Edit_Moa_Partner(MOAPartnerEdited input)
         {
             try
@@ -195,7 +198,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult CheckPartnerExistedInMOA(string partner_name)
+        public ActionResult CheckPartnerExistedInMOA(int partner_id)
         {
             try
             {
@@ -206,7 +209,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["moa_detail_id"].ToString();
-                    string partner = moa.CheckPartnerExistedInMOA(int.Parse(id), partner_name);
+                    string partner = moa.CheckPartnerExistedInMOA(int.Parse(id), partner_id);
                     return Json(partner);
                 }
             }
@@ -216,11 +219,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
-        public ActionResult CheckPartnerExistedInEditMOA(string partner_name, int moa_partner_id)
+        public ActionResult CheckPartnerExistedInEditMOA(int partner_id, int moa_partner_id)
         {
             try
             {
-                string partner = moa.CheckPartnerExistedInMOA(moa_partner_id, partner_name);
+                string partner = moa.CheckPartnerExistedInMOA(moa_partner_id, partner_id);
                 return Json(partner);
             }
             catch (Exception ex)

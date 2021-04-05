@@ -127,6 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to'
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
+                if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
                 return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)
@@ -140,9 +141,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"-----1.3. Đơn vị đào tạo - chiều đi/chiều đến -> partner/office
-                    select par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    select distinct par.*, cou.country_name from IA_Collaboration.[Partner] par
                     inner join General.Country cou on cou.country_id = par.country_id
-                    where partner_name like @partner_name and is_deleted = 0";
+					left join IA_Collaboration.MOUPartner mp on mp.partner_id = par.partner_id
+					left join IA_Collaboration.MOU m on m.mou_id = mp.mou_id and (m.mou_id IS NULL OR m.is_deleted = 0)
+                    where par.is_deleted = 0 and partner_name like @partner_name";
                 List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
                     new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
                 return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
@@ -302,6 +305,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     db.Configuration.LazyLoadingEnabled = false;
                     //check duplicate academic collaboration: person, partner, collab_scope base on time
                     if (checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab))
@@ -353,6 +357,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             {
                                 //incease 1 to referecen count
                                 increaseReferenceCountOfPartnerScope(partner_scope);
+                                db.SaveChanges();
                             }
                             else
                             {
@@ -361,17 +366,32 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
+                            //add Academic Collab
+                            var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
+                            //add infor to File
+                            var evidence_file = saveFile(f, evidence);
+                            db.SaveChanges();
+                            //add infor to CollaborationStatusHistory
+                            var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                            db.SaveChanges();
                         }
-
-                        //add Academic Collab
-                        var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
-
-                        //add infor to File
-                        var evidence_file = saveFile(f, evidence);
-
-                        //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
+                        //change status corressponding MOU/MOA
+                        using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                List<int> list_partner_scope_id = new List<int>();
+                                list_partner_scope_id.Add(partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
+                                dbContext.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                dbContext.Rollback();
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Thêm cán bộ giảng viên thành công.");
                     }
                     else
@@ -404,7 +424,9 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                                 ||
                                                                 (x.plan_study_start_date <= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
                                                                 ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date))).FirstOrDefault();
+                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                                ||
+                                                                (x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
                     if (academicCollaboration != null)
                     {
                         return false;
@@ -425,7 +447,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 person.email = obj_person.person_email;
                 if (obj_person.person_profile_office_id != 0) person.office_id = obj_person.person_profile_office_id;
                 db.People.Add(person);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -449,7 +470,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 {
                     person.office_id = null;
                 }
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -494,7 +514,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     account_id = account_id
                 };
                 db.Articles.Add(article);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -625,7 +644,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
                     if (f.Id != null) evidence_file.file_drive_id = f.Id;
                     db.Files.Add(evidence_file);
-                    db.SaveChanges();
                 }
             }
             catch (Exception e)
@@ -648,7 +666,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (evidence != null) collab_status_hist.file_id = evidence_file.file_id;
                 collab_status_hist.account_id = account_id;
                 db.CollaborationStatusHistories.Add(collab_status_hist);
-                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -733,6 +750,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             SaveAcadCollab_AcademicCollaboration obj_academic_collab,
             Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase new_evidence, int account_id)
         {
+            AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
+            AcademicCollaboration academicCollaboration = new AcademicCollaboration();
+            Person person;
+            var person_id = obj_person.person_id;
+            Partner partner;
+            var partner_id = obj_partner.partner_id;
+            var partner_scope_id = 0;
+            PartnerScope partner_scope = new PartnerScope();
+            PartnerScope old_partner_scope = new PartnerScope();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -740,12 +766,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     //check duplicate academic collaboration: person, partner, collab_scope base on time
                     if (checkDuplicateAcademicCollaboration(obj_person, obj_partner, obj_academic_collab))
                     {
-                        Person person;
-                        var person_id = obj_person.person_id;
-                        Partner partner;
-                        var partner_id = obj_partner.partner_id;
-                        var partner_scope_id = 0;
-                        PartnerScope partner_scope;
                         //check available person
                         if (!obj_person.available_person)
                         {
@@ -789,11 +809,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 AcademicCollaboration ac = db.AcademicCollaborations.Find(obj_academic_collab.collab_id);
                                 if (ac.partner_scope_id != partner_scope.partner_scope_id)
                                 {
+                                    //decrease ref_coou of old partner_scope
+                                    old_partner_scope = db.PartnerScopes.Find(ac.partner_scope_id);
+                                    decreaseReferenceCountOfPartnerScope(old_partner_scope);
+                                    //update infor to AcademicCollaboration
+                                    academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
                                     //incease 1 to new referecen_count PartnerScope
                                     increaseReferenceCountOfPartnerScope(partner_scope);
-                                    //decrease ref_coou of old partner_scope
-                                    PartnerScope old_partner_scope = db.PartnerScopes.Find(ac.partner_scope_id);
-                                    decreaseReferenceCountOfPartnerScope(old_partner_scope);
                                     if (old_partner_scope.reference_count <= 0)
                                     {
                                         db.PartnerScopes.Remove(old_partner_scope);
@@ -803,12 +825,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             else
                             {
+                                //decrease ref_coou of old partner_scope
+                                AcademicCollaboration ac = db.AcademicCollaborations.Where(x => x.collab_id == obj_academic_collab.collab_id).FirstOrDefault();
+                                old_partner_scope = db.PartnerScopes.Where(x => x.partner_scope_id == ac.partner_scope_id).FirstOrDefault();
+                                decreaseReferenceCountOfPartnerScope(old_partner_scope);
                                 //add partner_id & scope_id to PartnerScope
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
-                                //decrease ref_coou of old partner_scope
-                                AcademicCollaboration ac = db.AcademicCollaborations.Find(obj_academic_collab.collab_id);
-                                PartnerScope old_partner_scope = db.PartnerScopes.Find(ac.partner_scope_id);
-                                decreaseReferenceCountOfPartnerScope(old_partner_scope);
+                                //delete 0 ref_cou partner_scope
                                 if (old_partner_scope.reference_count <= 0)
                                 {
                                     db.PartnerScopes.Remove(old_partner_scope);
@@ -818,14 +841,35 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
                         }
-                        //update infor to AcademicCollaboration
-                        AcademicCollaboration academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
-                        //check exist file
                         //add file
                         var evidence_file = saveFile(f, new_evidence);
                         //add infor to CollaborationStatusHistory
                         var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         trans.Commit();
+
+                        using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                //change status corressponding MOU/MOA
+                                if (old_partner_scope.partner_scope_id != 0)
+                                {
+                                    List<int> list_old_partner_scope_id = new List<int>();
+                                    list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
+                                    autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
+                                }
+                                //change status corressponding MOU/MOA
+                                List<int> list_new_partner_scope_id = new List<int>();
+                                list_new_partner_scope_id.Add(partner_scope.partner_scope_id);
+                                autoActiveInactive.changeStatusMOUMOA(list_new_partner_scope_id, db);
+                                dbContext.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                dbContext.Rollback();
+                                return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                            }
+                        }
                         return new AlertModal<AcademicCollaboration_Ext>(null, true, "Cập nhật cán bộ giảng viên thành công.");
                     }
                     else
@@ -870,34 +914,55 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         //DELETE
         public AlertModal<string> deleteAcademicCollaboration(int acad_collab_id)
         {
-            using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
                 {
+                    AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                     AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Find(acad_collab_id);
-                    //decrease reference_count in PartnerScope
-                    PartnerScope partnerScope = db.PartnerScopes.Find(academicCollaboration.partner_scope_id);
-                    if (partnerScope != null)
-                    {
-                        decreaseReferenceCountOfPartnerScope(partnerScope);
-                    }
+                    int partner_scope_id = academicCollaboration.partner_scope_id;
+
                     //delete AcademicCollab
                     db.AcademicCollaborations.Remove(academicCollaboration);
                     db.SaveChanges();
-
+                    //decrease reference_count in PartnerScope
+                    PartnerScope partnerScope = db.PartnerScopes.Find(partner_scope_id);
+                    if (partnerScope != null)
+                    {
+                        decreaseReferenceCountOfPartnerScope(partnerScope);
+                        db.SaveChanges();
+                    }
                     //delete partner_scope records with reference_count = 0
                     if (partnerScope.reference_count <= 0)
                     {
                         db.PartnerScopes.Remove(partnerScope);
                         db.SaveChanges();
                     }
-                    dbContext.Commit();
+                    trans.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> list_partner_scope_id = new List<int>();
+                            list_partner_scope_id.Add(partner_scope_id);
+                            autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                        }
+                    }
+
                     return new AlertModal<string>(null, true, "Thành công", "Xóa hợp tác học thuật thành công.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                    dbContext.Rollback();
+                    trans.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }
             }

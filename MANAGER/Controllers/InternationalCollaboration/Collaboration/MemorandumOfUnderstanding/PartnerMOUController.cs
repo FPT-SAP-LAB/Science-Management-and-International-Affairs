@@ -70,6 +70,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Add_Mou_Partner(PartnerInfo input)
         {
             try
@@ -80,8 +81,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.addMOUPartner(input, int.Parse(id));
+                    mou.addMOUPartner(input, int.Parse(id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -91,6 +93,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Edit_Mou_Partner(PartnerInfo input)
         {
             try
@@ -101,8 +104,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id);
+                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id, user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -112,6 +116,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return null;
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult deletePartnerMOU(int mou_bonus_id)
         {
             try

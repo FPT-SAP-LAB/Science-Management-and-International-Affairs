@@ -212,6 +212,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
@@ -245,12 +246,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         //new partner
                         if (item.partner_id == 0)
                         {
+                            //add Article.
+                            //add ArticleVersion.
+                            //add Partner.
+                            Article a = db.Articles.Add(new Article
+                            {
+                                need_approved = false,
+                                article_status_id = 2,
+                                account_id = user is null ? 1 : user.account.account_id,
+                            });
+                            ArticleVersion av = db.ArticleVersions.Add(new ArticleVersion
+                            {
+                                publish_time = DateTime.Now,
+                                version_title = "",
+                                article_id = a.article_id,
+                                language_id = 1
+                            });
                             db.Partners.Add(new ENTITIES.Partner
                             {
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = item.nation_add
+                                country_id = item.nation_add,
+                                article_id = a.article_id
                             });
                             //checkpoint 2
                             db.SaveChanges();
@@ -288,12 +306,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 db.SaveChanges();
                                 PartnerScope newObjPS = db.PartnerScopes.Where(x => x.partner_id == partner_id_item && x.scope_id == tokenScope).FirstOrDefault();
                                 partner_scope_id = newObjPS.partner_scope_id;
+                                //add to total PS List
+                                totalRelatedPS.Add(newObjPS);
                             }
                             else
                             {
                                 objPS.reference_count += 1;
                                 db.Entry(objPS).State = EntityState.Modified;
                                 partner_scope_id = objPS.partner_scope_id;
+                                //add to total PS List
+                                totalRelatedPS.Add(objPS);
                             }
                             db.MOUPartnerScopes.Add(new MOUPartnerScope
                             {
@@ -316,6 +338,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -374,6 +412,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     //delete partner_scope_id 
                     //delete from ExMOA => MOA => ExMOU => MOU
                     string sql_ex_moa = @"select t3.* from IA_Collaboration.MOABonus t1
@@ -409,20 +448,20 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     List<PartnerScope> mou_list = db.Database.SqlQuery<PartnerScope>(sql_mou,
                         new SqlParameter("mou_id", mou_id)).ToList();
 
-                    if (ex_moa_list != null)
-                    {
-                        foreach (PartnerScope item in ex_moa_list)
-                        {
-                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
-                        }
-                    }
-                    if (moa_list != null)
-                    {
-                        foreach (PartnerScope item in moa_list)
-                        {
-                            db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
-                        }
-                    }
+                    //if (ex_moa_list != null)
+                    //{
+                    //    foreach (PartnerScope item in ex_moa_list)
+                    //    {
+                    //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                    //    }
+                    //}
+                    //if (moa_list != null)
+                    //{
+                    //    foreach (PartnerScope item in moa_list)
+                    //    {
+                    //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
+                    //    }
+                    //}
                     if (ex_mou_list != null)
                     {
                         foreach (PartnerScope item in ex_mou_list)
@@ -438,12 +477,32 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                     }
                     db.SaveChanges();
+                    totalRelatedPS.AddRange(ex_moa_list);
+                    totalRelatedPS.AddRange(moa_list);
+                    totalRelatedPS.AddRange(ex_mou_list);
+                    totalRelatedPS.AddRange(mou_list);
 
                     MOU mou = db.MOUs.Find(mou_id);
                     mou.is_deleted = true;
                     db.Entry(mou).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
+
+                    //change status corressponding MOU/MOA
+                    using (DbContextTransaction dbContext = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            List<int> listPS = totalRelatedPS.Select(x => x.partner_scope_id).Distinct().ToList();
+                            new AutoActiveInactive().changeStatusMOUMOA(listPS, db);
+                            dbContext.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            dbContext.Rollback();
+                            throw e;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -656,6 +715,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             mou.mou_id = id;
                             mou.mou_status_id = 2;
                             mou.datetime = DateTime.Now;
+                            mou.reason = "Quá hạn";
                             db.MOUStatusHistories.Add(mou);
                             db.SaveChanges();
                         }
@@ -705,7 +765,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         {
             try
             {
-                MOU obj = db.MOUs.Where(x => x.mou_code == mou_code).FirstOrDefault();
+                MOU obj = db.MOUs.Where(x => x.mou_code == mou_code && !x.is_deleted).FirstOrDefault();
                 return obj == null ? false : true;
             }
             catch (Exception ex)
@@ -726,7 +786,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                  from IA_Collaboration.MOUPartner t1
                 inner join IA_Collaboration.MOU t2
                 on t2.mou_id = t1.mou_id
-                where t1.partner_id in (" + partner_id_para + @")
+                where t1.partner_id in (" + partner_id_para + @") and t2.is_deleted = 0
                 group by mou_end_date, t2.mou_id, t2.mou_code
                 having count(*) = @partner_count
                 order by mou_id";

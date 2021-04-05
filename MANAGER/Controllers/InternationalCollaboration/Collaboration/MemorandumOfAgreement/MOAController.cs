@@ -17,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         private static MOARepo moa = new MOARepo();
         private static BasicInfoMOARepo moa_detail = new BasicInfoMOARepo();
         private static PartnerMOARepo moa_partner = new PartnerMOARepo();
-        //[Auther(RightID = "6")]
+        [Auther(RightID = "7")]
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
@@ -101,6 +101,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Delete_Moa(int moa_id)
         {
             try
@@ -113,6 +114,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Moa(MOAAdd input)
         {
             try
@@ -123,8 +125,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 }
                 else
                 {
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string mou_id = Session["mou_detail_id"].ToString();
-                    moa.addMOA(input, int.Parse(mou_id));
+                    moa.addMOA(input, int.Parse(mou_id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }

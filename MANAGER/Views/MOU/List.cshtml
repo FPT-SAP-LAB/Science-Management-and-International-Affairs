@@ -135,6 +135,13 @@
     @*@model int*@
 
     @*toast*@
+
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
+
     <script>
     $('.toast-close-button').click(function () {
             $(this).parent().fadeOut('slow');
@@ -1213,17 +1220,17 @@
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
-            ],
-            columnDefs: [
-                {
-                    className: "text-center",
-                    targets: [0, 4, 9, 12, 13, 14],
-                },
-                {
-                    className: "text-nowrap",
-                    targets: [5, 6, 8, -1]
-                },
-            ],
+        ],
+        columnDefs: [
+            {
+                className: "text-center",
+                targets: [0, 4, 9, 12, 13, 14],
+            },
+            {
+                className: "text-nowrap",
+                targets: [5, 6, 8, -1]
+            },
+        ],
         });
         $('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }

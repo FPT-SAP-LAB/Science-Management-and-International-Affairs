@@ -22,5 +22,10 @@ namespace MANAGER.Controllers
 
             return View();
         }
+
+        public ActionResult Chat()
+        {
+            return View();
+        }
     }
 }

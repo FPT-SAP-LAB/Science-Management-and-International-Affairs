@@ -54,10 +54,10 @@
             <span></span>
         </label>
     </div>
-    <div class="col-xl-6 form-group">
+    <div class="col-xl-6 form-group" style="display:none">
         <label class="required-field">@rm.GetString("ContractType")</label>
         <select class="form-control select-custom edit input_fe" id="add_author_contractType" name="param" style="width: 100% !important">
-            <option disabled selected></option>
+            <option disabled></option>
             @{
                 foreach (var item in ViewBag.contract)
                 {
