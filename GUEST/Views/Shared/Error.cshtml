@@ -1,119 +1,53 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <base href="../../../">
-    <meta charset="utf-8" />
-    <title>Lỗi | @ViewBag.errorCode</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />        <!--end::Fonts-->
-    <!--begin::Global Theme Styles(used by all pages)-->
-    <link href="~/Content/assets/plugins/global/plugins.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/style.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <!--end::Global Theme Styles-->
-    <!--begin::Layout Themes(used by all pages)-->
-
-    <link href="~/Content/assets/css/themes/layout/header/base/light.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/themes/layout/header/menu/light.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/themes/layout/brand/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />        <!--end::Layout Themes-->
-
-    <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
-
-</head>
-<!--end::Head-->
-<!--begin::Body-->
-<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
-
-    <!--begin::Main-->
-    <div class="d-flex flex-column flex-root">
-        <!--begin::Error-->
-        <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="background-image: url(../Content/assets/media/error/bg1.jpg);">
-            <!--begin::Content-->
-            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">404</h1>
-            <p class="font-size-h3 text-muted font-weight-normal">
-                Có lỗi xảy ra! Vui lòng thử lại sau
-            </p>
-            <!--end::Content-->
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool show_error_stack = true; //chạy thật thì tắt bỏ cái này đi
+}
+<div class="row">
+    <div class="col-xl-12">
+        <!--begin::Tiles Widget 3-->
+        <div class="card card-custom bgi-no-repeat bgi-no-repeat bgi-size-cover gutter-b" style="min-height: 40rem; background-image: url(/Content/assets/media/error/bg4.jpg)">
+            <!--begin::Body-->
+            <div class="card-body d-flex flex-column" style="">
+                <!--begin::Title-->
+                <a href="#" class="text-dark-75 text-hover-primary font-weight-bolder font-size-h3">
+                    @if (HttpContext.Current.Response.StatusCode == 404)
+                    {
+                        <span>Trang này không tồn tại hoặc bạn không có quyền truy cập!</span>
+                    }
+                    else
+                    {
+                        <span>Opps! Đã xảy ra lỗi</span>
+                    }
+                </a>
+                    <!--begin::Content-->
+                <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 5rem">
+                    @HttpContext.Current.Response.StatusCode - @HttpContext.Current.Response.StatusDescription
+                </h1>
+                    <p class="font-size-h3 text-muted font-weight-normal">
+                        
+                    </p>
+                    @if (show_error_stack)
+                    {
+                        <div>
+                            <p>
+                                <pre>
+                    @ViewBag.exception
+                    </pre>
+                            </p>
+                        </div>
+                    }
+                    <!--------------------------------------------------------------------------------------------->
+                    <!--end::Content-->
+                <!--end::Title-->
+            </div>
+            <!--end::Body-->
         </div>
-        <!--end::Error-->
+        <!--end::Tiles Widget 3-->
     </div>
-    <!--end::Main-->
+</div>
 
+@section scripts{
 
-    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-    <!--begin::Global Config(global config for global JS scripts)-->
-    <script>
-            var KTAppSettings = {
-    "breakpoints": {
-        "sm": 576,
-        "md": 768,
-        "lg": 992,
-        "xl": 1200,
-        "xxl": 1400
-    },
-    "colors": {
-        "theme": {
-            "base": {
-                "white": "#ffffff",
-                "primary": "#3699FF",
-                "secondary": "#E5EAEE",
-                "success": "#1BC5BD",
-                "info": "#8950FC",
-                "warning": "#FFA800",
-                "danger": "#F64E60",
-                "light": "#E4E6EF",
-                "dark": "#181C32"
-            },
-            "light": {
-                "white": "#ffffff",
-                "primary": "#E1F0FF",
-                "secondary": "#EBEDF3",
-                "success": "#C9F7F5",
-                "info": "#EEE5FF",
-                "warning": "#FFF4DE",
-                "danger": "#FFE2E5",
-                "light": "#F3F6F9",
-                "dark": "#D6D6E0"
-            },
-            "inverse": {
-                "white": "#ffffff",
-                "primary": "#ffffff",
-                "secondary": "#3F4254",
-                "success": "#ffffff",
-                "info": "#ffffff",
-                "warning": "#ffffff",
-                "danger": "#ffffff",
-                "light": "#464E5F",
-                "dark": "#ffffff"
-            }
-        },
-        "gray": {
-            "gray-100": "#F3F6F9",
-            "gray-200": "#EBEDF3",
-            "gray-300": "#E4E6EF",
-            "gray-400": "#D1D3E0",
-            "gray-500": "#B5B5C3",
-            "gray-600": "#7E8299",
-            "gray-700": "#5E6278",
-            "gray-800": "#3F4254",
-            "gray-900": "#181C32"
-        }
-    },
-    "font-family": "Poppins"
-};
-    </script>
-    <!--end::Global Config-->
-    <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6"></script>
-    <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
-    <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
-    <!--end::Global Theme Bundle-->
-
-
-</body>
-<!--end::Body-->
-</html>
+}

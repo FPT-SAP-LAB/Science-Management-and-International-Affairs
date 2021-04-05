@@ -61,7 +61,7 @@
                 <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
                     <div class="d-flex flex-center mb-15">
                         <a href="#">
-                            <img src="https://2.pik.vn/2021572057c6-8c72-42f0-95ed-6965c02f0c13.png" class="max-h-75px"
+                            <img src="~/Content/assets/media/logos/2020-FPT-Edu.png" class="max-h-75px"
                                  alt="" />
                         </a>
                     </div>
@@ -153,12 +153,11 @@
     <script src="~/Content/assets/js/bundle.js"></script>
     
     <script>
-        var login_btn;
+        var login_btn = new LoaderBtn($("#login_btn"));
         $(document).ready(function () {
-            login_btn = new LoaderBtn($("#login_btn"));
+            
         });
         function onSignIn(googleUser) {
-            $('#login_btn').attr('disabled', true);
             login_btn.startLoading();
             var id_token = googleUser.getAuthResponse().id_token;
             var xhr = new XMLHttpRequest();
@@ -170,7 +169,6 @@
                         toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
-                            $('#login_btn').attr('disabled', false);
                             login_btn.stopLoading();
                         });
                     } else {
