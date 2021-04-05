@@ -110,8 +110,31 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     db.SaveChanges();
                 }
+                else
+                {
+                    int opplanguage_id = language_id == 1 ? 2 : 1;
+                    List<subContent> datarv = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language_id", opplanguage_id),
+                                                              new SqlParameter("activity_id", activity_id)).ToList();
+                    List<int> list_id_rv = datarv.Select(x => x.article_id).ToList();
+                    foreach (subContent item in data)
+                    {
+                        list_id_rv.Remove(item.article_id);
+                    }
+                    foreach (int item in list_id_rv)
+                    {
+                        db.ArticleVersions.Add(new ArticleVersion
+                        {
+                            article_id = item,
+                            language_id = language_id,
+                            version_title = String.Empty,
+                            article_content = String.Empty,
+                            publish_time = DateTime.Now
+                        });
+                    }
+                    db.SaveChanges();
+                }
                 data = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language_id", language_id),
-                                                                              new SqlParameter("activity_id", activity_id)).ToList();
+                                                             new SqlParameter("activity_id", activity_id)).ToList();
                 return data;
             }
             catch (Exception e)
@@ -178,17 +201,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         updateSubContent(x, language_id);
                     }
                     old_id.Remove(x.article_id);
-                    foreach (int i in old_id)
-                    {
-                        ArticleVersion av = db.ArticleVersions.Where(z => z.article_id == i && z.language_id == language_id).FirstOrDefault();
-                        db.ArticleVersions.Remove(av);
-                        ActivityInfo ai = db.ActivityInfoes.Where(z => z.article_id == i && z.main_article == false).FirstOrDefault();
-                        db.ActivityInfoes.Remove(ai);
-                        Article a = db.Articles.Find(i);
-                        db.Articles.Remove(a);
-                    }
-                    db.SaveChanges();
                 }
+                foreach (int i in old_id)
+                {
+                    ArticleVersion av = db.ArticleVersions.Where(z => z.article_id == i && z.language_id == language_id).FirstOrDefault();
+                    db.ArticleVersions.Remove(av);
+                    ActivityInfo ai = db.ActivityInfoes.Where(z => z.article_id == i && z.main_article == false).FirstOrDefault();
+                    db.ActivityInfoes.Remove(ai);
+                    Article a = db.Articles.Find(i);
+                    db.Articles.Remove(a);
+                }
+                db.SaveChanges();
             }
         }
         public void updateSubContent(subContent data, int language_id)
