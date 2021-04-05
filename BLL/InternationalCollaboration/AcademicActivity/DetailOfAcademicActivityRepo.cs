@@ -116,11 +116,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     List<subContent> datarv = db.Database.SqlQuery<subContent>(sql, new SqlParameter("language_id", opplanguage_id),
                                                               new SqlParameter("activity_id", activity_id)).ToList();
                     List<int> list_id_rv = datarv.Select(x => x.article_id).ToList();
-                    foreach(subContent item in data)
+                    foreach (subContent item in data)
                     {
                         list_id_rv.Remove(item.article_id);
                     }
-                    foreach(int item in list_id_rv)
+                    foreach (int item in list_id_rv)
                     {
                         db.ArticleVersions.Add(new ArticleVersion
                         {
