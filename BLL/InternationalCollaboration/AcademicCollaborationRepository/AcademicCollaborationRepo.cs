@@ -127,6 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to'
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
+                if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
                 return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)
@@ -851,9 +852,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             try
                             {
                                 //change status corressponding MOU/MOA
-                                List<int> list_old_partner_scope_id = new List<int>();
-                                list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
-                                autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
+                                if (old_partner_scope.partner_scope_id != 0)
+                                {
+                                    List<int> list_old_partner_scope_id = new List<int>();
+                                    list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
+                                    autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
+                                }
                                 //change status corressponding MOU/MOA
                                 List<int> list_new_partner_scope_id = new List<int>();
                                 list_new_partner_scope_id.Add(partner_scope.partner_scope_id);

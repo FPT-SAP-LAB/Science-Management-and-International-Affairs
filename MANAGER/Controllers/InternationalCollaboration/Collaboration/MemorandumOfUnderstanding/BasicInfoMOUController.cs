@@ -87,6 +87,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult editMOUBasicInfo(MOUBasicInfo input)
         {
             try
@@ -108,6 +109,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult deleteExMOU(int mou_bonus_id)
         {
             try
@@ -163,6 +165,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Add_Ex_Mou(ExMOUAdd input)
         {
             try
@@ -185,6 +188,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "6")]
         public ActionResult Edit_Ex_Mou(ExMOUAdd input)
         {
             try
