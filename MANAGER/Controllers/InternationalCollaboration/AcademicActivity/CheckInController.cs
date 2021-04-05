@@ -31,7 +31,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             bool res = repo.Checkin(participant_id);
             if (res)
-                return Json("Checkin thành công", JsonRequestBehavior.AllowGet);
+                return Json("Checkin thành công");
             else return Json(String.Empty);
         }
         [Auther(RightID = "2")]
@@ -40,7 +40,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             bool res = repo.Checkout(participant_id);
             if (res)
-                return Json("Thu hồi thành công", JsonRequestBehavior.AllowGet);
+                return Json("Thu hồi thành công");
             else return Json(String.Empty);
         }
         [HttpPost]
@@ -61,7 +61,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             bool res = repo.addParticipant(obj);
             if (res)
             {
-                return Json("Thêm người tham dự thành công", JsonRequestBehavior.AllowGet);
+                return Json("Thêm người tham dự thành công");
             }
             return Json(String.Empty);
         }
