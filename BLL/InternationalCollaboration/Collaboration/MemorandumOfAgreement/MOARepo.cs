@@ -1,5 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -365,6 +366,26 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             {
                 throw ex;
             }
+        }
+        public bool checkDuplicatePartnersMOA(List<MOAPartnerInfo> PartnerInfo, int mou_id)
+        {
+            string partner_id_para = "";
+            foreach (MOAPartnerInfo item in PartnerInfo)
+            {
+                partner_id_para += (item.partner_id + ",");
+            }
+            partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
+            string query = @"select count(*) as num_check ,t1.moa_id,t1.mou_id from IA_Collaboration.MOA t1 inner join 
+                IA_Collaboration.MOAPartner t2 on
+                t1.moa_id = t2.moa_id
+                where t2.partner_id in (" + partner_id_para + @") and t1.is_deleted = 0 and t1.mou_id = @mou_id
+                group by t1.moa_id,t1.mou_id
+                having count(*) = @partner_count
+                order by moa_id";
+            List<DuplicatePartnersMOA> obj = db.Database.SqlQuery<DuplicatePartnersMOA>(query,
+                    new SqlParameter("partner_count", PartnerInfo.Count),
+                    new SqlParameter("mou_id", mou_id)).ToList();
+            return obj.Count() > 0 ? true : false;
         }
     }
 }

@@ -447,6 +447,12 @@
                                                 <span class="menu-text">CẬP NHẬT TẠP CHÍ JOURNAL</span>
                                             </a>
                                         </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/PaperCriteria/List" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">TIÊU CHÍ BÀI BÁO QUỐC TẾ</span>
+                                            </a>
+                                        </li>
 
                                         @*sẽ xóa true sau khi deploy cho khách hàng*@
                                         @if (user != null && (user.account.role_id == 1 || true))
@@ -669,17 +675,20 @@
     <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->
     <script src="~/Scripts/updateJournal.js"></script>
     <script>
-        $(".menu-link").each(function () {
-            if ($(this).attr('href').trim() == window.location.pathname) {
-                $(this).parent().addClass('menu-item-active')
-                $(this).parent().parent().parent().parent().addClass('menu-item-open')
-                $(this).parent().parent().parent().parent().addClass(' menu-item-here')
-            }
-        });
-        function onLoad() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init();
-            });
+        //$(".menu-link").each(function () {
+        //    if ($(this).attr('href').trim() == window.location.pathname) {
+        //        $(this).parent().addClass('menu-item-active')
+        //        $(this).parent().parent().parent().parent().addClass('menu-item-open')
+        //        $(this).parent().parent().parent().parent().addClass(' menu-item-here')
+        //    }
+        //});
+        async function onLoad() {
+            new Promise((resolve, reject) => {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                    resolve();
+                });
+            })
         }
         function gp_signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
@@ -687,8 +696,8 @@
                 window.location.href = '/Authen/Logout';
             });
         }
-        $(document).ready(function () {
-            onLoad();
+        $(document).ready(async function () {
+            await onLoad();
         });
     </script>
     @RenderSection("scripts")

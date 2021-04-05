@@ -23,6 +23,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         ResearchersBiographyRepo researcherBiographyRepo;
         EditResearcherInfoRepo researcherEditResearcherInfo;
         // GET: Reseachers
+        const int ListGuestLenght = 20;
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public ActionResult List()
         {
@@ -36,32 +37,41 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             researcherListRepo = new ResearchersListRepo();
             BaseDatatable datatable = new BaseDatatable();
             datatable.Start = 0;
-            datatable.Length = 20;
+            datatable.Length = ListGuestLenght;
             datatable.SortColumnName = "name";
             datatable.SortDirection = "asc";
             BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
             ViewBag.list = list;
+            ViewBag.initNumber = datatable.Length;
             ////////////////////////////////////////////
             return View();
         }
         public ActionResult GetList()
         {
-            researcherListRepo = new ResearchersListRepo();
-            BaseDatatable datatable = new BaseDatatable();
-            string request = Request["request"];
-            var requestJson = JObject.Parse(request);
-            datatable.Start = (int)requestJson["request"]["start"];
-            datatable.Start = (int)requestJson["request"]["length"];
-            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
-            ViewBag.list = list;
-            return Json(new { list });
+            try
+            {
+                researcherListRepo = new ResearchersListRepo();
+                BaseDatatable datatable = new BaseDatatable();
+                datatable.Start = Int32.Parse(Request["start"]);
+                datatable.Length = ListGuestLenght;
+                datatable.SortColumnName = "name";
+                datatable.SortDirection = "asc";
+                BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
+                ViewBag.list = list;
+                int initNumber = datatable.Start < list.RecordsTotal ? (list.RecordsTotal + datatable.Length) : list.RecordsTotal;
+                return Json(new { success = true, list = list, initNumber = initNumber });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
         }
         public ActionResult ViewInfo()
         {
             var pagesTree = new List<PageTree>
            {
                new PageTree("Nghiên cứu viên", "/Researchers"),
-               new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo"),
+               new PageTree("Thông tin nghiên cứu viên", "#"),
            };
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
@@ -82,7 +92,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             var pagesTree = new List<PageTree>
            {
                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
-               new PageTree("Chỉnh sửa thông tin", "/Researchers/EditInfo"),
+               new PageTree("Chỉnh sửa thông tin", "#"),
            };
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);

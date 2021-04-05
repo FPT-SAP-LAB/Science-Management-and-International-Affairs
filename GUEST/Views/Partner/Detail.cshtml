@@ -23,7 +23,7 @@
                                     @{
                                         if (ViewBag.partnerArticle.avatar == null)
                                         {
-                                            <img id="avata" src="~/Content/assets/media/custom-image/icona-partnership.png" />
+                                            <img id="avata" src="~/Content/assets/media/custom-image/logo_partner.png" />
                                         }
                                         else
                                         {
@@ -57,7 +57,7 @@
                         <div class="tab-content" id="">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                   @Html.Raw(ViewBag.partnerArticle.partner_content)
+                                    @Html.Raw(ViewBag.partnerArticle.partner_content)
                                 </div>
                             </div>
                         </div>
@@ -68,6 +68,9 @@
     </div>
 </div>
 @section scripts{
-
-
+    <script>
+        $(document).ready(function () {
+            $('table').wrap('<div style="overflow-x: auto"></div>');
+        })
+    </script>
 }
