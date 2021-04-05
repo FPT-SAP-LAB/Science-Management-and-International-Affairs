@@ -89,7 +89,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         }
         public ActionResult EditInfo()
         {
-
             var pagesTree = new List<PageTree>
            {
                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
