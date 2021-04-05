@@ -852,9 +852,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             try
                             {
                                 //change status corressponding MOU/MOA
-                                List<int> list_old_partner_scope_id = new List<int>();
-                                list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
-                                autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
+                                if (old_partner_scope.partner_scope_id != 0)
+                                {
+                                    List<int> list_old_partner_scope_id = new List<int>();
+                                    list_old_partner_scope_id.Add(old_partner_scope.partner_scope_id);
+                                    autoActiveInactive.changeStatusMOUMOA(list_old_partner_scope_id, db);
+                                }
                                 //change status corressponding MOU/MOA
                                 List<int> list_new_partner_scope_id = new List<int>();
                                 list_new_partner_scope_id.Add(partner_scope.partner_scope_id);
