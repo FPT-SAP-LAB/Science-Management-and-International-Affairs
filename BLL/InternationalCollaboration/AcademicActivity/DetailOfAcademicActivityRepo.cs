@@ -165,7 +165,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             List<subContent> old = getSubContents(language_id, activity_id);
             List<int> old_id = old.Select(x => x.article_id).ToList();
-            if(data != null)
+            if (data != null)
             {
                 foreach (subContent x in data)
                 {
