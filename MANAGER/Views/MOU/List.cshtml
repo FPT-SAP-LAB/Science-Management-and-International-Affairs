@@ -472,6 +472,11 @@
             KTSelect2.init();
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
 
     @*general*@
     <script>
@@ -758,20 +763,24 @@
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (data) {
-                        if (data == "") {
-                            document.getElementById('website_add').removeAttribute('disabled');
-                            document.getElementById('address_add').removeAttribute('disabled');
+                        if (data == "") { 
+                            //set value
                             document.getElementById("website_add").value = "";
                             document.getElementById("address_add").value = "";
                             document.getElementById("partner_id_add").value = "";
+                            $('#nation_add_input').val('');
+
+                            //toggle
+                            document.getElementById('website_add').removeAttribute('disabled');
+                            document.getElementById('address_add').removeAttribute('disabled');
                             document.getElementById('nation_add_select').removeAttribute('hidden');
                             $('#nation_add_select').select2({
                                 placeholder: 'Chọn quốc gia',
                                 allowClear: false,
                             });
                             document.getElementById('nation_add_input').setAttribute('hidden', '');
-                            $('#nation_add_input').val('');
                         } else {
+                            //toggle
                             $("#nation_add_select").val('').trigger("change");
                             document.getElementById('nation_add_input').removeAttribute('hidden');
                             $('#nation_add_select').select2({
@@ -782,8 +791,9 @@
                             $("#nation_add_select").attr("hidden", true);
                             document.getElementById('website_add').setAttribute('disabled', '');
                             document.getElementById('address_add').setAttribute('disabled', '');
-                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
 
+                            //set value
+                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
                             document.getElementById("website_add").value = data.website == null ? "" : data.website;
                             document.getElementById("address_add").value = data.address == null ? "" : data.address;
                             document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
@@ -1113,7 +1123,7 @@
 
     @*mou-list*@
     function getMOUList() {
-            mou_table = $(".mou_table").DataTable({
+        mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1123,6 +1133,7 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
+            pageLength: 5,
             lengthChange: false,
             serverSide: true,
             initComplete: function () {
@@ -1130,20 +1141,24 @@
                 $('.mou_table').parent().removeClass();
             },
             ajax: {
-                    url: "@Url.Action("ViewMOU", "MOU")",
-                    type: "POST",
-                    datatype: "json",
-                    data: {
-                        "partner_name": function () { return $('#search_partner_name').val() },
-                        "contact_point_name": function () { return $('#search_contact_point_name').val() },
-                        "mou_code": function () { return $('#search_mou_code').val() },
-                    },
-                    cache: "false"
+                url: "@Url.Action("ViewMOU", "MOU")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "partner_name": function () { return $('#search_partner_name').val() },
+                    "contact_point_name": function () { return $('#search_contact_point_name').val() },
+                    "mou_code": function () { return $('#search_mou_code').val() },
                 },
+                cache: "false"
+            },
             columns: [
-                { data: "RowNumber"},
-                { data: "mou_code", name:"mou_code"},
-                { data: "partner_name", name: "partner_name"},
+                { data: "RowNumber" },
+                { data: "mou_code", name: "mou_code" },
+                {
+                    data: "partner_name",
+                    name: "partner_name",
+                    width: '200px'
+                },
                 { data: "country_name", name: "country_name" },
                 {
                     data: "website",
@@ -1157,8 +1172,8 @@
                 },
                 { data: "specialization_name", name: "specialization_name" },
                 { data: "contact_point_name", name: "contact_point_name" },
-                { data: "contact_point_email", name: "contact_point_email"},
-                { data: "contact_point_phone", name: "contact_point_phone"},
+                { data: "contact_point_email", name: "contact_point_email" },
+                { data: "contact_point_phone", name: "contact_point_phone" },
                 {
                     data: "evidence",
                     render: function (data) {
@@ -1206,7 +1221,7 @@
                     orderable: false,
                     width: '125px',
                     render: function (data, type, full, meta) {
-                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                        return '<a onclick=goDetail(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
