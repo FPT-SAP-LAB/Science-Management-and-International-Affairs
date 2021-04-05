@@ -1227,6 +1227,9 @@
                             $('#remove_activity').attr('hidden', false);
                             $('#post_activity').attr('hidden', true);
                         }
+                        setTimeout(function () {
+                            initDetail();
+                        }, 1000);
                     } else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
                     }
