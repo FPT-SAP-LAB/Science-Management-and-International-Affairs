@@ -1,6 +1,4 @@
 ﻿
-
-
 $('.edit_program_btn').click(function () {
 
     var edit_program_title
@@ -91,7 +89,7 @@ $('.edit_program_btn').click(function () {
             };
             if (data.success) {
                 toastr.clear()
-                toastr.success('Thêm thành công');
+                toastr.success('Chỉnh sửa thành công');
 
                 $('.modal-edit-program textarea').val('');
                 $('.modal-edit-program input').val('');
