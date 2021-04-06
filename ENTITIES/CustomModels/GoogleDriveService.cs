@@ -137,7 +137,11 @@ namespace ENTITIES.CustomModels
 
                 UploadedFiles.Add(file);
 
-                if (ShareWithEmail != null) ShareFile(ShareWithEmail, file.Id);
+                if (ShareWithEmail != null)
+                {
+                    ShareFile(ShareWithEmail, file.Id);
+                    ShareFile(ShareWithEmail, folder.Id);
+                }
             }
 
             return UploadedFiles;
