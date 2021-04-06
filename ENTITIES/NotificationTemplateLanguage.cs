@@ -10,10 +10,15 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class NotificationTemplateLanguage
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int notification_type_id { get; set; }
+        public int language_id { get; set; }
+        public string template { get; set; }
+    
+        public virtual Language Language { get; set; }
+        public virtual NotificationType NotificationType { get; set; }
     }
 }

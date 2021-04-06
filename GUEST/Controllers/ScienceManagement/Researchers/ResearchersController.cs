@@ -25,13 +25,12 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         // GET: Reseachers
         const int ListGuestLenght = 20;
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public ActionResult List()
-        {
-            var pagesTree = new List<PageTree>
+        readonly List<PageTree> pagesTree = new List<PageTree>
             {
-                new PageTree("Nghiên cứu viên", "/Researchers"),
                 new PageTree("Danh sách nghiên cứu viên", "/Researchers/List"),
             };
+        public ActionResult List()
+        {
             ViewBag.pagesTree = pagesTree;
             ////////////////////////////////////////////
             researcherListRepo = new ResearchersListRepo();
@@ -51,28 +50,27 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherListRepo = new ResearchersListRepo();
-                BaseDatatable datatable = new BaseDatatable();
-                datatable.Start = Int32.Parse(Request["start"]);
-                datatable.Length = ListGuestLenght;
-                datatable.SortColumnName = "name";
-                datatable.SortDirection = "asc";
+                BaseDatatable datatable = new BaseDatatable
+                {
+                    Start = Int32.Parse(Request["start"]),
+                    Length = ListGuestLenght,
+                    SortColumnName = "name",
+                    SortDirection = "asc"
+                };
                 BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
                 ViewBag.list = list;
                 int initNumber = datatable.Start < list.RecordsTotal ? (list.RecordsTotal + datatable.Length) : list.RecordsTotal;
-                return Json(new { success = true, list = list, initNumber = initNumber });
+                return Json(new { success = true, list, initNumber });
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false });
             }
         }
         public ActionResult ViewInfo()
         {
-            var pagesTree = new List<PageTree>
-           {
-               new PageTree("Nghiên cứu viên", "/Researchers"),
-               new PageTree("Thông tin nghiên cứu viên", "#"),
-           };
+            pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "#"));
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetDetailView(id);
@@ -89,13 +87,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         }
         public ActionResult EditInfo()
         {
-            var pagesTree = new List<PageTree>
-           {
-               new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
-               new PageTree("Chỉnh sửa thông tin", "#"),
-           };
-            researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
+            pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo?id=" + id));
+            pagesTree.Add(new PageTree("Chỉnh sửa thông tin", "#"));
+            researcherDetailRepo = new ResearchersDetailRepo();
             if (CurrentAccount.getProfile(Session).people_id != id)
             {
                 Response.Redirect("/ErrorPage/Error");
