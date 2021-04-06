@@ -69,7 +69,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                         new SqlParameter("sortDirection", baseDatatable.SortDirection),
                                                         new SqlParameter("start", baseDatatable.Start),
                                                         new SqlParameter("length", baseDatatable.Length)).ToList();
-                } else
+                }
+                else
                 {
                     academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
                                                         new SqlParameter("direction", direction),
@@ -855,7 +856,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 AcademicCollaboration ac = db.AcademicCollaborations.Where(x => x.collab_id == obj_academic_collab.collab_id).FirstOrDefault();
                                 old_partner_scope = db.PartnerScopes.Where(x => x.partner_scope_id == ac.partner_scope_id).FirstOrDefault();
                                 decreaseReferenceCountOfPartnerScope(old_partner_scope);
-                               
+
                                 //add partner_id & scope_id to PartnerScope
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                                 //update infor to AcademicCollaboration
