@@ -56,8 +56,9 @@ $(document).ready(function() {
                     className: 'text-center'
                 }
             ],
-            initComplete: function() {
+            initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
                 $(this).parent().css('padding', '0');
             },
         })
@@ -125,8 +126,9 @@ $(document).ready(function() {
                     className: 'text-center'
                 }
             ],
-            initComplete: function() {
+            initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
                 $(this).parent().css('padding', '0');
             },
         })
@@ -144,10 +146,10 @@ $(document).ready(function() {
             sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             sInfoEmpty: "",
         },
-        initComplete: function() {
+        initComplete: function () {
             $(this).parent().css('overflow-x', 'auto');
+            $(this).parent().css('width', '100%');
             $(this).parent().css('padding', '0');
-            //$(this).parent().removeClass();
         },
         searching: false,
         lengthChange: false,
@@ -286,6 +288,7 @@ $(document).ready(function() {
         }],
         initComplete: function() {
             $(this).parent().css('overflow-x', 'auto');
+            $(this).parent().css('width', '100%');
             $(this).parent().css('padding', '0');
         },
     });
