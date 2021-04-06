@@ -245,6 +245,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChatHub.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\AdditionalProfileController.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
@@ -707,6 +708,7 @@
     <Content Include="Content\assets\media\error\bg5.jpg" />
     <Content Include="Content\assets\media\error\bg6.jpg" />
     <Content Include="Content\assets\media\error\smile.gif" />
+    <Content Include="Content\assets\media\logos\2020-FPT-Edu.png" />
     <Content Include="Content\assets\media\logos\favicon.ico" />
     <Content Include="Content\assets\media\logos\logo-1.png" />
     <Content Include="Content\assets\media\logos\logo-4.png" />
