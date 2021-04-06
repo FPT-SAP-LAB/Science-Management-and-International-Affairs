@@ -131,7 +131,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -209,7 +209,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="load-btn btn btn-light-primary font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+                <button type="button" class="load-btn btn btn-light-primary font-weight-bold" id="btn_edit">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -401,6 +401,7 @@
             window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
         }
         $('#btn_add').click(function () {
+            save_loader.startLoading();
             let activity_name = document.getElementById('add_title').value;
             let activity_type_id = document.getElementById('add_category').value;
             let from = document.getElementById('add_from').value;
@@ -430,14 +431,15 @@
                     if (data != '') {
                         toastr.success(data);
                         clearModal('#addModal');
-                        stt = 1;
+                        $('#addModal').modal('hide');
                         datatable.ajax.reload();
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
+                    save_loader.startLoading();
                 },
                 error: function (data) {
-                    alert(data)
+                    save_loader.startLoading();
                 }
             });
         });
@@ -508,7 +510,6 @@
                                     $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                                     clearModal('#editModal');
                                     $('#editModal').modal('hide');
-                                    stt = 1;
                                     datatable.ajax.reload();
                                 } else {
                                     var itemId = files[0].id;
@@ -574,7 +575,6 @@
                         clearModal('#cloneModal');
                         unCheckbox('#cloneModal');
                         $('#cloneModal').modal('hide');
-                        stt = 1;
                         datatable.ajax.reload();
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
@@ -625,8 +625,8 @@
                 },
                 columns: [
                     {
-                        render: function () {
-                            return stt++;
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
                     {

@@ -21,7 +21,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 SMIA_AcademicActivity.AcademicActivityPhaseLanguage al ON
                                 p.phase_id = al.phase_id inner join General.Account a
                                 on p.created_by = a.account_id
-                                WHERE al.language_id = @language_id AND p.activity_id = @activity_id";
+                                WHERE al.language_id = @language_id AND p.activity_id = @activity_id order by p.phase_end";
                 List<infoPhase> data = db.Database.SqlQuery<infoPhase>(sql,
                     new SqlParameter("language_id", language_id),
                     new SqlParameter("activity_id", activity_id)).ToList();
