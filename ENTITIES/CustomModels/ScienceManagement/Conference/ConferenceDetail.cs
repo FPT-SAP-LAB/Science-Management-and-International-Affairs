@@ -26,6 +26,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string PaperLink { get; set; }
         public string PaperFileName { get; set; }
         public string PaperName { get; set; }
+        public string FolderLink { get; set; }
         public int RequestID { get; set; }
         public int CountryID { get; set; }
         public string CountryName { get; set; }
