@@ -845,6 +845,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         var evidence_file = saveFile(f, new_evidence);
                         //add infor to CollaborationStatusHistory
                         var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                        db.SaveChanges();
                         trans.Commit();
 
                         using (DbContextTransaction dbContext = db.Database.BeginTransaction())
@@ -1014,6 +1015,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         }
                         //add academic collab status history
                         var collab_staus_hist = saveCollabStatusHistory(evidence_file, collab_id, num_status_id, note, file, account_id);
+                        db.SaveChanges();
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chuyển trạng thái hợp tác học thuật thành công.");
                     }
