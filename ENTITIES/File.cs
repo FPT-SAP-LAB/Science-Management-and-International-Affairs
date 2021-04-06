@@ -29,6 +29,7 @@ namespace ENTITIES
             this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
             this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
+            this.RequestConferences1 = new HashSet<RequestConference>();
         }
     
         public int file_id { get; set; }
@@ -60,5 +61,7 @@ namespace ENTITIES
         public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestConference> RequestConferences1 { get; set; }
     }
 }
