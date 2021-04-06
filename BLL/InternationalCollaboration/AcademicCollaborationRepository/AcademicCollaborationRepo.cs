@@ -47,23 +47,42 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
                         and ISNULL(c.country_name, '') like @country_name
                         and ISNULL(pn.partner_name, '') like @partner_name
-                        and ISNULL(offi.office_name, '') like @office_name
-                        or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)
-                        ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                        and ISNULL(offi.office_name, '') like @office_name ";
+                if (obj_searching.year != 0)
+                {
+                    sql += @"or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)";
+                }
+                sql += @"ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                         " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
 
-                List<AcademicCollaboration_Ext> academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
-                                                    new SqlParameter("direction", direction),
-                                                    new SqlParameter("collab_type_id", collab_type_id),
-                                                    new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
-                                                    new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
-                                                    new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
-                                                    new SqlParameter("year", obj_searching.year),
-                                                    new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
-                                                    new SqlParameter("sortDirection", baseDatatable.SortDirection),
-                                                    new SqlParameter("start", baseDatatable.Start),
-                                                    new SqlParameter("length", baseDatatable.Length)).ToList();
-
+                List<AcademicCollaboration_Ext> academicCollaborations;
+                if (obj_searching.year != 0)
+                {
+                    academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
+                                                        new SqlParameter("direction", direction),
+                                                        new SqlParameter("collab_type_id", collab_type_id),
+                                                        new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                        new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                        new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                        new SqlParameter("year", obj_searching.year),
+                                                        new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
+                                                        new SqlParameter("sortDirection", baseDatatable.SortDirection),
+                                                        new SqlParameter("start", baseDatatable.Start),
+                                                        new SqlParameter("length", baseDatatable.Length)).ToList();
+                }
+                else
+                {
+                    academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
+                                                        new SqlParameter("direction", direction),
+                                                        new SqlParameter("collab_type_id", collab_type_id),
+                                                        new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                        new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                        new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                        new SqlParameter("sortColumnName", baseDatatable.SortColumnName),
+                                                        new SqlParameter("sortDirection", baseDatatable.SortDirection),
+                                                        new SqlParameter("start", baseDatatable.Start),
+                                                        new SqlParameter("length", baseDatatable.Length)).ToList();
+                }
                 int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)                                                              
                                                                 from IA_AcademicCollaboration.AcademicCollaboration collab
                                                                 join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
@@ -348,6 +367,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                             //get corresponding partner_scope_id
                             partner_scope_id = partner_scope.partner_scope_id;
+                            //add Academic Collab
+                            var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
+                            //add infor to File
+                            var evidence_file = saveFile(f, evidence);
+                            //add infor to CollaborationStatusHistory
+                            var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                         }
                         else
                         {
@@ -370,10 +395,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
                             //add infor to File
                             var evidence_file = saveFile(f, evidence);
-                            db.SaveChanges();
                             //add infor to CollaborationStatusHistory
                             var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
-                            db.SaveChanges();
                         }
                         trans.Commit();
                         //change status corressponding MOU/MOA
@@ -447,6 +470,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 person.email = obj_person.person_email;
                 if (obj_person.person_profile_office_id != 0) person.office_id = obj_person.person_profile_office_id;
                 db.People.Add(person);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -514,6 +538,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     account_id = account_id
                 };
                 db.Articles.Add(article);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -535,6 +560,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     language_id = 1 //Vietnamese
                 };
                 db.ArticleVersions.Add(articleVersion);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -666,6 +692,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (evidence != null) collab_status_hist.file_id = evidence_file.file_id;
                 collab_status_hist.account_id = account_id;
                 db.CollaborationStatusHistories.Add(collab_status_hist);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -829,8 +856,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 AcademicCollaboration ac = db.AcademicCollaborations.Where(x => x.collab_id == obj_academic_collab.collab_id).FirstOrDefault();
                                 old_partner_scope = db.PartnerScopes.Where(x => x.partner_scope_id == ac.partner_scope_id).FirstOrDefault();
                                 decreaseReferenceCountOfPartnerScope(old_partner_scope);
+
                                 //add partner_id & scope_id to PartnerScope
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
+                                //update infor to AcademicCollaboration
+                                academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
                                 //delete 0 ref_cou partner_scope
                                 if (old_partner_scope.reference_count <= 0)
                                 {
