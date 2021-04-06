@@ -1,5 +1,6 @@
 ﻿using BLL.ModelDAL;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using Microsoft.AspNet.SignalR;
 using System.Collections.Generic;
 
