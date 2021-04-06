@@ -173,6 +173,7 @@
     <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
+    <Compile Include="ModelDAL\NotificationRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
