@@ -9,6 +9,7 @@ $(document).ready(function() {
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sInfoEmpty: "",
             },
             serverSide: true,
             searching: false,
@@ -75,6 +76,7 @@ $(document).ready(function() {
                 },
                 sEmptyTable: "Không có dữ liệu",
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sInfoEmpty: "",
             },
             serverSide: true,
             searching: false,
@@ -140,6 +142,7 @@ $(document).ready(function() {
             },
             sEmptyTable: "Không có dữ liệu",
             sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+            sInfoEmpty: "",
         },
         initComplete: function() {
             $(this).parent().css('overflow-x', 'auto');
@@ -220,6 +223,7 @@ $(document).ready(function() {
                 sNext: "Trang sau"
             },
             sEmptyTable: "Không có dữ liệu",
+            sInfoEmpty: "",
             sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
         },
         searching: false,
