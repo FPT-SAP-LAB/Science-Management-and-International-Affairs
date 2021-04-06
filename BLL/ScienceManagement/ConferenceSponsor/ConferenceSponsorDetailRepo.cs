@@ -53,6 +53,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                PaperLink = f.link,
                                                PaperFileName = f.name,
                                                PaperName = e.name,
+                                               FolderLink = a.folder_id == null ? null : a.File1.link,
                                                RequestID = a.request_id,
                                                CountryID = c.country_id,
                                                CountryName = c.country_name,
@@ -242,7 +243,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         join b in db.RequestConferences on a.request_id equals b.request_id
                         join c in db.Accounts on a.account_id equals c.account_id
                         join d in db.Conferences on b.conference_id equals d.conference_id
-                        where c.account_id == account_id && a.request_id == request_id
+                        where a.request_id == request_id
                         select new
                         {
                             d.conference_name,
@@ -296,6 +297,53 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
             }
             return new AlertModal<string>(true);
+        }
+        public AlertModal<string> SubmitFiles(List<HttpPostedFileBase> files, int request_id)
+        {
+            RequestConference request = db.RequestConferences.Find(request_id);
+            if (request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                List<string> ids = new List<string>();
+                try
+                {
+                    string parentID;
+                    if (request.folder_id == null)
+                    {
+                        parentID = GoogleDriveService.GetFile(request.File.file_drive_id).Parents[0];
+                        string parentLink = GoogleDriveService.GetFile(parentID).WebViewLink;
+                        File file = new File
+                        {
+                            file_drive_id = parentID,
+                            link = parentLink
+                        };
+                        request.File1 = file;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        parentID = request.File1.file_drive_id;
+                    }
+                    foreach (var item in files)
+                    {
+                        Google.Apis.Drive.v3.Data.File temp = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, parentID);
+                        ids.Add(temp.Id);
+                    }
+                    trans.Commit();
+                    return new AlertModal<string>(true);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Console.WriteLine(e.ToString());
+                    foreach (var item in ids)
+                    {
+                        GoogleDriveService.DeleteFile(item);
+                    }
+                }
+            }
+            return new AlertModal<string>(false);
         }
         public AlertModal<string> SubmitReimbursement(string reimbursement_string, int request_id)
         {
