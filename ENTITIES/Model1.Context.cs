@@ -150,7 +150,7 @@ namespace ENTITIES
         public virtual DbSet<QuestionOption> QuestionOptions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
-        public virtual DbSet<NotificationTemplateLanguage> NotificationTemplateLanguages { get; set; }
+        public virtual DbSet<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
         public virtual DbSet<NotificationSubscribe> NotificationSubscribes { get; set; }
     }
 }
