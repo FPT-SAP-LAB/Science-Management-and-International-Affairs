@@ -11,14 +11,14 @@ namespace UnitTest
         [Test]
         public void TestMethod1()
         {
-            Assert.AreEqual(1,1);
+            Assert.AreEqual(1, 1);
         }
 
         [Test]
         public void ClassicModel()
         {
             //Doc: https://docs.nunit.org/articles/nunit/writing-tests/assertions/assertion-models/classic.html
-            
+
             //For example:
             Assert.AreEqual(1, 1, "Message error 1");
         }
@@ -44,9 +44,9 @@ namespace UnitTest
 
         [TestCase(1, 4, 9)]
         [TestCase(10, 7, 17)]
-        public void TestPreparedTCs(int a,int b,int c)
+        public void TestPreparedTCs(int a, int b, int c)
         {
-            Assert.AreEqual(a+b,c,"Message error");
+            Assert.AreEqual(a + b, c, "Message error");
         }
     }
 }

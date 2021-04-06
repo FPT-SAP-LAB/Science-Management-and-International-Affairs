@@ -23,7 +23,7 @@ namespace UnitTest
                 Start = 0,
                 Length = 10
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable,"","","").Data;
+            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, "", "", "").Data;
             Assert.AreEqual(10, listTest.Count);
         }
     }
