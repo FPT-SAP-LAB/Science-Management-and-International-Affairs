@@ -14,7 +14,7 @@
                         @foreach (var item in ViewBag.listCountry)
                         {
                             <option value="@item.country_id">@item.country_name</option>
-                        }
+                        }                        
                     </select>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <a onclick="load_detail.load_program_detail(@item.program_id)" class="link-load-detail">
                     @if (item.avatar is null)
                     {
-                        <img src="~/Content/assets/media/custom-image/icona-partnership.png" class="item-picture" />
+                        <img src="~/Content/assets/media/custom-image/logo_partner.png" class="item-picture" />
                     }
                     else
                     {
@@ -55,38 +55,46 @@
                 </a>
             </div>
         }
+        @if (ViewBag.ListProgram.Count < 4)
+        {
+            for (var i = 0; i < 4 - ViewBag.ListProgram.Count; i++)
+            {
+                <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                </div>
+            }
+        }
         @*<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
-                    <img src="~/Content/Picture1.jpg" class="item-picture" />
-                    <label>
-                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
-                    </label>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
-                    <img src="~/Content/Picture2.jpg" class="item-picture" />
-                    <label>
-                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
-                    </label>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                <a onclick="load_detail.load_program_detail(1,2)" class="link-load-detail">
-                    <img src="~/Content/Picture3.jpg" class="item-picture" />
-                    <label>
-                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
-                    </label>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                <a onclick="load_detail.load_program_detail(1,2)" class="link-load-detail">
-                    <img src="~/Content/Picture4.jpg" class="item-picture" />
-                    <label>
-                        Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
-                    </label>
-                </a>
-            </div>*@
+            <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
+                <img src="~/Content/Picture1.jpg" class="item-picture" />
+                <label>
+                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ UTP
+                </label>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+            <a onclick="load_detail.load_program_detail(1,1)" class="link-load-detail">
+                <img src="~/Content/Picture2.jpg" class="item-picture" />
+                <label>
+                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HUST
+                </label>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+            <a onclick="load_detail.load_program_detail(1,2)" class="link-load-detail">
+                <img src="~/Content/Picture3.jpg" class="item-picture" />
+                <label>
+                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ FTU
+                </label>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+            <a onclick="load_detail.load_program_detail(1,2)" class="link-load-detail">
+                <img src="~/Content/Picture4.jpg" class="item-picture" />
+                <label>
+                    Thông báo tuyển sinh đào tạo trình độ tiến sĩ HARDVARD
+                </label>
+            </a>
+        </div>*@
     </div>
 </div>
 <div class="row">

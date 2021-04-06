@@ -1,6 +1,7 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
 using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using MANAGER.Support;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         private static MOARepo moa = new MOARepo();
         private static BasicInfoMOARepo moa_detail = new BasicInfoMOARepo();
         private static PartnerMOARepo moa_partner = new PartnerMOARepo();
-        //[Auther(RightID = "6")]
+        [Auther(RightID = "7")]
         public ActionResult Detail_MOA()
         {
             ViewBag.pageTitle = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
@@ -101,6 +102,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Delete_Moa(int moa_id)
         {
             try
@@ -113,6 +115,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "7")]
         public ActionResult Add_Moa(MOAAdd input)
         {
             try
@@ -141,6 +144,27 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             {
                 bool isDup = moa.getMOACodeCheck(moa_code);
                 return Json(isDup);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult checkDuplicatePartnersMOA(List<MOAPartnerInfo> MOAPartnerInfo)
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string mou_id = Session["mou_detail_id"].ToString();
+                    bool isDup = moa.checkDuplicatePartnersMOA(MOAPartnerInfo, int.Parse(mou_id));
+                    return Json(isDup);
+                }
             }
             catch (Exception ex)
             {

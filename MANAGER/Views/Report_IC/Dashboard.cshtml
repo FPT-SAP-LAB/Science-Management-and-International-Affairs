@@ -181,7 +181,7 @@
                     d3.push([i, parseInt(Math.random() * 30)]);
 
                 var stack = 0,
-                    bars = true,
+                    bars = true;
 
                 function plotWithOptions() {
                     $.plot($("#kt_flotcharts_6"),
@@ -232,7 +232,7 @@
                 $(".stackControls input").click(function (e) {
                     e.preventDefault();
                     stack = $(this).val() == "With stacking" ? true : null;
-                    plotWithOptions();
+                    //plotWithOptions();
                 });
 
                 $(".graphControls input").click(function (e) {
@@ -240,10 +240,10 @@
                     bars = $(this).val().indexOf("Bars") != -1;
                     lines = $(this).val().indexOf("Lines") != -1;
                     steps = $(this).val().indexOf("steps") != -1;
-                    plotWithOptions();
+                    //plotWithOptions();
                 });
 
-                plotWithOptions();
+                //plotWithOptions();
             }
             // Private properties
             // Charts widgets

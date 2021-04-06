@@ -304,7 +304,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_clone">Xác nhận</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_clone">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -540,6 +540,7 @@
         });
 
         $('#btn_clone').click(function () {
+            save_loader.startLoading();
             let activity_name = document.getElementById('clone_title').value;
             let activity_type_id = document.getElementById('clone_category').value;
             let from = document.getElementById('clone_from').value;
@@ -572,14 +573,17 @@
                         toastr.success(data);
                         clearModal('#cloneModal');
                         unCheckbox('#cloneModal');
+                        $('#cloneModal').modal('hide');
                         stt = 1;
                         datatable.ajax.reload();
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
+                    save_loader.stopLoading();
                 },
                 error: function (data) {
-                    alert(data)
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    save_loader.stopLoading();
                 }
             });
         });

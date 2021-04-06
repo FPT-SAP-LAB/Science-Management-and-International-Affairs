@@ -124,7 +124,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="javascript:" onclick="saveBasicInfo()" class="btn btn-sm btn-light-success px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="javascript:" onclick="saveBasicInfo(this)" class="load-btn btn btn-sm btn-light-success font-weight-bold float-right">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -686,20 +686,26 @@
             $('#moa_status').append(HTMLStatusData);
         }
 
-        function saveBasicInfo() {
+        function saveBasicInfo(element) {
+            var button_loader = new LoaderBtn(element);
+            button_loader.startLoading();
             if ($('#moa_code').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
             else if ($('#end_date_moa').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn chưa được chọn');
                 return;
             }
             else if (compareDate($('#sign_date_moa').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                 return;
             }
             else if (MOACodeIsInvalid($('#moa_code').val().trim())) {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
@@ -720,6 +726,7 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
+                        button_loader.stopLoading();
                         Swal.fire("Thành công",
                             "Thông tin được cập nhật thành công", "success").then(function (result) {
                                 if (result.value) {
@@ -1236,28 +1243,36 @@
             });
         }
 
-        function finishExMOAAdd() {
+        function finishExMOAAdd(element) {
+            var button_loader = new LoaderBtn(element);
+            button_loader.startLoading();
             if ($('#moa_id_addition').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
             else if ($('#moa_addition_end_time').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn chưa được chọn');
                 return;
             }
             else if (compareDate($('#moa_addition_sign_time').val(), $('#moa_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                 return;
             }
             else if (ExMOACodeIsInvalid($('#moa_id_addition').val().trim())) {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
             else if (compareDate($('#sign_date_moa').val(), $('#moa_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
                 return;
             }
             else if (compareDate($('#end_date_moa').val(), $('#moa_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
                 return;
             }
@@ -1283,6 +1298,7 @@
                     success: function (data) {
                         listTempExMOAPartnerScope = [];
                         $('#add_additional_moa').modal('hide');
+                        button_loader.stopLoading();
                         Swal.fire("Thành công",
                             "Đã bổ sung biên bản ghi nhớ thành công", "success").then(function (result) {
                                 if (result.value) {
@@ -1796,17 +1812,22 @@
             }
         });
     }
-
-    function valMOAPartner() {
+    var moa_partner_button_loader;
+    function valMOAPartner(element) {
+        moa_partner_button_loader = new LoaderBtn(element);
+        moa_partner_button_loader.startLoading();
         if ($('#sign_date').val().trim() == '') {
+            moa_partner_button_loader.stopLoading();
             toastr.error('Ngày ký kết chưa được chọn');
             return;
         }
         else if ($('#coop_scope').val().length == 0) {
+            moa_partner_button_loader.stopLoading();
             toastr.error('Phạm vi hợp tác chưa được chọn');
             return;
         }
         else if (compareDate($('#sign_date').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
+            moa_partner_button_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
         else {
@@ -1828,6 +1849,7 @@
                 cache: false,
                 success: function (data) {
                     if (data != "") {
+                        moa_partner_button_loader.stopLoading();
                         toastr.error('Đối tác đã có trong biên bản ghi nhớ');
                     } else {
                         CheckMOAPartnerDateInvalid($('#sign_date').val(), $('#partner_name_form').val());
@@ -1843,7 +1865,7 @@
             var obj =
             {
                 partner_id: $('#partner_name_form_edit').val(),
-                mou_partner_id: $('#moa_partner_id_edit').val()
+                moa_partner_id: $('#moa_partner_id_edit').val()
             };
             $.ajax({
                 url: "@Url.Action("CheckPartnerExistedInEditMOA", "PartnerMOA")",
@@ -1854,6 +1876,7 @@
                 cache: false,
                 success: function (data) {
                     if (data != "") {
+                        moa_partner_edit_button.stopLoading();
                         toastr.error('Đối tác đã có trong biên bản thỏa thuận');
                     } else {
                         editMOAPartnerAction();
@@ -1881,6 +1904,7 @@
                 cache: false,
                 success: function (data) {
                     $('#add_partner_moa').modal('hide');
+                    moa_partner_button_loader.stopLoading();
                     Swal.fire("Thành công",
                         "Đã thêm đối tác thành công", "success").then(function (result) {
                             if (result.value) {
@@ -1908,6 +1932,7 @@
                 cache: false,
                 success: function (isInvalid) {
                     if (isInvalid) {
+                        moa_partner_button_loader.stopLoading();
                         toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
                     }
                     else {
@@ -1963,7 +1988,8 @@
                 $("#phone_edit").val(data.contact_point_phone);
                 $("#address_edit").val(data.address);
                 $("#specialization_edit").val(data.specialization_name);
-                moa_partner_id_item = moa_partner_id;
+                $("#moa_partner_id_edit").val(moa_partner_id);
+                //moa_partner_id_item = moa_partner_id;
                 loadDataMOAPartnerForEdit(data);
             },
             error: function () {
@@ -2112,20 +2138,27 @@
         moa_partner_table.ajax.reload();
     }
 
-    function editMOAPartner() {
+    var moa_partner_edit_button;
+    function editMOAPartner(element) {
+        moa_partner_edit_button = new LoaderBtn(element);
+        moa_partner_edit_button.startLoading();
         if ($('#partner_name_form_edit').val().trim() == '') {
+            moa_partner_edit_button.stopLoading();
             toastr.error('Đối tác chưa được chọn');
             return;
         }
         else if ($('#sign_date_edit').val().trim() == '') {
+            moa_partner_edit_button.stopLoading();
             toastr.error('Ngày ký kết chưa được chọn');
             return;
         }
         else if ($('#coop_scope_edit').val().length == 0) {
+            moa_partner_edit_button.stopLoading();
             toastr.error('Phạm vi hợp tác chưa được chọn');
             return;
         }
         else if (compareDate($('#sign_date_edit').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
+            moa_partner_edit_button.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
         else {
@@ -2138,7 +2171,7 @@
                 scopes: $('#coop_scope_edit').val(),
                 partner_id: $('#partner_name_form_edit').val(),
                 sign_date_string: $('#sign_date_edit').val(),
-                moa_partner_id: moa_partner_id_item
+                moa_partner_id: $("#moa_partner_id_edit").val()
             }
             $.ajax({
                 url: "@Url.Action("Edit_Moa_Partner", "PartnerMOA")",
@@ -2149,6 +2182,7 @@
                 cache: false,
                 success: function (data) {
                     $('#edit_partner_moa').modal('hide');
+                    moa_partner_edit_button.stopLoading();
                     Swal.fire("Thành công",
                         "Đã chỉnh sửa thông tin đối tác thành công", "success").then(function (result) {
                             if (result.value) {

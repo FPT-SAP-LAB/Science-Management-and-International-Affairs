@@ -8,6 +8,7 @@ using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEnti
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.DeserializeAcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;
 using MANAGER.Models;
+using MANAGER.Support;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -189,6 +190,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         [HttpPost]
         public ActionResult saveAcademicCollaboration(HttpPostedFileBase evidence, string folder_name, int direction_id, int collab_type_id,
             string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
@@ -252,6 +254,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         [HttpPost]
         public ActionResult updateAcademicCollaboration(string old_evidence_stringify, HttpPostedFileBase new_evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
         {
@@ -293,6 +296,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         //DELETE
         [HttpPost]
         public ActionResult deleteAcademicCollaboration(int acad_collab_id)
@@ -333,6 +337,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         //CHANGE STATUS HISTORY
         [HttpPost]
         public ActionResult changeStatus(int collab_id, HttpPostedFileBase evidence_file, string folder_name, string status_id, string note)
@@ -374,6 +379,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         //LONG-TERM UPDATE CONTENT
         [HttpPost]
         public ActionResult updateLTContent(int collab_type_id, int language_id, string description)
@@ -406,6 +412,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         //LONG-TERM GOING || COMING UPDATE CONTENT
         [HttpPost]
         public ActionResult updateLTGCContent(int collab_type_direction_id, int language_id, string description)
@@ -456,6 +463,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult AddProcedure(string procedure_title, string content, int direction,
             int numberOfImage, int partner_language_type)
@@ -530,6 +538,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult SaveEdit(int procedure_id, string content, int numberOfImage, string procedure_name, int language_id)
         {
@@ -581,6 +590,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "11")]
         [HttpPost]
         public ActionResult DeleteProcedure(int procedure_id)
         {
@@ -624,6 +634,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult AddProgram(int direction, int numberOfImage, string program_title, string collab_type,
             string program_partner, int program_language, string program_range_date, string note, string content)
@@ -678,6 +689,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         public ActionResult DeleteProgram(string article_id)
         {
             try
@@ -694,6 +706,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [Auther(RightID = "10,11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult SaveEditProgram(string program_id, string content, int numberOfImage, string program_title,
             int program_language, string program_partner, string program_range_date, string note, string direction)

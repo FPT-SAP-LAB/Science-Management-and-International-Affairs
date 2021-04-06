@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using OfficeOpenXml;
+using MANAGER.Support;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -21,6 +22,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         readonly BasicInfoMOURepo mou_detail = new BasicInfoMOURepo();
         readonly PartnerMOURepo mou_partner = new PartnerMOURepo();
         readonly MOARepo moa = new MOARepo();
+        [Auther(RightID = "5")]
         public ActionResult List()
         {
             try
@@ -72,8 +74,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                List<ListMOU> listMOU = mou.listAllMOUDeleted(partner_name, contact_point_name, mou_code);
-                return Json(new { success = true, data = listMOU }, JsonRequestBehavior.AllowGet);
+                BaseDatatable baseDatatable = new BaseDatatable(Request);
+                BaseServerSideData<ListMOU> listMOU = mou.listAllMOUDeleted(baseDatatable, partner_name, contact_point_name, mou_code);
+                return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -81,6 +84,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult Delete_Mou(int mou_id)
         {
             try
@@ -94,6 +98,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult Add_Mou(MOUAdd input)
         {
             try
@@ -135,6 +140,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        [Auther(RightID = "5")]
         public ActionResult ExportMOUExcel()
         {
             try
@@ -185,6 +191,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
                     ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
                     ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
+                    ViewBag.listCountry = mou.GetCountries();
 
                     //MOA
                     ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));

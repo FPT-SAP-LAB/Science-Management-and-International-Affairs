@@ -186,6 +186,10 @@
             $('.header-modify').css('padding', '13px');
 
         });
+
+        //init loading button:
+        var add_mou_loader = new LoaderBtn($("#step-2-button"));
+        //var mou_detail_loader = new LoaderBtn($(".mou_detail"));
     </script>
 
     @*custom_wizard*@
@@ -472,6 +476,11 @@
             KTSelect2.init();
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('.select2-search__field').css('width', '100%');
+        })
+    </script>
 
     @*general*@
     <script>
@@ -666,22 +675,30 @@
     }
 
     function doneStep() {
+        //start display loading:
+        add_mou_loader.startLoading();
         if ($('#mou_code_add').val().trim() == "") {
+            add_mou_loader.stopLoading();
             toastr.error('Số hiệu không được bỏ trống');
         }
         else if ($('#end_date_mou').val() == "") {
+            add_mou_loader.stopLoading();
             toastr.error('Ngày hết hạn chưa được chọn');
         }
         else if ($('#search_office').val() == null) {
+            add_mou_loader.stopLoading();
             toastr.error('Cơ sở chưa được chọn');
         }
         else if (listTempPartnerMOUAdd.length == 0) {
+            add_mou_loader.stopLoading();
             toastr.error('Chưa có đối tác nào được thêm');
         }
         else if (compareDate($('#sign_date_mou').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
+            add_mou_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
         }
         else if (MOUCodeIsInvalid($('#mou_code_add').val().trim())) {
+            add_mou_loader.stopLoading();
             toastr.error('Số hiệu không hợp lệ');
         }
         else {
@@ -712,6 +729,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
+                    add_mou_loader.stopLoading();
                     mou_table.ajax.reload();
                     Swal.fire("Thành công!", "Đã thêm biên bản ghi nhớ thành công.", "success");
                     $('#add_mou_modal').modal('hide');
@@ -722,11 +740,8 @@
                 },
                 error: function () {
                     Swal.fire("Lỗi!", "Đã xảy ra lỗi", "error");
-                    //alert("fail");
                 }
             });
-            //collect Partner data.
-            //Send to controller.
         }
 
     @*add-partner-for-add-mou*@
@@ -758,20 +773,24 @@
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (data) {
-                        if (data == "") {
-                            document.getElementById('website_add').removeAttribute('disabled');
-                            document.getElementById('address_add').removeAttribute('disabled');
+                        if (data == "") { 
+                            //set value
                             document.getElementById("website_add").value = "";
                             document.getElementById("address_add").value = "";
                             document.getElementById("partner_id_add").value = "";
+                            $('#nation_add_input').val('');
+
+                            //toggle
+                            document.getElementById('website_add').removeAttribute('disabled');
+                            document.getElementById('address_add').removeAttribute('disabled');
                             document.getElementById('nation_add_select').removeAttribute('hidden');
                             $('#nation_add_select').select2({
                                 placeholder: 'Chọn quốc gia',
                                 allowClear: false,
                             });
                             document.getElementById('nation_add_input').setAttribute('hidden', '');
-                            $('#nation_add_input').val('');
                         } else {
+                            //toggle
                             $("#nation_add_select").val('').trigger("change");
                             document.getElementById('nation_add_input').removeAttribute('hidden');
                             $('#nation_add_select').select2({
@@ -782,8 +801,9 @@
                             $("#nation_add_select").attr("hidden", true);
                             document.getElementById('website_add').setAttribute('disabled', '');
                             document.getElementById('address_add').setAttribute('disabled', '');
-                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
 
+                            //set value
+                            document.getElementById("nation_add_input").value = data.country_name == null ? "" : data.country_name;
                             document.getElementById("website_add").value = data.website == null ? "" : data.website;
                             document.getElementById("address_add").value = data.address == null ? "" : data.address;
                             document.getElementById("partner_id_add").value = data.partner_id == null ? "" : data.partner_id;
@@ -959,9 +979,6 @@
                 document.getElementById('nation_edit_input').setAttribute('disabled', '');
                 $("#nation_edit_input").val(listTempPartnerMOUAdd[index].nation_name_input);
             }
-            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
-            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
-
 
             $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
             $('#address_edit').val(listTempPartnerMOUAdd[index].address_add);
@@ -1113,7 +1130,7 @@
 
     @*mou-list*@
     function getMOUList() {
-            mou_table = $(".mou_table").DataTable({
+        mou_table = $(".mou_table").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -1123,6 +1140,7 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
+            pageLength: 5,
             lengthChange: false,
             serverSide: true,
             initComplete: function () {
@@ -1130,20 +1148,24 @@
                 $('.mou_table').parent().removeClass();
             },
             ajax: {
-                    url: "@Url.Action("ViewMOU", "MOU")",
-                    type: "POST",
-                    datatype: "json",
-                    data: {
-                        "partner_name": function () { return $('#search_partner_name').val() },
-                        "contact_point_name": function () { return $('#search_contact_point_name').val() },
-                        "mou_code": function () { return $('#search_mou_code').val() },
-                    },
-                    cache: "false"
+                url: "@Url.Action("ViewMOU", "MOU")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "partner_name": function () { return $('#search_partner_name').val() },
+                    "contact_point_name": function () { return $('#search_contact_point_name').val() },
+                    "mou_code": function () { return $('#search_mou_code').val() },
                 },
+                cache: "false"
+            },
             columns: [
-                { data: "RowNumber"},
-                { data: "mou_code", name:"mou_code"},
-                { data: "partner_name", name: "partner_name"},
+                { data: "RowNumber" },
+                { data: "mou_code", name: "mou_code" },
+                {
+                    data: "partner_name",
+                    name: "partner_name",
+                    width: '200px'
+                },
                 { data: "country_name", name: "country_name" },
                 {
                     data: "website",
@@ -1157,8 +1179,8 @@
                 },
                 { data: "specialization_name", name: "specialization_name" },
                 { data: "contact_point_name", name: "contact_point_name" },
-                { data: "contact_point_email", name: "contact_point_email"},
-                { data: "contact_point_phone", name: "contact_point_phone"},
+                { data: "contact_point_email", name: "contact_point_email" },
+                { data: "contact_point_phone", name: "contact_point_phone" },
                 {
                     data: "evidence",
                     render: function (data) {
@@ -1205,8 +1227,8 @@
                     data: "mou_id",
                     orderable: false,
                     width: '125px',
-                    render: function (data, type, full, meta) {
-                        return '<a onclick=goDetail('+data+') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                    render: function (data) {
+                        return '<a onclick=goDetail(' + data + ','+ 'this'+') class="load-btn btn btn-sm btn-light-primary font-weight-bold px-6" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
@@ -1246,7 +1268,9 @@
         });
     }
 
-    function goDetail(mou_id) {
+    function goDetail(mou_id, element) {
+        var mou_detail_loader = new LoaderBtn(element);
+        mou_detail_loader.startLoading();
         var id = { id: mou_id };
         $.ajax({
             url: "@Url.Action("PassDataToMOUDetail", "BasicInfoMOU")",
@@ -1257,6 +1281,7 @@
             cache: false,
             success: function (data) {
                 window.location.href = './Detail';
+                mou_detail_loader.stopLoading();
             },
             error: function () {
 
