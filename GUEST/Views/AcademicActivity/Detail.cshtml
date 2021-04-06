@@ -96,7 +96,7 @@
                 {
                     <div id="p-@item.id" class="event-content" hidden>
                         @Html.Raw(item.content)<br/>
-                        @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0)
+                        @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0 && @ViewBag.have_form)
                         {
                             <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">@rm.GetString("Registration")</a>
                         }
