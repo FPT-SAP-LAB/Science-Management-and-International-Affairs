@@ -25,6 +25,55 @@ namespace BLL.ScienceManagement.MasterData
             return list;
         }
 
+        public int AddPaperCriteria(string name)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).Where(x => x.status == "active").FirstOrDefault();
+                if (ck != null) return -1;
+                else
+                {
+                    PaperCriteria pc = new PaperCriteria
+                    {
+                        name = name,
+                        status = "active"
+                    };
+                    db.PaperCriterias.Add(pc);
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return pc.criteria_id;
+                }
+            }
+            catch (Exception e)
+            {
+                dbc.Rollback();
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        public string DeletePaperCriteria(string cri_id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int criteria_id = Int32.Parse(cri_id);
+                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
+                pc.status = "inactive";
+                db.Entry(pc).State = EntityState.Modified;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public List<PaperCriteria> getPaperCriteria()
         {
             List<PaperCriteria> list = new List<PaperCriteria>();
@@ -119,6 +168,34 @@ namespace BLL.ScienceManagement.MasterData
                 dbc.Rollback();
 
                 return null;
+            }
+        }
+
+        public string GetPaperCriteria(string id)
+        {
+            int criteria_id = Int32.Parse(id);
+            string name = (from a in db.PaperCriterias where a.criteria_id == criteria_id select a.name).FirstOrDefault();
+            return name;
+        }
+
+        public string UpdatePaperCriteria(string id, string name)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int criteria_id = Int32.Parse(id);
+                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
+                pc.name = name;
+                db.Entry(pc).State = EntityState.Modified;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
             }
         }
     }

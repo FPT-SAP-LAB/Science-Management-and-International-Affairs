@@ -9,66 +9,66 @@
     <!--<div class="row">
         <div class="col-12">
             <div id="" class=" container ">-->
-                <!--begin::Row-->
-                <!--<div id="" class="row">-->
-                    <!--begin::Col-->
-                    <!--<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">-->
-                        <!--begin::Card-->
-                        <!--<div class="card card-custom gutter-b card-stretch bgi-no-repeat" style="background-position: right top; background-size: 30% auto; background-image: url(/Content/assets/media/svg/shapes/abstract-2.svg)">
-                            <div class="card-header">
-                                
-                            </div>-->
-                            <!--begin::Body-->
-                            <!--<div class="card-body text-center pt-4">
-                                <div class="row align-items-left">
-                                    <div class="col-md-3 my-2 my-md-0">
-                                        <div class="input-icon">
-                                            <input type="text" class="form-control"
-                                                   placeholder="Tên"
-                                                   id="kt_datatable_search_query" />
-                                            <span>
-                                                <i class="flaticon2-search-1 text-muted"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 my-2 my-md-0">
-                                        <div class="d-flex align-items-center">
-                                            <select class="form-control" id="search_coso" name="param">
-                                                <option label="Label"></option>
-                                                <option value="0">Tất cả</option>
-                                                <option value="1">FPTU Cần Thơ</option>
-                                                <option value="2">FPTU Hoà Lạc</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 my-2 my-md-0">
-                                        <div class="d-flex align-items-center">
-                                            <select class="form-control" id="search_nganh" name="param">
-                                                <option label="Label"></option>
-                                                <option value="0">Tất cả</option>
-                                                <option value="1">Toán học</option>
-                                                <option value="2">Khoa học máy tính</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0"  style="text-align:initial">
-                                        <a href="#"
-                                           class="btn btn-light-primary font-weight-bold">
-                                            Tìm kiếm
-                                        </a>
-                                    </div>
+    <!--begin::Row-->
+    <!--<div id="" class="row">-->
+    <!--begin::Col-->
+    <!--<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">-->
+    <!--begin::Card-->
+    <!--<div class="card card-custom gutter-b card-stretch bgi-no-repeat" style="background-position: right top; background-size: 30% auto; background-image: url(/Content/assets/media/svg/shapes/abstract-2.svg)">
+        <div class="card-header">
 
-                                </div>
+        </div>-->
+    <!--begin::Body-->
+    <!--<div class="card-body text-center pt-4">
+        <div class="row align-items-left">
+            <div class="col-md-3 my-2 my-md-0">
+                <div class="input-icon">
+                    <input type="text" class="form-control"
+                           placeholder="Tên"
+                           id="kt_datatable_search_query" />
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 my-2 my-md-0">
+                <div class="d-flex align-items-center">
+                    <select class="form-control" id="search_coso" name="param">
+                        <option label="Label"></option>
+                        <option value="0">Tất cả</option>
+                        <option value="1">FPTU Cần Thơ</option>
+                        <option value="2">FPTU Hoà Lạc</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 my-2 my-md-0">
+                <div class="d-flex align-items-center">
+                    <select class="form-control" id="search_nganh" name="param">
+                        <option label="Label"></option>
+                        <option value="0">Tất cả</option>
+                        <option value="1">Toán học</option>
+                        <option value="2">Khoa học máy tính</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0"  style="text-align:initial">
+                <a href="#"
+                   class="btn btn-light-primary font-weight-bold">
+                    Tìm kiếm
+                </a>
+            </div>
 
-                            </div>-->
-                            <!--end::Body-->
-                        <!--</div>-->
-                        <!--end::Card-->
-                    <!--</div>-->
-                    <!--end::Col-->
-                <!--</div>-->
-                <!--end::Pagination-->
-            <!--</div>
+        </div>
+
+    </div>-->
+    <!--end::Body-->
+    <!--</div>-->
+    <!--end::Card-->
+    <!--</div>-->
+    <!--end::Col-->
+    <!--</div>-->
+    <!--end::Pagination-->
+    <!--</div>
         </div>
     </div>-->
     <div class="row">
@@ -78,8 +78,6 @@
                 <div id="researchers_list" class="row">
                     <!--begin::Col-->
                     @{
-                        var colors = new List<string> { "success", "danger", "warning", "primary" };
-                        //int rownum = ViewBag.list_demo.Length;
                         foreach (var researcher in ViewBag.list.Data)
                         {
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
@@ -91,11 +89,10 @@
                                         <!--end::Toolbar-->
                                         <!--begin::User-->
                                         <div class="mt-7 pb-2">
-                                            <div class="symbol symbol-circle symbol-lg-75">
-                                                <img src="@(researcher.avatar==null?"/Content/assets/media/users/blank.png":researcher.avatar)" alt="image" />
-                                            </div>
-                                            <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
-                                                <span class="font-size-h3 font-weight-boldest">JB</span>
+                                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                                <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@(researcher.avatar==null?"/Content/assets/media/users/blank.png":researcher.avatar))">
+                                                    <div class="image-input-wrapper"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--end::User-->
@@ -137,19 +134,101 @@
         </div>
     </div>
     <!--end::Container-->
-    <div class="row">
-        <div class="col-12" style="text-align:center">
-            <button id="view-more" class="btn btn-primary">Xem thêm</button>
+    @if (ViewBag.list.Data.Count < ViewBag.list.RecordsTotal)
+    {
+        <div class="row">
+            <div class="col-12" style="text-align:center">
+                <button id="view-more" class="btn btn-primary">Xem thêm</button>
+            </div>
         </div>
-    </div>
+    }
 </div>
 @section scripts{
     <script>
         var viewmore_preloader = new LoaderBtn($("#view-more"))
-        $("#view-more").click(function () {
+        function ncvCardGenerator(avatar, id, name, office, googleScholar, website, email){
+            return `<div class='col-xl-3 col-lg-6 col-md-6 col-sm-6'>
+                                <!--begin::Card-->
+                                <div class='card card-custom gutter-b card-stretch'>
+                                    <!--begin::Body-->
+                                    <div class='card-body text-center pt-4'>
+                                        <!--begin::Toolbar-->
+                                        <!--end::Toolbar-->
+                                        <!--begin::User-->
+                                        <div class='mt-7 pb-2'>
+                                            <div class='symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center'>
+                                                <div class='image-input image-input-empty image-input-outline' id='kt_image_avatar' style='background-image: url(` + (avatar == null ? '/Content/assets/media/users/blank.png' : avatar) + `)'>
+                                                    <div class='image-input-wrapper'></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::User-->
+                                        <!--begin::Name-->
+                                        <div class='my-2'>
+                                            <a href='/Researchers/ViewInfo?id=` + id + `' class='text-dark font-weight-bold text-hover-primary font-size-h4'>` + name + `</a>
+                                        </div>
+                                        <!--end::Name-->
+                                        <!--begin::Label-->
+
+                                        <a class='label label-inline label-lg label-light-success font-weight-bold'>` + office + `</a>
+                                        <!--end::Label-->
+                                        <!--begin::Buttons-->
+                                        <div class='mt-9 mb-6'>
+                                            <a href='` + googleScholar + `' class='btn btn-md btn-icon btn-light-facebook btn-pill mx-2'>
+                                                <i class='socicon-facebook'></i>
+                                            </a>
+                                            <a href='` + website + `' class='btn btn-md btn-icon btn-light-twitter btn-pill mx-2'>
+                                                <i class='socicon-twitter'></i>
+                                            </a>
+                                            <a mailto='` + email + `' class='btn btn-md btn-icon btn-light-linkedin btn-pill mx-2'>
+                                                <i class='socicon-linkedin'></i>
+                                            </a>
+                                        </div>
+                                        <!--end::Buttons-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Card-->
+                            </div>`;
+        }
+        var initNumber =@ViewBag.initNumber;
+            $("#view-more").click(function () {
             viewmore_preloader.startLoading()
             setTimeout(() => {
                 //$('#researchers_list').clone().attr('id', new Date().getTime()).appendTo('#page-container');
+                data = new FormData();
+                data.append("start", initNumber)
+                $.ajax({
+                    url: "/Researchers/GetList",
+                    type: "POST",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success == true) {
+                            for (i in response.list.Data) {
+                                $("#researchers_list").append(
+                                    ncvCardGenerator(
+                                        response.list.Data[i].avatar,
+                                        response.list.Data[i].peopleId,
+                                        response.list.Data[i].name,
+                                        response.list.Data[i].office_name,
+                                        response.list.Data[i].googleScholar,
+                                        response.list.Data[i].website,
+                                        response.list.Data[i].email));
+                            }
+                            initNumber = response.initNumber
+                            if (initNumber == response.list.RecordsTotal) {
+                                $("#view-more").hide()
+                            }
+                            viewmore_preloader.stopLoading()
+                        }
+                    },
+                    error: function () {
+                        viewmore_preloader.stopLoading()
+                    }
+                });
+
                 viewmore_preloader.stopLoading()
             }, 2000);
         })

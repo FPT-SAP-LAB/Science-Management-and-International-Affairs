@@ -39,7 +39,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id left join General.[File] f
 						on f.[file_id] = aa.[file_id] and al.language_id = av.language_id
-                        WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
+                        WHERE al.language_id = @language AND ar.article_status_id = 2 AND [aa].activity_type_id IN " + typestr.ToString();
                 if (search is null)
                 {
                     sql += @" ORDER BY [from] DESC
