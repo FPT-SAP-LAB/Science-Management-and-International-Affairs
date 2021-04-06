@@ -233,16 +233,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Articles.Remove(a);
                     }
                     db.SaveChanges();
+                    deleteFileInActivity(id);
                     ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
-                    File f = db.Files.Find(aa.file_id);
-                    if (f != null)
+                    if (aa.file_id != null)
                     {
-                        GoogleDriveService.DeleteFile(f.file_drive_id);
+                        GoogleDriveService.DeleteFile(aa.File.file_drive_id);
                     }
-                    db.SaveChanges();
                     db.AcademicActivities.Remove(aa);
-                    db.SaveChanges();
-                    db.Files.Remove(f);
+                    if (aa.file_id != null)
+                    {
+                        File f = db.Files.Find(aa.file_id);
+                        db.Files.Remove(f);
+                    }
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -255,7 +257,39 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool clone(cloneBase obj)
+        public void deleteFileInActivity(int activity_id)
+        {
+            List<ActivityOffice> aos = db.ActivityOffices.Where(x => x.activity_id == activity_id).ToList();
+            foreach (ActivityOffice ao in aos)
+            {
+                List<ActivityExpenseCategory> aecs = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                foreach (ActivityExpenseCategory aec in aecs)
+                {
+                    List<ActivityExpenseDetail> aeds = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec.expense_category_id).ToList();
+                    foreach (ActivityExpenseDetail aed in aeds)
+                    {
+                        if (aed.file_id != null)
+                        {
+                            File f = db.Files.Find(aed.file_id);
+                            GoogleDriveService.DeleteFile(f.file_drive_id);
+                            db.Files.Remove(f);
+                        }
+                    }
+                }
+            }
+            List<ActivityPartner> aps = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
+            foreach (ActivityPartner ap in aps)
+            {
+                if (ap.file_id != null)
+                {
+                    File f = db.Files.Find(ap.file_id);
+                    GoogleDriveService.DeleteFile(f.file_drive_id);
+                    db.Files.Remove(f);
+                }
+            }
+            db.SaveChanges();
+        }
+        public bool clone(cloneBase obj, int account_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -297,7 +331,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     int activity_id = aa.activity_id;
-                    cloneContent(obj, av_new, activity_id);
+                    cloneContent(obj, av_new, activity_id, account_id);
                     transaction.Commit();
                     return true;
                 }
@@ -309,14 +343,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneContent(cloneBase obj, ArticleVersion av_new, int activity_id)
+        public void cloneContent(cloneBase obj, ArticleVersion av_new, int activity_id, int account_id)
         {
             if (obj.content != null)
             {
                 cloneKP(obj, obj.content.Contains("KP"), activity_id);
-                cloneDTC(obj, obj.content.Contains("DTC"), activity_id);
+                cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
                 cloneND(obj, obj.content.Contains("ND"), activity_id, av_new);
-                cloneTD(obj, obj.content.Contains("TD"), activity_id);
+                cloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
             }
         }
         public void cloneKP(cloneBase obj, bool start, int activity_id)
@@ -357,7 +391,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneTD(cloneBase obj, bool start, int activity_id)
+        public void cloneTD(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
@@ -366,8 +400,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     AcademicActivityPhase aap_new = db.AcademicActivityPhases.Add(new AcademicActivityPhase
                     {
-                        created_by = 1,
-                        activity_id = activity_id
+                        created_by = account_id,
+                        activity_id = activity_id,
+                        phase_start = aap.phase_start,
+                        phase_end = aap.phase_end
                     });
                     db.SaveChanges();
                     Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
@@ -381,13 +417,24 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
                     foreach (Question q in ques_old)
                     {
-                        db.Questions.Add(new Question
+                        Question q_new = db.Questions.Add(new Question
                         {
                             answer_type_id = q.answer_type_id,
                             is_compulsory = q.is_compulsory,
                             title = q.title,
-                            form_id = f_new.form_id
+                            form_id = f_new.form_id,
+                            is_changeable = q.is_changeable
                         });
+                        db.SaveChanges();
+                        if (q_new.answer_type_id == 3 || q_new.answer_type_id == 5)
+                        {
+                            QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
+                            db.QuestionOptions.Add(new QuestionOption
+                            {
+                                question_id = q_new.question_id,
+                                option_title = qo.option_title
+                            });
+                        }
                     }
                     db.SaveChanges();
                     List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
@@ -401,20 +448,45 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         });
                     }
                     db.SaveChanges();
+                    List<ParticipantRole> pr_old = db.ParticipantRoles.Where(x => x.phase_id == aap.phase_id).ToList();
+                    foreach (ParticipantRole pr in pr_old)
+                    {
+                        ParticipantRole pr_new = db.ParticipantRoles.Add(new ParticipantRole
+                        {
+                            participant_role_name = pr.participant_role_name,
+                            need_payed = pr.need_payed,
+                            price = pr.price,
+                            phase_id = aap_new.phase_id
+                        });
+                        db.SaveChanges();
+                        List<PlanParticipant> pp_old = db.PlanParticipants.Where(x => x.participant_role_id == pr.participant_role_id).ToList();
+                        foreach (PlanParticipant pp in pp_old)
+                        {
+                            db.PlanParticipants.Add(new PlanParticipant
+                            {
+                                quantity = pp.quantity,
+                                participant_role_id = pr_new.participant_role_id,
+                                office_id = pp.office_id,
+                            });
+                        }
+                        db.SaveChanges();
+                    }
                 }
             }
         }
-        public void cloneDTC(cloneBase obj, bool start, int activity_id)
+        public void cloneDTC(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
-                List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == activity_id).ToList();
+                List<ActivityPartner> partners = db.ActivityPartners.Where(x => x.activity_id == obj.id).ToList();
                 foreach (ActivityPartner ap in partners)
                 {
                     db.ActivityPartners.Add(new ActivityPartner
                     {
                         activity_id = activity_id,
-                        partner_scope_id = ap.partner_scope_id
+                        partner_scope_id = ap.partner_scope_id,
+                        account_id = account_id,
+                        add_time = DateTime.Now
                     });
                 }
                 db.SaveChanges();

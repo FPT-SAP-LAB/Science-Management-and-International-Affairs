@@ -76,7 +76,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         [Auther(RightID = "2")]
         public JsonResult clone(AcademicActivityRepo.cloneBase obj)
         {
-            bool res = repo.clone(obj);
+            int account_id = CurrentAccount.AccountID(Session);
+            bool res = repo.clone(obj, account_id);
             if (res)
             {
                 return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);
