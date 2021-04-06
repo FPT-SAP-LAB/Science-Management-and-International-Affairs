@@ -5,30 +5,30 @@
 }
 <style>
     label {
-        font-size: 16px !important;
+        font-size: 13px !important;
     }
 
     input, textarea {
-        font-size: 14px !important;
+        font-size: 12px !important;
     }
 
     .checkbox {
-        margin-bottom: 13px !important
+        margin-bottom: 12px !important
     }
 
     .custom-span {
-        margin-right: 15px !important;
+        margin-right: 14px !important;
     }
 
     .custom-radio {
-        width: 20px !important;
-        height: 20px !important;
+        width: 18px !important;
+        height: 18px !important;
         margin-right: 14px !important;
     }
 
     .px-lg-custom {
-        padding-left: 12em !important;
-        padding-right: 12em !important;
+        padding-left: 16em !important;
+        padding-right: 16em !important;
     }
 
     .radio {
@@ -67,34 +67,33 @@
                 }
             }
 
-            <hr />
             <div class="col-md-12">
-                <div class="row justify-content-center bg-gray-100 py-8 px-lg-custom py-md-10">
+                <div class="row justify-content-center px-lg-custom py-md-10">
                     <div class="col-md-12 col-sm-12">
                         <div class="row" id="main-control">
 
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group fv-plugins-icon-container">
                                     <label><b id="question-title-fullname"></b><label style="color:red" id="compulsory-fullname">*</label>:</label>
-                                    <input type="text" id="ques-answer-fullname" class="form-control form-control-lg" autocomplete="off">
+                                    <input type="text" id="ques-answer-fullname" class="form-control" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group fv-plugins-icon-container">
                                     <label><b id="question-title-email"></b><label style="color:red" id="compulsory-email">*</label>:</label>
-                                    <input type="text" id="ques-answer-email" class="form-control form-control-lg" autocomplete="off">
+                                    <input type="text" id="ques-answer-email" class="form-control" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group fv-plugins-icon-container">
                                     <label><b id="question-title-phone"></b><label style="color:red" id="compulsory-phone">*</label>:</label>
-                                    <input type="text" id="ques-answer-phone" class="form-control form-control-lg" autocomplete="off">
+                                    <input type="text" id="ques-answer-phone" class="form-control" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group fv-plugins-icon-container">
                                     <label><b id="question-title-role"></b><label style="color:red" id="compulsory-role">*</label>:</label>
-                                    <select class="form-control form-control-lg" id="ques-answer-role">
+                                    <select class="form-control" id="ques-answer-role">
                                         @{
                                             foreach (var item in ViewBag.role)
                                             {
@@ -107,7 +106,7 @@
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group fv-plugins-icon-container">
                                     <label><b id="question-title-office"></b><label style="color:red" id="compulsory-office">*</label>:</label>
-                                    <select class="form-control form-control-lg" id="ques-answer-office">
+                                    <select class="form-control" id="ques-answer-office">
                                         @{
                                             foreach (var item in ViewBag.office)
                                             {
@@ -121,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center bg-gray-100 py-8 px-8">
+                <div class="row justify-content-center pb-8 px-8">
                     <div class="col-12" style=" text-align: center;">
                         <a href="javascript:;" class="btn btn-light-success px-6 font-weight-bold" onclick="sendForm()">Gửi đơn</a>
                     </div>

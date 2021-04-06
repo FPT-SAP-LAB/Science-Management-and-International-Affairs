@@ -617,10 +617,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Key>
             <PropertyRef Name="notification_type_id" />
             <PropertyRef Name="language_id" />
+            <PropertyRef Name="notification_template" />
+            <PropertyRef Name="notification_type_name" />
           </Key>
           <Property Name="notification_type_id" Type="int" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
-          <Property Name="template" Type="nvarchar(max)" />
+          <Property Name="notification_template" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notification_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PaperStatusLanguage">
           <Key>
@@ -695,7 +698,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="notification_type_id" />
           </Key>
           <Property Name="notification_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="notification_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="icon" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Citation">
           <Key>
@@ -4014,7 +4017,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <DefiningQuery>SELECT 
     [NotificationTemplateLanguage].[notification_type_id] AS [notification_type_id], 
     [NotificationTemplateLanguage].[language_id] AS [language_id], 
-    [NotificationTemplateLanguage].[template] AS [template]
+    [NotificationTemplateLanguage].[notification_template] AS [notification_template], 
+    [NotificationTemplateLanguage].[notification_type_name] AS [notification_type_name]
     FROM [Localization].[NotificationTemplateLanguage] AS [NotificationTemplateLanguage]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="NotificationSubscribe" EntityType="Self.NotificationSubscribe" store:Type="Tables" store:Schema="Notification">
@@ -5741,7 +5745,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="notification_type_id" />
           </Key>
           <Property Name="notification_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="notification_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="icon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="NotificationBases" Relationship="Self.FK__Notificat__notif__3C89F72A" FromRole="NotificationType" ToRole="NotificationBase" />
           <NavigationProperty Name="NotificationSubscribes" Relationship="Self.FK__Notificat__notif__3F6663D5" FromRole="NotificationType" ToRole="NotificationSubscribe" />
           <NavigationProperty Name="NotificationTemplateLanguages" Relationship="Self.FK__Notificat__notif__414EAC47" FromRole="NotificationType" ToRole="NotificationTemplateLanguage" />
@@ -6503,10 +6507,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Key>
             <PropertyRef Name="notification_type_id" />
             <PropertyRef Name="language_id" />
+            <PropertyRef Name="notification_template" />
+            <PropertyRef Name="notification_type_name" />
           </Key>
           <Property Name="notification_type_id" Type="Int32" Nullable="false" />
           <Property Name="language_id" Type="Int32" Nullable="false" />
-          <Property Name="template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="notification_template" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notification_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Notificat__langu__4242D080" FromRole="NotificationTemplateLanguage" ToRole="Language" />
           <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__414EAC47" FromRole="NotificationTemplateLanguage" ToRole="NotificationType" />
         </EntityType>
@@ -10614,7 +10621,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.NotificationType">
               <MappingFragment StoreEntitySet="NotificationType">
                 <ScalarProperty Name="notification_type_id" ColumnName="notification_type_id" />
-                <ScalarProperty Name="notification_type_name" ColumnName="notification_type_name" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11258,7 +11265,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <MappingFragment StoreEntitySet="NotificationTemplateLanguage">
                 <ScalarProperty Name="notification_type_id" ColumnName="notification_type_id" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
-                <ScalarProperty Name="template" ColumnName="template" />
+                <ScalarProperty Name="notification_template" ColumnName="notification_template" />
+                <ScalarProperty Name="notification_type_name" ColumnName="notification_type_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

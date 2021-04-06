@@ -648,64 +648,66 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    form_id = data.form.form_id;
-                    document.getElementById('form_title_description').value = data.form.title_description;
-                    document.getElementById('form_title').value = data.form.title;
-                    data.ques.forEach(function (x,index) {
-                        if (x.is_changeable == 0) {
-                            $('#question-title-' + map[index].id).val(x.title);
-                            if (x.is_compulsory == 1)
-                                $('#compulsory-' + map[index].id).attr('checked', true);
-                        } else {
-                            arrMapping.push(indexDiv - 1);
-                            arrReal.push(x.question_id);
-                            document.getElementById('answer-type-' + (indexDiv - 1)).value = x.answer_type_id;
-                            changeAnswerType(indexDiv - 1);
-                            document.getElementById('question-title-' + (indexDiv - 1)).value = x.title;
-                            if (x.is_compulsory == 1)
-                                $('#compulsory-' + (indexDiv - 1)).attr('checked', true);
-                            data.quesOption.forEach(function (y) {
-                                if (x.question_id == y.question_id) {
-                                    str = y.option_title.split("$^");
-                                    for (let i = 0; i < str.length; i++) {
-                                        if (x.answer_type_id == 3) {
-                                            temp_option = 0
-                                            for (let i = 0; i < 100; i++) {
-                                                if (typeof arrM_content[(indexDiv - 1)][i] == 'undefined') {
-                                                    i = 999;
-                                                } else {
-                                                    temp_option = temp_option + 1;
+                    if (data.form != null) {
+                        form_id = data.form.form_id;
+                        document.getElementById('form_title_description').value = data.form.title_description;
+                        document.getElementById('form_title').value = data.form.title;
+                        data.ques.forEach(function (x, index) {
+                            if (x.is_changeable == 0) {
+                                $('#question-title-' + map[index].id).val(x.title);
+                                if (x.is_compulsory == 1)
+                                    $('#compulsory-' + map[index].id).attr('checked', true);
+                            } else {
+                                arrMapping.push(indexDiv - 1);
+                                arrReal.push(x.question_id);
+                                document.getElementById('answer-type-' + (indexDiv - 1)).value = x.answer_type_id;
+                                changeAnswerType(indexDiv - 1);
+                                document.getElementById('question-title-' + (indexDiv - 1)).value = x.title;
+                                if (x.is_compulsory == 1)
+                                    $('#compulsory-' + (indexDiv - 1)).attr('checked', true);
+                                data.quesOption.forEach(function (y) {
+                                    if (x.question_id == y.question_id) {
+                                        str = y.option_title.split("$^");
+                                        for (let i = 0; i < str.length; i++) {
+                                            if (x.answer_type_id == 3) {
+                                                temp_option = 0
+                                                for (let i = 0; i < 100; i++) {
+                                                    if (typeof arrM_content[(indexDiv - 1)][i] == 'undefined') {
+                                                        i = 999;
+                                                    } else {
+                                                        temp_option = temp_option + 1;
+                                                    }
                                                 }
-                                            }
-                                            arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
-                                            document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
-                                            $('#content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
-                                            if (i < (str.length - 1)) {
-                                                AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
-                                            }
-                                        } else if (x.answer_type_id == 5) {
-                                            temp_option = 0
-                                            for (let i = 0; i < 100; i++) {
-                                                if (typeof arrC_content[(indexDiv - 1)][i] == 'undefined') {
-                                                    i = 999;
-                                                } else {
-                                                    temp_option = temp_option + 1;
+                                                arrM_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                                document.getElementById('content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                                $('#content-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
+                                                if (i < (str.length - 1)) {
+                                                    AddCheckbox('#answer-checkbox-' + (indexDiv - 1) + '-' + (temp_option - 1));
                                                 }
-                                            }
-                                            arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
-                                            document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
-                                            $('#content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
-                                            if (i < (str.length - 1)) {
-                                                AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                            } else if (x.answer_type_id == 5) {
+                                                temp_option = 0
+                                                for (let i = 0; i < 100; i++) {
+                                                    if (typeof arrC_content[(indexDiv - 1)][i] == 'undefined') {
+                                                        i = 999;
+                                                    } else {
+                                                        temp_option = temp_option + 1;
+                                                    }
+                                                }
+                                                arrC_content[(indexDiv - 1)][temp_option - 1] = 'Lựa chọn';
+                                                document.getElementById('content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).value = str[i];
+                                                $('#content-radio-' + (indexDiv - 1) + '-' + (temp_option - 1)).trigger("change");
+                                                if (i < (str.length - 1)) {
+                                                    AddRadio('#answer-radio-' + (indexDiv - 1) + '-' + (temp_option - 1));
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            });
-                            if (x !== data.ques[data.ques.length - 1])
-                                addQues('#control-' + (indexDiv - 1));
-                        }
-                    });
+                                });
+                                if (x !== data.ques[data.ques.length - 1])
+                                    addQues('#control-' + (indexDiv - 1));
+                            }
+                        });
+                    }
                 },
                 error: function (data) {
                     toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
@@ -795,7 +797,7 @@
                                 toastr.success(data);
                                 setTimeout(function () {
                                     window.location.reload();
-                                }, 1500);
+                                }, 1000);
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                             }
@@ -827,7 +829,7 @@
                                 toastr.success(data);
                                 setTimeout(function () {
                                     window.location.reload();
-                                }, 1500);
+                                }, 1000);
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                             }
@@ -846,27 +848,31 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    let column = [];
-                    let dataSet = [];
-                    data.ques.forEach(function (x) {
-                        column.push({ title: x.title });
-                    });
-                    if (typeof datatable_testing != 'undefined') {
-                        datatable_testing.columns(column);
-                        datatable_testing.clear().draw();
-                        data.res.forEach(function (x) {
-                            datatable_testing.row.add(x.answer.split('<$>')).draw();
+                    if (data.ques.length != 0) {
+                        let column = [];
+                        let dataSet = [];
+                        data.ques.forEach(function (x) {
+                            column.push({ title: x.title });
                         });
+                        if (typeof datatable_testing != 'undefined') {
+                            datatable_testing.columns(column);
+                            datatable_testing.clear().draw();
+                            data.res.forEach(function (x) {
+                                datatable_testing.row.add(x.answer.split('<$>')).draw();
+                            });
+                        } else {
+                            data.res.forEach(function (x) {
+                                dataSet.push(x.answer.split('<$>'));
+                            });
+                            datatable_testing = $('#datatable-testing').DataTable({
+                                data: dataSet,
+                                columns: column
+                            });
+                        }
+                        $('#modal-testing').modal('show');
                     } else {
-                        data.res.forEach(function (x) {
-                            dataSet.push(x.answer.split('<$>'));
-                        });
-                        datatable_testing = $('#datatable-testing').DataTable({
-                            data: dataSet,
-                            columns: column
-                        });
+                        toastr.info('Bạn chưa có mẫu đăng ký cho giai đoạn học thuật này');
                     }
-                    $('#modal-testing').modal('show');
                 }
             });
         }
