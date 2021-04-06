@@ -186,6 +186,10 @@
             $('.header-modify').css('padding', '13px');
 
         });
+
+        //init loading button:
+        var add_mou_loader = new LoaderBtn($("#step-2-button"));
+        //var mou_detail_loader = new LoaderBtn($(".mou_detail"));
     </script>
 
     @*custom_wizard*@
@@ -671,22 +675,30 @@
     }
 
     function doneStep() {
+        //start display loading:
+        add_mou_loader.startLoading();
         if ($('#mou_code_add').val().trim() == "") {
+            add_mou_loader.stopLoading();
             toastr.error('Số hiệu không được bỏ trống');
         }
         else if ($('#end_date_mou').val() == "") {
+            add_mou_loader.stopLoading();
             toastr.error('Ngày hết hạn chưa được chọn');
         }
         else if ($('#search_office').val() == null) {
+            add_mou_loader.stopLoading();
             toastr.error('Cơ sở chưa được chọn');
         }
         else if (listTempPartnerMOUAdd.length == 0) {
+            add_mou_loader.stopLoading();
             toastr.error('Chưa có đối tác nào được thêm');
         }
         else if (compareDate($('#sign_date_mou').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
+            add_mou_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
         }
         else if (MOUCodeIsInvalid($('#mou_code_add').val().trim())) {
+            add_mou_loader.stopLoading();
             toastr.error('Số hiệu không hợp lệ');
         }
         else {
@@ -717,6 +729,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
+                    add_mou_loader.stopLoading();
                     mou_table.ajax.reload();
                     Swal.fire("Thành công!", "Đã thêm biên bản ghi nhớ thành công.", "success");
                     $('#add_mou_modal').modal('hide');
@@ -727,11 +740,8 @@
                 },
                 error: function () {
                     Swal.fire("Lỗi!", "Đã xảy ra lỗi", "error");
-                    //alert("fail");
                 }
             });
-            //collect Partner data.
-            //Send to controller.
         }
 
     @*add-partner-for-add-mou*@
@@ -969,9 +979,6 @@
                 document.getElementById('nation_edit_input').setAttribute('disabled', '');
                 $("#nation_edit_input").val(listTempPartnerMOUAdd[index].nation_name_input);
             }
-            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
-            //$('#nation_edit').val(listTempPartnerMOUAdd[index].nation_name);
-
 
             $('#website_edit').val(listTempPartnerMOUAdd[index].website_add);
             $('#address_edit').val(listTempPartnerMOUAdd[index].address_add);
@@ -1220,8 +1227,8 @@
                     data: "mou_id",
                     orderable: false,
                     width: '125px',
-                    render: function (data, type, full, meta) {
-                        return '<a onclick=goDetail(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
+                    render: function (data) {
+                        return '<a onclick=goDetail(' + data + ','+ 'this'+') class="load-btn btn btn-sm btn-light-primary font-weight-bold px-6" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     }
                 },
@@ -1261,7 +1268,9 @@
         });
     }
 
-    function goDetail(mou_id) {
+    function goDetail(mou_id, element) {
+        var mou_detail_loader = new LoaderBtn(element);
+        mou_detail_loader.startLoading();
         var id = { id: mou_id };
         $.ajax({
             url: "@Url.Action("PassDataToMOUDetail", "BasicInfoMOU")",
@@ -1272,6 +1281,7 @@
             cache: false,
             success: function (data) {
                 window.location.href = './Detail';
+                mou_detail_loader.stopLoading();
             },
             error: function () {
 

@@ -110,7 +110,7 @@
             $('.header-modify').css('padding', '13px');
 
         });
-        var rowIdx = 1;
+        //var rowIdx = 1;
         var mou_table = $("#mou_table_deleted").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -121,7 +121,9 @@
                 sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
             },
             searching: false,
+            pageLength: 5,
             lengthChange: false,
+            serverSide: true,
             initComplete: function () {
                 $('#mou_table_deleted').parent().css('overflow-x', 'auto');
                 $('#mou_table_deleted').parent().removeClass();
@@ -138,11 +140,7 @@
                     cache: "false"
                 },
             columns: [
-                {
-                    render: function () {
-                        return rowIdx++;
-                    }
-                },
+                { data: "RowNumber" },
                 { data: "mou_code" },
                 { data: "partner_name" },
                 { data: "country_name" },

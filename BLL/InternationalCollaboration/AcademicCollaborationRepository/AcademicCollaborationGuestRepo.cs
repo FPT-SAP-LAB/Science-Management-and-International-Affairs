@@ -94,7 +94,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                string sql = @"select ROW_NUMBER() OVER (ORDER BY ap.program_id ASC) AS 'no', ap.program_id, pa.partner_name, cou.country_name, av.version_title 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' +CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY av.publish_time DESC) AS 'no', ap.program_id, pa.partner_name, cou.country_name, av.version_title 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' +CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
                 from IA_AcademicCollaboration.AcademicProgram ap
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
@@ -138,7 +138,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                string sql = @"select ROW_NUMBER() OVER (ORDER BY ap.program_id ASC) AS 'no', ap.program_id, av.version_title as 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' + CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY av.publish_time DESC) AS 'no', ap.program_id, av.version_title as 'program_name', CONVERT(nvarchar ,ap.program_start_date, 103) + ' - ' + CONVERT(nvarchar ,ap.program_end_date, 103) 'registration_deadline', CONVERT(nvarchar ,av.publish_time, 20) 'publish_time'
                 from IA_AcademicCollaboration.AcademicProgram ap
                 join IA_Article.Article ar on ap.article_id = ar.article_id
                 join IA_Article.ArticleVersion av on av.article_id = ap.article_id
@@ -206,7 +206,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             try
             {
-                string sql = @"select ROW_NUMBER() OVER (ORDER BY pr.procedure_id ASC) AS 'no', pr.procedure_id, av.version_title 'procedure_name', CONVERT(nvarchar,av.publish_time, 20) 'publish_time' 
+                string sql = @"select ROW_NUMBER() OVER (ORDER BY av.publish_time DESC) AS 'no', pr.procedure_id, av.version_title 'procedure_name', CONVERT(nvarchar,av.publish_time, 20) 'publish_time' 
 		    from IA_AcademicCollaboration.[Procedure] pr
 		    join IA_Article.Article ar on ar.article_id = pr.article_id
 		    join IA_Article.ArticleVersion av on av.article_id = pr.article_id
