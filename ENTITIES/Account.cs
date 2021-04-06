@@ -26,7 +26,8 @@ namespace ENTITIES
             this.CollaborationStatusHistories = new HashSet<CollaborationStatusHistory>();
             this.MOAs = new HashSet<MOA>();
             this.MOUs = new HashSet<MOU>();
-            this.Notifications = new HashSet<Notification>();
+            this.NotificationBases = new HashSet<NotificationBase>();
+            this.NotificationSubscribes = new HashSet<NotificationSubscribe>();
             this.Profiles = new HashSet<Profile>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
             this.MOABonus = new HashSet<MOABonu>();
@@ -61,7 +62,9 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOU> MOUs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<NotificationBase> NotificationBases { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotificationSubscribe> NotificationSubscribes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

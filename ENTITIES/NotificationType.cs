@@ -12,21 +12,24 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ContractType
+    public partial class NotificationType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ContractType()
+        public NotificationType()
         {
-            this.Authors = new HashSet<Author>();
-            this.Profiles = new HashSet<Profile>();
+            this.NotificationBases = new HashSet<NotificationBase>();
+            this.NotificationSubscribes = new HashSet<NotificationSubscribe>();
+            this.NotificationTemplateLanguages = new HashSet<NotificationTemplateLanguage>();
         }
     
-        public int contract_id { get; set; }
-        public string name { get; set; }
+        public int notification_type_id { get; set; }
+        public string notification_type_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Author> Authors { get; set; }
+        public virtual ICollection<NotificationBase> NotificationBases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<NotificationSubscribe> NotificationSubscribes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotificationTemplateLanguage> NotificationTemplateLanguages { get; set; }
     }
 }

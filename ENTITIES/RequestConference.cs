@@ -34,8 +34,10 @@ namespace ENTITIES
         public System.DateTime attendance_start { get; set; }
         public System.DateTime attendance_end { get; set; }
         public int specialization_id { get; set; }
+        public Nullable<int> folder_id { get; set; }
     
         public virtual File File { get; set; }
+        public virtual File File1 { get; set; }
         public virtual Specialization Specialization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApprovalProcess> ApprovalProcesses { get; set; }
