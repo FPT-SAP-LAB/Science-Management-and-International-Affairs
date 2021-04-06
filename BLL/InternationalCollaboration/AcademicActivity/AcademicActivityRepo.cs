@@ -407,7 +407,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
-                    if(f_old != null)
+                    if (f_old != null)
                     {
                         Form f_new = db.Forms.Add(new Form
                         {

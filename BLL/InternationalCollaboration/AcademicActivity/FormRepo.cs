@@ -232,7 +232,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 inner join SMIA_AcademicActivity.Form f on q.form_id = f.form_id
                                 where f.phase_id = @phase_id order by q.is_changeable";
                 List<Question> ques = db.Database.SqlQuery<Question>(sql, new SqlParameter("phase_id", phase_id)).ToList();
-                if(ques.Count == 0)
+                if (ques.Count == 0)
                 {
                     viewResponse rest = new viewResponse
                     {
