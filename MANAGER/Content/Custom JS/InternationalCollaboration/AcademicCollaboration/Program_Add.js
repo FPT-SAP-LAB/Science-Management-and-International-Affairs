@@ -2,7 +2,6 @@
 $('.program_partner').select2({
     placeholder: 'Đối tác',
     allowClear: true,
-    tags: true,
     ajax: {
         url: '/AcademicCollaboration/getPartners',
         delay: 250,
