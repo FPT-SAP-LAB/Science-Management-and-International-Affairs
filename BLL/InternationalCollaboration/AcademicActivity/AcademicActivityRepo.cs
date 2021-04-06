@@ -350,7 +350,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 cloneKP(obj, obj.content.Contains("KP"), activity_id);
                 cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
                 cloneND(obj, obj.content.Contains("ND"), activity_id, av_new);
-                cloneTD(obj, obj.content.Contains("TD"), activity_id,account_id);
+                cloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
             }
         }
         public void cloneKP(cloneBase obj, bool start, int activity_id)
@@ -391,7 +391,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneTD(cloneBase obj, bool start, int activity_id,int account_id)
+        public void cloneTD(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
@@ -426,7 +426,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             is_changeable = q.is_changeable
                         });
                         db.SaveChanges();
-                        if(q_new.answer_type_id == 3 || q_new.answer_type_id == 5)
+                        if (q_new.answer_type_id == 3 || q_new.answer_type_id == 5)
                         {
                             QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
                             db.QuestionOptions.Add(new QuestionOption
@@ -449,7 +449,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     db.SaveChanges();
                     List<ParticipantRole> pr_old = db.ParticipantRoles.Where(x => x.phase_id == aap.phase_id).ToList();
-                    foreach(ParticipantRole pr in pr_old)
+                    foreach (ParticipantRole pr in pr_old)
                     {
                         ParticipantRole pr_new = db.ParticipantRoles.Add(new ParticipantRole
                         {
@@ -460,7 +460,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         });
                         db.SaveChanges();
                         List<PlanParticipant> pp_old = db.PlanParticipants.Where(x => x.participant_role_id == pr.participant_role_id).ToList();
-                        foreach(PlanParticipant pp in pp_old)
+                        foreach (PlanParticipant pp in pp_old)
                         {
                             db.PlanParticipants.Add(new PlanParticipant
                             {
