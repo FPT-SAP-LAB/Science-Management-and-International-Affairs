@@ -12,14 +12,16 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class NotificationLanguage
+    public partial class NotificationBase
     {
-        public int language_id { get; set; }
         public int notification_id { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
+        public int account_id { get; set; }
+        public int notification_type_id { get; set; }
+        public bool is_read { get; set; }
+        public string URL { get; set; }
+        public System.DateTime created_date { get; set; }
     
-        public virtual Language Language { get; set; }
-        public virtual Notification Notification { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual NotificationType NotificationType { get; set; }
     }
 }

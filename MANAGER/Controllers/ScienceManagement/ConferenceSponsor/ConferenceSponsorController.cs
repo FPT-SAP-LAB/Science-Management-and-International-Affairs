@@ -2,6 +2,8 @@
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
+using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -59,6 +61,20 @@ namespace MANAGER.Controllers
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
             AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number, request_id, CurrentAccount.AccountID(Session));
+            return Json(result);
+        }
+        [HttpPost]
+        public JsonResult SubmitFiles(int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
+            foreach (string key in Request.Files.AllKeys)
+            {
+                files.Add(Request.Files[key]);
+            }
+            if (files.Count == 0)
+                return Json(new { success = false, content = "Không có file nào được up" });
+            AlertModal<string> result = DetailRepos.SubmitFiles(files, request_id);
             return Json(result);
         }
         [HttpPost]

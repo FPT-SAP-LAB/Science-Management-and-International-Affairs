@@ -496,7 +496,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add_giaidoan">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_add_giaidoan">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1844,6 +1844,19 @@
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
                 return false;
             }
+            var form_data = datatableGD.rows().data();
+            let checkout = false;
+            for (let i = 0; i < form_data.length; i++) {
+                if ((convertDate(basePhase.to).getTime() >= convertDate(form_data[i].from).getTime() && convertDate(basePhase.to).getTime() < convertDate(form_data[i].to).getTime())
+                    || (convertDate(basePhase.from).getTime() >= convertDate(form_data[i].from).getTime() && convertDate(basePhase.to).getTime() <= convertDate(form_data[i].to).getTime())
+                    || (convertDate(basePhase.from).getTime() <= convertDate(form_data[i].to).getTime() && convertDate(basePhase.to).getTime() > convertDate(form_data[i].to).getTime())) {
+                    checkout = true;
+                }
+            }
+            if (checkout) {
+                toastr.warning('Thời gian diễn ra các giai đoạn không thể trùng nhau');
+                return false;
+            }
             var object = {
                 language_id: document.getElementById('detail_language_content').value,
                 activity_id: document.getElementById('activity_id').value,
@@ -1857,7 +1870,8 @@
                 success: function (data) {
                     if (data != '') {
                         datatableGD.ajax.reload();
-                        clearModal('#addModal_DongToChuc');
+                        clearModal('#addModal_Giaidoan');
+                        $('#addModal_Giaidoan').modal('hide');
                         toastr.success(data);
                     } else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
@@ -2176,7 +2190,7 @@
             $('#edit_email_DongToChuc').val('');
             $('#edit_phone_DongToChuc').val('');
         }
-
+        //aa
         $('#btn_edit_giaidoan').click(function () {
             var data = {
                 phase_id: id_edit_giai_doan,
@@ -2187,6 +2201,21 @@
             };
             if (convertDate(data.from).getTime() > convertDate(data.to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                return false;
+            }
+            var form_data = datatableGD.rows().data();
+            let checkout = false;
+            for (let i = 0; i < form_data.length; i++) {
+                if (data.phase_id != form_data[i].phase_id) {
+                    if ((convertDate(data.to).getTime() >= convertDate(form_data[i].from).getTime() && convertDate(data.to).getTime() < convertDate(form_data[i].to).getTime())
+                        || (convertDate(data.from).getTime() >= convertDate(form_data[i].from).getTime() && convertDate(data.to).getTime() <= convertDate(form_data[i].to).getTime())
+                        || (convertDate(data.from).getTime() <= convertDate(form_data[i].to).getTime() && convertDate(data.to).getTime() > convertDate(form_data[i].to).getTime())) {
+                        checkout = true;
+                    }
+                }
+            }
+            if (checkout) {
+                toastr.warning('Thời gian diễn ra các giai đoạn không thể trùng nhau');
                 return false;
             }
             var obj = {
@@ -2469,7 +2498,7 @@
                 note: $('#add_ghichu_kpDuTru').val(),
                 link : ''
             };
-            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 save_loader.stopLoading();
                 return false;
@@ -2530,7 +2559,7 @@
                 note: $('#edit_ghichu_kpDuTru').val(),
                 link : ''
             };
-            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 save_loader.stopLoading();
                 return false;
@@ -2590,7 +2619,7 @@
                 note: $('#edit_ghichu_kpDieuChinh').val(),
                 link : ''
             };
-            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 save_loader.stopLoading();
                 return false;
@@ -2650,7 +2679,7 @@
                 note: $('#edit_ghichu_kpThucTe').val(),
                 link : ''
             };
-            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '' || object.note == '') {
+            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 save_loader.stopLoading();
                 return false;
