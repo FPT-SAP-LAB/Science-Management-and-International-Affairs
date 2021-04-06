@@ -574,16 +574,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public string CheckPartnerExistedInEditMOA(int moa_partner_id, string partner_name)
+        public string CheckPartnerExistedInEditMOA(int moa_partner_id, int partner_id)
         {
             try
             {
                 string sql = @"select partner_name from IA_Collaboration.MOAPartner t1 left join
                     IA_Collaboration.Partner t2 on
                     t1.partner_id = t2.partner_id
-                    where t1.moa_partner_id != @moa_partner_id and t2.partner_name like @partner_name";
+                    where t1.moa_partner_id != @moa_partner_id and t2.partner_id = @partner_id";
                 string result = db.Database.SqlQuery<string>(sql,
-                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("partner_id", partner_id),
                     new SqlParameter("moa_partner_id", moa_partner_id)).FirstOrDefault();
                 return result is null ? "" : result;
             }
