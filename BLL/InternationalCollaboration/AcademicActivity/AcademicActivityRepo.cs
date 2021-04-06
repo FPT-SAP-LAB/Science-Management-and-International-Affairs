@@ -407,36 +407,39 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     Form f_old = db.Forms.Where(x => x.phase_id == aap.phase_id).FirstOrDefault();
-                    Form f_new = db.Forms.Add(new Form
+                    if (f_old != null)
                     {
-                        phase_id = aap_new.phase_id,
-                        title = f_old.title,
-                        title_description = f_old.title_description
-                    });
-                    db.SaveChanges();
-                    List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
-                    foreach (Question q in ques_old)
-                    {
-                        Question q_new = db.Questions.Add(new Question
+                        Form f_new = db.Forms.Add(new Form
                         {
-                            answer_type_id = q.answer_type_id,
-                            is_compulsory = q.is_compulsory,
-                            title = q.title,
-                            form_id = f_new.form_id,
-                            is_changeable = q.is_changeable
+                            phase_id = aap_new.phase_id,
+                            title = f_old.title,
+                            title_description = f_old.title_description
                         });
                         db.SaveChanges();
-                        if (q_new.answer_type_id == 3 || q_new.answer_type_id == 5)
+                        List<Question> ques_old = db.Questions.Where(x => x.form_id == f_old.form_id).ToList();
+                        foreach (Question q in ques_old)
                         {
-                            QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
-                            db.QuestionOptions.Add(new QuestionOption
+                            Question q_new = db.Questions.Add(new Question
                             {
-                                question_id = q_new.question_id,
-                                option_title = qo.option_title
+                                answer_type_id = q.answer_type_id,
+                                is_compulsory = q.is_compulsory,
+                                title = q.title,
+                                form_id = f_new.form_id,
+                                is_changeable = q.is_changeable
                             });
+                            db.SaveChanges();
+                            if (q_new.answer_type_id == 3 || q_new.answer_type_id == 5)
+                            {
+                                QuestionOption qo = db.QuestionOptions.Where(x => x.question_id == q.question_id).FirstOrDefault();
+                                db.QuestionOptions.Add(new QuestionOption
+                                {
+                                    question_id = q_new.question_id,
+                                    option_title = qo.option_title
+                                });
+                            }
                         }
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
                     List<AcademicActivityPhaseLanguage> activityPhaseLanguages_old = db.AcademicActivityPhaseLanguages.Where(x => x.phase_id == aap.phase_id).ToList();
                     foreach (AcademicActivityPhaseLanguage aapl in activityPhaseLanguages_old)
                     {
