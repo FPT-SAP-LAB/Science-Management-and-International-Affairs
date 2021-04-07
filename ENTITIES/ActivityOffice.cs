@@ -24,6 +24,8 @@ namespace ENTITIES
         public Nullable<int> activity_id { get; set; }
         public Nullable<int> office_id { get; set; }
     
+        public virtual Office Office { get; set; }
+        public virtual AcademicActivity AcademicActivity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityExpenseCategory> ActivityExpenseCategories { get; set; }
     }

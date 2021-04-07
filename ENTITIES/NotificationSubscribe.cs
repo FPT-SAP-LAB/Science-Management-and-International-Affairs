@@ -10,13 +10,15 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class NotificationSubscribe
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int account_id { get; set; }
+        public int notification_type_id { get; set; }
+        public bool is_subscribe { get; set; }
+    
+        public virtual Account Account { get; set; }
+        public virtual NotificationType NotificationType { get; set; }
     }
 }

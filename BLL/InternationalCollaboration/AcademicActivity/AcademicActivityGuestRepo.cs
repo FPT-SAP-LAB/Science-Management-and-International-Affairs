@@ -39,7 +39,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
                         on av.article_id = ai.article_id left join General.[File] f
 						on f.[file_id] = aa.[file_id] and al.language_id = av.language_id
-                        WHERE al.language_id = @language AND [aa].activity_type_id IN " + typestr.ToString();
+                        WHERE al.language_id = @language AND ar.article_status_id = 2 AND [aa].activity_type_id IN " + typestr.ToString();
                 if (search is null)
                 {
                     sql += @" ORDER BY [from] DESC
@@ -158,8 +158,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             try
             {
                 string sql = @"select f.title as 'f_title',f.title_description,f.form_id,f.phase_id,q.question_id,q.title,cast(q.is_compulsory as int) as 'is_compulsory',q.answer_type_id,cast(q.is_changeable as int) as 'is_changeable' from SMIA_AcademicActivity.AcademicActivityPhase aap
-                                inner join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
-                                inner join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
+                                left join SMIA_AcademicActivity.Form f on f.phase_id = aap.phase_id
+                                left join SMIA_AcademicActivity.Question q on f.form_id = q.form_id
                                 where f.phase_id = @phase_id order by q.is_changeable";
                 List<baseFrom> data = db.Database.SqlQuery<baseFrom>(sql, new SqlParameter("phase_id", phase_id)).ToList();
                 List<int> quesOp = data.Where(x => x.answer_type_id == 3 || x.answer_type_id == 5).Select(y => y.question_id).ToList();
@@ -187,6 +187,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 Console.WriteLine(e.ToString());
                 return new fullForm();
+            }
+        }
+        public bool checkForm(int phase_id)
+        {
+            try
+            {
+                Form f = db.Forms.Where(x => x.phase_id == phase_id).FirstOrDefault();
+                if (f == null)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
         public bool sendForm(int fid, string answer, AnswerUnchange unchange)

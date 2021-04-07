@@ -93,7 +93,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     ArticleVersion articleVersion = new ArticleVersion
                     {
                         article_content = content,
-                        publish_time = DateTime.Today,
+                        publish_time = DateTime.Now,
                         version_title = procedure_title,
                         article_id = article.article_id,
                         language_id = partner_language_type
@@ -234,7 +234,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             article_id = article.article_id,
                             article_content = procedureInfoManager.content,
                             language_id = procedureInfoManager.language_id,
-                            publish_time = DateTime.Today,
+                            publish_time = DateTime.Now,
                             version_title = procedureInfoManager.procedure_name,
                         };
                         db.ArticleVersions.Add(articleVersion);

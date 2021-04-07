@@ -12,11 +12,11 @@
 
     .content-active {
         color: white;
-        background: #b7b2b2;
+        background: #4a69bf;
     }
 
     .content-nav :hover {
-        background: darkgray;
+        background: #d0e0f2;
         cursor: pointer;
     }
 
@@ -95,8 +95,8 @@
                 @foreach (var item in ViewBag.SubContent)
                 {
                     <div id="p-@item.id" class="event-content" hidden>
-                        @Html.Raw(item.content)<br />
-                        @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0)
+                        @Html.Raw(item.content)<br/>
+                        @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0 && @ViewBag.have_form)
                         {
                             <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">@rm.GetString("Registration")</a>
                         }

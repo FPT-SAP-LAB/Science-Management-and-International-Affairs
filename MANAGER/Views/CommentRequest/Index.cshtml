@@ -38,8 +38,8 @@
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    console.log($("#comment-table").parent());
                     $("#comment-table").parent().load("/CommentRequest/Index?request_id=@ViewBag.request_id");
+                    chat.server.send(data.obj);
                 }
                 else
                     toastr.error(data.content);
