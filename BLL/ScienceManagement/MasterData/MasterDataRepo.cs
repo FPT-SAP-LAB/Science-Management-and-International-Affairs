@@ -198,5 +198,146 @@ namespace BLL.ScienceManagement.MasterData
                 return "ff";
             }
         }
+
+        public List<Title2Name> getListTitle_2Lang()
+        {
+            string sql = @"select t.title_id, tv.name as 'tv', ta.name as 'ta'
+                            from [SM_MasterData].Title t left join
+		                            (select t.title_id, tl.name
+		                            from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+		                            where tl.language_id = 1) as tv on t.title_id = tv.title_id left join
+		                            (select t.title_id, tl.name
+		                            from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+		                            where tl.language_id = 2) as ta on t.title_id = ta.title_id
+                            where tv.name is not null ";
+            List<Title2Name> list = db.Database.SqlQuery<Title2Name>(sql).ToList();
+            return list;
+        }
+
+        public Title2Name GetTitleWithName(int id)
+        {
+            string sql = @"select t.title_id, tv.name as 'tv', ta.name as 'ta'
+                            from [SM_MasterData].Title t left join
+		                            (select t.title_id, tl.name
+		                            from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+		                            where tl.language_id = 1) as tv on t.title_id = tv.title_id left join
+		                            (select t.title_id, tl.name
+		                            from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
+		                            where tl.language_id = 2) as ta on t.title_id = ta.title_id
+                            where tv.name is not null and t.title_id = @id";
+            Title2Name t = db.Database.SqlQuery<Title2Name>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            return t;
+        }
+
+        public string updateTitle(int id, string tv, string ta)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                TitleLanguage tl = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 1).FirstOrDefault();
+                if (tl == null)
+                {
+                    tl = new TitleLanguage
+                    {
+                        language_id = 1,
+                        title_id = id,
+                        name = tv
+                    };
+                    db.TitleLanguages.Add(tl);
+                }
+                else
+                {
+                    tl.name = tv;
+                    db.Entry(tl).State = EntityState.Modified;
+                }
+                //db.SaveChanges();
+
+                TitleLanguage tl2 = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 2).FirstOrDefault();
+                if (tl2 == null)
+                {
+                    tl2 = new TitleLanguage
+                    {
+                        language_id = 2,
+                        title_id = id,
+                        name = ta
+                    };
+                    db.TitleLanguages.Add(tl2);
+                }
+                else
+                {
+                    tl2.name = ta;
+                    db.Entry(tl2).State = EntityState.Modified;
+                }
+
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
+        public int addTitle(string tv, string ta)
+        {
+            TitleLanguage ck1 = db.TitleLanguages.Where(x => x.language_id == 1).Where(x => x.name == tv).FirstOrDefault();
+            TitleLanguage ck2 = db.TitleLanguages.Where(x => x.language_id == 2).Where(x => x.name == ta).FirstOrDefault();
+            if (ck1 != null || ck2 != null) return -1;
+
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Title t = new Title();
+                db.Titles.Add(t);
+                db.SaveChanges();
+
+                TitleLanguage tl1 = new TitleLanguage
+                {
+                    language_id = 1,
+                    name = tv,
+                    title_id = t.title_id
+                };
+                db.TitleLanguages.Add(tl1);
+
+                TitleLanguage tl2 = new TitleLanguage
+                {
+                    language_id = 2,
+                    name = ta,
+                    title_id = t.title_id
+                };
+                db.TitleLanguages.Add(tl2);
+                db.SaveChanges();
+                dbc.Commit();
+                return t.title_id;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return 0;
+            }
+        }
+
+        public string deleteTitle(int id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                string sql = @"delete from [Localization].TitleLanguage where title_id = @id
+                                delete from [SM_MasterData].Title where title_id = @id";
+                db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
     }
 }
