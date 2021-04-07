@@ -1144,8 +1144,9 @@
             lengthChange: false,
             serverSide: true,
             initComplete: function () {
-                $('.mou_table').parent().css('overflow-x', 'auto');
-                $('.mou_table').parent().removeClass();
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
+                $(this).parent().css('padding', '0');
             },
             ajax: {
                 url: "@Url.Action("ViewMOU", "MOU")",
