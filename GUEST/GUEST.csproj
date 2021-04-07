@@ -260,6 +260,7 @@
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\PartialViewController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -624,6 +625,7 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.min.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
     <Content Include="Content\assets\js\pages\my-script.min.js" />
+    <Content Include="Content\assets\js\pages\researcher-bio.js" />
     <Content Include="Content\assets\js\pages\researcher-change-avt.js" />
     <Content Include="Content\assets\js\pages\researcher-edit-info.js" />
     <Content Include="Content\assets\js\pages\widgets.js" />
@@ -2548,6 +2550,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
+    <Folder Include="Views\Biography\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />

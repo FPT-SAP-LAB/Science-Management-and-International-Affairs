@@ -87,6 +87,13 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         }
         public ActionResult EditInfo()
         {
+            var pagesTree = new List<PageTree>
+           {
+               new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
+               new PageTree("Chỉnh sửa thông tin", "#"),
+           };
+            researcherDetailRepo = new ResearchersDetailRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo?id=" + id));
             pagesTree.Add(new PageTree("Chỉnh sửa thông tin", "#"));
@@ -96,6 +103,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 Response.Redirect("/ErrorPage/Error");
             }
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listTitles = researcherBiographyRepo.getTitles();
+            ViewBag.listAcadDegree = listAcadDegree;
+            ViewBag.listTitles = listTitles;
             ViewBag.profile = profile;
             ViewBag.pagesTree = pagesTree;
             return View();
@@ -107,6 +118,61 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             string data = Request["info"];
             researcherEditResearcherInfo.EditResearcherProfile(data);
             return null;
+        }
+
+        public JsonResult getAcadList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+                return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult getWorkList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
+                workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
+                return Json(new
+                {
+                    success = true,
+                    data = (from a in workList
+                            select new
+                            {
+                                index = a.index,
+                                id = a.records.id,
+                                people_id = a.records.pepple_id,
+                                work_unit = a.records.work_unit,
+                                title = a.records.title,
+                                start_year = a.records.start_year,
+                                end_year = a.records.end_year
+                            })
+                },
+                JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult EditProfilePhoto()
+        {
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            var uploadfile = Request.Files["imageInput"];
+            int people_id = Int32.Parse(Request.Form["people_id"]);
+            Account account = CurrentAccount.Account(Session);
+            var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
+            int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
+            return Json(new { res = res });
         }
     }
 }
