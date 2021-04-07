@@ -479,8 +479,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1,
-                                     DateTime date_format2, int file_id2, string number2, string file_drive_id2)
+        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -493,19 +492,12 @@ namespace BLL.ScienceManagement.Paper
                     decision_number = number1
                 };
                 db.Decisions.Add(decision);
-
-                Decision decision2 = new Decision
-                {
-                    valid_date = date_format2,
-                    file_id = file_id2,
-                    decision_number = number2
-                };
-                db.Decisions.Add(decision2);
                 db.SaveChanges();
 
-                List<WaitDecisionPaper> listTN = getListWwaitDecision("Trongnuoc");
-                List<WaitDecisionPaper> listQT = getListWwaitDecision("Quocte");
-                foreach (var item in listTN)
+                List<WaitDecisionPaper> list = getListWait_UploadQDGV(0);
+                List<WaiDecisionHaveReseacher> list2 = getListHaveReseacher();
+
+                foreach (var item in list)
                 {
                     RequestDecision request = new RequestDecision
                     {
@@ -513,35 +505,15 @@ namespace BLL.ScienceManagement.Paper
                         decision_id = decision.decision_id
                     };
                     db.RequestDecisions.Add(request);
-
-                    RequestDecision request2 = new RequestDecision
-                    {
-                        request_id = item.request_id,
-                        decision_id = decision2.decision_id
-                    };
-                    db.RequestDecisions.Add(request2);
 
                     RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
                     rc.status_id = 2;
                 }
-                foreach (var item in listQT)
+
+                foreach (var item in list2)
                 {
-                    RequestDecision request = new RequestDecision
-                    {
-                        request_id = item.request_id,
-                        decision_id = decision.decision_id
-                    };
-                    db.RequestDecisions.Add(request);
-
-                    RequestDecision request2 = new RequestDecision
-                    {
-                        request_id = item.request_id,
-                        decision_id = decision2.decision_id
-                    };
-                    db.RequestDecisions.Add(request2);
-
                     RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                    rc.status_id = 2;
+                    rc.status_id = 6;
                 }
 
                 db.SaveChanges();
@@ -555,9 +527,119 @@ namespace BLL.ScienceManagement.Paper
                 dbc.Rollback();
                 dbc.Dispose();
                 GoogleDriveService.DeleteFile(file_drive_id1);
-                GoogleDriveService.DeleteFile(file_drive_id2);
                 return "ff";
             }
+        }
+
+        public string uploadDecision2(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Decision decision = new Decision
+                {
+                    valid_date = date_format1,
+                    file_id = file_id1,
+                    decision_number = number1
+                };
+                db.Decisions.Add(decision);
+                db.SaveChanges();
+
+                List<WaitDecisionPaper> list = getListWait_UploadNCV(1);
+                List<WaiDecisionHaveReseacher> list2 = getListHaveReseacher();
+
+                foreach (var item in list)
+                {
+                    RequestDecision request = new RequestDecision
+                    {
+                        request_id = item.request_id,
+                        decision_id = decision.decision_id
+                    };
+                    db.RequestDecisions.Add(request);
+
+                    RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 2;
+                }
+
+                foreach (var item in list2)
+                {
+                    RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    rc.status_id = 7;
+                }
+
+                db.SaveChanges();
+                dbc.Commit();
+                dbc.Dispose();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                dbc.Dispose();
+                GoogleDriveService.DeleteFile(file_drive_id1);
+                return "ff";
+            }
+        }
+
+        public List<WaiDecisionHaveReseacher> getListHaveReseacher()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select a.*
+                            from (select p.paper_id, rp.request_id, p.name, count(rd.decision_id) as 'sum'
+		                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+			                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+			                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+			                            left join [SM_Request].RequestDecision rd on rd.request_id = rp.request_id
+		                            where rp.status_id in (4) and ah.is_reseacher = 0 and ah.office_id is not null
+		                            group by p.paper_id, rp.request_id, p.name) as a
+                            join (select p.paper_id, rp.request_id, p.name, count(rd.decision_id) as 'sum'
+		                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+			                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+			                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+			                            left join [SM_Request].RequestDecision rd on rd.request_id = rp.request_id
+		                            where rp.status_id in (4) and ah.is_reseacher = 1 and ah.office_id is not null
+		                            group by p.paper_id, rp.request_id, p.name) as b on a.request_id = b.request_id 
+                            where a.sum < 2";
+            List<WaiDecisionHaveReseacher> list = db.Database.SqlQuery<WaiDecisionHaveReseacher>(sql).ToList();
+            return list;
+        }
+
+        public List<WaitDecisionPaper> getListWait_UploadQDGV(int reseacher)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on o.office_id = po.office_id
+								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+                            where rp.status_id in (4, 7) and ah.is_reseacher = @reseacher
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("reseacher", reseacher)).ToList();
+            return list;
+        }
+
+        public List<WaitDecisionPaper> getListWait_UploadNCV(int reseacher)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on o.office_id = po.office_id
+								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+                            where rp.status_id in (4, 6) and ah.is_reseacher = @reseacher
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("reseacher", reseacher)).ToList();
+            return list;
         }
 
         public int addPeople(string name, string mail, Nullable<int> office_id)
@@ -800,7 +882,11 @@ namespace BLL.ScienceManagement.Paper
                     Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
                     author.name = item.name;
                     author.email = item.email;
-                    if (item.office_id != 0)
+                    if(item.office_id == 0 || item.office_id == null)
+                    {
+                        author.office_id = null;
+                    }
+                    else
                     {
                         author.office_id = item.office_id;
                         author.bank_number = item.bank_number;
@@ -903,7 +989,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public List<WaitDecisionPaper> getListWwaitDecision(string type)
+        public List<WaitDecisionPaper> getListWwaitDecision(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
@@ -914,13 +1000,32 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].People po on acc.email = po.email
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on o.office_id = po.office_id
-                            where rp.status_id = 4 and rp.type = @type
+								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+                            where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher
                             group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
-            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type)).ToList();
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
 
-        public List<Paper_Appendix_1> getListAppendix1_2(string type)
+        public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+	                            join [General].Account acc on br.account_id = acc.account_id
+	                            join [General].People po on acc.email = po.email
+	                            join [General].Profile pro on po.people_id = pro.people_id
+	                            join [General].Office o on o.office_id = po.office_id
+								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+                            where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher
+                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
+            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
+            return list;
+        }
+
+        public List<Paper_Appendix_1> getListAppendix1_2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, p.name, p.company, a.sum, b.sumFE, p.paper_id
@@ -935,13 +1040,13 @@ namespace BLL.ScienceManagement.Paper
 			                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 			                            join [SM_ScientificProduct].Author ah on ah.people_id = ap.people_id
 			                            group by p.paper_id) as b on p.paper_id = b.paper_id
-                            where rp.status_id = 4 and rp.type = @type
+                            where rp.status_id in (4, 6, 7) and rp.type = @type and ah.is_reseacher = @reseacher
                             order by ah.name";
-            List<Paper_Appendix_1> list = db.Database.SqlQuery<Paper_Appendix_1>(sql, new SqlParameter("type", type)).ToList();
+            List<Paper_Appendix_1> list = db.Database.SqlQuery<Paper_Appendix_1>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
 
-        public List<Paper_Apendix_3> getListAppendix3_4(string type)
+        public List<Paper_Apendix_3> getListAppendix3_4(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money'
@@ -949,11 +1054,11 @@ namespace BLL.ScienceManagement.Paper
 	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
 	                            join [General].Office o on ah.office_id = o.office_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-                            where rp.status_id = 4 and rp.type = @type
+                            where rp.status_id in (4, 6, 7) and rp.type = @type and ah.is_reseacher = @reseacher
                             group by ah.name, ah.mssv_msnv, o.office_abbreviation
                             having sum(ap.money_reward_in_decision) > 0
                             order by ah.name";
-            List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type)).ToList();
+            List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
     }
