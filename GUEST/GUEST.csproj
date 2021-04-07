@@ -246,6 +246,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\AdditionalProfileController.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
@@ -2547,7 +2548,6 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
-    <Folder Include="Views\Authen\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />
@@ -2555,7 +2555,6 @@
     <Folder Include="Views\InternationalCollaboration\News\" />
     <Folder Include="Views\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Scholarship\" />
-    <Folder Include="Views\List\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

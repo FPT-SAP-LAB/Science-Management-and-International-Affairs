@@ -2473,6 +2473,7 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\PaperCriteria\List.cshtml" />
+    <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
