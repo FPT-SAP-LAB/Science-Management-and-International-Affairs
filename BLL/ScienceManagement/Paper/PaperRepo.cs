@@ -205,7 +205,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public string getDecisionLink(int id)
+        public List<string> getDecisionLink(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             try
@@ -215,13 +215,13 @@ namespace BLL.ScienceManagement.Paper
 	                                join [SM_Request].Decision d on rd.decision_id = d.decision_id
 	                                join [General].[File] f on f.file_id = d.file_id
                                 where rp.paper_id = @id";
-                string link = db.Database.SqlQuery<string>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                List<string> link = db.Database.SqlQuery<string>(sql, new SqlParameter("id", id)).ToList();
                 return link;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return "ff";
+                return null;
             }
         }
 
