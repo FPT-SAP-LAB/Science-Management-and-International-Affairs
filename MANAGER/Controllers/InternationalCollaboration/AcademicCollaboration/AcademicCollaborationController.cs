@@ -122,7 +122,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partnersSearching(partner_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
