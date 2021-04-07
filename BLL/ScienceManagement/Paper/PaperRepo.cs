@@ -882,7 +882,7 @@ namespace BLL.ScienceManagement.Paper
                     Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
                     author.name = item.name;
                     author.email = item.email;
-                    if(item.office_id == 0 || item.office_id == null)
+                    if (item.office_id == 0 || item.office_id == null)
                     {
                         author.office_id = null;
                     }
