@@ -27,7 +27,7 @@ namespace ENTITIES
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
             this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
-            this.NotificationTemplateLanguages = new HashSet<NotificationTemplateLanguage>();
+            this.NotificationTypeLanguages = new HashSet<NotificationTypeLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
             this.PositionLanguages = new HashSet<PositionLanguage>();
             this.ResearchAreaLanguages = new HashSet<ResearchAreaLanguage>();
@@ -60,7 +60,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NotificationTemplateLanguage> NotificationTemplateLanguages { get; set; }
+        public virtual ICollection<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperStatusLanguage> PaperStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

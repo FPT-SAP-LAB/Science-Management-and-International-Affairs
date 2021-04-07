@@ -9,6 +9,7 @@ var collab_program_going_table = $("#collab_program_going_table").DataTable({
         },
         sEmptyTable: "Không có dữ liệu",
         sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+        sInfoEmpty: "",
     },
     searching: false,
     lengthChange: false,
@@ -79,8 +80,12 @@ var collab_program_going_table = $("#collab_program_going_table").DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().css('padding', '0');
+        $(this).parent().css('width', '100%');
     },
 });
+
+$('#collab_program_going_table > thead > tr > th:nth-child(2)').css({ 'min-width': '300px', 'max-width': '300px' });
+$('#collab_program_going_table > thead > tr > th:nth-child(3)').css({ 'min-width': '300px', 'max-width': '300px' });
 
 $('#collab_program_going_search_btn').click(function () {
     collab_program_going_table.ajax.reload();
@@ -93,6 +98,7 @@ var collab_program_coming_table = $("#collab_program_coming_table").DataTable({
             sNext: "Trang sau"
         },
         sEmptyTable: "Không có dữ liệu",
+        sInfoEmpty: "",
         sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
     },
     searching: false,
@@ -159,6 +165,7 @@ var collab_program_coming_table = $("#collab_program_coming_table").DataTable({
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().css('padding', '0');
+        $(this).parent().css('width', '100%');
     },
 });
 

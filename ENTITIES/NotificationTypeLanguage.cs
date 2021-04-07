@@ -12,7 +12,7 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class NotificationTemplateLanguage
+    public partial class NotificationTypeLanguage
     {
         public int notification_type_id { get; set; }
         public int language_id { get; set; }
