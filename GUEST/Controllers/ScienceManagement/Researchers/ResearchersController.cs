@@ -142,16 +142,21 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 int id = Int32.Parse(Request.QueryString["id"]);
                 List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
                 workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
-                return Json(new { success = true, 
-                    data = (from a in workList select new {
-                        index=a.index,
-                        id=a.records.id,
-                        people_id=a.records.pepple_id,
-                        work_unit=a.records.work_unit,
-                        title=a.records.title,
-                        start_year=a.records.start_year,
-                        end_year=a.records.end_year
-                    } ) }, 
+                return Json(new
+                {
+                    success = true,
+                    data = (from a in workList
+                            select new
+                            {
+                                index = a.index,
+                                id = a.records.id,
+                                people_id = a.records.pepple_id,
+                                work_unit = a.records.work_unit,
+                                title = a.records.title,
+                                start_year = a.records.start_year,
+                                end_year = a.records.end_year
+                            })
+                },
                 JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
