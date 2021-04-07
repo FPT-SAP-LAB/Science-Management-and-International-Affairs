@@ -307,6 +307,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />

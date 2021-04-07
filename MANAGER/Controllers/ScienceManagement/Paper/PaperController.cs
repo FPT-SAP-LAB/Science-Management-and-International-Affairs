@@ -60,14 +60,29 @@ namespace MANAGER.Controllers
             return View();
         }
 
+        [Auther(RightID = "18")]
         public ActionResult WaitDecision()
         {
-            ViewBag.title = "Chờ quyết định khen thưởng";
+            ViewBag.title = "Chờ quyết định khen thưởng (giảng viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("Quocte");
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("Quocte", 0);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("Trongnuoc");
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("Trongnuoc", 0);
+            ViewBag.waitTN = listWaitTN;
+
+            return View();
+        }
+
+        [Auther(RightID = "18")]
+        public ActionResult WaitDecision2()
+        {
+            ViewBag.title = "Chờ quyết định khen thưởng (nghiên cứu viên)";
+
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("Quocte", 1);
+            ViewBag.waitQT = listWaitQT;
+
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("Trongnuoc", 1);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -98,7 +113,7 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult exportExcel()
+        public JsonResult exportExcel(int reseacher)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             string path = HostingEnvironment.MapPath("/Excel_template/");
@@ -107,7 +122,7 @@ namespace MANAGER.Controllers
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorkbook excelWorkbook = excelPackage.Workbook;
 
-            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("Trongnuoc");
+            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("Trongnuoc", reseacher);
             ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
             int i = 2;
             int count = 1;
@@ -130,14 +145,14 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("Quocte");
+            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("Quocte", reseacher);
             ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
             i = 2;
             count = 1;
             Paper_Appendix_1 temp2 = new Paper_Appendix_1();
             foreach (var item in list2)
             {
-                if (item.author_name != temp2.author_name && item.mssv_msnv != temp.mssv_msnv)
+                if (item.author_name != temp2.author_name && item.mssv_msnv != temp2.mssv_msnv)
                 {
                     excelWorksheet2.Cells[i, 1].Value = count;
                     excelWorksheet2.Cells[i, 2].Value = item.author_name;
@@ -153,7 +168,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("Trongnuoc");
+            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("Trongnuoc", reseacher);
             ExcelWorksheet excelWorksheet3 = excelWorkbook.Worksheets[2];
             i = 2;
             count = 1;
@@ -170,7 +185,7 @@ namespace MANAGER.Controllers
                 count++;
             }
 
-            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("Quocte");
+            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("Quocte", reseacher);
             ExcelWorksheet excelWorksheet4 = excelWorkbook.Worksheets[3];
             i = 2;
             count = 1;
@@ -195,19 +210,13 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult uploadDecision(HttpPostedFileBase file1, string number1, string date1,
-                                         HttpPostedFileBase file2, string number2, string date2)
+        public JsonResult uploadDecision(HttpPostedFileBase file1, string number1, string date1, int reseacher)
         {
             string[] arr = date1.Split('/');
             string format = arr[1] + "/" + arr[0] + "/" + arr[2];
             DateTime date_format1 = DateTime.Parse(format);
 
-            arr = date2.Split('/');
-            format = arr[1] + "/" + arr[0] + "/" + arr[2];
-            DateTime date_format2 = DateTime.Parse(format);
-
             string name1 = "QD_" + number1 + "_" + date1;
-            string name2 = "QD_" + number2 + "_" + date2;
 
             Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
             ENTITIES.File fl1 = new ENTITIES.File
@@ -217,19 +226,33 @@ namespace MANAGER.Controllers
                 name = name1
             };
 
-            Google.Apis.Drive.v3.Data.File f2 = GoogleDriveService.UploadResearcherFile(file2, name2, 4, null);
-            ENTITIES.File fl2 = new ENTITIES.File
+            ENTITIES.File myFile1 = mdr.addFile(fl1);
+
+            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
+
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult uploadDecision2(HttpPostedFileBase file1, string number1, string date1, int reseacher)
+        {
+            string[] arr = date1.Split('/');
+            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
+            DateTime date_format1 = DateTime.Parse(format);
+
+            string name1 = "QD_" + number1 + "_" + date1;
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            ENTITIES.File fl1 = new ENTITIES.File
             {
-                link = f2.WebViewLink,
-                file_drive_id = f2.Id,
-                name = name2
+                link = f1.WebViewLink,
+                file_drive_id = f1.Id,
+                name = name1
             };
 
             ENTITIES.File myFile1 = mdr.addFile(fl1);
-            ENTITIES.File myFile2 = mdr.addFile(fl2);
 
-            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id,
-                                            date_format2, myFile2.file_id, number2, myFile2.file_drive_id);
+            string mess = pr.uploadDecision2(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }

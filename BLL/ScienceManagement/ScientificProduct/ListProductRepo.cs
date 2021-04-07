@@ -26,7 +26,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 				                            join [SM_ScientificProduct].Author po on ap.people_id = po.people_id
 			                            group by p.paper_id) as b on p.paper_id = b.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-                            where p.paper_type_id = 1 and rp.status_id = 2";
+                            where p.paper_type_id = 1 and rp.status_id in (2, 6, 7)";
             if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(p.publish_date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(p.publish_date) = @year"; else item.yearS = " ";
@@ -51,7 +51,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 				                            join [SM_ScientificProduct].Author po on ap.people_id = po.people_id
 			                            group by p.paper_id) as b on p.paper_id = b.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-                            where p.paper_type_id = 2 and rp.status_id = 2";
+                            where p.paper_type_id = 2 and rp.status_id in (2, 6, 7)";
             if (item.nameS != null && item.nameS != " ") sql += " and p.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(p.publish_date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(p.publish_date) = @year"; else item.yearS = " ";
@@ -74,7 +74,7 @@ namespace BLL.ScienceManagement.ScientificProduct
 			                            group by i.invention_id) as a on i.invention_id = a.invention_id
 	                            join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
-                            where 1=1 and ri.status_id = 2";
+                            where 1=1 and ri.status_id in (2, 6)";
             if (item.nameS != null && item.nameS != " ") sql += " and i.name like @name"; else item.nameS = " ";
             if (item.monthS != null && item.monthS != " ") sql += " and month(i.date) = @month"; else item.monthS = " ";
             if (item.yearS != null && item.yearS != " ") sql += " and year(i.date) = @year"; else item.yearS = " ";

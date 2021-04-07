@@ -466,7 +466,7 @@
                         add_author_msnv = response.author[i].mssv_msnv;
                         add_author_name = response.author[i].name;
                         add_author_title = response.author[i].title_name;
-                        add_author_contractType = response.author[i].contract_name;
+                        add_author_contractType = 1;
                         add_author_cmnd = response.author[i].identification_number;
                         add_author_tax = response.author[i].tax_code;
                         add_author_bank = response.author[i].bank_branch;
@@ -493,7 +493,7 @@
                             identification_number: add_author_cmnd,
                             mssv_msnv: add_author_msnv,
                             office_id: response.author[i].office_id_string,
-                            contract_id: response.author[i].contract_id,
+                            contract_id: 1,
                             title_id: response.author[i].title_id,
                             people_id: response.author[i].people_id,
                             temp_id: id,
