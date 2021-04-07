@@ -41,6 +41,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<infoExpense>();
             }
         }
@@ -62,6 +63,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return String.Empty;
             }
         }
@@ -76,6 +78,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
@@ -94,6 +97,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<infoExpenseEstimate>();
             }
         }
@@ -141,6 +145,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -189,6 +194,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -211,6 +217,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new infoExpenseEstimate();
             }
         }
@@ -260,6 +267,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -285,6 +293,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<infoExpenseModified>();
             }
         }
@@ -334,10 +343,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         else
                         {
                             Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí điều chỉnh - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                            File file = new File();
-                            file.name = img.FileName;
-                            file.link = f.WebViewLink;
-                            file.file_drive_id = f.Id;
+                            File file = new File
+                            {
+                                name = img.FileName,
+                                link = f.WebViewLink,
+                                file_drive_id = f.Id
+                            };
                             File ff = db.Files.Add(file);
                             db.SaveChanges();
                             aed.file_id = ff.file_id;
@@ -350,6 +361,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -382,6 +394,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<infoExpenseModified>();
             }
         }
@@ -447,6 +460,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -474,6 +488,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new Statistic();
             }
         }
@@ -499,6 +514,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Statistic>();
             }
         }
@@ -526,6 +542,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return new List<Statistic>();
             }
         }

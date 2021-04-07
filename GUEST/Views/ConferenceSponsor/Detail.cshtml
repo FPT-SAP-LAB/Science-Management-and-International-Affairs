@@ -165,6 +165,13 @@
                                     <a href="#" class="text-muted text-hover-primary">@Decision.ValidDate.ToString(rm.GetString("DateFormat"))</a>
                                 </div>
                             }
+                            @if (ConferenceDetail.FolderLink != null)
+                            {
+                                <div class="d-flex justify-content-between align-items-cente my-1">
+                                    <span class="text-dark-75 font-weight-bolder mr-2">Thư mục drive của đề nghị :</span>
+                                    <a href="@ConferenceDetail.FolderLink" target="_blank" class="text-muted text-hover-primary">Xem</a>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-6">

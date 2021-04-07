@@ -137,7 +137,11 @@ namespace ENTITIES.CustomModels
 
                 UploadedFiles.Add(file);
 
-                if (ShareWithEmail != null) ShareFile(ShareWithEmail, file.Id);
+                if (ShareWithEmail != null)
+                {
+                    ShareFile(ShareWithEmail, file.Id);
+                    ShareFile(ShareWithEmail, folder.Id);
+                }
             }
 
             return UploadedFiles;
@@ -177,6 +181,13 @@ namespace ENTITIES.CustomModels
             else
                 return result.Files[0];
         }
+        public static Google.Apis.Drive.v3.Data.File GetFile(string FileID)
+        {
+            GetRequest RequestGet = driveService.Files.Get(FileID);
+            RequestGet.Fields = "webViewLink,parents";
+            RequestGet.SupportsAllDrives = true;
+            return RequestGet.Execute();
+        }
         public static Google.Apis.Drive.v3.Data.File UploadFile(string FileName, Stream InputStream, string ContentType, string ParentID)
         {
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
@@ -198,9 +209,6 @@ namespace ENTITIES.CustomModels
 
         public static Google.Apis.Drive.v3.Data.File UpdateFile(string FileName, Stream InputStream, string ContentType, string FileID)
         {
-            GetRequest RequestGet = driveService.Files.Get(FileID);
-            RequestGet.Fields = "id,webViewLink";
-            RequestGet.SupportsAllDrives = true;
             Google.Apis.Drive.v3.Data.File file = new Google.Apis.Drive.v3.Data.File
             {
                 Name = FileName

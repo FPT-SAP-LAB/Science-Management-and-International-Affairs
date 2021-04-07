@@ -112,7 +112,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="javascript:" onclick="saveBasicInfo()" class="btn btn-sm btn-light-primary px-6 font-weight-bold float-right">Lưu</a>
+                                    <a href="javascript:" onclick="saveBasicInfo()" class="load-btn btn btn-sm btn-light-primary font-weight-bold float-right save-basic-info">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -330,6 +330,14 @@
             allowClear: false,
         }).on("select2:select", function () { //after select
             checkPartnerAddMOA();
+        }).on("select2:unselecting", function () {
+
+        });
+        $('#moa_partner_name_edit').select2({
+            placeholder: 'Chọn cơ sở',
+            allowClear: false,
+        }).on("select2:select", function () { //after select
+            checkPartnerEditMOA();
         }).on("select2:unselecting", function () {
 
         });
@@ -1219,6 +1227,8 @@
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             } else {
+                var basic_info_loader = new LoaderBtn($('.save-basic-info'));
+                basic_info_loader.startLoading();
                 var BasicInfo = {
                     mou_code: $('#mou_code').val(),
                     mou_end_date_string: $('#end_date_mou').val(),
@@ -1235,6 +1245,7 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
+                        basic_info_loader.stopLoading();
                         Swal.fire("Thành công",
                             "Thông tin được cập nhật thành công.", "success").then(function (result) {
                                 if (result.value) {
@@ -1250,35 +1261,43 @@
         }
 
         function finishExMOUAdd() {
+            var button_loader = new LoaderBtn($('#add_ex_mou_modal'));
+            button_loader.startLoading();
             if ($('#ex_mou_id_add').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
             else if ($('#mou_addition_end_time').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn chưa được chọn');
                 return;
             }
             else if (compareDate($('#mou_addition_sign_time').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                 return;
             }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_add').val().trim())) {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
             else if (compareDate($('#sign_date_mou').val(), $('#mou_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
                 return;
             }
             else if (compareDate($('#end_date_mou').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
                 return;
             }
             else {
                 var ExBasicInfo = {
-                ex_mou_code: $('#ex_mou_id_add').val() ,
-                ex_mou_sign_date: $('#mou_addition_sign_time').val(),
-                ex_mou_end_date: $('#mou_addition_end_time').val()
+                    ex_mou_code: $('#ex_mou_id_add').val() ,
+                    ex_mou_sign_date: $('#mou_addition_sign_time').val(),
+                    ex_mou_end_date: $('#mou_addition_end_time').val()
                 };
 
                 var ExMOUAdd = {
@@ -1296,7 +1315,7 @@
                     success: function (data) {
                         listTempExMOUPartnerScope = [];
                         $('#add_additional_mou').modal('hide');
-                        //mou_ex.ajax.reload();
+                        button_loader.stopLoading();
                         Swal.fire("Thành công",
                             "Đã bổ sung biên bản ghi nhớ thành công.", "success").then(function (result) {
                                 if (result.value) {
@@ -1509,19 +1528,25 @@
         }
 
         function finishExMOUEdit() {
+            var button_loader = new LoaderBtn($('#edit_ex_mou_modal'));
+            button_loader.startLoading();
             if ($('#ex_mou_id_edit').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
             else if ($('#mou_addition_end_time_edit').val().trim() == "") {
+                button_loader.stopLoading();
                 toastr.error('Ngày hết hạn chưa được chọn');
                 return;
             }
             else if (compareDate($('#mou_addition_sign_time_edit').val(), $('#mou_addition_end_time_edit').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
                 toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                 return;
             }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_edit').val().trim())) {
+                button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
@@ -1548,6 +1573,7 @@
                     success: function (data) {
                         listTempExMOUPartnerScopeEdit = [];
                         $('#edit_additional_mou').modal('hide');
+                        button_loader.stopLoading();
                         Swal.fire("Thành công!",
                             "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success").then(function (result) {
                                 if (result.value) {
@@ -1561,7 +1587,7 @@
                     }
                 });
             }
-    }
+        }
 
     @*mou_partner*@
         var listSpeMOUPartner = [];
@@ -1681,10 +1707,13 @@
 
             ],
             initComplete: function () {
-                $('#partner_table').parent().css('overflow-x', 'auto');
-                $('#partner_table').parent().removeClass();
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
+                $(this).parent().css('padding', '0');
             }
         });
+
+        $('#partner_table > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function checkPartnerAdd() {
@@ -1748,27 +1777,35 @@
         document.getElementById("add_mou_partner_button").setAttribute('disabled', '');
     }
 
-    function addMOUPartner() {
+    function addMOUPartner(element) {
+        var button_loader = new LoaderBtn(element);
+        button_loader.startLoading();
         if ($('#partner_name_add').val().trim() == '') {
+            button_loader.stopLoading();
             toastr.error('Đối tác chưa được chọn');
             return;
         }
         else if ($('#mou_sign_date_partner_add').val().trim() == '') {
+            button_loader.stopLoading();
             toastr.error('Ngày ký kết chưa được chọn');
             return;
         }
         else if ($('#mou_partner_specialization_add').val().length == 0) {
+            button_loader.stopLoading();
             toastr.error('Lĩnh vực chưa được chọn');
             return;
         }
         else if ($('#mou_partner_scope_add').val().length == 0) {
+            button_loader.stopLoading();
             toastr.error('Phạm vi hợp tác chưa được chọn');
             return;
         }
         else if (compareDate($('#mou_sign_date_partner_add').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
+            button_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
         else if (checkMOUPartnerAddDuplicated()) {
+            button_loader.stopLoading();
             toastr.error('Đối tác đã có trong biên bản ghi nhớ');
             return;
         }
@@ -1795,6 +1832,7 @@
                 cache: false,
                 success: function (data) {
                     $('#add_partner_mou').modal('hide');
+                    button_loader.stopLoading();
                     Swal.fire("Thành công!",
                         "Đã thêm đối tác thành công.", "success").then(function (result) {
                             if (result.value) {
@@ -1980,27 +2018,35 @@
             });
         }
 
-    function editMOUPartner() {
+    function editMOUPartner(element) {
+        var button_loader = new LoaderBtn(element);
+        button_loader.startLoading();
         if ($('#mou_partner_name_edit').val().trim() == '') {
+            button_loader.stopLoading();
             toastr.error('Đối tác chưa được chọn');
             return;
         }
         else if ($('#mou_sign_date_partner_edit').val().trim() == '') {
+            button_loader.stopLoading();
             toastr.error('Ngày ký kết chưa được chọn');
             return;
         }
         else if ($('#mou_partner_specialization_edit').val().length == 0) {
+            button_loader.stopLoading();
             toastr.error('Lĩnh vực chưa được chọn');
             return;
         }
         else if ($('#mou_partner_scope_edit').val().length == 0) {
+            button_loader.stopLoading();
             toastr.error('Phạm vi hợp tác chưa được chọn');
             return;
         }
         else if (compareDate($('#mou_sign_date_partner_edit').val(), $('#end_date_mou').val())) { //compare = true <=> sign_date > end_date
+            button_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn của biên bản ghi nhớ');
         }
         else if (checkMOUPartnerEditDuplicated()) {
+            button_loader.stopLoading();
             toastr.error('Đối tác đã có trong biên bản ghi nhớ');
             return;
         }
@@ -2027,6 +2073,7 @@
                 datatype: "json",
                 cache: false,
                 success: function (data) {
+                    button_loader.stopLoading();
                     Swal.fire("Thành công!",
                         "Đã chỉnh sửa thông tin đối tác thành công.", "success").then(function (result) {
                             if (result.value) {
@@ -2159,8 +2206,9 @@
             lengthChange: false
             ,
             initComplete: function () {
-                $('#moa_table').parent().css('overflow-x', 'auto');
-                $('#moa_table').parent().removeClass();
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
+                $(this).parent().css('padding', '0');
             },
             ajax: {
                 url: "@Url.Action("ViewMOA", "MOA")",
@@ -2193,7 +2241,13 @@
                 { data: "moa_start_date_string" },
                 { data: "moa_end_date_string" },
                 { data: "office_name" },
-                { data: "scope_abbreviation" },
+                {
+                    data: "scope_abbreviation",
+                    render: function (data) {
+                        data = data.replaceAll(',', ', ')
+                        return data
+                    }
+                },
                 {
                     data: "mou_status_id",
                     width: '50px',
@@ -2234,7 +2288,8 @@
                 },
             ],
         });
-        }
+        $('#moa_table > thead > tr > th:nth-child(3)').css({ 'min-width': '300px', 'max-width': '300px' });
+    }
 
     function nextStep() {
         toggleNextStep();
@@ -2285,6 +2340,7 @@
             datatype: "json",
             cache: false,
             success: function (data) {
+                moa_add_button_loader.stopLoading();
                 $('#add_moa_modal').modal('hide');
                 toastr.success('Thêm thành công');
                 $('#end_date_moa').val('');
@@ -2361,9 +2417,9 @@
         $('#moa_partner_scope_edit').append(HTMLScopesdata);
         for (j = 0; j < listPartnersMOA.length; j++) {
             if (partnername_add == listPartnersMOA[j].partner_name) {
-                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_name + '" selected>' + listPartnersMOA[j].partner_name + '</option>';
+                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_id + '" selected>' + listPartnersMOA[j].partner_name + '</option>';
             } else {
-                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_name + '">' + listPartnersMOA[j].partner_name + '</option>';
+                HTMLPartnerdata += '<option value="' + listPartnersMOA[j].partner_id + '">' + listPartnersMOA[j].partner_name + '</option>';
             }
         }
         $('#moa_partner_name_edit').append(HTMLPartnerdata);
@@ -2401,14 +2457,14 @@
         var HTMLdata = null;
         for (idx = 0; idx < listTempPartnerMOAAdd.length; idx++) {
             HTMLdata += '<tr id="tempMOA' + idx + '" "class="MOAPartnerTempList">';
-            HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].partnername_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].represent_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].phone_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].email_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + (idx + 1) + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTempMOA(' + idx + ')" href="#edit_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp_moa(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-            HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+            HTMLdata += '<td class="text-center align-middle text-nowrap">' + buttonEdit + buttonDel + '</td>';
             HTMLdata += '</tr>';
         }
         $('#moa-partner-table').append(HTMLdata);
@@ -2573,7 +2629,7 @@
         }
         else {
             var index = $("#idx_moa_edit").val();
-            listTempPartnerMOAAdd[index].partnername_add = $("#moa_partner_name_add option:selected").text(),
+            listTempPartnerMOAAdd[index].partnername_add = $("#moa_partner_name_edit option:selected").text(),
             listTempPartnerMOAAdd[index].represent_add = document.getElementById("moa_partner_represent_edit").value;
             listTempPartnerMOAAdd[index].specialization_add = $("#moa_partner_specialization_edit").val();
             listTempPartnerMOAAdd[index].nation_add = document.getElementById("moa_partner_nation_edit").value;
@@ -2584,7 +2640,7 @@
             listTempPartnerMOAAdd[index].phone_add = document.getElementById("moa_partner_phone_edit").value;
             listTempPartnerMOAAdd[index].coop_scope_add = $("#moa_partner_scope_edit").val();
             listTempPartnerMOAAdd[index].list_scope = listScopesMOA;
-            listTempPartnerMOAAdd[index].partner_id = $('#moa_partner_name_add').val();
+            listTempPartnerMOAAdd[index].partner_id = $('#moa_partner_name_edit').val();
             initAndRefreshTableMOAAdd();
             updateMOAStartDateAndMainScope();
             $('#edit_partner_moa').modal('hide');
@@ -2643,8 +2699,8 @@
     }
 
     function checkPartnerEditMOA(){
-        var partner_name = document.getElementById("moa_partner_name_edit").value;
-        var em = { partner_name: partner_name };
+        var partner_id = document.getElementById("moa_partner_name_edit").value;
+        var em = { partner_id: partner_id };
         $.ajax({
             url: "@Url.Action("GetMOAScopesByPartner", "MOA")",
             type: "POST",
@@ -2733,22 +2789,30 @@
     $(document).ready(function () {
         $("#moa_partner_name_add option").each(function () {
             listPartnersMOA.push({
+                partner_id: $(this).val(),
                 partner_name: $(this).text()
             });
         });
     });
 
-    function doneStep() {
+    var moa_add_button_loader;
+    function doneStep(element) {
+        moa_add_button_loader = new LoaderBtn(element);
+        moa_add_button_loader.startLoading();
         if (listTempPartnerMOAAdd.length == 0) {
+            moa_add_button_loader.stopLoading();
             toastr.error('Chưa có đối tác nào được thêm');
         }
         else if ($('#end_date_moa').val() == "") {
+            moa_add_button_loader.stopLoading();
             toastr.error('Ngày hết hạn chưa được chọn');
         }
         else if (compareDate($('#sign_date_moa').val(), $('#end_date_moa').val())) { //compare = true <=> sign_date > end_date
+            moa_add_button_loader.stopLoading();
             toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
         }
         else if (MOACodeIsInvalid($('#moa_code').val().trim())) {
+            moa_add_button_loader.stopLoading();
             toastr.error('Số hiệu không hợp lệ');
         }
         else {
@@ -2770,6 +2834,7 @@
                 cache: false,
                 success: function (isDuplicated) {
                     if (isDuplicated) {
+                        moa_add_button_loader.stopLoading();
                         toastr.error("Đã có mã hiệu " + $('#moa_code').val()+ " trong hệ thống");
                     } else {
                         checkDuplicatePartnersMOA();
@@ -2795,6 +2860,7 @@
                 cache: false,
                 success: function (data) {
                     if (data == true) {
+                        moa_add_button_loader.stopLoading();
                         toastr.error("Các đối tác trên đã được ký kết biên bản thỏa thuận");
                     } else {
                         addMOA();

@@ -1,4 +1,5 @@
-﻿using ENTITIES;
+﻿using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using System;
@@ -29,8 +30,10 @@ namespace BLL.ScienceManagement.Comment
         }
         public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id)
         {
+            NotificationRepo notificationRepo = new NotificationRepo();
+
             List<int> manager_account_id = new List<int> { 2, 3 };
-            if (String.IsNullOrWhiteSpace(content))
+            if (string.IsNullOrWhiteSpace(content))
                 return new AlertModal<string>(false, "Nội dung không được bỏ trống");
             BaseRequest request = db.BaseRequests.Find(request_id);
             if (request == null)
@@ -39,14 +42,28 @@ namespace BLL.ScienceManagement.Comment
                 return new AlertModal<string>(false, "Bạn không có quyền bình luận vào đề nghị này");
             if (request.finished_date != null)
                 return new AlertModal<string>(false, "Đề nghị đã kết thúc");
-            request.CommentBases.Add(new CommentBase()
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                account_id = account_id,
-                content = content.Trim(),
-                date = DateTime.Now
-            });
-            db.SaveChanges();
-            return new AlertModal<string>(true);
+                try
+                {
+                    request.CommentBases.Add(new CommentBase()
+                    {
+                        account_id = account_id,
+                        content = content.Trim(),
+                        date = DateTime.Now
+                    });
+                    int notification_id = notificationRepo.Add(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id);
+                    db.SaveChanges();
+                    trans.Commit();
+                    return new AlertModal<string>(notification_id.ToString(), true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                }
+            }
+            return new AlertModal<string>(false);
         }
     }
 }

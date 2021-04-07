@@ -106,31 +106,31 @@
                         <a href="#add_partner_moa" data-toggle="modal" id="" class="btn btn-sm btn-light-primary px-6 font-weight-bold">Thêm</a>
                     </div>
                 </div>
-                <table class="table table-bordered table-hover table-checkable">
-                    <thead>
-                        <tr>
-                            <th class="text-center" rowspan="2">STT</th>
-                            <th class="text-center" rowspan="2">Tên đối tác</th>
-                            <th class="text-center" colspan="3">Người đại diện</th>
-                            <th class="text-center" rowspan="2"></th>
-                        </tr>
-                        <tr>
-                            <th class="text-center">Họ và tên</th>
-                            <th class="text-center">Điện thoại</th>
-                            <th class="text-center">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody id="moa-partner-table">
-
-                    </tbody>
-
-                </table>
+                <div style="overflow-x: auto">
+                    <table class="table table-bordered table-hover table-checkable">
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle" rowspan="2">STT</th>
+                                <th class="text-center align-middle" rowspan="2">Tên đối tác</th>
+                                <th class="text-center align-middle" colspan="3">Người đại diện</th>
+                                <th class="text-center align-middle" rowspan="2">Hành động</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center align-middle">Họ và tên</th>
+                                <th class="text-center align-middle">Điện thoại</th>
+                                <th class="text-center align-middle">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="moa-partner-table">
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="step-1-close-btn" type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
                 <button id='step-1-button' type="button" class="btn btn-sm btn-primary px-6" onclick="nextStep()">Tiếp</button>
                 <button id='step-2-backbutton' type="button" class="btn btn-sm btn-secondary px-6" onclick="backToStep()" style="display:none">Quay về</button>
-                <button id='step-2-button' type="button" class="btn btn-sm btn-primary px-6" onclick="doneStep()" style="display:none">Hoàn thành</button>
+                <button id='step-2-button' type="button" class="btn btn-sm btn-primary" onclick="doneStep(this)" style="display:none">Hoàn thành</button>
             </div>
         </div>
     </div>
