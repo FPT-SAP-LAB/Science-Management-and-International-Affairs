@@ -1,6 +1,6 @@
 ﻿@{
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
-    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["USer"];
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 
 <!DOCTYPE html>
@@ -829,11 +829,6 @@
             document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
             location.reload();
         });
-        function onLoad() {
-            gapi.load('auth2', function () {
-                gapi.auth2.init();
-            });
-        }
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
             //var xhr = new XMLHttpRequest();
@@ -891,6 +886,11 @@
         $("#login_btn").click(function () {
             $("#google_auth_login").find(".abcRioButtonContentWrapper").click();
         });
+        function onLoad() {
+            gapi.load('auth2', function () {
+                gapi.auth2.init();
+            });
+        }
         $(document).ready(function () {
             onLoad();
         });
