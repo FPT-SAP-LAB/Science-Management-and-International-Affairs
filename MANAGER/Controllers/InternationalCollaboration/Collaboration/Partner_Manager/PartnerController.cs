@@ -107,11 +107,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 AlertModal<string> alertModal = partnerRePo.DeletePartner(id);
-                return Json(new { alertModal.success }, JsonRequestBehavior.AllowGet);
+                return Json(new { alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
+                AlertModal<string> alertModal = new AlertModal<string>(null, false, "Thất bại", "Có lỗi xảy ra khi xóa");
+                return Json(new { alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
         }
 

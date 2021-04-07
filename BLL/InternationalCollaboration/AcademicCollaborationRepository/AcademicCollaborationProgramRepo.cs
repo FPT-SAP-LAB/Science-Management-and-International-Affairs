@@ -247,6 +247,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         articleVersion.article_content = content;
                         articleVersion.version_title = program_title;
+                        articleVersion.publish_time = DateTime.Now;
                     }
                     else
                     {
