@@ -117,7 +117,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     ArticleVersion articleVersion = new ArticleVersion
                     {
                         article_content = content,
-                        publish_time = DateTime.Today,
+                        publish_time = DateTime.Now,
                         version_title = partner_article.partner_name,
                         article_id = article.article_id,
                         language_id = partner_article.partner_language_type
@@ -283,7 +283,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                             article_id = article.article_id,
                             article_content = content,
                             language_id = partner_article.partner_language_type,
-                            publish_time = DateTime.Today,
+                            publish_time = DateTime.Now,
                             version_title = partner_article.partner_name,
                         };
                         db.ArticleVersions.Add(articleVersion);

@@ -19,17 +19,17 @@ namespace ENTITIES
         {
             this.NotificationBases = new HashSet<NotificationBase>();
             this.NotificationSubscribes = new HashSet<NotificationSubscribe>();
-            this.NotificationTemplateLanguages = new HashSet<NotificationTemplateLanguage>();
+            this.NotificationTypeLanguages = new HashSet<NotificationTypeLanguage>();
         }
     
         public int notification_type_id { get; set; }
-        public string notification_type_name { get; set; }
+        public string icon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationBase> NotificationBases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationSubscribe> NotificationSubscribes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NotificationTemplateLanguage> NotificationTemplateLanguages { get; set; }
+        public virtual ICollection<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
     }
 }

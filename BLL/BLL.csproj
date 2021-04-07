@@ -149,8 +149,6 @@
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProcedureRepo.cs" />
-    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\ProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AutoActiveInactive.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOARepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOARepo.cs" />
@@ -175,6 +173,7 @@
     <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
+    <Compile Include="ModelDAL\NotificationRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
