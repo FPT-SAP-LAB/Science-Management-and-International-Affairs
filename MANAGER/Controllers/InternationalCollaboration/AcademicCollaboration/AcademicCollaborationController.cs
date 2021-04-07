@@ -114,6 +114,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [HttpGet]
+        public ActionResult getPartnersSearching(string partner_name)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partnersSearching(partner_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         //add person
         [HttpGet]
         public ActionResult getPeople(string person_name)
