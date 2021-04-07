@@ -175,6 +175,24 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
+        public AlertModal<List<AcademicCollaborationPartner_Ext>> partnersSearching(string partner_name)
+        {
+            try
+            {
+                var sql = @"-----1.3. Đơn vị đào tạo - chiều đi/chiều đến -> partner/office
+                    select distinct par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    inner join General.Country cou on cou.country_id = par.country_id
+					where partner_name like @partner_name";
+                List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
+                    new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
+                return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public AlertModal<AcademicCollaborationPartner_Ext> partner(int partner_id, string partner_name)
         {
             try
