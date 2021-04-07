@@ -95,12 +95,17 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                new PageTree("Chỉnh sửa thông tin", "#"),
            };
             researcherDetailRepo = new ResearchersDetailRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
             if (CurrentAccount.getProfile(Session).people_id != id)
             {
                 Response.Redirect("/ErrorPage/Error");
             }
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listTitles = researcherBiographyRepo.getTitles();
+            ViewBag.listAcadDegree = listAcadDegree;
+            ViewBag.listTitles = listTitles;
             ViewBag.profile = profile;
             ViewBag.pagesTree = pagesTree;
             return View();
@@ -112,6 +117,35 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             string data = Request["info"];
             researcherEditResearcherInfo.EditResearcherProfile(data);
             return null;
+        }
+
+        public JsonResult getAcadList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+                return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult getWorkList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
+                return Json(new { success = true, acadList = workList });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }
