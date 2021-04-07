@@ -21,7 +21,7 @@
                 maxFileSize: 15728640, // 15mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
-                allowedFileTypes: ['.pdf']
+                allowedFileTypes: ['.pdf, .docx, .doc']
             }
         });
 
