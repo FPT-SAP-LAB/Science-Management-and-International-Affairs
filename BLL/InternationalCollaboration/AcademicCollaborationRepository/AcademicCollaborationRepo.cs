@@ -143,7 +143,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 var sql = @"-----1.2. Danh sách Năm
-                    select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(GETDATE()) as 'year_to'
+                    select YEAR(MIN(plan_study_start_date)) as 'year_from', YEAR(MAX(plan_study_end_date)) as 'year_to'
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
@@ -494,6 +494,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 {
                     person.office_id = null;
                 }
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -670,6 +671,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
                     if (f.Id != null) evidence_file.file_drive_id = f.Id;
                     db.Files.Add(evidence_file);
+                    db.SaveChanges();
                 }
             }
             catch (Exception e)
@@ -841,6 +843,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                     decreaseReferenceCountOfPartnerScope(old_partner_scope);
                                     //update infor to AcademicCollaboration
                                     academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
+                                    //add file
+                                    var evidence_file = saveFile(f, new_evidence);
+                                    //add infor to CollaborationStatusHistory
+                                    var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                                     //incease 1 to new referecen_count PartnerScope
                                     increaseReferenceCountOfPartnerScope(partner_scope);
                                     if (old_partner_scope.reference_count <= 0)
@@ -861,6 +867,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                                 //update infor to AcademicCollaboration
                                 academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
+                                //add file
+                                var evidence_file = saveFile(f, new_evidence);
+                                //add infor to CollaborationStatusHistory
+                                var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                                 //delete 0 ref_cou partner_scope
                                 if (old_partner_scope.reference_count <= 0)
                                 {
@@ -868,14 +878,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 }
                                 db.SaveChanges();
                             }
-                            //get corresponding partner_scope_id
-                            partner_scope_id = partner_scope.partner_scope_id;
                         }
-                        //add file
-                        var evidence_file = saveFile(f, new_evidence);
-                        //add infor to CollaborationStatusHistory
-                        var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
-                        db.SaveChanges();
                         trans.Commit();
 
                         using (DbContextTransaction dbContext = db.Database.BeginTransaction())

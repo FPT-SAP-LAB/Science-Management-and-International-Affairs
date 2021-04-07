@@ -16,7 +16,7 @@ namespace BLL.ModelDAL
         }
         public static int? GetPositionIdByAccountId(ScienceAndInternationalAffairsEntities db, int account_id)
         {
-            return db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault()?.Position.position_id;
+            return db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault().Position?.position_id;
         }
         public static string GetPositionNameByProfileCode(string code, int language_id)
         {
