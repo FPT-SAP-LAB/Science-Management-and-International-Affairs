@@ -188,8 +188,9 @@
                         <label>Số quyết định</label>
                         <input class="form-control form-control-lg notnull" id="decisionNo" type="text" value="" />
                     </div>
+
                     <div class="col-xl-6 mt-5">
-                        <label>File QĐ cho giảng viên/sinh viên</label>
+                        <label>File QĐ cho nghiên cứu viên</label>
                         <div class="uppy" id="kt_uppy_1">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
@@ -253,7 +254,7 @@
             formData.append('reseacher', 0);
 
             $.ajax({
-                url: "/Paper/uploadDecision",
+                url: "/Paper/uploadDecision2",
                 method: "post",
                 complete: function (data) {
                     var mess = data.responseJSON.mess;
@@ -278,7 +279,7 @@
             $.ajax({
                 url: "@Url.Action("exportExcel", "Paper")",
                 type: "post",
-                data: {"reseacher": 0},
+                data: {"reseacher": 1},
                 success: function (data) {
                     window.location.href = data.location;
                 },
