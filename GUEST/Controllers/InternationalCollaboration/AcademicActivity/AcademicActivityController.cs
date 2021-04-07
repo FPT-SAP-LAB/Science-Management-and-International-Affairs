@@ -43,6 +43,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.Detail = guestRepo.getBaseAADetail(id, language);
             ViewBag.SubContent = guestRepo.GetSubContent(id, language);
             ViewBag.phase_id = guestRepo.getPhaseCurrentByActivity(id);
+            ViewBag.have_form = guestRepo.checkForm(guestRepo.getPhaseCurrentByActivity(id));
             return View();
         }
 

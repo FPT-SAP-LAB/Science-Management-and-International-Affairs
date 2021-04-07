@@ -183,32 +183,14 @@
                         <label>Ngày có hiệu lực</label>
                         <input class="form-control form-control-lg custom-pickdate notnull" id="valid_date" type="text" value="" />
                     </div>
-                    <div class="col-xl-6">
-                        <label>Ngày có hiệu lực</label>
-                        <input class="form-control form-control-lg custom-pickdate notnull" id="valid_date_2" type="text" value="" />
-                    </div>
 
-                    <div class="col-xl-6 mt-5">
+                    <div class="col-xl-6">
                         <label>Số quyết định</label>
                         <input class="form-control form-control-lg notnull" id="decisionNo" type="text" value="" />
                     </div>
                     <div class="col-xl-6 mt-5">
-                        <label>Số quyết định</label>
-                        <input class="form-control form-control-lg notnull" id="decisionNo_2" type="text" value="" />
-                    </div>
-
-                    <div class="col-xl-6 mt-5">
-                        <label>File QĐ cho nghiên cứu viên</label>
-                        <div class="uppy" id="kt_uppy_1">
-                            <div class="uppy-wrapper"></div>
-                            <div class="uppy-list"></div>
-                            <div class="uppy-status"></div>
-                            <div class="uppy-informer uppy-informer-min"></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 mt-5">
                         <label>File QĐ cho giảng viên/sinh viên</label>
-                        <div class="uppy" id="kt_uppy_2">
+                        <div class="uppy" id="kt_uppy_1">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
@@ -253,10 +235,7 @@
             var number = $("#decisionNo").val();
             var date = $("#valid_date").val();
 
-            var number2 = $("#decisionNo_2").val();
-            var date2 = $("#valid_date_2").val();
-
-            if (number == "" || date == "" || number2 == "" || date2 == "") {
+            if (number == "" || date == "") {
                 $("#loading").hide();
                 toastr.error("Cần nhập đủ các trường");
                 return false;
@@ -264,21 +243,14 @@
 
             if (uppy1.getFiles()[0] == undefined) {
                 $("#loading").hide();
-                toastr.error("Thiếu file quyết định cho nghiên cứu viên");
-                return false;
-            }
-            if (uppy2.getFiles()[0] == undefined) {
-                $("#loading").hide();
-                toastr.error("Thiếu file quyết định cho giảng viên/sinh viên");
+                toastr.error("Thiếu file quyết định");
                 return false;
             }
 
             formData.append('file1', uppy1.getFiles()[0].data);
-            formData.append('file2', uppy2.getFiles()[0].data);
             formData.append('number1', number);
             formData.append('date1', date);
-            formData.append('number2', number2);
-            formData.append('date2', date2);
+            formData.append('reseacher', 0);
 
             $.ajax({
                 url: "/Paper/uploadDecision",
@@ -306,6 +278,7 @@
             $.ajax({
                 url: "@Url.Action("exportExcel", "Paper")",
                 type: "post",
+                data: {"reseacher": 0},
                 success: function (data) {
                     window.location.href = data.location;
                 },

@@ -100,6 +100,7 @@ namespace ENTITIES
         public virtual DbSet<Criterion> Criteria { get; set; }
         public virtual DbSet<EligibilityCriteria> EligibilityCriterias { get; set; }
         public virtual DbSet<Formality> Formalities { get; set; }
+        public virtual DbSet<QsUniversity> QsUniversities { get; set; }
         public virtual DbSet<RequestConference> RequestConferences { get; set; }
         public virtual DbSet<RequestConferencePolicy> RequestConferencePolicies { get; set; }
         public virtual DbSet<ContractType> ContractTypes { get; set; }
@@ -150,7 +151,7 @@ namespace ENTITIES
         public virtual DbSet<QuestionOption> QuestionOptions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
-        public virtual DbSet<NotificationTemplateLanguage> NotificationTemplateLanguages { get; set; }
+        public virtual DbSet<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
         public virtual DbSet<NotificationSubscribe> NotificationSubscribes { get; set; }
     }
 }

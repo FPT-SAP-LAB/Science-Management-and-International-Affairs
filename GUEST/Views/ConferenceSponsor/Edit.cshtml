@@ -601,9 +601,9 @@
             if (repo.id && repo.website != undefined) {
                 if (repo.is_verified) {
                     toastr.warning("Hội nghị này đã được thông qua tại một đề nghị khác");
-                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", true);
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #co_organized_unit").prop("disabled", true);
                 } else {
-                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #kt_daterangepicker_2, #formality, #co_organized_unit").prop("disabled", false);
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #co_organized_unit").prop("disabled", false);
                 }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
@@ -617,7 +617,7 @@
                     endDate = new Date();
                 else
                     endDate = new Date(parseInt(repo.time_end.substr(6)));
-                inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2", startDate, endDate);
+                inItDateRangePicker("#kt_daterangepicker_1", startDate, endDate);
                 document.getElementById("formality").value = repo.formality_id;
                 document.getElementById("co_organized_unit").value = repo.co_organized_unit;
                 conferenceID = repo.id;
@@ -626,12 +626,14 @@
         }
 
         function inItDateRangePicker(ele, sDate, eDate) {
+            let currentDate = new Date();
             $(ele).daterangepicker({
                 buttonClasses: 'btn',
                 applyClass: 'btn-primary',
                 cancelClass: 'btn-secondary',
                 startDate: sDate,
                 endDate: eDate,
+                minDate: currentDate,
                 locale: {
                     format: '@rm.GetString("DateRangePickerFormat")',
                 }

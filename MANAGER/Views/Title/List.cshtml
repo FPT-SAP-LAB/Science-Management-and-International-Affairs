@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý chức danh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="tabbable-line">
+                    <div class="tab-content" id="myTabContent">
+                        <div>
+                            <a href="#add_modal" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal">Thêm</a>
+                        </div>
+                        <table class="table table-bordered" id="internal_unit_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên chức danh tiếng việt
+                                    </th>
+                                    <th>
+                                        Tên chức danh tiếng anh
+                                    </th>
+                                    <th>
+                                        Hành động
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table_body">
+                                @{
+                                    foreach (var item in ViewBag.list)
+                                    {
+                                        <tr id="@item.title_id">
+                                            <td>@item.tv</td>
+                                            <td>@item.ta</td>
+                                            <td>
+                                                <a onclick="loadDataToEditModal(@item.title_id)" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>
+                                                <a onclick="deleteInternalUnit(@item.title_id)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EDIT-->
+<div class="modal fade in" id="edit_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">SỬA CHỨC DANH</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="edit_modal_cri_name_tv" class="form-control" type="text" placeholder="Tên chức danh tiếng việt" />
+                    </div>
+                    <div class="mt-5 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="edit_modal_cri_name_ta" class="form-control" type="text" placeholder="Tên chức danh tiếng anh" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id='edit_modal_close' type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='edit_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ADD-->
+<div class="modal fade in" id="add_modal" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h3 class="modal-title font-weight-bolder">THÊM CHỨC DANH</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_cri_name_tv" class="form-control" type="text" placeholder="Tên chức danh tiếng việt" />
+                    </div>
+                    <div class="mt-5 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <input id="add_modal_cri_name_ta" class="form-control" type="text" placeholder="Tên chức danh tiếng anh" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add_modal_close" type="button" class="btn btn-sm btn-secondary font-weight-bold px-6" data-dismiss="modal">Hủy</button>
+                <button id='add_modal_confirm' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var dataTable = $("#internal_unit_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+
+        function loadDataToEditModal(cri_id) {
+            temp_id = cri_id;
+            $.ajax({
+                url: "@Url.Action("getItem", "Title")",
+                type: "POST",
+                data: JSON.stringify({ 'cri_id': cri_id}),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.success == "ss") {
+                        $("#edit_modal_cri_name_tv").val(response.pc.tv);
+                        $("#edit_modal_cri_name_ta").val(response.pc.ta);
+                        //editRequest();
+                        //$("#loading").hide();
+                        //window.location.href = "/Paper/Pending";
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
+
+        $("#edit_modal_confirm").click(function () {
+            $("#loading").show();
+            var tv = $("#edit_modal_cri_name_tv").val();
+            var ta = $("#edit_modal_cri_name_ta").val();
+            $.ajax({
+                url: "@Url.Action("updateItem", "Title")",
+                type: "POST",
+                data: JSON.stringify({ 'cri_id': temp_id, 'tv': tv, 'ta': ta}),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.success == "ss") {
+                        $("#edit_modal_cri_name").val("");
+                        //close modal
+                        $("#edit_modal_close").click();
+
+                        toastr.success("Cập nhật thành công");
+                        $("#" + temp_id +" td:eq(0)").text(tv);
+                        $("#" + temp_id +" td:eq(1)").text(ta);
+                        $("#loading").hide();
+                    }
+                    else {
+                        toastr.error("Cập nhật thất bại");
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        $("#add_modal_confirm").click(function () {
+            $("#loading").show();
+            var tv = $("#add_modal_cri_name_tv").val();
+            var ta = $("#add_modal_cri_name_ta").val();
+            $.ajax({
+                url: "@Url.Action("addItem", "Title")",
+                type: "POST",
+                data: JSON.stringify({ 'tv': tv, 'ta': ta}),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        if (response.id == "-1") {
+                            toastr.error("Chức danh đã tồn tại");
+                            return false;
+                        }
+                        $("#add_modal_cri_name").val("");
+                        //close modal
+                        $("#add_modal_close").click();
+
+                        var tr = "<tr id='" + response.id + "'>"
+                            + "<td>" + tv + "</td>"
+                            + "<td>" + ta + "</td>"
+                            + "<td>"
+                            + "<a onclick='loadDataToEditModal(" + response.id + ")' href='#edit_modal' class='btn btn-sm btn-light-primary px-6 font-weight-bold mr-2' data-toggle='modal'>Sửa</a>"
+                            + "<a onclick='deleteInternalUnit(" + response.id + ")' class='btn btn-sm btn-light-danger px-6 font-weight-bold' data-toggle='modal'>Xóa</a>"
+                            + "</td>"
+                            + "</tr>";
+                        dataTable.row.add($(tr)).draw();
+
+                        //toastr.success("Thêm thành công");
+                        //$("#internal_unit_table tbody tr:first").after("<tr>"
+                        //    +"<td id='" + response.id + "'>" + name + "</td>"
+                        //    +"<td>"
+                        //    +"<a onclick='loadDataToEditModal(" + response.id + ")' href='#edit_modal' class='btn btn-sm btn-light-primary px-6 font-weight-bold mr-2' data-toggle='modal'>Sửa</a>"
+                        //    +"<a onclick='deleteInternalUnit(" + response.id + ")' class='btn btn-sm btn-light-danger px-6 font-weight-bold' data-toggle='modal'>Xóa</a>"
+                        //    +"</td>"
+                        //    + "</tr>");
+
+                        //dataTable.draw();
+                        $("#loading").hide();
+                        //location.reload();
+                    }
+                    else {
+                        toastr.error("Thêm thất bại");
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        function deleteInternalUnit(cri_id) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Xóa loại chức danh này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $("#loading").show();
+                    $.ajax({
+                        url: "@Url.Action("deleteItem", "Title")",
+                        type: "POST",
+                        data: JSON.stringify({ 'cri_id': cri_id }),
+                        contentType: "application/json;charset=utf-8",
+                        datatype: "json",
+                        cache: false,
+                        success: function (response) {
+                            $("#loading").hide();
+                            if (response.mess == "ss") {
+                                //var row = document.getElementById(cri_id);
+                                //row.remove();
+
+                                table.row('#'+cri_id).remove().draw();
+
+                                toastr.success("Xóa thành công");
+                                //$("#edit_modal_cri_name").val(response.pc);
+                                //editRequest();
+                                //$("#loading").hide();
+                                //window.location.href = "/Paper/Pending";
+                            }
+                            else toastr.error("Không thể xóa chức danh này vì đang được sử dụng");
+                        },
+                        error: function () {
+                            $("#loading").hide();
+                            toastr.error("Xóa thất bại");
+                            //alert("fail");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}
+
