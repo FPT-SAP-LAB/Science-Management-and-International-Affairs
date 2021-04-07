@@ -14,8 +14,8 @@ namespace BLL.InternationalCollaboration.Dashboard
         ScienceAndInternationalAffairsEntities db;
         public List<ChartDashboard> GetDashboard(int? year)
         {
-           db = new ScienceAndInternationalAffairsEntities();
-           try
+            db = new ScienceAndInternationalAffairsEntities();
+            try
             {
                 string query = @"SELECT p1.[year], p1.signed, p2.total, (p2.total - p1.signed) as 'not_sign_yet' FROM
                             (SELECT b.[year], COUNT(b.partner_id) 'signed' FROM
@@ -47,9 +47,9 @@ namespace BLL.InternationalCollaboration.Dashboard
 
                 return chartDashboard;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-               throw e;
+                throw e;
             }
         }
         public BaseServerSideData<DashboardDatatable> GetTable(int collab_type_id, int year, BaseDatatable baseDatatable)

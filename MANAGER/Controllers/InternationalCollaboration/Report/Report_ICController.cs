@@ -22,7 +22,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
             List<int?> year = new List<int?>();
             List<int?> signed = new List<int?>();
             List<int?> not_sign_yet = new List<int?>();
-            foreach(var i in dashboards)
+            foreach (var i in dashboards)
             {
                 year.Add(i.year);
                 signed.Add(i.signed);
@@ -40,7 +40,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
             {
                 dashboardRepo = new DashboardRepo();
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<DashboardDatatable> baseServerSideData = 
+                BaseServerSideData<DashboardDatatable> baseServerSideData =
                     dashboardRepo.GetTable(collab_type_id, year, baseDatatable);
                 return Json(new
                 {

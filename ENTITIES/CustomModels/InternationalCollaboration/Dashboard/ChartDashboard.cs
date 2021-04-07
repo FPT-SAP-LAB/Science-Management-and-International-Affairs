@@ -8,9 +8,9 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Dashboard
 {
     public class ChartDashboard
     {
-        public int? year { get; set; } 
-        public int? signed { get; set; } 
-        public int? not_sign_yet { get; set; } 
-        public int? total { get; set; } 
+        public int? year { get; set; }
+        public int? signed { get; set; }
+        public int? not_sign_yet { get; set; }
+        public int? total { get; set; }
     }
 }

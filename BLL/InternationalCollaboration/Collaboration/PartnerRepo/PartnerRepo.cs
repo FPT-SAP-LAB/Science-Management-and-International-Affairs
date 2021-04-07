@@ -158,7 +158,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = new Partner();
                 partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
-                if(partner.AcademicPrograms.Count != 0 || partner.MOAPartners.Count != 0 ||
+                if (partner.AcademicPrograms.Count != 0 || partner.MOAPartners.Count != 0 ||
                     partner.MOUPartners.Count != 0 || partner.PartnerScopes.Count != 0)
                 {
                     return new AlertModal<string>(false, "Đối tác đang có hoạt động đi kèm không thể xóa");
