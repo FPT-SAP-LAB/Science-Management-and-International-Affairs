@@ -39,7 +39,8 @@
             success: function (data) {
                 if (data.success) {
                     $("#comment-table").parent().load("/CommentRequest/Index?request_id=@ViewBag.request_id");
-                    chat.server.send(data.obj);
+                    if (data.obj != 0 && data.obj != '0')
+                        chat.server.send(data.obj);
                 }
                 else
                     toastr.error(data.content);

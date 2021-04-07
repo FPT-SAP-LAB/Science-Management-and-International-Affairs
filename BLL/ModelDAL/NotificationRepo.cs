@@ -13,17 +13,25 @@ namespace BLL.ModelDAL
         public int Add(int account_id, int notification_type_id, string URL)
         {
             db = new ScienceAndInternationalAffairsEntities();
-            NotificationBase notification = new NotificationBase
+            NotificationSubscribe subscribe = db.NotificationSubscribes.Where(x => x.account_id == account_id && x.notification_type_id == notification_type_id).FirstOrDefault();
+            if (subscribe == null && subscribe.is_subscribe)
             {
-                account_id = account_id,
-                created_date = DateTime.Now,
-                is_read = false,
-                notification_type_id = notification_type_id,
-                URL = URL
-            };
-            db.NotificationBases.Add(notification);
-            db.SaveChanges();
-            return notification.notification_id;
+                NotificationBase notification = new NotificationBase
+                {
+                    account_id = account_id,
+                    created_date = DateTime.Now,
+                    is_read = false,
+                    notification_type_id = notification_type_id,
+                    URL = URL
+                };
+                db.NotificationBases.Add(notification);
+                db.SaveChanges();
+                return notification.notification_id;
+            }
+            else
+            {
+                return 0;
+            }
         }
         public List<NotificationTypeLanguage> Languages()
         {
