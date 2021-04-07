@@ -1,13 +1,11 @@
 ﻿using BLL.ScienceManagement.Researcher;
-using ENTITIES;
-using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MANAGER.Controllers.ScienceManagement.Researchers
+namespace GUEST.Controllers.ScienceManagement.Researchers
 {
     public class BiographyController : Controller
     {
