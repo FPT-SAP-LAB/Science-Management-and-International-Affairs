@@ -1707,10 +1707,13 @@
 
             ],
             initComplete: function () {
-                $('#partner_table').parent().css('overflow-x', 'auto');
-                $('#partner_table').parent().removeClass();
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
+                $(this).parent().css('padding', '0');
             }
         });
+
+        $('#partner_table > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function checkPartnerAdd() {
@@ -2203,8 +2206,9 @@
             lengthChange: false
             ,
             initComplete: function () {
-                $('#moa_table').parent().css('overflow-x', 'auto');
-                $('#moa_table').parent().removeClass();
+                $(this).parent().css('overflow-x', 'auto');
+                $(this).parent().css('width', '100%');
+                $(this).parent().css('padding', '0');
             },
             ajax: {
                 url: "@Url.Action("ViewMOA", "MOA")",
@@ -2237,7 +2241,13 @@
                 { data: "moa_start_date_string" },
                 { data: "moa_end_date_string" },
                 { data: "office_name" },
-                { data: "scope_abbreviation" },
+                {
+                    data: "scope_abbreviation",
+                    render: function (data) {
+                        data = data.replaceAll(',', ', ')
+                        return data
+                    }
+                },
                 {
                     data: "mou_status_id",
                     width: '50px',
@@ -2278,7 +2288,8 @@
                 },
             ],
         });
-        }
+        $('#moa_table > thead > tr > th:nth-child(3)').css({ 'min-width': '300px', 'max-width': '300px' });
+    }
 
     function nextStep() {
         toggleNextStep();
@@ -2446,14 +2457,14 @@
         var HTMLdata = null;
         for (idx = 0; idx < listTempPartnerMOAAdd.length; idx++) {
             HTMLdata += '<tr id="tempMOA' + idx + '" "class="MOAPartnerTempList">';
-            HTMLdata += '<td class="text-center">' + (idx + 1) + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].partnername_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].represent_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].phone_add + '</td>';
-            HTMLdata += '<td class="text-center">' + listTempPartnerMOAAdd[idx].email_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + (idx + 1) + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].partnername_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].represent_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].phone_add + '</td>';
+            HTMLdata += '<td class="text-center align-middle">' + listTempPartnerMOAAdd[idx].email_add + '</td>';
             var buttonEdit = '<a onclick="loadEditTempMOA(' + idx + ')" href="#edit_partner_moa" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
             var buttonDel = '<a onclick="confirm_delete_temp_moa(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-            HTMLdata += '<td class="text-center">' + buttonEdit + buttonDel + '</td>';
+            HTMLdata += '<td class="text-center align-middle text-nowrap">' + buttonEdit + buttonDel + '</td>';
             HTMLdata += '</tr>';
         }
         $('#moa-partner-table').append(HTMLdata);
