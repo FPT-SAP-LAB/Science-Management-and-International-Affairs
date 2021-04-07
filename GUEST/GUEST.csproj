@@ -260,6 +260,7 @@
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\PartialViewController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2549,6 +2550,7 @@
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
+    <Folder Include="Views\Biography\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />

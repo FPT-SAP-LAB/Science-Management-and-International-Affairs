@@ -23,6 +23,7 @@ $(function () {
     })
     $("#save-btn").click(function () {
         save_loader.startLoading()
+        $("#progress-bar").show()
         $(".researcher_infomation").attr('disabled', false)
         ////////////////////xử lý ở đây/////////////////////
         var url = new URL(window.location.href);
@@ -60,5 +61,21 @@ $(function () {
             }
         });
         ////////////////////xử lý ở đây/////////////////////
+    })
+    $("#cancel-btn").click(function () {
+        Swal.fire({
+            title: "Huỷ thay đổi?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Không",
+            reverseButtons: true
+        }).then(function (result) {
+            if (result.value) {
+                window.location.reload()
+            } else if (result.dismiss === "cancel") {
+
+            }
+        });
     })
 })

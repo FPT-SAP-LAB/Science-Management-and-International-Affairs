@@ -141,12 +141,33 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 int id = Int32.Parse(Request.QueryString["id"]);
                 List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-                return Json(new { success = true, acadList = workList });
+                workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
+                return Json(new { success = true, 
+                    data = (from a in workList select new {
+                        index=a.index,
+                        id=a.records.id,
+                        people_id=a.records.pepple_id,
+                        work_unit=a.records.work_unit,
+                        title=a.records.title,
+                        start_year=a.records.start_year,
+                        end_year=a.records.end_year
+                    } ) }, 
+                JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                return Json(new { success = false });
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
+        }
+        public ActionResult EditProfilePhoto()
+        {
+            researcherEditResearcherInfo = new EditResearcherInfoRepo();
+            var uploadfile = Request.Files["imageInput"];
+            int people_id = Int32.Parse(Request.Form["people_id"]);
+            Account account = CurrentAccount.Account(Session);
+            var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
+            int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
+            return Json(new { res = res });
         }
     }
 }

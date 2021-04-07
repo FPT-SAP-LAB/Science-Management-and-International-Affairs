@@ -44,6 +44,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="progress" style=" border-radius: 0" id="progress-bar">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated "
+                                 role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                         <!--end::Header-->
                         <!--begin::Form-->
                         <form class="form">
@@ -52,8 +56,8 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">Hình đại diện</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
-                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/300_21.jpg)"></div>
+                                        <div class="image-input image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
+                                            <div class="image-input-wrapper" style="background-image: url()"></div>
 
                                             <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                                 <i class="fa fa-pen icon-sm text-muted"></i>
@@ -225,9 +229,6 @@
                             <div class="row">
                                 <label class="col-xl-3"></label>
                                 <div class="col-lg-12 col-xl-12">
-                                    <h5 class="font-weight-bold ">Quá trình học tập</h5>
-                                </div>
-                                <div class="col-lg-12 col-xl-12">
                                     <table class="custom-add-table table table-bordered" id="acad_history_table">
                                         <thead>
                                             <tr>
@@ -256,6 +257,51 @@
                 <!--end::Content-->
             </div>
             <!--end::Profile Personal Information-->
+            <div class="row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="col-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">TIẾU SỬ CÔNG TÁC</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="work_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Đơn vị công tác</th>
+                                                <th>Chức vụ/ vai trò</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_themtieusu_congtac" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm tiểu sử công tác
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Content-->
+            </div>
         </div>
         <!--end::Container-->
     </div>
@@ -527,14 +573,6 @@
                         </div>
                     </div>
                 </div>
-                @*<div class="row form-group">
-                        <div class="col-12">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
-                                <span><i class="far fa-sticky-note"></i></span>
-                            </div>
-                        </div>
-                    </div>*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">Lưu</button>
@@ -545,42 +583,9 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
-    <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
-    <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
     <script>
-        $(".research-info-link").each(function () {
-            if ($(this).attr('href').trim() == window.location.pathname) {
-                $(this).addClass('active')
-            }
-        })
-        // Class definition
-        var KTSelect2 = function () {
-            // Private functions
-            var demos = function () {
-                // basic
-
-                // multi select
-                $('#kt_select2_3').select2({
-                    placeholder: 'Chọn lĩnh vực quan tâm',
-                    tags: true
-                });
-            }
-            // Public functions
-            return {
-                init: function () {
-                    demos();
-                }
-            };
-        }();
-
-        // Initialization
-        jQuery(document).ready(function () {
-            KTSelect2.init();
-        });
         $(function () {
             var save_loader = new LoaderBtn($("#save-btn"))
-
             $("#save-btn").click(function () {
                 save_loader.startLoading()
                 $(".researcher_infomation").attr('disabled', false)
@@ -614,7 +619,6 @@
                     tags: true
                 });
             }
-            // Public functions
             return {
                 init: function () {
                     demos();
@@ -633,7 +637,6 @@
             $("#edit-enable-area").hide()
             $(".researcher_infomation").attr('disabled', false)
         }
-
 
         var KTBootstrapDatetimepicker = function () {
             // Private functions
@@ -655,57 +658,9 @@
         });
     </script>
     <script>
-        url = new URL(window.location.href);
-        people_id = url.searchParams.get("id");
-        $(function () {
-            var table1 = $('#acad_history_table').DataTable({
-                responsive: true,
-                // DOM Layout settings
-                searching: false,
-                bPaginate: false,
-                lengthMenu: [5],
-                pageLength: 10,
-                bLengthChange: false,
-                bInfo: false,
-                language: {
-                    'lengthMenu': 'Display _MENU_',
-                },
-                // Order settings
-                order: [[1, 'desc']],
-                serverSide: true,
-                ajax: {
-                    url: "/Researchers/getAcadList?id=" + people_id,
-                    datatype: "json",
-                    cache: true
-                },
-                columns: [
-                    { data: "rownum", name: "rownum", orderable: false },
-                    {
-                        data: "acad_id", name: "degree", render: function (data, type, row, meta) {
-                            return "<span class='acad-degree' data-id='" + row.acad_id + "'>" + row.degree + "</span>"
-                        }
-                    },
-                    {
-                        data: "place", name: "place", render: function (data) {
-                            return "<span class='acad-place'>" + data + "</span>"
-                        }
-                    },
-                    {
-                        data: "time", name: "time", render: function (data) {
-                            return "<span class='acad-time'>" + data + "</span>"
-                        }
-                    },
-                    {
-                        data: "acad_id", render: function (data, type, row, meta) {
-                            return "<a data-id='" + row.acad_id + "-" + row.acad_id + "' data-toggle='modal' data-target='#modal_suatieusu_hoctap' class='btn btn-sm btn-clean btn-icon edit-acad' title='Edit'> <i class='far fa-edit'></i> </a>"
-                        }
-                    },
-                ],
-                initComplete: function (settings, json) {
-                    $("#loader_panel").hide()
-                }
-            });
-        })
+       
     </script>
-
+    <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
+    <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
+    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
 }
