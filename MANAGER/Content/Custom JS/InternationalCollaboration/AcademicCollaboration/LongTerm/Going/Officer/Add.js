@@ -274,7 +274,7 @@ $('#going_add_officer_coop_scope').select2({
         dataType: 'json',
         data: function () {
             return {
-                collab_abbreviation_name: 'JTP' //join training program
+                collab_abbreviation_name: 'FE' //faculty exchange
             };
         },
         processResults: function (data) {

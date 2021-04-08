@@ -338,5 +338,25 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
+
+        public int AddAward(Award a)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Awards.Add(a);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
     }
 }

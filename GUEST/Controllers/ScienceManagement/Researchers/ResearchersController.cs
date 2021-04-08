@@ -119,7 +119,6 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             researcherEditResearcherInfo.EditResearcherProfile(data);
             return null;
         }
-
         public JsonResult getAcadList()
         {
             try
@@ -173,6 +172,21 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
             return Json(new { res = res });
+        }
+        public JsonResult GetAwards()
+        {
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ///////////////////////////////////////////////////////////////
+            List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
+            return Json(new { success = true, 
+                data=(from a in awards select new { 
+                    id=a.records.award_id,
+                    index=a.index,
+                    competion_name=a.records.competion_name,
+                    rank=a.records.rank,
+                    award_time=a.records.award_time!=null? a.records.award_time.Value.ToString("dd/MM/yyyy"):""
+                })}, JsonRequestBehavior.AllowGet);
         }
     }
 }
