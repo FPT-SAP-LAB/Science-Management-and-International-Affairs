@@ -40,7 +40,7 @@ donvife = {
 //var filename = [];
 
 class AuthorInfoView {
-    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id) {
+    constructor(add_author_workplace, add_author_msnv, add_author_name, add_author_title, add_author_contractType, add_author_cmnd, add_author_tax, add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, add_author_link_file) {
         if (add_author_msnv != null) this.add_author_msnv = add_author_msnv;
         else this.add_author_msnv = "";
         this.add_author_email = add_author_email;
@@ -70,6 +70,8 @@ class AuthorInfoView {
         else this.add_author_isReseacher = false;
         if (this.add_author_isReseacher == true) this.title_2 = ", Nghiên cứu viên";
         else this.title_2 = "";
+        if (add_author_link_file != null) this.link_file = add_author_link_file;
+        else this.link_file = "";
     }
     getHTML() {
         return `
@@ -106,6 +108,14 @@ class AuthorInfoView {
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Mã số thuế: </span>
                                                         <a href='#' class='text-muted text-hover-primary'>` + this.add_author_tax + `</a>
                                                     </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_cmnd + `</a>
+                                                    </div>
+                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
+                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND file:</span>
+                                                        <a href='#' class='text-muted text-hover-primary'>` + this.link_file + `</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class='col-lg-6 col-sm-12'>
@@ -113,10 +123,6 @@ class AuthorInfoView {
                                                     <div class='d-flex justify-content-between align-items-center'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Email:</span>
                                                         <span class='text-muted font-weight-bold'>` + this.add_author_email + `</span>
-                                                    </div>
-                                                    <div class='d-flex justify-content-between align-items-cente my-1'>
-                                                        <span class='text-dark-75 font-weight-bolder mr-2'>CMND số:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>` + this.add_author_cmnd + `</a>
                                                     </div>
                                                     <div class='d-flex justify-content-between align-items-cente my-1'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>Ngân hàng: </span>
@@ -155,6 +161,7 @@ $("#add_author_save").click(function () {
     add_author_title = $("#add_author_title option:selected").text()
     add_author_contractType = $("#add_author_contractType option:selected").text()
     add_author_cmnd = $("#add_author_cmnd").val()
+    add_author_cmnd_link = $("#add_author_cmnd_link").val()
     add_author_tax = $("#add_author_tax").val()
     add_author_bank = $("#add_author_bank").val()
     add_author_accno = $("#add_author_accno").val()
@@ -165,7 +172,7 @@ $("#add_author_save").click(function () {
     id = new Date().getTime()
     au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
         add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id)
+        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, add_author_cmnd_link)
     $("#authors-info-container").append(au.getHTML());
     var AddAuthor = {
         name: add_author_name,
@@ -182,6 +189,7 @@ $("#add_author_save").click(function () {
         temp_id: id,
         office_abbreviation: $("#ckfe option:selected").val(),
         is_reseacher: add_author_isReseacher,
+        identification_file_link: $("#add_author_cmnd_link").val(),
     }
     people.push(AddAuthor);
     addOption();
@@ -202,6 +210,7 @@ $("#add_author_save_edit").click(function () {
     people[temp_index_edit].title_id = $("#add_author_title_edit").val();
     people[temp_index_edit].contract_id = $("#add_author_contractType_edit").val();
     people[temp_index_edit].identification_number = $("#add_author_cmnd_edit").val();
+    people[temp_index_edit].identification_file_link = $("#add_author_cmnd_link_edit").val();
     people[temp_index_edit].tax_code = $("#add_author_tax_edit").val();
     people[temp_index_edit].bank_branch = $("#add_author_bank_edit").val();
     people[temp_index_edit].bank_number = $("#add_author_accno_edit").val();
@@ -217,7 +226,7 @@ $("#add_author_save_edit").click(function () {
         $("#add_author_title_edit option:selected").text(), $("#add_author_contractType_edit option:selected").text(),
         people[temp_index_edit].identification_number, people[temp_index_edit].tax_code,
         people[temp_index_edit].bank_branch, people[temp_index_edit].bank_number,
-        people[temp_index_edit].money_string, '', people[temp_index_edit].email, people[temp_index_edit].is_reseacher, people[temp_index_edit].temp_id);
+        people[temp_index_edit].money_string, '', people[temp_index_edit].email, people[temp_index_edit].is_reseacher, people[temp_index_edit].temp_id, people[temp_index_edit].identification_file_link);
     $("#authors-info-container").append(au.getHTML());
     addOption();
 });
@@ -236,7 +245,7 @@ $("#authors-info-container").on('click', '.edit-author', function () {
                 var newOption = new Option(people[i].mssv_msnv, people[i].mssv_msnv, true, true);
                 // Append it to the select
                 $('#add_author_msnv_edit').append(newOption).trigger('change');
-            } 
+            }
 
             //$("#add_author_msnv_edit").val(people[i].mssv_msnv);
             //$("#add_author_msnv_edit").trigger('change');
@@ -247,6 +256,7 @@ $("#authors-info-container").on('click', '.edit-author', function () {
             $("#add_author_contractType_edit").val(people[i].contract_id);
             $("#add_author_contractType_edit").trigger('change');
             $("#add_author_cmnd_edit").val(people[i].identification_number);
+            $("#add_author_cmnd_link_edit").val(people[i].identification_file_link);
             $("#add_author_tax_edit").val(people[i].tax_code);
             $("#add_author_bank_edit").val(people[i].bank_branch);
             $("#add_author_accno_edit").val(people[i].bank_number);
@@ -305,6 +315,6 @@ $("#authors-info-container").on('click', '.del-author', function () {
 function addOption() {
     $("#daidien").empty();
     for (var i = 0; i < people.length; i++) {
-        if(people[i].mssv_msnv != null) $("#daidien").append(new Option(people[i].name, people[i].mssv_msnv));
+        if (people[i].mssv_msnv != null) $("#daidien").append(new Option(people[i].name, people[i].mssv_msnv));
     }
 }

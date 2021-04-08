@@ -62,7 +62,7 @@ namespace BLL.ScienceManagement.Paper
         public List<AuthorInfoWithNull> getAuthorPaper(string id, string lang)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ap.money_reward
+            string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ap.money_reward, ah.identification_file_link
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].Author ah on ah.people_id = ap.people_id
 	                            left join (select ah.people_id, tl.name
@@ -401,7 +401,8 @@ namespace BLL.ScienceManagement.Paper
                             author.mssv_msnv = item.mssv_msnv;
                             author.is_reseacher = item.is_reseacher;
                             author.title_id = item.title_id;
-                            author.contract_id = item.contract_id;
+                            author.contract_id = 1;
+                            author.identification_file_link = item.identification_file_link;
                         }
                         db.Authors.Add(author);
                         listAuthor.Add(author);
@@ -766,7 +767,8 @@ namespace BLL.ScienceManagement.Paper
                             paper_id = paper_id_int,
                             criteria_id = item.criteria_id,
                             link = item.link,
-                            check = item.check
+                            check = item.check,
+                            manager_check = false
                         };
                         db.PaperWithCriterias.Add(pwc);
                     }
@@ -896,7 +898,8 @@ namespace BLL.ScienceManagement.Paper
                         author.mssv_msnv = item.mssv_msnv;
                         author.is_reseacher = item.is_reseacher;
                         author.title_id = item.title_id;
-                        author.contract_id = item.contract_id;
+                        author.contract_id = 1;
+                        author.identification_file_link = item.identification_file_link;
                     }
                     db.Entry(author).State = EntityState.Modified;
                 }
@@ -989,10 +992,34 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
+        public string updateCriteria_ManagerCheck(int id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                List<PaperWithCriteria> list = db.PaperWithCriterias.Where(x => x.paper_id == id).ToList();
+                foreach (var item in list)
+                {
+                    item.manager_check = true;
+                    db.Entry(item).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public List<WaitDecisionPaper> getListWwaitDecision(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1001,8 +1028,10 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on o.office_id = po.office_id
 								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
-                            where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher
-                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
+								join (select p.paper_id, count(ap.people_id) as 'note'
+										from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
+										group by p.paper_id) as a on p.paper_id = a.paper_id
+                            where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher";
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
@@ -1010,7 +1039,7 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
+            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1019,8 +1048,10 @@ namespace BLL.ScienceManagement.Paper
 	                            join [General].Profile pro on po.people_id = pro.people_id
 	                            join [General].Office o on o.office_id = po.office_id
 								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
-                            where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher
-                            group by p.name, p.company, po.name, pro.mssv_msnv, o.office_abbreviation, rp.request_id, p.paper_id";
+								join (select p.paper_id, count(ap.people_id) as 'note'
+										from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
+										group by p.paper_id) as a on p.paper_id = a.paper_id
+                            where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
             List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
@@ -1049,13 +1080,13 @@ namespace BLL.ScienceManagement.Paper
         public List<Paper_Apendix_3> getListAppendix3_4(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money'
+            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money', ah.identification_file_link
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
 	                            join [General].Office o on ah.office_id = o.office_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
                             where rp.status_id in (4, 6, 7) and rp.type = @type and ah.is_reseacher = @reseacher
-                            group by ah.name, ah.mssv_msnv, o.office_abbreviation
+                            group by ah.name, ah.mssv_msnv, o.office_abbreviation, ah.identification_file_link
                             having sum(ap.money_reward_in_decision) > 0
                             order by ah.name";
             List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
