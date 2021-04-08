@@ -173,7 +173,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult getDecision(int id)
         {
-            string link = pr.getDecisionLink(id);
+            List<string> link = pr.getDecisionLink(id);
             return Json(new { link = link }, JsonRequestBehavior.AllowGet);
         }
     }
