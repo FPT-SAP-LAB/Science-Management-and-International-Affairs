@@ -138,7 +138,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                 Console.WriteLine(e.Message);
                 return 0;
             }
-        } 
+        }
         public int WidgetSupport(int year)
         {
             try
