@@ -20,11 +20,17 @@ namespace MANAGER.Controllers.ScienceManagement.ConferenceSponsor
         }
 
         [AjaxOnly]
-        public JsonResult List()
+        public JsonResult List(string university)
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<QsUniversity> output = qsUniversityRepo.List(datatable);
+            BaseServerSideData<QsUniversity> output = qsUniversityRepo.List(datatable, university);
             return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Add(HttpPostedFileBase ListUniversity)
+        {
+            AlertModal<string> result = qsUniversityRepo.Add(ListUniversity);
+            return Json(result);
         }
     }
 }
