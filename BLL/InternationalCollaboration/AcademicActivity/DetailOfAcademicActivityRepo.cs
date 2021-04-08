@@ -313,7 +313,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
-
         public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
@@ -357,7 +356,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-
         public PartnerScope updatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
         {
             PartnerScope partnerScope;
@@ -379,7 +377,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return partnerScope;
         }
-
         public void saveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner)
         {
             try
@@ -402,7 +399,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-
         public AlertModal<ActivityPartner_Ext> getActivityPartner(int activity_partner_id)
         {
             try
@@ -438,7 +434,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-
         public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
@@ -495,7 +490,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-
         public File removeFile(File file)
         {
             try
@@ -509,7 +503,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-
         public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file)
         {
             try
@@ -556,7 +549,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-
         public AlertModal<string> deleteActivityPartner(int activity_partner_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
@@ -596,7 +588,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-
         public bool checkDuplicatePartnerScope(SaveActivityPartner activityPartner)
         {
             try

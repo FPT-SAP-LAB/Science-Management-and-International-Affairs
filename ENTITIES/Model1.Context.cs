@@ -100,6 +100,7 @@ namespace ENTITIES
         public virtual DbSet<Criterion> Criteria { get; set; }
         public virtual DbSet<EligibilityCriteria> EligibilityCriterias { get; set; }
         public virtual DbSet<Formality> Formalities { get; set; }
+        public virtual DbSet<QsUniversity> QsUniversities { get; set; }
         public virtual DbSet<RequestConference> RequestConferences { get; set; }
         public virtual DbSet<RequestConferencePolicy> RequestConferencePolicies { get; set; }
         public virtual DbSet<ContractType> ContractTypes { get; set; }

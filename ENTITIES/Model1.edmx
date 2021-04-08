@@ -806,6 +806,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </Key>
           <Property Name="formality_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="QsUniversity">
+          <Key>
+            <PropertyRef Name="row_id" />
+          </Key>
+          <Property Name="row_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ranking" Type="int" Nullable="false" />
+          <Property Name="university" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="RequestConference">
           <Key>
             <PropertyRef Name="request_id" />
@@ -3955,6 +3963,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="EligibilityCriteria" EntityType="Self.EligibilityCriteria" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="Formality" EntityType="Self.Formality" Schema="SM_Conference" store:Type="Tables" />
+          <EntitySet Name="QsUniversity" EntityType="Self.QsUniversity" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="RequestConference" EntityType="Self.RequestConference" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="RequestConferencePolicy" EntityType="Self.RequestConferencePolicy" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="ContractType" EntityType="Self.ContractType" Schema="SM_MasterData" store:Type="Tables" />
@@ -5871,6 +5880,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="formality_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="FormalityLanguages" Relationship="Self.FK__Formality__forma__0662F0A3" FromRole="Formality" ToRole="FormalityLanguage" />
           <NavigationProperty Name="Conferences" Relationship="Self.FK__Conferenc__forma__59904A2C" FromRole="Formality" ToRole="Conference" />
+        </EntityType>
+        <EntityType Name="QsUniversity">
+          <Key>
+            <PropertyRef Name="row_id" />
+          </Key>
+          <Property Name="row_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ranking" Type="Int32" Nullable="false" />
+          <Property Name="university" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
           <Key>
@@ -9061,6 +9078,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Criteria" EntityType="Self.Criterion" />
           <EntitySet Name="EligibilityCriterias" EntityType="Self.EligibilityCriteria" />
           <EntitySet Name="Formalities" EntityType="Self.Formality" />
+          <EntitySet Name="QsUniversities" EntityType="Self.QsUniversity" />
           <EntitySet Name="RequestConferences" EntityType="Self.RequestConference" />
           <EntitySet Name="RequestConferencePolicies" EntityType="Self.RequestConferencePolicy" />
           <EntitySet Name="ContractTypes" EntityType="Self.ContractType" />
@@ -10729,6 +10747,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Formality">
               <MappingFragment StoreEntitySet="Formality">
                 <ScalarProperty Name="formality_id" ColumnName="formality_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QsUniversities">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.QsUniversity">
+              <MappingFragment StoreEntitySet="QsUniversity">
+                <ScalarProperty Name="row_id" ColumnName="row_id" />
+                <ScalarProperty Name="ranking" ColumnName="ranking" />
+                <ScalarProperty Name="university" ColumnName="university" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

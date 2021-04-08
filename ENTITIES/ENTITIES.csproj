@@ -304,6 +304,8 @@
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerHistoryList.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\PartnerList.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Collaboration\PartnerEntity\SearchPartner.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Dashboard\ChartDashboard.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Dashboard\DashboardDatatable.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
@@ -514,6 +516,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QsUniversity.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Question.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
