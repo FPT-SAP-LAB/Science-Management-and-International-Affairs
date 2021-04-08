@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "TOP QS UNIVERSITY";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <button class="btn btn-light-danger">IMPORT DỮ LIỆU</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <!--begin: Datatable-->
+        <div class="col-xl-12 col-xxl-12 table-responsive">
+            <br />
+            <table id="mytable" class="table table-bordered table-checkable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Đại học</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!--end: Datatable-->
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#mytable").DataTable({
+                responsive: true,
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 10,
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+                serverSide: true,
+                ajax: {
+                    url: "/QsUniversity/List",
+                    datatype: "json",
+                    cache: true
+                },
+                columns: [
+                    { data: "ranking", name: "ranking" },
+                    { data: "university", name: "university" },
+                    {
+                        data: "row_id", orderable: false, render: function (data) {
+                            return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
+                        }
+                    }
+                ],
+                order: [0, "desc"]
+            });
+        });
+    </script>
+}
