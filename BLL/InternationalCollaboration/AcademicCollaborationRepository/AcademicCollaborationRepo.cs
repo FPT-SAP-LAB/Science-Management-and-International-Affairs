@@ -147,6 +147,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
+                if (yearSearching.year_to == null) yearSearching.year_to = DateTime.Now.Year;
                 return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)
@@ -872,6 +873,14 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                         db.PartnerScopes.Remove(old_partner_scope);
                                     }
                                     db.SaveChanges();
+                                } else
+                                {
+                                    //update infor to AcademicCollaboration
+                                    academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
+                                    //add file
+                                    var evidence_file = saveFile(f, new_evidence);
+                                    //add infor to CollaborationStatusHistory
+                                    var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                                 }
                             }
                             else
