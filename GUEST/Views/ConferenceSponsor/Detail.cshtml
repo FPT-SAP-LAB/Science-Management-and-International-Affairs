@@ -58,13 +58,13 @@
                             <span class="text-dark-75 font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
                             <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.KeynoteSpeaker</a>
                         </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Thuộc trường đại học top QS 1000:</span>
+                            <span href="#" class="text-muted text-hover-primary">@ConferenceDetail.QsUniversity</span>&nbsp;-&nbsp;<span style="color:red">@(ViewBag.ranking == null ? "Không tìm thấy dữ liệu" : "Rank: " + ViewBag.ranking)</span>
+                        </div>
                         <div class="d-flex justify-content-lg-start align-items-center">
                             <span class="text-dark-75 font-weight-bolder mr-2">Quốc gia:</span>
                             <span class="text-muted font-weight-bold">@ConferenceDetail.CountryName</span>
-                        </div>
-                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị tổ chức (Top QS):</span>
-                            <span href="#" class="text-muted text-hover-primary">@ConferenceDetail.QsUniversity</span>&nbsp;-&nbsp;<span style="color:red">@(ViewBag.ranking == null ? "Không tìm thấy dữ liệu" : "Rank: " + ViewBag.ranking)</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
                             <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
