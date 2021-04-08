@@ -59,11 +59,11 @@ $.ajax({
 
 
 $('#search_training_facility_tab_1_table_1').select2({
-    placeholder: 'Đơn vị đào tạo',
+    placeholder: 'Đơn vị công tác',
     allowClear: true,
     tags: true,
     ajax: {
-        url: '/AcademicCollaboration/getPartners',
+        url: '/AcademicCollaboration/getPartnersSearching',
         delay: 250,
         cache: true,
         dataType: 'json',
@@ -92,7 +92,7 @@ function formatPartnerInfo(partner) {
 }
 
 $('#search_working_facility_tab_1_table_1').select2({
-    placeholder: 'Đơn vị công tác',
+    placeholder: 'Đơn vị đào tạo',
     allowClear: true,
     tags: true,
     ajax: {

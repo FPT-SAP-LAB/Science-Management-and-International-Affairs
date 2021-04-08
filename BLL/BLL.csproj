@@ -157,6 +157,7 @@
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\PartnerMOURepo.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\PartnerRepo\PartnerRepo.cs" />
+    <Compile Include="InternationalCollaboration\Dashboard\DashboardRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityExpenseTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicActivityTypeRepo.cs" />
     <Compile Include="InternationalCollaboration\MasterData\AcademicCollaborationStatusRepo.cs" />

@@ -355,9 +355,9 @@
                         success: function (data) {
                             if (data.success) {
                                 datatable.ajax.reload();
-                                Swal.fire("Thành công", "Xóa thành công", "success");
+                                Swal.fire("Thành công", data.content, "success");
                             } else {
-                                Swal.fire("Thất bại", "Có lỗi khi xóa", "error");
+                                Swal.fire("Thất bại", data.content, "error");
                             }
                         },
                         error: function (data) {

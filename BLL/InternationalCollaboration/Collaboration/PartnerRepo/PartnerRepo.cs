@@ -81,6 +81,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 try
                 {
+                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                    if (partner_check > 0)
+                    {
+                        return new AlertModal<string>(false, "Tên đối tác bị trùng");
+                    }
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
@@ -158,9 +163,17 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = new Partner();
                 partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
+                //if (partner.AcademicPrograms.Count != 0 || partner.MOAPartners.Count != 0 ||
+                //    partner.MOUPartners.Count != 0 || partner.PartnerScopes.Count != 0)
+                //{
+                //    return new AlertModal<string>(false, "Đối tác đang có hoạt động đi kèm không thể xóa");
+                //}
+                //else
+                //{
                 partner.is_deleted = true;
                 db.SaveChanges();
-                return new AlertModal<string>(true);
+                return new AlertModal<string>(true, "Xóa thành công");
+                //}
             }
             catch (Exception)
             {
@@ -234,7 +247,11 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 try
                 {
                     db = new ScienceAndInternationalAffairsEntities();
-
+                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                    if (partner_check > 0)
+                    {
+                        return new AlertModal<string>(false, "Tên đối tác bị trùng");
+                    }
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
                     List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
@@ -331,13 +348,13 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 ON ac.partner_scope_id = b.partner_scope_id
                                 UNION ALL
                                 SELECT DISTINCT mou.mou_code, N'Ký kết biên bản ghi nhớ' 'activity', isnull(mp.contact_point_name, '')  'contact_point_name',
-								isnull(mp.contact_point_email, '') 'contact_point_email', isnull(mp.contact_point_phone, '')  'contact_point_phone', a.full_name,
+								isnull(mp.contact_point_email, '') 'contact_point_email', isnull(mp.contact_point_phone, '')  'contact_point_phone', isnull(a.full_name, ''),
                                 mp.mou_start_date, mou.mou_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOUPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOU mou ON mou.mou_id = mp.mou_id INNER JOIN General.[Account] a
                                 ON mou.account_id = a.account_id
                                 UNION ALL
-                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity','','','', a.full_name, mp.moa_start_date, moa.moa_end_date
+                                SELECT DISTINCT moa.moa_code, N'Ký kết biên bản thỏa thuận' 'activity','','','', isnull(a.full_name, ''), mp.moa_start_date, moa.moa_end_date
                                 FROM b INNER JOIN IA_Collaboration.MOAPartner mp ON b.partner_id = mp.partner_id
                                 INNER JOIN IA_Collaboration.MOA moa ON moa.moa_id = mp.moa_id 
                                 INNER JOIN General.Account a ON a.account_id = moa.account_id
@@ -353,7 +370,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                                 INNER JOIN IA_Collaboration.MOABonus mb ON mp.moa_id = mb.moa_id 
                                 LEFT JOIN IA_Collaboration.MOAPartnerScope mps ON mps.moa_bonus_id = mb.moa_bonus_id
                                 WHERE (mb.moa_bonus_end_date IS NOT NULL) OR (mps.partner_scope_id IS NOT NULL)
-                                ORDER BY activity_date_start ASC ";
+                                ORDER BY activity_date_start ASC  ";
                 List<PartnerHistory> list = db.Database.SqlQuery<PartnerHistory>(query, id).ToList();
                 string partner_name = db.Partners.Where(x => x.partner_id == id).Select(x => x.partner_name).FirstOrDefault();
                 return new PartnerHistoryList<PartnerHistory>(list, partner_name);

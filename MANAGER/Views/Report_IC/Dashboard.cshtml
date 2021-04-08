@@ -215,7 +215,42 @@
             },
             searching: false,
             lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("LoadTable", "Report_IC")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "collab_type_id": 2,
+                    "year": 2020
+                },
+                cache: "false"
+            },
+            columns: [
+                {
+                    data: "training",
+                    name: "training",
+                    className: "text-center"
+
+                },
+                {
+                    data: "working",
+                    name: "working",
+                    className: "text-center"
+                },
+                {
+                    data: "collab_status_name",
+                    name: "collab_status_name",
+                    className: "text-center"
+                },
+                {
+                    data: "count",
+                    name: "count",
+                    className: "text-center"
+                },
+            ],
         })
+
         $('#dashboard_shortterm_table').DataTable({
             oLanguage: {
                 oPaginate: {
@@ -228,15 +263,60 @@
             },
             searching: false,
             lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("LoadTable", "Report_IC")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "collab_type_id": 1,
+                    "year": 2020
+                },
+                cache: "false"
+            },
+            columns: [
+                {
+                    data: "training",
+                    name: "training",
+                    className: "text-center"
+
+                },
+                {
+                    data: "working",
+                    name: "working",
+                    className: "text-center"
+                },
+                {
+                    data: "collab_status_name",
+                    name: "collab_status_name",
+                    className: "text-center"
+                },
+                {
+                    data: "count",
+                    name: "count",
+                    className: "text-center"
+                },
+            ],
         })
     </script>
 
-    <script>
+    <script type="text/javascript">
         const primary = '#6993FF';
         const success = '#1BC5BD';
         const info = '#8950FC';
         const warning = '#FFA800';
         const danger = '#F64E60';
+        var year = @Html.Raw(Json.Encode(ViewBag.year.Data));
+        var signed = @Html.Raw(Json.Encode(ViewBag.signed.Data));
+        var not_sign_yet = @Html.Raw(Json.Encode(ViewBag.not_sign_yet.Data));
+        var year_arr = []
+        var signed_arr = []
+        var not_sign_yet_arr = []
+        for (var i = 0; i < year.year.length; i++) {
+            year_arr.push(year.year[i])
+            signed_arr.push(signed.signed[i])
+            not_sign_yet_arr.push(not_sign_yet.not_sign_yet[i])
+        }
 
         // Class definitio
 
@@ -249,16 +329,15 @@
                 var options = {
                     series: [{
                         name: 'Đối tác chiến lược',
-                        data: [44, 55, 41, 37, 22, 43, 21]
+                        data: signed_arr
                     }, {
-                        name: 'Chưa thành đối tác chiên lược',
-                        data: [53, 32, 33, 52, 13, 43, 32]
+                        name: 'Chưa thành đối tác chiến lược',
+                        data: not_sign_yet_arr
                     }],
                     chart: {
                         type: 'bar',
                         height: 350,
                         stacked: true,
-                        stackType: '100%'
                     },
                     plotOptions: {
                         bar: {
@@ -272,15 +351,14 @@
                     title: {
                     },
                     xaxis: {
-                        categories: [n, n - 1, n - 2, n - 3, n - 4, n - 5, n - 6],
+                        categories: year_arr,
                         labels: {
                             formatter: function (val) {
-                                return val + "%"
+                                return val + ""
                             }
                         }
                     },
                     yaxis: {
-                        //categories: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                         labels: {
                             formatter: function (val) {
                                 return val

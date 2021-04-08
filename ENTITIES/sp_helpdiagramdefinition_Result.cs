@@ -10,17 +10,10 @@
 namespace ENTITIES
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PaperWithCriteria
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int criteria_id { get; set; }
-        public int paper_id { get; set; }
-        public string link { get; set; }
-        public Nullable<bool> check { get; set; }
-        public Nullable<bool> manager_check { get; set; }
-    
-        public virtual Paper Paper { get; set; }
-        public virtual PaperCriteria PaperCriteria { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
