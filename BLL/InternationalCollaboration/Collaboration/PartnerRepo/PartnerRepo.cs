@@ -81,7 +81,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 try
                 {
-                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower())).ToList().Count();
+                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
                     if (partner_check > 0)
                     {
                         return new AlertModal<string>(false, "Tên đối tác bị trùng");
@@ -247,7 +247,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 try
                 {
                     db = new ScienceAndInternationalAffairsEntities();
-                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower())).ToList().Count();
+                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
                     if (partner_check > 0)
                     {
                         return new AlertModal<string>(false, "Tên đối tác bị trùng");
