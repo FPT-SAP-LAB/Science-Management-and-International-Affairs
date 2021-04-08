@@ -66,5 +66,10 @@ namespace BLL.ModelDAL
             }
             return new AlertModal<string>(false);
         }
+        public string GetRanking(string university)
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+            return db.QsUniversities.Where(x => x.university == university).Select(x => x.ranking).FirstOrDefault();
+        }
     }
 }

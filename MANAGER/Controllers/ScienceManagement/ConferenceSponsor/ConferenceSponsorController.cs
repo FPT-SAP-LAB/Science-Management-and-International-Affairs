@@ -1,7 +1,9 @@
-﻿using BLL.ScienceManagement.ConferenceSponsor;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -31,8 +33,16 @@ namespace MANAGER.Controllers
         }
         public ActionResult Detail(int id)
         {
+            QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();
             DetailRepos = new ConferenceSponsorDetailRepo();
-            ViewBag.output = DetailRepos.GetDetailPageGuest(id, 1);
+
+            string output = DetailRepos.GetDetailPageGuest(id, 1);
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
+
+            ViewBag.output = output;
+            string university = JObject.Parse(output)["Conference"]["QsUniversity"].ToString();
+            ViewBag.ranking = qsUniversityRepo.GetRanking(university);
             return View();
         }
         [HttpPost]
@@ -111,13 +121,13 @@ namespace MANAGER.Controllers
             else
                 return File(Word, "application/vnd.ms-word", "Đề-nghị-cử-bán-bộ-đi-công-tác.docx");
         }
-        [ChildActionOnly]
-        public ActionResult CostMenu(int id)
-        {
-            ViewBag.id = id;
-            ViewBag.CheckboxColumn = id == 2;
-            ViewBag.ReimbursementColumn = id >= 3;
-            return PartialView();
-        }
+        //[ChildActionOnly]
+        //public ActionResult CostMenu(int id)
+        //{
+        //    ViewBag.id = id;
+        //    ViewBag.CheckboxColumn = id == 2;
+        //    ViewBag.ReimbursementColumn = id >= 3;
+        //    return PartialView();
+        //}
     }
 }
