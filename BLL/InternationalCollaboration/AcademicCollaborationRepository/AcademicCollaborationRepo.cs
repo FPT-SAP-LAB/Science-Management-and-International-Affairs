@@ -873,7 +873,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                         db.PartnerScopes.Remove(old_partner_scope);
                                     }
                                     db.SaveChanges();
-                                } else
+                                }
+                                else
                                 {
                                     //update infor to AcademicCollaboration
                                     academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
