@@ -811,7 +811,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ranking" Type="int" Nullable="false" />
+          <Property Name="ranking" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="university" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -989,10 +989,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="identification_number" Type="nvarchar" MaxLength="100" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="100" />
           <Property Name="is_reseacher" Type="bit" />
-          <Property Name="identification_file_id" Type="int" />
           <Property Name="office_id" Type="int" />
           <Property Name="contract_id" Type="int" />
           <Property Name="title_id" Type="int" />
+          <Property Name="identification_file_link" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -1072,6 +1072,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="paper_id" Type="int" Nullable="false" />
           <Property Name="link" Type="nvarchar" MaxLength="250" />
           <Property Name="check" Type="bit" />
+          <Property Name="manager_check" Type="bit" />
         </EntityType>
         <EntityType Name="RequestInvention">
           <Key>
@@ -1798,18 +1799,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Author">
               <PropertyRef Name="contract_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Author__identifi__7F80E8EA">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Author" Type="Self.Author" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Author">
-              <PropertyRef Name="identification_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4197,10 +4186,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractType" />
             <End Role="Author" EntitySet="Author" />
           </AssociationSet>
-          <AssociationSet Name="FK__Author__identifi__7F80E8EA" Association="Self.FK__Author__identifi__7F80E8EA">
-            <End Role="File" EntitySet="File" />
-            <End Role="Author" EntitySet="Author" />
-          </AssociationSet>
           <AssociationSet Name="FK__Author__office_i__451F3D2B" Association="Self.FK__Author__office_i__451F3D2B">
             <End Role="Office" EntitySet="Office" />
             <End Role="Author" EntitySet="Author" />
@@ -4977,7 +4962,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="file_drive_id" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Authors" Relationship="Self.FK__Author__identifi__7F80E8EA" FromRole="File" ToRole="Author" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="File" ToRole="RequestConference" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
@@ -5886,7 +5870,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ranking" Type="Int32" Nullable="false" />
+          <Property Name="ranking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="university" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -6100,11 +6084,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="identification_number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="is_reseacher" Type="Boolean" />
-          <Property Name="identification_file_id" Type="Int32" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="contract_id" Type="Int32" />
           <Property Name="title_id" Type="Int32" />
-          <NavigationProperty Name="File" Relationship="Self.FK__Author__identifi__7F80E8EA" FromRole="Author" ToRole="File" />
+          <Property Name="identification_file_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Office" Relationship="Self.FK__Author__office_i__451F3D2B" FromRole="Author" ToRole="Office" />
           <NavigationProperty Name="RequestCitations" Relationship="Self.FK__Citation__people__178D7CA5" FromRole="Author" ToRole="RequestCitation" />
           <NavigationProperty Name="ContractType" Relationship="Self.FK__Author__contract__46136164" FromRole="Author" ToRole="ContractType" />
@@ -6212,6 +6195,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="paper_id" Type="Int32" Nullable="false" />
           <Property Name="link" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="check" Type="Boolean" />
+          <Property Name="manager_check" Type="Boolean" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__PaperWith__paper__3AD6B8E2" FromRole="PaperWithCriteria" ToRole="Paper" />
           <NavigationProperty Name="PaperCriteria" Relationship="Self.FK__PaperWith__crite__45544755" FromRole="PaperWithCriteria" ToRole="PaperCriteria" />
         </EntityType>
@@ -6821,18 +6805,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Scholarship">
               <PropertyRef Name="country_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Author__identifi__7F80E8EA">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Author" Type="Self.Author" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Author">
-              <PropertyRef Name="identification_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9223,10 +9195,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Country" EntitySet="Countries" />
             <End Role="Scholarship" EntitySet="Scholarships" />
           </AssociationSet>
-          <AssociationSet Name="FK__Author__identifi__7F80E8EA" Association="Self.FK__Author__identifi__7F80E8EA">
-            <End Role="File" EntitySet="Files" />
-            <End Role="Author" EntitySet="Authors" />
-          </AssociationSet>
           <AssociationSet Name="FK__Conferenc__invit__23BE4960" Association="Self.FK__Conferenc__invit__23BE4960">
             <End Role="File" EntitySet="Files" />
             <End Role="RequestConference" EntitySet="RequestConferences" />
@@ -10933,10 +10901,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="identification_number" ColumnName="identification_number" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="is_reseacher" ColumnName="is_reseacher" />
-                <ScalarProperty Name="identification_file_id" ColumnName="identification_file_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="contract_id" ColumnName="contract_id" />
                 <ScalarProperty Name="title_id" ColumnName="title_id" />
+                <ScalarProperty Name="identification_file_link" ColumnName="identification_file_link" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11021,6 +10989,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="paper_id" ColumnName="paper_id" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="check" ColumnName="check" />
+                <ScalarProperty Name="manager_check" ColumnName="manager_check" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
