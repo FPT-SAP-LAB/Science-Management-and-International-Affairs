@@ -496,7 +496,7 @@
                         id = new Date().getTime();
                         au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
                             add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id);
+                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, response.author[i].identification_file_link);
                         $("#authors-info-container").append(au.getHTML());
                         var AddAuthor = {
                             name: add_author_name,
@@ -513,7 +513,8 @@
                             temp_id: id,
                             office_abbreviation: response.author[i].office_abbreviation,
                             is_reseacher: response.author[i].is_reseacher,
-                            money_string: add_author_reward
+                            money_string: add_author_reward,
+                            identification_file_link: response.author[i].identification_file_link
                         }
                         people.push(AddAuthor);
                     }
