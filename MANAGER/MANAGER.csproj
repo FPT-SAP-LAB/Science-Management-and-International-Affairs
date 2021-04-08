@@ -283,6 +283,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfUnderstanding\MOUController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\QsUniversityController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AjaxOnlyAttribute.cs" />
     <Compile Include="Models\CurrentAccount.cs" />
     <Compile Include="Models\JsonError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2325,6 +2327,7 @@
     <Content Include="Scripts\updateJournal.js" />
     <Content Include="Web.config" />
     <Content Include="Word_Template\ConferenceSponsor\RequestForm.docx" />
+    <Content Include="Excel_template\TemplateQsRanking.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
@@ -2476,6 +2479,7 @@
     <Content Include="Views\PaperCriteria\List.cshtml" />
     <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <Content Include="Views\Title\List.cshtml" />
+    <Content Include="Views\QsUniversity\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

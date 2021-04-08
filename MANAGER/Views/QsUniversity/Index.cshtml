@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "TOP QS UNIVERSITY";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="mb-7">
+            <div class="row align-items-center">
+                <div class="col-lg-10 col-xl-10">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 my-2 my-md-0">
+                            <div class="input-icon">
+                                <input type="text" class="form-control"
+                                       placeholder="Tên trường đại học"
+                                       id="search_name" />
+                                <span>
+                                    <i class="flaticon2-search-1 text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xl-2 mt-5 mt-lg-0">
+                            <a id="search_list"
+                               class="btn btn-light-primary px-6 font-weight-bold">
+                                Tìm kiếm
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0" style="text-align: right;">
+                    <div class="dropdown dropdown-inline mr-2">
+                        <button type="button" class="btn btn-light-danger" data-toggle="modal" data-target="#exampleModalLong">
+                            IMPORT DỮ LIỆU
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--begin: Datatable-->
+        <div class="table-responsive">
+            <table id="mytable" class="table table-bordered table-checkable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Đại học</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!--end: Datatable-->
+    </div>
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CẬP NHẬT DANH SÁCH</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>
+                    Template import:
+                    <a href="~/Excel_template/TemplateQsRanking.xlsx">Download</a>
+                </label>
+                <div class="uppy" id="kt_uppy_1">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+                <span class="form-text text-muted">Max file size is 15MB and max number of files is 1.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy</button>
+                <button type="button" id="SubmitButton" class="btn btn-primary font-weight-bold">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var mytable = $("#mytable").DataTable({
+                responsive: true,
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 10,
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                },
+                serverSide: true,
+                ajax: {
+                    url: "/QsUniversity/List",
+                    datatype: "json",
+                    cache: true,
+                    data: {
+                        university: function myfunction() {
+                            return $("#search_name").val()
+                        }
+                    }
+                },
+                ordering: false,
+                columns: [
+                    { data: "ranking" },
+                    { data: "university" },
+                ]
+            });
+
+            $("#search_list").click(function () {
+                mytable.ajax.reload();
+            })
+        });
+
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
+        const save_loader = new LoaderBtn($("#SubmitButton"));
+
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 5242880, // 5mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.xlsx']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: '/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+
+        $("#SubmitButton").click(function () {
+            if (uppy1.getFiles().length == 0) {
+                toastr.error("File không được để trống");
+                return false;
+            }
+            let fd = new FormData();
+            fd.append("ListUniversity", uppy1.getFiles()[0].data);
+            save_loader.startLoading();
+            $.ajax({
+                url: "/QsUniversity/Add",
+                method: "post",
+                dataType: "json",
+                complete: function (result) {
+                    if (result.responseJSON.success) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(result.content);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                data: fd,
+                processData: false,
+                contentType: false,
+            });
+        })
+    </script>
+}
