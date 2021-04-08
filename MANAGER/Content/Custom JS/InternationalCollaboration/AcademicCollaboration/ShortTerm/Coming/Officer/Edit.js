@@ -340,13 +340,15 @@ $('#coming_edit_officer').on('show.bs.modal', function (e) {
                     $("#coming_edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#coming_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    if (acadCollab.file_id != null) {
-                        uppy5.addFile({
-                            name: acadCollab.file_name, // file name
-                            type: '', // file type
-                            data: new Blob(), // file blob
-                        });
+                    let file_content = '';
+                    if (acadCollab.file_id == null) {
+                        file_content = 'Chưa có bản mềm.';
+                    } else {
+                        file_content = acadCollab.file_name;
                     }
+                    $("#coming_edit_officer_upload #coming_edit_file_content_upload").append(
+                        `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
+                        white-space: nowrap;" target="_blank" href="` + acadCollab.file_link + `"><span>` + file_content + `</span></a>`);
 
                     //console.log(acadCollab.file_id);
                     //console.log(acadCollab.file_name);
@@ -508,6 +510,7 @@ function clearContentComingEditModal() {
     $('#coming_edit_officer_end_plan_date').val('');
 
     //clear upload file
+    $('#coming_edit_officer_upload #coming_edit_file_content_upload').html('');
     $('#coming_edit_officer_upload .uppy-list').html('');
     uppy5.removeFile(uppy5.getFiles().length == 0 ? '' : uppy5.getFiles()[0].id);
 
