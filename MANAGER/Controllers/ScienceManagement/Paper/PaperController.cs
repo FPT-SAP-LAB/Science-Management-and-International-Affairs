@@ -109,6 +109,7 @@ namespace MANAGER.Controllers
             }
             string mess = pr.updateRewardPaper(paper);
             if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
+            if (mess == "ss") mess = pr.updateCriteria_ManagerCheck(paper.paper_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -181,6 +182,7 @@ namespace MANAGER.Controllers
                 CultureInfo cul = new CultureInfo("vi-VN");
                 item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
                 excelWorksheet3.Cells[i, 5].Value = item.money_string;
+                excelWorksheet3.Cells[i, 6].Value = item.identification_file_link;
                 i++;
                 count++;
             }
@@ -198,6 +200,7 @@ namespace MANAGER.Controllers
                 CultureInfo cul = new CultureInfo("vi-VN");
                 item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
                 excelWorksheet4.Cells[i, 5].Value = item.money_string;
+                excelWorksheet4.Cells[i, 6].Value = item.identification_file_link;
                 i++;
                 count++;
             }
