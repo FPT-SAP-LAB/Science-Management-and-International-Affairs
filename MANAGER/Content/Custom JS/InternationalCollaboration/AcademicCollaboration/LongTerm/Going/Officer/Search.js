@@ -63,7 +63,7 @@ $('#search_training_facility_tab_1_table_1').select2({
     allowClear: true,
     tags: true,
     ajax: {
-        url: '/AcademicCollaboration/getPartners',
+        url: '/AcademicCollaboration/getPartnersSearching',
         delay: 250,
         cache: true,
         dataType: 'json',
