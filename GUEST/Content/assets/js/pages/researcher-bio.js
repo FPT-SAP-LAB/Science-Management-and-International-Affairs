@@ -1,5 +1,6 @@
 ﻿url = new URL(window.location.href);
 people_id = url.searchParams.get("id");
+
 var table1 = $('#acad_history_table').DataTable({
         responsive: true,
         // DOM Layout settings
@@ -46,7 +47,8 @@ var table1 = $('#acad_history_table').DataTable({
         initComplete: function (settings, json) {
             $("#loader_panel").hide()
         }
-    });
+});
+
 var table2 = $('#work_history_table').DataTable({
         responsive: true,
         // DOM Layout settings
@@ -93,7 +95,56 @@ var table2 = $('#work_history_table').DataTable({
         initComplete: function (settings, json) {
             $("#loader_panel").hide()
         }
-    });
+});
+
+var table3 = $('#award_history_table').DataTable({
+    responsive: true,
+    // DOM Layout settings
+    searching: false,
+    bPaginate: false,
+    lengthMenu: [5],
+    pageLength: 10,
+    bLengthChange: false,
+    bInfo: false,
+    language: {
+        'lengthMenu': 'Display _MENU_',
+    },
+    // Order settings
+    order: [[1, 'desc']],
+    serverSide: true,
+    ajax: {
+        url: "/Researchers/GetAwards?id=" + people_id,
+        datatype: "json",
+        cache: true
+    },
+    columns: [
+        { data: "index", name: "index", orderable: false },
+        {
+            data: "competion_name", render: function (data) {
+                return "<span class='competion_name'>" + data + "</span>"
+            }
+        },
+        {
+            data: "rank", name: "rank", render: function (data) {
+                return "<span class='rank'>" + data + "</span>"
+            }
+        },
+        {
+            data: "award_time", render: function (data) {
+                return "<span class='award_time'>" + data + "</span>"
+            }
+        },
+        {
+            data: "id", render: function (data) {
+                return "<a data-id='" + data + "' data-toggle='modal' data-target='#modal_edit_award' class='btn btn-sm btn-clean btn-icon edit-award' title='Edit'> <i class='far fa-edit'></i> </a>"
+            }
+        },
+    ],
+    initComplete: function (settings, json) {
+        $("#loader_panel").hide()
+    }
+});
+
 var KTBootstrapDatetimepicker = function () {
     // Private functions
     var baseDemos = function () {
@@ -158,6 +209,12 @@ var KTBootstrapDatetimepicker = function () {
             $('#kt_datetimepicker_7_7').datetimepicker('maxDate', e.date);
         });
 
+        $('#date_award').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#edit_date_award').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
     }
     return {
         // Public functions
@@ -186,8 +243,11 @@ var submit_new_work = new LoaderBtn($("#submit_new_work"))
 var submit_new_acad = new LoaderBtn($("#submit_new_acad"))
 var submit_edit_acad = new LoaderBtn($("#submit_edit_acad"))
 var submit_edit_work = new LoaderBtn($("#submit_edit_work"))
+var submit_new_award = new LoaderBtn($("#submit_new_award"))
 var delete_acad = new LoaderBtn($("#delete_acad"))
 var delete_work = new LoaderBtn($("#delete_work"))
+var submit_edit_award = new LoaderBtn($("#submit_edit_award"))
+var delete_award = new LoaderBtn($("#delete_award"))
 class WorkEvent {
     constructor(people_id, title, location, start, end) {
         this.people_id = people_id;
@@ -269,6 +329,40 @@ $(function () {
                 }
                 else {
                     table2.ajax.reload();
+                    resetAndCloseModals(response.success)
+                }
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+    })
+    $("#submit_new_award").click(function () {
+        submit_new_award.startLoading();
+        var url = new URL(window.location.href);
+        data = new FormData()
+        people_id = url.searchParams.get("id");
+        add_award_name = $("#add_award_name").val();
+        add_award_rank = $("#add_award_rank").val();
+        add_award_date = $("#add_award_date").val();
+        data.append("people_id", people_id)
+        data.append("add_award_name", add_award_name)
+        data.append("add_award_rank", add_award_rank)
+        data.append("add_award_date", add_award_date)
+
+        $.ajax({
+            url: "/Biography/AddAward",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success == true) {
+                    table3.ajax.reload();
+                    resetAndCloseModals(response.success);
+                }
+                else {
+                    table3.ajax.reload();
                     resetAndCloseModals(response.success)
                 }
             },
@@ -438,6 +532,87 @@ $(function () {
                             table1.ajax.reload();
                             resetAndCloseModals(response.success);
                         }
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            }
+        });
+    })
+
+    $("#award_history_table").on("click", ".edit-award", (function () {
+        id = $(this).data('id');
+        competion_name = $(this).parent().parent().find(".competion_name").text()
+        award_time = $(this).parent().parent().find(".award_time").text()
+        rank = $(this).parent().parent().find(".rank").text()
+        $("#edit_award_name").val(competion_name);
+        $("#edit_award_rank").val(rank)
+        $("#sua_award_date").val(award_time)
+        $("#delete_award").attr("data-id", $(this).data('id'));
+    }));
+
+    $("#submit_edit_award").click(function () {
+        submit_edit_award.startLoading()
+        var url = new URL(window.location.href);
+        people_id = url.searchParams.get("id");
+        var fd = new FormData();
+        fd.append('id',id);
+        fd.append('competion_name', $("#edit_award_name").val());
+        fd.append('award_time', $("#sua_award_date").val());
+        fd.append('rank', $("#edit_award_rank").val());
+        $.ajax({
+            url: "/Biography/EditAward",
+            type: "POST",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success == true) {
+                    table3.ajax.reload();
+                    resetAndCloseModals(response.success);
+                }
+                else {
+                    table3.ajax.reload();
+                    resetAndCloseModals(response.success);
+                }
+                submit_edit_award.stopLoading()
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+    })
+
+    $("#delete_award").click(function () {
+        Swal.fire({
+            title: "Xoá giải thưởng này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Huỷ",
+            reverseButtons: true
+        }).then(function (result) {
+            delete_award.startLoading()
+            if (result.value) {
+                var fd = new FormData();
+                fd.append('id', $("#delete_award").data('id'));
+                $.ajax({
+                    url: "/Biography/DeleteAward",
+                    type: "POST",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success == true) {
+                            table3.ajax.reload();
+                            resetAndCloseModals(response.success);
+                        }
+                        else {
+                            table3.ajax.reload();
+                            resetAndCloseModals(response.success);
+                        }
+                        delete_award.stopLoading();
                     },
                     error: function () {
                         //alert("fail");

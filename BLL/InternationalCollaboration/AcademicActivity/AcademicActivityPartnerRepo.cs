@@ -138,7 +138,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             cs.scope_id, cs.scope_abbreviation, cs.scope_name,
                             ap.cooperation_date_start, 
                             ap.cooperation_date_end,
-                            f.file_id, f.name 'file_name',
+                            f.file_id, f.name 'file_name', f.link 'file_link',
                             ap.contact_point_name, ap.contact_point_email, ap.contact_point_phone
                             from 
                             SMIA_AcademicActivity.ActivityPartner ap 

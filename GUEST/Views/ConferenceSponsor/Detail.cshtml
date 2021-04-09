@@ -40,63 +40,67 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Tên bài báo:</span>
-                            <span class="label-lg label-inline font-weight-bold">@ConferenceDetail.PaperName</span>
+                            <span class="font-weight-bolder mr-2">Tên bài báo:</span>
+                            <span>@ConferenceDetail.PaperName</span>
                         </div>
                         <hr />
                     </div>
-                    <div class="col-lg-6 col-sm-12 col-md-6">
+                    <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Tên hội nghị:</span>
-                            <span class="label label-lg label-inline label-light-primary font-weight-bold">@ConferenceDetail.ConferenceName</span>
+                            <span class="font-weight-bolder mr-2">Tên hội nghị:</span>
+                            <span>@ConferenceDetail.ConferenceName</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Website hội nghị:</span>
-                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Website</a>
+                            <span class="font-weight-bolder mr-2">Website hội nghị:</span>
+                            <span>@ConferenceDetail.Website</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
-                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.KeynoteSpeaker</a>
-                        </div>
-                        <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Quốc gia:</span>
-                            <span class="text-muted font-weight-bold">@ConferenceDetail.CountryName</span>
+                            <span class="font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
+                            <span>@ConferenceDetail.KeynoteSpeaker</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị tổ chức (Top QS):</span>
-                            <span href="#" class="text-muted text-hover-primary">@ConferenceDetail.QsUniversity</span>&nbsp;-&nbsp;<span style="color:red">@(ViewBag.ranking == null ? "Không tìm thấy dữ liệu" : "Rank: " + ViewBag.ranking)</span>
+                            <span class="font-weight-bolder mr-2">Thuộc trường đại học top QS 1000:</span>
+                            <span>@ConferenceDetail.QsUniversity</span>&nbsp;-&nbsp;<span style="color:red">@(ViewBag.ranking == null ? "Không tìm thấy dữ liệu" : "Rank: " + ViewBag.ranking)</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="text-dark-75 font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
-                            <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.Co_organizedUnit</a>
+                            <span class="font-weight-bolder mr-2">Hình thức:</span>
+                            <span>@ConferenceDetail.FormalityName</span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-sm-12 col-md-6">
-                        <div class="mb-7">
-                            <div class="d-flex justify-content-lg-start align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian diễn ra:</span>
-                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.TimeStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.TimeEnd.ToString(rm.GetString("DateFormat"))</a>
-                            </div>
-                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Thời gian tham dự:</span>
-                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.AttendanceStart.ToString(rm.GetString("DateFormat")) – @ConferenceDetail.AttendanceEnd.ToString(rm.GetString("DateFormat"))</a>
-                            </div>
-                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">File bài báo:</span>
-                                <a href="@ConferenceDetail.PaperLink" class="text-muted text-hover-primary">Xem</a>
-                            </div>
-                            <div class="d-flex justify-content-lg-start align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Thư mời hội nghị:</span>
-                                <a href="@ConferenceDetail.InvitationLink" class="text-muted text-hover-primary">Xem</a>
-                            </div>
-                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Hình thức:</span>
-                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FormalityName</a>
-                            </div>
-                            <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Chuyên ngành:</span>
-                                <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.SpecializationName</a>
-                            </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="font-weight-bolder mr-2">Chuyên ngành:</span>
+                            <span>@ConferenceDetail.SpecializationName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="font-weight-bolder mr-2">Địa điểm tổ chức:</span>
+                            <span>@ConferenceDetail.CountryName</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="font-weight-bolder mr-2">Đơn vị tổ chức:</span>
+                            <span>@ConferenceDetail.OrganizedUnit</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
+                            <span>@ConferenceDetail.Co_organizedUnit</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                            <span>@ConferenceDetail.TimeStart.ToString("dd/MM/yyyy") – @ConferenceDetail.TimeEnd.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="font-weight-bolder mr-2">Thời gian tham dự:</span>
+                            <span>@ConferenceDetail.AttendanceStart.ToString("dd/MM/yyyy") – @ConferenceDetail.AttendanceEnd.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-cente my-1">
+                            <span class="font-weight-bolder mr-2">File bài báo:</span>
+                            <a href="@ConferenceDetail.PaperLink">Xem</a>
+                        </div>
+                        <div class="d-flex justify-content-lg-start align-items-center">
+                            <span class="font-weight-bolder mr-2">Thư mời hội nghị:</span>
+                            <a href="@ConferenceDetail.InvitationLink">Xem</a>
                         </div>
                     </div>
                 </div>

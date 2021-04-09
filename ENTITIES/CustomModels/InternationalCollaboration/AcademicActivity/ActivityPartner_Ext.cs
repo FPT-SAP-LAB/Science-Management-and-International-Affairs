@@ -19,6 +19,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.AcademicActivity
         public Nullable<DateTime> cooperation_date_end { get; set; }
         public int? file_id { get; set; }
         public string file_name { get; set; }
+        public string file_link { get; set; }
         public string contact_point_name { get; set; }
         public string contact_point_email { get; set; }
         public string contact_point_phone { get; set; }
