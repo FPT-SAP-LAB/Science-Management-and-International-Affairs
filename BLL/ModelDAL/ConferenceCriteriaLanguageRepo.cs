@@ -22,6 +22,17 @@ namespace BLL.ModelDAL
                                                select c).ToList();
             return ConferenceCriteriaLanguages;
         }
+        public List<ConferenceCriteriaLanguage> GetAll()
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+            db.Configuration.LazyLoadingEnabled = false;
+            var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
+                                               join b in db.Criteria on a.policy_id equals b.policy_id
+                                               join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
+                                               where a.expired_date == null
+                                               select c).ToList();
+            return ConferenceCriteriaLanguages;
+        }
         public AlertModal<string> Edit(int id, string name)
         {
             if (string.IsNullOrWhiteSpace(name))

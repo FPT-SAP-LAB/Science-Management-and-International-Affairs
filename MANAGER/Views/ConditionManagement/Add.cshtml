@@ -2,14 +2,221 @@
 @{
     ViewBag.Title = "THAY ĐỔI CHÍNH SÁCH";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<ENTITIES.ConferenceCriteriaLanguage> list = ViewBag.ConferenceCriteriaLanguages;
 }
 
 <div class="card card-custom gutter-b">
     <div class="card-body">
-
+        <div class="row">
+            @*<div class="col-md-12">
+                    <div class="form-group">
+                        <label>Cách đăng tập tin chính sách</label>
+                        <div class="radio-inline">
+                            <label class="radio group-file">
+                                <input type="radio" checked="checked" value="link" name="radios3" />
+                                <span></span>
+                                Link drive
+                            </label>
+                            <label class="radio group-file">
+                                <input type="radio" value="file" name="radios3" />
+                                <span></span>
+                                Up file
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="up-link">
+                    <div class="form-group">
+                        <label>Link file <span style='color:red'>*</span>: </label>
+                        <input type="text" class="form-control" />
+                        <span class="form-text text-muted">Chú ý: nên bật chế độ chia sẻ trong FPT hoặc mọi người.</span>
+                    </div>
+                </div>*@
+            <div class="col-md-6" id="up-file">
+                <div class="form-group">
+                    <label>Chọn file chính sách <span style='color:red'>*</span>:</label>
+                    <div class="uppy" id="kt_uppy_1">
+                        <div class="uppy-wrapper"></div>
+                        <div class="uppy-list"></div>
+                        <div class="uppy-status"></div>
+                        <div class="uppy-informer uppy-informer-min"></div>
+                    </div>
+                    <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <label>Danh sách điều kiện <span style='color:red'>*</span>:</label>
+                <div class="table-responsive">
+                    <table id="mytable" style="min-width: 500px" class="table table-bordered table-checkable">
+                        <thead>
+                            <tr>
+                                @foreach (ENTITIES.Language item in ViewBag.languages)
+                                {
+                                    <th class="text-center">@item.language_name</th>
+                                }
+                                <th class="text-center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (int item in ViewBag.DistinctList)
+                            {
+                                <tr>
+                                    @foreach (ENTITIES.ConferenceCriteriaLanguage crit in list.Where(x => x.criteria_id == item))
+                                    {
+                                        <td>
+                                            <input type="text" class="form-control" value="@crit.name" />
+                                        </td>
+                                    }
+                                    <td class="text-center">
+                                        <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr id="baseCondition">
+                                @foreach (ENTITIES.Language item in ViewBag.languages)
+                                {
+                                    <td>
+                                        <input type="text" class="form-control" />
+                                    </td>
+                                }
+                                <td class="text-center">
+                                    <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-12" style="    text-align: end;">
+                <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                    <span class="svg-icon svg-icon-md">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                            </g>
+                        </svg><!--end::Svg Icon-->
+                    </span> Thêm
+                </a>
+            </div>
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-success">Cập nhật</button>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts{
+    <script>
+        const Tus = Uppy.Tus;
+        const StatusBar = Uppy.StatusBar;
+        const FileInput = Uppy.FileInput;
+        const Informer = Uppy.Informer;
 
+        // Uppy variables
+        // For more info refer: https://uppy.io/
+        var elemId = 'kt_uppy_1';
+        var id = '#' + elemId;
+        var $statusBar = $(id + ' .uppy-status');
+        var $uploadedList = $(id + ' .uppy-list');
+        var timeout;
+
+        var uppy1 = Uppy.Core({
+            debug: true,
+            autoProceed: false,
+            showProgressDetails: true,
+            restrictions: {
+                maxFileSize: 15728640, // 15mb
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['.pdf', '.docx', '.doc']
+            }
+        });
+
+        uppy1.use(FileInput, {
+            target: id + ' .uppy-wrapper',
+            pretty: false
+        });
+        uppy1.use(Informer, {
+            target: id + ' .uppy-informer'
+        });
+
+        // demo file upload server
+        uppy1.use(Tus, {
+            endpoint: 'https://master.tus.io/files/'
+        });
+        uppy1.use(StatusBar, {
+            target: id + ' .uppy-status',
+            hideUploadButton: true,
+            hideAfterFinish: false
+        });
+
+        $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+        $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+        var $fileLabel = $(id + ' .uppy-input-label');
+
+        uppy1.on('upload', function (data) {
+            $fileLabel.text("Uploading...");
+            $statusBar.addClass('uppy-status-ongoing');
+            $statusBar.removeClass('uppy-status-hidden');
+            clearTimeout(timeout);
+        });
+
+        uppy1.on('file-added', function (file) {
+            var sizeLabel = "bytes";
+            var filesize = file.size;
+            if (filesize > 1024) {
+                filesize = filesize / 1024;
+                sizeLabel = "kb";
+
+                if (filesize > 1024) {
+                    filesize = filesize / 1024;
+                    sizeLabel = "MB";
+                }
+            }
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+            $uploadedList.append(uploadListHtml);
+
+            $statusBar.addClass('uppy-status-hidden');
+            $statusBar.removeClass('uppy-status-ongoing');
+        });
+
+        $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            var itemId = $(this).attr('data-id');
+            uppy1.removeFile(itemId);
+            $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+        });
+
+        $(".group-file").click(function (event) {
+            if ($("input[name='radios3']:checked").val() == "file") {
+                $("#up-link").prop("hidden", true);
+                $("#up-file").prop("hidden", false);
+            } else {
+                $("#up-link").prop("hidden", false);
+                $("#up-file").prop("hidden", true);
+            }
+        })
+
+        var baseCondition = document.getElementById("baseCondition").cloneNode(true);
+
+        function addCost() {
+            let temp = baseCondition.cloneNode(true);
+            $("#mytable tbody").append(temp);
+        }
+
+        function submitCondition() {
+            var input = []
+            for (let j = 0; j < $("#mytable tbody tr").length; j++) {
+                let temp = {}
+                for (let i = 0; i < $("#mytable thead tr th").length - 1; i++) {
+                    const x = $("#mytable tbody tr")[j]
+                    const language = $("#mytable thead tr th")[i].innerHTML
+                    temp[$("#mytable thead tr th")[i].innerHTML] = $(x).find("input")[i].value
+                }
+                input.push(temp)
+            }
+        }
+    </script>
 }
