@@ -4,7 +4,8 @@ $('.edit_program_btn').click(function () {
     var edit_program_title
     var edit_program_language = 0;
     var edit_program_partner
-    var edit_program_range_date
+    var edit_program_start_date
+    var edit_program_end_date
     var note
     var content
 
@@ -12,7 +13,8 @@ $('.edit_program_btn').click(function () {
         edit_program_title = $('#edit_program_title_going').val()
         edit_program_language = $('#edit_program_language_going').val()
         edit_program_partner = $('#edit_program_partner').val()
-        edit_program_range_date = $('#edit_program_range_date_going').val()
+        edit_program_start_date = $('#edit_program_start_date_going').val()
+        edit_program_end_date = $('#edit_program_end_date_going').val()
         note = $('#edit_note_going').val()
         content = $('#edit_summernote_going').summernote('code') + "";
     }
@@ -20,7 +22,8 @@ $('.edit_program_btn').click(function () {
         edit_program_title = $('#edit_program_title_coming').val()
         edit_program_language = $('#edit_program_language_coming').val()
         edit_program_partner = ""
-        edit_program_range_date = $('#edit_program_range_date_coming').val()
+        edit_program_start_date = $('#edit_program_start_date_coming').val()
+        edit_program_end_date = $('#edit_program_end_date_coming').val()
         note = $('#edit_note_coming').val()
         content = $('#edit_summernote_coming').summernote('code') + "";
     }
@@ -31,6 +34,10 @@ $('.edit_program_btn').click(function () {
     }
     if (direction == 1 && edit_program_partner == "") {
         toastr.warning("Vui lòng chọn đối tác")
+        return;
+    }
+    if (edit_program_start_date == "" || edit_program_end_date == "") {
+        toastr.warning("Vui lòng chọn thời hạn")
         return;
     }
 
@@ -58,7 +65,8 @@ $('.edit_program_btn').click(function () {
     form_data.append('program_title', edit_program_title)
     form_data.append('program_partner', edit_program_partner)
     form_data.append('program_language', edit_program_language)
-    form_data.append('program_range_date', edit_program_range_date)
+    form_data.append('edit_program_start_date', edit_program_start_date)
+    form_data.append('edit_program_end_date', edit_program_end_date)
     form_data.append('note', note)
     form_data.append('content', content)
 
@@ -93,7 +101,6 @@ $('.edit_program_btn').click(function () {
 
                 $('.modal-edit-program textarea').val('');
                 $('.modal-edit-program input').val('');
-                $('.modal-edit-program .kt_daterangepicker_1').val(moment().format('DD/MM/yyyy') + ' - ' + moment().format('DD/MM/yyyy'));
                 $('.modal-edit-program select').val('').trigger('change');
                 $('.modal-edit-program .program_language').val('1').trigger('change');
                 $('#edit_summernote_going').summernote('reset');

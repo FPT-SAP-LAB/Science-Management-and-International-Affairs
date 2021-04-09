@@ -19,12 +19,23 @@
 
     .text_size {
         font-size: 20px;
-    }
+    }   
 </style>
 <div class="card card-custom gutter-b">
     <div class="card-title my-4">
         <h1 class="font-weight-bolder text-center">THỐNG KÊ TỔNG QUAN</h1>
-
+        <div class="row justify-content-center">
+            <div class="col-lg-2 col-md-2 col-4">
+                <select id="year_select" class="form-control text-center" required style="width: 100% !important">
+                    @{
+                        foreach (var i in ViewBag.year_select)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <!--begin: Search Form-->
@@ -247,6 +258,13 @@
     </div>
 </div>
 @section scripts{
+    <script>
+        $('#year_select').select2({
+            placeholder: 'Năm',
+        })
+
+        $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
+    </script>
     <script>
         $('#dashboard_longterm_table').DataTable({
             oLanguage: {
