@@ -130,6 +130,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -160,6 +161,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -179,14 +181,19 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             int id = Int32.Parse(Request.QueryString["id"]);
             ///////////////////////////////////////////////////////////////
             List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
-            return Json(new { success = true, 
-                data=(from a in awards select new { 
-                    id=a.records.award_id,
-                    index=a.index,
-                    competion_name=a.records.competion_name,
-                    rank=a.records.rank,
-                    award_time=a.records.award_time!=null? a.records.award_time.Value.ToString("dd/MM/yyyy"):""
-                })}, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                success = true,
+                data = (from a in awards
+                        select new
+                        {
+                            id = a.records.award_id,
+                            index = a.index,
+                            competion_name = a.records.competion_name,
+                            rank = a.records.rank,
+                            award_time = a.records.award_time != null ? a.records.award_time.Value.ToString("dd/MM/yyyy") : ""
+                        })
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

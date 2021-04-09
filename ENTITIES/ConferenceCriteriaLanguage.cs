@@ -14,6 +14,7 @@ namespace ENTITIES
     
     public partial class ConferenceCriteriaLanguage
     {
+        public int conference_criteria_language_id { get; set; }
         public int criteria_id { get; set; }
         public int language_id { get; set; }
         public string name { get; set; }

@@ -45,7 +45,7 @@
         <div class="row" id="thuong">
             <div class="col-xl-6 col-sm-12 form-group">
                 <label>Tổng thưởng: </label>
-                <input id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.item.total_reward" />
+                <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.item.total_reward" />
             </div>
             <div class="col-xl-6 form-group" style="display:none">
                 <label>Kiểu thưởng</label>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="col-xl-6">
                         <label>Thưởng</label>
-                        <input class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
+                        <input autocomplete="off" oninput="numberWithCommas(this)" class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
                     </div>
                     <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
                         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save_edit" data-dismiss="modal">Lưu</button>
@@ -387,17 +387,18 @@
             }
         });
         $(".onereward, #totalreward").inputFilter(function (value) {
-            return /^-?\d*$/.test(value);
-        });
-        $("#totalreward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            return /^[0-9,.]*$/.test(value);
         });
 
-        $(".onereward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
+        //$("#totalreward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
+
+        //$(".onereward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
 
         $(".edit-author-reward").click(function () {
             id_people_selected = $(this).data("id");
@@ -412,6 +413,11 @@
             var val = $("#reward_tacgia").val();
             var x = document.getElementById(id_people_selected).querySelector("#tacgia_reward").innerHTML = val;
         });
+
+        function numberWithCommas(ele) {
+            var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(ele).val(x);
+        }
     </script>
 }
 

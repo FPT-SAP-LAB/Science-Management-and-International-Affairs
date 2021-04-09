@@ -186,9 +186,9 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            @foreach (var item in ViewBag.ConferenceCriteriaLanguages)
+                                            @foreach (ENTITIES.ConferenceCriteriaLanguage item in ViewBag.ConferenceCriteriaLanguages)
                                             {
-                                                <li>@item</li>
+                                                <li>@item.name</li>
                                             }
                                         </ul>
                                         <br />

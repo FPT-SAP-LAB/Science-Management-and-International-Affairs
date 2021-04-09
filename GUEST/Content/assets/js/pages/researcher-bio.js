@@ -136,7 +136,7 @@ var table3 = $('#award_history_table').DataTable({
         },
         {
             data: "id", render: function (data) {
-                return "<a data-id='" + data + "' data-toggle='modal' data-target='#modal_sua_award' class='btn btn-sm btn-clean btn-icon edit-award' title='Edit'> <i class='far fa-edit'></i> </a>"
+                return "<a data-id='" + data + "' data-toggle='modal' data-target='#modal_edit_award' class='btn btn-sm btn-clean btn-icon edit-award' title='Edit'> <i class='far fa-edit'></i> </a>"
             }
         },
     ],
@@ -212,6 +212,9 @@ var KTBootstrapDatetimepicker = function () {
         $('#date_award').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+        $('#edit_date_award').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
     }
     return {
         // Public functions
@@ -243,6 +246,8 @@ var submit_edit_work = new LoaderBtn($("#submit_edit_work"))
 var submit_new_award = new LoaderBtn($("#submit_new_award"))
 var delete_acad = new LoaderBtn($("#delete_acad"))
 var delete_work = new LoaderBtn($("#delete_work"))
+var submit_edit_award = new LoaderBtn($("#submit_edit_award"))
+var delete_award = new LoaderBtn($("#delete_award"))
 class WorkEvent {
     constructor(people_id, title, location, start, end) {
         this.people_id = people_id;
@@ -527,6 +532,87 @@ $(function () {
                             table1.ajax.reload();
                             resetAndCloseModals(response.success);
                         }
+                    },
+                    error: function () {
+                        //alert("fail");
+                    }
+                });
+            }
+        });
+    })
+
+    $("#award_history_table").on("click", ".edit-award", (function () {
+        id = $(this).data('id');
+        competion_name = $(this).parent().parent().find(".competion_name").text()
+        award_time = $(this).parent().parent().find(".award_time").text()
+        rank = $(this).parent().parent().find(".rank").text()
+        $("#edit_award_name").val(competion_name);
+        $("#edit_award_rank").val(rank)
+        $("#sua_award_date").val(award_time)
+        $("#delete_award").attr("data-id", $(this).data('id'));
+    }));
+
+    $("#submit_edit_award").click(function () {
+        submit_edit_award.startLoading()
+        var url = new URL(window.location.href);
+        people_id = url.searchParams.get("id");
+        var fd = new FormData();
+        fd.append('id',id);
+        fd.append('competion_name', $("#edit_award_name").val());
+        fd.append('award_time', $("#sua_award_date").val());
+        fd.append('rank', $("#edit_award_rank").val());
+        $.ajax({
+            url: "/Biography/EditAward",
+            type: "POST",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success == true) {
+                    table3.ajax.reload();
+                    resetAndCloseModals(response.success);
+                }
+                else {
+                    table3.ajax.reload();
+                    resetAndCloseModals(response.success);
+                }
+                submit_edit_award.stopLoading()
+            },
+            error: function () {
+                //alert("fail");
+            }
+        });
+    })
+
+    $("#delete_award").click(function () {
+        Swal.fire({
+            title: "Xoá giải thưởng này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Huỷ",
+            reverseButtons: true
+        }).then(function (result) {
+            delete_award.startLoading()
+            if (result.value) {
+                var fd = new FormData();
+                fd.append('id', $("#delete_award").data('id'));
+                $.ajax({
+                    url: "/Biography/DeleteAward",
+                    type: "POST",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success == true) {
+                            table3.ajax.reload();
+                            resetAndCloseModals(response.success);
+                        }
+                        else {
+                            table3.ajax.reload();
+                            resetAndCloseModals(response.success);
+                        }
+                        delete_award.stopLoading();
                     },
                     error: function () {
                         //alert("fail");
