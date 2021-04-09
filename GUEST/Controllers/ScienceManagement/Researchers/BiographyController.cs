@@ -124,5 +124,33 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        public ActionResult EditAward()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                researcherBiographyRepo.EditAward(Request);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult DeleteAward()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                researcherBiographyRepo.DeleteAward(Request);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false });
+            }
+        }
     }
 }

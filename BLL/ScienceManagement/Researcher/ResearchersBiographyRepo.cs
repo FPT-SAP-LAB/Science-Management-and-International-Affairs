@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
@@ -129,7 +131,6 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<BaseRecord<Award>>();
             return list;
         }
-
         public List<SelectField> getAcadDegrees()
         {
             var data = (from c in db.AcademicDegrees
@@ -143,7 +144,6 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList();
             return data;
         }
-
         public int AddNewAcadEvent(string data)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -179,7 +179,6 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
-
         public List<SelectField> getTitles()
         {
             var data = (from a in db.Titles
@@ -346,6 +345,47 @@ namespace BLL.ScienceManagement.Researcher
                 try
                 {
                     db.Awards.Add(a);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        public int EditAward(HttpRequestBase Request)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Award b = db.Awards.Find(Int32.Parse(Request["id"]));
+                    b.competion_name = Request["competion_name"];
+                    b.rank = Request["rank"];
+                    b.award_time = DateTime.ParseExact(Request["award_time"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        public int DeleteAward(HttpRequestBase Request)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Awards.Remove(db.Awards.Find(Int32.Parse(Request["id"])));
                     db.SaveChanges();
                     trans.Commit();
                 }

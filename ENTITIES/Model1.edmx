@@ -750,6 +750,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="datetime" Nullable="false" />
           <Property Name="time_end" Type="datetime" Nullable="false" />
           <Property Name="formality_id" Type="int" Nullable="false" />
+          <Property Name="organized_unit" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="co-organized_unit" Type="nvarchar" MaxLength="50" />
           <Property Name="is_verified" Type="bit" Nullable="false" />
         </EntityType>
@@ -5793,6 +5794,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="time_end" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="formality_id" Type="Int32" Nullable="false" />
+          <Property Name="organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="co_organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="is_verified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Conferenc__count__589C25F3" FromRole="Conference" ToRole="Country" />
@@ -10655,6 +10657,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="time_start" ColumnName="time_start" />
                 <ScalarProperty Name="time_end" ColumnName="time_end" />
                 <ScalarProperty Name="formality_id" ColumnName="formality_id" />
+                <ScalarProperty Name="organized_unit" ColumnName="organized_unit" />
                 <ScalarProperty Name="co_organized_unit" ColumnName="co-organized_unit" />
                 <ScalarProperty Name="is_verified" ColumnName="is_verified" />
               </MappingFragment>
