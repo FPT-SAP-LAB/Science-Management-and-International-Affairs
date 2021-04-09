@@ -38,7 +38,7 @@
             <!--begin: Pic-->
             <div class="flex-shrink-0 mr-7 mt-lg-0 mt-3">
                 <div class="symbol symbol-50 symbol-lg-120">
-                    <img src="@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar)" alt="image" />
+                    <img src="@(ViewBag.profile.avatar == null ? "/Content/assets/media/users/blank.png" : ViewBag.profile.avatar)" alt="image" />
                 </div>
 
                 <div class="symbol symbol-50 symbol-lg-120 symbol-primary d-none">
@@ -178,7 +178,7 @@
             </div>
         </div>
         <!------------------------->
-        <div class="row" style="margin-bottom:1rem">
+        <!--<div class="row" style="margin-bottom:1rem">
             <div class="col-12">
                 <div class="card card-custom card-stretch gutster-b">
                     <div class="card-header border-0 pt-5">
@@ -194,7 +194,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!------------------------->
         <!--end::Mixed Widget 14-->
     </div>
@@ -265,6 +265,7 @@
                 <!--end::Advance Table Widget 2-->
             </div>
         </div>
+        @if (ViewBag.profile.awards.Count > 0) {
         <div class="row">
             <div class="col-12">
                 <div class="card card-custom card-stretch gutter-b">
@@ -286,13 +287,14 @@
                                         </span>
                                     </div>
                                 </div>
-                            }
+                                }
                         </div>
                     </div>
                     <!--end::Table-->
                 </div>
             </div>
         </div>
+        }
     </div>
 
 </div>
@@ -311,7 +313,8 @@
                     { width: "5%" },
                 ],
                 responsive: true,
-
+                "bLengthChange": false,
+                "bInfo": false,
                 lengthMenu: [5, 10, 25, 50],
 
                 pageLength: 5,
