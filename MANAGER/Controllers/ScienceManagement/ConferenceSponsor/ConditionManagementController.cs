@@ -1,5 +1,8 @@
 ﻿using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers.ScienceManagement.ConferenceSponsor
@@ -23,6 +26,10 @@ namespace MANAGER.Controllers.ScienceManagement.ConferenceSponsor
         }
         public ActionResult Add()
         {
+            ViewBag.languages = LanguageRepo.GetLanguages();
+            IEnumerable<ConferenceCriteriaLanguage> result = criteriaLanguageRepo.GetAll();
+            ViewBag.ConferenceCriteriaLanguages = result;
+            ViewBag.DistinctList = result.Select(x => x.criteria_id).Distinct().ToList();
             return View();
         }
     }
