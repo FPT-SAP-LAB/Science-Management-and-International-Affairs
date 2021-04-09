@@ -285,6 +285,7 @@
     <Compile Include="Controllers\InternationalCollaboration\Convention\ConventionController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Scholarship\ScholarshipController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\QsUniversityController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Decision\DecisionHistoryController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
@@ -2483,6 +2484,7 @@
     <Content Include="Views\QsUniversity\Index.cshtml" />
     <Content Include="Views\ConditionManagement\Index.cshtml" />
     <Content Include="Views\ConditionManagement\Add.cshtml" />
+    <Content Include="Views\DecisionHistory\History.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
