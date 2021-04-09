@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
@@ -114,6 +116,8 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<ResearcherPublications>();
             return data;
         }
+
+
         public List<BaseRecord<Award>> GetAwards(int id)
         {
             var list = (from a in db.Awards
@@ -346,6 +350,49 @@ namespace BLL.ScienceManagement.Researcher
                 try
                 {
                     db.Awards.Add(a);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
+
+        public int EditAward(HttpRequestBase Request)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Award b = db.Awards.Find(Int32.Parse(Request["id"]));
+                    b.competion_name = Request["competion_name"];
+                    b.rank = Request["rank"];
+                    b.award_time = DateTime.ParseExact(Request["award_time"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    db.SaveChanges();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    trans.Rollback();
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        public int DeleteAward(HttpRequestBase Request)
+        {
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Awards.Remove(db.Awards.Find(Int32.Parse(Request["id"])));
                     db.SaveChanges();
                     trans.Commit();
                 }
