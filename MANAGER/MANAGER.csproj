@@ -273,6 +273,7 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\SpecializationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
     <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2481,6 +2482,8 @@
     <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <Content Include="Views\Title\List.cshtml" />
     <Content Include="Views\QsUniversity\Index.cshtml" />
+    <Content Include="Views\ConditionManagement\Index.cshtml" />
+    <Content Include="Views\ConditionManagement\Add.cshtml" />
     <Content Include="Views\DecisionHistory\History.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
