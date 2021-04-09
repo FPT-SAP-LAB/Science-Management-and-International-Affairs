@@ -91,7 +91,7 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <label>Tổng thưởng</label>
-                        <input id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
+                        <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
                     </div>
                 </div>
                 <hr />
@@ -230,12 +230,18 @@
             }
         });
         $("#totalreward").inputFilter(function (value) {
-            return /^-?\d*$/.test(value);
+            return /^[0-9,.]*$/.test(value);
         });
-        $("#totalreward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
+
+        //$("#totalreward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
+
+        function numberWithCommas(ele) {
+            var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(ele).val(x);
+        }
     </script>
 }
 

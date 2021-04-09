@@ -47,6 +47,24 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
+                                            <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="organized_unit" placeholder="Đơn vị tổ chức">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
+                                            <label>Đơn vị đồng tổ chức :</label>
+                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị đồng tổ chức">
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group fv-plugins-icon-container">
                                             <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC ">
                                         </div>
@@ -55,12 +73,8 @@
                                     <div class="col-md-6">
                                         <!--begin::Select-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Quốc gia <span style='color:red'>*</span>:</label>
-                                            <select class="form-control" id="country">
-                                                @foreach (var item in ViewBag.countries)
-                                                {
-                                                    <option value="@item.country_id">@item.country_name</option>
-                                                }
+                                            <label>Thuộc trường đại học top QS 1000 <span style='color:red'>*</span>:</label>
+                                            <select class="form-control select2" id="qs_university" name="param">
                                             </select>
                                         </div>
                                         <!--end::Select-->
@@ -68,19 +82,26 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Đơn vị tổ chức (Top QS) <span style='color:red'>*</span>:</label>
-                                            <select class="form-control select2" id="qs_university" name="param">
+                                            <label>Hình thức <span style='color:red'>*</span>:</label>
+                                            <select id="formality" class="form-control">
+                                                @foreach (var item in ViewBag.FormalityLanguages)
+                                                {
+                                                    <option value="@item.formality_id">@item.name</option>
+                                                }
                                             </select>
                                         </div>
-                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Đơn vị đồng tổ chức:</label>
-                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị tổ chức">
+                                            <label>Địa điểm tổ chức <span style='color:red'>*</span>:</label>
+                                            <select class="form-control" id="country">
+                                                @foreach (var item in ViewBag.countries)
+                                                {
+                                                    <option value="@item.country_id">@item.country_name</option>
+                                                }
+                                            </select>
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -110,17 +131,8 @@
                                             <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            <label>Hình thức <span style='color:red'>*</span>:</label>
-                                            <select id="formality" class="form-control">
-                                                @foreach (var item in ViewBag.FormalityLanguages)
-                                                {
-                                                    <option value="@item.formality_id">@item.name</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>Chuyên ngành <span style='color:red'>*</span>:</label>
@@ -170,9 +182,9 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            @foreach (var item in ViewBag.ConferenceCriteriaLanguages)
+                                            @foreach (ENTITIES.ConferenceCriteriaLanguage item in ViewBag.ConferenceCriteriaLanguages)
                                             {
-                                                <li>@item</li>
+                                                <li>@item.name</li>
                                             }
                                         </ul>
                                         <br />
@@ -362,6 +374,7 @@
                                 qs_university: "",
                                 country_id: 1,
                                 formality_id: 1,
+                                organized_unit: "",
                                 co_organized_unit: ""
                             });
                             decreaseID = decreaseID - 1;
@@ -603,9 +616,9 @@
             if (repo.id) {
                 if (repo.is_verified) {
                     toastr.warning("Hội nghị này đã được thông qua tại một đề nghị khác");
-                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #co_organized_unit").prop("disabled", true);
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #organized_unit, #co_organized_unit").prop("disabled", true);
                 } else {
-                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #co_organized_unit").prop("disabled", false);
+                    $("#website, #keynote_speaker, #qs_university, #country, #kt_daterangepicker_1, #formality, #organized_unit, #co_organized_unit").prop("disabled", false);
                 }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
@@ -622,6 +635,7 @@
                 inItDateRangePicker("#kt_daterangepicker_1, #kt_daterangepicker_2");
                 document.getElementById("formality").value = repo.formality_id;
                 document.getElementById("co_organized_unit").value = repo.co_organized_unit;
+                document.getElementById("organized_unit").value = repo.organized_unit;
                 conferenceID = repo.id;
             }
             return repo.conference_name || repo.text;
@@ -716,6 +730,7 @@
                     time_end: time_end,
                     formality_id: $("#formality").val(),
                     co_organized_unit: $("#co_organized_unit").val(),
+                    organized_unit: $("#organized_unit").val()
                 },
                 attendance_start: attendance_start,
                 attendance_end: attendance_end,

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Conference
 {
@@ -12,6 +8,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Conference
         public string Website { get; set; }
         public string KeynoteSpeaker { get; set; }
         public string QsUniversity { get; set; }
+        public string OrganizedUnit { get; set; }
         public string Co_organizedUnit { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? FinishedDate { get; set; }

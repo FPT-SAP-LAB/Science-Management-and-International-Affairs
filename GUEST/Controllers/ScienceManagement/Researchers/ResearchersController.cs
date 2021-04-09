@@ -130,6 +130,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -160,6 +161,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
