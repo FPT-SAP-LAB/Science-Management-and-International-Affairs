@@ -93,7 +93,7 @@
             </div>
             <div class="col-xl-6 form-group">
                 <label>Tổng thưởng</label>
-                <input oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
+                <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
             </div>
             <div class="col-xl-6 form-group" id="daidien_block">
                 <label>Đại diện nhận thưởng</label>
@@ -265,7 +265,7 @@
                     </div>
                     <div class="col-xl-6">
                         <label>Thưởng</label>
-                        <input oninput="numberWithCommas(this)" class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
+                        <input autocomplete="off" oninput="numberWithCommas(this)" class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
                     </div>
                     <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
                         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save_edit" data-dismiss="modal">Lưu</button>
