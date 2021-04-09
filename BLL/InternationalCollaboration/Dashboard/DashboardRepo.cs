@@ -25,8 +25,12 @@ namespace BLL.InternationalCollaboration.Dashboard
                             JOIN IA_Collaboration.MOUPartner mp
                             ON a.[year] >= YEAR(mou_start_date) JOIN IA_Collaboration.[Partner] p
                             ON mp.partner_id = p.partner_id JOIN IA_Collaboration.MOU mou
-                            ON mou.mou_id = mp.mou_id AND a.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date) 
-                            JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
+                            ON mou.mou_id = mp.mou_id 
+                            JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id 
+                            LEFT JOIN IA_Collaboration.MOUBonus mb ON mou.mou_id = mb.mou_id
+                            AND ((a.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR(a.[year] BETWEEN YEAR(mp.mou_start_date) 
+                            AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL))
+                            LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
                             ON ps.partner_scope_id = ap.partner_scope_id AND YEAR(ap.cooperation_date_start) = a.[year]
                             AND ap.cooperation_date_start BETWEEN mp.mou_start_date AND mou.mou_end_date
                             LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = ps.partner_scope_id
