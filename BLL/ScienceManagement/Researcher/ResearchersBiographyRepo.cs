@@ -116,8 +116,6 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<ResearcherPublications>();
             return data;
         }
-
-
         public List<BaseRecord<Award>> GetAwards(int id)
         {
             var list = (from a in db.Awards
@@ -133,7 +131,6 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList<BaseRecord<Award>>();
             return list;
         }
-
         public List<SelectField> getAcadDegrees()
         {
             var data = (from c in db.AcademicDegrees
@@ -147,7 +144,6 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList();
             return data;
         }
-
         public int AddNewAcadEvent(string data)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -183,7 +179,6 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
-
         public List<SelectField> getTitles()
         {
             var data = (from a in db.Titles
@@ -362,8 +357,6 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
-
-
         public int EditAward(HttpRequestBase Request)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
