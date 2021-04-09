@@ -420,6 +420,7 @@
                             <div class="uppy-list"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
+                            <div id="edit_DongToChuc_file_content_upload"></div>
                         </div>
                     </div>
 
@@ -2152,13 +2153,16 @@
                             $('#edit_taitro_DongToChuc').val(objData.sponsor);
                             if (!isEmptyOrNullOrUndefined(objData.cooperation_date_start)) $('#edit_from_DongToChuc').val(moment(objData.cooperation_date_start).format("DD/MM/YYYY"));
                             if (!isEmptyOrNullOrUndefined(objData.cooperation_date_end)) $('#edit_to_DongToChuc').val(moment(objData.cooperation_date_end).format("DD/MM/YYYY"));
-                            if (objData.file_id != null) {
-                                uppy2.addFile({
-                                    name: objData.file_name, // file name
-                                    type: '', // file type
-                                    data: new Blob(), // file blob
-                                });
+                            let file_content = '';
+                            if (objData.file_id == null) {
+                                file_content = 'Chưa có bản mềm.';
+                            } else {
+                                file_content = objData.file_name;
                             }
+                            console.log(objData);
+                            $("#edit_banmem_DongToChuc #edit_DongToChuc_file_content_upload").append(
+                                `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
+                                white-space: nowrap;" target="_blank" href="` + objData.file_link + `"><span>` + file_content + `</span></a>`);
                             $('#edit_name_DongToChuc').val(objData.contact_point_name);
                             $('#edit_email_DongToChuc').val(objData.contact_point_email);
                             $('#edit_phone_DongToChuc').val(objData.contact_point_phone);
@@ -2184,6 +2188,7 @@
             $('#edit_from_DongToChuc').val('');
             $('#edit_to_DongToChuc').val('');
             //clear upload file
+            $("#edit_banmem_DongToChuc #edit_DongToChuc_file_content_upload").html('');
             $('#edit_banmem_DongToChuc .uppy-list').html('');
             uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
             $('#edit_name_DongToChuc').val('');

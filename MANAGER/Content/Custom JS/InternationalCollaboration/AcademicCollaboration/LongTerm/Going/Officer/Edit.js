@@ -247,7 +247,7 @@ $('#going_edit_officer_coop_scope').select2({
         dataType: 'json',
         data: function () {
             return {
-                collab_abbreviation_name: 'JTP' //join training program
+                collab_abbreviation_name: 'FE' //faculty exchange
             };
         },
         processResults: function (data) {
@@ -340,18 +340,23 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     $("#going_edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#going_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    if (acadCollab.file_id != null) {
-                        uppy2.addFile({
-                            name: acadCollab.file_name, // file name
-                            type: '*', // file type
-                            data: new Blob(), // file blob
-                        });
-                    }
+                    //if (acadCollab.file_id != null) {
+                    //    uppy2.addFile({
+                    //        name: acadCollab.file_name, // file name
+                    //        type: '*', // file type
+                    //        data: new Blob(), // file blob
+                    //    });
+                    //} 
 
-                    //console.log(acadCollab.file_id);
-                    //console.log(acadCollab.file_name);
-                    //console.log(acadCollab.file_link);
-                    //console.log(acadCollab.file_drive_id);
+                    let file_content = '';
+                    if (acadCollab.file_id == null) {
+                        file_content = 'Chưa có bản mềm.';
+                    } else {
+                        file_content = acadCollab.file_name;
+                    }
+                    $("#going_edit_officer_upload #going_edit_file_content_upload").append(
+                        `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
+                        white-space: nowrap;" target="_blank" href="` + acadCollab.file_link + `"><span>` + file_content + `</span></a>`);
 
                     file = {
                         file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,
@@ -360,10 +365,8 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                         file_drive_id: acadCollab.file_drive_id === null ? "" : acadCollab.file_drive_id
                     }
 
-                    console.log(file);
-
+                    //console.log(file);
                     collab_id = acadCollab.collab_id;
-
                     $("#going_edit_officer_support").prop("checked", acadCollab.is_supported);
                     $("#going_edit_officer_note").val(acadCollab.note);
                 } else {
@@ -512,6 +515,7 @@ function clearContentEditModal() {
     $('#going_edit_officer_end_plan_date').val('');
 
     //clear upload file
+    $('#going_edit_officer_upload #going_edit_file_content_upload').html('');
     $('#going_edit_officer_upload .uppy-list').html('');
     uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
 

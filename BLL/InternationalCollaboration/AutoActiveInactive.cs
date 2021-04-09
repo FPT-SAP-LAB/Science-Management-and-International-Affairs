@@ -27,9 +27,9 @@ namespace BLL.InternationalCollaboration
                                 LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = mps.partner_scope_id
                                 LEFT JOIN SMIA_AcademicActivity.AcademicActivity aa ON ap.activity_id = aa.activity_id 
                                 WHERE ((ap.partner_scope_id IS NOT NULL AND aa.activity_date_start BETWEEN mp.mou_start_date 
-                                AND mou.mou_end_date AND aa.activity_date_end BETWEEN mp.mou_start_date AND mou.mou_end_date) 
+                                AND mou.mou_end_date) 
                                 OR (ac.partner_scope_id IS NOT NULL AND ac.plan_study_start_date BETWEEN mp.mou_start_date 
-                                AND mou.mou_end_date AND ac.plan_study_end_date BETWEEN mp.mou_start_date AND mou.mou_end_date))";
+                                AND mou.mou_end_date))";
                 foreach (var partner_scope_id in list_partner_scope_id)
                 {
                     List<MOUPartnerScope_Ext> listMps = db.Database.SqlQuery<MOUPartnerScope_Ext>(sql_check,
@@ -64,9 +64,9 @@ namespace BLL.InternationalCollaboration
                                 FROM
                                 (SELECT DISTINCT mou.mou_id,
                                 CASE WHEN ((ap.partner_scope_id IS NULL OR aa.activity_date_start NOT BETWEEN mp.mou_start_date 
-                                AND mou.mou_end_date OR aa.activity_date_end NOT BETWEEN mp.mou_start_date AND mou.mou_end_date) 
+                                AND mou.mou_end_date) 
                                 AND (ac.partner_scope_id IS NULL OR ac.plan_study_start_date NOT  BETWEEN mp.mou_start_date 
-                                AND mou.mou_end_date OR ac.plan_study_end_date NOT BETWEEN mp.mou_start_date AND mou.mou_end_date)) THEN 1 ELSE 0 END 'checker'
+                                AND mou.mou_end_date)) THEN 1 ELSE 0 END 'checker'
                                 FROM IA_Collaboration.MOUPartnerScope mps
                                 JOIN IA_Collaboration.MOU mou ON mou.mou_id = mps.mou_id AND mps.partner_scope_id = @partner_scope_id
                                 JOIN IA_Collaboration.MOUPartnerScope mps2 ON mps2.mou_id = mou.mou_id
@@ -150,9 +150,9 @@ namespace BLL.InternationalCollaboration
                                 LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = mps.partner_scope_id
                                 LEFT JOIN SMIA_AcademicActivity.AcademicActivity aa ON ap.activity_id = aa.activity_id 
                                 WHERE ((ap.partner_scope_id IS NOT NULL AND aa.activity_date_start BETWEEN mp.moa_start_date 
-                                AND moa.moa_end_date AND aa.activity_date_end BETWEEN mp.moa_start_date AND moa.moa_end_date) 
+                                AND moa.moa_end_date) 
                                 OR (ac.partner_scope_id IS NOT NULL AND ac.plan_study_start_date BETWEEN mp.moa_start_date 
-                                AND moa.moa_end_date AND ac.plan_study_end_date BETWEEN mp.moa_start_date AND moa.moa_end_date))";
+                                AND moa.moa_end_date))";
                 foreach (var partner_scope_id in list_partner_scope_id)
                 {
                     List<MOAPartnerScope_Ext> listMps = db.Database.SqlQuery<MOAPartnerScope_Ext>(sql_check,
@@ -187,9 +187,9 @@ namespace BLL.InternationalCollaboration
                                 FROM
                                 (SELECT DISTINCT moa.moa_id,
                                 CASE WHEN ((ap.partner_scope_id IS NULL OR aa.activity_date_start NOT BETWEEN mp.moa_start_date 
-                                AND moa.moa_end_date OR aa.activity_date_end NOT BETWEEN mp.moa_start_date AND moa.moa_end_date) 
+                                AND moa.moa_end_date) 
                                 AND (ac.partner_scope_id IS NULL OR ac.plan_study_start_date NOT  BETWEEN mp.moa_start_date 
-                                AND moa.moa_end_date OR ac.plan_study_end_date NOT BETWEEN mp.moa_start_date AND moa.moa_end_date)) THEN 1 ELSE 0 END 'checker'
+                                AND moa.moa_end_date)) THEN 1 ELSE 0 END 'checker'
                                 FROM IA_Collaboration.MOAPartnerScope mps
                                 JOIN IA_Collaboration.MOA moa ON moa.moa_id = mps.moa_id AND mps.partner_scope_id = @partner_scope_id
                                 JOIN IA_Collaboration.MOAPartner mp ON mp.moa_id = moa.moa_id 
