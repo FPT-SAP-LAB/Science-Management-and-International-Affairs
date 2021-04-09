@@ -315,6 +315,11 @@
     @* -----------------save edit program--------------------------------------------- *@
     <script src="~/Content/Custom JS/InternationalCollaboration/AcademicCollaboration/Program_Edit.js"></script>
     <script>
+        $('.kt_datepicker_5').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        });
         //table 3
         $('#search_status_tab_2_table_1').select2({
             placeholder: 'Trạng thái',
