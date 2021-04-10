@@ -526,9 +526,16 @@
         });
 
         $(".manager_check").click(function () {
-            $(this).attr("name", "1");
-            $(this).empty();
-            $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: lawngreen; border-color: lawngreen'><i class='flaticon2-checkmark' style='color:black'></i></a>")
+            var val = $(this).attr("name");
+            if (val == "0") {
+                $(this).attr("name", "1");
+                $(this).empty();
+                $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: lawngreen; border-color: lawngreen'><i class='flaticon2-checkmark' style='color:black'></i></a>");
+            } else {
+                $(this).attr("name", "0");
+                $(this).empty();
+                $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: red; border-color: red'><i class='flaticon2-delete' style='color:black'></i></a>");
+            }
             //alert(val);
         });
 

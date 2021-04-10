@@ -122,9 +122,9 @@ namespace User.Controllers
         [HttpPost]
         public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
         {
-            cr.addAuthor(people);
+            //cr.addAuthor(people);
             List<Citation> oldcitation = cr.getCitation(request_id);
-            Author author = cr.addAuthor(people);
+            Author author = cr.editAuthor(people);
             string mess = cr.editCitation(oldcitation, citation, request_id, author);
             return Json(new { mess = mess, id = request_id }, JsonRequestBehavior.AllowGet);
         }
