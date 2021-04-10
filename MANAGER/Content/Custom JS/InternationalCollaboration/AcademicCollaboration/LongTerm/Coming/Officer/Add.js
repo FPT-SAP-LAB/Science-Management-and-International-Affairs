@@ -38,10 +38,10 @@ $('#coming_add_officer_name').select2({
     //after clear tag
     //clear email & office
     $('#coming_add_officer_email').val("");
-    $('#coming_add_officer_facility').val(null).trigger('change');
+    //$('#coming_add_officer_facility').val(null).trigger('change');
     //enable email & office
     $('#coming_add_officer_email').prop('disabled', false);
-    $('#coming_add_officer_facility').prop('disabled', false);
+    //$('#coming_add_officer_facility').prop('disabled', false);
 });
 
 function checkPersonComingAdd() {
@@ -62,7 +62,7 @@ function checkPersonComingAdd() {
             if (data != null) {
                 //clear content
                 $('#coming_add_officer_email').val("");
-                $('#coming_add_officer_facility').val(null).trigger('change');
+                //$('#coming_add_officer_facility').val(null).trigger('change');
                 if (data.obj != null) {
                     //avaiable person data in DB
                     available_person = true; //using for Add||Edit
@@ -70,12 +70,12 @@ function checkPersonComingAdd() {
                         //auto fill data
                         let p = data.obj;
                         $('#coming_add_officer_email').val(p.email);
-                        if (!(isEmptyOrNullOrUndefined(p.office_id))) {
-                            $('#coming_add_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
-                        }
+                        //if (!(isEmptyOrNullOrUndefined(p.office_id))) {
+                        //    $('#coming_add_officer_facility').append(new Option(p.office_name, p.office_id, false, true)).trigger('change');
+                        //}
                         //disable email & office
                         $('#coming_add_officer_email').prop('disabled', true);
-                        $('#coming_add_officer_facility').prop('disabled', true);
+                        //$('#coming_add_officer_facility').prop('disabled', true);
                     } else {
                         toastr.error(data.content);
                     }
@@ -84,7 +84,7 @@ function checkPersonComingAdd() {
                     available_person = false;
                     ///enable email and office select
                     $('#coming_add_officer_email').prop('disabled', false);
-                    $('#coming_add_officer_facility').prop('disabled', false);
+                    //$('#coming_add_officer_facility').prop('disabled', false);
                 }
             } else {
                 toastr.error("Kiểm tra cán bộ giảng viên có lỗi xảy ra.");
@@ -96,33 +96,33 @@ function checkPersonComingAdd() {
     });
 }
 
-$('#coming_add_officer_facility').select2({
-    placeholder: 'Đơn vị đào tạo',
-    allowClear: true,
-    ajax: {
-        url: '/AcademicCollaboration/getOffices',
-        delay: 250,
-        cache: true,
-        dataType: 'json',
-        data: function (params) {
-            return {
-                office_name: params.term
-            };
-        },
-        processResults: function (data) {
-            data.obj.map(function (obj) {
-                obj.id = obj.office_id;
-                obj.text = obj.office_name;
-                return data.obj;
-            });
+//$('#coming_add_officer_facility').select2({
+//    placeholder: 'Đơn vị đào tạo',
+//    allowClear: true,
+//    ajax: {
+//        url: '/AcademicCollaboration/getOffices',
+//        delay: 250,
+//        cache: true,
+//        dataType: 'json',
+//        data: function (params) {
+//            return {
+//                office_name: params.term
+//            };
+//        },
+//        processResults: function (data) {
+//            data.obj.map(function (obj) {
+//                obj.id = obj.office_id;
+//                obj.text = obj.office_name;
+//                return data.obj;
+//            });
 
-            return {
-                results: data.obj
-            };
-        }
-    },
-    templateResult: formatOfficeInfo
-});
+//            return {
+//                results: data.obj
+//            };
+//        }
+//    },
+//    templateResult: formatOfficeInfo
+//});
 
 ///2.1.2.ĐƠN VỊ CÔNG TÁC
 $('#coming_add_officer_traning').select2({
@@ -304,7 +304,7 @@ $('#coming_add_officer_save').on('click', function () {
     let person = $('#coming_add_officer_name').val();
 
     let person_email = $('#coming_add_officer_email').val();
-    let person_profile_office_id = $('#coming_add_officer_facility').val();
+    //let person_profile_office_id = $('#coming_add_officer_facility').val();
 
     //partner
     let partner = $('#coming_add_officer_traning').val();
@@ -339,8 +339,8 @@ $('#coming_add_officer_save').on('click', function () {
         let partner_name = partner.split('/')[0];
         let partner_id = partner.split('/')[1];
 
-        let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
-        console.log(obj_person);
+        let obj_person = objPerson(available_person, person_name, person_id, person_email, null);
+        //console.log(obj_person);
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
@@ -401,7 +401,7 @@ $('#coming_add_officer_save').on('click', function () {
 function clearContentComingAddModal() {
     //enable input and select
     $('#coming_add_officer_email').prop('disabled', false);
-    $("#coming_add_officer_facility").prop('disabled', false);
+    //$("#coming_add_officer_facility").prop('disabled', false);
     $('#coming_add_officer_nation').prop('disabled', false);
     $('#coming_add_officer_coop_scope').prop('disabled', false);
 
@@ -409,7 +409,7 @@ function clearContentComingAddModal() {
     ///THÔNG TIN CÁ NHÂN
     $('#coming_add_officer_name').val(null).trigger('change');
     $('#coming_add_officer_email').val('');
-    $('#coming_add_officer_facility').val(null).trigger('change');
+    //$('#coming_add_officer_facility').val(null).trigger('change');
     ///ĐƠN VỊ ĐÀO TẠO
     $('#coming_add_officer_traning').val(null).trigger('change');
     $('#coming_add_officer_nation').val(null).trigger('change');
