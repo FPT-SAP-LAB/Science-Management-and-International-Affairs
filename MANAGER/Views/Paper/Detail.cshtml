@@ -80,9 +80,9 @@
                 <label>Chỉ số tạp chí</label>
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.index" disabled />
             </div>
-            <div class="col-xl-6 form-group" style="display: none">
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
                 <label>Ghi chú</label>
-                <input class="form-control form-control-lg" type="text" value="" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.note_domestic" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Loại khen thưởng</label>
@@ -526,9 +526,16 @@
         });
 
         $(".manager_check").click(function () {
-            $(this).attr("name", "1");
-            $(this).empty();
-            $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: lawngreen; border-color: lawngreen'><i class='flaticon2-checkmark' style='color:black'></i></a>")
+            var val = $(this).attr("name");
+            if (val == "0") {
+                $(this).attr("name", "1");
+                $(this).empty();
+                $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: lawngreen; border-color: lawngreen'><i class='flaticon2-checkmark' style='color:black'></i></a>");
+            } else {
+                $(this).attr("name", "0");
+                $(this).empty();
+                $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: red; border-color: red'><i class='flaticon2-delete' style='color:black'></i></a>");
+            }
             //alert(val);
         });
 

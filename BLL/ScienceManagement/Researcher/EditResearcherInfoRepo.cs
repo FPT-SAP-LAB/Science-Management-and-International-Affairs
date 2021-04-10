@@ -62,7 +62,7 @@ namespace BLL.ScienceManagement.Researcher
                     string website = (string)editInfo["info"]["website"];
                     string googlescholar = (string)editInfo["info"]["googlescholar"];
                     string cv = (string)editInfo["info"]["cv"];
-                    
+
                     if (birthdate == null || birthdate == "")
                     {
                         profile.birth_date = null;
