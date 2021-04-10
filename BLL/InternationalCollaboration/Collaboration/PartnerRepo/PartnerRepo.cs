@@ -248,14 +248,15 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 {
                     db = new ScienceAndInternationalAffairsEntities();
                     string partner_name_check = db.Partners.Find(partner_id).partner_name;
-                    if(!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
+                    if (!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
                     {
                         int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
                         if (partner_check > 0)
                         {
                             return new AlertModal<string>(false, "Tên đối tác bị trùng");
                         }
-                    }else
+                    }
+                    else
                     {
                         int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
                         if (partner_check > 1)
