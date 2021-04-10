@@ -62,7 +62,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                int added=researcherBiographyRepo.EditWorkEvent(data);
+                int added = researcherBiographyRepo.EditWorkEvent(data);
                 if (added == 1)
                 {
                     return Json(new { success = true });
@@ -99,7 +99,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                int added=researcherBiographyRepo.DeleteAcadEvent(data);
+                int added = researcherBiographyRepo.DeleteAcadEvent(data);
                 if (added == 1)
                 {
                     return Json(new { success = true });
@@ -121,7 +121,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                int added=researcherBiographyRepo.DeleteWorkEvent(data);
+                int added = researcherBiographyRepo.DeleteWorkEvent(data);
                 if (added == 1)
                 {
                     return Json(new { success = true });
@@ -150,7 +150,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                     rank = Request["add_award_rank"],
                     award_time = DateTime.ParseExact(Request["add_award_date"], "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 };
-                int added=researcherBiographyRepo.AddAward(a);
+                int added = researcherBiographyRepo.AddAward(a);
                 if (added == 1)
                 {
                     return Json(new { success = true });
@@ -171,7 +171,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                int added= researcherBiographyRepo.EditAward(Request);
+                int added = researcherBiographyRepo.EditAward(Request);
                 if (added == 1)
                 {
                     return Json(new { success = true });
@@ -192,7 +192,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                int added= researcherBiographyRepo.DeleteAward(Request);
+                int added = researcherBiographyRepo.DeleteAward(Request);
                 if (added == 1)
                 {
                     return Json(new { success = true });
