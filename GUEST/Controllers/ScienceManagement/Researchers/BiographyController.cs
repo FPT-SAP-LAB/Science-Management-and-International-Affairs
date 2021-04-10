@@ -18,8 +18,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                researcherBiographyRepo.AddNewAcadEvent(data);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.AddNewAcadEvent(data);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -33,8 +40,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                researcherBiographyRepo.AddNewWorkEvent(data);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.AddNewWorkEvent(data);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -48,8 +62,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                researcherBiographyRepo.EditWorkEvent(data);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.EditWorkEvent(data);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -78,8 +99,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                researcherBiographyRepo.DeleteAcadEvent(data);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.DeleteAcadEvent(data);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -93,8 +121,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 string data = Request["data"];
-                researcherBiographyRepo.DeleteWorkEvent(data);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.DeleteWorkEvent(data);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -115,8 +150,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                     rank = Request["add_award_rank"],
                     award_time = DateTime.ParseExact(Request["add_award_date"], "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 };
-                researcherBiographyRepo.AddAward(a);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.AddAward(a);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -129,8 +171,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                researcherBiographyRepo.EditAward(Request);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.EditAward(Request);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
@@ -143,8 +192,15 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                researcherBiographyRepo.DeleteAward(Request);
-                return Json(new { success = true });
+                int added = researcherBiographyRepo.DeleteAward(Request);
+                if (added == 1)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception e)
             {
