@@ -243,7 +243,8 @@ namespace BLL.ScienceManagement.Paper
                         vol = item.vol,
                         company = item.company,
                         index = item.index,
-                        paper_type_id = item.paper_type_id
+                        paper_type_id = item.paper_type_id,
+                        note_domestic = item.note_domestic
                     };
                     db.Papers.Add(paper);
                     db.SaveChanges();
