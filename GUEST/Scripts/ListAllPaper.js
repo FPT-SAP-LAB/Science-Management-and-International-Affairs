@@ -38,7 +38,6 @@
             todayHighlight: true,
             templates: arrows,
             format: "dd/mm/yyyy",
-            todayHighlight: true,
             endDate: "10/04/2021"
         });
     }
