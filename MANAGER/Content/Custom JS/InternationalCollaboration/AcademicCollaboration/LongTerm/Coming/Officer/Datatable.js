@@ -47,10 +47,6 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
             name: 'partner_name'
         },
         {
-            data: 'office_name',
-            name: 'office_name'
-        },
-        {
             data: 'country_name',
             name: 'country_name'
         },
@@ -111,7 +107,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
             className: 'text-center'
         },
         {
-            targets: 8,
+            targets: 7,
             render: function (data, type, row) {
                 var status = {
                     1: {
