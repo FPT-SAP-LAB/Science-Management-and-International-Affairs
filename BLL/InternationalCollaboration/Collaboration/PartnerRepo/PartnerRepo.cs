@@ -247,10 +247,21 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 try
                 {
                     db = new ScienceAndInternationalAffairsEntities();
-                    int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
-                    if (partner_check > 0)
+                    string partner_name_check = db.Partners.Find(partner_id).partner_name;
+                    if(!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
                     {
-                        return new AlertModal<string>(false, "Tên đối tác bị trùng");
+                        int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                        if (partner_check > 0)
+                        {
+                            return new AlertModal<string>(false, "Tên đối tác bị trùng");
+                        }
+                    }else
+                    {
+                        int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                        if (partner_check > 1)
+                        {
+                            return new AlertModal<string>(false, "Tên đối tác bị trùng");
+                        }
                     }
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
