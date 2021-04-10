@@ -62,7 +62,15 @@ namespace BLL.ScienceManagement.Researcher
                     string website = (string)editInfo["info"]["website"];
                     string googlescholar = (string)editInfo["info"]["googlescholar"];
                     string cv = (string)editInfo["info"]["cv"];
-                    profile.birth_date = DateTime.ParseExact(birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    
+                    if (birthdate == null || birthdate == "")
+                    {
+                        profile.birth_date = null;
+                    }
+                    else
+                    {
+                        profile.birth_date = DateTime.ParseExact(birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    }
                     person.phone_number = phone;
                     profile.website = website;
                     profile.cv = cv;
