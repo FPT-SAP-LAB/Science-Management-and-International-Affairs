@@ -35,6 +35,7 @@ namespace ENTITIES
         public string index { get; set; }
         public Nullable<int> paper_type_id { get; set; }
         public Nullable<int> file_id { get; set; }
+        public string note_domestic { get; set; }
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
