@@ -99,7 +99,7 @@ namespace BLL.ScienceManagement.Citation
                 AddAuthor temp = people[0];
                 Author author = db.Authors.Where(x => x.people_id == temp.people_id).FirstOrDefault();
                 author.name = temp.name;
-                author.email = temp.email; 
+                author.email = temp.email;
                 if (temp.office_id != 0)
                 {
                     author.office_id = temp.office_id;
