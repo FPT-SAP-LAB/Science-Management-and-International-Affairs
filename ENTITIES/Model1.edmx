@@ -576,12 +576,12 @@
         </EntityType>
         <EntityType Name="ConferenceCriteriaLanguage">
           <Key>
-            <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="conference_criteria_language_id" />
           </Key>
+          <Property Name="conference_criteria_language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="criteria_id" Type="int" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.ConferenceStatusLanguage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -750,6 +750,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="datetime" Nullable="false" />
           <Property Name="time_end" Type="datetime" Nullable="false" />
           <Property Name="formality_id" Type="int" Nullable="false" />
+          <Property Name="organized_unit" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="co-organized_unit" Type="nvarchar" MaxLength="50" />
           <Property Name="is_verified" Type="bit" Nullable="false" />
         </EntityType>
@@ -811,7 +812,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ranking" Type="int" Nullable="false" />
+          <Property Name="ranking" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="university" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -1048,6 +1049,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="index" Type="nvarchar" MaxLength="150" />
           <Property Name="paper_type_id" Type="int" />
           <Property Name="file_id" Type="int" />
+          <Property Name="note_domestic" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="PaperCriteria">
           <Key>
@@ -5655,12 +5657,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
         </EntityType>
         <EntityType Name="ConferenceCriteriaLanguage">
           <Key>
-            <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="conference_criteria_language_id" />
           </Key>
+          <Property Name="conference_criteria_language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="criteria_id" Type="Int32" Nullable="false" />
           <Property Name="language_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Criterion" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="ConferenceCriteriaLanguage" ToRole="Criteria" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="ConferenceCriteriaLanguage" ToRole="Language" />
         </EntityType>
@@ -5827,6 +5829,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="time_end" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="formality_id" Type="Int32" Nullable="false" />
+          <Property Name="organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="co_organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="is_verified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Conferenc__count__589C25F3" FromRole="Conference" ToRole="Country" />
@@ -5904,7 +5907,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ranking" Type="Int32" Nullable="false" />
+          <Property Name="ranking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="university" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -6194,6 +6197,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="index" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="paper_type_id" Type="Int32" />
           <Property Name="file_id" Type="Int32" />
+          <Property Name="note_domestic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="File" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="Paper" ToRole="File" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__RequestCo__paper__1881A0DE" FromRole="Paper" ToRole="RequestConference" />
           <NavigationProperty Name="PaperType" Relationship="Self.FK__Paper__paper_typ__38EE7070" FromRole="Paper" ToRole="PaperType" />
@@ -10598,6 +10602,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySetMapping Name="ConferenceCriteriaLanguages">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceCriteriaLanguage">
               <MappingFragment StoreEntitySet="ConferenceCriteriaLanguage">
+                <ScalarProperty Name="conference_criteria_language_id" ColumnName="conference_criteria_language_id" />
                 <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -10730,6 +10735,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="time_start" ColumnName="time_start" />
                 <ScalarProperty Name="time_end" ColumnName="time_end" />
                 <ScalarProperty Name="formality_id" ColumnName="formality_id" />
+                <ScalarProperty Name="organized_unit" ColumnName="organized_unit" />
                 <ScalarProperty Name="co_organized_unit" ColumnName="co-organized_unit" />
                 <ScalarProperty Name="is_verified" ColumnName="is_verified" />
               </MappingFragment>
@@ -11038,6 +11044,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="index" ColumnName="index" />
                 <ScalarProperty Name="paper_type_id" ColumnName="paper_type_id" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="note_domestic" ColumnName="note_domestic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -247,6 +247,7 @@
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\QsUniversityController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\AdditionalProfileController.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\AcademicActivity\AcademicActivityController.cs" />
@@ -2411,6 +2412,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom CSS\preloader.css" />
+    <Content Include="Content\Custom JS\ScienceManagement\ConferenceSponsor\QsUniversity.js" />
     <Content Include="Content\demo_partner_detail_guest.jpg" />
     <Content Include="Content\Picture1.jpg" />
     <Content Include="Content\Picture2.jpg" />
@@ -2542,6 +2544,7 @@
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AdditionalProfile\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

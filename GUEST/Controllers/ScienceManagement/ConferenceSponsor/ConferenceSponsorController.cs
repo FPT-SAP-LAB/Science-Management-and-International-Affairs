@@ -109,12 +109,17 @@ namespace GUEST.Controllers
         public ActionResult Detail(int id)
         {
             pagesTree.Add(new PageTree("Chi tiết", "/ConferenceSponsor/Detail?id=" + id));
+            ViewBag.pagesTree = pagesTree;
+
+            QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();
+
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
 
-            ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
+            string university = JObject.Parse(output)["Conference"]["QsUniversity"].ToString();
+            ViewBag.ranking = qsUniversityRepo.GetRanking(university);
             return View();
         }
         [AjaxOnly]

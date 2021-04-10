@@ -65,7 +65,8 @@ $('.add_program_btn').click(function() {
     var add_program_title
     var add_program_language
     var add_program_partner
-    var add_program_range_date
+    var add_program_start_date
+    var add_program_end_date
     var note
     var content
 
@@ -73,6 +74,8 @@ $('.add_program_btn').click(function() {
         add_program_title = $('#add_program_title_going').val()
         add_program_language = $('#add_program_language_going').val()
         add_program_partner = $('#add_program_partner').val()
+        add_program_start_date = $('#add_program_start_date_going').val()
+        add_program_end_date = $('#add_program_end_date_going').val()
         add_program_range_date = $('#add_program_range_date_going').val()
         note = $('#add_note_going').val()
         content = $('#add_summernote_going').summernote('code') + "";
@@ -81,7 +84,8 @@ $('.add_program_btn').click(function() {
         add_program_title = $('#add_program_title_coming').val()
         add_program_language = $('#add_program_language_coming').val()
         add_program_partner = ""
-        add_program_range_date = $('#add_program_range_date_coming').val()
+        add_program_start_date = $('#add_program_start_date_coming').val()
+        add_program_end_date = $('#add_program_end_date_coming').val()
         note = $('#add_note_coming').val()
         content = $('#add_summernote_coming').summernote('code') + "";
     }
@@ -93,7 +97,10 @@ $('.add_program_btn').click(function() {
         toastr.warning("Vui lòng chọn đối tác")
         return;
     }
-
+    if (add_program_start_date == "" || add_program_end_date == "") {
+        toastr.warning("Vui lòng chọn thời hạn")
+        return;
+    }
     var save_loader = new LoaderBtn($(".load-btn"))
     var form_data = new FormData();
 
@@ -114,7 +121,8 @@ $('.add_program_btn').click(function() {
     form_data.append('program_title', add_program_title)
     form_data.append('program_partner', add_program_partner)
     form_data.append('program_language', add_program_language)
-    form_data.append('program_range_date', add_program_range_date)
+    form_data.append('add_program_start_date', add_program_start_date)
+    form_data.append('add_program_end_date', add_program_end_date)
     form_data.append('note', note)
     form_data.append('content', content)
 
@@ -149,7 +157,6 @@ $('.add_program_btn').click(function() {
 
                 $('.modal-add-program input').val('');
                 $('.modal-add-program textarea').val('');
-                $('.modal-add-program .kt_daterangepicker_1').val(moment().format('DD/MM/yyyy') + ' - ' + moment().format('DD/MM/yyyy'));
                 $('.modal-add-program select').val('').trigger('change');
                 $('.modal-add-program .program_language').val('1').trigger('change');
                 $('#add_summernote_going').summernote('reset');

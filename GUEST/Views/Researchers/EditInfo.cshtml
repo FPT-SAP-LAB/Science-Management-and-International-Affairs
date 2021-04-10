@@ -256,7 +256,7 @@
                 </div>
                 <!--end::Content-->
             </div>
-            <!--end::Profile Personal Information-->
+            <!--enddd::Profile Personal Information-->
             <div class="row">
                 <!--begin::Aside-->
                 <!--end::Aside-->
@@ -299,6 +299,50 @@
                         </div>
                     </div>
 
+                </div>
+                <!--end::Content-->
+            </div>
+            <div class="row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="col-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">GIẢI THƯỞNG</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="award_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Cuộc thi/giải thưởng</th>
+                                                <th>Thứ hạng</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm giải thưởng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--end::Content-->
             </div>
@@ -443,7 +487,6 @@
         </div>
     </div>
 </div>
-<!--end::Body-->
 <!-- Modal edit hoc tap-->
 <div class="modal fade" id="modal_suatieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -582,6 +625,109 @@
         </div>
     </div>
 </div>
+<!--Modal them award-->
+<div class="modal fade" id="modal_them_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm giải thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="add_award_name">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Thứ hạng" id="add_award_rank">
+                            <span><i class="far fa-hand-rock"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group date" id="date_award" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="add_award_date" placeholder="Thời gian" data-target="#date_award" />
+                                    <div class="input-group-append" data-target="#date_award" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_award">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_edit_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin giải thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="edit_award_name">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Thứ hạng" id="edit_award_rank">
+                            <span><i class="far fa-hand-rock"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group date" id="edit_date_award" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="sua_award_date" placeholder="Thời gian" data-target="#edit_date_award" />
+                                    <div class="input-group-append" data-target="#edit_date_award" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_award">Lưu</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_award">Xoá</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         $(function () {
@@ -625,19 +771,15 @@
                 }
             };
         }();
-
         // Initialization
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
-
-
         function enableEdit() {
             $("#edit-control-area").show()
             $("#edit-enable-area").hide()
             $(".researcher_infomation").attr('disabled', false)
         }
-
         var KTBootstrapDatetimepicker = function () {
             // Private functions
             var baseDemos = function () {
@@ -652,13 +794,11 @@
                 }
             };
         }();
-
         jQuery(document).ready(function () {
             KTBootstrapDatetimepicker.init();
         });
     </script>
     <script>
-       
     </script>
     <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
     <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>

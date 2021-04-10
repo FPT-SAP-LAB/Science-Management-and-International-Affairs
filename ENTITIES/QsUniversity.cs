@@ -15,7 +15,7 @@ namespace ENTITIES
     public partial class QsUniversity
     {
         public int row_id { get; set; }
-        public int ranking { get; set; }
+        public string ranking { get; set; }
         public string university { get; set; }
     }
 }

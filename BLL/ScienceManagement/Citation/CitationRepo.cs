@@ -49,7 +49,7 @@ namespace BLL.ScienceManagement.Citation
         public AuthorInfo getAuthor(string id)
         {
             AuthorInfo item = new AuthorInfo();
-            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher'
+            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
 	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
@@ -91,6 +91,41 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
+        public Author editAuthor(List<AddAuthor> people)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                AddAuthor temp = people[0];
+                Author author = db.Authors.Where(x => x.people_id == temp.people_id).FirstOrDefault();
+                author.name = temp.name;
+                author.email = temp.email;
+                if (temp.office_id != 0)
+                {
+                    author.office_id = temp.office_id;
+                    author.bank_number = temp.bank_number;
+                    author.bank_branch = temp.bank_branch;
+                    author.tax_code = temp.tax_code;
+                    author.identification_number = temp.identification_number;
+                    author.mssv_msnv = temp.mssv_msnv;
+                    author.is_reseacher = temp.is_reseacher;
+                    author.title_id = temp.title_id;
+                    author.contract_id = temp.contract_id;
+                    author.identification_file_link = temp.identification_file_link;
+                }
+                db.Entry(author).State = EntityState.Modified;
+                db.SaveChanges();
+                dbc.Commit();
+                return author;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return null;
+            }
+        }
+
         public Author addAuthor(List<AddAuthor> list)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -113,6 +148,7 @@ namespace BLL.ScienceManagement.Citation
                         author.is_reseacher = item.is_reseacher;
                         author.title_id = item.title_id;
                         author.contract_id = item.contract_id;
+                        author.identification_file_link = item.identification_file_link;
                     }
                     db.Authors.Add(author);
                 }

@@ -1,6 +1,6 @@
 ﻿
 @{
-    //ViewBag.Title = "Detail";
+    ViewBag.Title = "Chi tiết trích dẫn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
@@ -29,7 +29,7 @@
                         <label>Chức danh</label>
                         <select disabled class="form-control editfe select-custom edit" id="add_author_title_edit" name="param" style="width: 100% !important">
                             @{
-                                foreach (var item in ViewBag.title)
+                                foreach (var item in ViewBag.ctitle)
                                 {
                                     <option value="@item.title_id">@item.name</option>
                                 }
@@ -37,17 +37,17 @@
                         </select>
                     </div>
                     @*<div class="col-xl-6 form-group">
-                        <label>Loại hợp đồng</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.contract_name" disabled />
-                    </div>*@
+                            <label>Loại hợp đồng</label>
+                            <input class="form-control form-control-lg" type="text" value="@ViewBag.author.contract_name" disabled />
+                        </div>*@
                     <div class="col-xl-6 form-group">
                         <label>CMND</label>
                         <input class="form-control form-control-lg" type="text" value="@ViewBag.author.identification_number" disabled />
                     </div>
-                    @*<div class="col-xl-6 form-group">
-                            <label>CMND</label>
-                            <input class="form-control form-control-lg" type="text" value="@ViewBag.author." disabled />
-                        </div>*@
+                    <div class="col-xl-6 form-group">
+                        <label>CMND link</label>
+                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.identification_file_link" disabled />
+                    </div>
                     <div class="col-xl-6 form-group">
                         <label>Mã số thuế</label>
                         <input class="form-control form-control-lg" type="text" value="@ViewBag.author.tax_code" disabled />
@@ -91,7 +91,7 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <label>Tổng thưởng</label>
-                        <input id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
+                        <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
                     </div>
                 </div>
                 <hr />
@@ -230,12 +230,18 @@
             }
         });
         $("#totalreward").inputFilter(function (value) {
-            return /^-?\d*$/.test(value);
+            return /^[0-9,.]*$/.test(value);
         });
-        $("#totalreward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
+
+        //$("#totalreward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
+
+        function numberWithCommas(ele) {
+            var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(ele).val(x);
+        }
     </script>
 }
 

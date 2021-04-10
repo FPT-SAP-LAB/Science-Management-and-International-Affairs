@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PaperName")</label>
-                            <input id="paper_name" class="form-control form-control-lg edit edit" type="text" value="@ViewBag.Paper.name" />
+                            <input autocomplete="off" id="paper_name" class="form-control form-control-lg edit edit" type="text" value="@ViewBag.Paper.name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishDate")</label>
-                            <input id="paper_publish_date" class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.Paper.publish_date.ToString("MM/yyyy")" />
+                            <input autocomplete="off" id="paper_publish_date" class="form-control form-control-lg edit custom-pickdate" type="text" value="@ViewBag.Paper.publish_date.ToString("MM/yyyy")" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("LinkFull")</label>
-                            <input id="paper_full" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_doi" />
+                            <input autocomplete="off" id="paper_full" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_doi" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Link scholar</label>
-                            <input id="paper_scholar" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_scholar" />
+                            <input autocomplete="off" id="paper_scholar" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.link_scholar" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>Loại ấn phẩm</label>
@@ -52,19 +52,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("JournalName")</label>
-                            <input id="paper_journal" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.journal_name" />
+                            <input autocomplete="off" id="paper_journal" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.journal_name" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Vol")</label>
-                            <input id="paper_vol" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.vol" />
+                            <input autocomplete="off" id="paper_vol" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Page")</label>
-                            <input id="paper_page" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.page" />
+                            <input autocomplete="off" id="paper_page" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PublishName")</label>
-                            <input id="paper_publish_name" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
+                            <input autocomplete="off" id="paper_publish_name" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
@@ -94,15 +94,15 @@
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
-                            <input class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" id="paper_index" />
+                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" id="paper_index" />
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
-                            <input class="form-control form-control-lg edit" type="text" />
+                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" id="paper_note_domestic" value="@ViewBag.Paper.note_domestic"/>
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
-                            <input class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.Paper.total_reward" />
+                            <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.Paper.total_reward" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("RewardType")</label>
@@ -209,6 +209,7 @@
     <script>
         var paper_id = "@ViewBag.id";
         var ck = "@ViewBag.ckEdit";
+        var check = true;
         var people = [];
         var criteria = [];
         $('#chuyennganh').select2({
@@ -257,16 +258,7 @@
         }
 
         function editCriteria() {
-            var inputs = $(".tieuchiname");
-            var inputs2 = $(".tieuchilink");
-            for (var i = 0; i < inputs.length; i++) {
-                var PaperWithCriteria = {
-                    link: $(inputs2[i]).val(),
-                    name: $(inputs[i]).val()
-                }
-                criteria.push(PaperWithCriteria);
-            }
-            console.log(criteria);
+
             $.ajax({
                 url: "@Url.Action("editCriteria", "Paper")",
                 type: "POST",
@@ -360,6 +352,36 @@
             var dateFormat
             if (arr.length == 3) dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
             else dateFormat = arr[0] + '/01/' + arr[1];
+
+            var inputs = $(".tieuchiname");
+            var inputs2 = $(".tieuchilink");
+            criteria = [];
+            for (var i = 0; i < inputs.length; i++) {
+                var PaperWithCriteria = {
+                    link: $(inputs2[i]).val(),
+                    name: $(inputs[i]).val()
+                }
+                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
+                    $("#loading").hide();
+                    toastr.error("Tiêu chí chưa có link chứng minh");
+                    check = false;
+                    return false;
+                }
+                criteria.push(PaperWithCriteria);
+            }
+            if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
+                $("#loading").hide();
+                toastr.error("Cần có ít nhất 1 tiêu chí");
+                check = false;
+            }
+
+            if (people.length == 0) {
+                check = false;
+                $("#loading").hide();
+                toastr.error("Chưa có tác giả");
+            }
+
+
             var Paper = {
                 name: $("#paper_name").val(),
                 publish_date: dateFormat,
@@ -370,25 +392,29 @@
                 vol: $("#paper_vol").val(),
                 page: $("#paper_page").val(),
                 company: $("#paper_publish_name").val(),
-                index: $("#paper_index").val()
+                index: $("#paper_index").val(),
+                note_domestic: $("#paper_note_domestic").val(),
             };
-            $.ajax({
-                url: "@Url.Action("editPaper", "Paper")",
-                type: "POST",
-                data: JSON.stringify({ 'paper': Paper, 'paper_id': paper_id }),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-                    if (response.mess == "ss") {
-                        editCriteria();
+
+            if (check) {
+                $.ajax({
+                    url: "@Url.Action("editPaper", "Paper")",
+                    type: "POST",
+                    data: JSON.stringify({ 'paper': Paper, 'paper_id': paper_id }),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (response) {
+                        if (response.mess == "ss") {
+                            editCriteria();
+                        }
+                        else alert('loi');
+                    },
+                    error: function () {
+                        //alert("fail");
                     }
-                    else alert('loi');
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
+                });
+            } else check = true;
         });
 
         $("#view_decision").click(function () {
@@ -496,7 +522,7 @@
                         id = new Date().getTime();
                         au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
                             add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id);
+                            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, response.author[i].identification_file_link);
                         $("#authors-info-container").append(au.getHTML());
                         var AddAuthor = {
                             name: add_author_name,
@@ -513,7 +539,8 @@
                             temp_id: id,
                             office_abbreviation: response.author[i].office_abbreviation,
                             is_reseacher: response.author[i].is_reseacher,
-                            money_string: add_author_reward
+                            money_string: add_author_reward,
+                            identification_file_link: response.author[i].identification_file_link
                         }
                         people.push(AddAuthor);
                     }
@@ -570,8 +597,8 @@
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
             $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
-                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>" +
-                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' /></span>" +
+                "<span class='col-xl-2'><input autocomplete='off' readonly value='" + temp + "' class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input autocomplete='off' placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg edit btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
             var option = $("#tieuchi option[value='" + temp + "']");

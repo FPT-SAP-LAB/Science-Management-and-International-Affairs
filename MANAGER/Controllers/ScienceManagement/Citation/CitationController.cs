@@ -40,7 +40,7 @@ namespace MANAGER.Controllers
             ViewBag.author = author;
 
             List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
-            ViewBag.title = listTitle;
+            ViewBag.ctitle = listTitle;
 
             ViewBag.request_id = id;
 
