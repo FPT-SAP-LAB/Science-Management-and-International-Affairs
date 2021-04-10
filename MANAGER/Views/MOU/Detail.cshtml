@@ -37,7 +37,7 @@
                                     <input class="form-control" type="text" placeholder="Số hiệu" autocomplete="off" required id="mou_code" />
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <label class="font-weight-bolder">Đơn vị - Cơ sở kí kết</label>
+                                    <label class="font-weight-bolder">Đơn vị - Cơ sở ký kết</label>
                                     <label style="color:red">*</label>
                                     <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
                                         <select class="form-control select-search" id="office" name="param" style="width:100% !important">
@@ -50,7 +50,7 @@
                                     <label class="font-weight-bolder">Thời gian có hiệu lực</label>
                                     <label style="font-style: italic;">(Cập nhật theo đối tác)</label>
                                     <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_sign_date" data-target-input="nearest">
-                                        <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
+                                        <input disabled type="text" class="form-control datetimepicker-input" placeholder="Thời gian ký kết" id="sign_date_mou" readonly autocomplete="off" data-target="#kt_datetimepicker_sign_date" />
                                         <div class="input-group-append" data-target="#kt_datetimepicker_sign_date" data-toggle="datetimepicker">
                                             <span class="input-group-text">
                                                 <i class="ki ki-calendar"></i>
@@ -87,7 +87,7 @@
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                                     <label class="font-weight-bolder">Phạm vi hợp tác chính</label>&nbsp;
                                     <label style="font-style: italic;">
-                                        (Cập nhật theo pham vi hợp tác của các đối tác kí kết)
+                                        (Cập nhật theo pham vi hợp tác của các đối tác ký kết)
                                     </label>
                                     <input disabled class="form-control" type="text" placeholder="Phạm vi hợp tác" autocomplete="off" required id="coop_scope" />
                                 </div>
@@ -404,7 +404,7 @@
         })
 
         $('#facility').select2({
-            placeholder: 'Đơn vị - Cơ sở kí kết',
+            placeholder: 'Đơn vị - Cơ sở ký kết',
             allowClear: true,
         })
         $('#partner_name_form').select2({
@@ -779,7 +779,17 @@
             columns: [
                 { data: "mou_bonus_code" },
                 { data: "mou_bonus_decision_date_string" },
-                { data: "mou_bonus_end_date_string" },
+                //{ data: "mou_bonus_end_date_string" },
+                {
+                    data: "mou_bonus_end_date_string",
+                    render: function (data) {
+                        if (data == "01/01/1900") {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
                 { data: "partner_name" },
                 { data: "scope_abbreviation" },
                 {
@@ -1268,15 +1278,17 @@
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
-            else if ($('#mou_addition_end_time').val().trim() == "") {
-                button_loader.stopLoading();
-                toastr.error('Ngày hết hạn chưa được chọn');
-                return;
-            }
-            else if (compareDate($('#mou_addition_sign_time').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
-                button_loader.stopLoading();
-                toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
-                return;
+            else if ($('#mou_addition_end_time').val().trim() != "") {
+                if (compareDate($('#mou_addition_sign_time').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                    button_loader.stopLoading();
+                    toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+                    return;
+                } 
+                else if (compareDate($('#end_date_mou').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
+                    button_loader.stopLoading();
+                    toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
+                    return;
+                }
             }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_add').val().trim())) {
                 button_loader.stopLoading();
@@ -1288,23 +1300,16 @@
                 toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
                 return;
             }
-            else if (compareDate($('#end_date_mou').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
-                button_loader.stopLoading();
-                toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
-                return;
-            }
             else {
                 var ExBasicInfo = {
                     ex_mou_code: $('#ex_mou_id_add').val() ,
                     ex_mou_sign_date: $('#mou_addition_sign_time').val(),
                     ex_mou_end_date: $('#mou_addition_end_time').val()
                 };
-
                 var ExMOUAdd = {
                     ExBasicInfo: ExBasicInfo,
                     PartnerScopeInfo: listTempExMOUPartnerScope,
                 };
-
                 $.ajax({
                     url: "@Url.Action("Add_Ex_Mou", "BasicInfoMOU")",
                     type: "POST",
@@ -1338,7 +1343,11 @@
                     $('#ex_mou_id_edit').val(data.ExBasicInfo.ex_mou_code);
                     $('#mou_bonus_id').val(mou_bonus_id);
                     $('#mou_addition_sign_time_edit').val(data.ExBasicInfo.ex_mou_sign_date);
-                    $('#mou_addition_end_time_edit').val(data.ExBasicInfo.ex_mou_end_date);
+                    if (data.ExBasicInfo.ex_mou_end_date == '01/01/1900') {
+                        $('#mou_addition_end_time_edit').val('');
+                    } else {
+                        $('#mou_addition_end_time_edit').val(data.ExBasicInfo.ex_mou_end_date);
+                    }
                     addToPartnerScopeListEdit(data);
                 },
                 error: function (data) {
@@ -1527,28 +1536,29 @@
             }
         }
 
-        function finishExMOUEdit() {
-            var button_loader = new LoaderBtn($('#edit_ex_mou_modal'));
+        function finishExMOUEdit(element) {
+            var button_loader = new LoaderBtn(element);
             button_loader.startLoading();
             if ($('#ex_mou_id_edit').val().trim() == "") {
                 button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
-            else if ($('#mou_addition_end_time_edit').val().trim() == "") {
-                button_loader.stopLoading();
-                toastr.error('Ngày hết hạn chưa được chọn');
-                return;
-            }
-            else if (compareDate($('#mou_addition_sign_time_edit').val(), $('#mou_addition_end_time_edit').val())) { //compare = true <=> sign_date > end_date
-                button_loader.stopLoading();
-                toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
-                return;
-            }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_edit').val().trim())) {
+                alert('test');
                 button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
+            }
+            else if ($('#mou_addition_end_time_edit').val().trim() != "") {
+                if (compareDate($('#mou_addition_sign_time_edit').val(), $('#mou_addition_end_time_edit').val())) { //compare = true <=> sign_date > end_date
+                    button_loader.stopLoading();
+                    toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
+                    return;
+                } else {
+                    button_loader.stopLoading();
+                    alert('huhu');
+                }
             }
             else {
                 var ExBasicInfo = {
@@ -1587,7 +1597,9 @@
                     }
                 });
             }
-        }
+    }
+
+
 
     @*mou_partner*@
         var listSpeMOUPartner = [];
@@ -2587,7 +2599,7 @@
             return;
         }
         else if (compareDate($('#sign_date_mou').val(), $('#moa_sign_date_partner_add').val())) { //compare = true <=> sign_date > end_date
-            toastr.error('Ngày ký kết đối tác trong biên bản thỏa thuận phải sau ngày kí kết trong biên bản ghi nhớ');
+            toastr.error('Ngày ký kết đối tác trong biên bản thỏa thuận phải sau ngày ký kết trong biên bản ghi nhớ');
             return;
         }
         else {

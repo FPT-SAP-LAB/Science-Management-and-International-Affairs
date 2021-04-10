@@ -590,6 +590,7 @@
                 cache: false,
                 success: function (isDuplicated) {
                     if (isDuplicated) {
+                        add_mou_loader.stopLoading();
                         toastr.error("Đã có mã hiệu " + $('#mou_code_add').val()+ " trong hệ thống");
                     } else {
                         checkIntersectPeriodMOUDate();
@@ -617,6 +618,7 @@
                 cache: false,
                 success: function (data) {
                     if (data.mou_id != 0) {
+                        add_mou_loader.stopLoading();
                         toastr.error("Các đối tác trên đã ký kết từ ngày " + data.mou_start_date_string + " đến ngày " + data.mou_end_date_string + " ở biên bản " + data.mou_code);
                     } else {
                         addMOU();
@@ -674,7 +676,9 @@
         })
     }
 
-    function doneStep() {
+    var add_mou_loader;
+    function doneStep(element) {
+        add_mou_loader = new LoaderBtn(element);
         //start display loading:
         add_mou_loader.startLoading();
         if ($('#mou_code_add').val().trim() == "") {

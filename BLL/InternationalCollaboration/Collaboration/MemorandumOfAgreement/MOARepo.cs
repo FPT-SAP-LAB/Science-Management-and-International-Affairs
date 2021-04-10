@@ -270,7 +270,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
                     //    }
                     //}
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     MOA moa = db.MOAs.Find(moa_id);
                     moa.is_deleted = true;
