@@ -17,6 +17,7 @@ namespace MANAGER.Controllers
         ConferenceSponsorDetailRepo DetailRepos;
         public ActionResult Index()
         {
+            ViewBag.title = "DANH SÁCH ĐỀ NGHỊ ĐANG XỬ LÝ";
             return View();
         }
         public JsonResult List()
