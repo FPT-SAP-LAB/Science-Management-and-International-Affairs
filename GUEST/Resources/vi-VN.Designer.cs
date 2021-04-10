@@ -169,7 +169,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ngân hàng.
+        ///   Looks up a localized string similar to Ngân hàng - Chi nhánh ngân hàng.
         /// </summary>
         public static string Bank {
             get {
