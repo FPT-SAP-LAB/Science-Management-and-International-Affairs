@@ -32,6 +32,18 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
             ViewBag.signed = Json(new { signed });
             ViewBag.not_sign_yet = Json(new { not_sign_yet });
             int this_year = DateTime.Today.Year;
+            //23 22 21 20 19 18 17 16 15
+            List<int> year_select = new List<int>
+            {
+                this_year + 2,
+                this_year + 1,
+                this_year
+            };
+            for (int i = 1; i <= (this_year - 2015); i++)
+            {
+                year_select.Add(this_year - i);
+            }
+            ViewBag.year_select = year_select;
             ViewBag.widget_mou = dashboardRepo.WidgetMou(this_year);
             ViewBag.widget_collab = dashboardRepo.WidgetCollab(this_year);
             ViewBag.widget_support = dashboardRepo.WidgetSupport(this_year);

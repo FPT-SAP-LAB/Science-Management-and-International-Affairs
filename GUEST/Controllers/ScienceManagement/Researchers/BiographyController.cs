@@ -102,19 +102,48 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
-        
+
         public ActionResult AddAward()
         {
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                Award a = new Award() { 
-                    people_id=Int32.Parse(Request["people_id"]),
-                    competion_name=Request["add_award_name"],
+                Award a = new Award()
+                {
+                    people_id = Int32.Parse(Request["people_id"]),
+                    competion_name = Request["add_award_name"],
                     rank = Request["add_award_rank"],
-                    award_time=DateTime.ParseExact(Request["add_award_date"], "dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    award_time = DateTime.ParseExact(Request["add_award_date"], "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 };
                 researcherBiographyRepo.AddAward(a);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult EditAward()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                researcherBiographyRepo.EditAward(Request);
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false });
+            }
+        }
+        public ActionResult DeleteAward()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                researcherBiographyRepo.DeleteAward(Request);
                 return Json(new { success = true });
             }
             catch (Exception e)

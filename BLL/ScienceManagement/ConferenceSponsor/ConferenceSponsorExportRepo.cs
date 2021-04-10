@@ -69,6 +69,9 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         regexText = new Regex("@QsUniversity");
                         docText = regexText.Replace(docText, Conference.QsUniversity);
 
+                        regexText = new Regex("@Unit");
+                        docText = regexText.Replace(docText, Conference.OrganizedUnit);
+
                         regexText = new Regex("@CoUnit");
                         docText = regexText.Replace(docText, Conference.Co_organizedUnit ?? "");
 

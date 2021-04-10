@@ -37,10 +37,11 @@
         <div class="d-flex mb-9">
             <!--begin: Pic-->
             <div class="flex-shrink-0 mr-7 mt-lg-0 mt-3">
-                <div class="symbol symbol-50 symbol-lg-120">
-                    <img src="@(ViewBag.profile.avatar == null ? "/Content/assets/media/users/blank.png" : ViewBag.profile.avatar)" alt="image" />
+                <div class="symbol symbol-xxl-100 align-self-xxl-center">
+                    <div class="image-input image-input-empty image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar == null ? "/Content/assets/media/users/blank.png" : ViewBag.profile.avatar))">
+                        <div class="image-input-wrapper"></div>
+                    </div>
                 </div>
-
                 <div class="symbol symbol-50 symbol-lg-120 symbol-primary d-none">
                     <span class="font-size-h3 symbol-label font-weight-boldest">JM</span>
                 </div>
