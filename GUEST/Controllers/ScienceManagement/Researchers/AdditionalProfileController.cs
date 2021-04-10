@@ -1,5 +1,6 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.Researcher;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using GUEST.Models;
 using System;
@@ -24,8 +25,14 @@ namespace GUEST.Controllers
             TitleLanguageRepo titleRepo = new TitleLanguageRepo();
             CountryRepo countryRepo = new CountryRepo();
 
-            if (CurrentAccount.Account(Session).account_id == 0)
+            Account account = CurrentAccount.Account(Session);
+            if (account.account_id == 0)
                 return Redirect("/");
+            string EmailDomain = account.email.Split('@').Last();
+            if (EmailDomain.Equals("fe.edu.vn"))
+            {
+                ViewBag.Positions = PositionLanguageRepo.GetPositionLanguages(LanguageResource.GetCurrentLanguageID());
+            }
 
             ViewBag.Titles = titleRepo.GetList(LanguageResource.GetCurrentLanguageID());
             ViewBag.Offices = officeRepo.GetList();
