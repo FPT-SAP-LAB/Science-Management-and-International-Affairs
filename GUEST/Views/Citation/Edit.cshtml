@@ -98,6 +98,7 @@
             $("#add_author_contractType").val("@ViewBag.author.contract_id");
             $("#add_author_contractType").trigger('change');
             $("#add_author_cmnd").val("@ViewBag.author.identification_number");
+            $("#add_author_cmnd_link").val("@ViewBag.author.identification_file_link");
             $("#add_author_tax").val("@ViewBag.author.tax_code");
             $("#add_author_bank").val("@ViewBag.author.bank_branch");
             $("#add_author_accno").val("@ViewBag.author.bank_number");
@@ -151,9 +152,10 @@
                 office_id: $("#ckfe option:selected").attr("name"),
                 contract_id: $("#add_author_contractType").val(),
                 title_id: $("#add_author_title").val(),
-                people_id: $("#add_author_msnv").attr("name"),
+                people_id: "@ViewBag.author.people_id",
                 temp_id: id,
                 office_abbreviation: $("#ckfe option:selected").val(),
+                identification_file_link: $("#add_author_cmnd_link").val(),
             }
             people.push(AddAuthor);
         }
