@@ -12,6 +12,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public int partner_id { get; set; }
         public string partner_name { get; set; }
         public string scopes_name { get; set; }
+        public string scope_abbreviation { get; set; }
         public List<CollaborationScope> total_scopes { get; set; }
     }
 }

@@ -364,19 +364,22 @@
         $('#coop_scope_ex_mou_add').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
-
         $('#coop_scope_ex_mou_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_mou_edit_for_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_mou_add_for_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#mou_partner_specialization_add').select2({
             placeholder: 'Lĩnh vực',
@@ -385,14 +388,17 @@
         $('#moa_partner_scope_add').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#moa_partner_scope_edit').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#mou_partner_scope_add').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#mou_partner_specialization_edit').select2({
             placeholder: 'Lĩnh vực',
@@ -401,6 +407,7 @@
         $('#mou_partner_scope_edit').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
 
         $('#facility').select2({
@@ -439,6 +446,9 @@
         jQuery(document).ready(function () {
             KTBootstrapDatetimepicker.init();
         });
+        function formatStateScope(state) {
+            return state.text.split('-')[0];
+        };
     </script>
     <script>
         var MultipleDropDownDemo = function () {
@@ -859,7 +869,8 @@
             $("#coop_scope_ex_mou_add option").each(function (){
                 listScopes.push({
                     scope_id: $(this).val(),
-                    scope_abbreviation: $(this).text()
+                    scope_abbreviation: $(this).text().split('-')[0],
+                    scope_name: $(this).text().split('-')[1],
                 });
             });
             $("#partner_name_ex_mou_add option").each(function () {
@@ -915,7 +926,7 @@
         }
 
         function clearInputAddExMOUPartner() {
-            $('#partner_name_ex_mou_add').val('');
+            //$('#partner_name_ex_mou_add').val('');
             $('#coop_scope_ex_mou_add').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
@@ -925,7 +936,7 @@
         }
 
         function clearInputAddExMOUPartnerForEdit() {
-            $('#partner_name_ex_mou_add_for_edit').val('');
+            //$('#partner_name_ex_mou_add_for_edit').val('');
             $('#coop_scope_ex_mou_add_for_edit').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
@@ -976,9 +987,9 @@
             }
             for (j = 0; j < listScopes.length; j++) {
                 if (listTempExMOUPartnerScope[index].scopes_id.includes(listScopes[j].scope_id)) {
-                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation + '</option>'
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation +'-'+ listScopes[j].scope_name + '</option>'
                 } else {
-                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '-' + listScopes[j].scope_name +  '</option>'
                 }
             }
 
@@ -1428,9 +1439,9 @@
             }
             for (j = 0; j < listScopes.length; j++) {
                 if ((listTempExMOUPartnerScopeEdit[index].scopes_id+'').includes(listScopes[j].scope_id)) {
-                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation + '</option>'
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '" selected>' + listScopes[j].scope_abbreviation + '-' + listScopes[j].scope_name+ '</option>'
                 } else {
-                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+                    HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '-' + listScopes[j].scope_name +'</option>'
                 }
             }
             $('#partner_name_ex_mou_edit_for_edit').append(HTMLPartnerdata);
@@ -1628,7 +1639,8 @@
         $("#mou_partner_scope_add option").each(function () {
             listScopeMOUPartner.push({
                 scope_id: $(this).val(),
-                scope_name: $(this).text()
+                scope_abbreviation: $(this).text().split('-')[0],
+                scope_name: $(this).text().split('-')[1],
             });
         });
         $("#partnerList option").each(function () {
@@ -1952,10 +1964,10 @@
                 }
             }
             for (j = 0; j < listScopeMOUPartner.length; j++) {
-                if (data.scope_abbreviation.includes(listScopeMOUPartner[j].scope_name)) {
-                    HTMLScopedata += '<option value = "' + listScopeMOUPartner[j].scope_id + '" selected>' + listScopeMOUPartner[j].scope_name + '</option>'
+                if (data.scope_abbreviation.includes(listScopeMOUPartner[j].scope_abbreviation)) {
+                    HTMLScopedata += '<option value = "' + listScopeMOUPartner[j].scope_id + '" selected>' + listScopeMOUPartner[j].scope_abbreviation + '-'+ listScopeMOUPartner[j].scope_name + '</option>'
                 } else {
-                    HTMLScopedata += '<option value = "' + listScopeMOUPartner[j].scope_id + '">' + listScopeMOUPartner[j].scope_name + '</option>'
+                    HTMLScopedata += '<option value = "' + listScopeMOUPartner[j].scope_id + '">' + listScopeMOUPartner[j].scope_abbreviation + '-' + listScopeMOUPartner[j].scope_name + '</option>'
                 }
             }
             //add current choice of partner_name_for_edit
@@ -2421,9 +2433,9 @@
 
         for (i = 0; i < list_scope.length; i++) {
             if (coop_scope_add.includes(list_scope[i].scope_id)) {
-                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '" selected>' + list_scope[i].scope_abbreviation + '</option>';
+                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '" selected>' + list_scope[i].scope_abbreviation + '-'+ list_scope[i].scope_name + '</option>';
             } else {
-                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '">' + list_scope[i].scope_abbreviation + '</option>';
+                HTMLScopesdata += '<option value="' + list_scope[i].scope_id + '">' + list_scope[i].scope_abbreviation + '-' + list_scope[i].scope_name + '</option>';
             }
         }
         $('#moa_partner_scope_edit').append(HTMLScopesdata);
@@ -2685,10 +2697,11 @@
         var HTMLScopesdata = "";
         listScopesMOA = [];
         for (j = 0; j < data.length; j++) {
-            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '-'+ data[j].scope_name +'</option>';
             var obj = {
                 scope_id: data[j].scope_id,
-                scope_abbreviation: data[j].scope_abbreviation
+                scope_abbreviation: data[j].scope_abbreviation,
+                scope_name: data[j].scope_name,
             }
             listScopesMOA.push(obj);
         }
@@ -2700,10 +2713,11 @@
         var HTMLScopesdata = "";
         listScopesMOA = [];
         for (j = 0; j < data.length; j++) {
-            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '-' + data[j].scope_name + '</option>';
             var obj = {
                 scope_id: data[j].scope_id,
-                scope_abbreviation: data[j].scope_abbreviation
+                scope_abbreviation: data[j].scope_abbreviation,
+                scope_name: data[j].scope_name,
             }
             listScopesMOA.push(obj);
         }
