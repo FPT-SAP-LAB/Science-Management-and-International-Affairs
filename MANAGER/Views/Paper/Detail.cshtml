@@ -119,11 +119,11 @@
                                     <td>
                                         @if (item.check == true)
                                         {
-                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) <i class='flaticon2-check-mark icon-nm' style="color:#62c700"></i></a>
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-check-mark icon-nm' style="color:#99f5a4"></i>
                                         }
                                         else
                                         {
-                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) <i class='flaticon2-delete icon-nm' style="color:red"></i></a>
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-delete icon-nm' style="color:#f59999"></i>
                                         }
                                     </td>
                                     @*<td>
