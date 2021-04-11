@@ -40,9 +40,9 @@
                                     <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin cho nghiên cứu viên</span>
                                 </div>
                                 <div class="card-toolbar">
-                                    <div id="edit-control-area">
-                                        <a id="save-btn" class="btn btn-success mr-2">Lưu</a>
-                                        <a id="cancel-btn" class="btn btn-secondary">Huỷ</a>
+                                    <div id="edit-control-area" hidden>
+                                        <a id="save-btn" class="btn btn-success mr-2" >Lưu</a>
+                                        <a id="cancel-btn" class="btn btn-secondary" >Huỷ</a>
                                     </div>
                                     <div id="edit-enable-area">
                                         <a id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</a>
@@ -250,7 +250,8 @@
 
 
             function enableEdit() {
-                $("#edit-control-area").show()
+                $("#edit-control-area").removeAttr('hidden')
+                $("#edit-control-area").css('display','block')
                 $("#edit-enable-area").hide()
                 $(".researcher_infomation").attr('disabled', false)
             }
