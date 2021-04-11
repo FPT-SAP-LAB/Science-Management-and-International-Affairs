@@ -11,7 +11,7 @@ namespace GUEST
         //private HttpSessionState session;
         private static readonly Dictionary<int, List<BruhbrubLNguyen>> AccountConnections = new Dictionary<int, List<BruhbrubLNguyen>>();
         private static readonly NotificationRepo notficationRepo = new NotificationRepo();
-        private readonly List<NotificationTypeLanguage> TypeLanguage = notficationRepo.Languages();
+        private static readonly List<NotificationTypeLanguage> TypeLanguage = notficationRepo.Languages();
         public ChatHub()
         {
             //AccountConnections = new Dictionary<int, List<string>>();
