@@ -38,12 +38,10 @@ $(".number-comma").each(function () {
     $(this).attr('data-value', $(this).val())
     $(this).text(AddComma($(this).val()))
 })
-$(function () {
-    $(".menu-link").each(function () {
-        if ($(this).attr('href').trim() == window.location.pathname) {
-            $(this).parent().addClass('menu-item-active')
-            $(this).parent().parent().parent().parent().addClass('menu-item-open')
-            $(this).parent().parent().parent().parent().addClass(' menu-item-here')
-        }
-    });
-})
+$(".menu-link").each(function () {
+    if ($(this).attr('href').trim() == window.location.pathname) {
+        $(this).parent().addClass('menu-item-active')
+        $(this).parent().parent().parent().parent().addClass('menu-item-open')
+        $(this).parent().parent().parent().parent().addClass(' menu-item-here')
+    }
+});
