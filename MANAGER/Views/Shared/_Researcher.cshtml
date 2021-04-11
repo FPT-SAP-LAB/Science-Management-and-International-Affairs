@@ -160,7 +160,7 @@
             <!--begin::Nav-->
             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/ViewInfo?id=@ViewBag.profile.id" class="research-info-link navi-link py-4">
+                    <a href="/Researchers/ViewInfo?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 @(Request.RawUrl.Contains("ViewInfo")?"active":"")">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-user icon-md"></i>
                         </span>
@@ -169,8 +169,9 @@
                         </span>
                     </a>
                 </div>
+                
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Biography?id=@ViewBag.profile.id" class="research-info-link navi-link py-4">
+                    <a href="/Researchers/Biography?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 @(Request.RawUrl.Contains("Biography")?"active":"")">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-history icon-md"></i>
                         </span>
@@ -180,7 +181,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Publications?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 ">
+                    <a href="/Researchers/Publications?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 @(Request.RawUrl.Contains("Publications")?"active":"")">
                         <span class="navi-icon mr-2">
                             <i class="far fa-newspaper icon-md"></i>
                         </span>
@@ -190,7 +191,7 @@
                     </a>
                 </div>
                 <div class="navi-item mb-2">
-                    <a href="/Researchers/Rewards?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 ">
+                    <a href="/Researchers/Rewards?id=@ViewBag.profile.id" class="research-info-link navi-link py-4 @(Request.RawUrl.Contains("Rewards")?"active":"")">
                         <span class="navi-icon mr-2">
                             <i class="fas fa-certificate icon-md"></i>
                         </span>
