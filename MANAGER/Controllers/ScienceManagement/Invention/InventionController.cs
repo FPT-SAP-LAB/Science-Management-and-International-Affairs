@@ -77,7 +77,9 @@ namespace MANAGER.Controllers
 
             string name = "QD_" + number + "_" + date;
 
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, null);
+            List<string> listE = ir.getAuthorEmail();
+
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
             ENTITIES.File fl = new ENTITIES.File
             {
                 link = f.WebViewLink,
