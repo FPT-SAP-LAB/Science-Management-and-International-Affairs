@@ -72,7 +72,7 @@ namespace GUEST.Controllers
         public JsonResult AddPaper(HttpPostedFileBase file, string name, DetailPaper paper)
         {
             paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            if(file != null)
+            if (file != null)
             {
                 LoginRepo.User u = new LoginRepo.User();
                 Account acc = new Account();
