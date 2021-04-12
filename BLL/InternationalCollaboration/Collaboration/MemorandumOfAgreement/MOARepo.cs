@@ -270,7 +270,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //        db.PartnerScopes.Find(item.partner_scope_id).reference_count -= 1;
                     //    }
                     //}
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     MOA moa = db.MOAs.Find(moa_id);
                     moa.is_deleted = true;
@@ -317,7 +317,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
         {
             try
             {
-                string sql_scopeList = @"select distinct t3.scope_id,t3.scope_abbreviation from IA_Collaboration.MOUPartnerScope t1
+                string sql_scopeList = @"select distinct t3.* from IA_Collaboration.MOUPartnerScope t1
                     inner join IA_Collaboration.PartnerScope t2 on
                     t1.partner_scope_id = t2.partner_scope_id
                     inner join IA_Collaboration.CollaborationScope t3 on
