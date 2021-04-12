@@ -355,36 +355,34 @@
                 };
 
                 if (uppy1.getFiles().length > 0) {
+                    var paper_temp = [];
+                    paper_temp["name"] = $("#paper_name").val();
                     var name = $("#paper_name").val();
                     formData = new FormData();
                     formData.append('file', uppy1.getFiles()[0].data);
                     formData.append('name', name);
+                    formData.append(paper_temp["name"], $("#paper_name").val());
+                    formData.append(paper_temp["date_string"], $("#paper_publish_date").val());
+                    formData.append(paper_temp["link_doi"], $("#paper_full").val());
+                    formData.append(paper_temp["link_scholar"], $("#paper_scholar").val());
+                    formData.append(paper_temp["paper_type_id"], $("#paper_type").val());
+                    formData.append(paper_temp["journal_name"], $("#paper_journal").val());
+                    formData.append(paper_temp["vol"], $("#paper_vol").val());
+                    formData.append(paper_temp["page"], $("#paper_page").val());
+                    formData.append(paper_temp["company"], $("#paper_publish_name").val());
+                    formData.append(paper_temp["index"], $("#paper_index").val());
+                    formData.append(paper_temp["note_domestic"], $("#paper_note_domestic").val());
+
                     $.ajax({
-                        url: "/Paper/addFile",
+                        url: "/Paper/AddPaper",
                         method: "post",
                         complete: function (data) {
                             var mess = data.responseJSON.mess;
                             if (mess == "ss") {
-                                fileid = data.responseJSON.id;
-                                $.ajax({
-                                    url: "@Url.Action("AddPaper", "Paper")",
-                                    type: "POST",
-                                    data: JSON.stringify({ 'paper': Paper, 'fileid': fileid }),
-                                    contentType: "application/json;charset=utf-8",
-                                    datatype: "json",
-                                    cache: false,
-                                    success: function (response) {
-                                        if (response.mess == "ss") {
-                                            paper_id = response.id;
-                                            addCriteria();
-                                        }
-                                        else alert('loi');
-                                    },
-                                    error: function () {
-                                        //alert("fail");
-                                    }
-                                });
+                                paper_id = response.id;
+                                addCriteria();
                             }
+                            else alert('loi');
                         },
                         error: function () {
                             toastr.error("Có lỗi xảy ra");

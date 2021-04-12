@@ -48,7 +48,7 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult addFile(HttpPostedFileBase file, string name)
+        public JsonResult addFile(HttpPostedFileBase file, string name, DetailPaper paper)
         {
             LoginRepo.User u = new LoginRepo.User();
             Account acc = new Account();
@@ -69,10 +69,28 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddPaper(DetailPaper paper, string fileid)
+        public JsonResult AddPaper(HttpPostedFileBase file, string name, DetailPaper paper)
         {
             paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            if (fileid != "0") paper.file_id = Int32.Parse(fileid);
+            if(file != null)
+            {
+                LoginRepo.User u = new LoginRepo.User();
+                Account acc = new Account();
+                if (Session["User"] != null)
+                {
+                    u = (LoginRepo.User)Session["User"];
+                    acc = u.account;
+                }
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 2, acc.email);
+                ENTITIES.File fl = new ENTITIES.File
+                {
+                    link = f.WebViewLink,
+                    file_drive_id = f.Id,
+                    name = name
+                };
+                string mess = pr.addFile(fl);
+                if (mess == "ss") paper.file_id = fl.file_id;
+            }
             Paper p = pr.addPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
