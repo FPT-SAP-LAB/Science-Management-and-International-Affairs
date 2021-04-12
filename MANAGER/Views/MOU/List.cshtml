@@ -610,7 +610,8 @@
             {
                 PartnerInfo: listTempPartnerMOUAdd,
                 start_date: $('#sign_date_mou').val(),
-                end_date: $('#end_date_mou').val()
+                end_date: $('#end_date_mou').val(),
+                office_id: $('#search_office').val()
             };
             $.ajax({
                 url: "@Url.Action("checkIntersectPeriodMOUDate", "MOU")",
