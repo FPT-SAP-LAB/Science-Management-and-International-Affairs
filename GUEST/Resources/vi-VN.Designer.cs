@@ -169,7 +169,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ngân hàng.
+        ///   Looks up a localized string similar to Ngân hàng - Chi nhánh ngân hàng.
         /// </summary>
         public static string Bank {
             get {
@@ -439,6 +439,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload file mới.
+        /// </summary>
+        public static string FileCMnew {
+            get {
+                return ResourceManager.GetString("FileCMnew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thủ tục với FPT.
         /// </summary>
         public static string FPTProcedure {
@@ -646,7 +655,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của ĐH FPT.
+        ///   Looks up a localized string similar to Đào tạo &lt;br/&gt; của ĐH FPT.
         /// </summary>
         public static string LongTermFPTProgram {
             get {
@@ -655,7 +664,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Giới thiệu chương trình.
+        ///   Looks up a localized string similar to Giới thiệu &lt;br/&gt; chương trình.
         /// </summary>
         public static string LongTermIntroduction {
             get {
@@ -664,7 +673,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đào tạo của đối tác.
+        ///   Looks up a localized string similar to Đào tạo &lt;br/&gt; của đối tác.
         /// </summary>
         public static string LongTermPartnerProgram {
             get {

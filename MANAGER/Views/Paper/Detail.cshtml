@@ -80,9 +80,13 @@
                 <label>Chỉ số tạp chí</label>
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.index" disabled />
             </div>
-            <div class="col-xl-6 form-group" style="display: none">
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label>File chứng minh</label>
+                <a href="@ViewBag.paper.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
                 <label>Ghi chú</label>
-                <input class="form-control form-control-lg" type="text" value="" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.note_domestic" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Loại khen thưởng</label>
@@ -99,33 +103,90 @@
                 <label>Đại diện nhận thưởng</label>
                 <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled />
             </div>
+            <h3 class="mb-10 font-weight-bold text-dark">Thông tin nhà xuất bản</h3>
+            <div class="col-xl-12 datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable" style="">
+                <table class="custom-add-table table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tiêu chí</th>
+                            <th>Đường dẫn</th>
+                            <th>Duyệt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.crite.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3" class="justify-content-center text-muted text-center">Không có tiêu chí nào</td>
+                            </tr>
+                        }
+                        @{
+                            foreach (var item in ViewBag.crite)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.name
+                                    </td>
+                                    <td>
+                                        @if (item.check == true)
+                                        {
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-check-mark icon-nm' style="color:#99f5a4"></i>
+                                        }
+                                        else
+                                        {
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-delete icon-nm' style="color:#f59999"></i>
+                                        }
+                                    </td>
+                                    @*<td>
+                                    @if (item.check == true)
+                                    {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                    }
+                                    else
+                                    {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                    }
+                                </td>*@
+                                    <td>
+                                        @if (item.manager_check != null && item.manager_check)
+                                        {
+                                            <a name="1" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md" style="color:#62c700"></i> </a>
+                                            @*<span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg edit btn' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>*@
+                                        }
+                                        else
+                                        {
+                                            <a name="0" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md"></i> </a>
+                                            @*<span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg edit btn' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>*@
+                                        }
+                                    </td>
+                                </tr>
+                                @*<div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
+                                <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
+                                <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
+                                @if (item.check == true)
+                                {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg  font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
+                                else
+                                {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                }
+                                @if (item.manager_check)
+                                {
+                                    <span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
+                                else
+                                {
+                                    <span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
 
-            @{
-                foreach (var item in ViewBag.crite)
-                {
-                    <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
-                        <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
-                        <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
-                        @if (item.check == true)
-                        {
-                            <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
+                            </div>*@
+                            }
                         }
-                        else
-                        {
-                            <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
-                        }
-                        @if (item.manager_check)
-                        {
-                            <span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg edit btn' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
-                        }
-                        else
-                        {
-                            <span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg edit btn' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
-                        }
+                    </tbody>
+                </table>
+            </div>
 
-                    </div>
-                }
-            }
         </div>
         <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
         <div class="row" id="authors-info-container">
@@ -185,7 +246,8 @@
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">CMND link:</span>
-                                                <a href="#" class="text-muted text-hover-primary">@item.identification_file_link</a>
+                                                <a href="@item.identification_file_link" class="text-muted text-hover-primary">
+                                                @(item.identification_file_link!=null?(item.identification_file_link.Length>30? item.identification_file_link.Substring(0,30)+"...": item.identification_file_link):"")</a>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
@@ -400,7 +462,7 @@
             var temp = $("#totalreward").val();
             if (temp == "" || temp == "0") {
                 $("#loading").hide();
-                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo");
                 check = false;
             } else {
                 check = true;
@@ -410,7 +472,7 @@
                         //console.log(value);
                         if (value == "" || value == "0") {
                             $("#loading").hide();
-                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả");
                             check = false;
                             return false;
                         } else {
@@ -420,17 +482,20 @@
                 }
             }
 
-            $(".manager_check").each(function () {
-                var val = $(this).attr("name");
-                if (val == "0") {
-                    $("#loading").hide();
-                    toastr.error("Chưa check hết các tiêu chí", "Lỗi");
-                    check = false;
-                    return false;
-                } else {
-                    check = true;
-                }
-            })
+            if (check) {
+                $(".manager_check").each(function () {
+                    var val = $(this).attr("name");
+                    if (val == "0") {
+                        $("#loading").hide();
+                        toastr.error("Chưa check hết các tiêu chí");
+                        check = false;
+                        return false;
+                    } else {
+                        check = true;
+                    }
+                })
+            }
+
 
             //if (check) alert("abc");
 
@@ -458,10 +523,10 @@
                 //console.log(sum, parseInt(total));
                 if (sum > parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo");
                 } else if (sum < parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo");
                 } else {
                     var paper_id = "@ViewBag.paper.paper_id";
                     var request_id = "@ViewBag.paper.request_id";
@@ -526,9 +591,16 @@
         });
 
         $(".manager_check").click(function () {
-            $(this).attr("name", "1");
-            $(this).empty();
-            $(this).append("<a class='form-control form-control-lg edit btn' style='background-color: lawngreen; border-color: lawngreen'><i class='flaticon2-checkmark' style='color:black'></i></a>")
+            var val = $(this).attr("name");
+            if (val == "0") {
+                $(this).attr("name", "1");
+                $(this).empty();
+                $(this).append("<a onclick='' class='btn btn-sm btn-clean btn-icon manager_check' title='View'> <i class='fa fas fa-check-circle icon-md' style='color: #62c700'></i> </a>");
+            } else {
+                $(this).attr("name", "0");
+                $(this).empty();
+                $(this).append("<a onclick='' class='btn btn-sm btn-clean btn-icon manager_check' title='View'> <i class='fa fas fa-check-circle icon-md'></i> </a>");
+            }
             //alert(val);
         });
 

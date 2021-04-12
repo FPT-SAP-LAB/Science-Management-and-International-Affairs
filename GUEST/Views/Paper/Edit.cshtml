@@ -92,13 +92,17 @@
                             <label style="color:#fff">abc</label>
                             <button class="btn btn-primary form-control form-control-lg edit">@rm.GetString("ListMaga")</button>
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-4 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
                             <input autocomplete="off" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" id="paper_index" />
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-3 form-group thuongtn">
+                            <label>@rm.GetString("FileCM")</label>
+                            <a href="@ViewBag.Paper.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
+                        </div>
+                        <div class="col-xl-5 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
-                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" />
+                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" id="paper_note_domestic" value="@ViewBag.Paper.note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
@@ -209,6 +213,7 @@
     <script>
         var paper_id = "@ViewBag.id";
         var ck = "@ViewBag.ckEdit";
+        var check = true;
         var people = [];
         var criteria = [];
         $('#chuyennganh').select2({
@@ -257,16 +262,7 @@
         }
 
         function editCriteria() {
-            var inputs = $(".tieuchiname");
-            var inputs2 = $(".tieuchilink");
-            for (var i = 0; i < inputs.length; i++) {
-                var PaperWithCriteria = {
-                    link: $(inputs2[i]).val(),
-                    name: $(inputs[i]).val()
-                }
-                criteria.push(PaperWithCriteria);
-            }
-            console.log(criteria);
+
             $.ajax({
                 url: "@Url.Action("editCriteria", "Paper")",
                 type: "POST",
@@ -360,6 +356,36 @@
             var dateFormat
             if (arr.length == 3) dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
             else dateFormat = arr[0] + '/01/' + arr[1];
+
+            var inputs = $(".tieuchiname");
+            var inputs2 = $(".tieuchilink");
+            criteria = [];
+            for (var i = 0; i < inputs.length; i++) {
+                var PaperWithCriteria = {
+                    link: $(inputs2[i]).val(),
+                    name: $(inputs[i]).val()
+                }
+                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
+                    $("#loading").hide();
+                    toastr.error("Tiêu chí chưa có link chứng minh");
+                    check = false;
+                    return false;
+                }
+                criteria.push(PaperWithCriteria);
+            }
+            if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
+                $("#loading").hide();
+                toastr.error("Cần có ít nhất 1 tiêu chí");
+                check = false;
+            }
+
+            if (people.length == 0) {
+                check = false;
+                $("#loading").hide();
+                toastr.error("Chưa có tác giả");
+            }
+
+
             var Paper = {
                 name: $("#paper_name").val(),
                 publish_date: dateFormat,
@@ -370,25 +396,29 @@
                 vol: $("#paper_vol").val(),
                 page: $("#paper_page").val(),
                 company: $("#paper_publish_name").val(),
-                index: $("#paper_index").val()
+                index: $("#paper_index").val(),
+                note_domestic: $("#paper_note_domestic").val(),
             };
-            $.ajax({
-                url: "@Url.Action("editPaper", "Paper")",
-                type: "POST",
-                data: JSON.stringify({ 'paper': Paper, 'paper_id': paper_id }),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-                    if (response.mess == "ss") {
-                        editCriteria();
+
+            if (check) {
+                $.ajax({
+                    url: "@Url.Action("editPaper", "Paper")",
+                    type: "POST",
+                    data: JSON.stringify({ 'paper': Paper, 'paper_id': paper_id }),
+                    contentType: "application/json;charset=utf-8",
+                    datatype: "json",
+                    cache: false,
+                    success: function (response) {
+                        if (response.mess == "ss") {
+                            editCriteria();
+                        }
+                        else alert('loi');
+                    },
+                    error: function () {
+                        //alert("fail");
                     }
-                    else alert('loi');
-                },
-                error: function () {
-                    //alert("fail");
-                }
-            });
+                });
+            } else check = true;
         });
 
         $("#view_decision").click(function () {
@@ -546,6 +576,7 @@
                         }
                     } else {
                         $("#edit_submit_reward").hide();
+                        $(".edit-author").prop('disabled', true);
                     }
                 },
                 error: function () {

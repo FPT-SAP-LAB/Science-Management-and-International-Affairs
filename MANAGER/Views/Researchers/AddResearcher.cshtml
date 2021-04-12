@@ -56,7 +56,7 @@
                             <div class="row" style="text-align: right;">
                                 <label class="col-xl-3"></label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <span id="edit-control-area">
+                                    <span id="edit-control-area" hidden>
                                         <a id="save-btn" class="btn btn-success mr-2">Lưu</a>
                                         <a id="cancel-btn" class="btn btn-secondary">Huỷ</a>
                                     </span>
@@ -95,10 +95,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Quốc tịch</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
-                                        <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@(ViewBag.profile.dob==null?"":ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture));" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
+                                        <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@(ViewBag.profile.dob==null?"":ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture))" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
                                         <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
                                             <span class="input-group-text">
                                                 <i class="ki ki-calendar"></i>
@@ -718,7 +718,8 @@
 
 
             function enableEdit() {
-                $("#edit-control-area").show()
+                $("#edit-control-area").removeAttr('hidden')
+                $("#edit-control-area").css('display', 'block')
                 $("#edit-enable-area").hide()
                 $(".researcher_infomation").attr('disabled', false)
             }
@@ -743,10 +744,13 @@
                 KTBootstrapDatetimepicker.init();
             });
         </script>
-        <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
-        <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
-        <script src="~/Content/assets/js/pages/researcher-bio.js"></script>
+        <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-edit-info.js"></script>
+        <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-change-avt.js"></script>
+        <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-bio.js"></script>
         <script>
+            $('#kt_datetimepicker_2').datetimepicker({
+                format: 'DD-MM-YYYY'
+            });
             var create_loader = new LoaderBtn($("#create-profile-btn"))
             $("#create-profile-btn").click(function () {
                 create_loader.startLoading()

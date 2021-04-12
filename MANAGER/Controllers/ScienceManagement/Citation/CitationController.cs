@@ -40,7 +40,7 @@ namespace MANAGER.Controllers
             ViewBag.author = author;
 
             List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
-            ViewBag.title = listTitle;
+            ViewBag.ctitle = listTitle;
 
             ViewBag.request_id = id;
 
@@ -81,7 +81,7 @@ namespace MANAGER.Controllers
 
             string name = "QD_" + number + "_" + date;
 
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 4, null);
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, null);
             ENTITIES.File fl = new ENTITIES.File
             {
                 link = f.WebViewLink,

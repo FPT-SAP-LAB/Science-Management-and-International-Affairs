@@ -14,7 +14,7 @@ namespace BLL.ModelDAL
         {
             db = new ScienceAndInternationalAffairsEntities();
             NotificationSubscribe subscribe = db.NotificationSubscribes.Where(x => x.account_id == account_id && x.notification_type_id == notification_type_id).FirstOrDefault();
-            if (subscribe == null && subscribe.is_subscribe)
+            if (subscribe == null || subscribe.is_subscribe)
             {
                 NotificationBase notification = new NotificationBase
                 {

@@ -154,7 +154,7 @@
     <value>Tên tác giả</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>Ngân hàng</value>
+    <value>Ngân hàng - Chi nhánh ngân hàng</value>
   </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Số trích dẫn</value>
@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
   </data>
+  <data name="FileCMnew" xml:space="preserve">
+    <value>Upload file mới</value>
+  </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>
   </data>
@@ -313,13 +316,13 @@
     <value>Đào tạo sau đại học</value>
   </data>
   <data name="LongTermFPTProgram" xml:space="preserve">
-    <value>Đào tạo của ĐH FPT</value>
+    <value>Đào tạo &lt;br/&gt; của ĐH FPT</value>
   </data>
   <data name="LongTermIntroduction" xml:space="preserve">
-    <value>Giới thiệu chương trình</value>
+    <value>Giới thiệu &lt;br/&gt; chương trình</value>
   </data>
   <data name="LongTermPartnerProgram" xml:space="preserve">
-    <value>Đào tạo của đối tác</value>
+    <value>Đào tạo &lt;br/&gt; của đối tác</value>
   </data>
   <data name="Mar" xml:space="preserve">
     <value>Tháng 3</value>

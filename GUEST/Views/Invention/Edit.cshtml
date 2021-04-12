@@ -49,6 +49,15 @@
                             <label>@rm.GetString("FileCM")</label>
                             <a href="@ViewBag.item.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
                         </div>
+                        <div class="col-xl-6 form-group" id="edit_file">
+                            <label>@rm.GetString("FileCMnew")</label>
+                            <div class="uppy" id="kt_uppy_1">
+                                <div class="uppy-wrapper"></div>
+                                <div class="uppy-list"></div>
+                                <div class="uppy-status"></div>
+                                <div class="uppy-informer uppy-informer-min"></div>
+                            </div>
+                        </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
                     <div class="row">
@@ -195,6 +204,9 @@
             if (ck != "5") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
 
+            if (ck == "4") $("#edit_file").show();
+            else $("#edit_file").hide();
+
             var kieuthuong = "@ViewBag.item.reward_type";
             if (kieuthuong == "Quydinh") $("#kieuthuong").val("Quydinh");
             if (kieuthuong == "Canhan") $("#kieuthuong").val("Canhan");
@@ -270,5 +282,6 @@
         });
     </script>
     <script src="~/Scripts/PartialViewScript.js"></script>
+    <script src="~/Scripts/JSUpload.js"></script>
 }
 
