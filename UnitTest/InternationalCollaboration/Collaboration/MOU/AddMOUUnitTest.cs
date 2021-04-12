@@ -44,7 +44,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                     represent_add = "TestAddMOU1",
                     phone_add = "0123456789",
                     email_add = "TestAddMOU1",
-                    coop_scope_add = new List<int>() { 3,5 },
+                    coop_scope_add = new List<int>() { 3, 5 },
                     specialization_add = new List<int>() { 3 }
                 }
             );

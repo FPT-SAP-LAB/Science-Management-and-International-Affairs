@@ -94,7 +94,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
             List<ListMOU> listTest = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
             foreach (ListMOU item in listTest)
             {
-                if (!(item.partner_name.Contains(partner_name) && item.contact_point_name.Contains(contact_point_name) 
+                if (!(item.partner_name.Contains(partner_name) && item.contact_point_name.Contains(contact_point_name)
                     && item.mou_code.Contains(mou_code)))
                 {
                     Assert.Fail();
@@ -142,7 +142,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
             };
             List<ListMOU> listTest1 = mou.listAllMOU(baseDatatable, "", "", "").Data;
             List<ListMOU> listTest2 = mou.listAllMOUToExportExcel();
-            Assert.AreEqual(listTest1.Count,listTest2.Count);
+            Assert.AreEqual(listTest1.Count, listTest2.Count);
         }
     }
 }
