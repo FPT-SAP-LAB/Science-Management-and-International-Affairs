@@ -66,6 +66,17 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
+        public List<string> getAuthorEmail()
+        {
+            string sql = @"select distinct ah.email
+                            from [SM_ScientificProduct].Invention p join [SM_ScientificProduct].AuthorInvention ap on p.invention_id = ap.invention_id
+	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+	                            join [SM_ScientificProduct].RequestInvention rp on p.invention_id = rp.invention_id
+                            where rp.status_id in (4, 6, 7)";
+            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
+            return list;
+        }
+
         public string changeStatus(DetailInvention inven)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();

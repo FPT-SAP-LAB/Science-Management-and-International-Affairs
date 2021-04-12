@@ -221,7 +221,9 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            List<string> listE = pr.getLstEmailAuthor(0);
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
             {
                 link = f1.WebViewLink,
@@ -245,7 +247,9 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            List<string> listE = pr.getLstEmailAuthor(1);
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
             {
                 link = f1.WebViewLink,

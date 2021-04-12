@@ -92,13 +92,17 @@
                             <label style="color:#fff">abc</label>
                             <button class="btn btn-primary form-control form-control-lg edit">@rm.GetString("ListMaga")</button>
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-4 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("JournalIndex")</label>
                             <input autocomplete="off" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.index" id="paper_index" />
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-3 form-group thuongtn">
+                            <label>@rm.GetString("FileCM")</label>
+                            <a href="@ViewBag.Paper.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
+                        </div>
+                        <div class="col-xl-5 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("Note")</label>
-                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" id="paper_note_domestic" value="@ViewBag.Paper.note_domestic"/>
+                            <input autocomplete="off" class="form-control form-control-lg edit" type="text" id="paper_note_domestic" value="@ViewBag.Paper.note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
@@ -572,6 +576,7 @@
                         }
                     } else {
                         $("#edit_submit_reward").hide();
+                        $(".edit-author").prop('disabled', true);
                     }
                 },
                 error: function () {

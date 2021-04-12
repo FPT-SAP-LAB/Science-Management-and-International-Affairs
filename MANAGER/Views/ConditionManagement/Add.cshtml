@@ -8,30 +8,6 @@
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <div class="row">
-            @*<div class="col-md-12">
-                    <div class="form-group">
-                        <label>Cách đăng tập tin chính sách</label>
-                        <div class="radio-inline">
-                            <label class="radio group-file">
-                                <input type="radio" checked="checked" value="link" name="radios3" />
-                                <span></span>
-                                Link drive
-                            </label>
-                            <label class="radio group-file">
-                                <input type="radio" value="file" name="radios3" />
-                                <span></span>
-                                Up file
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" id="up-link">
-                    <div class="form-group">
-                        <label>Link file <span style='color:red'>*</span>: </label>
-                        <input type="text" class="form-control" />
-                        <span class="form-text text-muted">Chú ý: nên bật chế độ chia sẻ trong FPT hoặc mọi người.</span>
-                    </div>
-                </div>*@
             <div class="col-md-6" id="up-file">
                 <div class="form-group">
                     <label>Chọn file chính sách <span style='color:red'>*</span>:</label>
@@ -52,7 +28,7 @@
                             <tr>
                                 @foreach (ENTITIES.Language item in ViewBag.languages)
                                 {
-                                    <th class="text-center">@item.language_name</th>
+                                    <th data-language="@item.language_id" class="text-center">@item.language_name</th>
                                 }
                                 <th class="text-center">Hành động</th>
                             </tr>
@@ -101,7 +77,7 @@
                 </a>
             </div>
             <div class="col-sm-12 text-center">
-                <button class="btn btn-success">Cập nhật</button>
+                <button class="btn btn-success" id="SendConditionButton" onclick="submitCondition()">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -109,6 +85,7 @@
 
 @section Scripts{
     <script>
+        var save_loader = new LoaderBtn($("#SendConditionButton"))
         const Tus = Uppy.Tus;
         const StatusBar = Uppy.StatusBar;
         const FileInput = Uppy.FileInput;
@@ -127,7 +104,7 @@
             autoProceed: false,
             showProgressDetails: true,
             restrictions: {
-                maxFileSize: 15728640, // 15mb
+                maxFileSize: 5242880, // 15mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
                 allowedFileTypes: ['.pdf', '.docx', '.doc']
@@ -206,17 +183,67 @@
             $("#mytable tbody").append(temp);
         }
 
+        var numLanguage = $("#mytable thead tr th").length - 1;
+
         function submitCondition() {
-            var input = []
+            let input = []
             for (let j = 0; j < $("#mytable tbody tr").length; j++) {
                 let temp = {}
-                for (let i = 0; i < $("#mytable thead tr th").length - 1; i++) {
-                    const x = $("#mytable tbody tr")[j]
-                    const language = $("#mytable thead tr th")[i].innerHTML
-                    temp[$("#mytable thead tr th")[i].innerHTML] = $(x).find("input")[i].value
+                for (let i = 0; i < numLanguage; i++) {
+                    const $tr = $("#mytable tbody tr")[j];
+                    const language = $("#mytable thead tr th").eq(i).data("language");
+                    const name = $($tr).find("input")[i].value;
+                    if (name.trim() != "")
+                        temp[language] = name;
                 }
-                input.push(temp)
+                if (Object.keys(temp).length == numLanguage)
+                    input.push(temp);
             }
+            if (uppy1.getFiles().length == 0) {
+                toastr.error("Không được bỏ trống tệp tin");
+                return false;
+            }
+            if (input.length == 0) {
+                toastr.error("Không được bỏ trống điều kiện");
+                return false;
+            }
+            Swal.fire({
+                title: input.length + " điều kiện mới sẽ được áp dụng",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    let fd = new FormData();
+                    fd.append("file", uppy1.getFiles()[0].data);
+                    fd.append("policies", JSON.stringify(input));
+                    save_loader.startLoading();
+                    $.ajax({
+                        url: "/ConditionManagement/Add",
+                        method: "post",
+                        complete: function (data) {
+                            if (data.responseJSON.success) {
+                                location.href = "/ConditionManagement"
+                            }
+                            else {
+                                toastr.error(data.responseJSON.content);
+                                save_loader.stopLoading();
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            save_loader.stopLoading();
+                        },
+                        dataType: "json",
+                        data: fd,
+                        processData: false,
+                        contentType: false
+                    });
+                }
+            });
         }
     </script>
 }

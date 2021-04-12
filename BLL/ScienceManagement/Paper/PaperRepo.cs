@@ -30,8 +30,9 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id
+            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id, f.link as 'link_file'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+							left join [General].[File] f on p.file_id = f.file_id
                             where p.paper_id = @id";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
@@ -57,6 +58,22 @@ namespace BLL.ScienceManagement.Paper
                         where a.paper_id == paper_id
                         select b).FirstOrDefault();
             return p;
+        }
+
+        public string addFile(ENTITIES.File f)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            try
+            {
+                db.Files.Add(f);
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
+            }
         }
 
         public List<AuthorInfoWithNull> getAuthorPaper(string id, string lang)
@@ -246,6 +263,7 @@ namespace BLL.ScienceManagement.Paper
                         paper_type_id = item.paper_type_id,
                         note_domestic = item.note_domestic
                     };
+                    if (item.file_id != null) paper.file_id = item.file_id;
                     db.Papers.Add(paper);
                     db.SaveChanges();
                     //string sql = @"select p.*
@@ -1091,6 +1109,19 @@ namespace BLL.ScienceManagement.Paper
                             having sum(ap.money_reward_in_decision) > 0
                             order by ah.name";
             List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
+            return list;
+        }
+
+        public List<string> getLstEmailAuthor(int reseacher)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select distinct ah.email
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+	                            join [General].Office o on ah.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+                            where rp.status_id in (4, 6, 7) and ah.is_reseacher = @reseacher";
+            List<string> list = db.Database.SqlQuery<string>(sql, new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
     }
