@@ -41,7 +41,7 @@
 <!--begin::Body-->
 
 <body id="kt_body"
-      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading 
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading
       @(ViewBag.asideMinimize!=null?(ViewBag.asideMinimize==true?"aside-minimize":""):"")">
     <!--begin::Main-->
     <!--begin::Header Mobile-->
@@ -324,16 +324,16 @@
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
                                 @*<div class="menu-submenu ">
-                <i class="menu-arrow"></i>
-                <ul class="menu-subnav">
-                    <li class="menu-item " aria-haspopup="true">
-                        <a href="#" class="menu-link ">
-                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                            <span class="menu-text">.......................</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>*@
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="#" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">.......................</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
@@ -517,6 +517,49 @@
                             if (user != null)
                             {
                                 <div class="topbar">
+                                    <!--begin::Notifications-->
+                                    <div class="dropdown">
+                                        <!--begin::Toggle-->
+                                        <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+                                            <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
+                                                <i class="fa fas fa-bell icon-md text-success"></i><span class="pulse-ring"></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Toggle-->
+                                        <!--begin::Dropdown-->
+                                        <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
+                                            <form>
+                                                <!--begin::Header-->
+                                                <div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">
+                                                    <!--begin::Title-->
+                                                    <h4 class="d-flex flex-center rounded-top">
+                                                        <span class="text-white">User Notifications</span>
+                                                        <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
+                                                            23
+                                                            new
+                                                        </span>
+                                                    </h4>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Header-->
+                                                <!--begin::Content-->
+                                                <div class="tab-content">
+                                                    <!--begin::Tabpane-->
+                                                    <div class="tab-pane active show" id="topbar_notifications_events" role="tabpanel">
+                                                        <!--begin::Nav-->
+                                                        <div class="navi navi-hover scroll my-4" id="event-noti" data-scroll="true" data-height="300" data-mobile-height="200">
+                                                        </div>
+                                                        <!--end::Nav-->
+                                                    </div>
+                                                    <!--end::Tabpane-->
+                                                </div>
+                                                <!--end::Content-->
+                                            </form>
+                                        </div>
+                                        <!--end::Dropdown-->
+                                    </div>
+                                    <!--end::Notifications-->
+                                    <!--begin::User-->
                                     <div class="topbar-item">
                                         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                              id="kt_quick_user_toggle">
@@ -727,7 +770,7 @@
         $(document).ready(function () {
             // Reference the auto-generated proxy for the hub.
             $.connection.hub.url = 'https://localhost:44316/signalr';
-            chat = $.connection.chatHub;
+            chat = $.connection.notiHub;
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
