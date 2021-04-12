@@ -1111,5 +1111,18 @@ namespace BLL.ScienceManagement.Paper
             List<Paper_Apendix_3> list = db.Database.SqlQuery<Paper_Apendix_3>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
+
+        public List<string> getLstEmailAuthor(int reseacher)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select distinct ah.email
+                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+	                            join [General].Office o on ah.office_id = o.office_id
+	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+                            where rp.status_id in (4, 6, 7) and ah.is_reseacher = @reseacher";
+            List<string> list = db.Database.SqlQuery<string>(sql, new SqlParameter("reseacher", reseacher)).ToList();
+            return list;
+        }
     }
 }
