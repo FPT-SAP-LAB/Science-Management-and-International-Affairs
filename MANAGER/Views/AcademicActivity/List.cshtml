@@ -422,6 +422,7 @@
                 from: from,
                 to: to
             }
+            save_loader.startLoading();
             $.ajax({
                 url: "@Url.Action("add_AcademicActivity", "AcademicActivity")",
                 data: JSON.stringify(object),
@@ -433,13 +434,13 @@
                         clearModal('#addModal');
                         $('#addModal').modal('hide');
                         datatable.ajax.reload();
+                        save_loader.stopLoading();
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }
-                    save_loader.startLoading();
                 },
                 error: function (data) {
-                    save_loader.startLoading();
+                    save_loader.stopLoading();
                 }
             });
         });
