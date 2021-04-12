@@ -60,6 +60,15 @@ namespace BLL.ScienceManagement.Citation
             return item;
         }
 
+        public List<string> getAuthorEmail()
+        {
+            string sql = @"select distinct ah.email
+                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
+                            where rc.status_id in (4, 6, 7)";
+            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
+            return list;
+        }
+
         public string changeStatus(string request_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
