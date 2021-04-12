@@ -19,10 +19,13 @@ namespace GUEST
             // Call the addNewMessageToPage method to update clients.
             Notification Noti = notficationRepo.Get(notification_id);
             AccountConnections.TryGetValue(Noti.AccountID, out BruhbrubLNguyen[] Connections);
+
+            List<NotificationTypeLanguage> Types = TypeLanguage.Where(x => x.notification_type_id == Noti.TypeID).ToList();
+
             if (Connections != null)
-                foreach (var conn in Connections)
+                foreach (var conn in Connections.Where(x => x != null))
                 {
-                    foreach (var type in TypeLanguage)
+                    foreach (var type in Types)
                     {
                         if (conn.LanguageID == type.language_id)
                             Clients.Client(conn.ConnectionID).addNewMessageToPage(Noti.URL, Noti.Icon, type.notification_template, Noti.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
@@ -34,7 +37,6 @@ namespace GUEST
             if (AccountConnections.ContainsKey(account_id))
             {
                 bool FullInit = true;
-                //  Đừng tạo biến array, nó tốn dung lượng
                 for (int i = 0; i < AccountConnections[account_id].Length; i++)
                 {
                     if (AccountConnections[account_id][i] == null)
@@ -56,6 +58,7 @@ namespace GUEST
             else
             {
                 AccountConnections.Add(account_id, new BruhbrubLNguyen[6]);
+                AccountConnections[account_id][0] = new BruhbrubLNguyen(connID, language_id, DateTime.Now);
             }
         }
 

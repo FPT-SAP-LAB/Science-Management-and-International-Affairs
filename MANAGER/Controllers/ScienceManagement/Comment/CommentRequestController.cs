@@ -5,7 +5,7 @@ using MANAGER.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace GUEST.Controllers.ScienceManagement.Comment
+namespace MANAGER.Controllers.ScienceManagement.Comment
 {
     public class CommentRequestController : Controller
     {
@@ -22,7 +22,7 @@ namespace GUEST.Controllers.ScienceManagement.Comment
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {
-            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content, CurrentAccount.RoleID(Session)));
+            return Json(CommentRepo.AddComment(request_id, CurrentAccount.AccountID(Session), content, CurrentAccount.RoleID(Session), true));
         }
     }
 }
