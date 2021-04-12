@@ -9,20 +9,14 @@ namespace BLL.ModelDAL
     {
         public static List<Language> GetLanguages()
         {
-            List<Language> languages = new List<Language>();
-            try
+            using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
             {
-                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
-                {
-                    db.Configuration.LazyLoadingEnabled = false;
-                    languages = db.Languages.ToList();
-                }
+                return GetLanguages(db);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return languages;
+        }
+        public static List<Language> GetLanguages(ScienceAndInternationalAffairsEntities db)
+        {
+            return db.Languages.ToList();
         }
     }
 }

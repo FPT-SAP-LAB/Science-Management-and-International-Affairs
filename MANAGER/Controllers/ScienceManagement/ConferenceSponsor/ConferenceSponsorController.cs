@@ -17,6 +17,7 @@ namespace MANAGER.Controllers
         ConferenceSponsorDetailRepo DetailRepos;
         public ActionResult Index()
         {
+            ViewBag.title = "DANH SÁCH ĐỀ NGHỊ ĐANG XỬ LÝ";
             return View();
         }
         public JsonResult List()
@@ -39,7 +40,7 @@ namespace MANAGER.Controllers
             string output = DetailRepos.GetDetailPageGuest(id, 1);
             if (output == null)
                 return Redirect("/ConferenceSponsor");
-
+            ViewBag.asideMinimize = true;
             ViewBag.output = output;
             string university = JObject.Parse(output)["Conference"]["QsUniversity"].ToString();
             ViewBag.ranking = qsUniversityRepo.GetRanking(university);

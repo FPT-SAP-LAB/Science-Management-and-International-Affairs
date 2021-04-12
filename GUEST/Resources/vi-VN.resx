@@ -154,7 +154,7 @@
     <value>Tên tác giả</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>Ngân hàng</value>
+    <value>Ngân hàng - Chi nhánh ngân hàng</value>
   </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Số trích dẫn</value>
@@ -242,6 +242,9 @@
   </data>
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
+  </data>
+  <data name="FileCMnew" xml:space="preserve">
+    <value>Upload file mới</value>
   </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>

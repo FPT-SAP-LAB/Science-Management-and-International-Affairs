@@ -169,7 +169,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ngân hàng.
+        ///   Looks up a localized string similar to Ngân hàng - Chi nhánh ngân hàng.
         /// </summary>
         public static string Bank {
             get {
@@ -435,6 +435,15 @@ namespace GUEST.Resources {
         public static string FileCM {
             get {
                 return ResourceManager.GetString("FileCM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file mới.
+        /// </summary>
+        public static string FileCMnew {
+            get {
+                return ResourceManager.GetString("FileCMnew", resourceCulture);
             }
         }
         

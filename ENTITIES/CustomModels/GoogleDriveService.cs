@@ -1,13 +1,11 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
-using Google.Apis.Requests;
 using Google.Apis.Services;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Web;
 using static Google.Apis.Drive.v3.FilesResource;
 
@@ -21,7 +19,9 @@ namespace ENTITIES.CustomModels
         //IncludeItemsFromAllDrives: hỗ trợ tìm kiếm dữ liệu file/folder trên cả drive của người dùng, shared drive
 
         public static GoogleCredential credential;
-        public static string SMDrive;
+        public static string PeopleDrive;
+        public static string DecisionDrive;
+        public static string PolicyDrive;
         public static string IADrive;
         public static DriveService driveService;
         public static void InIt()
@@ -41,29 +41,48 @@ namespace ENTITIES.CustomModels
             using (StreamReader r = new StreamReader(filePath + "/DriveConfig.json"))
             {
                 string json = r.ReadToEnd();
-                SMDrive = JObject.Parse(json).Value<string>("SMDriveID");
+                PeopleDrive = JObject.Parse(json).Value<string>("PeopleDriveID");
+                DecisionDrive = JObject.Parse(json).Value<string>("DecisionDriveID");
+                PolicyDrive = JObject.Parse(json).Value<string>("PolicyDriveID");
                 IADrive = JObject.Parse(json).Value<string>("IADriveID");
             }
         }
-        public static string CurrentAccount()
+
+        //Quyết định
+        //|_____QD_abc
+        //|
+        //|_____QD_xyz
+        public static Google.Apis.Drive.v3.Data.File UploadDecisionFile(HttpPostedFileBase InputFile, string FolderName, List<string> Emails)
         {
-            if (driveService == null)
-                return null;
-            AboutResource.GetRequest request = driveService.About.Get();
-            request.Fields = "user";
-            var About = request.Execute();
-            return About.User.EmailAddress;
-        }
-        public static void Logout()
-        {
-            if (driveService == null)
-                return;
-            //_ = credential.RevokeTokenAsync(CancellationToken.None).Result;
-            credential = null;
-            driveService = null;
+            var folder = FindFirstFolder(FolderName, DecisionDrive) ?? CreateFolder(FolderName, DecisionDrive);
+
+            var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, folder.Id);
+
+            if (Emails != null)
+                foreach (var item in Emails)
+                {
+                    ShareWithEmail(item, file.Id);
+                }
+            return file;
         }
 
-        //Thư mục gốc
+        //Chính sách
+        //|_____9/11/1997
+        //|
+        //|_____29/11/1999
+        public static Google.Apis.Drive.v3.Data.File UploadPolicyFile(HttpPostedFileBase InputFile)
+        {
+            string FolderName = DateTime.Now.ToString("dd/MM/yyyy");
+            var folder = FindFirstFolder(FolderName, PolicyDrive) ?? CreateFolder(FolderName, PolicyDrive);
+
+            var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, folder.Id);
+
+            ShareWithAnyone(file.Id);
+
+            return file;
+        }
+
+        //Danh sách tài khoản
         //|_____sonnt5
         //|  |_____Khen thưởng bài báo
         //|  |  |_____Bài báo A(file đính kèm 1, file đính kèm 2)
@@ -76,27 +95,21 @@ namespace ENTITIES.CustomModels
         //|  |_____Học bổng, ...vv
         //|
         //|_____anhnb
-        public static Google.Apis.Drive.v3.Data.File UploadResearcherFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string ShareWithEmail)
+        public static Google.Apis.Drive.v3.Data.File UploadResearcherFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, string Email)
         {
-            return UploadResearcherFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, ShareWithEmail)[0];
+            return UploadResearcherFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, Email)[0];
         }
         public static Google.Apis.Drive.v3.Data.File UploadProfileMedia(HttpPostedFileBase InputFile, string ShareWithEmail)
         {
             string ResearcherFolderName = ShareWithEmail.Split('@')[0];
-            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, SMDrive) ?? CreateFolder(ResearcherFolderName, SMDrive);
+            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, PeopleDrive) ?? CreateFolder(ResearcherFolderName, PeopleDrive);
             var SubFolder = FindFirstFolder("ProfileMedia", ResearcherFolder.Id) ?? CreateFolder("ProfileMedia", ResearcherFolder.Id);
             var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, SubFolder.Id);
-            Permission userPermission = new Permission
-            {
-                Type = "anyone",
-                Role = "reader"
-            };
-            PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, file.Id);
-            createRequest.SupportsAllDrives = true;
-            createRequest.Execute();
+
+            ShareWithAnyone(file.Id);
             return file;
         }
-        public static List<Google.Apis.Drive.v3.Data.File> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string ShareWithEmail)
+        public static List<Google.Apis.Drive.v3.Data.File> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string Email)
         {
             string SubFolderName;
             switch (TypeFolder)
@@ -110,20 +123,14 @@ namespace ENTITIES.CustomModels
                 case 3:
                     SubFolderName = "Bằng sáng chế";
                     break;
-                case 4:
-                    SubFolderName = "Quyết định";
-                    break;
-                case 5:
-                    SubFolderName = "ProfileMedia";
-                    break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
             }
             string ResearcherFolderName;
-            if (ShareWithEmail == null) ResearcherFolderName = "Phòng KH";
-            else ResearcherFolderName = ShareWithEmail.Split('@')[0];
+            if (Email == null) ResearcherFolderName = "Phòng KH";
+            else ResearcherFolderName = Email.Split('@')[0];
 
-            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, SMDrive) ?? CreateFolder(ResearcherFolderName, SMDrive);
+            var ResearcherFolder = FindFirstFolder(ResearcherFolderName, PeopleDrive) ?? CreateFolder(ResearcherFolderName, PeopleDrive);
 
             var SubFolder = FindFirstFolder(SubFolderName, ResearcherFolder.Id) ?? CreateFolder(SubFolderName, ResearcherFolder.Id);
 
@@ -137,10 +144,10 @@ namespace ENTITIES.CustomModels
 
                 UploadedFiles.Add(file);
 
-                if (ShareWithEmail != null)
+                if (Email != null)
                 {
-                    ShareFile(ShareWithEmail, file.Id);
-                    ShareFile(ShareWithEmail, folder.Id);
+                    ShareWithEmail(Email, file.Id);
+                    ShareWithEmail(Email, folder.Id);
                 }
             }
 
@@ -222,7 +229,7 @@ namespace ENTITIES.CustomModels
             return RequestPut.ResponseBody;
         }
 
-        public static void ShareFile(string Email, string FileID)
+        public static void ShareWithEmail(string Email, string FileID)
         {
             Permission userPermission = new Permission
             {
@@ -235,6 +242,20 @@ namespace ENTITIES.CustomModels
             createRequest.SupportsAllDrives = true;
             createRequest.Execute();
         }
+
+        public static void ShareWithAnyone(string FileID)
+        {
+            Permission userPermission = new Permission
+            {
+                Type = "anyone",
+                Role = "reader"
+            };
+
+            PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, FileID);
+            createRequest.SupportsAllDrives = true;
+            createRequest.Execute();
+        }
+
         public static AlertModal<string> DeleteFile(string FileID)
         {
             try
@@ -307,15 +328,7 @@ namespace ENTITIES.CustomModels
 
                 UploadedFiles.Add(file);
 
-                Permission userPermission = new Permission
-                {
-                    Type = "anyone",
-                    Role = "reader"
-                };
-
-                PermissionsResource.CreateRequest createRequest = driveService.Permissions.Create(userPermission, file.Id);
-                createRequest.SupportsAllDrives = true;
-                createRequest.Execute();
+                ShareWithAnyone(file.Id);
             }
 
             if (isFolder)

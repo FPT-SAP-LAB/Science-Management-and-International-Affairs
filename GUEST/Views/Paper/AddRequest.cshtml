@@ -120,13 +120,23 @@
                             <label style="color:#fff">abc</label>
                             <button class="btn btn-primary form-control form-control-lg">@rm.GetString("ListMaga")</button>
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-4 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("JournalIndex")</label>
                             <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_index" />
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-3 form-group thuongtn" style="display: none">
+                            <label>@rm.GetString("FileCM")<span style='color:red'>*</span></label>
+                            <div class="uppy" id="kt_uppy_1">
+                                <div class="uppy-wrapper"></div>
+                                <div class="uppy-list"></div>
+                                <div class="uppy-status"></div>
+                                <div class="uppy-informer uppy-informer-min"></div>
+                            </div>
+                            <span class="form-text text-muted">Max file size is 15MB and max number of files is 1.</span>
+                        </div>
+                        <div class="col-xl-5 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("Note")</label>
-                            <input autocomplete="off" class="form-control form-control-lg" type="text" />
+                            <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("TotalReward")</label>
@@ -214,6 +224,7 @@
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
+        var uppy1;
         var temp_index_edit;
         var paper_id;
         var people = [];
@@ -320,6 +331,14 @@
                 ck = false;
             }
 
+            if ($("#loaithuong").val() == "Trongnuoc") {
+                if (uppy1.getFiles().length == 0) {
+                    toastr.error("Thiếu file chứng minh cho chỉ số tạp chí");
+                    ck = false;
+                    return false;
+                }
+            }
+
             if (ck) {
                 var Paper = {
                     name: $("#paper_name").val(),
@@ -331,27 +350,73 @@
                     vol: $("#paper_vol").val(),
                     page: $("#paper_page").val(),
                     company: $("#paper_publish_name").val(),
-                    index: $("#paper_index").val()
+                    index: $("#paper_index").val(),
+                    note_domestic: $("#paper_note_domestic").val(),
                 };
 
-                $.ajax({
-                    url: "@Url.Action("AddPaper", "Paper")",
-                    type: "POST",
-                    data: JSON.stringify({ 'paper': Paper }),
-                    contentType: "application/json;charset=utf-8",
-                    datatype: "json",
-                    cache: false,
-                    success: function (response) {
-                        if (response.mess == "ss") {
-                            paper_id = response.id;
-                            addCriteria();
+                if (uppy1.getFiles().length > 0) {
+                    var name = $("#paper_name").val();
+                    formData = new FormData();
+                    formData.append('file', uppy1.getFiles()[0].data);
+                    formData.append('name', name);
+                    $.ajax({
+                        url: "/Paper/addFile",
+                        method: "post",
+                        complete: function (data) {
+                            var mess = data.responseJSON.mess;
+                            if (mess == "ss") {
+                                fileid = data.responseJSON.id;
+                                $.ajax({
+                                    url: "@Url.Action("AddPaper", "Paper")",
+                                    type: "POST",
+                                    data: JSON.stringify({ 'paper': Paper, 'fileid': fileid }),
+                                    contentType: "application/json;charset=utf-8",
+                                    datatype: "json",
+                                    cache: false,
+                                    success: function (response) {
+                                        if (response.mess == "ss") {
+                                            paper_id = response.id;
+                                            addCriteria();
+                                        }
+                                        else alert('loi');
+                                    },
+                                    error: function () {
+                                        //alert("fail");
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            save_loader.stopLoading();
+                        },
+                        dataType: "json",
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    });
+                } else {
+                    $.ajax({
+                        url: "@Url.Action("AddPaper", "Paper")",
+                        type: "POST",
+                        data: JSON.stringify({ 'paper': Paper, 'fileid': '0' }),
+                        contentType: "application/json;charset=utf-8",
+                        datatype: "json",
+                        cache: false,
+                        success: function (response) {
+                            if (response.mess == "ss") {
+                                paper_id = response.id;
+                                addCriteria();
+                            }
+                            else alert('loi');
+                        },
+                        error: function () {
+                            //alert("fail");
                         }
-                        else alert('loi');
-                    },
-                    error: function () {
-                        //alert("fail");
-                    }
-                });
+                    });
+                }
+
+
             } else {
                 ck = true;
             }
@@ -424,5 +489,6 @@
         });
     </script>
     <script src="~/Scripts/PartialViewScript.js"></script>
+    <script src="~/Scripts/JSUpload.js"></script>
 }
 

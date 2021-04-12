@@ -178,6 +178,7 @@
     <Compile Include="ModelDAL\NotificationRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
+    <Compile Include="ModelDAL\PositionLanguageRepo.cs" />
     <Compile Include="ModelDAL\QsUniversityRepo.cs" />
     <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
