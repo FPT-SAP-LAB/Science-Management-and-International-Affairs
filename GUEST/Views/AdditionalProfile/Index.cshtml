@@ -82,6 +82,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    @if (ViewBag.Positions != null)
+                    {
+                        <div class="col-lg-4">
+                            <label>Chức vụ <span style='color:red'>*</span>:</label>
+                            <input id="multiple-dropdown" class="form-control tagify" name='tags3' placeholder="Chọn các chức vụ của bạn" value="" />
+                        </div>
+                    }
                     <div class="col-md-4">
                         <label>Chức vụ nghiên cứu viên:</label>
                         <div class="radio-inline">
@@ -99,78 +106,92 @@
                     </div>
                 </div>
             </div>
+            @if (ViewBag.Positions != null)
+            {
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button type="button" id="submitForm" class="btn btn-primary mr-2">Cập nhật</button>
+                            <button type="reset" class="btn btn-secondary">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="card card-custom gutter-b example example-compact">
-            <div class="card-header">
-                <div class="card-title position-relative m-0">
-                    <span>
-                        Thông tin khen thưởng sản phẩm khoa học / hỗ trợ tham dự hội nghị
-                    </span>
-                    <span class="form-text text-muted position-absolute bottom-0 left" style="font-size: 1rem;">Cán bộ/ giảng viên không cần điền thông tin này</span>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-lg-4">
-                        <label>Số tài khoản :</label>
-                        <input id="bank_numberInput" type="text" class="form-control" />
-                    </div>
-                    <div class="col-lg-4">
-                        <label>Chi nhánh ngân hàng :</label>
-                        <input id="bank_branchInput" type="email" class="form-control" />
-                    </div>
-                    <div class="col-lg-4">
-                        <label>Mã số thuế :</label>
-                        <input type="text" class="form-control" />
+        @if (ViewBag.Positions == null)
+        {
+            <div class="card card-custom gutter-b example example-compact">
+                <div class="card-header">
+                    <div class="card-title position-relative m-0">
+                        <span>
+                            Thông tin khen thưởng sản phẩm khoa học / hỗ trợ tham dự hội nghị
+                        </span>
+                        <span class="form-text text-muted position-absolute bottom-0 left" style="font-size: 1rem;">Cán bộ/ giảng viên không cần điền thông tin này</span>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-4">
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label>Số CMND/Hộ chiếu :</label>
-                                <input id="identification_number" type="text" class="form-control" />
-                            </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <label>Số tài khoản :</label>
+                            <input id="bank_numberInput" type="text" class="form-control" />
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label>Mặt trước CMT :</label>
-                                <div class="uppy" id="kt_uppy_1">
-                                    <div class="uppy-wrapper"></div>
-                                    <div class="uppy-list"></div>
-                                    <div class="uppy-status"></div>
-                                    <div class="uppy-informer uppy-informer-min"></div>
+                        <div class="col-lg-4">
+                            <label>Ngân hàng - Chi nhánh ngân hàng :</label>
+                            <input id="bank_branchInput" type="email" class="form-control" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Mã số thuế :</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label>Số CMND/Hộ chiếu :</label>
+                                    <input id="identification_number" type="text" class="form-control" />
                                 </div>
-                                <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label>Mặt sau CMT :</label>
-                                <div class="uppy" id="kt_uppy_2">
-                                    <div class="uppy-wrapper"></div>
-                                    <div class="uppy-list"></div>
-                                    <div class="uppy-status"></div>
-                                    <div class="uppy-informer uppy-informer-min"></div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label>Mặt trước CMT :</label>
+                                    <div class="uppy" id="kt_uppy_1">
+                                        <div class="uppy-wrapper"></div>
+                                        <div class="uppy-list"></div>
+                                        <div class="uppy-status"></div>
+                                        <div class="uppy-informer uppy-informer-min"></div>
+                                    </div>
+                                    <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
                                 </div>
-                                <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label>Mặt sau CMT :</label>
+                                    <div class="uppy" id="kt_uppy_2">
+                                        <div class="uppy-wrapper"></div>
+                                        <div class="uppy-list"></div>
+                                        <div class="uppy-status"></div>
+                                        <div class="uppy-informer uppy-informer-min"></div>
+                                    </div>
+                                    <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-md-8">
+                            <image id="myCanvas" class="img-fluid"></image>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <image id="myCanvas" class="img-fluid"></image>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button type="button" id="submitForm" class="btn btn-primary mr-2">Cập nhật</button>
+                            <button type="reset" class="btn btn-secondary">Xóa</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <button type="button" id="submitForm" class="btn btn-primary mr-2">Cập nhật</button>
-                        <button type="reset" class="btn btn-secondary">Xóa</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 @section Scripts{
@@ -178,6 +199,7 @@
         $("#office-select").select2();
         $("#title-select").select2();
         $("#country-select").select2();
+        $("#position-select").select2();
         var save_loader = new LoaderBtn($("#submitForm"))
 
         var arrows;
@@ -200,211 +222,276 @@
             templates: arrows
         });
 
-        var KTUppy = function () {
-            const Tus = Uppy.Tus;
-            const StatusBar = Uppy.StatusBar;
-            const FileInput = Uppy.FileInput;
-            const Informer = Uppy.Informer;
+        if ($("#kt_uppy_1").length != 0) {
+            var KTUppy = function () {
+                const Tus = Uppy.Tus;
+                const StatusBar = Uppy.StatusBar;
+                const FileInput = Uppy.FileInput;
+                const Informer = Uppy.Informer;
 
-            var initUppy1 = function () {
-                // Uppy variables
-                // For more info refer: https://uppy.io/
-                var elemId = 'kt_uppy_1';
-                var id = '#' + elemId;
-                var $statusBar = $(id + ' .uppy-status');
-                var $uploadedList = $(id + ' .uppy-list');
+                var initUppy1 = function () {
+                    // Uppy variables
+                    // For more info refer: https://uppy.io/
+                    var elemId = 'kt_uppy_1';
+                    var id = '#' + elemId;
+                    var $statusBar = $(id + ' .uppy-status');
+                    var $uploadedList = $(id + ' .uppy-list');
 
-                uppy1 = Uppy.Core({
-                    debug: true,
-                    autoProceed: false,
-                    showProgressDetails: true,
-                    restrictions: {
-                        maxFileSize: 5242880, // 5mb
-                        maxNumberOfFiles: 1,
-                        minNumberOfFiles: 1,
-                        allowedFileTypes: ['.jpg', '.jpeg', '.png']
-                    }
-                });
+                    uppy1 = Uppy.Core({
+                        debug: true,
+                        autoProceed: false,
+                        showProgressDetails: true,
+                        restrictions: {
+                            maxFileSize: 5242880, // 5mb
+                            maxNumberOfFiles: 1,
+                            minNumberOfFiles: 1,
+                            allowedFileTypes: ['.jpg', '.jpeg', '.png']
+                        }
+                    });
 
-                uppy1.use(FileInput, {
-                    target: id + ' .uppy-wrapper',
-                    pretty: false
-                });
-                uppy1.use(Informer, {
-                    target: id + ' .uppy-informer'
-                });
+                    uppy1.use(FileInput, {
+                        target: id + ' .uppy-wrapper',
+                        pretty: false
+                    });
+                    uppy1.use(Informer, {
+                        target: id + ' .uppy-informer'
+                    });
 
-                // demo file upload server
-                uppy1.use(Tus, {
-                    endpoint: 'https://master.tus.io/files/'
-                });
-                uppy1.use(StatusBar, {
-                    target: id + ' .uppy-status',
-                    hideUploadButton: true,
-                    hideAfterFinish: false
-                });
+                    // demo file upload server
+                    uppy1.use(Tus, {
+                        endpoint: 'https://master.tus.io/files/'
+                    });
+                    uppy1.use(StatusBar, {
+                        target: id + ' .uppy-status',
+                        hideUploadButton: true,
+                        hideAfterFinish: false
+                    });
 
-                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+                    $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                    $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
 
-                uppy1.on('file-added', function (file) {
-                    var sizeLabel = "bytes";
-                    var filesize = file.size;
-                    if (filesize > 1024) {
-                        filesize = filesize / 1024;
-                        sizeLabel = "kb";
-
+                    uppy1.on('file-added', function (file) {
+                        var sizeLabel = "bytes";
+                        var filesize = file.size;
                         if (filesize > 1024) {
                             filesize = filesize / 1024;
-                            sizeLabel = "MB";
+                            sizeLabel = "kb";
+
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
                         }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+
+                        if (uppy2.getFiles()[0] != undefined) {
+                            save_loader.startLoading();
+                            showPhoto();
+                        }
+                    });
+
+                    $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                        var itemId = $(this).attr('data-id');
+                        uppy1.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        document.getElementById("myCanvas").src = "";
+                    });
+                }
+
+                var initUppy2 = function () {
+                    // Uppy variables
+                    // For more info refer: https://uppy.io/
+                    var elemId = 'kt_uppy_2';
+                    var id = '#' + elemId;
+                    var $statusBar = $(id + ' .uppy-status');
+                    var $uploadedList = $(id + ' .uppy-list');
+
+                    uppy2 = Uppy.Core({
+                        debug: true,
+                        autoProceed: false,
+                        showProgressDetails: true,
+                        restrictions: {
+                            maxFileSize: 5242880, // 5mb
+                            maxNumberOfFiles: 1,
+                            minNumberOfFiles: 1,
+                            allowedFileTypes: ['.jpg', '.jpeg', '.png']
+                        }
+                    });
+
+                    uppy2.use(FileInput, {
+                        target: id + ' .uppy-wrapper',
+                        pretty: false
+                    });
+                    uppy2.use(Informer, {
+                        target: id + ' .uppy-informer'
+                    });
+
+                    // demo file upload server
+                    uppy2.use(Tus, {
+                        endpoint: 'https://master.tus.io/files/'
+                    });
+                    uppy2.use(StatusBar, {
+                        target: id + ' .uppy-status',
+                        hideUploadButton: true,
+                        hideAfterFinish: false
+                    });
+
+                    $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                    $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                    uppy2.on('file-added', function (file) {
+                        var sizeLabel = "bytes";
+                        var filesize = file.size;
+                        if (filesize > 1024) {
+                            filesize = filesize / 1024;
+                            sizeLabel = "kb";
+
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "MB";
+                            }
+                        }
+                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+
+                        if (uppy1.getFiles()[0] != undefined) {
+                            save_loader.startLoading();
+                            showPhoto();
+                        }
+                    });
+
+                    $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                        var itemId = $(this).attr('data-id');
+                        uppy2.removeFile(itemId);
+                        $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                        document.getElementById("myCanvas").src = "";
+                    });
+                }
+
+                return {
+                    // public functions
+                    init: function () {
+                        initUppy1();
+                        initUppy2();
+                        // initUppy6();
                     }
-                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                    $uploadedList.append(uploadListHtml);
+                };
+            }();
 
-                    $statusBar.addClass('uppy-status-hidden');
-                    $statusBar.removeClass('uppy-status-ongoing');
 
-                    if (uppy2.getFiles()[0] != undefined) {
-                        save_loader.startLoading();
-                        showPhoto();
-                    }
-                });
 
-                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-                    var itemId = $(this).attr('data-id');
-                    uppy1.removeFile(itemId);
-                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-                    document.getElementById("myCanvas").src = "";
-                });
+            function showPhoto() {
+                var reader = new FileReader();
+                var rd = new FileReader();
+
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        rd.onload = function (ex) {
+                            var image2 = new Image();
+                            image2.src = ex.target.result;
+                            image2.onload = function () {
+                                canvas.width = image.width + image2.width;
+                                canvas.height = Math.max(image.height, image2.height);
+                                ctx.drawImage(image, 0, 0);
+                                ctx.drawImage(image2, image.width, 0);
+                                var URL = canvas.toDataURL('image/jpeg');
+                                document.getElementById("myCanvas").src = URL;
+                                save_loader.stopLoading();
+                            }
+                        }
+                        rd.readAsDataURL(uppy2.getFiles()[0].data);
+                    };
+                }
+                reader.readAsDataURL(uppy1.getFiles()[0].data);
             }
 
-            var initUppy2 = function () {
-                // Uppy variables
-                // For more info refer: https://uppy.io/
-                var elemId = 'kt_uppy_2';
-                var id = '#' + elemId;
-                var $statusBar = $(id + ' .uppy-status');
-                var $uploadedList = $(id + ' .uppy-list');
+            KTUtil.ready(function () {
+                KTUppy.init();
+            });
 
-                uppy2 = Uppy.Core({
-                    debug: true,
-                    autoProceed: false,
-                    showProgressDetails: true,
-                    restrictions: {
-                        maxFileSize: 5242880, // 5mb
-                        maxNumberOfFiles: 1,
-                        minNumberOfFiles: 1,
-                        allowedFileTypes: ['.jpg', '.jpeg', '.png']
-                    }
-                });
+            function dataURItoBlob(dataURI) {
+                var blobBin = atob(dataURI.split(',')[1]);
+                var array = [];
+                for (var i = 0; i < blobBin.length; i++) {
+                    array.push(blobBin.charCodeAt(i));
+                }
+                var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                var file = new Blob([new Uint8Array(array)], { type: mimeString });
+                return file;
+            }
+        }
 
-                uppy2.use(FileInput, {
-                    target: id + ' .uppy-wrapper',
-                    pretty: false
-                });
-                uppy2.use(Informer, {
-                    target: id + ' .uppy-informer'
-                });
+        var tagifyTo;
 
-                // demo file upload server
-                uppy2.use(Tus, {
-                    endpoint: 'https://master.tus.io/files/'
-                });
-                uppy2.use(StatusBar, {
-                    target: id + ' .uppy-status',
-                    hideUploadButton: true,
-                    hideAfterFinish: false
-                });
+        var whitelist = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Positions)));
+        for (var i = 0; i < whitelist.length; i++) {
+            whitelist[i].value = whitelist.name;
+        }
 
-                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
-
-                uppy2.on('file-added', function (file) {
-                    var sizeLabel = "bytes";
-                    var filesize = file.size;
-                    if (filesize > 1024) {
-                        filesize = filesize / 1024;
-                        sizeLabel = "kb";
-
-                        if (filesize > 1024) {
-                            filesize = filesize / 1024;
-                            sizeLabel = "MB";
+        var MultipleDropDownDemo = function () {
+            var demo5 = function () {
+                // Init autocompletes
+                var toEl = document.getElementById('multiple-dropdown');
+                tagifyTo = new Tagify(toEl, {
+                    delimiters: ", ", // add new tags when a comma or a space character is entered
+                    maxTags: 10,
+                    keepInvalidTags: false, // do not remove invalid tags (but keep them marked as invalid)
+                    whitelist: [
+                        { language_id: 1, position_id: 1, value: "Trưởng phòng" },
+                        { language_id: 1, position_id: 2, value: "Trưởng bộ môn" },
+                        { language_id: 1, position_id: 3, value: "Hiệu trưởng" }
+                    ],
+                    templates: {
+                        dropdownItem: function (tagData) {
+                            try {
+                                var html = '';
+                                html += '<div class="tagify__dropdown__item">';
+                                html += '   <div class="d-flex align-items-center">';
+                                html += '       <div class="d-flex flex-column">';
+                                html += '           <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">' + (tagData.value ? tagData.value : '') + '</a>';
+                                html += '       </div>';
+                                html += '   </div>';
+                                html += '</div>';
+                                return html;
+                            } catch (err) { }
                         }
+                    },
+                    transformTag: function (tagData) {
+                        tagData.class = 'tagify__tag tagify__tag--primary';
+                    },
+                    dropdown: {
+                        classname: "color-blue",
+                        enabled: 0,
+                        maxItems: 5,
+                        closeOnSelect: true,
                     }
-                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                    $uploadedList.append(uploadListHtml);
-
-                    $statusBar.addClass('uppy-status-hidden');
-                    $statusBar.removeClass('uppy-status-ongoing');
-
-                    if (uppy1.getFiles()[0] != undefined) {
-                        save_loader.startLoading();
-                        showPhoto();
-                    }
-                });
-
-                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
-                    var itemId = $(this).attr('data-id');
-                    uppy2.removeFile(itemId);
-                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
-                    document.getElementById("myCanvas").src = "";
                 });
             }
 
             return {
                 // public functions
                 init: function () {
-                    initUppy1();
-                    initUppy2();
-                    // initUppy6();
+                    demo5();
+                    $(".tagify__input").keydown(function (e) {
+                        e.preventDefault()
+                    })
                 }
             };
         }();
-
-        function showPhoto() {
-            var reader = new FileReader();
-            var rd = new FileReader();
-
-            reader.onload = function (e) {
-                var image = new Image();
-                image.src = e.target.result;
-                image.onload = function () {
-                    var canvas = document.createElement("canvas");
-                    var ctx = canvas.getContext("2d");
-                    rd.onload = function (ex) {
-                        var image2 = new Image();
-                        image2.src = ex.target.result;
-                        image2.onload = function () {
-                            canvas.width = image.width + image2.width;
-                            canvas.height = Math.max(image.height, image2.height);
-                            ctx.drawImage(image, 0, 0);
-                            ctx.drawImage(image2, image.width, 0);
-                            var URL = canvas.toDataURL('image/jpeg');
-                            document.getElementById("myCanvas").src = URL;
-                            save_loader.stopLoading();
-                        }
-                    }
-                    rd.readAsDataURL(uppy2.getFiles()[0].data);
-                };
-            }
-            reader.readAsDataURL(uppy1.getFiles()[0].data);
-        }
-
-        KTUtil.ready(function () {
-            KTUppy.init();
+        jQuery(document).ready(function () {
+            MultipleDropDownDemo.init();
         });
-
-        function dataURItoBlob(dataURI) {
-            var blobBin = atob(dataURI.split(',')[1]);
-            var array = [];
-            for (var i = 0; i < blobBin.length; i++) {
-                array.push(blobBin.charCodeAt(i));
-            }
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            var file = new Blob([new Uint8Array(array)], { type: mimeString });
-            return file;
-        }
 
         $("#submitForm").click(function () {
             let fd = new FormData();
@@ -412,7 +499,7 @@
             let username = $("#username").val();
             let mssv_msnv = $("#mssv_msnv").val()
 
-            if (document.getElementById("myCanvas").src != "")
+            if (document.getElementById("myCanvas") != null && document.getElementById("myCanvas").src != "")
                 fd.append("identification", dataURItoBlob(document.getElementById("myCanvas").src));
             if (name.trim() == "") {
                 toastr.error("Trường họ và tên là bắt buộc");
@@ -442,6 +529,16 @@
                 mssv_msnv: mssv_msnv,
                 identification_number: $("#identification_number").val()
             }
+            if ($("#multiple-dropdown").length != 0) {
+                profile.PeoplePositions = [];
+                let temp = JSON.parse($("#multiple-dropdown").val());
+                temp.map(function (val, idx) {
+                    profile.PeoplePositions.push({
+                        position_id: val.position_id
+                    })
+                })
+            }
+            console.log(profile);
             fd.append("profile", JSON.stringify(profile));
             fd.append("username", username);
 

@@ -72,6 +72,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             var Conferences = db.Conferences.Where(x => x.conference_name.Contains(name)).ToList();
             return Conferences;
         }
+        public bool DateRangeOverlaps(DateTime a_start, DateTime a_end, DateTime b_start, DateTime b_end)
+        {
+            if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+            if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
+            if (b_start < a_start && a_end < b_end) return true; // a in b
+            return false;
+        }
         public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             List<string> FileIDs = new List<string>();
@@ -86,6 +93,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     JObject @object = JObject.Parse(input);
 
                     Conference conference = @object["Conference"].ToObject<Conference>();
+                    DateTime attendance_start = DateTime.Parse(@object["attendance_start"].ToString());
+                    DateTime attendance_end = DateTime.Parse(@object["attendance_end"].ToString());
+                    if (!DateRangeOverlaps(attendance_start, attendance_end, conference.time_start, conference.time_end))
+                        return JsonConvert.SerializeObject(new { success = false, message = "Hai khoảng thời gian không hợp lệ" });
+
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     int conference_id = 0;
                     string conference_name;
@@ -164,8 +176,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         policy_id = policy.policy_id,
                         editable = false,
                         reimbursement = 0,
-                        attendance_start = DateTime.Parse(@object["attendance_start"].ToString()),
-                        attendance_end = DateTime.Parse(@object["attendance_end"].ToString()),
+                        attendance_start = attendance_start,
+                        attendance_end = attendance_end,
                         invitation_file_id = Finvite.file_id,
                         paper_id = Paper.paper_id,
                         specialization_id = int.Parse(@object["specialization_id"].ToString())
