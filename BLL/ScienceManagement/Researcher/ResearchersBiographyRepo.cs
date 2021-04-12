@@ -85,7 +85,7 @@ namespace BLL.ScienceManagement.Researcher
                             publish_date = x.publish_date,
                             year = x.publish_date.Value.Year.ToString(),
                             co_author = x.co_author,
-                            link=x.link
+                            link = x.link
                         }).ToList<ResearcherPublications>();
             return data;
         }
