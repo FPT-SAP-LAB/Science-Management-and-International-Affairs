@@ -321,7 +321,7 @@
         </div>
         <div class="card-footer">
             <div class="row justify-content-center">
-                <button id="SendRequestButton" onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
+                <button onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
@@ -337,7 +337,6 @@
         var conferenceID = 0;
         var decreaseID = 0;
         var uppy1, uppy2;
-        var save_loader = new LoaderBtn($("#SendRequestButton"))
 
         $(document).ready(function () {
             $(document).find(".selectOffice, .selectTitle, #country, #specialization").select2({
@@ -785,7 +784,7 @@
             })
 
             fd.append("input", JSON.stringify(this.data));
-            save_loader.startLoading();
+            $("#loading").show();
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -796,11 +795,11 @@
                     else {
                         toastr.error(data.responseJSON.message);
                     }
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 error: function () {
                     toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 dataType: "json",
                 data: fd,
