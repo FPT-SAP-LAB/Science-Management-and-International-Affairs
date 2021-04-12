@@ -9,6 +9,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration
     public class YearSearching
     {
         public int? year_from { get; set; }
-        public int year_to { get; set; }
+        public int? year_to { get; set; }
     }
 }

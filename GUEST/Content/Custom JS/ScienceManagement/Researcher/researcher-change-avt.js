@@ -3,14 +3,10 @@ toastr.options = {
     "closeButton": false,
     "debug": false,
     "newestOnTop": false,
-    "progressBar": true,
     "positionClass": "toast-top-right",
     "preventDuplicates": false,
     "onclick": null,
-    "showDuration": "30000",
-    "hideDuration": "10000",
-    "timeOut": "50000",
-    "extendedTimeOut": "1000",
+    "timeOut": "2000",
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
@@ -31,7 +27,8 @@ var KTImageInputDemo = function () {
         });
         
         avatar5.on('change', function (imageInput) {
-            toastr.success("Đang thay đổi ảnh hồ sơ....");
+            $("#progress-bar").show()
+            //toastr.success("Đang thay đổi ảnh hồ sơ....");
             url = new URL(window.location.href);
             people_id = url.searchParams.get("id");
             var fd = new FormData()
@@ -55,16 +52,7 @@ var KTImageInputDemo = function () {
                         });
                         window.location.reload()
                     }
-                    else {
-                        swal.fire({
-                            title: 'Lỗi!',
-                            type: 'error',
-                            buttonsStyling: false,
-                            confirmButtonText: 'OK',
-                            confirmButtonClass: 'btn btn-primary font-weight-bold'
-                        });
-                        window.location.reload()
-                    }
+                    else window.location.reload()
                 },
                 error: function () {
                     //alert("fail");
@@ -92,5 +80,6 @@ var KTImageInputDemo = function () {
 }();
 
 KTUtil.ready(function () {
+    $("#progress-bar").hide()
     KTImageInputDemo.init();
 });

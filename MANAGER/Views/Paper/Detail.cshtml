@@ -80,9 +80,13 @@
                 <label>Chỉ số tạp chí</label>
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.index" disabled />
             </div>
-            <div class="col-xl-6 form-group" style="display: none">
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label>File chứng minh</label>
+                <a href="@ViewBag.paper.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
                 <label>Ghi chú</label>
-                <input class="form-control form-control-lg" type="text" value="" disabled />
+                <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.note_domestic" disabled />
             </div>
             <div class="col-xl-6 form-group">
                 <label>Loại khen thưởng</label>
@@ -93,31 +97,96 @@
             </div>
             <div class="col-xl-6 form-group">
                 <label>Tổng thưởng</label>
-                <input id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
+                <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg edit" type="text" value="@ViewBag.paper.total_reward" />
             </div>
             <div class="col-xl-6 form-group" id="daidien_block">
                 <label>Đại diện nhận thưởng</label>
                 <input id="daidien" class="form-control form-control-lg edit" type="text" value="@ViewBag.p.name" disabled />
             </div>
-
-            @{
-                foreach (var item in ViewBag.crite)
-                {
-                    <div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
-                        <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
-                        <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
-                        @if (item.check == true)
+            <h3 class="mb-10 font-weight-bold text-dark">Thông tin nhà xuất bản</h3>
+            <div class="col-xl-12 datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable" style="">
+                <table class="custom-add-table table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tiêu chí</th>
+                            <th>Đường dẫn</th>
+                            <th>Duyệt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.crite.Count == 0)
                         {
-                            <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>
+                            <tr>
+                                <td colspan="3" class="justify-content-center text-muted text-center">Không có tiêu chí nào</td>
+                            </tr>
                         }
-                        else
-                        {
-                            <span class='col-xl-2'><a target="_blank" href="@item.link" class='form-control form-control-lg edit btn deletetieuchi' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>
-                        }
+                        @{
+                            foreach (var item in ViewBag.crite)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.name
+                                    </td>
+                                    <td>
+                                        @if (item.check == true)
+                                        {
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-check-mark icon-nm' style="color:#99f5a4"></i>
+                                        }
+                                        else
+                                        {
+                                            <a href="@item.link">@(item.link.Length > 80 ? item.link.Substring(0, 80)+ "..." : item.link) </a> <i class='flaticon2-delete icon-nm' style="color:#f59999"></i>
+                                        }
+                                    </td>
+                                    @*<td>
+                                    @if (item.check == true)
+                                    {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                    }
+                                    else
+                                    {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                    }
+                                </td>*@
+                                    <td>
+                                        @if (item.manager_check != null && item.manager_check)
+                                        {
+                                            <a name="1" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md" style="color:#62c700"></i> </a>
+                                            @*<span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg edit btn' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>*@
+                                        }
+                                        else
+                                        {
+                                            <a name="0" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md"></i> </a>
+                                            @*<span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg edit btn' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>*@
+                                        }
+                                    </td>
+                                </tr>
+                                @*<div class='col-xl-12 d-flex justify-content-center onetieuchi' style="margin-top: 1rem">
+                                <span class='col-xl-2'><input readonly value="@item.name" class='form-control form-control-lg edit tieuchiname' name='tieuchiname' type='text' /></span>
+                                <span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg edit tieuchilink' type='text' value="@item.link" /></span>
+                                @if (item.check == true)
+                                {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg  font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
+                                else
+                                {
+                                    <span class='col-xl-1'><a target="_blank" href="@item.link" class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fas fa-eye"></i></a></span>
+                                }
+                                @if (item.manager_check)
+                                {
+                                    <span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
+                                else
+                                {
+                                    <span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg font-weight-bold edit btn deletetieuchi'><i class="fa fas fa-check-circle icon-md"></i></a></span>
+                                }
 
-                    </div>
-                }
-            }
+                            </div>*@
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin tác giả</h3>
         <div class="row" id="authors-info-container">
@@ -160,9 +229,9 @@
                                                 <a href="#" class="text-muted text-hover-primary">@item.title_string</a>
                                             </div>
                                             @*<div class="d-flex justify-content-between align-items-cente my-1">
-                                                <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
-                                                <a href="#" class="text-muted text-hover-primary">@item.contract_name</a>
-                                            </div>*@
+                                                    <span class="text-dark-75 font-weight-bolder mr-2">Loại hợp đồng:</span>
+                                                    <a href="#" class="text-muted text-hover-primary">@item.contract_name</a>
+                                                </div>*@
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
                                                 <a href="#" class="text-muted text-hover-primary">@item.tax_code</a>
@@ -174,6 +243,11 @@
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
                                                 <a href="#" class="text-muted text-hover-primary">@item.identification_number</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND link:</span>
+                                                <a href="@item.identification_file_link" class="text-muted text-hover-primary">
+                                                @(item.identification_file_link!=null?(item.identification_file_link.Length>30? item.identification_file_link.Substring(0,30)+"...": item.identification_file_link):"")</a>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
@@ -253,7 +327,7 @@
                     </div>
                     <div class="col-xl-6">
                         <label>Thưởng</label>
-                        <input class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
+                        <input autocomplete="off" oninput="numberWithCommas(this)" class="form-control form-control-lg onereward" id="reward_tacgia" type="text" value="" />
                     </div>
                     <div class="justify-content-center col-xl-12 d-flex citationE" style="margin-top: 25px">
                         <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save_edit" data-dismiss="modal">Lưu</button>
@@ -388,7 +462,7 @@
             var temp = $("#totalreward").val();
             if (temp == "" || temp == "0") {
                 $("#loading").hide();
-                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo");
                 check = false;
             } else {
                 check = true;
@@ -398,7 +472,7 @@
                         //console.log(value);
                         if (value == "" || value == "0") {
                             $("#loading").hide();
-                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả");
                             check = false;
                             return false;
                         } else {
@@ -407,6 +481,23 @@
                     });
                 }
             }
+
+            if (check) {
+                $(".manager_check").each(function () {
+                    var val = $(this).attr("name");
+                    if (val == "0") {
+                        $("#loading").hide();
+                        toastr.error("Chưa check hết các tiêu chí");
+                        check = false;
+                        return false;
+                    } else {
+                        check = true;
+                    }
+                })
+            }
+
+
+            //if (check) alert("abc");
 
             if (check) {
                 people = [];
@@ -432,10 +523,10 @@
                 //console.log(sum, parseInt(total));
                 if (sum > parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo");
                 } else if (sum < parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo");
                 } else {
                     var paper_id = "@ViewBag.paper.paper_id";
                     var request_id = "@ViewBag.paper.request_id";
@@ -470,18 +561,18 @@
         });
 
         $(".onereward, #totalreward").inputFilter(function (value) {
-            return /^-?\d*$/.test(value);
+            return /^[0-9,.]*$/.test(value);
         });
 
-        $("#totalreward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
+        //$("#totalreward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
 
-        $(".onereward").change(function () {
-            var x = $(this).val();
-            $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
+        //$(".onereward").change(function () {
+        //    var x = $(this).val();
+        //    $(this).val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        //});
 
         $(".edit-author-reward").click(function () {
             id_people_selected = $(this).data("id");
@@ -498,5 +589,24 @@
             var val = $("#reward_tacgia").val();
             var x = document.getElementById(id_people_selected).querySelector("#tacgia_reward").innerHTML = val;
         });
+
+        $(".manager_check").click(function () {
+            var val = $(this).attr("name");
+            if (val == "0") {
+                $(this).attr("name", "1");
+                $(this).empty();
+                $(this).append("<a onclick='' class='btn btn-sm btn-clean btn-icon manager_check' title='View'> <i class='fa fas fa-check-circle icon-md' style='color: #62c700'></i> </a>");
+            } else {
+                $(this).attr("name", "0");
+                $(this).empty();
+                $(this).append("<a onclick='' class='btn btn-sm btn-clean btn-icon manager_check' title='View'> <i class='fa fas fa-check-circle icon-md'></i> </a>");
+            }
+            //alert(val);
+        });
+
+        function numberWithCommas(ele) {
+            var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $(ele).val(x);
+        }
     </script>
 }

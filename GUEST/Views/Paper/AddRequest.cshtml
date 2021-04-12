@@ -20,19 +20,19 @@
                             <div class="row">
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PaperName")</label>
-                                    <input class="form-control form-control-lg notnull" type="text" id="paper_name" />
+                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input class="form-control form-control-lg custom-pickdate notnull" type="text" id="paper_publish_date" />
+                                    <input autocomplete="off" readonly class="form-control form-control-lg custom-pickdate notnull" type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
-                                    <input class="form-control form-control-lg notnull" type="text" id="paper_full" />
+                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Link scholar</label>
-                                    <input class="form-control form-control-lg notnull" type="text" id="paper_scholar" />
+                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -80,19 +80,19 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("JournalName")</label>
-                            <input class="form-control form-control-lg notnull" type="text" id="paper_journal" />
+                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_journal" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Vol")</label>
-                            <input class="form-control form-control-lg notnull" type="text" id="paper_vol" />
+                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Page")</label>
-                            <input class="form-control form-control-lg notnull" type="text" id="paper_page" />
+                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("PublishName")</label>
-                            <input class="form-control form-control-lg notnull" type="text" id="paper_publish_name" />
+                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_publish_name" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
@@ -120,17 +120,27 @@
                             <label style="color:#fff">abc</label>
                             <button class="btn btn-primary form-control form-control-lg">@rm.GetString("ListMaga")</button>
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-4 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("JournalIndex")</label>
-                            <input class="form-control form-control-lg" type="text" id="paper_index" />
+                            <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_index" />
                         </div>
-                        <div class="col-xl-6 form-group thuongtn" style="display: none">
+                        <div class="col-xl-3 form-group thuongtn" style="display: none">
+                            <label>@rm.GetString("FileCM")<span style='color:red'>*</span></label>
+                            <div class="uppy" id="kt_uppy_1">
+                                <div class="uppy-wrapper"></div>
+                                <div class="uppy-list"></div>
+                                <div class="uppy-status"></div>
+                                <div class="uppy-informer uppy-informer-min"></div>
+                            </div>
+                            <span class="form-text text-muted">Max file size is 15MB and max number of files is 1.</span>
+                        </div>
+                        <div class="col-xl-5 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("Note")</label>
-                            <input class="form-control form-control-lg" type="text" />
+                            <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("TotalReward")</label>
-                            <input class="form-control form-control-lg" readonly type="text" />
+                            <input autocomplete="off" class="form-control form-control-lg" readonly type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("RewardType")</label>
@@ -207,13 +217,14 @@
     <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 </div>
 <form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
-    <input name="id" id="nameEdit" />
-    <input name="editable" id="ckEdit" />
+    <input autocomplete="off" name="id" id="nameEdit" />
+    <input autocomplete="off" name="editable" id="ckEdit" />
 </form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
     <script src="~/Content/assets/plugins/custom/draggable/draggable.bundle.js?v=7.0.6"></script>
     <script>
+        var uppy1;
         var temp_index_edit;
         var paper_id;
         var people = [];
@@ -299,6 +310,35 @@
                 $("#loading").hide();
                 toastr.error("Chưa có tác giả");
             }
+
+            var inputs = $(".tieuchiname");
+            var inputs2 = $(".tieuchilink");
+            criteria = [];
+            for (var i = 0; i < inputs.length; i++) {
+                var PaperWithCriteria = {
+                    link: $(inputs2[i]).val(),
+                    name: $(inputs[i]).val()
+                }
+                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
+                    toastr.error("Tiêu chí chưa có link chứng minh");
+                    ck = false;
+                    return false;
+                }
+                criteria.push(PaperWithCriteria);
+            }
+            if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
+                toastr.error("Cần có ít nhất 1 tiêu chí");
+                ck = false;
+            }
+
+            if ($("#loaithuong").val() == "Trongnuoc") {
+                if (uppy1.getFiles().length == 0) {
+                    toastr.error("Thiếu file chứng minh cho chỉ số tạp chí");
+                    ck = false;
+                    return false;
+                }
+            }
+
             if (ck) {
                 var Paper = {
                     name: $("#paper_name").val(),
@@ -310,35 +350,73 @@
                     vol: $("#paper_vol").val(),
                     page: $("#paper_page").val(),
                     company: $("#paper_publish_name").val(),
-                    index: $("#paper_index").val()
+                    index: $("#paper_index").val(),
+                    note_domestic: $("#paper_note_domestic").val(),
                 };
-                var inputs = $(".tieuchiname");
-                var inputs2 = $(".tieuchilink");
-                for (var i = 0; i < inputs.length; i++) {
-                    var PaperWithCriteria = {
-                        link: $(inputs2[i]).val(),
-                        name: $(inputs[i]).val()
-                    }
-                    criteria.push(PaperWithCriteria);
-                }
-                $.ajax({
-                    url: "@Url.Action("AddPaper", "Paper")",
-                    type: "POST",
-                    data: JSON.stringify({ 'paper': Paper }),
-                    contentType: "application/json;charset=utf-8",
-                    datatype: "json",
-                    cache: false,
-                    success: function (response) {
-                        if (response.mess == "ss") {
-                            paper_id = response.id;
-                            addCriteria();
+
+                if (uppy1.getFiles().length > 0) {
+                    var name = $("#paper_name").val();
+                    formData = new FormData();
+                    formData.append('file', uppy1.getFiles()[0].data);
+                    formData.append('name', name);
+                    $.ajax({
+                        url: "/Paper/addFile",
+                        method: "post",
+                        complete: function (data) {
+                            var mess = data.responseJSON.mess;
+                            if (mess == "ss") {
+                                fileid = data.responseJSON.id;
+                                $.ajax({
+                                    url: "@Url.Action("AddPaper", "Paper")",
+                                    type: "POST",
+                                    data: JSON.stringify({ 'paper': Paper, 'fileid': fileid }),
+                                    contentType: "application/json;charset=utf-8",
+                                    datatype: "json",
+                                    cache: false,
+                                    success: function (response) {
+                                        if (response.mess == "ss") {
+                                            paper_id = response.id;
+                                            addCriteria();
+                                        }
+                                        else alert('loi');
+                                    },
+                                    error: function () {
+                                        //alert("fail");
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            save_loader.stopLoading();
+                        },
+                        dataType: "json",
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    });
+                } else {
+                    $.ajax({
+                        url: "@Url.Action("AddPaper", "Paper")",
+                        type: "POST",
+                        data: JSON.stringify({ 'paper': Paper, 'fileid': '0' }),
+                        contentType: "application/json;charset=utf-8",
+                        datatype: "json",
+                        cache: false,
+                        success: function (response) {
+                            if (response.mess == "ss") {
+                                paper_id = response.id;
+                                addCriteria();
+                            }
+                            else alert('loi');
+                        },
+                        error: function () {
+                            //alert("fail");
                         }
-                        else alert('loi');
-                    },
-                    error: function () {
-                        //alert("fail");
-                    }
-                });
+                    });
+                }
+
+
             } else {
                 ck = true;
             }
@@ -350,7 +428,6 @@
         $(document).ready(function () {
             $("#block_daidien").hide();
             $("#add_author_reward").prop('disabled', true);
-            //$("#uppy-FileInput-input").prop('disabled', true);
             $("#upCM").hide();
 
             $("#kieuthuong").on("select2:select", function (e) {
@@ -396,8 +473,8 @@
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
             $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
-                "<span class='col-xl-2'><input readonly value='" + temp + "' class='form-control form-control-lg tieuchiname' name='tieuchiname' type='text' /></span>" +
-                "<span class='col-xl-8'><input placeholder='Link' class='form-control form-control-lg tieuchilink' type='text' name='tieuchilink' /></span>" +
+                "<span class='col-xl-2'><input autocomplete='off' readonly value='" + temp + "' class='form-control form-control-lg tieuchiname' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input autocomplete='off'  placeholder='Link' class='form-control form-control-lg tieuchilink' type='text' name='tieuchilink' /></span>" +
                 "<span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
             var option = $("#tieuchi option[value='" + temp + "']");
@@ -412,5 +489,6 @@
         });
     </script>
     <script src="~/Scripts/PartialViewScript.js"></script>
+    <script src="~/Scripts/JSUpload.js"></script>
 }
 

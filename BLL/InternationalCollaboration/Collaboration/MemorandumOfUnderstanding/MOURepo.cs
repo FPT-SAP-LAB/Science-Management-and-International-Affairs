@@ -805,7 +805,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public IntersectPeriodMOUDate checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date)
+        public IntersectPeriodMOUDate checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date, int office_id)
         {
             string partner_id_para = "";
             foreach (PartnerInfo item in PartnerInfo)
@@ -814,16 +814,17 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
             string query = @"select count(*) as num_check,max(mou_start_date) as mou_start_date
-                , mou_end_date, t2.mou_id, t2.mou_code
+                , mou_end_date, t2.mou_id, t2.mou_code, t2.office_id
                  from IA_Collaboration.MOUPartner t1
                 inner join IA_Collaboration.MOU t2
                 on t2.mou_id = t1.mou_id
-                where t1.partner_id in (" + partner_id_para + @") and t2.is_deleted = 0
-                group by mou_end_date, t2.mou_id, t2.mou_code
+                where t1.partner_id in (" + partner_id_para + @") and t2.is_deleted = 0 and t2.office_id = @office_id
+                group by mou_end_date, t2.mou_id, t2.mou_code 
                 having count(*) = @partner_count
                 order by mou_id";
             List<IntersectPeriodMOUDate> obj = db.Database.SqlQuery<IntersectPeriodMOUDate>(query,
-                    new SqlParameter("partner_count", PartnerInfo.Count)).ToList();
+                    new SqlParameter("partner_count", PartnerInfo.Count),
+                    new SqlParameter("office_id", office_id)).ToList();
             DateTime current_start_date = DateTime.ParseExact(start_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime current_end_date = DateTime.ParseExact(end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 

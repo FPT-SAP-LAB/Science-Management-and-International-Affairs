@@ -1,4 +1,6 @@
 ﻿using BLL.ScienceManagement.Researcher;
+using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -39,6 +39,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                Website = b.website,
                                                KeynoteSpeaker = b.keynote_speaker,
                                                QsUniversity = b.qs_university,
+                                               OrganizedUnit = b.organized_unit,
                                                Co_organizedUnit = b.co_organized_unit,
                                                CreatedDate = r.created_date.Value,
                                                FinishedDate = r.finished_date,
@@ -95,7 +96,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
                                                               join c in db.TitleLanguages on b.title_id equals c.title_id
                                                               join e in db.Offices on b.office_id equals e.office_id
-                                                              where b.request_id == request_id
+                                                              where b.request_id == request_id && c.language_id == language_id
                                                               select new ConferenceParticipantExtend
                                                               {
                                                                   ID = b.mssv_msnv,

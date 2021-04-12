@@ -109,6 +109,7 @@ namespace MANAGER.Controllers
             }
             string mess = pr.updateRewardPaper(paper);
             if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
+            if (mess == "ss") mess = pr.updateCriteria_ManagerCheck(paper.paper_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -181,6 +182,7 @@ namespace MANAGER.Controllers
                 CultureInfo cul = new CultureInfo("vi-VN");
                 item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
                 excelWorksheet3.Cells[i, 5].Value = item.money_string;
+                excelWorksheet3.Cells[i, 6].Value = item.identification_file_link;
                 i++;
                 count++;
             }
@@ -198,6 +200,7 @@ namespace MANAGER.Controllers
                 CultureInfo cul = new CultureInfo("vi-VN");
                 item.money_string = item.sum_money.ToString("C0", cul.NumberFormat);
                 excelWorksheet4.Cells[i, 5].Value = item.money_string;
+                excelWorksheet4.Cells[i, 6].Value = item.identification_file_link;
                 i++;
                 count++;
             }
@@ -218,7 +221,9 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            List<string> listE = pr.getLstEmailAuthor(0);
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
             {
                 link = f1.WebViewLink,
@@ -242,7 +247,9 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadResearcherFile(file1, name1, 4, null);
+            List<string> listE = pr.getLstEmailAuthor(1);
+
+            Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
             {
                 link = f1.WebViewLink,

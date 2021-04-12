@@ -186,10 +186,6 @@
             $('.header-modify').css('padding', '13px');
 
         });
-
-        //init loading button:
-        var add_mou_loader = new LoaderBtn($("#step-2-button"));
-        //var mou_detail_loader = new LoaderBtn($(".mou_detail"));
     </script>
 
     @*custom_wizard*@
@@ -432,7 +428,7 @@
             if (partner.id) {
                 let partner_name = partner.partner_name;
                 if (partner_name === undefined) {
-                    return "Dữ liệu đơn vị đào tạo mới."
+                    return "Dữ liệu đối tác mới."
                 } else {
                     return partner.partner_name;
                 }
@@ -455,12 +451,16 @@
                 });
                 $('#coop_scope_add').select2({
                     placeholder: 'Chọn phạm vi',
+                    allowClear: true,
+                    templateSelection: formatStateScope
                 });
                 $('#specialization_edit').select2({
                     placeholder: 'Chọn lĩnh vực',
                 });
                 $('#coop_scope_edit').select2({
                     placeholder: 'Chọn phạm vi',
+                    allowClear: true,
+                    templateSelection: formatStateScope
                 });
             }
             // Public functions
@@ -475,6 +475,9 @@
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
+        function formatStateScope(state) {
+            return state.text.split('-')[0];
+        };
     </script>
     <script>
         $(document).ready(function () {
@@ -483,14 +486,14 @@
     </script>
 
     @*general*@
-    <script>
-        var listTempPartnerMOUAdd = [];
-        var listScopes = [];
-        var listSpe = [];
-        var listPartners = [];
-        var mou_table;
+<script>
+    var listTempPartnerMOUAdd = [];
+    var listScopes = [];
+    var listSpe = [];
+    var listPartners = [];
+    var mou_table;
 
-        $(document).ready(function () {
+    $(document).ready(function () {
             getSpeListForAdd();
             getScopeListForAdd();
             getMOUList();
@@ -498,16 +501,16 @@
             getScopes();
         });
 
-        function backToStep() {
+    function backToStep() {
             updateMOUStartDateAndMainScope();
             toggleBackStep();
         }
 
-        function nextStep() {
+    function nextStep() {
             toggleNextStep();
-        }
+    }
 
-        function updateMOUStartDateAndMainScope() {
+    function updateMOUStartDateAndMainScope() {
             var max_date = '01/01/0001';
             var main_scopes = '';
             var new_main_scopes = '';
@@ -551,7 +554,7 @@
             $("#coop_scope_mou").val(new_main_scopes);
         }
 
-        function compareDate(current, max) {
+    function compareDate(current, max) {
             var currentToken = current.split("/");
             var maxToken = max.split("/");
             if (parseInt(currentToken[2]) == parseInt(maxToken[2])) {    //year
@@ -590,6 +593,7 @@
                 cache: false,
                 success: function (isDuplicated) {
                     if (isDuplicated) {
+                        add_mou_loader.stopLoading();
                         toastr.error("Đã có mã hiệu " + $('#mou_code_add').val()+ " trong hệ thống");
                     } else {
                         checkIntersectPeriodMOUDate();
@@ -606,7 +610,8 @@
             {
                 PartnerInfo: listTempPartnerMOUAdd,
                 start_date: $('#sign_date_mou').val(),
-                end_date: $('#end_date_mou').val()
+                end_date: $('#end_date_mou').val(),
+                office_id: $('#search_office').val()
             };
             $.ajax({
                 url: "@Url.Action("checkIntersectPeriodMOUDate", "MOU")",
@@ -617,6 +622,7 @@
                 cache: false,
                 success: function (data) {
                     if (data.mou_id != 0) {
+                        add_mou_loader.stopLoading();
                         toastr.error("Các đối tác trên đã ký kết từ ngày " + data.mou_start_date_string + " đến ngày " + data.mou_end_date_string + " ở biên bản " + data.mou_code);
                     } else {
                         addMOU();
@@ -674,7 +680,9 @@
         })
     }
 
-    function doneStep() {
+    var add_mou_loader;
+    function doneStep(element) {
+        add_mou_loader = new LoaderBtn(element);
         //start display loading:
         add_mou_loader.startLoading();
         if ($('#mou_code_add').val().trim() == "") {
@@ -745,7 +753,8 @@
         }
 
     @*add-partner-for-add-mou*@
-            function getSpeListForAdd() {
+
+    function getSpeListForAdd() {
                 $("#specialization_add option").each(function () {
                     listSpe.push({
                         spe_id: $(this).val(),
@@ -754,7 +763,7 @@
                 });
             }
 
-            function getScopeListForAdd() {
+    function getScopeListForAdd() {
                 $("#coop_scope_add option").each(function () {
                     listScopes.push({
                         scope_id: $(this).val(),
@@ -773,7 +782,7 @@
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (data) {
-                        if (data == "") { 
+                        if (data == "") {
                             //set value
                             document.getElementById("website_add").value = "";
                             document.getElementById("address_add").value = "";
@@ -817,11 +826,11 @@
                 });
             }
 
-            function preventAdd() {
+    function preventAdd() {
                 document.getElementById("add_mou_partner_button").setAttribute('disabled', '');
             }
 
-            function addToTemp() {
+    function addToTemp() {
                 if ($('#partner_name_add').val().trim() == '') {
                     toastr.error('Đối tác chưa được chọn');
                     return;
@@ -843,7 +852,7 @@
                 }
             }
 
-            function CheckTempAdded(partnername_add) {
+    function CheckTempAdded(partnername_add) {
                 var objCheck = listTempPartnerMOUAdd.find(x => x.partnername_add == partnername_add);
                 if (objCheck == null) {
                     var TempObj = {
@@ -871,7 +880,7 @@
                 }
             }
 
-            function ContentAddedIsDuplicated(start_date_string,partner_name) {
+    function ContentAddedIsDuplicated(start_date_string,partner_name) {
                 var obj =
                 {
                     mou_start_date_string: start_date_string,
@@ -897,12 +906,11 @@
                 });
             }
 
-            function clearInputAdd() {
+    function clearInputAdd() {
                 var HTMLSpedata = '';
                 var HTMLScopedata = '';
                 $('#specialization_add').empty();
                 $('#coop_scope_add').empty();
-                //$('#partner_name_add').val('');
                 $("#partner_name_add").val('').trigger("change");
                 $('#represent_add').val('');
                 $('#nation_add_select').val('');
@@ -935,14 +943,13 @@
 
     @*edit-partner-for-add-mou*@
 
-        function loadEditTemp(index) {
+    function loadEditTemp(index) {
             $("#idx_edit").val(index);
             var HTMLSpedata = "";
             var HTMLScopedata = "";
             $('#specialization_edit').empty();
             $('#coop_scope_edit').empty();
             for (i = 0; i < listSpe.length; i++) {
-                //alert('Test of ' + listTempPartnerMOUAdd[index].specialization_add + ' and ' + listSpe[i].spe_id);
                 if ((listTempPartnerMOUAdd[index].specialization_add + '').includes(listSpe[i].spe_id)) {
                     HTMLSpedata += '<option value = "' + listSpe[i].spe_id + '" selected>' + listSpe[i].spe_name + '</option>'
 
@@ -997,7 +1004,7 @@
             }
         }
 
-        function checkPartnerEdit() {
+    function checkPartnerEdit() {
             var partner_name = $('#partner_name_edit').val();
             var em = { partner_name: partner_name };
             $.ajax({
@@ -1008,7 +1015,6 @@
                 dataType: "json",
                 success: function (data) {
                     if (data == "") {
-                        //document.getElementById('nation_edit').removeAttribute('disabled');
                         document.getElementById('nation_edit_select').removeAttribute('hidden');
                         $('#nation_edit_select').select2({
                             placeholder: 'Chọn quốc gia',
@@ -1019,12 +1025,10 @@
 
                         document.getElementById('website_edit').removeAttribute('disabled');
                         document.getElementById('address_edit').removeAttribute('disabled');
-                        //document.getElementById("nation_edit").value = "";
                         document.getElementById("website_edit").value = "";
                         document.getElementById("address_edit").value = "";
                         document.getElementById("partner_id_edit").value = "";
                     } else {
-                        //document.getElementById('nation_edit').setAttribute('disabled', '');
                         $("#nation_edit_select").val('').trigger("change");
                         document.getElementById('nation_edit_input').removeAttribute('hidden');
                         $('#nation_edit_select').select2({
@@ -1036,7 +1040,6 @@
 
                         document.getElementById('website_edit').setAttribute('disabled', '');
                         document.getElementById('address_edit').setAttribute('disabled', '');
-                        //document.getElementById("nation_edit").value = data.country_name == null ? "" : data.country_name;
                         document.getElementById("website_edit").value = data.website == null ? "" : data.website;
                         document.getElementById("address_edit").value = data.address == null ? "" : data.address;
                         document.getElementById("partner_id_edit").value = data.partner_id == null ? "" : data.partner_id;
@@ -1049,11 +1052,11 @@
             });
         }
 
-        function preventEdit() {
+    function preventEdit() {
             document.getElementById("edit_mou_partner_button").setAttribute('disabled', '');
         }
 
-        function editTemp() {
+    function editTemp() {
             if ($('#partner_name_edit').val().trim() == '') {
                 toastr.error('Đối tác chưa được chọn');
                 return;
@@ -1075,7 +1078,7 @@
             }
         }
 
-        function ContentEditedIsDuplicated(start_date_string,partner_name) {
+    function ContentEditedIsDuplicated(start_date_string,partner_name) {
                 var obj =
                 {
                     mou_start_date_string: start_date_string,
@@ -1101,7 +1104,7 @@
                 });
             }
 
-        function CheckTempEdited(partnername_edit) {
+    function CheckTempEdited(partnername_edit) {
             var index = $("#idx_edit").val();
             for (i = 0; i < listTempPartnerMOUAdd.length; i++) {
                 if (i != index) {
@@ -1253,7 +1256,7 @@
     }
 
     @*another-function*@
-        function exportExcel() {
+    function exportExcel() {
         $.ajax({
             url: "@Url.Action("ExportMOUExcel", "MOU")",
             type: "POST",
@@ -1575,8 +1578,8 @@
             });
         });
 
-    var scope_id_temp;
     //loading data to modal
+    var scope_id_temp;
     function loadDataToEditModal(scope_id) {
             scope_id_temp = scope_id;
             $.ajax({
@@ -1720,6 +1723,6 @@
                 }
             });
         }
-    </script>
+</script>
 }
 

@@ -21,13 +21,13 @@
         <!--begin::Container-->
         <div class=" container ">
             <!--begin::Profile Personal Information-->
-            <div class="d-flex flex-row">
+            <div class="row">
                 <!--begin::Aside-->
                 <!--end::Aside-->
                 <!--begin::Content-->
-                <div class="flex-row-fluid ml-lg-12">
+                <div class="col-12">
                     <!--begin::Card-->
-                    <div class="card card-custom card-stretch">
+                    <div class="card card-custom card-stretch gutter-b">
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
@@ -44,15 +44,36 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="progress" style=" border-radius: 0" id="progress-bar">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated "
+                                 role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                         <!--end::Header-->
                         <!--begin::Form-->
                         <form class="form">
                             <!--begin::Body-->
                             <div class="card-body">
-                                <div class="row">
-                                    <label class="col-xl-3"></label>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Hình đại diện</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        @*<h5 class="font-weight-bold mb-6">Customer Info</h5>*@
+                                        <div class="image-input image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
+                                            <div class="image-input-wrapper" style="background-image: url()"></div>
+
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="profile_avatar_remove" />
+                                            </label>
+
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                        </div>
+                                        <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -186,55 +207,537 @@
                         </form>
                         <!--end::Form-->
                     </div>
+
                 </div>
                 <!--end::Content-->
             </div>
-            <!--end::Profile Personal Information-->
+            <div class="row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="col-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">TIẾU SỬ HỌC TẬP</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="acad_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Học vị</th>
+                                                <th>Nơi học tập</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm tiểu sử học tập
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--enddd::Profile Personal Information-->
+            <div class="row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="col-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">TIẾU SỬ CÔNG TÁC</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="work_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Đơn vị công tác</th>
+                                                <th>Chức vụ/ vai trò</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_themtieusu_congtac" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm tiểu sử công tác
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Content-->
+            </div>
+            <div class="row">
+                <!--begin::Aside-->
+                <!--end::Aside-->
+                <!--begin::Content-->
+                <div class="col-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">GIẢI THƯỞNG</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="award_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Cuộc thi/giải thưởng</th>
+                                                <th>Thứ hạng</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm giải thưởng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Content-->
+            </div>
         </div>
         <!--end::Container-->
     </div>
     <!--end::Entry-->
 </div>
+<!-- Modal hoc tap-->
+<div class="modal fade" id="modal_themtieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <select type="text" class="form-control" placeholder="Học vị" id="acad_hocvi">
+                                <option value="" disabled selected>Học vị</option>
+                                @foreach (SelectField a in ViewBag.listAcadDegree)
+                                {
+                                    <option value="@a.id">@a.name</option>
+                                }
+                            </select>
+                            <span><i class="far fa-bookmark"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Nơi học tập" id="acad_location">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_1" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="add_acad_start" placeholder="Start date" data-target="#kt_datetimepicker_7_1" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_1" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_acad_end" data-target="#kt_datetimepicker_7_2" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_2" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                <span><i class="far fa-sticky-note"></i></span>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_acad">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal cong tac-->
+<div class="modal fade" id="modal_themtieusu_congtac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Đơn vị công tác" id="work_location">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Chức danh" id="work_title">
+                            <span><i class="far fa-bookmark"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_3" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="add_work_start" placeholder="Start date" data-target="#kt_datetimepicker_7_3" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_3" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_4" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="add_work_end" data-target="#kt_datetimepicker_7_4" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_4" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal edit hoc tap-->
+<div class="modal fade" id="modal_suatieusu_hoctap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử học tập</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <select type="text" class="form-control" placeholder="Học vị" id="acad_suahocvi">
+                                <option value="" disabled selected>Học vị</option>
+                                @foreach (SelectField a in ViewBag.listAcadDegree)
+                                {
+                                    <option value="@a.id">@a.name</option>
+                                }
+                            </select>
+                            <span><i class="far fa-bookmark"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Nơi học tập" id="edit_location">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_5" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="edit-acad-start" placeholder="Start date" data-target="#kt_datetimepicker_7_5" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_5" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_6" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-acad-end" data-target="#kt_datetimepicker_7_6" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_6" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Ghi chú" id="kt_datatable_search_query">
+                                <span><i class="far fa-sticky-note"></i></span>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_acad">Lưu</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_acad">Xoá</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal edit work-->
+<div class="modal fade" id="modal_suatieusu_work" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử công tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Đơn vị công tác" id="edit_work_location">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Chức danh" id="edit_work_title">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_7" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="edit-work-start" placeholder="Start date" data-target="#kt_datetimepicker_7_7" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_7" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group date" id="kt_datetimepicker_7_8" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="End date" id="edit-work-end" data-target="#kt_datetimepicker_7_8" />
+                                    <div class="input-group-append" data-target="#kt_datetimepicker_7_8" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">Lưu</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_work">Xoá</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal them award-->
+<div class="modal fade" id="modal_them_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm giải thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="add_award_name">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Thứ hạng" id="add_award_rank">
+                            <span><i class="far fa-hand-rock"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group date" id="date_award" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="add_award_date" placeholder="Thời gian" data-target="#date_award" />
+                                    <div class="input-group-append" data-target="#date_award" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_award">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_edit_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin giải thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="edit_award_name">
+                            <span><i class="fas fa-map-pin"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Thứ hạng" id="edit_award_rank">
+                            <span><i class="far fa-hand-rock"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group date" id="edit_date_award" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" id="sua_award_date" placeholder="Thời gian" data-target="#edit_date_award" />
+                                    <div class="input-group-append" data-target="#edit_date_award" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <i class="ki ki-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_award">Lưu</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_award">Xoá</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
-        $(".research-info-link").each(function () {
-            if ($(this).attr('href').trim() == window.location.pathname) {
-                $(this).addClass('active')
-            }
-        })
-        // Class definition
-        var KTSelect2 = function () {
-            // Private functions
-            var demos = function () {
-                // basic
-
-                // multi select
-                $('#kt_select2_3').select2({
-                    placeholder: 'Chọn lĩnh vực quan tâm',
-                    tags: true
-                });
-            }
-            // Public functions
-            return {
-                init: function () {
-                    demos();
-                }
-            };
-        }();
-
-        // Initialization
-        jQuery(document).ready(function () {
-            KTSelect2.init();
-        });
         $(function () {
             var save_loader = new LoaderBtn($("#save-btn"))
-
             $("#save-btn").click(function () {
                 save_loader.startLoading()
                 $(".researcher_infomation").attr('disabled', false)
             })
         })
-            $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
+        $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none")
         $(".research-info-link").each(function () {
             if ($(this).attr('href').trim() == window.location.pathname) {
                 $(this).addClass('active')
@@ -262,27 +765,21 @@
                     tags: true
                 });
             }
-            // Public functions
             return {
                 init: function () {
                     demos();
                 }
             };
         }();
-
         // Initialization
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
-
-
         function enableEdit() {
             $("#edit-control-area").show()
             $("#edit-enable-area").hide()
             $(".researcher_infomation").attr('disabled', false)
         }
-
-
         var KTBootstrapDatetimepicker = function () {
             // Private functions
             var baseDemos = function () {
@@ -297,11 +794,13 @@
                 }
             };
         }();
-
         jQuery(document).ready(function () {
             KTBootstrapDatetimepicker.init();
         });
     </script>
-    <script src="~/Content/assets/js/pages/researcher-edit-info.js"></script>
-    <script src="~/Content/assets/js/pages/researcher-change-avt.js"></script>
+    <script>
+    </script>
+    <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-bio.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-change-avt.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-edit-info.js"></script>
 }

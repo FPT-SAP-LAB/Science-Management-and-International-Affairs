@@ -41,6 +41,7 @@
         color: #2196f3 !important;
         cursor: pointer;
     }
+
 </style>
 <div class="card card-custom pb-4" style="background-color: #f0f8ff80">
     <div class="card-body p-0">
@@ -49,19 +50,19 @@
                 <div class="tabbable-line">
                     <div class="tab-content" id="myTabContent">
                         <div class="row justify-content-center training-type-list">
-                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-1 active-nav">
+                            <div class="justify-content-center align-items-center row mb-4 mx-2 col-lg-2 col-md-8 col-sm-8 text-center training-type type-1 active-nav">
                                 <a class="nav-link-custom" id="button-tab-1">
-                                    <label>@rm.GetString("LongTermIntroduction").ToUpper()</label>
+                                    <span>@Html.Raw(rm.GetString("LongTermIntroduction").ToUpper().Trim())</span>
                                 </a>
                             </div>
-                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-2">
+                            <div class="justify-content-center align-items-center row mb-4 mx-2 col-lg-2 col-md-8 col-sm-8 text-center training-type type-2">
                                 <a class="nav-link-custom" id="button-tab-2">
-                                    <label>@rm.GetString("LongTermPartnerProgram").ToUpper()</label>
+                                    <span>@Html.Raw(rm.GetString("LongTermPartnerProgram").ToUpper().Trim())</span>
                                 </a>
                             </div>
-                            <div class="mb-4 mx-2 col-lg-2 col-md-2 col-sm-2 text-center training-type type-3">
+                            <div class="justify-content-center align-items-center row mb-4 mx-2 col-lg-2 col-md-8 col-sm-8 text-center training-type type-3">
                                 <a class="nav-link-custom" id="button-tab-3">
-                                    <label>@rm.GetString("LongTermFPTProgram").ToUpper()</label>
+                                    <span>@Html.Raw(rm.GetString("LongTermFPTProgram").ToUpper().Trim())</span>
                                 </a>
                             </div>
                         </div>

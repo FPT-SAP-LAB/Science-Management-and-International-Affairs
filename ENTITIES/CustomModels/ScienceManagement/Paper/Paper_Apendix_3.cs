@@ -13,5 +13,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string office_abbreviation { get; set; }
         public int sum_money { get; set; }
         public string money_string { get; set; }
+        public string identification_file_link { get; set; }
     }
 }

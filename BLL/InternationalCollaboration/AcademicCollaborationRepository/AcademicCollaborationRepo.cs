@@ -147,6 +147,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     from IA_AcademicCollaboration.AcademicCollaboration";
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
+                if (yearSearching.year_to == null) yearSearching.year_to = DateTime.Now.Year;
                 return new AlertModal<YearSearching>(yearSearching, true);
             }
             catch (Exception e)
@@ -165,6 +166,24 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 					left join IA_Collaboration.MOUPartner mp on mp.partner_id = par.partner_id
 					left join IA_Collaboration.MOU m on m.mou_id = mp.mou_id and (m.mou_id IS NULL OR m.is_deleted = 0)
                     where par.is_deleted = 0 and partner_name like @partner_name";
+                List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
+                    new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
+                return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AlertModal<List<AcademicCollaborationPartner_Ext>> partnersSearching(string partner_name)
+        {
+            try
+            {
+                var sql = @"-----1.3. Đơn vị đào tạo - chiều đi/chiều đến -> partner/office
+                    select distinct par.*, cou.country_name from IA_Collaboration.[Partner] par
+                    inner join General.Country cou on cou.country_id = par.country_id
+					where partner_name like @partner_name";
                 List<AcademicCollaborationPartner_Ext> partners = db.Database.SqlQuery<AcademicCollaborationPartner_Ext>(sql,
                     new SqlParameter("partner_name", partner_name == null ? "%%" : "%" + partner_name + "%")).ToList();
                 return new AlertModal<List<AcademicCollaborationPartner_Ext>>(partners, true);
@@ -854,6 +873,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                         db.PartnerScopes.Remove(old_partner_scope);
                                     }
                                     db.SaveChanges();
+                                }
+                                else
+                                {
+                                    //update infor to AcademicCollaboration
+                                    academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
+                                    //add file
+                                    var evidence_file = saveFile(f, new_evidence);
+                                    //add infor to CollaborationStatusHistory
+                                    var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
                                 }
                             }
                             else

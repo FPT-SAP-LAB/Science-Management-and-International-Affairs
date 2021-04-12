@@ -3,14 +3,10 @@ toastr.options = {
     "closeButton": false,
     "debug": false,
     "newestOnTop": false,
-    "progressBar": true,
     "positionClass": "toast-top-right",
     "preventDuplicates": false,
     "onclick": null,
-    "showDuration": "30000",
-    "hideDuration": "10000",
-    "timeOut": "50000",
-    "extendedTimeOut": "1000",
+    "timeOut": "3000",
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
@@ -55,7 +51,16 @@ var KTImageInputDemo = function () {
                         });
                         window.location.reload()
                     }
-                    else window.location.reload()
+                    else {
+                        swal.fire({
+                            title: 'Lỗi!',
+                            type: 'error',
+                            buttonsStyling: false,
+                            confirmButtonText: 'OK',
+                            confirmButtonClass: 'btn btn-primary font-weight-bold'
+                        });
+                        window.location.reload()
+                    }
                 },
                 error: function () {
                     //alert("fail");

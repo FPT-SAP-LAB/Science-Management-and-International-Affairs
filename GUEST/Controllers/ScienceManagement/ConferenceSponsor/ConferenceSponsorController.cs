@@ -46,7 +46,10 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
+            string search_paper = Request["search_paper"];
+            string search_conference = Request["search_conference"];
+            int.TryParse(Request["search_status"], out int search_status);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -109,12 +112,17 @@ namespace GUEST.Controllers
         public ActionResult Detail(int id)
         {
             pagesTree.Add(new PageTree("Chi tiết", "/ConferenceSponsor/Detail?id=" + id));
+            ViewBag.pagesTree = pagesTree;
+
+            QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();
+
             string output = DetailRepos.GetDetailPageGuest(id, LanguageResource.GetCurrentLanguageID(), CurrentAccount.AccountID(Session));
             if (output == null)
                 return Redirect("/ConferenceSponsor");
 
-            ViewBag.pagesTree = pagesTree;
             ViewBag.output = output;
+            string university = JObject.Parse(output)["Conference"]["QsUniversity"].ToString();
+            ViewBag.ranking = qsUniversityRepo.GetRanking(university);
             return View();
         }
         [AjaxOnly]

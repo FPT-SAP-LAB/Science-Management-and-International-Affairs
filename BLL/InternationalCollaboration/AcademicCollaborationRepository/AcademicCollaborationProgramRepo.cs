@@ -62,7 +62,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 
         public AlertModal<string> AddProgram(List<HttpPostedFileBase> files_request, string program_title, int collab_type,
             int direction, string content, int number_of_image, int program_language, int account_id,
-            string program_partner, string program_range_date, string note)
+            string program_partner, string add_program_start_date, string add_program_end_date, string note)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -117,8 +117,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         note = note,
                         collab_type_id = collab_type,
                         direction_id = direction,
-                        program_start_date = DateTime.ParseExact(program_range_date.Split('-')[0].Trim(), "dd/MM/yyyy", null),
-                        program_end_date = DateTime.ParseExact(program_range_date.Split('-')[1].Trim(), "dd/MM/yyyy", null)
+                        program_start_date = DateTime.ParseExact(add_program_start_date.Trim(), "dd/MM/yyyy", null),
+                        program_end_date = DateTime.ParseExact(add_program_end_date.Trim(), "dd/MM/yyyy", null)
                     };
 
                     if (direction == 1)
@@ -196,7 +196,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         }
 
         public AlertModal<string> SaveEditProgram(List<HttpPostedFileBase> files_request, int program_id, string program_title,
-            string content, int number_of_image, int program_language, string program_partner, string program_range_date, string note,
+            string content, int number_of_image, int program_language, string program_partner, string edit_program_start_date,
+            string edit_program_end_date, string note,
             int direction, int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -227,8 +228,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         }
                     }
                     AcademicProgram academicProgram = db.AcademicPrograms.Find(program_id);
-                    academicProgram.program_start_date = DateTime.ParseExact(program_range_date.Split('-')[0].Trim(), "dd/MM/yyyy", null);
-                    academicProgram.program_end_date = DateTime.ParseExact(program_range_date.Split('-')[1].Trim(), "dd/MM/yyyy", null);
+                    academicProgram.program_start_date = DateTime.ParseExact(edit_program_start_date.Trim(), "dd/MM/yyyy", null);
+                    academicProgram.program_end_date = DateTime.ParseExact(edit_program_end_date.Trim(), "dd/MM/yyyy", null);
                     academicProgram.note = note;
                     if (direction == 1)
                     {
@@ -247,6 +248,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     {
                         articleVersion.article_content = content;
                         articleVersion.version_title = program_title;
+                        articleVersion.publish_time = DateTime.Now;
                     }
                     else
                     {

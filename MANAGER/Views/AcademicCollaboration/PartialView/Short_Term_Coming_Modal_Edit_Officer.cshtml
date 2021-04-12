@@ -30,8 +30,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <label class="font-weight-bolder">Đơn vị đào tạo</label>
                         <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                            <select class="form-control text-center" id="coming_edit_officer_facility" name="param" style="width:100% !important">
-                            </select>
+                            @*<select class="form-control text-center" id="coming_edit_officer_facility" name="param" style="width:100% !important">
+        </select>*@
+                            <input class="form-control" style="width: 100% !important" name="param" value="Đại học FPT" readonly />
                         </div>
                     </div>
                 </div>
@@ -82,7 +83,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học dự kiến</label>
+                        <label class="font-weight-bolder">TG trao đổi dự kiến</label>
                         <label style="color:red">*</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_edit_officer_start_plan_date" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học dự kiến" id="coming_edit_officer_start_plan_date" data-target="#kt_datetimepicker_coming_edit_officer_start_plan_date" />
@@ -113,10 +114,11 @@
                             <div class="uppy-list col-12"></div>
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
+                            <div class="col-12" id="coming_edit_file_content_upload"></div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
-                        <label class="font-weight-bolder">TG đi học thực tế</label>
+                        <label class="font-weight-bolder">TG trao đổi thực tế</label>
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_coming_edit_officer_start_date" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" placeholder="TG đi học thực tế" id="coming_edit_officer_start_date" data-target="#kt_datetimepicker_coming_edit_officer_start_date" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_coming_edit_officer_start_date" data-toggle="datetimepicker">

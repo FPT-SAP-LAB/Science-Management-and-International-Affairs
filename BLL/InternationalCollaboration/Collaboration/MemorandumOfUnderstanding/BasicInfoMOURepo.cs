@@ -79,7 +79,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 string sql_mouExList =
-                    @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,t1.mou_bonus_end_date,
+                    @"select t1.mou_bonus_code, t1.mou_bonus_decision_date, isnull(t1.mou_bonus_end_date,'') as mou_bonus_end_date,
                         t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
@@ -173,7 +173,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             try
             {
                 string sql_mouEx =
-                    @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,t1.mou_bonus_end_date,
+                    @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,isnull(t1.mou_bonus_end_date,'') as mou_bonus_end_date,
                         t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id,
                         ISNULL(t5.scope_id, 0) as scope_id, ISNULL(t4.partner_id, 0) as partner_id
                         from IA_Collaboration.MOUBonus t1 left join 
@@ -239,7 +239,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    DateTime end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime? end_date = null;
+                    if (input.ExBasicInfo.ex_mou_end_date != null)
+                    {
+                        end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
                     //add MOUBonus
 
                     MOUBonu mb = db.MOUBonus.Add(new MOUBonu
@@ -331,7 +335,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    DateTime end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime? end_date = null;
+                    if (input.ExBasicInfo.ex_mou_end_date != null)
+                    {
+                        end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
 
                     //edit MOUBonus
                     MOUBonu mb = db.MOUBonus.Find(input.mou_bonus_id);

@@ -576,12 +576,12 @@
         </EntityType>
         <EntityType Name="ConferenceCriteriaLanguage">
           <Key>
-            <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="conference_criteria_language_id" />
           </Key>
+          <Property Name="conference_criteria_language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="criteria_id" Type="int" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.ConferenceStatusLanguage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -750,6 +750,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="datetime" Nullable="false" />
           <Property Name="time_end" Type="datetime" Nullable="false" />
           <Property Name="formality_id" Type="int" Nullable="false" />
+          <Property Name="organized_unit" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="co-organized_unit" Type="nvarchar" MaxLength="50" />
           <Property Name="is_verified" Type="bit" Nullable="false" />
         </EntityType>
@@ -811,7 +812,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ranking" Type="int" Nullable="false" />
+          <Property Name="ranking" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="university" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -989,10 +990,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="identification_number" Type="nvarchar" MaxLength="100" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="100" />
           <Property Name="is_reseacher" Type="bit" />
-          <Property Name="identification_file_id" Type="int" />
           <Property Name="office_id" Type="int" />
           <Property Name="contract_id" Type="int" />
           <Property Name="title_id" Type="int" />
+          <Property Name="identification_file_link" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AuthorInvention">
           <Key>
@@ -1048,6 +1049,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="index" Type="nvarchar" MaxLength="150" />
           <Property Name="paper_type_id" Type="int" />
           <Property Name="file_id" Type="int" />
+          <Property Name="note_domestic" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="PaperCriteria">
           <Key>
@@ -1072,6 +1074,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="paper_id" Type="int" Nullable="false" />
           <Property Name="link" Type="nvarchar" MaxLength="250" />
           <Property Name="check" Type="bit" />
+          <Property Name="manager_check" Type="bit" />
         </EntityType>
         <EntityType Name="RequestInvention">
           <Key>
@@ -1798,18 +1801,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Author">
               <PropertyRef Name="contract_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Author__identifi__7F80E8EA">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Author" Type="Self.Author" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Author">
-              <PropertyRef Name="identification_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3883,6 +3874,40 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="InputString" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4195,10 +4220,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </AssociationSet>
           <AssociationSet Name="FK__Author__contract__46136164" Association="Self.FK__Author__contract__46136164">
             <End Role="ContractType" EntitySet="ContractType" />
-            <End Role="Author" EntitySet="Author" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Author__identifi__7F80E8EA" Association="Self.FK__Author__identifi__7F80E8EA">
-            <End Role="File" EntitySet="File" />
             <End Role="Author" EntitySet="Author" />
           </AssociationSet>
           <AssociationSet Name="FK__Author__office_i__451F3D2B" Association="Self.FK__Author__office_i__451F3D2B">
@@ -4977,7 +4998,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="file_drive_id" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Authors" Relationship="Self.FK__Author__identifi__7F80E8EA" FromRole="File" ToRole="Author" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="File" ToRole="RequestConference" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
@@ -5637,12 +5657,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
         </EntityType>
         <EntityType Name="ConferenceCriteriaLanguage">
           <Key>
-            <PropertyRef Name="criteria_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="conference_criteria_language_id" />
           </Key>
+          <Property Name="conference_criteria_language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="criteria_id" Type="Int32" Nullable="false" />
           <Property Name="language_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Criterion" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="ConferenceCriteriaLanguage" ToRole="Criteria" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="ConferenceCriteriaLanguage" ToRole="Language" />
         </EntityType>
@@ -5809,6 +5829,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="time_start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="time_end" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="formality_id" Type="Int32" Nullable="false" />
+          <Property Name="organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="co_organized_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="is_verified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Conferenc__count__589C25F3" FromRole="Conference" ToRole="Country" />
@@ -5886,7 +5907,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="row_id" />
           </Key>
           <Property Name="row_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ranking" Type="Int32" Nullable="false" />
+          <Property Name="ranking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="university" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestConference">
@@ -6100,11 +6121,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="identification_number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="mssv_msnv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="is_reseacher" Type="Boolean" />
-          <Property Name="identification_file_id" Type="Int32" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="contract_id" Type="Int32" />
           <Property Name="title_id" Type="Int32" />
-          <NavigationProperty Name="File" Relationship="Self.FK__Author__identifi__7F80E8EA" FromRole="Author" ToRole="File" />
+          <Property Name="identification_file_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Office" Relationship="Self.FK__Author__office_i__451F3D2B" FromRole="Author" ToRole="Office" />
           <NavigationProperty Name="RequestCitations" Relationship="Self.FK__Citation__people__178D7CA5" FromRole="Author" ToRole="RequestCitation" />
           <NavigationProperty Name="ContractType" Relationship="Self.FK__Author__contract__46136164" FromRole="Author" ToRole="ContractType" />
@@ -6177,6 +6197,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="index" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="paper_type_id" Type="Int32" />
           <Property Name="file_id" Type="Int32" />
+          <Property Name="note_domestic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="File" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="Paper" ToRole="File" />
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__RequestCo__paper__1881A0DE" FromRole="Paper" ToRole="RequestConference" />
           <NavigationProperty Name="PaperType" Relationship="Self.FK__Paper__paper_typ__38EE7070" FromRole="Paper" ToRole="PaperType" />
@@ -6212,6 +6233,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="paper_id" Type="Int32" Nullable="false" />
           <Property Name="link" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="check" Type="Boolean" />
+          <Property Name="manager_check" Type="Boolean" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__PaperWith__paper__3AD6B8E2" FromRole="PaperWithCriteria" ToRole="Paper" />
           <NavigationProperty Name="PaperCriteria" Relationship="Self.FK__PaperWith__crite__45544755" FromRole="PaperWithCriteria" ToRole="PaperCriteria" />
         </EntityType>
@@ -6821,18 +6843,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Scholarship">
               <PropertyRef Name="country_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Author__identifi__7F80E8EA">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Author" Type="Self.Author" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Author">
-              <PropertyRef Name="identification_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9223,10 +9233,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Country" EntitySet="Countries" />
             <End Role="Scholarship" EntitySet="Scholarships" />
           </AssociationSet>
-          <AssociationSet Name="FK__Author__identifi__7F80E8EA" Association="Self.FK__Author__identifi__7F80E8EA">
-            <End Role="File" EntitySet="Files" />
-            <End Role="Author" EntitySet="Authors" />
-          </AssociationSet>
           <AssociationSet Name="FK__Conferenc__invit__23BE4960" Association="Self.FK__Conferenc__invit__23BE4960">
             <End Role="File" EntitySet="Files" />
             <End Role="RequestConference" EntitySet="RequestConferences" />
@@ -9951,7 +9957,48 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10555,6 +10602,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySetMapping Name="ConferenceCriteriaLanguages">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceCriteriaLanguage">
               <MappingFragment StoreEntitySet="ConferenceCriteriaLanguage">
+                <ScalarProperty Name="conference_criteria_language_id" ColumnName="conference_criteria_language_id" />
                 <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -10687,6 +10735,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="time_start" ColumnName="time_start" />
                 <ScalarProperty Name="time_end" ColumnName="time_end" />
                 <ScalarProperty Name="formality_id" ColumnName="formality_id" />
+                <ScalarProperty Name="organized_unit" ColumnName="organized_unit" />
                 <ScalarProperty Name="co_organized_unit" ColumnName="co-organized_unit" />
                 <ScalarProperty Name="is_verified" ColumnName="is_verified" />
               </MappingFragment>
@@ -10933,10 +10982,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="identification_number" ColumnName="identification_number" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="is_reseacher" ColumnName="is_reseacher" />
-                <ScalarProperty Name="identification_file_id" ColumnName="identification_file_id" />
                 <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="contract_id" ColumnName="contract_id" />
                 <ScalarProperty Name="title_id" ColumnName="title_id" />
+                <ScalarProperty Name="identification_file_link" ColumnName="identification_file_link" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10995,6 +11044,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="index" ColumnName="index" />
                 <ScalarProperty Name="paper_type_id" ColumnName="paper_type_id" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="note_domestic" ColumnName="note_domestic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11021,6 +11071,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="paper_id" ColumnName="paper_id" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="check" ColumnName="check" />
+                <ScalarProperty Name="manager_check" ColumnName="manager_check" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11354,6 +11405,30 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

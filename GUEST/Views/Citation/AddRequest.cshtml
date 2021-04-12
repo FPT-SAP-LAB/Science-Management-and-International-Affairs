@@ -58,9 +58,9 @@
         $(".addrow").click(function () {
             var id = new Date().getTime();
             $("#trichdan_body").append("<tr id=" + id + ">" +
-                "<td><input type='text' class='form-control trichdan_source' /></td>" +
-                "<td><input type='number' class='form-control trichdan_count' min='0' /></td>" +
-                "<td><input type='text' class='form-control trichdan_link' /></td>" +
+                "<td><input autocomplete='off' type='text' class='form-control trichdan_source' /></td>" +
+                "<td><input autocomplete='off' type='number' class='form-control trichdan_count' min='0' /></td>" +
+                "<td><input autocomplete='off' type='text' class='form-control trichdan_link' /></td>" +
                 "<td><a onclick='deleteRow(" + id + ")' class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a></td>" +
                 "</tr>");
         });
@@ -96,9 +96,9 @@
                 office_id: $("#ckfe option:selected").attr("name"),
                 contract_id: $("#add_author_contractType").val(),
                 title_id: $("#add_author_title").val(),
-                people_id: $("#add_author_msnv").attr("name"),
                 temp_id: id,
                 office_abbreviation: $("#ckfe option:selected").val(),
+                identification_file_link: $("#add_author_cmnd_link").val(),
             }
             people.push(AddAuthor);
         }

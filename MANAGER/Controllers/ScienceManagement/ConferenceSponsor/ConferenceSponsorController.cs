@@ -1,7 +1,9 @@
-﻿using BLL.ScienceManagement.ConferenceSponsor;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -15,13 +17,17 @@ namespace MANAGER.Controllers
         ConferenceSponsorDetailRepo DetailRepos;
         public ActionResult Index()
         {
+            ViewBag.title = "DANH SÁCH ĐỀ NGHỊ ĐANG XỬ LÝ";
             return View();
         }
         public JsonResult List()
         {
             IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable);
+            string search_paper = Request["search_paper"];
+            string search_conference = Request["search_conference"];
+            int.TryParse(Request["search_status"], out int search_status);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status);
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -31,8 +37,16 @@ namespace MANAGER.Controllers
         }
         public ActionResult Detail(int id)
         {
+            QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();
             DetailRepos = new ConferenceSponsorDetailRepo();
-            ViewBag.output = DetailRepos.GetDetailPageGuest(id, 1);
+
+            string output = DetailRepos.GetDetailPageGuest(id, 1);
+            if (output == null)
+                return Redirect("/ConferenceSponsor");
+            ViewBag.asideMinimize = true;
+            ViewBag.output = output;
+            string university = JObject.Parse(output)["Conference"]["QsUniversity"].ToString();
+            ViewBag.ranking = qsUniversityRepo.GetRanking(university);
             return View();
         }
         [HttpPost]
@@ -111,13 +125,13 @@ namespace MANAGER.Controllers
             else
                 return File(Word, "application/vnd.ms-word", "Đề-nghị-cử-bán-bộ-đi-công-tác.docx");
         }
-        [ChildActionOnly]
-        public ActionResult CostMenu(int id)
-        {
-            ViewBag.id = id;
-            ViewBag.CheckboxColumn = id == 2;
-            ViewBag.ReimbursementColumn = id >= 3;
-            return PartialView();
-        }
+        //[ChildActionOnly]
+        //public ActionResult CostMenu(int id)
+        //{
+        //    ViewBag.id = id;
+        //    ViewBag.CheckboxColumn = id == 2;
+        //    ViewBag.ReimbursementColumn = id >= 3;
+        //    return PartialView();
+        //}
     }
 }

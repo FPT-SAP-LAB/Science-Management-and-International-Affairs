@@ -47,10 +47,6 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
             name: 'partner_name'
         },
         {
-            data: 'office_name',
-            name: 'office_name'
-        },
-        {
             data: 'country_name',
             name: 'country_name'
         },
@@ -94,7 +90,7 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
     ],
     columnDefs: [
         {
-            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9],
             className: 'text-nowrap text-center'
         },
         {
@@ -103,7 +99,7 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
             className: 'text-center'
         },
         {
-            targets: 8,
+            targets: 7,
             render: function (data, type, row) {
                 var status = {
                     1: {

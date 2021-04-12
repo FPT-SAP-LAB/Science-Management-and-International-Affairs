@@ -114,6 +114,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             }
         }
 
+        [HttpGet]
+        public ActionResult getPartnersSearching(string partner_name)
+        {
+            try
+            {
+                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partnersSearching(partner_name);
+                return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         //add person
         [HttpGet]
         public ActionResult getPeople(string person_name)
@@ -641,7 +656,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [Auther(RightID = "10,11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult AddProgram(int direction, int numberOfImage, string program_title, string collab_type,
-            string program_partner, int program_language, string program_range_date, string note, string content)
+            string program_partner, int program_language, string add_program_start_date, string add_program_end_date, string note, string content)
         {
             try
             {
@@ -665,7 +680,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     return Json(new { json_false.success, json_false.content });
                 }
                 AlertModal<string> json = acProgramRepo.AddProgram(files_request, program_title, Int32.Parse(collab_type), direction,
-                    content, numberOfImage, program_language, acc.account_id, program_partner, program_range_date, note);
+                    content, numberOfImage, program_language, acc.account_id, program_partner, add_program_start_date, add_program_end_date, note);
                 return Json(new { json.success, json.content });
             }
             catch (Exception e)
@@ -713,7 +728,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         [Auther(RightID = "10,11")]
         [HttpPost, ValidateInput(false)]
         public ActionResult SaveEditProgram(string program_id, string content, int numberOfImage, string program_title,
-            int program_language, string program_partner, string program_range_date, string note, string direction)
+            int program_language, string program_partner, string edit_program_start_date, string edit_program_end_date, string note, string direction)
         {
             try
             {
@@ -742,7 +757,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 else
                 {
                     AlertModal<string> json = acProgramRepo.SaveEditProgram(files_request, Int32.Parse(program_id), program_title, content, numberOfImage, program_language,
-                        program_partner, program_range_date, note, Int32.Parse(direction), acc.account_id);
+                        program_partner, edit_program_start_date, edit_program_end_date, note, Int32.Parse(direction), acc.account_id);
                     return Json(new { json.success, json.content });
                 }
             }
