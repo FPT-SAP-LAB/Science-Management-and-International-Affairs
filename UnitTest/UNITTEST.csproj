@@ -62,7 +62,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InternationalCollaboration\Collaboration\MOUUnitTest.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\AddMOUUnitTest.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\DeleteMOUUnitTest.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\ExportExcelUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\GetSuggestedMOUCodeUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\GetMasterDataMOUUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\CheckPartnerUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\GetNotiUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\PartnerInfoIsDuplicatedUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\GetMOUCodeCheckUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\CheckIntersectDateUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\UpdateStatusMOUUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\UpdateNotiCountUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUDeletedUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Lib.cs" />
@@ -77,6 +90,11 @@
     <Folder Include="Authen\" />
     <Folder Include="InternationalCollaboration\AcademicActivity\" />
     <Folder Include="InternationalCollaboration\AcademicCollaborationRepository\" />
+    <Folder Include="InternationalCollaboration\Collaboration\MOABasicInfo\" />
+    <Folder Include="InternationalCollaboration\Collaboration\MOAPartner\" />
+    <Folder Include="InternationalCollaboration\Collaboration\MOA\" />
+    <Folder Include="InternationalCollaboration\Collaboration\MOUBasicInfo\" />
+    <Folder Include="InternationalCollaboration\Collaboration\MOUPartner\" />
     <Folder Include="InternationalCollaboration\MasterData\" />
     <Folder Include="ModelDAL\" />
     <Folder Include="ScienceManagement\" />
