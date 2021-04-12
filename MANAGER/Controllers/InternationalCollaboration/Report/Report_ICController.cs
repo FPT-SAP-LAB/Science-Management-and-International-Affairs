@@ -59,8 +59,16 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
                 string widget_mou = dashboardRepo.WidgetMou(this_year);
                 string widget_collab = dashboardRepo.WidgetCollab(this_year) + "";
                 string widget_support = dashboardRepo.WidgetSupport(this_year) + "";
-                return Json(new { success = true, year, signed, not_sign_yet, 
-                    widget_mou, widget_collab, widget_support});
+                return Json(new
+                {
+                    success = true,
+                    year,
+                    signed,
+                    not_sign_yet,
+                    widget_mou,
+                    widget_collab,
+                    widget_support
+                });
             }
             catch (Exception e)
             {
