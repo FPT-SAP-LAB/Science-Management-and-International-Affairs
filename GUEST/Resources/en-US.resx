@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="FileCMnew" xml:space="preserve">
+    <value>Upload new file</value>
+  </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>FPT Procedure</value>
   </data>

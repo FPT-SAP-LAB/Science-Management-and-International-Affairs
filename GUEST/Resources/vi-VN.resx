@@ -243,6 +243,9 @@
   <data name="FileCM" xml:space="preserve">
     <value>File chứng minh</value>
   </data>
+  <data name="FileCMnew" xml:space="preserve">
+    <value>Upload file mới</value>
+  </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>
   </data>

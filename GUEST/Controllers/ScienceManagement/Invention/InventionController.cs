@@ -89,7 +89,14 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult addFile(HttpPostedFileBase file, string name)
         {
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 3, "hieumv0163@gmail.com");
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 3, acc.email);
             ENTITIES.File fl = new ENTITIES.File
             {
                 link = f.WebViewLink,
