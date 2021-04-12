@@ -218,45 +218,9 @@
                                     <th>Tên bài báo</th>
                                     <th>Tên tạp chí</th>
                                     <th>Năm xuất bản</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
-                                    <td>dummy text</td>
-                                    <td>2019</td>
-                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
-                                    <td>dummy text</td>
-                                    <td>2019</td>
-                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
-                                    <td>dummy text</td>
-                                    <td>2019</td>
-                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
-                                    <td>dummy text</td>
-                                    <td>2019</td>
-                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</td>
-                                    <td>dummy text</td>
-                                    <td>2019</td>
-                                    <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
-                                </tr>
                             </tbody>
                         </table>
                         <!--end::Table-->
@@ -334,17 +298,12 @@
                 columns: [
                     { data: "rownum", name: "rownum", orderable: false },
                     {
-                        data: "paper_name", name: "paper_name", render: function (data) {
-                            return "<a href='#'>" + data + "</a>"
+                        data: "paper_name", name: "paper_name", render: function (data, type, row, meta) {
+                            return "<a href='"+row.link+"'>" + row.paper_name + "</a>"
                         }
                     },
                     { data: "journal_or_cfr_name", name: "journal_or_cfr_name" },
                     { data: "year", name: "year" },
-                    {
-                        data: "publish_date", name: "publish_date", render: function (data) {
-                            return "<a onclick='' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i> </a>"
-                        }
-                    },
                 ],
             });
         })
