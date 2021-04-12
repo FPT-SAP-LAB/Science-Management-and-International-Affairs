@@ -91,7 +91,7 @@
                             <select class="form-control select2" multiple="multiple" id="mou_partner_scope_add" style="width:100% !important">
                                 @foreach (var item in ViewBag.listScopesMOUPartner)
                                 {
-                                    <option value="@item.scope_id">@item.scope_abbreviation</option>
+                                <option value="@item.scope_id">@item.scope_abbreviation-@item.scope_name</option>
                                 }
                             </select>
                         </div>

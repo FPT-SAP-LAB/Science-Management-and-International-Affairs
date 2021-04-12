@@ -102,7 +102,7 @@
                                 {
                                     foreach (var item in ViewBag.listScopes)
                                     {
-                                        <option value="@item.scope_id">@item.scope_abbreviation</option>
+                                        <option value="@item.scope_id">@item.scope_abbreviation-@item.scope_name</option>
                                     }
                                 }
                             </select>

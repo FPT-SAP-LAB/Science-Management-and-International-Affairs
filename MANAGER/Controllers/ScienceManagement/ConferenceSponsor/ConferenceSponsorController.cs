@@ -24,7 +24,10 @@ namespace MANAGER.Controllers
         {
             IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable);
+            string search_paper = Request["search_paper"];
+            string search_conference = Request["search_conference"];
+            int.TryParse(Request["search_status"], out int search_status);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status);
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;

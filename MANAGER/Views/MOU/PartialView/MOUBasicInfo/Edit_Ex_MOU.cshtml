@@ -75,7 +75,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-sm btn-secondary px-6" data-dismiss="modal">Đóng</button>
-                <button type="button" id="edit_ex_mou_modal" onclick="finishExMOUEdit()" class="load-btn btn btn-sm btn-light-primary">Sửa</button>
+                <button type="button" id="edit_ex_mou_modal" onclick="finishExMOUEdit(this)" class="load-btn btn btn-sm btn-light-primary">Sửa</button>
             </div>
         </div>
     </div>
@@ -103,7 +103,7 @@
                         <select class="form-control select2" required id="coop_scope_ex_mou_add_for_edit" multiple="multiple" style="width:100% !important">
                             @foreach (var item in ViewBag.scopeList)
                             {
-                                <option value="@item.scope_id">@item.scope_abbreviation</option>
+                            <option value="@item.scope_id">@item.scope_abbreviation-@item.scope_name</option>
                             }
                         </select>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="col-md-3">
                         <input hidden readonly type="text" class="form-control" id="idx_ex_mou_edit_for_edit" placeholder="" name="idx_edit" value="no" />
                         <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
-                        <select class="form-control" required id="partner_name_ex_mou_edit_for_edit">
+                        <select class="form-control" required id="partner_name_ex_mou_edit_for_edit" style="width:100% !important">
                         </select>
                     </div>
                     <div class="col-md-9">
