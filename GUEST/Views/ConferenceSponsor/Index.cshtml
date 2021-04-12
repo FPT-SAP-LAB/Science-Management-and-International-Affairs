@@ -7,18 +7,53 @@
 <div class="card card-custom">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-12 col-xl-12" style="text-align: right;">
-                <div class="dropdown dropdown-inline mr-2">
+            <div class="col-md-3 col-sm-12 form-group">
+                <div class="input-icon">
+                    <input type="text" class="form-control"
+                           placeholder="Tên sản phẩm khoa học"
+                           id="search_paper" />
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 form-group">
+                <div class="input-icon">
+                    <input type="text" class="form-control"
+                           placeholder="Tên hội nghị"
+                           id="search_conference" />
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12 form-group">
+                <div>
+                    <select class="form-control" id="search_status" name="param">
+                        <option value="0">Tất cả</option>
+                        <option value="1">Đang duyệt</option>
+                        <option value="2">Được tham dự</option>
+                        <option value="3">Đã duyệt</option>
+                        <option value="4">Chưa hoàn ứng</option>
+                        <option value="5">Đã hoàn ứng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="float-left">
+                    <a onclick="ReloadTable()"
+                       class="btn btn-light-primary px-6 font-weight-bold">
+                        Tìm kiếm
+                    </a>
+                </div>
+                <div class="float-right">
                     <a href="/ConferenceSponsor/Add"
                        class="btn btn-light-success font-weight-bolder">
                         Thêm đề nghị
                     </a>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-xl-12 col-xxl-12 table-responsive">
-                <br />
                 <table id="mytable" class="table table-bordered table-checkable ">
                     <thead>
                         <tr>
@@ -39,6 +74,11 @@
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
+        $("#search_status").select2({
+            minimumResultsForSearch: -1,
+            width: '100%'
+        });
+
         var label_status = {
             1: "primary",
             2: "success",
@@ -47,46 +87,59 @@
             5: "success"
         }
 
-        $(document).ready(function () {
-            $("#mytable").DataTable({
-                responsive: true,
-                // DOM Layout settings
-                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                lengthMenu: [5, 10, 25, 50],
-                pageLength: 10,
-                language: {
-                    'lengthMenu': 'Display _MENU_',
-                },
-                serverSide: true,
-                ajax: {
-                    url: "/ConferenceSponsor/List",
-                    datatype: "json",
-                    cache: true
-                },
-                columns: [
-                    { data: "RowNumber", name: "RowNumber", orderable: false },
-                    { data: "PaperName", name: "PaperName" },
-                    { data: "ConferenceName", name: "ConferenceName" },
-                    { data: "CreatedDate", name: "Date" },
-                    {
-                        data: {}, name: "StatusID", render: function (data) {
-                            if (data.EditAble)
-                                return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
-                            else
-                                return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
-                        }, width: "80px", className: "text-center"
+        var mytable = $("#mytable").DataTable({
+            responsive: true,
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            serverSide: true,
+            ajax: {
+                url: "/ConferenceSponsor/List",
+                datatype: "json",
+                cache: true,
+                data: {
+                    search_paper: function () {
+                        return $("#search_paper").val();
                     },
-                    {
-                        data: {}, orderable: false, render: function (data) {
-                            let html = "<a href='/ConferenceSponsor/Detail?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>";
-                            if (data.EditAble)
-                                html += "<a href='/ConferenceSponsor/Edit?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fa fa-edit'></i> </a>";
-                            return html
-                        }, width: "66px", className: "text-left"
-                    }
-                ],
-                order: [3, "desc"]
-            });
+                    search_conference: function () {
+                        return $("#search_conference").val();
+                    },
+                    search_status: function () {
+                        return $("#search_status").val();
+                    },
+                }
+            },
+            columns: [
+                { data: "RowNumber", name: "RowNumber", orderable: false },
+                { data: "PaperName", name: "PaperName" },
+                { data: "ConferenceName", name: "ConferenceName" },
+                { data: "CreatedDate", name: "Date" },
+                {
+                    data: {}, name: "StatusID", render: function (data) {
+                        if (data.EditAble)
+                            return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
+                        else
+                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
+                    }, width: "80px", className: "text-center"
+                },
+                {
+                    data: {}, orderable: false, render: function (data) {
+                        let html = "<a href='/ConferenceSponsor/Detail?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>";
+                        if (data.EditAble)
+                            html += "<a href='/ConferenceSponsor/Edit?id=" + data.RequestID + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fa fa-edit'></i> </a>";
+                        return html
+                    }, width: "66px", className: "text-center"
+                }
+            ],
+            order: [3, "desc"]
         });
+
+        function ReloadTable() {
+            mytable.ajax.reload();
+        }
     </script>
 }
