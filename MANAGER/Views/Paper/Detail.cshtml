@@ -81,6 +81,10 @@
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.index" disabled />
             </div>
             <div class="col-xl-6 form-group thuongtn" style="display: none">
+                <label>File chứng minh</label>
+                <a href="@ViewBag.paper.link_file" target="_blank" class="btn btn-light-primary px-6 font-weight-bold btn-sm form-control">View</a>
+            </div>
+            <div class="col-xl-6 form-group thuongtn" style="display: none">
                 <label>Ghi chú</label>
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.note_domestic" disabled />
             </div>
@@ -110,7 +114,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (ViewBag.crite.Count == 0) { 
+                        @if (ViewBag.crite.Count == 0)
+                        {
                             <tr>
                                 <td colspan="3" class="justify-content-center text-muted text-center">Không có tiêu chí nào</td>
                             </tr>
@@ -145,12 +150,12 @@
                                     <td>
                                         @if (item.manager_check != null && item.manager_check)
                                         {
-                                            <a onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md" style="color:#62c700"></i> </a>
+                                            <a name="1" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md" style="color:#62c700"></i> </a>
                                             @*<span class='col-xl-1 manager_check' name="1"><a class='form-control form-control-lg edit btn' style="background-color: lawngreen; border-color: lawngreen"><i class='flaticon2-checkmark' style="color:black"></i></a></span>*@
                                         }
                                         else
                                         {
-                                            <a onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md"></i> </a>
+                                            <a name="0" onclick="" class="btn btn-sm btn-clean btn-icon manager_check" title="View"> <i class="fa fas fa-check-circle icon-md"></i> </a>
                                             @*<span class='col-xl-1 manager_check' name="0"><a class='form-control form-control-lg edit btn' style="background-color: red; border-color: red"><i class='flaticon2-delete' style="color:black"></i></a></span>*@
                                         }
                                     </td>
@@ -457,7 +462,7 @@
             var temp = $("#totalreward").val();
             if (temp == "" || temp == "0") {
                 $("#loading").hide();
-                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo", "Lỗi");
+                toastr.error("Chưa điền thông tin tổng thưởng cho bài báo");
                 check = false;
             } else {
                 check = true;
@@ -467,7 +472,7 @@
                         //console.log(value);
                         if (value == "" || value == "0") {
                             $("#loading").hide();
-                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả", "Lỗi");
+                            toastr.error("Chưa điền đủ thông tin thưởng cho tác giả");
                             check = false;
                             return false;
                         } else {
@@ -477,17 +482,20 @@
                 }
             }
 
-            $(".manager_check").each(function () {
-                var val = $(this).attr("name");
-                if (val == "0") {
-                    $("#loading").hide();
-                    toastr.error("Chưa check hết các tiêu chí", "Lỗi");
-                    check = false;
-                    return false;
-                } else {
-                    check = true;
-                }
-            })
+            if (check) {
+                $(".manager_check").each(function () {
+                    var val = $(this).attr("name");
+                    if (val == "0") {
+                        $("#loading").hide();
+                        toastr.error("Chưa check hết các tiêu chí");
+                        check = false;
+                        return false;
+                    } else {
+                        check = true;
+                    }
+                })
+            }
+
 
             //if (check) alert("abc");
 
@@ -515,10 +523,10 @@
                 //console.log(sum, parseInt(total));
                 if (sum > parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo");
                 } else if (sum < parseInt(total) && ck == "Quydinh") {
                     $("#loading").hide();
-                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo", "Lỗi");
+                    toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo");
                 } else {
                     var paper_id = "@ViewBag.paper.paper_id";
                     var request_id = "@ViewBag.paper.request_id";

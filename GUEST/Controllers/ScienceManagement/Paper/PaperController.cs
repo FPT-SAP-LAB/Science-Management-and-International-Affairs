@@ -3,6 +3,7 @@ using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -47,9 +48,31 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddPaper(DetailPaper paper)
+        public JsonResult addFile(HttpPostedFileBase file, string name)
+        {
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 2, acc.email);
+            ENTITIES.File fl = new ENTITIES.File
+            {
+                link = f.WebViewLink,
+                file_drive_id = f.Id,
+                name = name
+            };
+            string mess = pr.addFile(fl);
+            return Json(new { mess = mess, id = fl.file_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddPaper(DetailPaper paper, string fileid)
         {
             paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            if (fileid != "0") paper.file_id = Int32.Parse(fileid);
             Paper p = pr.addPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
