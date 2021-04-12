@@ -66,6 +66,7 @@
     <input name="id" id="nameEdit" />
     <input name="editable" id="ckEdit" />
 </form>
+<input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none"/>
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
@@ -92,7 +93,7 @@
             $("#add_author_msnv").trigger('change');*@
 
             $("#add_author_mail").val("@ViewBag.author.email");
-            $("#add_author_name").val("@ViewBag.author.name");
+            $("#add_author_name").val($("#name_temp").val());
             $("#add_author_title").val("@ViewBag.author.title_id");
             $("#add_author_title").trigger('change');
             $("#add_author_contractType").val("@ViewBag.author.contract_id");
