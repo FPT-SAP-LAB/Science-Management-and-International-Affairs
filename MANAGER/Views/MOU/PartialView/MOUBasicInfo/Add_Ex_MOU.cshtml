@@ -24,7 +24,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label style="color:red">*</label><label class="font-weight-bolder">Ngày kí kết</label>&nbsp;
+                        <label style="color:red">*</label><label class="font-weight-bolder">Ngày ký kết</label>&nbsp;
                         <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_mou_addition_sign_time" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kí kết" id="mou_addition_sign_time" readonly autocomplete="off" data-target="#kt_datetimepicker_mou_addition_sign_time" />
                             <div class="input-group-append" data-target="#kt_datetimepicker_mou_addition_sign_time" data-toggle="datetimepicker">
@@ -102,7 +102,7 @@
                         <select class="form-control select2" required id="coop_scope_ex_mou_add" multiple="multiple" style="width:100% !important">
                             @foreach (var item in ViewBag.scopeList)
                             {
-                                <option value="@item.scope_id">@item.scope_abbreviation</option>
+                            <option value="@item.scope_id">@item.scope_abbreviation-@item.scope_name</option>
                             }
                         </select>
                     </div>
@@ -127,7 +127,7 @@
                     <div class="col-md-3">
                         <input hidden readonly type="text" class="form-control" id="idx_ex_mou_edit" placeholder="" name="idx_edit" value="no" />
                         <label style="color:red">*</label><label class="font-weight-bolder">Đối tác</label>&nbsp;
-                        <select class="form-control" required id="partner_name_ex_mou_edit">
+                        <select class="form-control" required id="partner_name_ex_mou_edit" style="width:100% !important">
                         </select>
                     </div>
                     <div class="col-md-9">

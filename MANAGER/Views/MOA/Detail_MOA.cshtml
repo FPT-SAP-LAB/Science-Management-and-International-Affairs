@@ -298,26 +298,32 @@
         $('#coop_scope').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_edit').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_moa_add').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_moa_edit').select2({
             placeholder: 'Lĩnh vực',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_moa_edit_for_edit').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         $('#coop_scope_ex_moa_add_for_edit').select2({
             placeholder: 'Phạm vi hợp tác',
             allowClear: true,
+            templateSelection: formatStateScope
         })
         //datepicker
         var KTBootstrapDatetimepicker = function () {
@@ -338,6 +344,9 @@
         jQuery(document).ready(function () {
             KTBootstrapDatetimepicker.init();
         });
+        function formatStateScope(state) {
+            return state.text.split('-')[0];
+        };
     </script>
     <script>
         //$("#moa_update_table").DataTable({
@@ -906,7 +915,7 @@
                 success: function (data) {
                     $('#coop_scope_ex_moa_add').empty();
                     for (i = 0; i < data.length; i++) {
-                        var newOption = new Option(data[i].scope_abbreviation, data[i].scope_id, false, false);
+                        var newOption = new Option(data[i].scope_abbreviation+'-'+data[i].scope_name, data[i].scope_id, false, false);
                         $('#coop_scope_ex_moa_add').append(newOption).trigger('change');
                     }
                 },
@@ -950,7 +959,7 @@
                 success: function (data) {
                     $('#coop_scope_ex_moa_add_for_edit').empty();
                     for (i = 0; i < data.length; i++) {
-                        var newOption = new Option(data[i].scope_abbreviation, data[i].scope_id, false, false);
+                        var newOption = new Option(data[i].scope_abbreviation + '-' + data[i].scope_name, data[i].scope_id, false, false);
                         $('#coop_scope_ex_moa_add_for_edit').append(newOption).trigger('change');
                     }
                 },
@@ -972,7 +981,7 @@
                 success: function (data) {
                     $('#coop_scope_ex_moa_edit_for_edit').empty();
                     for (i = 0; i < data.length; i++) {
-                        var newOption = new Option(data[i].scope_abbreviation, data[i].scope_id, false, false);
+                        var newOption = new Option(data[i].scope_abbreviation + '-' + data[i].scope_name, data[i].scope_id, false, false);
                         $('#coop_scope_ex_moa_edit_for_edit').append(newOption).trigger('change');
                     }
                 },
@@ -998,12 +1007,12 @@
                 var objCheck = listTempExMOAPartnerScope.find(x => x.partner_name == partner_name_ex_add);
                 if (objCheck == null) {
                     var scopes = $("#coop_scope_ex_moa_add").select2('data');
-                    var scopes_name = '';
+                    var scopes_abbreviation = '';
                     for (i = 0; i < scopes.length; i++) {
-                        scopes_name += scopes[i].text + ',';
+                        scopes_abbreviation += scopes[i].text.split('-')[0] + ',';
                     }
-                    if (scopes_name.endsWith(",")) {
-                        scopes_name = scopes_name.slice(0, -1);
+                    if (scopes_abbreviation.endsWith(",")) {
+                        scopes_abbreviation = scopes_abbreviation.slice(0, -1);
                     }
 
                     var objPartner = listPartner.find(x => x.partner_id == partner_id);
@@ -1013,7 +1022,8 @@
                     $("#coop_scope_ex_moa_add option").each(function () {
                         ListScopesOfExMOA.push({
                             scope_id: $(this).val(),
-                            scope_abbreviation: $(this).text()
+                            scope_abbreviation: $(this).text().split('-')[0],
+                            scope_name: $(this).text().split('-')[1],
                         });
                     });
 
@@ -1021,7 +1031,7 @@
                         partner_id: partner_id,
                         partner_name: partner_name,
                         scopes_id: $("#coop_scope_ex_moa_add").val(),
-                        scopes_name: scopes_name,
+                        scopes_abbreviation: scopes_abbreviation,
                         list_scopes: ListScopesOfExMOA
                     }
                     $('#add-partner-scope').modal('hide');
@@ -1062,7 +1072,7 @@
                 HTMLdata += '<tr id="tempExMOA' + idx + '" "class="MOAPartnerTempList">';
                 HTMLdata += '<td>' + (idx + 1) + '</td>';
                 HTMLdata += '<td>' + listTempExMOAPartnerScope[idx].partner_name + '</td>';
-                HTMLdata += '<td>' + listTempExMOAPartnerScope[idx].scopes_name + '</td>';
+                HTMLdata += '<td>' + listTempExMOAPartnerScope[idx].scopes_abbreviation + '</td>';
 
                 var buttonEdit = '<a onclick="loadEditExMOATemp(' + idx + ')" href="#edit-partner-scope" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
                 var buttonDel = '<a onclick="confirm_delete_ex_moa_temp(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
@@ -1090,23 +1100,21 @@
             $('#coop_scope_ex_moa_edit').empty();
             for (j = 0; j < listTempExMOAPartnerScope[index].list_scopes.length; j++) {
                 var isSelected = false;
+                var scope_id = listTempExMOAPartnerScope[index].list_scopes[j].scope_id;
+                var scope_abbreviation = listTempExMOAPartnerScope[index].list_scopes[j].scope_abbreviation;
+                var scope_name = listTempExMOAPartnerScope[index].list_scopes[j].scope_name;
+                var option;
                 for (k = 0; k < listTempExMOAPartnerScope[index].scopes_id.length; k++) {
                     if (listTempExMOAPartnerScope[index].scopes_id[k] == listTempExMOAPartnerScope[index].list_scopes[j].scope_id) {
-
-                        var scope_id = listTempExMOAPartnerScope[index].list_scopes[j].scope_id;
-                        var scope_name = listTempExMOAPartnerScope[index].list_scopes[j].scope_abbreviation;
-                        var option = new Option(scope_name, scope_id, true, true);
-                        $('#coop_scope_ex_moa_edit').append(option).trigger('change');
+                        option = new Option(scope_abbreviation+'-'+scope_name, scope_id, true, true);
                         isSelected = true;
                         break;
                     }
                 }
                 if (!isSelected) {
-                    var scope_id = listTempExMOAPartnerScope[index].list_scopes[j].scope_id;
-                    var scope_name = listTempExMOAPartnerScope[index].list_scopes[j].scope_abbreviation;
-                    var option = new Option(scope_name, scope_id, false, false);
-                    $('#coop_scope_ex_moa_edit').append(option).trigger('change');
+                    option = new Option(scope_abbreviation + '-' + scope_name, scope_id, false, false);
                 }
+                $('#coop_scope_ex_moa_edit').append(option).trigger('change');
             }
         };
 
@@ -1125,12 +1133,12 @@
 
             //create value for scopes and partner edited
             var scopes = $("#coop_scope_ex_moa_edit").select2('data');
-            var scopes_name = '';
+            var scopes_abbreviation = '';
             for (i = 0; i < scopes.length; i++) {
-                scopes_name += scopes[i].text + ',';
+                scopes_abbreviation += scopes[i].text.split('-')[0] + ',';
             }
-            if (scopes_name.endsWith(",")) {
-                scopes_name = scopes_name.slice(0, -1);
+            if (scopes_abbreviation.endsWith(",")) {
+                scopes_abbreviation = scopes_abbreviation.slice(0, -1);
             }
 
             var objPartner = listPartner.find(x => x.partner_id == partner_id);
@@ -1149,7 +1157,7 @@
             listTempExMOAPartnerScope[index].partner_id = partner_id;
             listTempExMOAPartnerScope[index].partner_name = partner_name;
             listTempExMOAPartnerScope[index].scopes_id = $("#coop_scope_ex_moa_edit").val();
-            listTempExMOAPartnerScope[index].scopes_name = scopes_name;
+            listTempExMOAPartnerScope[index].scopes_abbreviation = scopes_abbreviation;
             initAndRefreshTableExMOAAdd();
             $('#edit-partner-scope').modal('hide');
     }
@@ -1157,26 +1165,25 @@
         function editExMOATempForEdit() {
             var index = $("#idx_ex_moa_edit_for_edit").val();
             var partner_id = $('#partner_name_ex_moa_edit_for_edit').val();
-            var scopes = $('#coop_scope_ex_moa_edit_for_edit').val();
-            var scopes_name = '';
+            var scopes_num = $('#coop_scope_ex_moa_edit_for_edit').val();
 
             if ($('#partner_name_ex_moa_edit_for_edit').val() == "") {
                 toastr.error('Đối tác chưa được chọn');
                 return;
             }
-            else if (scopes.length == 0) {
+            else if (scopes_num.length == 0) {
                 toastr.error('Phạm vi hợp tác chưa được chọn');
                 return;
             }
 
             //create value for scopes and partner edited
             var scopes = $("#coop_scope_ex_moa_edit_for_edit").select2('data');
-            var scopes_name = '';
+            var scopes_abbreviation = '';
             for (i = 0; i < scopes.length; i++) {
-                scopes_name += scopes[i].text + ',';
+                scopes_abbreviation += scopes[i].text.split('-')[0] + ',';
             }
-            if (scopes_name.endsWith(",")) {
-                scopes_name = scopes_name.slice(0, -1);
+            if (scopes_abbreviation.endsWith(",")) {
+                scopes_abbreviation = scopes_abbreviation.slice(0, -1);
             }
 
             var objPartner = listPartner.find(x => x.partner_id == partner_id);
@@ -1195,7 +1202,7 @@
             listTempExMOAPartnerScopeEdit[index].partner_id = partner_id;
             listTempExMOAPartnerScopeEdit[index].partner_name = partner_name;
             listTempExMOAPartnerScopeEdit[index].scopes_id = $("#coop_scope_ex_moa_edit_for_edit").val();
-            listTempExMOAPartnerScopeEdit[index].scopes_name = scopes_name;
+            listTempExMOAPartnerScopeEdit[index].scopes_abbreviation = scopes_abbreviation;
             initAndRefreshTableExMOAEdit();
             $('#edit-partner-scope-for-edit').modal('hide');
         }
@@ -1355,7 +1362,7 @@
                     partner_id: partner_id,
                     partner_name: partner_name,
                     scopes_id: scopes,
-                    scopes_name: scopes_name,
+                    scopes_abbreviation: scopes_name,
                     list_scopes: total_scopes
                 }
                 listTempExMOAPartnerScopeEdit.push(temp);
@@ -1380,7 +1387,7 @@
                 HTMLdata += '<tr id="tempExMOAEdit' + idx + '" "class="MOAPartnerTempList">';
                 HTMLdata += '<td>' + (idx + 1) + '</td>';
                 HTMLdata += '<td>' + listTempExMOAPartnerScopeEdit[idx].partner_name + '</td>';
-                HTMLdata += '<td>' + listTempExMOAPartnerScopeEdit[idx].scopes_name + '</td>';
+                HTMLdata += '<td>' + listTempExMOAPartnerScopeEdit[idx].scopes_abbreviation + '</td>';
 
                 var buttonEdit = '<a onclick="loadEditExMOATempForEdit(' + idx + ')" href="#edit-partner-scope-for-edit" data-toggle="modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>';
                 var buttonDel = '<a onclick="confirm_delete_ex_moa_temp_edit(' + (idx) + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
@@ -1406,25 +1413,22 @@
             $('#coop_scope_ex_moa_edit_for_edit').empty();
             for (j = 0; j < listTempExMOAPartnerScopeEdit[index].list_scopes.length; j++) {
                 var isSelected = false;
+                var scope_id = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_id;
+                var scope_name = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_name;
+                var scope_abbreviation = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_abbreviation;
+                var option;
                 for (k = 0; k < listTempExMOAPartnerScopeEdit[index].scopes_id.length; k++) {
                     if (listTempExMOAPartnerScopeEdit[index].scopes_id[k] == listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_id) {
-
-                        var scope_id = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_id;
-                        var scope_name = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_abbreviation;
-                        var option = new Option(scope_name, scope_id, true, true);
-                        $('#coop_scope_ex_moa_edit_for_edit').append(option).trigger('change');
+                        option = new Option(scope_abbreviation + '-' + scope_name, scope_id, true, true);
                         isSelected = true;
                         break;
                     }
                 }
                 if (!isSelected) {
-                    var scope_id = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_id;
-                    var scope_name = listTempExMOAPartnerScopeEdit[index].list_scopes[j].scope_abbreviation;
-                    var option = new Option(scope_name, scope_id, false, false);
-                    $('#coop_scope_ex_moa_edit_for_edit').append(option).trigger('change');
+                    option = new Option(scope_abbreviation + '-' + scope_name, scope_id, false, false);
                 }
+                $('#coop_scope_ex_moa_edit_for_edit').append(option).trigger('change');
             }
-
             $('#partner_name_ex_moa_edit_for_edit').append(HTMLPartnerdata);
         }
 
@@ -1474,10 +1478,10 @@
 
         function addExMOATempForEdit() {
             var partner_id = $('#partner_name_ex_moa_add_for_edit').val();
-            var scopes = $('#coop_scope_ex_moa_add_for_edit').val();
+            var scopes_num = $('#coop_scope_ex_moa_add_for_edit').val();
             var ListScopesOfExMOA = [];
 
-            if (scopes.length == 0) {
+            if (scopes_num.length == 0) {
                 toastr.error('Phạm vi hợp tác chưa được chọn');
                 return;
             }
@@ -1487,25 +1491,22 @@
             }
             else {
                 var scopes = $("#coop_scope_ex_moa_add_for_edit").select2('data');
-                var scopes_name = '';
+                var scopes_abbreviation = '';
                 for (i = 0; i < scopes.length; i++) {
-                    scopes_name += scopes[i].text + ',';
+                    scopes_abbreviation += scopes[i].text.split('-')[0] + ',';
                 }
-                if (scopes_name.endsWith(",")) {
-                    scopes_name = scopes_name.slice(0, -1);
+                if (scopes_abbreviation.endsWith(",")) {
+                    scopes_abbreviation = scopes_abbreviation.slice(0, -1);
                 }
 
                 var objPartner = listPartner.find(x => x.partner_id == partner_id);
                 var partner_name = objPartner.partner_name;
 
-                if (scopes_name.endsWith(",")) {
-                    scopes_name = scopes_name.slice(0, -1);
-                }
-
                 $("#coop_scope_ex_moa_add_for_edit option").each(function () {
                     ListScopesOfExMOA.push({
                         scope_id: $(this).val(),
-                        scope_abbreviation: $(this).text()
+                        scope_abbreviation: $(this).text().split('-')[0],
+                        scope_name: $(this).text().split('-')[1],
                     });
                 });
 
@@ -1516,7 +1517,7 @@
                         partner_id: partner_id,
                         partner_name: partner_name,
                         scopes_id: $("#coop_scope_ex_moa_add_for_edit").val(),
-                        scopes_name: scopes_name,
+                        scopes_abbreviation: scopes_abbreviation,
                         list_scopes: ListScopesOfExMOA
                     }
                     listTempExMOAPartnerScopeEdit.push(temp);
@@ -1535,7 +1536,7 @@
             $('#coop_scope_ex_moa_add_for_edit').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
-                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '</option>'
+                HTMLScopedata += '<option value = "' + listScopes[j].scope_id + '">' + listScopes[j].scope_abbreviation + '-'+ listScopes[j].scope_name +'</option>'
             }
             $('#coop_scope_ex_moa_add_for_edit').append(HTMLScopedata);
         }
@@ -1738,7 +1739,7 @@
         $('#coop_scope').empty();
         var HTMLScopesdata = "";
         for (j = 0; j < data.length; j++) {
-            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '-' + data[j].scope_name + '</option>';
         }
         $('#coop_scope').append(HTMLScopesdata);
     }
@@ -1747,7 +1748,7 @@
         $('#coop_scope_edit').empty();
         var HTMLScopesdata = "";
         for (j = 0; j < data.length; j++) {
-            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '</option>';
+            HTMLScopesdata += '<option value = "' + data[j].scope_id + '">' + data[j].scope_abbreviation + '-' + data[j].scope_name+ '</option>';
         }
         $('#coop_scope_edit').append(HTMLScopesdata);
     }
@@ -2056,13 +2057,13 @@
                     for (i = 0; i < token.length; i++) {
                         if (token[i] == data[j].scope_id) {
                             isSelected = true;
-                            var newOption = new Option(data[j].scope_abbreviation, data[j].scope_id, true, true);
+                            var newOption = new Option(data[j].scope_abbreviation+'-'+data[j].scope_name, data[j].scope_id, true, true);
                             $('#coop_scope_edit').append(newOption).trigger('change');
                             break;
                         }
                     }
                     if (!isSelected) {
-                        var newOption = new Option(data[j].scope_abbreviation, data[j].scope_id, false, false);
+                        var newOption = new Option(data[j].scope_abbreviation + '-' + data[j].scope_name, data[j].scope_id, false, false);
                         $('#coop_scope_edit').append(newOption).trigger('change');
                     }
                 }
