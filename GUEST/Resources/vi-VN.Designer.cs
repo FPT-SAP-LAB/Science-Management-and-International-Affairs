@@ -439,6 +439,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload file mới.
+        /// </summary>
+        public static string FileCMnew {
+            get {
+                return ResourceManager.GetString("FileCMnew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thủ tục với FPT.
         /// </summary>
         public static string FPTProcedure {

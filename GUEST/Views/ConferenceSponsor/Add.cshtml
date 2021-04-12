@@ -321,7 +321,7 @@
         </div>
         <div class="card-footer">
             <div class="row justify-content-center">
-                <button id="SendRequestButton" onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
+                <button onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
@@ -337,7 +337,6 @@
         var conferenceID = 0;
         var decreaseID = 0;
         var uppy1, uppy2;
-        var save_loader = new LoaderBtn($("#SendRequestButton"))
 
         $(document).ready(function () {
             $(document).find(".selectOffice, .selectTitle, #country, #specialization").select2({
@@ -622,8 +621,9 @@
                 }
                 document.getElementById("website").value = repo.website;
                 document.getElementById("keynote_speaker").value = repo.keynote_speaker;
-                document.getElementById("qs_university").value = repo.qs_university;
                 $('#country').val(repo.country_id).trigger('change');
+                let newOption = new Option(repo.qs_university, repo.qs_university, false, true);
+                $('#qs_university').append(newOption).trigger('change');
                 if (repo.time_start == undefined)
                     startDate = new Date();
                 else
@@ -692,10 +692,16 @@
             });
         }
 
+        function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+            if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+            if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
+            if (b_start < a_start && a_end < b_end) return true; // a in b
+            return false;
+        }
+
         inItSelectPeople(document.getElementsByClassName("selectPeople"))
 
         function submitData() {
-            let fd = new FormData();
             if (uppy1.getFiles()[0] == undefined) {
                 toastr.error("Thiếu file bài báo");
                 return false;
@@ -708,16 +714,29 @@
                 toastr.error("Thiếu tên bài báo");
                 return false;
             }
-            fd.append('paper', uppy1.getFiles()[0].data)
-            fd.append('invite', uppy2.getFiles()[0].data)
+            if ($("#qs_university").val() == null) {
+                toastr.error("Thiếu tên đại học thuộc top QS");
+                return false;
+            }
 
             let conferenceSelect = $('#selectConference').select2('data')[0];
             if (conferenceSelect == undefined)
                 return toastr.warning("Bạn chưa điền tên hội nghị");
-            let time_start = moment($("#kt_daterangepicker_1").val().split(" - ")[0] + "+0000", "@rm.GetString("DateFormat") Z");
-            let time_end = moment($("#kt_daterangepicker_1").val().split(" - ")[1] + "+0000", "@rm.GetString("DateFormat") Z");
-            let attendance_start = moment($("#kt_daterangepicker_2").val().split(" - ")[0] + "+0000", "@rm.GetString("DateFormat") Z");
-            let attendance_end = moment($("#kt_daterangepicker_2").val().split(" - ")[1] + "+0000", "@rm.GetString("DateFormat") Z");
+            //  Nếu không dùng Z thì sẽ bị lệch múi giờ khi truyền về backend
+            let time_start = moment($("#kt_daterangepicker_1").val().split(" - ")[0] + " +0000", "@rm.GetString("DateRangePickerFormat") Z");
+            let time_end = moment($("#kt_daterangepicker_1").val().split(" - ")[1] + " +0000", "@rm.GetString("DateRangePickerFormat") Z");
+            let attendance_start = moment($("#kt_daterangepicker_2").val().split(" - ")[0] + " +0000", "@rm.GetString("DateRangePickerFormat") Z");
+            let attendance_end = moment($("#kt_daterangepicker_2").val().split(" - ")[1] + " +0000", "@rm.GetString("DateRangePickerFormat") Z");
+            if (!dateRangeOverlaps(time_start._d, time_end._d, attendance_start._d, attendance_end._d)) {
+                toastr.error("Hai khoảng thời gian không hợp lệ");
+                return false;
+            }
+
+            let fd = new FormData();
+
+            fd.append('paper', uppy1.getFiles()[0].data)
+            fd.append('invite', uppy2.getFiles()[0].data)
+
             this.data = {
                 Conference: {
                     conference_id: conferenceID,
@@ -726,19 +745,20 @@
                     keynote_speaker: $("#keynote_speaker").val(),
                     qs_university: $("#qs_university").val(),
                     country_id: $("#country").val(),
-                    time_start: time_start,
-                    time_end: time_end,
+                    time_start: time_start._d,
+                    time_end: time_end._d,
                     formality_id: $("#formality").val(),
                     co_organized_unit: $("#co_organized_unit").val(),
                     organized_unit: $("#organized_unit").val()
                 },
-                attendance_start: attendance_start,
-                attendance_end: attendance_end,
+                attendance_start: attendance_start._d,
+                attendance_end: attendance_end._d,
                 specialization_id: $("#specialization").val(),
                 ConferenceParticipant: {},
                 Cost: [],
                 paper_name: $("#paper_name").val()
             }
+            console.log(this.data);
             let ms = $(".selectPeople").select2('data')[0].id;
             let name = $(".inputName").val();
             if (ms == "" || name == "")
@@ -764,7 +784,7 @@
             })
 
             fd.append("input", JSON.stringify(this.data));
-            save_loader.startLoading();
+            $("#loading").show();
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -775,11 +795,11 @@
                     else {
                         toastr.error(data.responseJSON.message);
                     }
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 error: function () {
                     toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 dataType: "json",
                 data: fd,

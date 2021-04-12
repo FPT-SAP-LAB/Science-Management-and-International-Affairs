@@ -10,5 +10,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     {
         public string scope_abbreviation { get; set; }
         public int scope_id { get; set; }
+        public string scope_name { get; set; }
     }
 }
