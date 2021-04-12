@@ -1,10 +1,7 @@
 ﻿using BLL.ModelDAL;
 using ENTITIES;
 using ENTITIES.CustomModels;
-using GUEST.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MANAGER.Models;
 using System.Web;
 using System.Web.Mvc;
 
