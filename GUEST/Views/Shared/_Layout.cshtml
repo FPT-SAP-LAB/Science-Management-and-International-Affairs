@@ -869,7 +869,7 @@
         <script>
             $(document).ready(function () {
                 // Reference the auto-generated proxy for the hub.
-                var chat = $.connection.chatHub;
+                var chat = $.connection.notiHub;
                 // Create a function that the hub can call back to display messages.
                 chat.client.addNewMessageToPage = function (URL, icon, template, date) {
                     let templateMessage = '<a href="' + URL + '" class="navi-item">' +
