@@ -819,7 +819,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 inner join IA_Collaboration.MOU t2
                 on t2.mou_id = t1.mou_id
                 where t1.partner_id in (" + partner_id_para + @") and t2.is_deleted = 0 and t2.office_id = @office_id
-                group by mou_end_date, t2.mou_id, t2.mou_code 
+                group by mou_end_date, t2.mou_id, t2.mou_code , t2.office_id
                 having count(*) = @partner_count
                 order by mou_id";
             List<IntersectPeriodMOUDate> obj = db.Database.SqlQuery<IntersectPeriodMOUDate>(query,

@@ -42,7 +42,7 @@ namespace UnitTest
             });
         }
 
-        [TestCase(1, 4, 9)]
+        [TestCase(1, 4, 5)]
         [TestCase(10, 7, 17)]
         public void TestPreparedTCs(int a, int b, int c)
         {

@@ -39,7 +39,7 @@ $(".number-comma").each(function () {
     $(this).text(AddComma($(this).val()))
 })
 $(".menu-link").each(function () {
-    if ($(this).attr('href').trim() == window.location.pathname) {
+    if (typeof $(this).attr('href') !== 'undefined'&&$(this).attr('href').trim() == window.location.pathname) {
         $(this).parent().addClass('menu-item-active')
         $(this).parent().parent().parent().parent().addClass('menu-item-open')
         $(this).parent().parent().parent().parent().addClass(' menu-item-here')

@@ -20,30 +20,30 @@
                             <div class="row">
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PaperName")</label>
-                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_name" />
+                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input autocomplete="off" readonly class="form-control form-control-lg custom-pickdate notnull" type="text" id="paper_publish_date" />
+                                    <input autocomplete="off" readonly class="form-control custom-pickdate notnull" type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
-                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_full" />
+                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Link scholar</label>
-                                    <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_scholar" />
+                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
-                                    <select id="paper_type" class="form-control form-control-lg">
+                                    <select id="paper_type" class="form-control">
                                         <option value="1">@rm.GetString("JournalPaper")</option>
                                         <option value="2">@rm.GetString("ConferencePaper")</option>
                                     </select>
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("Specialized")</label>
-                                    <select id="chuyennganh" class="form-control form-control-lg">
+                                    <select id="chuyennganh" class="form-control">
                                         @{
                                             foreach (var item in ViewBag.listSpec)
                                             {
@@ -80,33 +80,33 @@
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("JournalName")</label>
-                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_journal" />
+                            <input autocomplete="off" class="form-control notnull" type="text" id="paper_journal" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Vol")</label>
-                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_vol" />
+                            <input autocomplete="off" class="form-control notnull" type="text" id="paper_vol" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("Page")</label>
-                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_page" />
+                            <input autocomplete="off" class="form-control notnull" type="text" id="paper_page" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("PublishName")</label>
-                            <input autocomplete="off" class="form-control form-control-lg notnull" type="text" id="paper_publish_name" />
+                            <input autocomplete="off" class="form-control notnull" type="text" id="paper_publish_name" />
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
                     <div class="row" id="thuong">
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("CriteriaType")</label>
-                            <select id="loaithuong" class="form-control form-control-lg">
+                            <select id="loaithuong" class="form-control">
                                 <option selected value="Quocte">@rm.GetString("International")</option>
                                 <option value="Trongnuoc">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongqt">
                             <label class="required-field">@rm.GetString("Criteria")</label>
-                            <select id="tieuchi" class="form-control form-control-lg">
+                            <select id="tieuchi" class="form-control">
                                 <option value="0" selected disabled>@rm.GetString("Criteria")</option>
                                 @{
                                     foreach (var item in ViewBag.listCriteria)
@@ -118,11 +118,11 @@
                         </div>
                         <div class="col-xl-6 form-group thuongtn" style="display: none">
                             <label style="color:#fff">abc</label>
-                            <button class="btn btn-primary form-control form-control-lg">@rm.GetString("ListMaga")</button>
+                            <button class="btn btn-primary form-control">@rm.GetString("ListMaga")</button>
                         </div>
                         <div class="col-xl-4 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("JournalIndex")</label>
-                            <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_index" />
+                            <input autocomplete="off" class="form-control" type="text" id="paper_index" />
                         </div>
                         <div class="col-xl-3 form-group thuongtn" style="display: none">
                             <label>@rm.GetString("FileCM")<span style='color:red'>*</span></label>
@@ -136,22 +136,22 @@
                         </div>
                         <div class="col-xl-5 form-group thuongtn" style="display: none">
                             <label class="required-field">@rm.GetString("Note")</label>
-                            <input autocomplete="off" class="form-control form-control-lg" type="text" id="paper_note_domestic" />
+                            <input autocomplete="off" class="form-control" type="text" id="paper_note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("TotalReward")</label>
-                            <input autocomplete="off" class="form-control form-control-lg" readonly type="text" />
+                            <input autocomplete="off" class="form-control" readonly type="text" />
                         </div>
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("RewardType")</label>
-                            <select id="kieuthuong" class="form-control form-control-lg">
+                            <select id="kieuthuong" class="form-control">
                                 <option value="Quydinh">@rm.GetString("According")</option>
                                 <option value="Canhan">@rm.GetString("Repre")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group" id="block_daidien">
                             <label class="required-field">Chọn đại diện nhận thưởng</label>
-                            <select id="daidien" class="form-control form-control-lg">
+                            <select id="daidien" class="form-control">
                             </select>
                         </div>
                     </div>
@@ -355,36 +355,38 @@
                 };
 
                 if (uppy1.getFiles().length > 0) {
-                    var name = $("#paper_name").val();
-                    formData = new FormData();
+                    const paper_temp = JSON.stringify({
+                        name: $("#paper_name").val(),
+                        date_string: $("#paper_publish_date").val(),
+                        link_doi: $("#paper_full").val(),
+                        link_scholar: $("#paper_scholar").val(),
+                        paper_type_id: $("#paper_type").val(),
+                        journal_name: $("#paper_journal").val(),
+                        vol: $("#paper_vol").val(),
+                        page: $("#paper_page").val(),
+                        company: $("#paper_publish_name").val(),
+                        index: $("#paper_index").val(),
+                        note_domestic: $("#paper_note_domestic").val(),
+                    });
+
+                    //var name = $("#paper_name").val();
+                    const formData = new FormData();
                     formData.append('file', uppy1.getFiles()[0].data);
-                    formData.append('name', name);
+                    formData.append('name', $("#paper_name").val());
+
+                    formData.append('input', paper_temp);
+                    formData.append('paper', paper_temp);
+
                     $.ajax({
-                        url: "/Paper/addFile",
+                        url: "/Paper/AddPaper",
                         method: "post",
                         complete: function (data) {
                             var mess = data.responseJSON.mess;
                             if (mess == "ss") {
-                                fileid = data.responseJSON.id;
-                                $.ajax({
-                                    url: "@Url.Action("AddPaper", "Paper")",
-                                    type: "POST",
-                                    data: JSON.stringify({ 'paper': Paper, 'fileid': fileid }),
-                                    contentType: "application/json;charset=utf-8",
-                                    datatype: "json",
-                                    cache: false,
-                                    success: function (response) {
-                                        if (response.mess == "ss") {
-                                            paper_id = response.id;
-                                            addCriteria();
-                                        }
-                                        else alert('loi');
-                                    },
-                                    error: function () {
-                                        //alert("fail");
-                                    }
-                                });
+                                paper_id = data.responseJSON.id;
+                                addCriteria();
                             }
+                            else alert('loi');
                         },
                         error: function () {
                             toastr.error("Có lỗi xảy ra");
@@ -473,9 +475,9 @@
         $("#tieuchi").change(function () {
             var temp = $("#tieuchi").val();
             $("#thuong").append("<div class='col-xl-12 d-flex justify-content-center onetieuchi' style='margin-top: 1rem'>" +
-                "<span class='col-xl-2'><input autocomplete='off' readonly value='" + temp + "' class='form-control form-control-lg tieuchiname' name='tieuchiname' type='text' /></span>" +
-                "<span class='col-xl-8'><input autocomplete='off'  placeholder='Link' class='form-control form-control-lg tieuchilink' type='text' name='tieuchilink' /></span>" +
-                "<span class='col-xl-2'><button class='form-control form-control-lg btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
+                "<span class='col-xl-2'><input autocomplete='off' readonly value='" + temp + "' class='form-control tieuchiname' name='tieuchiname' type='text' /></span>" +
+                "<span class='col-xl-8'><input autocomplete='off'  placeholder='Link' class='form-control tieuchilink' type='text' name='tieuchilink' /></span>" +
+                "<span class='col-xl-2'><button class='form-control btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
             var option = $("#tieuchi option[value='" + temp + "']");
             option.prop('disabled', true);
