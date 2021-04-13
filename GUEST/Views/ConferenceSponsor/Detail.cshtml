@@ -6,7 +6,7 @@
 
     JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
     ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
-    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    ConferenceParticipantExtend Participant = output["Participants"].ToObject<ConferenceParticipantExtend>();
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
@@ -231,7 +231,6 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">STT</th>
                             <th scope="col">MSNV/MSSV</th>
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Email</th>
@@ -240,17 +239,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Participants)
-                        {
-                            <tr>
-                                <th scope="row">@item.RowNumber</th>
-                                <td>@item.ID</td>
-                                <td>@item.FullName</td>
-                                <td>@item.Email</td>
-                                <td>@item.OfficeName</td>
-                                <td>@item.TitleName</td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>@Participant.ID</td>
+                            <td>@Participant.FullName</td>
+                            <td>@Participant.Email</td>
+                            <td>@Participant.OfficeName</td>
+                            <td>@Participant.TitleName</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -282,7 +277,7 @@
                             <th scope="col">Nội dung</th>
                             <th scope="col">Tổ chức tài trợ</th>
                             <th scope="col">Chi phí</th>
-                            <th scope="col">Tổng cộng</th>
+                            <th scope="col" class="text-right">Tổng cộng</th>
                             <th>Chấp thuận</th>
                         </tr>
                     </thead>
@@ -297,14 +292,14 @@
                                     <td class="align-middle">
                                         <input data-id="@item.cost_id" onInput="calculateCost(this)" type="text" class="form-control form-control-lg costInput" name="postcode" placeholder="Chi phí" value="0">
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
                                     </td>
                                 }
                                 else
                                 {
                                     <td class="align-middle">@item.detail</td>
-                                    <td>
+                                    <td class="text-right">
                                         <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
                                     </td>
                                 }
@@ -320,14 +315,14 @@
                             <th scope="row">Tổng cộng tạm ứng</th>
                             <td></td>
                             <td></td>
-                            <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Sum(x => x.total)) đ</span></td>
+                            <td class="text-right"><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Sum(x => x.total)) đ</span></td>
                             <td></td>
                         </tr>
                         <tr>
                             <th class="align-middle" scope="row">Thanh toán thực tế</th>
                             <td></td>
                             <td></td>
-                            <td><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
+                            <td class="text-right"><span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", ConferenceDetail.Reimbursement) đ</span></td>
                             <td></td>
                         </tr>
                     </tbody>

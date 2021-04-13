@@ -6,7 +6,7 @@
 
     JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
     ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
-    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    ConferenceParticipantExtend Participant = output["Participants"].ToObject<ConferenceParticipantExtend>();
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
@@ -387,31 +387,26 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">MSNV/MSSV</th>
-                            <th scope="col">Họ và tên</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Cơ sở công tác</th>
-                            <th scope="col">Chức danh</th>
-                            <th scope="col">Export</th>
+                            <th>MSNV/MSSV</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Cơ sở công tác</th>
+                            <th>Chức danh</th>
+                            <th>Export</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Participants)
-                        {
-                            <tr>
-                                <th scope="row">@item.RowNumber</th>
-                                <td>@item.ID</td>
-                                <td>@item.FullName</td>
-                                <td>@item.Email</td>
-                                <td>@item.OfficeName</td>
-                                <td>@item.TitleName</td>
-                                <td>
-                                    <a target="_blank" href="/ConferenceSponsor/ExportRequest?request_id=@ConferenceDetail.RequestID">Hỗ trợ kinh phí</a><br />
-                                    <a target="_blank" href="/ConferenceSponsor/ExportAppointment?request_id=@ConferenceDetail.RequestID">Cử cán bộ đi công tác</a><br />
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>@Participant.ID</td>
+                            <td>@Participant.FullName</td>
+                            <td>@Participant.Email</td>
+                            <td>@Participant.OfficeName</td>
+                            <td>@Participant.TitleName</td>
+                            <td>
+                                <a target="_blank" href="/ConferenceSponsor/ExportRequest?request_id=@ConferenceDetail.RequestID">Hỗ trợ kinh phí</a><br />
+                                <a target="_blank" href="/ConferenceSponsor/ExportAppointment?request_id=@ConferenceDetail.RequestID">Cử cán bộ đi công tác</a><br />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -441,10 +436,10 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">Nội dung</th>
-                                <th scope="col">Tổ chức tài trợ</th>
-                                <th scope="col">Chi phí</th>
-                                <th scope="col">Tổng cộng</th>
+                                <th>Nội dung</th>
+                                <th>Tổ chức tài trợ</th>
+                                <th>Chi phí</th>
+                                <th class="text-right">Tổng cộng</th>
                                 <th>Chấp thuận</th>
                             </tr>
                         </thead>
@@ -455,7 +450,7 @@
                                     <td class="align-middle">@item.content</td>
                                     <td class="align-middle">@item.sponsoring_organization</td>
                                     <td class="align-middle">@item.detail</td>
-                                    <td>
+                                    <td class="text-right">
                                         <span class="label label-lg label-light-danger label-inline targetCost">@String.Format("{0:n0}", item.total) đ</span>
                                     </td>
                                     <td>
@@ -470,14 +465,16 @@
                                 <th scope="row">Tổng cộng tạm ứng</th>
                                 <td></td>
                                 <td></td>
-                                <td><span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span></td>
+                                <td class="text-right">
+                                    <span id="totalCost" class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", Costs.Where(x => !x.editable).Select(x => x.total).Sum()) đ</span>
+                                </td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <th class="align-middle" scope="row">Thanh toán thực tế</th>
                                 <td></td>
                                 <td></td>
-                                <td>
+                                <td class="text-right">
                                     @if (ConferenceDetail.StatusID == 4)
                                     {
                                         <input oninput="numberWithCommas(this)" type="text" id="ReimbursementInput" class="form-control form-control" placeholder="Hoàn ứng" value="@String.Format("{0:n0}", ConferenceDetail.Reimbursement)">
@@ -489,6 +486,18 @@
                                 </td>
                                 <td></td>
                             </tr>
+                            @if (ConferenceDetail.FinishedDate == null)
+                            {
+                                <tr>
+                                    <th class="align-middle" scope="row">Ngân sách còn lại</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span class="label label-lg label-light-danger label-inline">@String.Format("{0:n0}", output["Budget"]) đ</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -571,10 +580,10 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Thời gian</th>
-                            <th scope="col">Quyền</th>
-                            <th scope="col">Người duyệt</th>
-                            <th scope="col">Bình luận</th>
+                            <th>Thời gian</th>
+                            <th>Quyền</th>
+                            <th>Người duyệt</th>
+                            <th>Bình luận</th>
                         </tr>
                     </thead>
                     <tbody>
