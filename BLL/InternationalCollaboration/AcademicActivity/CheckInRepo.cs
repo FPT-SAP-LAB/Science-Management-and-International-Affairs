@@ -141,8 +141,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         participant_role_id = obj.participant_role_id,
                         participant_name = obj.name,
-                        email = obj.email,
-                        participant_number = obj.participant_number,
+                        email = obj.email == null ? String.Empty : obj.email,
+                        participant_number = obj.participant_number == null ? String.Empty : obj.participant_number,
                         office_id = obj.office_id,
                         is_checked = false
                     });

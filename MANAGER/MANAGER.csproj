@@ -2331,6 +2331,9 @@
     <Content Include="Web.config" />
     <Content Include="Word_Template\ConferenceSponsor\RequestForm.docx" />
     <Content Include="Excel_template\TemplateQsRanking.xlsx" />
+    <Content Include="Excel_template\TemplateKinhPhiDuTru.xlsx" />
+    <Content Include="Excel_template\TemplateKinhPhiDieuChinh.xlsx" />
+    <Content Include="Excel_template\TemplateKinhPhiTongHop.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
