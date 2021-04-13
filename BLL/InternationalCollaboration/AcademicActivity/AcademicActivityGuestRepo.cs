@@ -217,7 +217,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     return "ok";
                 }
                 else return "no";
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return "no";
             }
