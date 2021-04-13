@@ -93,10 +93,10 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    for (var i = 0; i < response.Paper.length; i++) {
+                    for (var i = 0; i < response.OnePerson.length; i++) {
                         $("#pending_table").DataTable().row.add([
                             "" + response.OnePerson[i].name,
-                            "" + convertJsonDate(response.OnePerson[i].date_request),
+                            "" + convertJsonDate(response.OnePerson[i].created_date),
                             "" + response.OnePerson[i].status_id,
                             "" + response.OnePerson[i].note
                         ]).draw();
@@ -175,6 +175,10 @@
                                 6: {
                                     'title': 'Đã xong',
                                     'class': 'label label-success label-pill label-inline mr-2'
+                                },
+                                7: {
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
                                 }
                             };
                             if (typeof status[data] === 'undefined') {
@@ -207,6 +211,14 @@
                                 5: {
                                     'title': 'Chỉnh sửa',
                                     'class': 'btn btn-warning mr-2 mybtn'
+                                },
+                                6: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-primary mr-2 mybtn'
+                                },
+                                7: {
+                                    'title': 'Chi tiết',
+                                    'class': 'btn btn-primary mr-2 mybtn'
                                 }
                             };
                             if (typeof status[temp[0]] === 'undefined') {

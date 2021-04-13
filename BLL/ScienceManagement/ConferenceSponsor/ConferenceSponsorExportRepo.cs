@@ -24,7 +24,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
             JObject @object = JObject.Parse(DetailRepos.GetDetailPageGuest(request_id, 1, account_id));
             ConferenceDetail Conference = @object["Conference"].ToObject<ConferenceDetail>();
-            ConferenceParticipantExtend Participants = @object["Participants"].ToObject<List<ConferenceParticipantExtend>>()[0];
+            ConferenceParticipantExtend Participants = @object["Participants"].ToObject<ConferenceParticipantExtend>();
             try
             {
                 string fileName = HostingEnvironment.MapPath("/Word_Template/ConferenceSponsor/RequestForm.docx");
@@ -106,7 +106,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
             JObject @object = JObject.Parse(DetailRepos.GetDetailPageGuest(request_id, 1, account_id));
             ConferenceDetail Conference = @object["Conference"].ToObject<ConferenceDetail>();
-            ConferenceParticipantExtend Participants = @object["Participants"].ToObject<List<ConferenceParticipantExtend>>()[0];
+            ConferenceParticipantExtend Participants = @object["Participants"].ToObject<ConferenceParticipantExtend>();
             List<ConferenceApprovalProcess> ApprovalProcesses = @object["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
             try
             {

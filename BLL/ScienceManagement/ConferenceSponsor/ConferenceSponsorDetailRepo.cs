@@ -93,24 +93,20 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                       CriteriaName = b.name,
                                                       IsAccepted = a.is_accepted
                                                   }).ToList();
-            List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
-                                                              join c in db.TitleLanguages on b.title_id equals c.title_id
-                                                              join e in db.Offices on b.office_id equals e.office_id
-                                                              where b.request_id == request_id && c.language_id == language_id
-                                                              select new ConferenceParticipantExtend
-                                                              {
-                                                                  ID = b.mssv_msnv,
-                                                                  FullName = b.name,
-                                                                  OfficeName = e.office_name,
-                                                                  OfficeID = e.office_id,
-                                                                  TitleName = c.name,
-                                                                  TitleID = c.title_id,
-                                                                  Email = b.email
-                                                              }).ToList();
-            for (int i = 0; i < Participants.Count; i++)
-            {
-                Participants[i].RowNumber = 1 + i;
-            }
+            ConferenceParticipantExtend Participants = (from b in db.ConferenceParticipants
+                                                        join c in db.TitleLanguages on b.title_id equals c.title_id
+                                                        join e in db.Offices on b.office_id equals e.office_id
+                                                        where b.request_id == request_id && c.language_id == language_id
+                                                        select new ConferenceParticipantExtend
+                                                        {
+                                                            ID = b.mssv_msnv,
+                                                            FullName = b.name,
+                                                            OfficeName = e.office_name,
+                                                            OfficeID = e.office_id,
+                                                            TitleName = c.name,
+                                                            TitleID = c.title_id,
+                                                            Email = b.email
+                                                        }).FirstOrDefault();
             var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
             var ApprovalProcesses = (from a in db.ApprovalProcesses
                                      join b in db.Accounts on a.account_id equals b.account_id
@@ -125,7 +121,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          FullName = e.Person.name,
                                          Comment = a.comment
                                      }).ToList();
-            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail });
+
+            double Budget = 30000000 - db.ConferenceParticipants
+                .Where(x => x.RequestConference.BaseRequest.finished_date.Value.Year == DateTime.Now.Year && x.mssv_msnv.Equals(Participants.ID))
+                .Select(x => x.RequestConference.reimbursement).ToList().Sum();
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail, Budget });
         }
         public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id, string comment)
         {
