@@ -32,27 +32,29 @@ var collab_going_table = $('#collab_going_table').DataTable({
             name: 'collab_id',
             render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
-            }
+            },
         },
         {
             data: 'people_name',
-            name: 'people_name'
+            name: 'people_name',
         },
         {
             data: 'email',
-            name: 'email'
+            name: 'email',
         },
         {
             data: 'office_name',
-            name: 'office_name'
+            name: 'office_name',
         },
         {
             data: 'partner_name',
-            name: 'partner_name'
+            name: 'partner_name',
+           
         },
         {
             data: 'country_name',
-            name: 'country_name'
+            name: 'country_name',
+           
         },
         {
             data: 'plan_study_start_date',
@@ -77,6 +79,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
+            
         },
         {
             data: 'is_supported', //bool true || false
@@ -84,11 +87,11 @@ var collab_going_table = $('#collab_going_table').DataTable({
             render: function (data) {
                 if (data == true) return `<input type="checkbox" disabled checked/>`
                 return `<input type="checkbox" disabled/>`
-            }
+            },
         },
         {
             data: 'note',
-            name: 'note'
+            name: 'note',
         },
         {
             data: 'collab_id',
@@ -158,6 +161,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
         $(this).parent().css('padding', '0');
     }
 });
+$('#collab_going_table > thead > tr:nth-child(2) > th:nth-child(3)').css({ 'min-width': '200px', 'max-width': '200px' });
 
 //Search
 $("#collab_going_search").click(function () {
