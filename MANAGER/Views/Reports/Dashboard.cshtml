@@ -108,7 +108,7 @@
             </div>
             <!--End::Row-->
             <div class="row report-elements align-items-center">
-                <div class="col-lg-5 col-xl-5">
+                <div class="col-lg-12 col-xl-12 mb-10">
                     <!--begin::Charts Widget 1-->
                     <div class="card card-custom card-mycustom">
                         <!--begin::Header-->
@@ -116,8 +116,7 @@
                             <!--begin::Title-->
                             <div class="card-title py-5">
                                 <h3 class="card-label">
-                                    <span class="d-block text-dark font-weight-bolder">Thống kê bài báo / Hội nghị</span>
-                                    <span class="d-block text-muted mt-2 font-size-sm">Something ....</span>
+                                    <span class="d-block text-dark font-weight-bolder">THỐNG KÊ BÀI BÁO THEO KHU VỰC (FPTU)</span>
                                 </h3>
                             </div>
                             <!--end::Title-->
@@ -128,14 +127,19 @@
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::Chart-->
-                            <div id="kt_charts_widget_1_chart"></div>
+                            <div id="kt_charts_widget_1_chart">
+                                @{
+                                    Html.RenderPartial("_LoaderPanel");
+                                }
+                            </div>
+                            
                             <!--end::Chart-->
                         </div>
                         <!--end::Body-->
                     </div>
                     <!--end::Charts Widget 1-->
                 </div>
-                <div class="col-lg-7 col-xl-7">
+                <div class="col-lg-12 col-xl-12">
                     <!--begin::Base Table Widget 1-->
                     <div class="card card-custom card-mycustom ">
                         <!--begin::Header-->
@@ -399,11 +403,21 @@
 
                         var options = {
                             series: [{
-                                name: 'Net Profit',
-                                data: [44, 55, 57, 56, 61, 58]
+                                name: 'Q1',
+                                data: [44, 55, 57, 56, 61, 80, 80],
+
                             }, {
-                                name: 'Revenue',
-                                data: [76, 85, 101, 98, 87, 105]
+                                name: 'Q2',
+                                    data: [76, 85, 101, 98, 87, 80, 80]
+                            }, {
+                                name: 'Q3',
+                                    data: [76, 85, 101, 98, 87, 80, 80]
+                            }, {
+                                name: 'Q4',
+                                    data: [76, 85, 101, 98, 87, 80, 80]
+                            }, {
+                                name: 'QS500',
+                                    data: [76, 85, 101, 98, 15, 10, 50]
                             }],
                             chart: {
                                 type: 'bar',
@@ -415,12 +429,12 @@
                             plotOptions: {
                                 bar: {
                                     horizontal: false,
-                                    columnWidth: ['30%'],
+                                    columnWidth: ['50%'],
                                     endingShape: 'rounded'
                                 },
                             },
                             legend: {
-                                show: false
+                                show: true
                             },
                             dataLabels: {
                                 enabled: false
@@ -431,7 +445,7 @@
                                 colors: ['transparent']
                             },
                             xaxis: {
-                                categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                                categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL','KHÁC'],
                                 axisBorder: {
                                     show: false,
                                 },
@@ -490,7 +504,7 @@
                                     }
                                 }
                             },
-                            colors: [KTApp.getSettings()['colors']['theme']['base']['success'], KTApp.getSettings()['colors']['gray']['gray-300']],
+                            colors: ['#4BB5B1', '#F1808D', '#A479F7', '#FFD786','#027FFF'],
                             grid: {
                                 borderColor: KTApp.getSettings()['colors']['gray']['gray-200'],
                                 strokeDashArray: 4,
@@ -504,6 +518,7 @@
 
                         var chart = new ApexCharts(element, options);
                         chart.render();
+                        $("#kt_charts_widget_1_chart").find(".loader_panel").hide()
                     }
 
                     // Public methods

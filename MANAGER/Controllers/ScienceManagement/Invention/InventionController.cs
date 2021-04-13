@@ -77,7 +77,9 @@ namespace MANAGER.Controllers
 
             string name = "QD_" + number + "_" + date;
 
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, null);
+            List<string> listE = ir.getAuthorEmail();
+
+            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
             ENTITIES.File fl = new ENTITIES.File
             {
                 link = f.WebViewLink,
@@ -102,6 +104,13 @@ namespace MANAGER.Controllers
         public JsonResult changeStatusManager(DetailInvention inven)
         {
             string mess = ir.changeStatusManager(inven);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult deleteRequest(int id)
+        {
+            string mess = ir.deleteRequest(id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

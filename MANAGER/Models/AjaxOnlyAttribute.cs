@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
 
-namespace GUEST.Models
+namespace MANAGER.Models
 {
     public class AjaxOnlyAttribute : ActionMethodSelectorAttribute
     {

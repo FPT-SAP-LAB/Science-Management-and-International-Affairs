@@ -12,7 +12,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
         public string mssv_msnv { get; set; }
         public string office_abbreviation { get; set; }
         public string name { get; set; }
-        public string company { get; set; }
+        public string journal_name { get; set; }
         public int sum { get; set; }
         public int sumFE { get; set; }
         public int paper_id { get; set; }

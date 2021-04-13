@@ -10,7 +10,7 @@ namespace BLL.ModelDAL
     public class NotificationRepo
     {
         private ScienceAndInternationalAffairsEntities db;
-        public int Add(int account_id, int notification_type_id, string URL)
+        public int AddByAccountID(int account_id, int notification_type_id, string URL)
         {
             db = new ScienceAndInternationalAffairsEntities();
             NotificationSubscribe subscribe = db.NotificationSubscribes.Where(x => x.account_id == account_id && x.notification_type_id == notification_type_id).FirstOrDefault();
@@ -33,6 +33,41 @@ namespace BLL.ModelDAL
                 return 0;
             }
         }
+        public List<int> AddByRightID(int right_id, int notification_type_id, string URL)
+        {
+            return AddByRightID(new List<int> { right_id }, notification_type_id, URL);
+        }
+        public List<int> AddByRightID(List<int> rights, int notification_type_id, string URL)
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+            db.Configuration.LazyLoadingEnabled = false;
+
+            List<int> accounts = db.AccountRights.Where(x => rights.Contains(x.right_id)).Select(x => x.account_id).Distinct().ToList();
+
+            List<NotificationSubscribe> subscribes = db.NotificationSubscribes.Where(x => accounts.Contains(x.account_id) && x.notification_type_id == notification_type_id).ToList();
+
+            List<int> notis = new List<int>();
+            foreach (var account in accounts)
+            {
+                var subscribe = subscribes.Where(x => x.account_id == account).FirstOrDefault();
+
+                if (subscribe == null || subscribe.is_subscribe)
+                {
+                    NotificationBase notification = new NotificationBase
+                    {
+                        account_id = account,
+                        created_date = DateTime.Now,
+                        is_read = false,
+                        notification_type_id = notification_type_id,
+                        URL = URL
+                    };
+                    db.NotificationBases.Add(notification);
+                    db.SaveChanges();
+                    notis.Add(notification.notification_id);
+                }
+            }
+            return notis;
+        }
         public List<NotificationTypeLanguage> Languages()
         {
             db = new ScienceAndInternationalAffairsEntities();
@@ -51,7 +86,8 @@ namespace BLL.ModelDAL
                             IsRead = a.is_read,
                             URL = a.URL,
                             CreatedDate = a.created_date,
-                            AccountID = a.account_id
+                            AccountID = a.account_id,
+                            TypeID = a.notification_type_id
                         }).FirstOrDefault();
             return list;
         }

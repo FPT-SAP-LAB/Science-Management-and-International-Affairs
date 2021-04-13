@@ -142,6 +142,7 @@
         var formData;
         var people = [];
         var fileid;
+        var inven_id;
         $("#btemp").click(function () {
             //alert($("#temp").text());
         });
@@ -155,6 +156,31 @@
         $('#kieuthuong').select2({
             allowClear: true
         });
+
+        function addAuthor() {
+            $.ajax({
+                url: "@Url.Action("addAuthor", "Invention")",
+                type: "POST",
+                data: JSON.stringify({
+                    'people': people,
+                    'invention_id': inven_id
+                }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        $("#loading").hide();
+                        $("#nameEdit2").val(inven_id);
+                        $("#ckEdit2").val(3);
+                        $("#InvenForm").submit();
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
 
         function addInven() {
             try {
@@ -175,7 +201,6 @@
                     type: "POST",
                     data: JSON.stringify({
                         'inven': invention,
-                        'people': people,
                         'type': type,
                         'kieuthuong': kieuthuong
                     }),
@@ -184,10 +209,7 @@
                     cache: false,
                     success: function (response) {
                         if (response.mess == "ss") {
-                            $("#loading").hide();
-                            $("#nameEdit2").val(response.id);
-                            $("#ckEdit2").val(3);
-                            $("#InvenForm").submit();
+                            inven_id = response.id;
                         }
                     },
                     error: function () {
@@ -236,14 +258,29 @@
                 }
                 formData.append('file', uppy1.getFiles()[0].data);
                 formData.append('name', name);
+
+                var temp = $("#patent_date").val();
+                var arr = temp.split('/');
+                var dateFormat = arr[1] + '/' + arr[0] + '/' + arr[2];
+                var invention = {
+                    name: $("#inven_name").val(),
+                    no: $("#patent_number").val(),
+                    date: dateFormat,
+                    country_id: $("#search_country").val()
+                };
+                var type = $("#search_type").val();
+
+                formData.append('type', type);
+                formData.append('input', JSON.stringify(invention));
+
                 $.ajax({
                     url: "/Invention/addFile",
                     method: "post",
                     complete: function (data) {
                         var mess = data.responseJSON.mess;
                         if (mess == "ss") {
-                            fileid = data.responseJSON.id;
-                            addInven();
+                            inven_id = data.responseJSON.id;
+                            addAuthor();
                         }
                     },
                     error: function () {

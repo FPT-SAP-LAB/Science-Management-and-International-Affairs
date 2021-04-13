@@ -12,14 +12,16 @@ namespace GUEST.Controllers
         // GET: ErrorPage
         public ActionResult Error(int statusCode, Exception exception)
         {
-            Response.StatusCode = statusCode;
-            ViewBag.StatusCode = statusCode;
-            ViewBag.exception = exception;
             var pagesTree = new List<PageTree>
             {
                 new PageTree("","/"),
             };
             ViewBag.pagesTree = pagesTree;
+            if (Response.HeadersWritten)
+                return View();
+            Response.StatusCode = statusCode;
+            ViewBag.StatusCode = statusCode;
+            ViewBag.exception = exception;
             return View();
         }
     }

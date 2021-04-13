@@ -137,6 +137,7 @@
     <Compile Include="Admin\RightRepo.cs" />
     <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\LoginRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExcelRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExpenseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityPartnerRepo.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepo.cs" />
     <Compile Include="ScienceManagement\Report\ConferencesParticipationList.cs" />
+    <Compile Include="ScienceManagement\Report\ReportRepo.cs" />
     <Compile Include="ScienceManagement\Report\RewardsReportRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\AdditionalProfileRepo.cs" />
     <Compile Include="ScienceManagement\Researcher\EditResearcherInfoRepo.cs" />
