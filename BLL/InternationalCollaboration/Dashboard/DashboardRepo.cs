@@ -62,7 +62,7 @@ namespace BLL.InternationalCollaboration.Dashboard
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                string query = @"SELECT CASE WHEN ac.direction_id = 1 THEN p.partner_name ELSE 'Đại học FPT' END 'training',
+                string query = @"SELECT CASE WHEN ac.direction_id = 1 THEN p.partner_name ELSE N'Đại học FPT' END 'training',
                                 CASE WHEN ac.direction_id = 1 THEN o.office_name ELSE p.partner_name END 'working', acs.collab_status_name, count(ac.collab_id) 'count'
                                 FROM IA_Collaboration.[Partner] p JOIN IA_Collaboration.PartnerScope ps 
                                 ON p.partner_id = ps.partner_id JOIN IA_AcademicCollaboration.AcademicCollaboration ac 
@@ -96,10 +96,12 @@ namespace BLL.InternationalCollaboration.Dashboard
             {
                 db = new ScienceAndInternationalAffairsEntities();
                 string query_total = @"SELECT COUNT(a.mou_id) 'count' FROM 
-                        (SELECT DISTINCT mou.mou_id
-                        FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
-                        ON mou.mou_id = mp.mou_id 
-                        WHERE {0}  BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date)) a";
+                            (SELECT DISTINCT mou.mou_id
+                            FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
+                            ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb 
+                            ON mb.mou_id = mou.mou_id AND mb.mou_bonus_end_date IS NOT NULL 
+                            WHERE ({0}  BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL)
+                            OR ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date) AND mb.mou_bonus_end_date IS NOT NULL )) a";
 
                 int total = db.Database.SqlQuery<int>(query_total, year).FirstOrDefault();
 
@@ -131,7 +133,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                             ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb
                             ON mb.mou_id = mou.mou_id
                             WHERE ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) 
-                            OR (mb.mou_bonus_end_date IS NULL AND 2021 BETWEEN YEAR(mp.mou_start_date) 
+                            OR (mb.mou_bonus_end_date IS NULL AND {0} BETWEEN YEAR(mp.mou_start_date) 
                             AND YEAR(mou.mou_end_date))) a";
 
                 int collab = db.Database.SqlQuery<int>(query, year).FirstOrDefault();
@@ -151,7 +153,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                 db = new ScienceAndInternationalAffairsEntities();
                 string query = @"SELECT COUNT(collab_id) 'count'
                         FROM IA_AcademicCollaboration.AcademicCollaboration
-                        WHERE YEAR(plan_study_start_date) = {0}
+                        WHERE YEAR(plan_study_start_date) = {0} and is_supported = 1 
                         GROUP BY is_supported";
 
                 int support = db.Database.SqlQuery<int>(query, year).FirstOrDefault();

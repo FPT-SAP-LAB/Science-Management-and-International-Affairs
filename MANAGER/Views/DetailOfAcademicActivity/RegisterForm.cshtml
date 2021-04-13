@@ -925,11 +925,15 @@
             });
         }
         $('#btn_send').click(function () {
+            if (form_id == 0) {
+                toastr.info('Bạn chưa có mẫu đăng ký cho giai đoạn học thuật này');
+                return false;
+            }
             save_loader.startLoading();
             var object = {
                 phase_id: document.getElementById('phase_id').value,
                 title: $('#send_title').val(),
-                content: $('#send_content').val()
+                content: $('#send_content').summernote('code')
             };
             if (object.title == '' || object.content == '') {
                 toastr.warning('Bạn chưa điền hết các trường thông tin.');
@@ -944,6 +948,9 @@
                 success: function (data) {
                     if (data != '') {
                         toastr.success(data);
+                        $('#modal-send-email').modal('hide');
+                        $('#send_title').val('');
+                        $('#send_content').summernote('code', '');
                     } else {
                         toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                     }

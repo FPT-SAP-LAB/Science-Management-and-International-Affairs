@@ -261,6 +261,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
+                AcademicActivityPhase aap = db.AcademicActivityPhases.Find(data.phase_id);
+                string sql = @"select distinct p.email from SMIA_AcademicActivity.AcademicActivityPhase aap
+                                inner join SMIA_AcademicActivity.ParticipantRole pr on pr.phase_id = aap.phase_id
+                                left join SMIA_AcademicActivity.Participant p on p.participant_role_id = pr.participant_role_id
+                                where aap.activity_id = @activity_id and p.email != ''";
+                List<string> to = db.Database.SqlQuery<string>(sql, new SqlParameter("activity_id", aap.activity_id)).ToList();
+                //for local
+                data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='https://localhost:44316/AcademicActivity/loadForm?pid=" + data.phase_id + "' alt='_blank'>Tại đây</a>";
+                ////for server
+                //data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='http://103.77.167.209.xip.io:81/AcademicActivity/loadForm?pid=" + data.phase_id + "' alt='_blank'>Tại đây</a>";
+                ENTITIES.CustomModels.SmtpMailService.Send(to, data.title, data.content, true);
                 return true;
             }
             catch (Exception e)

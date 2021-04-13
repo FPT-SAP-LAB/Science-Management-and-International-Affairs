@@ -280,10 +280,6 @@
             todayHighlight: true,
             format: 'dd/mm/yyyy',
         });
-        $(document).on('click', '.applyBtn', function () {
-            $('.kt_daterangepicker_1').val(range);
-            $('.drp-selected').text(range);
-        })
 
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -355,7 +351,6 @@
                     tabsize: 2
                 });
             }
-
 
             return {
                 // public functions

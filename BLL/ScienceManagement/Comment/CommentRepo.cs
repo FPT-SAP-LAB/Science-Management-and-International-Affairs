@@ -29,7 +29,7 @@ namespace BLL.ScienceManagement.Comment
         }
         public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id, bool is_manager)
         {
-            NotificationRepo notificationRepo = new NotificationRepo();
+            NotificationRepo notificationRepo = new NotificationRepo(db);
 
             List<int> manager_account_id = new List<int> { 2, 3 };
             if (string.IsNullOrWhiteSpace(content))
