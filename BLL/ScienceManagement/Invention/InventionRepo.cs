@@ -350,30 +350,44 @@ namespace BLL.ScienceManagement.Invention
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
+                List<AddAuthor> list = new List<AddAuthor>();
                 //string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
                 //db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
                 //addAuthor(people, id);
                 foreach (var item in people)
                 {
-                    Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
-                    author.name = item.name;
-                    author.email = item.email;
-                    if (item.office_id != 0 && item.office_id != null)
+                    if (item.people_id == 0)
                     {
-                        author.office_id = item.office_id;
-                        author.bank_number = item.bank_number;
-                        author.bank_branch = item.bank_branch;
-                        author.tax_code = item.tax_code;
-                        author.identification_number = item.identification_number;
-                        author.mssv_msnv = item.mssv_msnv;
-                        author.is_reseacher = item.is_reseacher;
-                        author.title_id = item.title_id;
-                        author.contract_id = item.contract_id;
+                        list.Add(item);
                     }
-                    db.Entry(author).State = EntityState.Modified;
+                    else
+                    {
+                        Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
+                        author.name = item.name;
+                        author.email = item.email;
+                        if (item.office_id == 0 || item.office_id == null)
+                        {
+                            author.office_id = null;
+                        }
+                        else
+                        {
+                            author.office_id = item.office_id;
+                            author.bank_number = item.bank_number;
+                            author.bank_branch = item.bank_branch;
+                            author.tax_code = item.tax_code;
+                            author.identification_number = item.identification_number;
+                            author.mssv_msnv = item.mssv_msnv;
+                            author.is_reseacher = item.is_reseacher;
+                            author.title_id = item.title_id;
+                            author.contract_id = 1;
+                            author.identification_file_link = item.identification_file_link;
+                        }
+                        db.Entry(author).State = EntityState.Modified;
+                    }
                 }
                 db.SaveChanges();
                 dbc.Commit();
+                addAuthor(list, id);
                 return "ss";
             }
             catch (Exception e)
