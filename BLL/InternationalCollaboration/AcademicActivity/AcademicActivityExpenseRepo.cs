@@ -441,7 +441,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     and aee.expense_type_id = 3
                                     where aec.activity_office_id = @activity_office_id";
                 List<infoExpenseModified> data = db.Database.SqlQuery<infoExpenseModified>(sql, new SqlParameter("activity_office_id", activity_office_id)).ToList();
-                return data;    
+                return data;
             }
             catch (Exception e)
             {

@@ -59,7 +59,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     else
                     {
                         save_office = list.ElementAt(i).office_name;
-                        using (ExcelRange Rng = excelWorksheet.Cells[i+startRow, 1, i + startRow, 6])
+                        using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
                         {
                             Rng.Merge = true;
                             Rng.Style.Font.Bold = true;
@@ -67,14 +67,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
                             Rng.Value = save_office;
                             stt = 1;
-                            excelWorksheet.Cells[i + startRow+1, 1].Value = stt;
-                            excelWorksheet.Cells[i + startRow+1, 2].Value = list.ElementAt(i).expense_category_name;
+                            excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
+                            excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
                             excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow+1, 3].Value = list.ElementAt(i).expense_price;
-                            excelWorksheet.Cells[i + startRow+1, 4].Value = list.ElementAt(i).expense_quantity;
+                            excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).expense_price;
+                            excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).expense_quantity;
                             excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow+1, 5].Value = list.ElementAt(i).total;
-                            excelWorksheet.Cells[i + startRow+1, 6].Value = list.ElementAt(i).note;
+                            excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total;
+                            excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
                         }
                     }
                 }
