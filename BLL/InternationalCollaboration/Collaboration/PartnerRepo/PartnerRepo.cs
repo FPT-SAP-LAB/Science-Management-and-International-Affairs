@@ -50,48 +50,72 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
                 bool is_deleted = searchPartner.is_deleted == 0;
 
-                //var list = (from t1 in db.Partners
-                //            join t2 in db.MOUPartners on t1.partner_id equals t2.partner_id into a
-                //            from t2 in a.DefaultIfEmpty()
-                //            join t6 in db.MOUs on t2.mou_id equals t6.mou_id into b
-                //            from t6 in b.DefaultIfEmpty()
-                //            join t3 in db.MOUPartnerSpecializations on t2.mou_partner_id equals t3.mou_partner_id into c
-                //            from t3 in c.DefaultIfEmpty()
-                //            join t4 in db.SpecializationLanguages on t3.specialization_id equals t4.specialization_id into d
-                //            from t4 in d.DefaultIfEmpty()
-                //            join t5 in db.Countries on t1.country_id equals t5.country_id into e
-                //            from t5 in e.DefaultIfEmpty()
-                //            where (t1.is_deleted == is_deleted) && (t4.language_id == searchPartner.language)
-                //            select new
-                //            {
-                //                t1.partner_name,
-                //                t1.partner_id,
-                //                t1.is_deleted,
-                //                t1.website,
-                //                t1.address,
-                //                t4.name,
-                //                t5.country_name,
-                //                is_collab = t2.partner_id == 0 ? 1 : 2,
-                //            }).GroupBy(a => new
-                //            {
-                //                a.partner_name,
-                //                a.partner_id,
-                //                a.is_deleted,
-                //                a.website,
-                //                a.address,
-                //                a.country_name,
-                //                a.is_collab
-                //            }).Select(x => new
-                //            {
-                //                x.Key.partner_name,
-                //                x.Key.partner_id,
-                //                x.Key.is_deleted,
-                //                x.Key.website,
-                //                x.Key.address,
-                //                x.Key.is_collab,
-                //                specialization_name = string.Join(x.)
-                //                x.Key.country_name
-                //            });
+                var list = (from xyz in (
+     (from a in (
+         ((from t1 in db.Partners
+           join t2 in db.MOUPartners on t1.partner_id equals t2.partner_id into t2_join
+           from t2 in t2_join.DefaultIfEmpty()
+           join t6 in db.MOUs on t2.mou_id equals t6.mou_id into t6_join
+           from t6 in t6_join.DefaultIfEmpty()
+           join t3 in db.MOUPartnerSpecializations on t2.mou_partner_id equals t3.mou_partner_id into t3_join
+           from t3 in t3_join.DefaultIfEmpty()
+           join t4 in db.SpecializationLanguages on t3.specialization_id equals t4.specialization_id into t4_join
+           from t4 in t4_join.DefaultIfEmpty()
+           join t5 in db.Countries on t1.country_id equals t5.country_id into t5_join
+           from t5 in t5_join.DefaultIfEmpty()
+           where
+            t1.is_deleted == false &&
+            (t4.language_id == 1 ||
+            t4.language_id == 0)
+           select new
+           {
+               t1.partner_name,
+               partner_id = (int?)t1.partner_id,
+               t1.is_deleted,
+               t1.website,
+               t1.address,
+               Name = t4.name,
+               country_name = t5.country_name,
+               is_collab =
+            t2.partner_id == 0 ? 1 : 2
+           }).Distinct()))
+      group a by new
+      {
+          a.partner_name,
+          a.partner_id,
+          a.is_deleted,
+          a.website,
+          a.address,
+          a.country_name,
+          a.is_collab
+      } into g
+      select new
+      {
+          g.Key.partner_name,
+          g.Key.partner_id,
+          g.Key.is_deleted,
+          g.Key.website,
+          g.Key.address,
+          g.Key.is_collab,
+          specialization_name = g.Min(p => p.Name),
+          g.Key.country_name
+      }))
+                            where
+                              (xyz.partner_name ?? "").Contains("") &&
+                              (xyz.specialization_name ?? "").Contains("") &&
+                              (xyz.country_name ?? "").Contains("") &&
+                              (Convert.ToString(xyz.is_collab) ?? "").Contains("")
+                            select new
+                            {
+                                xyz.partner_name,
+                                xyz.partner_id,
+                                xyz.is_deleted,
+                                xyz.website,
+                                xyz.address,
+                                xyz.is_collab,
+                                xyz.specialization_name,
+                                xyz.country_name
+                            });
 
 
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
