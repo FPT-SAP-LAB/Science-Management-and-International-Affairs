@@ -131,7 +131,10 @@ namespace ENTITIES
         public virtual DbSet<PaperWithCriteria> PaperWithCriterias { get; set; }
         public virtual DbSet<RequestInvention> RequestInventions { get; set; }
         public virtual DbSet<RequestPaper> RequestPapers { get; set; }
+        public virtual DbSet<SCIE> SCIEs { get; set; }
         public virtual DbSet<Scimagojr> Scimagojrs { get; set; }
+        public virtual DbSet<Scopu> Scopus { get; set; }
+        public virtual DbSet<SSCI> SSCIs { get; set; }
         public virtual DbSet<AcademicActivity> AcademicActivities { get; set; }
         public virtual DbSet<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         public virtual DbSet<AcademicActivityPhase> AcademicActivityPhases { get; set; }
