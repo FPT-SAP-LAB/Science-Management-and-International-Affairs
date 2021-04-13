@@ -10,6 +10,7 @@ using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using GUEST.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,8 +88,15 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult addFile(HttpPostedFileBase file, string name)
+        public JsonResult addFile(HttpPostedFileBase file, string name, string input, string type)
         {
+            Invention inven = new Invention();
+            JObject @object = JObject.Parse(input);
+            inven.name = (string)@object["name"];
+            inven.no = (string)@object["no"];
+            inven.date = (DateTime)@object["date"];
+            inven.country_id = (int)@object["country_id"];
+
             LoginRepo.User u = new LoginRepo.User();
             Account acc = new Account();
             if (Session["User"] != null)
@@ -104,11 +112,23 @@ namespace GUEST.Controllers
                 name = name
             };
             string mess = ir.addFile(fl);
-            return Json(new { mess = mess, id = fl.file_id }, JsonRequestBehavior.AllowGet);
+
+            inven.file_id = fl.file_id;
+
+            PaperRepo pr = new PaperRepo();
+
+            InventionType ip = ir.addInvenType(type);
+            inven.type_id = ip.invention_type_id;
+            Invention i = ir.addInven(inven);
+
+            BaseRequest b = pr.addBaseRequest(acc.account_id);
+            if (mess == "ss") mess = ir.addInvenRequest(b, i);
+
+            return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult addInven(List<AddAuthor> people, Invention inven, string type, string kieuthuong)
+        public JsonResult addInven(List<AddAuthor> people, Invention inven, string type)
         {
             PaperRepo pr = new PaperRepo();
             LoginRepo.User u = new LoginRepo.User();
@@ -129,6 +149,14 @@ namespace GUEST.Controllers
             if (mess == "ss") mess = ir.addInvenRequest(b, i);
 
             return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult addAuthor(List<AddAuthor> people, int invention_id)
+        {
+            string mess = ir.addAuthor(people, invention_id);
+            return Json(new { mess = mess}, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]

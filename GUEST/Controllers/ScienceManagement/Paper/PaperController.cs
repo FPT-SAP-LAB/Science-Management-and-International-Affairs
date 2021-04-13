@@ -8,6 +8,7 @@ using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using GUEST.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -69,9 +70,28 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddPaper(HttpPostedFileBase file, string name, DetailPaper paper)
+        public JsonResult AddPaper(HttpPostedFileBase file, string name, DetailPaper paper, string input)
         {
-            paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            if(paper == null)
+            {
+                paper = new DetailPaper();
+                JObject @object = JObject.Parse(input);
+
+                paper.name = (string)@object["name"];
+                paper.date_string = (string)@object["date_string"];
+                paper.link_doi = (string)@object["link_doi"];
+                paper.link_scholar = (string)@object["link_scholar"];
+                paper.paper_type_id = (int)@object["paper_type_id"];
+                paper.journal_name = (string)@object["journal_name"];
+                paper.vol = (string)@object["vol"];
+                paper.page = (string)@object["page"];
+                paper.company = (string)@object["company"];
+                paper.index = (string)@object["index"];
+                paper.note_domestic = (string)@object["note_domestic"];
+
+                //paper = @object["DetailPaper"].ToObject<DetailPaper>();
+            }
+
             if (file != null)
             {
                 LoginRepo.User u = new LoginRepo.User();
@@ -91,6 +111,7 @@ namespace GUEST.Controllers
                 string mess = pr.addFile(fl);
                 if (mess == "ss") paper.file_id = fl.file_id;
             }
+            paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Paper p = pr.addPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
