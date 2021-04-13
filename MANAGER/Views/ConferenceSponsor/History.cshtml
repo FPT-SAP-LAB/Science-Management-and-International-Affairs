@@ -1,4 +1,9 @@
-﻿<div class="card card-custom gutter-b">
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
     <div class="card-body">
         <div class="row">
             <div class="col-md-3 col-sm-12 form-group">
@@ -21,18 +26,6 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-12 form-group">
-                <div>
-                    <select class="form-control" id="search_status" name="param">
-                        <option value="0">Tất cả</option>
-                        <option value="1">Đang duyệt</option>
-                        <option value="2">Được tham dự</option>
-                        <option value="3">Đã duyệt</option>
-                        <option value="4">Chưa hoàn ứng</option>
-                        <option value="5">Đã hoàn ứng</option>
-                    </select>
-                </div>
-            </div>
             <div class="col-md-4 col-sm-12">
                 <div class="float-left">
                     <a onclick="ReloadTable()"
@@ -51,7 +44,6 @@
                             <th>Sản phẩm khoa học</th>
                             <th>Tên hội nghị</th>
                             <th>Ngày&nbsp;tạo</th>
-                            <th>Trạng thái</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -97,10 +89,7 @@
                     search_conference: function () {
                         return $("#search_conference").val();
                     },
-                    search_status: function () {
-                        return $("#search_status").val();
-                    },
-                    is_history: false
+                    is_history: true
                 }
             },
             columns: [
@@ -109,14 +98,6 @@
                 { data: "PaperName", name: "PaperName" },
                 { data: "ConferenceName", name: "ConferenceName" },
                 { data: "CreatedDate", name: "Date" },
-                {
-                    data: {}, name: "StatusID", render: function (data) {
-                        if (data.EditAble)
-                            return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
-                        else
-                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
-                    }, width: "80px", className: "text-center"
-                },
                 {
                     data: "RequestID", orderable: false, render: function (data) {
                         return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
