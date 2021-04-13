@@ -151,7 +151,6 @@ namespace BLL.ScienceManagement.Researcher
             var profile = (
                from a in db.People
                join b in db.Profiles on a.people_id equals b.people_id
-               from k in db.Countries.Where(x => x.Profiles.Contains(b))
                where a.people_id == id
                select new ResearcherView
                {

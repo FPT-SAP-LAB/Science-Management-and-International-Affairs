@@ -41,7 +41,7 @@
 <!--begin::Body-->
 
 <body id="kt_body"
-      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading 
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading
       @(ViewBag.asideMinimize!=null?(ViewBag.asideMinimize==true?"aside-minimize":""):"")">
     <!--begin::Main-->
     <!--begin::Header Mobile-->
@@ -324,16 +324,16 @@
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
                                 @*<div class="menu-submenu ">
-                <i class="menu-arrow"></i>
-                <ul class="menu-subnav">
-                    <li class="menu-item " aria-haspopup="true">
-                        <a href="#" class="menu-link ">
-                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                            <span class="menu-text">.......................</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>*@
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="#" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">.......................</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
@@ -517,6 +517,49 @@
                             if (user != null)
                             {
                                 <div class="topbar">
+                                    <!--begin::Notifications-->
+                                    <div class="dropdown">
+                                        <!--begin::Toggle-->
+                                        <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+                                            <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
+                                                <i class="fa fas fa-bell icon-md text-success"></i><span class="pulse-ring"></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Toggle-->
+                                        <!--begin::Dropdown-->
+                                        <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
+                                            <form>
+                                                <!--begin::Header-->
+                                                <div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">
+                                                    <!--begin::Title-->
+                                                    <h4 class="d-flex flex-center rounded-top">
+                                                        <span class="text-white">User Notifications</span>
+                                                        <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
+                                                            23
+                                                            new
+                                                        </span>
+                                                    </h4>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Header-->
+                                                <!--begin::Content-->
+                                                <div class="tab-content">
+                                                    <!--begin::Tabpane-->
+                                                    <div class="tab-pane active show" id="topbar_notifications_events" role="tabpanel">
+                                                        <!--begin::Nav-->
+                                                        <div class="navi navi-hover scroll my-4" id="event-noti" data-scroll="true" data-height="300" data-mobile-height="200">
+                                                        </div>
+                                                        <!--end::Nav-->
+                                                    </div>
+                                                    <!--end::Tabpane-->
+                                                </div>
+                                                <!--end::Content-->
+                                            </form>
+                                        </div>
+                                        <!--end::Dropdown-->
+                                    </div>
+                                    <!--end::Notifications-->
+                                    <!--begin::User-->
                                     <div class="topbar-item">
                                         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                              id="kt_quick_user_toggle">
@@ -715,45 +758,82 @@
     </script>
     @RenderSection("scripts")
 
-    <!--Script references. -->
-    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
-    <!--Reference the SignalR library. -->
-    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
-    <!--Reference the autogenerated SignalR hub script. -->
-    <script src="https://localhost:44316/signalr/hubs"></script>
-    <!--SignalR script to update the chat page and send messages.-->
-    <script>
-        var chat;
-        $(document).ready(function () {
-            // Reference the auto-generated proxy for the hub.
-            $.connection.hub.url = 'https://localhost:44316/signalr';
-            chat = $.connection.chatHub;
-            // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
-                // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
-            };
-            // Set initial focus to message input box.
-            $('#message').focus();
-            // Start the connection.
-            $.connection.hub.start().done(function () {
+    @if (user != null)
+    {
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <!--Reference the autogenerated SignalR hub script. -->
+        <script src="https://localhost:44316/signalr/hubs"></script>
+        <!--SignalR script to update the chat page and send messages.-->
+        <script>
+            var hub
+            $(document).ready(function () {
+                // Reference the auto-generated proxy for the hub.
+                $.connection.hub.url = 'https://localhost:44316/signalr';
+                hub = $.connection.notiHub;
+                // Create a function that the hub can call back to display messages.
+                hub.client.addNewMessageToPage = function (URL, icon, template, date) {
+                    let templateMessage = '<a href="' + URL + '" class="navi-item">' +
+                        '<div class="navi-link">' +
+                            '<div class="navi-icon mr-2">' +
+                                '<i class="' + icon + '"></i>' +
+                            '</div>' +
+                            '<div class="navi-text">' +
+                                '<div class="font-weight-bold">' +
+                                    template +
+                                '</div>' +
+                                '<div class="text-muted">' +
+                                    date +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</a>';
+                    $("#event-noti").html(templateMessage + $("#event-noti").html());
+                };
 
-            }, (error) => {
-                console.log(error)
-            });
-            $.connection.hub.disconnected(function () {
-                setTimeout(function () {
-                    $.connection.hub.start();
-                }, 5000); // Restart connection after 5 seconds.
-            });
-        })
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
-    </script>
+                $.connection.hub.start().done(function () {
+                    hub.server.register($.connection.hub.id, @user.account.account_id, 1);
+                });
+                $.connection.hub.disconnected(function () {
+                    setTimeout(function () {
+                        $.connection.hub.start();
+                    }, 5000); // Restart connection after 5 seconds.
+                });
+
+                $.ajax({
+                    url: '/Notification/List',
+                    data: {
+                        start: 0
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            for (var i = 0; i < data.content.length; i++) {
+                                let templateMessage = '<a href="' + data.content[i].URL + '" class="navi-item">' +
+                                    '<div class="navi-link">' +
+                                        '<div class="navi-icon mr-2">' +
+                                            '<i class="' + data.content[i].Icon + '"></i>' +
+                                        '</div>' +
+                                        '<div class="navi-text">' +
+                                            '<div class="font-weight-bold">' +
+                                                data.content[i].Template +
+                                            '</div>' +
+                                            '<div class="text-muted">' +
+                                                data.content[i].StringDate +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '</a>';
+                                $("#event-noti").append(templateMessage);
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error("Không thể lấy được dữ liệu thông báo");
+                    }
+                });
+            })
+        </script>
+    }
 </body>
 <!--end::Body-->
 

@@ -272,6 +272,7 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\InternalUnitController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\MasterData\SpecializationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
