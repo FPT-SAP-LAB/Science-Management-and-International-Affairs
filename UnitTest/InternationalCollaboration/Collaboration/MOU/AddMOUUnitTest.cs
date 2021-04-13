@@ -79,7 +79,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 PartnerInfo = new List<PartnerInfo>()
             };
             input.PartnerInfo.AddRange(
-                new List<PartnerInfo> 
+                new List<PartnerInfo>
                 {
                     new PartnerInfo
                     {
