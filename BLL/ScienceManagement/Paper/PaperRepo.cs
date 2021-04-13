@@ -766,9 +766,6 @@ namespace BLL.ScienceManagement.Paper
 
                     int paper_id_int = Int32.Parse(paper_id);
                     ENTITIES.Paper paper = db.Papers.Where(x => x.paper_id == paper_id_int).FirstOrDefault();
-                    Scimagojr sci = db.Scimagojrs.Where(x => x.Title == paper.journal_name).FirstOrDefault();
-                    string quality = "";
-                    if (sci != null) quality = sci.SJR_Best_Quartile;
 
                     foreach (var item in list)
                     {
@@ -779,8 +776,6 @@ namespace BLL.ScienceManagement.Paper
                                 item.link = cri.link;
                             }
                         }
-                        if (item.name == quality) item.check = true;
-                        else item.check = false;
                         PaperWithCriteria pwc = new PaperWithCriteria
                         {
                             paper_id = paper_id_int,
