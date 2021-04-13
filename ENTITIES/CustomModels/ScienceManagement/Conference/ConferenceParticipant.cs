@@ -2,7 +2,6 @@
 {
     public class ConferenceParticipantExtend
     {
-        public int RowNumber { get; set; }
         public string ID { get; set; }
         public string FullName { get; set; }
         public string OfficeName { get; set; }

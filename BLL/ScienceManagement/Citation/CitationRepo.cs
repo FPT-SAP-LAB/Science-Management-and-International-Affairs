@@ -69,6 +69,25 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
+        public string deleteRequest(int id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestCitation rp = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string changeStatus(string request_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();

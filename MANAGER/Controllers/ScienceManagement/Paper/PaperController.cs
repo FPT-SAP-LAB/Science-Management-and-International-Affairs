@@ -139,7 +139,7 @@ namespace MANAGER.Controllers
                     count++;
                 }
                 excelWorksheet1.Cells[i, 5].Value = item.name;
-                excelWorksheet1.Cells[i, 6].Value = item.company;
+                excelWorksheet1.Cells[i, 6].Value = item.journal_name;
                 string note = item.sum + " tác giả, " + item.sumFE + " địa chỉ FPTU";
                 excelWorksheet1.Cells[i, 7].Value = note;
                 temp = item;
@@ -162,7 +162,7 @@ namespace MANAGER.Controllers
                     count++;
                 }
                 excelWorksheet2.Cells[i, 5].Value = item.name;
-                excelWorksheet2.Cells[i, 6].Value = item.company;
+                excelWorksheet2.Cells[i, 6].Value = item.journal_name;
                 string note = item.sum + " tác giả, " + item.sumFE + " địa chỉ FPTU";
                 excelWorksheet2.Cells[i, 7].Value = note;
                 temp2 = item;
@@ -275,6 +275,13 @@ namespace MANAGER.Controllers
         public JsonResult changeStatusManager(DetailPaper paper)
         {
             string mess = pr.changeStatusManager(paper);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult deleteRequest(int id)
+        {
+            string mess = pr.deleteRequest(id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

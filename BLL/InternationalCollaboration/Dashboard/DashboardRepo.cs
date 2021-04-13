@@ -17,31 +17,32 @@ namespace BLL.InternationalCollaboration.Dashboard
             db = new ScienceAndInternationalAffairsEntities();
             try
             {
-                string query = @"SELECT p1.[year], p1.signed, p2.total, (p2.total - p1.signed) as 'not_sign_yet' FROM
-                            (SELECT b.[year], COUNT(b.partner_id) 'signed' FROM
-                            (SELECT DISTINCT a.[year], p.partner_id
-                            FROM (SELECT DISTINCT YEAR(mou_start_date) 'year' FROM IA_Collaboration.MOUPartner 
-                            where YEAR(mou_start_date) <= {0}) a 
-                            JOIN IA_Collaboration.MOUPartner mp
-                            ON a.[year] >= YEAR(mou_start_date) JOIN IA_Collaboration.[Partner] p
-                            ON mp.partner_id = p.partner_id JOIN IA_Collaboration.MOU mou
-                            ON mou.mou_id = mp.mou_id 
-                            JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id 
-                            LEFT JOIN IA_Collaboration.MOUBonus mb ON mou.mou_id = mb.mou_id
-                            AND ((a.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR(a.[year] BETWEEN YEAR(mp.mou_start_date) 
-                            AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL))
-                            LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
-                            ON ps.partner_scope_id = ap.partner_scope_id AND YEAR(ap.cooperation_date_start) = a.[year]
-                            AND ap.cooperation_date_start BETWEEN mp.mou_start_date AND mou.mou_end_date
-                            LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = ps.partner_scope_id
-                            AND YEAR(ac.plan_study_start_date) = a.[year] AND ac.plan_study_start_date BETWEEN mp.mou_start_date AND mou.mou_end_date
-                            WHERE (ap.activity_partner_id IS NOT NULL) OR (ac.collab_id IS NOT NULL))b
-                            GROUP BY b.[year]) p1 JOIN 
-                            (SELECT YEAR(mp.mou_start_date) 'year', COUNT(mp.mou_partner_id) 'total' 
-                            FROM IA_Collaboration.MOUPartner mp
-                            GROUP BY YEAR(mp.mou_start_date)
-                            ) p2 ON p1.[year] = p2.[year]
-                            order by p1.year desc ";
+                string query = @"SELECT top(5) p2.[year], CASE WHEN p1.signed IS NULL THEN 0 ELSE p1.signed END 'signed', p2.total, CASE WHEN p1.signed IS NULL THEN p2.total ELSE (p2.total - p1.signed) END as 'not_sign_yet' FROM
+                        (SELECT b.[year], COUNT(b.partner_id) 'signed' FROM
+                        (SELECT DISTINCT a.[year], p.partner_id
+                        FROM (SELECT DISTINCT YEAR(mou_start_date) 'year' FROM IA_Collaboration.MOUPartner 
+                        ) a 
+                        JOIN IA_Collaboration.MOUPartner mp
+                        ON a.[year] >= YEAR(mou_start_date) JOIN IA_Collaboration.[Partner] p
+                        ON mp.partner_id = p.partner_id JOIN IA_Collaboration.MOU mou
+                        ON mou.mou_id = mp.mou_id 
+                        JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id 
+                        LEFT JOIN IA_Collaboration.MOUBonus mb ON mou.mou_id = mb.mou_id
+                        AND ((a.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR(a.[year] BETWEEN YEAR(mp.mou_start_date) 
+                        AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL))
+                        LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
+                        ON ps.partner_scope_id = ap.partner_scope_id AND YEAR(ap.cooperation_date_start) = a.[year]
+                        AND ap.cooperation_date_start BETWEEN mp.mou_start_date AND mou.mou_end_date
+                        LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = ps.partner_scope_id
+                        AND YEAR(ac.plan_study_start_date) = a.[year] AND ac.plan_study_start_date BETWEEN mp.mou_start_date AND mou.mou_end_date
+                        WHERE (ap.activity_partner_id IS NOT NULL) OR (ac.collab_id IS NOT NULL))b
+                        GROUP BY b.[year]) p1 RIGHT JOIN 
+                        (SELECT YEAR(mp.mou_start_date) 'year', COUNT(mp.mou_partner_id) 'total' 
+                        FROM IA_Collaboration.MOUPartner mp
+                        where YEAR(mou_start_date) <= {0}
+                        GROUP BY YEAR(mp.mou_start_date)
+                        ) p2 ON p1.[year] = p2.[year]
+                        order by p2.year desc ";
 
                 if (year is null)
                 {
@@ -61,7 +62,7 @@ namespace BLL.InternationalCollaboration.Dashboard
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                string query = @"SELECT CASE WHEN ac.direction_id = 1 THEN p.partner_name ELSE 'Đại học FPT' END 'training',
+                string query = @"SELECT CASE WHEN ac.direction_id = 1 THEN p.partner_name ELSE N'Đại học FPT' END 'training',
                                 CASE WHEN ac.direction_id = 1 THEN o.office_name ELSE p.partner_name END 'working', acs.collab_status_name, count(ac.collab_id) 'count'
                                 FROM IA_Collaboration.[Partner] p JOIN IA_Collaboration.PartnerScope ps 
                                 ON p.partner_id = ps.partner_id JOIN IA_AcademicCollaboration.AcademicCollaboration ac 
@@ -95,10 +96,12 @@ namespace BLL.InternationalCollaboration.Dashboard
             {
                 db = new ScienceAndInternationalAffairsEntities();
                 string query_total = @"SELECT COUNT(a.mou_id) 'count' FROM 
-                        (SELECT DISTINCT mou.mou_id
-                        FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
-                        ON mou.mou_id = mp.mou_id 
-                        WHERE {0}  BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date)) a";
+                            (SELECT DISTINCT mou.mou_id
+                            FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
+                            ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb 
+                            ON mb.mou_id = mou.mou_id AND mb.mou_bonus_end_date IS NOT NULL 
+                            WHERE ({0}  BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL)
+                            OR ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date) AND mb.mou_bonus_end_date IS NOT NULL )) a";
 
                 int total = db.Database.SqlQuery<int>(query_total, year).FirstOrDefault();
 
@@ -130,7 +133,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                             ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb
                             ON mb.mou_id = mou.mou_id
                             WHERE ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) 
-                            OR (mb.mou_bonus_end_date IS NULL AND 2021 BETWEEN YEAR(mp.mou_start_date) 
+                            OR (mb.mou_bonus_end_date IS NULL AND {0} BETWEEN YEAR(mp.mou_start_date) 
                             AND YEAR(mou.mou_end_date))) a";
 
                 int collab = db.Database.SqlQuery<int>(query, year).FirstOrDefault();
@@ -150,7 +153,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                 db = new ScienceAndInternationalAffairsEntities();
                 string query = @"SELECT COUNT(collab_id) 'count'
                         FROM IA_AcademicCollaboration.AcademicCollaboration
-                        WHERE YEAR(plan_study_start_date) = {0}
+                        WHERE YEAR(plan_study_start_date) = {0} and is_supported = 1 
                         GROUP BY is_supported";
 
                 int support = db.Database.SqlQuery<int>(query, year).FirstOrDefault();

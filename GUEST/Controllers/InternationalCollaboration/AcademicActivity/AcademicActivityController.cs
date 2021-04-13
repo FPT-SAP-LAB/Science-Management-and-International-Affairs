@@ -86,6 +86,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.pid = pid;
             ViewBag.role = guestRepo.GetParticipantRoleByPhase(pid);
             ViewBag.office = guestRepo.getOffices();
+            ViewBag.outdate = guestRepo.checkFormOutdate(pid);
             return View();
         }
         [HttpPost]

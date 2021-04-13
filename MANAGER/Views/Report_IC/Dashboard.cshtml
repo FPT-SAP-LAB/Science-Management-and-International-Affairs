@@ -262,103 +262,6 @@
         })
     </script>
 
-    <script>
-        $('#dashboard_longterm_table').DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sInfoEmpty: "",
-            },
-            searching: false,
-            lengthChange: false,
-            serverSide: true,
-            ajax: {
-                url: "@Url.Action("LoadTable", "Report_IC")",
-                type: "POST",
-                datatype: "json",
-                data: {
-                    "collab_type_id": 2,
-                    "year": 2020
-                },
-                cache: "false"
-            },
-            columns: [
-                {
-                    data: "training",
-                    name: "training",
-                    className: "text-center"
-
-                },
-                {
-                    data: "working",
-                    name: "working",
-                    className: "text-center"
-                },
-                {
-                    data: "collab_status_name",
-                    name: "collab_status_name",
-                    className: "text-center"
-                },
-                {
-                    data: "count",
-                    name: "count",
-                    className: "text-center"
-                },
-            ],
-        })
-
-        $('#dashboard_shortterm_table').DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sInfoEmpty: "",
-            },
-            searching: false,
-            lengthChange: false,
-            serverSide: true,
-            ajax: {
-                url: "@Url.Action("LoadTable", "Report_IC")",
-                type: "POST",
-                datatype: "json",
-                data: {
-                    "collab_type_id": 1,
-                    "year": 2020
-                },
-                cache: "false"
-            },
-            columns: [
-                {
-                    data: "training",
-                    name: "training",
-                    className: "text-center"
-
-                },
-                {
-                    data: "working",
-                    name: "working",
-                    className: "text-center"
-                },
-                {
-                    data: "collab_status_name",
-                    name: "collab_status_name",
-                    className: "text-center"
-                },
-                {
-                    data: "count",
-                    name: "count",
-                    className: "text-center"
-                },
-            ],
-        })
-    </script>
 
     <script type="text/javascript">
         const primary = '#6993FF';
@@ -367,8 +270,7 @@
         const warning = '#FFA800';
         const danger = '#F64E60';
 
-
-        // Class definitio
+        //Class definitio
         var chart
         var KTApexChartsDemo = function () {
             // Private functions
@@ -389,6 +291,9 @@
                         events: {
                             mounted: function (chartContext, options) {
                                 $("#loading").hide()
+                            },
+                            dataPointSelection: function (event, chartContext, config) {
+                                //alert(event + ' ' + chartContext + ' ' + config + ' legendClick')
                             }
                         }
                     },
@@ -491,9 +396,109 @@
         }).on("select2:select", function () { //after select partner
             //check partner
             load_data($('#year_select').val());
+            $('#dashboard_longterm_table').DataTable().ajax.reload()
+            $('#dashboard_shortterm_table').DataTable().ajax.reload()
         });
 
         $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
+    </script>
+
+    <script>
+        $('#dashboard_longterm_table').DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sInfoEmpty: "",
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("LoadTable", "Report_IC")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "collab_type_id": 2,
+                    "year": function () { return $('#year_select').val() }
+                },
+                cache: "false"
+            },
+            columns: [
+                {
+                    data: "training",
+                    name: "training",
+                    className: "text-center"
+
+                },
+                {
+                    data: "working",
+                    name: "working",
+                    className: "text-center"
+                },
+                {
+                    data: "collab_status_name",
+                    name: "collab_status_name",
+                    className: "text-center"
+                },
+                {
+                    data: "count",
+                    name: "count",
+                    className: "text-center"
+                },
+            ],
+        })
+
+        $('#dashboard_shortterm_table').DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                sInfoEmpty: "",
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("LoadTable", "Report_IC")",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    "collab_type_id": 1,
+                    "year": function () { return $('#year_select').val() }
+                },
+                cache: "false"
+            },
+            columns: [
+                {
+                    data: "training",
+                    name: "training",
+                    className: "text-center"
+
+                },
+                {
+                    data: "working",
+                    name: "working",
+                    className: "text-center"
+                },
+                {
+                    data: "collab_status_name",
+                    name: "collab_status_name",
+                    className: "text-center"
+                },
+                {
+                    data: "count",
+                    name: "count",
+                    className: "text-center"
+                },
+            ],
+        })
     </script>
     <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
 

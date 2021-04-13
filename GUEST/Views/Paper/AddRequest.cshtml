@@ -322,18 +322,21 @@
                 if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
                     toastr.error("Tiêu chí chưa có link chứng minh");
                     ck = false;
+                    $("#loading").hide();
                     return false;
                 }
                 criteria.push(PaperWithCriteria);
             }
             if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
                 toastr.error("Cần có ít nhất 1 tiêu chí");
+                $("#loading").hide();
                 ck = false;
             }
 
             if ($("#loaithuong").val() == "Trongnuoc") {
                 if (uppy1.getFiles().length == 0) {
                     toastr.error("Thiếu file chứng minh cho chỉ số tạp chí");
+                    $("#loading").hide();
                     ck = false;
                     return false;
                 }
@@ -355,38 +358,41 @@
                 };
 
                 if (uppy1.getFiles().length > 0) {
-                    var name = $("#paper_name").val();
-                    formData = new FormData();
+                    const paper_temp = JSON.stringify({
+                        name: $("#paper_name").val(),
+                        date_string: $("#paper_publish_date").val(),
+                        link_doi: $("#paper_full").val(),
+                        link_scholar: $("#paper_scholar").val(),
+                        paper_type_id: $("#paper_type").val(),
+                        journal_name: $("#paper_journal").val(),
+                        vol: $("#paper_vol").val(),
+                        page: $("#paper_page").val(),
+                        company: $("#paper_publish_name").val(),
+                        index: $("#paper_index").val(),
+                        note_domestic: $("#paper_note_domestic").val(),
+                    });
+
+                    //var name = $("#paper_name").val();
+                    const formData = new FormData();
                     formData.append('file', uppy1.getFiles()[0].data);
-                    formData.append('name', name);
+                    formData.append('name', $("#paper_name").val());
+
+                    formData.append('input', paper_temp);
+                    formData.append('paper', paper_temp);
+
                     $.ajax({
-                        url: "/Paper/addFile",
+                        url: "/Paper/AddPaper",
                         method: "post",
                         complete: function (data) {
                             var mess = data.responseJSON.mess;
                             if (mess == "ss") {
-                                fileid = data.responseJSON.id;
-                                $.ajax({
-                                    url: "@Url.Action("AddPaper", "Paper")",
-                                    type: "POST",
-                                    data: JSON.stringify({ 'paper': Paper, 'fileid': fileid }),
-                                    contentType: "application/json;charset=utf-8",
-                                    datatype: "json",
-                                    cache: false,
-                                    success: function (response) {
-                                        if (response.mess == "ss") {
-                                            paper_id = response.id;
-                                            addCriteria();
-                                        }
-                                        else alert('loi');
-                                    },
-                                    error: function () {
-                                        //alert("fail");
-                                    }
-                                });
+                                paper_id = data.responseJSON.id;
+                                addCriteria();
                             }
+                            else alert('loi');
                         },
                         error: function () {
+                            $("#loading").hide();
                             toastr.error("Có lỗi xảy ra");
                             save_loader.stopLoading();
                         },
@@ -477,8 +483,8 @@
                 "<span class='col-xl-8'><input autocomplete='off'  placeholder='Link' class='form-control tieuchilink' type='text' name='tieuchilink' /></span>" +
                 "<span class='col-xl-2'><button class='form-control btn btn-danger deletetieuchi'><i class='flaticon2-trash'></i></button></span>" +
                 "</div>");
-            var option = $("#tieuchi option[value='" + temp + "']");
-            option.prop('disabled', true);
+            //var option = $("#tieuchi option[value='" + temp + "']");
+            //option.prop('disabled', true);
         });
 
         $("#thuong").on("click", ".deletetieuchi", function () {

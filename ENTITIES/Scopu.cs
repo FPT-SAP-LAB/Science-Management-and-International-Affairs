@@ -10,13 +10,14 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class Scopu
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public string Sourcerecord_ID { get; set; }
+        public string Source_Title_Medline_sourced_journals_are_indicated_in_Green { get; set; }
+        public string Print_ISSN { get; set; }
+        public string E_ISSN { get; set; }
+        public string Active_or_Inactive { get; set; }
     }
 }

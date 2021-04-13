@@ -12,16 +12,15 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class PaperWithCriteria
+    public partial class SCIE
     {
-        public int criteria_id { get; set; }
-        public int paper_id { get; set; }
-        public string link { get; set; }
-        public Nullable<bool> check { get; set; }
-        public Nullable<bool> manager_check { get; set; }
-        public int paperwithcriteria_id { get; set; }
-    
-        public virtual Paper Paper { get; set; }
-        public virtual PaperCriteria PaperCriteria { get; set; }
+        public string Journal_title { get; set; }
+        public string ISSN { get; set; }
+        public string eISSN { get; set; }
+        public string Publisher_name { get; set; }
+        public string Publisher_address { get; set; }
+        public string Languages { get; set; }
+        public string Web_of_Science_Categories { get; set; }
+        public string SCIE_id { get; set; }
     }
 }

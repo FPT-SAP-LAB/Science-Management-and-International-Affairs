@@ -2,13 +2,11 @@
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.ScienceManagement.Comment
 {
@@ -20,6 +18,7 @@ namespace BLL.ScienceManagement.Comment
             List<DetailComment> list = (from a in db.CommentBases
                                         join b in db.Accounts on a.account_id equals b.account_id
                                         where a.BaseRequest.request_id == request_id
+                                        orderby a.date descending
                                         select new DetailComment
                                         {
                                             Content = a.content,
@@ -28,9 +27,9 @@ namespace BLL.ScienceManagement.Comment
                                         }).ToList();
             return list;
         }
-        public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id)
+        public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id, bool is_manager)
         {
-            NotificationRepo notificationRepo = new NotificationRepo();
+            NotificationRepo notificationRepo = new NotificationRepo(db);
 
             List<int> manager_account_id = new List<int> { 2, 3 };
             if (string.IsNullOrWhiteSpace(content))
@@ -52,10 +51,14 @@ namespace BLL.ScienceManagement.Comment
                         content = content.Trim(),
                         date = DateTime.Now
                     });
-                    int notification_id = notificationRepo.Add(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id);
+                    string notification_id;
+                    if (is_manager)
+                        notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id).ToString();
+                    else
+                        notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 22, 34 }, 1, "/ConferenceSponsor/Detail?id=" + request.request_id));
                     db.SaveChanges();
                     trans.Commit();
-                    return new AlertModal<string>(notification_id.ToString(), true);
+                    return new AlertModal<string>(notification_id, true);
                 }
                 catch (Exception e)
                 {

@@ -151,6 +151,7 @@
         <div class="row justify-content-center">
             <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+            <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
         </div>
     </div>
@@ -299,6 +300,50 @@
                 },
                 error: function () {
                     //alert("fail");
+                }
+            });
+        });
+
+        $("#deleteconfirm").click(function () {
+            Swal.fire({
+                title: "Xác nhận hủy",
+                text: "Hủy yêu cầu này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $("#loading").show();
+                    var request_id = "@ViewBag.request_id";
+                    $.ajax({
+                        url: "@Url.Action("deleteRequest", "Invention")",
+                        type: "POST",
+                        data: JSON.stringify({ 'id': request_id }),
+                        contentType: "application/json;charset=utf-8",
+                        datatype: "json",
+                        cache: false,
+                        success: function (response) {
+                            $("#loading").hide();
+                            if (response.mess == "ss") {
+                                $("#editconfirm").prop("disabled", true);
+                                $("#confirmbtn").prop("disabled", true);
+                                $("#totalreward").prop("disabled", true);
+                                $("#deleteconfirm").prop("disabled", true);
+
+                                toastr.success("Hủy yêu cầu thành công");
+                                //$("#edit_modal_cri_name").val(response.pc);
+                                $("#loading").hide();
+                            }
+                            else toastr.error("Hủy yêu cầu thất bại");
+                        },
+                        error: function () {
+                            $("#loading").hide();
+                            toastr.error("Hủy yêu cầu thất bại");
+                            //alert("fail");
+                        }
+                    });
                 }
             });
         });
