@@ -242,10 +242,11 @@
                 reward_type: $("#kieuthuong").val(),
                 paper_id: paper_id
             }
+            var daidien = $("#daidien").val();
             $.ajax({
                 url: "@Url.Action("editRequest", "Paper")",
                 type: "POST",
-                data: JSON.stringify(RequestPaper),
+                data: JSON.stringify({ 'item': RequestPaper, 'daidien': daidien }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
@@ -495,6 +496,15 @@
                 option.prop('disabled', true);
             });
 
+            $("#kieuthuong").on("select2:select", function (e) {
+                var temp = $("#kieuthuong").val();
+                if (temp == "Quydinh") $("#block_daidien").hide();
+                else {
+                    $("#block_daidien").show();
+                    addOption();
+                }
+            });
+
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
@@ -549,8 +559,7 @@
                         people.push(AddAuthor);
                     }
                     addOption();
-                    if (ck != "5") $(".edit").prop("disabled", true);
-                    $(".edit-author").prop("disabled", false);
+                    
                     $("#daidien").val(response.ms);
 
                     if (ck == "2" || ck == "6" || ck == "7") {
@@ -577,6 +586,14 @@
                     } else {
                         $("#edit_submit_reward").hide();
                         $(".edit-author").prop('disabled', true);
+                    }
+
+                    if (ck != "5") {
+                        $(".edit").prop("disabled", true);
+                        $(".edit-author").prop("disabled", true);
+                    } else {
+                        $(".edit").prop("disabled", false);
+                        $(".edit-author").prop("disabled", false);
                     }
                 },
                 error: function () {
