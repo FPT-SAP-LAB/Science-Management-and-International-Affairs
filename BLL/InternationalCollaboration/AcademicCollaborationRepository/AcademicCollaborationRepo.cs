@@ -138,7 +138,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<YearSearching> yearSearching()
+        public AlertModal<List<Year>> yearSearching()
         {
             try
             {
@@ -148,7 +148,16 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 YearSearching yearSearching = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
                 if (yearSearching.year_from == null) yearSearching.year_from = DateTime.Now.Year;
                 if (yearSearching.year_to == null) yearSearching.year_to = DateTime.Now.Year;
-                return new AlertModal<YearSearching>(yearSearching, true);
+
+                List<Year> yearsSearching = new List<Year>();
+                Year year;
+                for (var y = yearSearching.year_from; y <= yearSearching.year_to; y++)
+                {
+                    year = new Year();
+                    year.year = y;
+                    yearsSearching.Add(year);
+                }
+                return new AlertModal<List<Year>>(yearsSearching, true);
             }
             catch (Exception e)
             {
@@ -454,25 +463,20 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
         {
             if (obj_person.available_person && obj_partner.available_partner)
             {
-                PartnerScope partnerScope = db.PartnerScopes.Where(x => x.partner_id == obj_partner.partner_id
-                                                                && x.scope_id == obj_partner.collab_scope_id).FirstOrDefault();
-                if (partnerScope != null)
+                AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
+                                                            &&
+                                                            x.collab_id != obj_academic_collab.collab_id
+                                                            &&
+                                                            ((x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
+                                                            ||
+                                                            (x.plan_study_start_date <= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                            ||
+                                                            (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
+                                                            ||
+                                                            (x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
+                if (academicCollaboration != null)
                 {
-                    AcademicCollaboration academicCollaboration = db.AcademicCollaborations.Where(x => x.people_id == obj_person.person_id
-                                                                &&
-                                                                x.collab_id != obj_academic_collab.collab_id
-                                                                &&
-                                                                ((x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_start_date)
-                                                                ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.plan_end_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
-                                                                ||
-                                                                (x.plan_study_start_date <= obj_academic_collab.plan_start_date && x.plan_study_end_date >= obj_academic_collab.plan_end_date)
-                                                                ||
-                                                                (x.plan_study_start_date >= obj_academic_collab.plan_start_date && x.plan_study_end_date <= obj_academic_collab.plan_end_date))).FirstOrDefault();
-                    if (academicCollaboration != null)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             return true;
