@@ -9,7 +9,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Paper
     public class WaitDecisionPaper
     {
         public string name { get; set; }
-        public string company { get; set; }
+        public string journal_name { get; set; }
         public string author_name { get; set; }
         public string mssv_msnv { get; set; }
         public string office_abbreviation { get; set; }

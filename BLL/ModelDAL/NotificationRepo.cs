@@ -10,9 +10,13 @@ namespace BLL.ModelDAL
     public class NotificationRepo
     {
         private ScienceAndInternationalAffairsEntities db;
+        public NotificationRepo() { }
+        public NotificationRepo(ScienceAndInternationalAffairsEntities db)
+        {
+            this.db = db;
+        }
         public int AddByAccountID(int account_id, int notification_type_id, string URL)
         {
-            db = new ScienceAndInternationalAffairsEntities();
             NotificationSubscribe subscribe = db.NotificationSubscribes.Where(x => x.account_id == account_id && x.notification_type_id == notification_type_id).FirstOrDefault();
             if (subscribe == null || subscribe.is_subscribe)
             {
@@ -39,7 +43,6 @@ namespace BLL.ModelDAL
         }
         public List<int> AddByRightID(List<int> rights, int notification_type_id, string URL)
         {
-            db = new ScienceAndInternationalAffairsEntities();
             db.Configuration.LazyLoadingEnabled = false;
 
             List<int> accounts = db.AccountRights.Where(x => rights.Contains(x.right_id)).Select(x => x.account_id).Distinct().ToList();
@@ -76,7 +79,6 @@ namespace BLL.ModelDAL
         }
         public Notification Get(int notification_id)
         {
-            db = new ScienceAndInternationalAffairsEntities();
             var list = (from a in db.NotificationBases
                         join b in db.NotificationTypes on a.notification_type_id equals b.notification_type_id
                         where a.notification_id == notification_id
