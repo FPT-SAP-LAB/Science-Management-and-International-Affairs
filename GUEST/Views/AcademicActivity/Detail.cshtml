@@ -25,6 +25,9 @@
         max-width: 100%;
         height: auto;
     }
+    .custom-form{
+
+    }
 </style>
 <!-- begin::Card-->
 <div class="card card-custom overflow-hidden">
@@ -98,7 +101,7 @@
                         @Html.Raw(item.content)<br/>
                         @if (@item == @ViewBag.SubContent[0] && @ViewBag.phase_id != 0 && @ViewBag.have_form)
                         {
-                            <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" target="_blank">@rm.GetString("Registration")</a>
+                            <a href="@Url.Action("loadForm","AcademicActivity",new { pid = ViewBag.phase_id})" class="btn btn-primary px-6 font-weight-bold" target="_blank">@rm.GetString("Registration")</a>
                         }
                     </div>
                 }

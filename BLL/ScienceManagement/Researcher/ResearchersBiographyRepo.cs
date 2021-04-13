@@ -55,7 +55,7 @@ namespace BLL.ScienceManagement.Researcher
                         {
                             index = index + 1,
                             records = x.records
-                        }).OrderBy(x=>x.records.start_year).ToList<BaseRecord<WorkingProcess>>();
+                        }).OrderBy(x => x.records.start_year).ToList<BaseRecord<WorkingProcess>>();
             return list;
         }
 
@@ -75,14 +75,14 @@ namespace BLL.ScienceManagement.Researcher
                              join n in db.AuthorPapers on m.people_id equals n.people_id
                              where n.paper_id == a.paper_id
                              select m.Person.name).ToList<string>(),
-                             link = a.link_doi
+                            link = a.link_doi
                         }).OrderByDescending(x => x.publish_date).AsEnumerable<ResearcherPublications>().Select((x, index) => new ResearcherPublications
                         {
                             rownum = index + 1,
                             paper_id = x.paper_id,
                             journal_or_cfr_name = x.journal_or_cfr_name,
                             paper_name = x.paper_name,
-                            year = x.publish_date==null?"":x.publish_date.Value.Year.ToString(),
+                            year = x.publish_date == null ? "" : x.publish_date.Value.Year.ToString(),
                             co_author = x.co_author,
                             link = x.link
                         }).ToList<ResearcherPublications>();
