@@ -468,6 +468,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [Auther(RightID = "3")]
+        [HttpPost]
         public ActionResult ExportExcel(int type, int activity_id)
         {
             try
@@ -505,8 +506,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
+            }
+        }
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                return new EmptyResult();
             }
         }
     }
