@@ -72,7 +72,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult AddPaper(HttpPostedFileBase file, string name, DetailPaper paper, string input)
         {
-            if(paper == null)
+            if (paper == null)
             {
                 paper = new DetailPaper();
                 JObject @object = JObject.Parse(input);
