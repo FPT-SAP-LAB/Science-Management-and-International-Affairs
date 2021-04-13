@@ -74,7 +74,8 @@ namespace BLL.ScienceManagement.Researcher
                             (from m in db.Profiles
                              join n in db.AuthorPapers on m.people_id equals n.people_id
                              where n.paper_id == a.paper_id && m.people_id != id
-                             select m.Person.name).ToList<string>()
+                             select m.Person.name).ToList<string>(),
+                            link = a.link_doi
                         }).OrderByDescending(x => x.publish_date).AsEnumerable<ResearcherPublications>().Select((x, index) => new ResearcherPublications
                         {
                             rownum = index + 1,
@@ -83,7 +84,8 @@ namespace BLL.ScienceManagement.Researcher
                             paper_name = x.paper_name,
                             publish_date = x.publish_date,
                             year = x.publish_date.Value.Year.ToString(),
-                            co_author = x.co_author
+                            co_author = x.co_author,
+                            link=x.link
                         }).ToList<ResearcherPublications>();
             return data;
         }

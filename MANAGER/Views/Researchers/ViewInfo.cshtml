@@ -214,38 +214,22 @@
                 }
             })
             // Class definition
-            var KTSelect2 = function () {
-                // Private functions
-                var demos = function () {
-                    // multi select
-                    $('#title_select').select2({
-                        placeholder: 'Chọn chức danh',
-                        tags: true
-                    });
-                    $('#country_select').select2({
-                        placeholder: 'Chọn quốc tịch',
-                        tags: true
-                    });
-                    $('#position_select').select2({
-                        placeholder: 'Chọn chức vụ',
-                        tags: true
-                    });
-                    $('#interested_fields_select').select2({
-                        placeholder: 'Chọn lĩnh vực quan tâm',
-                        tags: true
-                    });
-                }
-                // Public functions
-                return {
-                    init: function () {
-                        demos();
-                    }
-                };
-            }();
-
-            // Initialization
-            jQuery(document).ready(function () {
-                KTSelect2.init();
+            // multi select
+            $('#title_select').select2({
+                placeholder: 'Chọn chức danh',
+                tags: true
+            });
+            $('#country_select').select2({
+                placeholder: 'Chọn quốc tịch',
+                tags: true
+            });
+            $('#position_select').select2({
+                placeholder: 'Chọn chức vụ',
+                tags: true
+            });
+            $('#interested_fields_select').select2({
+                placeholder: 'Chọn lĩnh vực quan tâm',
+                tags: true
             });
 
 
