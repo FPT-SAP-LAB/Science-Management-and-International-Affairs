@@ -67,11 +67,10 @@ namespace MANAGER.Controllers
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
         [HttpPost]
-        public ActionResult RequestEdit(int request_id)
+        public JsonResult RequestEdit(int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            DetailRepos.RequestEdit(request_id);
-            return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
+            return Json(DetailRepos.RequestEdit(request_id));
         }
         [HttpPost]
         public ActionResult UpdateCosts(string data, int request_id, string comment)
@@ -84,7 +83,7 @@ namespace MANAGER.Controllers
         public JsonResult SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number, request_id, CurrentAccount.AccountID(Session));
+            AlertModal<string> result = DetailRepos.SubmitPolicy(decision_file, valid_date, decision_number, request_id);
             return Json(result);
         }
         [HttpPost]
