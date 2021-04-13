@@ -26,7 +26,7 @@
                             aria-expanded="false">
                         Export
                     </button>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                    @*<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <ul class="navi flex-column navi-hover py-2">
                             <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
                                 Choose an option:
@@ -40,7 +40,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -314,7 +314,6 @@
     <script>
         let id_edit = "";
         let id_clone = "";
-        let stt = 1;
         var save_loader = new LoaderBtn($(".load-btn"));
 
         document.getElementById('search_year').value = new Date().getFullYear();
@@ -355,7 +354,6 @@
                         success: function (data) {
                             if (data != '') {
                                 toastr.success(data);
-                                stt = 1;
                                 datatable.ajax.reload();
                             } else {
                                 toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
@@ -537,7 +535,6 @@
         });
 
         $("#kt_datetimepicker_3_year").on("change.datetimepicker", ({ date, oldDate }) => {
-            stt = 1;
             datatable.ajax.reload();
         });
 

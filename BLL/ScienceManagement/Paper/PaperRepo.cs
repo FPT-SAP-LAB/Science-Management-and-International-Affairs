@@ -222,6 +222,26 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
+        public string deleteRequest(int id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestPaper rp = db.RequestPapers.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public List<string> getDecisionLink(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -766,21 +786,37 @@ namespace BLL.ScienceManagement.Paper
 
                     int paper_id_int = Int32.Parse(paper_id);
                     ENTITIES.Paper paper = db.Papers.Where(x => x.paper_id == paper_id_int).FirstOrDefault();
-                    Scimagojr sci = db.Scimagojrs.Where(x => x.Title == paper.journal_name).FirstOrDefault();
-                    string quality = "";
-                    if (sci != null) quality = sci.SJR_Best_Quartile;
 
-                    foreach (var item in list)
+                    foreach (var item in criteria)
                     {
-                        foreach (var cri in criteria)
+                        foreach (var cri in list)
                         {
                             if (cri.name == item.name)
                             {
-                                item.link = cri.link;
+                                item.criteria_id = cri.criteria_id;
+                                if (item.name == "ISI")
+                                {
+                                    SCIE scie = db.SCIEs.Where(x => x.Journal_title == paper.journal_name).FirstOrDefault();
+                                    SSCI ssci = db.SSCIs.Where(x => x.Journal_title == paper.journal_name).FirstOrDefault();
+                                    if (scie != null || ssci != null)
+                                    {
+                                        item.check = true;
+                                    }
+                                }
+                                else if (item.name == "Scopus")
+                                {
+                                    Scopu scopu = db.Scopus.Where(x => x.Source_Title_Medline_sourced_journals_are_indicated_in_Green == paper.journal_name).FirstOrDefault();
+                                    if (scopu != null)
+                                    {
+                                        if (scopu.Active_or_Inactive == "Active") item.check = true;
+                                    }
+                                }
+                                else
+                                {
+                                    item.check = false;
+                                }
                             }
                         }
-                        if (item.name == quality) item.check = true;
-                        else item.check = false;
                         PaperWithCriteria pwc = new PaperWithCriteria
                         {
                             paper_id = paper_id_int,
@@ -1038,7 +1074,7 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1058,7 +1094,7 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1078,7 +1114,7 @@ namespace BLL.ScienceManagement.Paper
         public List<Paper_Appendix_1> getListAppendix1_2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, p.name, p.company, a.sum, b.sumFE, p.paper_id
+            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, p.name, p.journal_name, a.sum, b.sumFE, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
 	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
 	                            join [General].Office o on ah.office_id = o.office_id

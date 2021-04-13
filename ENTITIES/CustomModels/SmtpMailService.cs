@@ -9,11 +9,11 @@ namespace ENTITIES.CustomModels
         public static readonly string From = "fpt.saplab@gmail.com";
         public static readonly string Name = "SAP-LAB";
         private static readonly string Password = "fptsaplab123";
-        public static AlertModal<string> Send(string To, string Subject, string BodyText, List<string> CC = null)
+        public static AlertModal<string> Send(string To, string Subject, string BodyText, bool IsHtml, List<string> CC = null)
         {
-            return Send(new List<string> { To }, Subject, BodyText, CC);
+            return Send(new List<string> { To }, Subject, BodyText, IsHtml, CC);
         }
-        public static AlertModal<string> Send(List<string> To, string Subject, string BodyText, List<string> CC = null)
+        public static AlertModal<string> Send(List<string> To, string Subject, string BodyText, bool IsHtml, List<string> CC = null)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace ENTITIES.CustomModels
                 {
                     From = new MailAddress(From, Name),
                     Body = BodyText,
-                    Subject = Subject
+                    Subject = Subject,
+                    IsBodyHtml = IsHtml
                 };
 
                 To.ForEach(x => mail.To.Add(new MailAddress(x)));
@@ -46,11 +47,11 @@ namespace ENTITIES.CustomModels
                 return new AlertModal<string>(false);
             }
         }
-        public static AlertModal<string> SendUpdateRequest(string To, string SubSubject, string BodyText, int RequestType, List<string> CC = null)
+        public static AlertModal<string> SendUpdateRequest(string To, string SubSubject, string BodyText, bool IsHtml, int RequestType, List<string> CC = null)
         {
-            return Send(new List<string> { To }, SubSubject, BodyText, CC);
+            return Send(new List<string> { To }, SubSubject, BodyText, IsHtml, CC);
         }
-        public static AlertModal<string> SendUpdateRequest(List<string> To, string BodyText, int RequestType, List<string> CC = null)
+        public static AlertModal<string> SendUpdateRequest(List<string> To, string BodyText, int RequestType, bool IsHtml, List<string> CC = null)
         {
             string Subject = "Đề nghị ";
             switch (RequestType)
@@ -68,7 +69,7 @@ namespace ENTITIES.CustomModels
                     return new AlertModal<string>(false, "Loại đề nghị không tồn tại");
             }
             Subject += " của bạn có cập nhật mới";
-            return Send(To, Subject, BodyText, CC);
+            return Send(To, Subject, BodyText, IsHtml, CC);
         }
     }
 }

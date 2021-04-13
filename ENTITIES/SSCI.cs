@@ -10,10 +10,17 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class SSCI
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string Journal_title { get; set; }
+        public string ISSN { get; set; }
+        public string eISSN { get; set; }
+        public string Publisher_name { get; set; }
+        public string Publisher_address { get; set; }
+        public string Languages { get; set; }
+        public string Web_of_Science_Categories { get; set; }
+        public string SSCI_id { get; set; }
     }
 }

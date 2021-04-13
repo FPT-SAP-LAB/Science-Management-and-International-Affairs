@@ -79,8 +79,8 @@ function load_program_detail_going(program_id) {
             $('#edit_program_title_going').val(data.json.program_name)
             $('#edit_program_language_going').val(data.json.language_id).trigger('change')
             $('#edit_program_partner').append(new Option(data.json.partner_name, data.json.partner_name + '/' + data.json.partner_id, false, true)).trigger('change');
-            $('#edit_program_start_date_going').val(data.json.registration_deadline.split(' - ')[0])
-            $('#edit_program_end_date_going').val(data.json.registration_deadline.split(' - ')[1])
+            $('#edit_program_start_date_going').datepicker('setDate', data.json.registration_deadline.split(' - ')[0])
+            $('#edit_program_end_date_going').datepicker('setDate', data.json.registration_deadline.split(' - ')[1])
             $('#edit_note_going').val(data.json.note)
             $('#edit_summernote_going').summernote('code', data.json.content)
             $('#edit_program_going').modal('show')
@@ -98,8 +98,8 @@ function load_program_detail_coming(program_id) {
         success: function (data) {
             $('#edit_program_title_coming').val(data.json.program_name)
             $('#edit_program_language_coming').val(data.json.language_id).trigger('change')
-            $('#edit_program_start_date_coming').val(data.json.registration_deadline.split(' - ')[0])
-            $('#edit_program_end_date_coming').val(data.json.registration_deadline.split(' - ')[1])
+            $('#edit_program_start_date_coming').datepicker('setDate', data.json.registration_deadline.split(' - ')[0])
+            $('#edit_program_end_date_coming').datepicker('setDate', data.json.registration_deadline.split(' - ')[1])
             $('#edit_note_coming').val(data.json.note)
             $('#edit_summernote_coming').summernote('code', data.json.content)
             $('#edit_program_coming').modal('show')
