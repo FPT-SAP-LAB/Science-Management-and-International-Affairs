@@ -10,6 +10,7 @@ using ENTITIES;
 using Newtonsoft.Json;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicActivity;
+using System.IO;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -20,6 +21,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         AcademicActivityExpenseRepo expenseRepo;
         AcademicActivityPhaseRepo phaseRepo;
         AcademicActivityPartnerRepo partnerRepo;
+        AcademicActivityExcelRepo excelRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
@@ -450,6 +452,42 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+        [Auther(RightID = "3")]
+        public ActionResult ExportExcel(int type)
+        {
+            try
+            {
+                excelRepo = new AcademicActivityExcelRepo();
+                switch (type)
+                {
+                    case 1:
+                        MemoryStream memoryStream = excelRepo.ExportDuTruExcel();
+                        string downloadFile = "Kinh-phi-du-tru.xlsx";
+                        string handle = Guid.NewGuid().ToString();
+                        TempData[handle] = memoryStream.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle, FileName = downloadFile } }, JsonRequestBehavior.AllowGet);
+                    case 2:
+                        MemoryStream memoryStream2 = excelRepo.ExportDieuChinhExcel();
+                        string downloadFile2 = "Kinh-phi-dieu-chinh.xlsx";
+                        string handle2 = Guid.NewGuid().ToString();
+                        TempData[handle2] = memoryStream2.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle2, FileName = downloadFile2 } }, JsonRequestBehavior.AllowGet);
+                    case 3:
+                        MemoryStream memoryStream3 = excelRepo.ExportThucTeExcel();
+                        string downloadFile3 = "Kinh-phi-thuc-te.xlsx";
+                        string handle3 = Guid.NewGuid().ToString();
+                        TempData[handle3] = memoryStream3.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle3, FileName = downloadFile3 } }, JsonRequestBehavior.AllowGet);
+                    default:
+                        return Json(new { success = true, data = new { } }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
             }
         }
     }
