@@ -19,6 +19,7 @@ namespace ENTITIES
         public string link { get; set; }
         public Nullable<bool> check { get; set; }
         public Nullable<bool> manager_check { get; set; }
+        public int paperwithcriteria_id { get; set; }
     
         public virtual Paper Paper { get; set; }
         public virtual PaperCriteria PaperCriteria { get; set; }
