@@ -48,6 +48,52 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 								isnull(xyz.country_name, '') like {4} and
 								isnull(xyz.is_collab , '') like {5} ";
 
+                bool is_deleted = searchPartner.is_deleted == 0;
+
+                //var list = (from t1 in db.Partners
+                //            join t2 in db.MOUPartners on t1.partner_id equals t2.partner_id into a
+                //            from t2 in a.DefaultIfEmpty()
+                //            join t6 in db.MOUs on t2.mou_id equals t6.mou_id into b
+                //            from t6 in b.DefaultIfEmpty()
+                //            join t3 in db.MOUPartnerSpecializations on t2.mou_partner_id equals t3.mou_partner_id into c
+                //            from t3 in c.DefaultIfEmpty()
+                //            join t4 in db.SpecializationLanguages on t3.specialization_id equals t4.specialization_id into d
+                //            from t4 in d.DefaultIfEmpty()
+                //            join t5 in db.Countries on t1.country_id equals t5.country_id into e
+                //            from t5 in e.DefaultIfEmpty()
+                //            where (t1.is_deleted == is_deleted) && (t4.language_id == searchPartner.language)
+                //            select new
+                //            {
+                //                t1.partner_name,
+                //                t1.partner_id,
+                //                t1.is_deleted,
+                //                t1.website,
+                //                t1.address,
+                //                t4.name,
+                //                t5.country_name,
+                //                is_collab = t2.partner_id == 0 ? 1 : 2,
+                //            }).GroupBy(a => new
+                //            {
+                //                a.partner_name,
+                //                a.partner_id,
+                //                a.is_deleted,
+                //                a.website,
+                //                a.address,
+                //                a.country_name,
+                //                a.is_collab
+                //            }).Select(x => new
+                //            {
+                //                x.Key.partner_name,
+                //                x.Key.partner_id,
+                //                x.Key.is_deleted,
+                //                x.Key.website,
+                //                x.Key.address,
+                //                x.Key.is_collab,
+                //                specialization_name = string.Join(x.)
+                //                x.Key.country_name
+                //            });
+
+
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT "
