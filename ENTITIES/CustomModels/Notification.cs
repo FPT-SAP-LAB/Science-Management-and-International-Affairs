@@ -11,5 +11,6 @@ namespace ENTITIES.CustomModels
         public DateTime CreatedDate { get; set; }
         public int AccountID { get; set; }
         public string StringDate { get; set; }
+        public int TypeID { get; set; }
     }
 }
